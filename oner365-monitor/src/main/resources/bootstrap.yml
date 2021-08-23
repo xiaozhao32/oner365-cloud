@@ -1,0 +1,27 @@
+
+server: 
+  port: 8706
+  undertow:
+    direct-buffers: true
+    threads:
+      io: 4
+      worker: 150
+
+spring: 
+  application:
+    name: oner365-monitor
+    
+  profiles:
+    active: dev
+    
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      config:
+        namespace: ${spring.profiles.active}
+        group: DEFAULT_GROUP
+        file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+          
+     

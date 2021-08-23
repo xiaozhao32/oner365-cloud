@@ -1,0 +1,17 @@
+
+server: 
+  port: 8718
+
+spring: 
+  application:
+    name: oner365-dubbo-consumer
+  profiles:
+    active: dev
+
+dubbo:
+  application:    name: oner365-dubbo
+  registry:    address: nacos://127.0.0.1:8848
+  protocol:
+    name: dubbo    port: -1
+  consumer:
+    version: 1.0

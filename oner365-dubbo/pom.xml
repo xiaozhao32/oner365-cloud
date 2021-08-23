@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.oner365</groupId>
+		<artifactId>oner365-nacos</artifactId>
+		<version>1.0.0-SNAPSHOT</version>
+	</parent>
+
+	<packaging>pom</packaging>
+	<artifactId>oner365-dubbo</artifactId>
+	<name>oner365-dubbo</name>
+
+	<modules>
+        <module>oner365-dubbo-api</module>
+        <module>oner365-dubbo-provider</module>
+        <module>oner365-dubbo-consumer</module>
+    </modules>
+
+</project>

@@ -1,0 +1,1 @@
+package com.oner365.common.feign;

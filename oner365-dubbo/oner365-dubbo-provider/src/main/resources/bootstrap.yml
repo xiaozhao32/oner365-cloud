@@ -1,0 +1,17 @@
+
+server: 
+  port: 8708
+
+spring: 
+  application:
+    name: oner365-dubbo-provider
+  profiles:
+    active: dev
+
+dubbo:
+  application:
+    name: oner365-dubbo
+  registry:    address: nacos://127.0.0.1:8848
+  protocol:
+    name: dubbo    port: -1
+  provider:    version: 1.0
