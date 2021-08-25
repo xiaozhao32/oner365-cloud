@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.oner365</groupId>
-	<artifactId>oner365-nacos</artifactId>
+	<artifactId>oner365-cloud</artifactId>
 	<version>1.0.0-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
-	<name>oner365-nacos</name>
-	<description>oner365-nacos</description>
+	<name>oner365-cloud</name>
+	<description>oner365-cloud</description>
 	<url>http://www.oner365.com</url>
 
 	<licenses>
