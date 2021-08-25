@@ -30,7 +30,7 @@
 ##### 后端架构
 1. 工具包 oner365-common
 2. 打包工具 oner365-deploy
-3. 网关前置 - 8080 oner365-gateway
+3. 网关前置 - 8704 oner365-gateway
 4. 文件中心 - 8705 oner365-files
 5. 监控中心 - 8706 oner365-monitor
 6. 认证中心 - 8707 oner365-system
