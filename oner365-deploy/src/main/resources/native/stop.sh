@@ -21,13 +21,9 @@ function exec() {
 
 #------------------------------------------------------------------
 
+exec oner365-elasticsearch
 exec oner365-files
-exec oner365-turbine
 exec oner365-system
 exec oner365-monitor
 exec oner365-gateway
-exec oner365-zuul
-exec oner365-config
-exec oner365-zipkin
-exec oner365-eureka
 echo 'finish!'

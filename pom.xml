@@ -40,7 +40,7 @@
 
 		<org.springframework.security.version>5.5.2</org.springframework.security.version>
 		<org.springframework.cloud.version>2020.0.3</org.springframework.cloud.version>
-		<org.springframework.boot.version>2.5.3</org.springframework.boot.version>
+		<org.springframework.boot.version>2.5.4</org.springframework.boot.version>
 		<org.springframework.version>5.3.9</org.springframework.version>
 
 		<org.apache.rocketmq.version>4.9.0</org.apache.rocketmq.version>
@@ -56,10 +56,10 @@
 
 		<com.fasterxml.jackson.version>2.12.4</com.fasterxml.jackson.version>
 
-		<io.projectreactor.netty.version>1.0.9</io.projectreactor.netty.version>
+		<io.projectreactor.netty.version>1.0.10</io.projectreactor.netty.version>
 		<io.github.openfeign.version>3.8.0</io.github.openfeign.version>
-		<io.undertow.version>2.2.9.Final</io.undertow.version>
-		<io.netty.version>4.1.66.Final</io.netty.version>
+		<io.undertow.version>2.2.10.Final</io.undertow.version>
+		<io.netty.version>4.1.67.Final</io.netty.version>
 
 	</properties>
 
@@ -88,12 +88,12 @@
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-starter-client</artifactId>
-				<version>2.4.3</version>
+				<version>2.5.1</version>
 			</dependency>
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-starter-server</artifactId>
-				<version>2.4.3</version>
+				<version>2.5.1</version>
 			</dependency>
 
 			<!-- alibaba -->
@@ -257,7 +257,7 @@
 			<dependency>
 				<groupId>org.apache.pdfbox</groupId>
 				<artifactId>pdfbox</artifactId>
-				<version>2.0.22</version>
+				<version>2.0.24</version>
 			</dependency>
 
 			<!-- zookeeper -->

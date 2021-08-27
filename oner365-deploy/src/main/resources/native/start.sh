@@ -16,8 +16,6 @@ function execute() {
 
 #------------------------------------------------------------------
 
-execute oner365-eureka
-execute oner365-config
 execute oner365-gateway
 execute oner365-system
 execute oner365-monitor
