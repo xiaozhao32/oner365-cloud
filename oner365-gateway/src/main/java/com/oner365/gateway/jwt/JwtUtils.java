@@ -17,9 +17,6 @@ package com.oner365.gateway.jwt;
 
 import java.util.Date;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.base.Strings;
@@ -33,8 +30,6 @@ import io.jsonwebtoken.Jwts;
  * @author zhaoyong
  */
 public class JwtUtils {
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtils.class);
 
     private JwtUtils() {
 
@@ -64,13 +59,7 @@ public class JwtUtils {
      * @return Claims
      */
     public static Claims getClaimsFromToken(String token, String secret) {
-        Claims claims = null;
-        try {
-            claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
-        } catch (Exception e) {
-            LOGGER.error("Error getClaimsFromToken: ", e);
-        }
-        return claims;
+        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     }
 
     /**
