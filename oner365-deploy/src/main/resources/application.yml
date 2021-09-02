@@ -9,7 +9,7 @@ deploy:
 
 #服务器配置  
 servers:
-  deploy: true
+  deploy: false
   name: /usr/local/tomcat/oner365
   ip: 192.168.101.130
   port: 22

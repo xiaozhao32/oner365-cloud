@@ -1,6 +1,7 @@
 package com.oner365.deploy.utils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,10 +13,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.ClassPathResource;
 
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.deploy.entity.Server;
-import com.oner365.util.DataUtils;
 import com.google.common.collect.Lists;
+import com.oner365.common.constants.PublicConstants;
+import com.oner365.deploy.entity.DeployEntity;
+import com.oner365.deploy.entity.Server;
+import com.oner365.deploy.entity.ServerEntity;
+import com.oner365.util.DataUtils;
 
 import ch.ethz.ssh2.Connection;
 
@@ -64,7 +67,9 @@ public class DeployMethod {
         //kill tomcat
         String cmd = "kill -9 `cat "+targetServer+".pid 2>/dev/null` 2>/dev/null || true";
         LOGGER.info("> {}", cmd);
-        List<List<String>> execList = DeployUtils.execCommand(con, new String[] { cmd });
+        List<String> cmdList = new ArrayList<>(2);
+        cmdList.add(cmd);
+        List<List<String>> execList = DeployUtils.execCommand(con, cmdList);
         for (List<String> list : execList) {
             for (String s : list) {
                 LOGGER.info("> {}", s);
@@ -81,7 +86,9 @@ public class DeployMethod {
         //tomcat启动找不到java_home,需要设置 ln -s /opt/jdk1.6.0_32/bin/java /bin/java
         String cmd = targetServer + "/bin/startup.sh";
         LOGGER.info("> {}", cmd);
-        List<List<String>> execList = DeployUtils.execCommand(con, new String[] { cmd });
+        List<String> cmdList = new ArrayList<>(2);
+        cmdList.add(cmd);
+        List<List<String>> execList = DeployUtils.execCommand(con, cmdList);
         for (List<String> list : execList) {
             for (String s : list) {
                 LOGGER.info("> {}", s);
@@ -104,7 +111,7 @@ public class DeployMethod {
      * @param con 连接对象
      * @param commands 命令
      */
-    public static void execCommands(Connection con, String[] commands) {
+    public static void execCommands(Connection con, List<String> commands) {
 
         List<List<String>> execList = DeployUtils.execCommand(con, commands);
         for (List<String> list : execList) {
@@ -121,48 +128,52 @@ public class DeployMethod {
      * @param version 版本
      * @param suffix 后缀
      */
-    public static void deployNative(String[] projectNames, String targetRoot,
-            String version, String suffix, String location) {
-        for (String projectName : projectNames) {
+    public static void deployNative(DeployEntity deployEntity) {
+        for (String projectName : deployEntity.getProjects()) {
             // jar包全路径
-            String path = location + File.separator + projectName + File.separator +
-                    "target" + File.separator + projectName + "-" + version + "." + suffix;
-            String resourcePath = location + File.separator + projectName + File.separator +
+            String path = deployEntity.getLocation() + File.separator + projectName + File.separator +
+                    "target" + File.separator + projectName + "-" + deployEntity.getVersion() + "." + deployEntity.getSuffix();
+            String resourcePath = deployEntity.getLocation() + File.separator + projectName + File.separator +
                     "target" + File.separator + "resources";
-            String libPath = location + File.separator + projectName + File.separator +
+            String libPath = deployEntity.getLocation() + File.separator + projectName + File.separator +
                     "target" + File.separator + "lib";
             // 目标目录
-            String targetPath = targetRoot + File.separator + projectName;
+            String targetPath = deployEntity.getName() + File.separator + projectName;
 
             // 拷贝相关文件
             DataUtils.createFolder(targetPath);
             DataUtils.copyFile(path, targetPath);
             DataUtils.copyDirectory(resourcePath, targetPath);
-            DataUtils.copyDirectory(libPath, targetRoot);
+            DataUtils.copyDirectory(libPath, deployEntity.getName());
 
             // 制作 Linux 启动脚本
             String readFile = DeployMethod.class.getResource("/service/start.sh").getPath();
             String writeFile = targetPath + File.separator + "start.sh";
             Map<String, Object> items = new HashMap<>(1);
             items.put("SERVICE_NAME=", "SERVICE_NAME=" + projectName);
-            items.put("VERSION=", "VERSION=" + version);
+            items.put("VERSION=", "VERSION=" + deployEntity.getVersion());
             DeployUtils.replaceContextFileCreate(readFile, writeFile, items);
 
             // 制作 Windows 启动脚本
             readFile = DeployMethod.class.getResource("/service/start.bat").getPath();
             writeFile = targetPath + File.separator + "start.bat";
             items = new HashMap<>(1);
-            items.put("RESOURCE_NAME", projectName + "-" + version + "." + suffix);
+            items.put("RESOURCE_NAME", projectName + "-" + deployEntity.getVersion() + "." + deployEntity.getSuffix());
             DeployUtils.replaceContextFileCreate(readFile, writeFile, items);
         }
 
     }
 
-    public static void deployServer(List<Server> deployServerList,
-            String[] projectNames, String local, String targetRoot, String version, String suffix, String libFile) {
+    /**
+     * 部署到所有服务器
+     * 
+     * @param deployEntity 部署对象
+     * @param serverEntity 服务器对象
+     */
+    public static void deployServer(DeployEntity deployEntity, ServerEntity serverEntity) {
         try {
             // 多个目标进行部署
-            for (Server server : deployServerList) {
+            for (Server server : serverEntity.getServerList()) {
                 // get connection
                 Connection con = DeployUtils.getConnection(server.getIp(), server.getPort());
 
@@ -170,7 +181,7 @@ public class DeployMethod {
                 boolean auth = DeployUtils.auth(con, server.getUsername(), server.getPassword());
                 LOGGER.info("Auth : {}", auth);
                 if (auth) {
-                    String[] commands = deploy(con, server, projectNames, local, targetRoot, version, suffix, libFile);
+                    List<String> commands = deploy(con, server, deployEntity, serverEntity.getServerName());
                     DeployMethod.execCommands(con, commands);
                 }
                 // close
@@ -181,24 +192,34 @@ public class DeployMethod {
         }
     }
 
-    public static String[] deploy(Connection con, Server server,
-            String[] projectNames, String local, String targetRoot, String version, String suffix, String libFile) {
-        String[] commands = new String[projectNames.length];
-        for (int i = 0; i < projectNames.length; i++) {
+    /**
+     * 部署到单台服务器
+     * 
+     * @param con          连接对象
+     * @param server       服务器对象
+     * @param deployEntity 部署对象
+     * @param targetRoot   部署根目录
+     * @return List<String> 返回执行脚本列表
+     */
+    public static List<String> deploy(Connection con, Server server,
+            DeployEntity deployEntity, String targetRoot) {
+        List<String> commands = new ArrayList<>(deployEntity.getProjects().size());
+        for (String projectName : deployEntity.getProjects()) {
             // 上传的文件
-            String localFile = local + File.separator + projectNames[i] + File.separator + projectNames[i] + "-" + version + "." + suffix;
+            String localFile = deployEntity.getLocation() + File.separator + projectName + File.separator + 
+                    projectName + "-" + deployEntity.getVersion() + "." + deployEntity.getSuffix();
             // 上传的路径
-            String targetPath = targetRoot + PublicConstants.DELIMITER + projectNames[i] + PublicConstants.DELIMITER;
+            String targetPath = targetRoot + PublicConstants.DELIMITER + projectName + PublicConstants.DELIMITER;
             // 配置文件
-            String resourcesFile = local + File.separator + projectNames[i] + File.separator + "resources";
+            String resourcesFile = deployEntity.getLocation() + File.separator + projectName + File.separator + "resources";
             // 依赖包上传到lib
-            String[] libFiles = StringUtils.split(libFile, ",");
             if (DeployUtils.isMac()) {
                 // mac scp方式
                 DeployMethod.deploy(server, localFile, targetPath);
                 DeployMethod.deploy(server, resourcesFile, targetPath);
-                for (String l : libFiles) {
-                    DeployMethod.deploy(server, local + File.separator + "lib" + File.separator + l + "-" + version + "." + suffix,
+                for (String lib : deployEntity.getLibs()) {
+                    DeployMethod.deploy(server, deployEntity.getLocation() + File.separator + "lib" + File.separator + 
+                            lib + "-" + deployEntity.getVersion() + "." + deployEntity.getSuffix(),
                             targetRoot + PublicConstants.DELIMITER + "lib" + PublicConstants.DELIMITER);
                 }
             } else {
@@ -210,13 +231,14 @@ public class DeployMethod {
                         DeployUtils.uploadFileMap(con, new String[] { f.getPath() } , targetPath + "/resources" + PublicConstants.DELIMITER);
                     }
                 }
-                for (String l : libFiles) {
-                    DeployUtils.uploadFileMap(con, new String[] { local + File.separator + "lib" + File.separator + l + "-" + version + "." + suffix },
+                for (String lib : deployEntity.getLibs()) {
+                    DeployUtils.uploadFileMap(con, new String[] { deployEntity.getLocation() + File.separator + "lib" + File.separator + 
+                            lib + "-" + deployEntity.getVersion() + "." + deployEntity.getSuffix() },
                             targetRoot + PublicConstants.DELIMITER + "lib" + PublicConstants.DELIMITER);
                 }
             }
             // 准备执行的命令
-            commands[i] = targetRoot + PublicConstants.DELIMITER + projectNames[i] + PublicConstants.DELIMITER + "start.sh";
+            commands.add(targetRoot + PublicConstants.DELIMITER + projectName + PublicConstants.DELIMITER + "start.sh");
         }
         return commands;
     }
