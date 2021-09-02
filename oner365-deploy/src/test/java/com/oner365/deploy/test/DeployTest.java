@@ -17,17 +17,31 @@ import com.oner365.deploy.utils.DeployUtils;
  * @author zhaoyong
  *
  */
-public class DeployServerTest {
+public class DeployTest {
     
-    private static final Logger LOGGER = LoggerFactory.getLogger(DeployServerTest.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeployTest.class);
     
+    /**
+     * 本地部署
+     */
     @Test
     public void deployNativeTest() {
+        DeployEntity entity = DeployUtils.getDeployEntity();
+        LOGGER.info("Deploy project: {}", entity);
+        // 部署目录
+        DeployMethod.deployNative(entity);
+    }
+    
+    /**
+     * 服务器部署
+     */
+    @Test
+    public void deployServerTest() {
         DeployEntity deploy = DeployUtils.getDeployEntity();
         ServerEntity server = DeployUtils.getServerEntity();
         LOGGER.info("Deploy project: {}", server);
         LOGGER.info("Server: {}", server);
-        // 部署服务器目录
+        // 部署服务器开关
         if (server.getIsDeploy()) {
             DeployMethod.deployServer(deploy, server);
         }
