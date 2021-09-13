@@ -169,17 +169,15 @@ public class SysUserController extends BaseController {
      * 删除用户
      *
      * @param ids 编号
-     * @return Map<String, Object>
+     * @return Integer
      */
     @DeleteMapping("/delete")
-    public Map<String, Object> delete(@RequestBody String... ids) {
+    public Integer delete(@RequestBody String... ids) {
         int code = 0;
         for (String id : ids) {
             code = sysUserService.deleteById(id);
         }
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+        return code;
     }
 
     /**
@@ -241,18 +239,13 @@ public class SysUserController extends BaseController {
     /**
      * 修改用户状态
      *
-     * @param json 参数
-     * @return Map<String, Object>
+     * @param id     主键
+     * @param status 状态
+     * @return Integer
      */
     @PostMapping("/editStatus")
-    public Map<String, Object> editStatus(@RequestBody JSONObject json) {
-        String status = json.getString(SysConstants.STATUS);
-        String userId = json.getString(SysConstants.USER_ID);
-        Integer code = sysUserService.editStatus(userId, status);
-
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+    public Integer editStatus(@PathVariable String id, @RequestParam("status") String status) {
+        return sysUserService.editStatus(id, status);
     }
 
     /**

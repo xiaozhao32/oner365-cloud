@@ -285,10 +285,13 @@ public class SysRoleServiceImpl implements ISysRoleService {
         @CacheEvict(value = CACHE_MENU_NAME, allEntries = true)
     })
     public Integer editStatus(String id, String status) {
-        SysRole sysRole = this.getById(id);
-        sysRole.setStatus(status);
-        this.save(sysRole);
-        return 1;
+        SysRole entity = this.getById(id);
+        if (entity != null && entity.getId() != null) {
+            entity.setStatus(status);
+            this.save(entity);
+            return 1;
+        }
+        return 0;
     }
 
 }

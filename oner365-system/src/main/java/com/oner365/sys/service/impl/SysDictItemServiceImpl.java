@@ -103,9 +103,12 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
     })
     public Integer editStatus(String id, String status) {
         SysDictItem entity = this.getById(id);
-        entity.setStatus(status);
-        this.save(entity);
-        return 1;
+        if (entity != null && entity.getId() != null) {
+            entity.setStatus(status);
+            this.save(entity);
+            return 1;
+        }
+        return 0;
     }
 
 }

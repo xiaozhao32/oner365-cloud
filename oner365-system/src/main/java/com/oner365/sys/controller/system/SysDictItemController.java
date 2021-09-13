@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
@@ -133,33 +134,25 @@ public class SysDictItemController extends BaseController {
     /**
      * 修改状态
      *
-     * @param json 参数
-     * @return Map<String, Object>
+     * @param id     主键
+     * @param status 状态
+     * @return Integer
      */
     @PostMapping("/editTypeStatus")
-    public Map<String, Object> editTypeStatus(@RequestBody JSONObject json) {
-        String status = json.getString(SysConstants.STATUS);
-        String id = json.getString(SysConstants.ID);
-        Integer code = sysDictItemTypeService.editStatus(id, status);
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+    public Integer editTypeStatus(@PathVariable String id, @RequestParam("status") String status) {
+        return sysDictItemTypeService.editStatus(id, status);
     }
 
     /**
      * 修改状态
      *
-     * @param json 参数
-     * @return Map<String, Object>
+     * @param id     主键
+     * @param status 状态
+     * @return Integer
      */
     @PostMapping("/editItemStatus")
-    public Map<String, Object> editItemStatus(@RequestBody JSONObject json) {
-        String status = json.getString(SysConstants.STATUS);
-        String id = json.getString(SysConstants.ID);
-        Integer code = sysDictItemService.editStatus(id, status);
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+    public Integer editItemStatus(@PathVariable String id, @RequestParam("status") String status) {
+        return sysDictItemService.editStatus(id, status);
     }
 
     /**
@@ -208,34 +201,30 @@ public class SysDictItemController extends BaseController {
      * 删除字典信息
      *
      * @param ids 编号
-     * @return Map<String, Object>
+     * @return Integer
      */
     @DeleteMapping("/deleteItem")
-    public Map<String, Object> deleteItem(@RequestBody String... ids) {
+    public Integer deleteItem(@RequestBody String... ids) {
         int code = 0;
         for (String id : ids) {
             code = sysDictItemService.deleteById(id);
         }
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+        return code;
     }
 
     /**
      * 删除字典类别
      *
      * @param ids 字典编号
-     * @return Map<String, Object>
+     * @return Integer
      */
     @DeleteMapping("/deleteItemType")
-    public Map<String, Object> deleteItemType(@RequestBody String... ids) {
+    public Integer deleteItemType(@RequestBody String... ids) {
         int code = 0;
         for (String id : ids) {
             code = sysDictItemTypeService.deleteById(id);
         }
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+        return code;
     }
 
     /**

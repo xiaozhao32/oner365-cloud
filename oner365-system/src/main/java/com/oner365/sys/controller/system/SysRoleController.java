@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
@@ -59,34 +60,27 @@ public class SysRoleController extends BaseController {
     /**
      * 删除
      * @param ids 编号
-     * @return Map<String, Object>
+     * @return Integer
      */
     @DeleteMapping("/delete")
-    public Map<String, Object> delete(@RequestBody String... ids) {
+    public Integer delete(@RequestBody String... ids) {
         int code = 0;
         for (String id : ids) {
             code = roleService.deleteById(id);
         }
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+        return code;
     }
 
     /**
      * 修改状态
      *
-     * @param paramJson 参数
-     * @return Map<String, Object>
+     * @param id     主键
+     * @param status 状态
+     * @return Integer
      */
     @PostMapping("/editStatus")
-    public Map<String, Object> editStatus(@RequestBody JSONObject paramJson) {
-        String status = paramJson.getString(SysConstants.STATUS);
-        String id = paramJson.getString(SysConstants.ID);
-        Integer code = roleService.editStatus(id, status);
-
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+    public Integer editStatus(@PathVariable String id, @RequestParam("status") String status) {
+        return roleService.editStatus(id, status);
     }
 
     /**

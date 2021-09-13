@@ -105,9 +105,12 @@ public class SysMenuServiceImpl implements ISysMenuService {
     })
     public int editStatusById(String id, String status) {
         SysMenu entity = getById(id);
-        entity.setStatus(status);
-        menuDao.save(entity);
-        return 1;
+        if (entity != null && entity.getId() != null) {
+            entity.setStatus(status);
+            menuDao.save(entity);
+            return 1;
+        }
+        return 0;
     }
 
     @Override

@@ -111,7 +111,7 @@ public class SysJobServiceImpl implements ISysJobService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public Integer editStatus(String id, String status) {
         SysJob entity = this.getById(id);
-        if (entity.getId() != null) {
+        if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             this.saveJob(entity);
             return 1;
