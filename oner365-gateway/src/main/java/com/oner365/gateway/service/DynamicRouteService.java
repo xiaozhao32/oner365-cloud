@@ -7,8 +7,8 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.data.domain.Page;
 
-import com.alibaba.fastjson.JSONObject;
 import com.oner365.gateway.entity.GatewayRoute;
+import com.oner365.gateway.query.QueryCriteriaBean;
 
 /**
  * 动态路由接口
@@ -26,10 +26,10 @@ public interface DynamicRouteService extends ApplicationEventPublisherAware {
     /**
      * 分页查询路由列表
      * 
-     * @param paramJson 路由对象
-     * @return Page
+     * @param data 查询参数
+     * @return Page<GatewayRoute>
      */
-    Page<GatewayRoute> pageList(JSONObject paramJson);
+    Page<GatewayRoute> pageList(QueryCriteriaBean data);
 
     /**
      * 添加路由

@@ -1,6 +1,7 @@
 package com.oner365.sys.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,25 +12,19 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.exception.ProjectRuntimeException;
-import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
-import com.oner365.common.query.Restrictions;
-import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysJobDao;
 import com.oner365.sys.entity.SysJob;
 import com.oner365.sys.service.ISysJobService;
-import com.google.common.base.Strings;
 
 /**
  * ISysJobService实现类
@@ -47,32 +42,30 @@ public class SysJobServiceImpl implements ISysJobService {
 
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public Page<SysJob> pageList(JSONObject paramJson) {
+    public Page<SysJob> pageList(QueryCriteriaBean data) {
         try {
-            QueryCriteriaBean data = JSON.toJavaObject(paramJson, QueryCriteriaBean.class);
             Pageable pageable = QueryUtils.buildPageRequest(data);
-            return dao.findAll(getCriteria(paramJson), pageable);
+            return dao.findAll(QueryUtils.buildCriteria(data), pageable);
         } catch (Exception e) {
             LOGGER.error("Error pageList: ", e);
         }
         return null;
     }
-    
+
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public List<SysJob> findList(JSONObject paramJson) {
-        Criteria<SysJob> criteria = getCriteria(paramJson);
-        criteria.add(Restrictions.eq(SysConstants.STATUS, PublicConstants.STATUS_YES));
-        return dao.findAll(criteria, Sort.by(SysConstants.JOB_ORDER));
+    public List<SysJob> findList(QueryCriteriaBean data) {
+        try {
+            if (data.getOrder() == null) {
+                return dao.findAll(QueryUtils.buildCriteria(data));
+            }
+            return dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+        } catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return new ArrayList<>();
     }
     
-    private Criteria<SysJob> getCriteria(JSONObject paramJson) {
-        Criteria<SysJob> criteria = new Criteria<>();
-        criteria.add(Restrictions.eq(SysConstants.STATUS, paramJson.getString(SysConstants.STATUS)));
-        criteria.add(Restrictions.like(SysConstants.JOB_NAME, paramJson.getString(SysConstants.JOB_NAME)));
-        return criteria;
-    }
-
     @Override
     @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
     public SysJob getById(String id) {

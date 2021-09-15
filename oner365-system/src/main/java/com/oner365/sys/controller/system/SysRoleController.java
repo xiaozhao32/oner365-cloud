@@ -19,15 +19,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.entity.SysRole;
 import com.oner365.sys.service.ISysRoleService;
-import com.google.common.collect.Maps;
 
 /**
  * 角色管理
+ * 
  * @author zhaoyong
  */
 @RestController
@@ -39,6 +41,7 @@ public class SysRoleController extends BaseController {
 
     /**
      * 获取信息
+     * 
      * @param id 编号
      * @return SysRole
      */
@@ -49,16 +52,18 @@ public class SysRoleController extends BaseController {
 
     /**
      * 列表
-     * @param paramJson 参数
+     * 
+     * @param data 查询参数
      * @return Page<SysRole>
      */
     @PostMapping("/list")
-    public Page<SysRole> list(@RequestBody JSONObject paramJson){
-        return roleService.pageList(paramJson);
+    public Page<SysRole> list(@RequestBody QueryCriteriaBean data) {
+        return roleService.pageList(data);
     }
 
     /**
      * 删除
+     * 
      * @param ids 编号
      * @return Integer
      */
@@ -78,13 +83,14 @@ public class SysRoleController extends BaseController {
      * @param status 状态
      * @return Integer
      */
-    @PostMapping("/editStatus")
+    @PostMapping("/editStatus/{id}")
     public Integer editStatus(@PathVariable String id, @RequestParam("status") String status) {
         return roleService.editStatus(id, status);
     }
 
     /**
      * 判断是否存在
+     * 
      * @param paramJson 参数
      * @return Map<String, Object>
      */
@@ -92,7 +98,7 @@ public class SysRoleController extends BaseController {
     public Map<String, Object> checkRoleName(@RequestBody JSONObject paramJson) {
         String id = paramJson.getString(SysConstants.ID);
         String roleName = paramJson.getString(SysConstants.ROLE_NAME);
-        long code = roleService.checkRoleName(id,roleName);
+        long code = roleService.checkRoleName(id, roleName);
 
         Map<String, Object> result = Maps.newHashMap();
         result.put(PublicConstants.CODE, code);
@@ -101,6 +107,7 @@ public class SysRoleController extends BaseController {
 
     /**
      * 角色权限保存
+     * 
      * @param paramJson 参数
      * @return ResponseData
      */
@@ -122,15 +129,16 @@ public class SysRoleController extends BaseController {
 
     /**
      * 导出Excel
-     * @param paramJson 参数
-     * @return ResponseData
+     * 
+     * @param data 参数
+     * @return ResponseEntity<byte[]>
      */
     @PostMapping("/export")
-    public ResponseEntity<byte[]> export(@RequestBody JSONObject paramJson){
-        List<SysRole> list = roleService.findList(paramJson);
+    public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
+        List<SysRole> list = roleService.findList(data);
 
-        String[] titleKeys = new String[]{"编号","角色标识","角色名称","角色描述","状态","创建时间","更新时间"};
-        String[] columnNames = {"id","roleCode","roleName","roleDes","status","createTime","updateTime"};
+        String[] titleKeys = new String[] { "编号", "角色标识", "角色名称", "角色描述", "状态", "创建时间", "更新时间" };
+        String[] columnNames = { "id", "roleCode", "roleName", "roleDes", "status", "createTime", "updateTime" };
 
         String fileName = SysRole.class.getSimpleName() + System.currentTimeMillis();
         return exportExcel(fileName, titleKeys, columnNames, list);

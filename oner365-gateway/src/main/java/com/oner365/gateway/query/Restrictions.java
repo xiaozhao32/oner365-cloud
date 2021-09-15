@@ -2,12 +2,12 @@ package com.oner365.gateway.query;
 
 import java.util.Collection;
 
-import org.springframework.util.ObjectUtils;
-
 import com.oner365.gateway.query.Criterion.Operator;
+import com.oner365.gateway.util.DataUtils;
 
 /**
  * 条件构造器-用于创建条件表达式
+ * 
  * @author zhaoyong
  */
 public class Restrictions {
@@ -20,11 +20,11 @@ public class Restrictions {
      * 等于
      *
      * @param fieldName 字段
-     * @param value 值
+     * @param value     值
      * @return SimpleExpression
      */
     public static SimpleExpression eq(String fieldName, Object value) {
-        if (ObjectUtils.isEmpty(value)) {
+        if (DataUtils.isEmpty(value)) {
             return null;
         }
         return new SimpleExpression(fieldName, value, Operator.EQ);
@@ -34,11 +34,11 @@ public class Restrictions {
      * 不等于
      *
      * @param fieldName 字段
-     * @param value 值
+     * @param value     值
      * @return SimpleExpression
      */
     public static SimpleExpression ne(String fieldName, Object value) {
-        if (ObjectUtils.isEmpty(value)) {
+        if (DataUtils.isEmpty(value)) {
             return null;
         }
         return new SimpleExpression(fieldName, value, Operator.NE);
@@ -48,11 +48,11 @@ public class Restrictions {
      * 模糊匹配
      *
      * @param fieldName 字段
-     * @param value 值
+     * @param value     值
      * @return SimpleExpression
      */
     public static SimpleExpression like(String fieldName, String value) {
-        if (ObjectUtils.isEmpty(value)) {
+        if (DataUtils.isEmpty(value)) {
             return null;
         }
         return new SimpleExpression(fieldName, value, Operator.LIKE);
@@ -62,11 +62,11 @@ public class Restrictions {
      * 大于
      *
      * @param fieldName 字段
-     * @param value 值
+     * @param value     值
      * @return SimpleExpression
      */
     public static SimpleExpression gt(String fieldName, Object value) {
-        if (ObjectUtils.isEmpty(value)) {
+        if (DataUtils.isEmpty(value)) {
             return null;
         }
         return new SimpleExpression(fieldName, value, Operator.GT);
@@ -76,11 +76,11 @@ public class Restrictions {
      * 小于
      *
      * @param fieldName 字段
-     * @param value 值
+     * @param value     值
      * @return SimpleExpression
      */
     public static SimpleExpression lt(String fieldName, Object value) {
-        if (ObjectUtils.isEmpty(value)) {
+        if (DataUtils.isEmpty(value)) {
             return null;
         }
         return new SimpleExpression(fieldName, value, Operator.LT);
@@ -90,11 +90,11 @@ public class Restrictions {
      * 小于等于
      *
      * @param fieldName 字段
-     * @param value 值
+     * @param value     值
      * @return SimpleExpression
      */
     public static SimpleExpression lte(String fieldName, Object value) {
-        if (ObjectUtils.isEmpty(value)) {
+        if (DataUtils.isEmpty(value)) {
             return null;
         }
         return new SimpleExpression(fieldName, value, Operator.LTE);
@@ -104,11 +104,11 @@ public class Restrictions {
      * 大于等于
      *
      * @param fieldName 字段
-     * @param value 值
+     * @param value     值
      * @return SimpleExpression
      */
     public static SimpleExpression gte(String fieldName, Object value) {
-        if (ObjectUtils.isEmpty(value)) {
+        if (DataUtils.isEmpty(value)) {
             return null;
         }
         return new SimpleExpression(fieldName, value, Operator.GTE);
@@ -137,8 +137,8 @@ public class Restrictions {
     /**
      * 包含于
      *
-     * @param fieldName 字段
-     * @param value 值
+     * @param fieldName  字段
+     * @param value      值
      * @param ignoreNull 是否忽略
      * @return LogicalExpression
      */
@@ -157,4 +157,19 @@ public class Restrictions {
         }
         return new LogicalExpression(ses, Operator.OR);
     }
+
+    /**
+     * between
+     *
+     * @param fieldName 字段
+     * @param value     值
+     * @return Criterion
+     */
+    public static Criterion between(String fieldName, String value) {
+        if (DataUtils.isEmpty(value)) {
+            return null;
+        }
+        return new SimpleExpression(fieldName, value, Operator.BE);
+    }
+
 }

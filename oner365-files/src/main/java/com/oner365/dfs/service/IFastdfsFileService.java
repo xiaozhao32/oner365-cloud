@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.dfs.entity.FastdfsFile;
 
 /**
@@ -16,18 +16,18 @@ public interface IFastdfsFileService {
     /**
      * 查询文件列表
      *
-     * @param paramJson 参数
+     * @param data 查询参数
      * @return Page
      */
-    Page<FastdfsFile> pageList(JSONObject paramJson);
+    Page<FastdfsFile> pageList(QueryCriteriaBean data);
 
     /**
      * 查询列表
      * 
-     * @param paramJson 参数
+     * @param data 查询参数
      * @return List
      */
-    List<FastdfsFile> findList(JSONObject paramJson);
+    List<FastdfsFile> findList(QueryCriteriaBean data);
 
     /**
      * 查询文件详情

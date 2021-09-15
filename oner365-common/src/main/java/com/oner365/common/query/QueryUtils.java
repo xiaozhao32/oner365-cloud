@@ -3,10 +3,12 @@ package com.oner365.common.query;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
+import com.oner365.common.query.Criterion.Operator;
 import com.oner365.util.DataUtils;
 
 
@@ -16,28 +18,18 @@ import com.oner365.util.DataUtils;
  */
 public class QueryUtils {
 
+    /** 升序 */
     public static final String PARAM_ORDER_ASC = "ASC";
+    /** 降序 */
     public static final String PARAM_ORDER_DESC = "DESC";
-
-    /***
-     * EQ, NE, LIKE, GT, LT, GTE, LTE
-     */
-    public static final String PARAM_QUERY_EQ = "EQ";
-    public static final String PARAM_QUERY_LIKE = "LIKE";
-    public static final String PARAM_QUERY_NE = "NE";
-    public static final String PARAM_QUERY_GT = "GT";
-    public static final String PARAM_QUERY_LT = "LT";
-    public static final String PARAM_QUERY_GTE = "GTE";
-    public static final String PARAM_QUERY_LTE = "LTE";
-    public static final String PARAM_QUERY_IN = "IN";
-    public static final String PARAM_QUERY_BE = "BE";
+    /** 和 */
     public static final String PARAM_QUERY_AND = " and ";
 
     private QueryUtils() {
 
     }
 
-    /***
+    /**
      * 构造查询条件
      *
      * @param data 数据
@@ -46,38 +38,44 @@ public class QueryUtils {
     public static <T> Criteria<T> buildCriteria(QueryCriteriaBean data) {
         Criteria<T> criteria = new Criteria<>();
         if (data!=null && data.getWhereList() != null && !data.getWhereList().isEmpty()) {
-            List<AttributeBean> whereList = data.getWhereList();
-            for (AttributeBean attr : whereList) {
+            for (AttributeBean attr : data.getWhereList()) {
                 String key = attr.getKey();
-                String opt = !DataUtils.isEmpty(attr.getOpt()) ? attr.getOpt().toUpperCase() : PARAM_QUERY_EQ;
+                String opt = !DataUtils.isEmpty(attr.getOpt()) ? attr.getOpt().toUpperCase() : Operator.EQ.name();
+                Operator operator = Criterion.Operator.valueOf(opt);
                 String value = attr.getVal();
                 if (DataUtils.isEmpty(key) || DataUtils.isEmpty(value)) {
                     continue;
                 }
-                switch (opt) {
-                    case PARAM_QUERY_LIKE:
+                switch (operator) {
+                    case LIKE:
                         criteria.add(Restrictions.like(key, value));
                         break;
-                    case PARAM_QUERY_NE:
+                    case NE:
                         criteria.add(Restrictions.ne(key, value));
                         break;
-                    case PARAM_QUERY_GT:
+                    case GT:
                         criteria.add(Restrictions.gt(key, value));
                         break;
-                    case PARAM_QUERY_LT:
+                    case LT:
                         criteria.add(Restrictions.lt(key, value));
                         break;
-                    case PARAM_QUERY_LTE:
+                    case LTE:
                         criteria.add(Restrictions.lte(key, value));
                         break;
-                    case PARAM_QUERY_GTE:
+                    case GTE:
                         criteria.add(Restrictions.gte(key, value));
                         break;
-                    case PARAM_QUERY_IN:
-                        criteria.add(Restrictions.in(key, Arrays.asList(value.split(",")), true));
+                    case IN:
+                        // 格式: 条件1,条件2
+                        if (value.length() > 1) {
+                            criteria.add(Restrictions.in(key, Arrays.asList(value.split(",")), true));
+                        }
                         break;
-                    case PARAM_QUERY_BE:
-                        criteria.add(Restrictions.between(key, value));
+                    case BE:
+                        // 格式: 开始条件|结束条件
+                        if (value.length() > 1) {
+                            criteria.add(Restrictions.between(key, value));
+                        }
                         break;
                     default:
                         criteria.add(Restrictions.eq(key, value));
@@ -89,40 +87,49 @@ public class QueryUtils {
     }
 
     /**
-     * 构造分页与排序内容
+     * 构造分页内容
      * @param data 数据
      * @return PageRequest
      */
     public static PageRequest buildPageRequest(QueryCriteriaBean data) {
-        Sort sort = null;
         Integer pageNum = 1;
         Integer pageSize = Integer.MAX_VALUE;
-        if(data!=null){
-            AttributeBean order = data.getOrder();
-            if (!DataUtils.isEmpty(order) && !DataUtils.isEmpty(order.getKey())) {
-                if(PARAM_ORDER_DESC.equalsIgnoreCase(order.getVal())){
-                    sort = Sort.by(Direction.DESC, order.getKey().split(","));
-                }else{
-                    sort = Sort.by(Direction.ASC, order.getKey().split(","));
-                }
+        if (data != null) {
+            pageNum = data.getPageIndex() == null ? pageNum : data.getPageIndex();
+            pageSize = data.getPageSize() == null ? pageSize : data.getPageSize();
+
+            Sort sort = buildSortRequest(data.getOrder());
+            if (sort != null) {
+                return PageRequest.of(pageNum - 1, pageSize, sort);
             }
-            pageNum = data.getPageIndex()==null?pageNum:data.getPageIndex();
-            pageSize = data.getPageSize()==null?pageSize:data.getPageSize();
         }
-        if(sort == null){
-            return PageRequest.of(pageNum - 1, pageSize);
-        }else{
-            return PageRequest.of(pageNum - 1, pageSize, sort);
+        return PageRequest.of(pageNum - 1, pageSize);
+    }
+    
+    /**
+     * 构造排序内容
+     * @param order 数据
+     * @return Sort
+     */
+    public static Sort buildSortRequest(AttributeBean order) {
+        Sort sort = null;
+        if (!DataUtils.isEmpty(order) && !DataUtils.isEmpty(order.getKey())) {
+            if (PARAM_ORDER_DESC.equalsIgnoreCase(order.getVal())) {
+                sort = Sort.by(Direction.DESC, order.getKey().split(","));
+            } else {
+                sort = Sort.by(Direction.ASC, order.getKey().split(","));
+            }
         }
+        return sort;
     }
 
 
-    /***
+    /**
      * 构造查询条件字符串
      * @param whereList 条件
      * @return String
      */
-    public static String buildWhereCondition(List<AttributeBean> whereList) {
+    public static String buildWhereCriterion(List<AttributeBean> whereList) {
         StringBuilder sb = new StringBuilder();
         for (AttributeBean attr : whereList) {
             String key = attr.getKey();
@@ -131,37 +138,46 @@ public class QueryUtils {
             if (DataUtils.isEmpty(key) || DataUtils.isEmpty(value)) {
                 continue;
             }
-            if (PARAM_QUERY_LIKE.equals(opt)) {
+            if (Operator.LIKE.name().equals(opt)) {
                 sb.append(PARAM_QUERY_AND).append(key).append(" like '%").append(value).append("%'");
-            } else if (PARAM_QUERY_NE.equals(opt)) {
+            } else if (Operator.NE.name().equals(opt)) {
                 sb.append(PARAM_QUERY_AND).append(key).append(" != '").append(value).append("'");
-            } else if (PARAM_QUERY_GT.equals(opt)) {
+            } else if (Operator.GT.name().equals(opt)) {
                 sb.append(PARAM_QUERY_AND).append(key).append(" > '").append(value).append("'");
-            } else if (PARAM_QUERY_LT.equals(opt)) {
+            } else if (Operator.LT.name().equals(opt)) {
                 sb.append(PARAM_QUERY_AND).append(key).append(" < '").append(value).append("'");
-            } else if (PARAM_QUERY_LTE.equals(opt)) {
+            } else if (Operator.LTE.name().equals(opt)) {
                 sb.append(PARAM_QUERY_AND).append(key).append(" <= '").append(value).append("'");
-            } else if (PARAM_QUERY_GTE.equals(opt)) {
+            } else if (Operator.GTE.name().equals(opt)) {
                 sb.append(PARAM_QUERY_AND).append(key).append(" >= '").append(value).append("'");
-            } else if (PARAM_QUERY_IN.equals(opt)) {
-                String inValStr = getInCondition(Arrays.asList(value.split(",")));
-                sb.append(PARAM_QUERY_AND).append(key).append(" in (").append(inValStr).append(")");
+            } else if (Operator.IN.name().equals(opt)) {
+                // 格式: 条件1,条件2
+                if (value.length() > 1) {
+                    String valueString = getInCriterion(Arrays.asList(value.split(",")));
+                    sb.append(PARAM_QUERY_AND).append(key).append(" in (").append(valueString).append(")");
+                }
+            } else if (Operator.BE.name().equals(opt)) {
+                // 格式: 开始条件|结束条件
+                if (value.length() > 1) {
+                    String[] array = StringUtils.split(value, "|");
+                    sb.append(PARAM_QUERY_AND).append(key).append(" between '").append(array[0]).append("' and '").append(array[1]).append("'");
+                }
             } else {
                 sb.append(PARAM_QUERY_AND).append(key).append(" = '").append(value).append("'");
             }
         }
         return sb.toString();
     }
-
-    /***
+    
+    /**
      * 把list<String>转换成in查询str
      *
      * @param list ['val1','val2','val3']
-     * @return  'val1','val2','val3'
+     * @return 'val1','val2','val3'
      */
-    public static String getInCondition(List<String> list) {
+    public static String getInCriterion(List<String> list) {
         String result = null;
-        if (!DataUtils.isEmpty(list)) {
+        if (list != null && !list.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             for (String str : list) {
                 sb.append("'").append(str).append("',");

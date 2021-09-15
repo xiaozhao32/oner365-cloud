@@ -6,30 +6,31 @@ import java.util.Map;
 import org.springframework.data.domain.Page;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.sys.entity.SysRole;
 
 /**
  * 角色接口
+ * 
  * @author zhaoyong
  */
 public interface ISysRoleService {
 
     /**
      * 查询列表
-     *
-     * @param paramJson 参数
-     * @return Page
+     * 
+     * @param data 查询参数
+     * @return Page<SysRole>
      */
-    Page<SysRole> pageList(JSONObject paramJson);
+    Page<SysRole> pageList(QueryCriteriaBean data);
 
     /**
      * 查询所有角色
-     *
-     * @param paramJson 参数
-     * @return List
+     * 
+     * @param data 查询参数
+     * @return List<SysRole>
      */
-    List<SysRole> findList(JSONObject paramJson);
+    List<SysRole> findList(QueryCriteriaBean data);
 
     /**
      * 查询详情

@@ -10,18 +10,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Strings;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
-import com.oner365.common.query.Restrictions;
 import com.oner365.monitor.dao.ISysTaskLogDao;
 import com.oner365.monitor.entity.SysTaskLog;
 import com.oner365.monitor.mapper.SysTaskLogMapper;
 import com.oner365.monitor.service.ISysTaskLogService;
-import com.google.common.base.Strings;
 
 /**
  * 定时任务调度日志信息 服务层
@@ -42,21 +38,14 @@ public class SysTaskLogServiceImpl implements ISysTaskLogService {
     /**
      * 获取quartz调度器日志的计划任务
      *
-     * @param paramJson 调度日志信息
+     * @param data 查询参数
      * @return 调度任务日志集合
      */
     @Override
-    public Page<SysTaskLog> pageList(JSONObject paramJson) {
+    public Page<SysTaskLog> pageList(QueryCriteriaBean data) {
         try {
-            QueryCriteriaBean data = JSON.toJavaObject(paramJson, QueryCriteriaBean.class);
             Pageable pageable = QueryUtils.buildPageRequest(data);
-            Criteria<SysTaskLog> criteria = new Criteria<>();
-            criteria.add(Restrictions.like("taskName", paramJson.getString("taskName")));
-            criteria.add(Restrictions.eq("taskGroup", paramJson.getString("taskGroup")));
-            criteria.add(Restrictions.eq("status", paramJson.getString("status")));
-            criteria.add(Restrictions.gt("startTime", paramJson.getString("beginTime")));
-            criteria.add(Restrictions.lt("stopTime", paramJson.getString("endTime")));
-            return dao.findAll(criteria, pageable);
+            return dao.findAll(QueryUtils.buildCriteria(data), pageable);
         } catch (Exception e) {
             LOGGER.error("Error pageList: ", e);
         }

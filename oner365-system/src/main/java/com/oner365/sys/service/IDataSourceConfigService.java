@@ -2,7 +2,7 @@ package com.oner365.sys.service;
 
 import org.springframework.data.domain.Page;
 
-import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.sys.entity.DataSourceConfig;
 
 /**
@@ -15,10 +15,10 @@ public interface IDataSourceConfigService {
     /**
      * 查询分页列表
      *
-     * @param paramJson 参数
+     * @param data 查询参数
      * @return Page
      */
-    Page<DataSourceConfig> pageList(JSONObject paramJson);
+    Page<DataSourceConfig> pageList(QueryCriteriaBean data);
 
     /**
      * 查询详情

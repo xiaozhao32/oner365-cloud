@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.sys.entity.SysJob;
 
 /**
@@ -16,17 +16,17 @@ public interface ISysJobService {
     /**
      * 查询职位列表
      *
-     * @param paramJson 参数
+     * @param data 查询参数
      * @return Page
      */
-    Page<SysJob> pageList(JSONObject paramJson);
+    Page<SysJob> pageList(QueryCriteriaBean data);
     
     /**
      * 查询列表
-     * @param paramJson 参数
+     * @param data 查询参数
      * @return List
      */
-    List<SysJob> findList(JSONObject paramJson);
+    List<SysJob> findList(QueryCriteriaBean data);
 
     /**
      * 查询职位详情

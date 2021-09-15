@@ -16,8 +16,6 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.repository.support.SimpleElasticsearchRepository.OperationsCallback;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.oner365.common.query.AttributeBean;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
@@ -44,8 +42,7 @@ public class SampleGeneElasticsearchServiceImpl implements ISampleGeneElasticsea
     
     @Override
     @SuppressWarnings("unchecked")
-    public Page<SampleGene> findList(JSONObject paramJson) {
-        QueryCriteriaBean data = JSON.toJavaObject(paramJson, QueryCriteriaBean.class);
+    public Page<SampleGene> findList(QueryCriteriaBean data) {
         Pageable pageable = QueryUtils.buildPageRequest(data);
         
         BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();

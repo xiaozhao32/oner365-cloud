@@ -1,5 +1,6 @@
 package com.oner365.sys.controller.system;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -17,12 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.query.AttributeBean;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.entity.SysMenuType;
 import com.oner365.sys.service.ISysMenuTypeService;
-import com.google.common.collect.Maps;
 
 /**
  * 菜单类型管理
@@ -71,12 +74,12 @@ public class SysMenuTypeController extends BaseController {
     /**
      * 列表
      * 
-     * @param paramJson 参数
+     * @param data 参数
      * @return Page<SysMenuType>
      */
     @PostMapping("/list")
-    public Page<SysMenuType> list(@RequestBody JSONObject paramJson) {
-        return menuTypeService.pageList(paramJson);
+    public Page<SysMenuType> list(@RequestBody QueryCriteriaBean data) {
+        return menuTypeService.pageList(data);
     }
 
     /**
@@ -86,9 +89,12 @@ public class SysMenuTypeController extends BaseController {
      */
     @GetMapping("/findAll")
     public List<SysMenuType> findAll() {
-        JSONObject paramJson = new JSONObject();
-        paramJson.put(SysConstants.STATUS, PublicConstants.STATUS_YES);
-        return menuTypeService.findList(paramJson);
+        QueryCriteriaBean data = new QueryCriteriaBean();
+        List<AttributeBean> whereList = new ArrayList<>();
+        AttributeBean attribute = new AttributeBean(SysConstants.STATUS, PublicConstants.STATUS_YES);
+        whereList.add(attribute);
+        data.setWhereList(whereList);
+        return menuTypeService.findList(data);
     }
 
     /**
@@ -98,7 +104,7 @@ public class SysMenuTypeController extends BaseController {
      * @param status 状态
      * @return Integer
      */
-    @PostMapping("/editStatusById")
+    @PostMapping("/editStatusById/{id}")
     public Integer editStatusById(@PathVariable String id, @RequestParam("status") String status) {
         return menuTypeService.editStatusById(id, status);
     }

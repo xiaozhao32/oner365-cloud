@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.sys.entity.SysLog;
 
 /**
@@ -16,17 +16,17 @@ public interface ISysLogService {
 
     /**
      * 查询分页列表
-     * @param paramJson 参数
+     * @param data 查询参数
      * @return Page
      */
-    Page<SysLog> pageList(JSONObject paramJson);
+    Page<SysLog> pageList(QueryCriteriaBean data);
 
     /**
      * 查询列表
-     * @param paramJson 参数
+     * @param data 查询参数
      * @return List
      */
-    List<SysLog> findList(JSONObject paramJson);
+    List<SysLog> findList(QueryCriteriaBean data);
 
     /**
      * 查询详情

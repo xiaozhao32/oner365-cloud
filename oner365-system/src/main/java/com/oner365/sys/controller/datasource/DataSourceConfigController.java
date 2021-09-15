@@ -15,11 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.entity.DataSourceConfig;
 import com.oner365.sys.service.IDataSourceConfigService;
-import com.google.common.collect.Maps;
 
 /**
  * 数据源
@@ -35,12 +36,12 @@ public class DataSourceConfigController extends BaseController {
 
     /**
      * 列表
-     * @param json 参数
+     * @param data 查询参数
      * @return Page<DataSourceConfig>
      */
     @PostMapping("/list")
-    public Page<DataSourceConfig> findList(@RequestBody JSONObject json) {
-        return service.pageList(json);
+    public Page<DataSourceConfig> findList(@RequestBody QueryCriteriaBean data) {
+        return service.pageList(data);
     }
 
     /**
@@ -85,16 +86,14 @@ public class DataSourceConfigController extends BaseController {
     /**
      * 删除
      * @param ids 编号
-     * @return Map<String, Object>
+     * @return Integer
      */
     @DeleteMapping("/delete")
-    public Map<String, Object> delete(@RequestBody String... ids) {
+    public Integer delete(@RequestBody String... ids) {
         int code = 0;
         for (String id : ids) {
             code = service.deleteById(id);
         }
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+        return code;
     }
 }

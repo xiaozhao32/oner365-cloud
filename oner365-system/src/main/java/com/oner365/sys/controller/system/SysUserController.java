@@ -1,6 +1,7 @@
 package com.oner365.sys.controller.system;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,12 +24,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import com.oner365.common.ResponseData;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.constants.ErrorCodes;
 import com.oner365.common.constants.ErrorInfo;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.query.AttributeBean;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.client.IFileServiceClient;
 import com.oner365.sys.constants.SysConstants;
@@ -37,10 +41,10 @@ import com.oner365.sys.service.ISysJobService;
 import com.oner365.sys.service.ISysRoleService;
 import com.oner365.sys.service.ISysUserService;
 import com.oner365.util.DataUtils;
-import com.google.common.collect.Maps;
 
 /**
  * 用户管理
+ * 
  * @author zhaoyong
  */
 @RestController
@@ -62,12 +66,12 @@ public class SysUserController extends BaseController {
     /**
      * 用户列表
      *
-     * @param paramJson 参数
+     * @param data 查询参数
      * @return Page<SysUser>
      */
     @PostMapping("/list")
-    public Page<SysUser> findUserList(@RequestBody JSONObject paramJson) {
-        return sysUserService.pageList(paramJson);
+    public Page<SysUser> pageList(@RequestBody QueryCriteriaBean data) {
+        return sysUserService.pageList(data);
     }
 
     /**
@@ -79,7 +83,7 @@ public class SysUserController extends BaseController {
     @PutMapping("/save")
     public Map<String, Object> save(@RequestBody JSONObject paramJson, HttpServletRequest request) {
         SysUser sysUser = JSON.toJavaObject(paramJson, SysUser.class);
-        
+
         Map<String, Object> result = Maps.newHashMap();
         result.put(PublicConstants.CODE, PublicConstants.ERROR_CODE);
         if (sysUser != null) {
@@ -104,8 +108,13 @@ public class SysUserController extends BaseController {
         Map<String, Object> result = Maps.newHashMap();
         result.put(PublicConstants.MSG, sysUser);
 
-        result.put("roleList", sysRoleService.findList(new JSONObject()));
-        result.put("jobList", sysJobService.findList(new JSONObject()));
+        QueryCriteriaBean data = new QueryCriteriaBean();
+        List<AttributeBean> whereList = new ArrayList<>();
+        AttributeBean attribute = new AttributeBean(SysConstants.STATUS, PublicConstants.STATUS_YES);
+        whereList.add(attribute);
+        data.setWhereList(whereList);
+        result.put("roleList", sysRoleService.findList(data));
+        result.put("jobList", sysJobService.findList(data));
         return result;
     }
 
@@ -128,7 +137,8 @@ public class SysUserController extends BaseController {
      * @return ResponseData
      */
     @PostMapping("avatar")
-    public ResponseData<Map<String, Object>> avatar(@CurrentUser AuthUser authUser, @RequestParam("avatarfile") MultipartFile file) {
+    public ResponseData<Map<String, Object>> avatar(@CurrentUser AuthUser authUser,
+            @RequestParam("avatarfile") MultipartFile file) {
         if (!file.isEmpty()) {
             ResponseData<Map<String, Object>> responseData = fileServiceClient.upload(file);
             if (responseData.getCode() == PublicConstants.SUCCESS_CODE) {
@@ -222,7 +232,8 @@ public class SysUserController extends BaseController {
      * @return ResponseData
      */
     @PostMapping("/editPassword")
-    public ResponseData<Map<String, Object>> editPassword(@CurrentUser AuthUser authUser, @RequestBody JSONObject json) {
+    public ResponseData<Map<String, Object>> editPassword(@CurrentUser AuthUser authUser,
+            @RequestBody JSONObject json) {
         String oldPassword = DigestUtils.md5Hex(json.getString("oldPassword")).toUpperCase();
         String password = json.getString(SysConstants.P);
         SysUser sysUser = sysUserService.getById(authUser.getId());
@@ -243,7 +254,7 @@ public class SysUserController extends BaseController {
      * @param status 状态
      * @return Integer
      */
-    @PostMapping("/editStatus")
+    @PostMapping("/editStatus/{id}")
     public Integer editStatus(@PathVariable String id, @RequestParam("status") String status) {
         return sysUserService.editStatus(id, status);
     }
@@ -251,12 +262,12 @@ public class SysUserController extends BaseController {
     /**
      * 导出Excel
      * 
-     * @param paramJson 参数
-     * @return ResponseData
+     * @param data 参数
+     * @return ResponseEntity<byte[]>
      */
     @PostMapping("/export")
-    public ResponseEntity<byte[]> export(@RequestBody JSONObject paramJson) {
-        List<SysUser> list = sysUserService.findList(paramJson);
+    public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
+        List<SysUser> list = sysUserService.findList(data);
 
         String[] titleKeys = new String[] { "编号", "用户标识", "用户名称", "姓名", "性别", "邮箱", "电话", "备注", "状态", "创建时间", "最后登录时间",
                 "最后登录ip" };

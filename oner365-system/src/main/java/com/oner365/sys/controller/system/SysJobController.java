@@ -20,12 +20,14 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.entity.SysJob;
 import com.oner365.sys.service.ISysJobService;
 
 /**
  * 用户职位信息
+ * 
  * @author zhaoyong
  */
 @RestController
@@ -37,6 +39,7 @@ public class SysJobController extends BaseController {
 
     /**
      * 用户职位保存
+     * 
      * @param paramJson 职位对象
      * @return Map<String, Object>
      */
@@ -56,6 +59,7 @@ public class SysJobController extends BaseController {
 
     /**
      * 获取用户职位
+     * 
      * @param id 编号
      * @return SysJob
      */
@@ -66,16 +70,18 @@ public class SysJobController extends BaseController {
 
     /**
      * 用户职位列表
-     * @param paramJson 参数
+     * 
+     * @param data 查询参数
      * @return Page<SysJob>
      */
     @PostMapping("/list")
-    public Page<SysJob> list(@RequestBody JSONObject paramJson) {
-        return sysJobService.pageList(paramJson);
+    public Page<SysJob> list(@RequestBody QueryCriteriaBean data) {
+        return sysJobService.pageList(data);
     }
 
     /**
      * 删除用户职位
+     * 
      * @param ids 编号
      * @return Integer
      */
@@ -102,15 +108,16 @@ public class SysJobController extends BaseController {
 
     /**
      * 导出Excel
-     * @param paramJson 参数
+     * 
+     * @param data 查询参数
      * @return ResponseEntity<byte[]>
      */
     @PostMapping("/export")
-    public ResponseEntity<byte[]> export(@RequestBody JSONObject paramJson){
-        List<SysJob> list = sysJobService.findList(paramJson);
+    public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
+        List<SysJob> list = sysJobService.findList(data);
 
-        String[] titleKeys = new String[]{"编号","职位名称","职位描述","排序","状态","创建时间","更新时间"};
-        String[] columnNames = {"id","jobName","jobInfo","jobOrder","status","createTime","updateTime"};
+        String[] titleKeys = new String[] { "编号", "职位名称", "职位描述", "排序", "状态", "创建时间", "更新时间" };
+        String[] columnNames = { "id", "jobName", "jobInfo", "jobOrder", "status", "createTime", "updateTime" };
 
         String fileName = SysJob.class.getSimpleName() + System.currentTimeMillis();
         return exportExcel(fileName, titleKeys, columnNames, list);

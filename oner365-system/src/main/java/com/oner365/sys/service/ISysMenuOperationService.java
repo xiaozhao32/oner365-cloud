@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.sys.entity.SysMenuOperation;
 
 /**
@@ -15,18 +15,16 @@ public interface ISysMenuOperationService {
 
     /**
      * 查询列表
-     *
-     * @param paramJson 查询参数
+     * @param data 查询参数
      * @return Page
      */
-    Page<SysMenuOperation> pageList(JSONObject paramJson);
+    Page<SysMenuOperation> pageList(QueryCriteriaBean data);
 
     /**
      * 查询列表
-     *
      * @return List
      */
-    List<SysMenuOperation> findAll();
+    List<SysMenuOperation> findList();
 
     /**
      * 查询菜单

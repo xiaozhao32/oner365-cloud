@@ -1,6 +1,7 @@
 package com.oner365.sys.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -17,9 +18,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
@@ -39,10 +40,10 @@ import com.oner365.sys.entity.SysRoleMenu;
 import com.oner365.sys.service.ISysMenuService;
 import com.oner365.sys.service.ISysRoleService;
 import com.oner365.util.DataUtils;
-import com.google.common.base.Strings;
 
 /**
  * ISysRoleService实现类
+ * 
  * @author zhaoyong
  */
 @Service
@@ -52,7 +53,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     private static final String CACHE_NAME = "Auth:SysRole";
     private static final String CACHE_MENU_NAME = "SysMenu";
-    
+
     @Autowired
     private ISysRoleDao roleDao;
 
@@ -68,36 +69,26 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Autowired
     private ISysMenuService sysMenuService;
 
-    @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public Page<SysRole> pageList(JSONObject paramJson) {
+    public Page<SysRole> pageList(QueryCriteriaBean data) {
         try {
-            QueryCriteriaBean data = JSON.toJavaObject(paramJson, QueryCriteriaBean.class);
             Pageable pageable = QueryUtils.buildPageRequest(data);
-            return roleDao.findAll(getCriteria(paramJson), pageable);
+            return roleDao.findAll(QueryUtils.buildCriteria(data), pageable);
         } catch (Exception e) {
             LOGGER.error("Error pageList: ", e);
         }
         return null;
     }
-    
+
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public List<SysRole> findList(JSONObject paramJson) {
-        Criteria<SysRole> criteria = getCriteria(paramJson);
-        criteria.add(Restrictions.eq(SysConstants.STATUS, PublicConstants.STATUS_YES));
-        return roleDao.findAll(criteria);
-    }
-    
-    private Criteria<SysRole> getCriteria(JSONObject paramJson) {
-        Criteria<SysRole> criteria = new Criteria<>();
-        criteria.add(Restrictions.like(SysConstants.ROLE_NAME, paramJson.getString(SysConstants.ROLE_NAME)));
-        criteria.add(Restrictions.eq(SysConstants.STATUS, paramJson.getString(SysConstants.STATUS)));
-        if (paramJson.get(SysConstants.BEGIN_TIME) != null && paramJson.get(SysConstants.END_TIME) != null) {
-            criteria.add(Restrictions.between(SysConstants.CREATE_TIME,
-                paramJson.getString(SysConstants.BEGIN_TIME) + "|" + paramJson.getString(SysConstants.END_TIME)));
+    public List<SysRole> findList(QueryCriteriaBean data) {
+        try {
+            return roleDao.findAll(QueryUtils.buildCriteria(data));
+        } catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
         }
-        return criteria;
+        return new ArrayList<>();
     }
 
     @Override
@@ -115,10 +106,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
-    @Caching(evict = {
-        @CacheEvict(value = CACHE_NAME, allEntries = true),
-        @CacheEvict(value = CACHE_MENU_NAME, allEntries = true)
-    })
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
+            @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
     public SysRole save(SysRole role) {
         if (Strings.isNullOrEmpty(role.getId())) {
             role.setStatus(PublicConstants.STATUS_YES);
@@ -133,10 +122,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
-    @Caching(evict = {
-        @CacheEvict(value = CACHE_NAME, allEntries = true),
-        @CacheEvict(value = CACHE_MENU_NAME, allEntries = true)
-    })
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
+            @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
     public int deleteById(String id) {
         // 删除用户与角色关联
         userRoleDao.deleteUserRoleByRoleId(id);
@@ -148,7 +135,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         roleDao.deleteById(id);
         return 1;
     }
-    
+
     @Override
     public long checkRoleName(String id, String roleName) {
         try {
@@ -166,10 +153,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
-    @Caching(evict = {
-        @CacheEvict(value = CACHE_NAME, allEntries = true),
-        @CacheEvict(value = CACHE_MENU_NAME, allEntries = true)
-    })
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
+            @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
     public int saveAuthority(String menuType, JSONArray menuIds, String roleId) {
         roleMenuDao.deleteRoleMenuByRoleId(roleId);
         menuIds.forEach(menuId -> {
@@ -182,7 +167,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         });
         return 1;
     }
-    
+
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
     public List<String> findMenuByRoleId(String menuTypeId, String roleId) {
@@ -254,7 +239,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
         return jsonArray;
     }
-    
+
     private JSONObject setMenu(SysMenu menu, boolean isParent) {
         JSONObject json = new JSONObject();
         json.put("id", menu.getId());
@@ -269,7 +254,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         JSONObject j = new JSONObject();
         j.put("title", menu.getMenuName());
         j.put("icon", menu.getIcon());
-        json.put("meta",j);
+        json.put("meta", j);
         return json;
     }
 
@@ -277,13 +262,11 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public List<Map<String, String>> findMenuOperByRoles(List<String> roles, String menuId) {
         return roleMenuOperDao.findMenuOperByRoles(roles, menuId);
     }
-    
+
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
-    @Caching(evict = {
-        @CacheEvict(value = CACHE_NAME, allEntries = true),
-        @CacheEvict(value = CACHE_MENU_NAME, allEntries = true)
-    })
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
+            @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
     public Integer editStatus(String id, String status) {
         SysRole entity = this.getById(id);
         if (entity != null && entity.getId() != null) {

@@ -18,15 +18,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.entity.SysLog;
 import com.oner365.sys.service.ISysLogService;
 import com.oner365.util.DateUtil;
-import com.google.common.collect.Maps;
 
 /**
  * 系统日志控制器
+ * 
  * @author zhaoyong
  */
 @RestController
@@ -38,11 +40,12 @@ public class SysLogController extends BaseController {
 
     /**
      * 保存
+     * 
      * @param paramJson 菜单类型对象
      * @return ResponseData
      */
     @PutMapping("/save")
-    public Map<String, Object> save(@RequestBody JSONObject paramJson){
+    public Map<String, Object> save(@RequestBody JSONObject paramJson) {
         SysLog sysLog = JSON.toJavaObject(paramJson, SysLog.class);
         Map<String, Object> result = Maps.newHashMap();
         result.put(PublicConstants.CODE, PublicConstants.ERROR_CODE);
@@ -57,6 +60,7 @@ public class SysLogController extends BaseController {
 
     /**
      * 获取信息
+     * 
      * @param id 编号
      * @return SysLog
      */
@@ -67,16 +71,18 @@ public class SysLogController extends BaseController {
 
     /**
      * 列表
-     * @param paramJson 参数
+     * 
+     * @param data 查询参数
      * @return Page<SysLog>
      */
     @PostMapping("/list")
-    public Page<SysLog> list(@RequestBody JSONObject paramJson){
-        return logService.pageList(paramJson);
+    public Page<SysLog> list(@RequestBody QueryCriteriaBean data) {
+        return logService.pageList(data);
     }
 
     /**
      * 删除
+     * 
      * @param ids 编号
      * @return Integer
      */
@@ -91,6 +97,7 @@ public class SysLogController extends BaseController {
 
     /**
      * 按日期删除日志
+     * 
      * @param date 日期
      * @return Map<String, Object>
      */
@@ -104,15 +111,17 @@ public class SysLogController extends BaseController {
 
     /**
      * 导出日志
-     * @param paramJson 参数
+     * 
+     * @param data 查询参数
      * @return ResponseEntity<byte[]>
      */
     @PostMapping("/export")
-    public ResponseEntity<byte[]> exportItem(@RequestBody JSONObject paramJson){
-        List<SysLog> list = logService.findList(paramJson);
+    public ResponseEntity<byte[]> exportItem(@RequestBody QueryCriteriaBean data) {
+        List<SysLog> list = logService.findList(data);
 
-        String[] titleKeys = new String[]{"编号","请求IP","请求方法","服务名称","请求地址","请求内容","创建时间"};
-        String[] columnNames = {"id","operationIp","methodName","operationName","operationPath","operationContext","createTime"};
+        String[] titleKeys = new String[] { "编号", "请求IP", "请求方法", "服务名称", "请求地址", "请求内容", "创建时间" };
+        String[] columnNames = { "id", "operationIp", "methodName", "operationName", "operationPath",
+                "operationContext", "createTime" };
 
         String fileName = SysLog.class.getSimpleName() + System.currentTimeMillis();
         return exportExcel(fileName, titleKeys, columnNames, list);

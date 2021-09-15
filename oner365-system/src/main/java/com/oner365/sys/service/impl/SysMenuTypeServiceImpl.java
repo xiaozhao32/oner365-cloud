@@ -1,6 +1,7 @@
 package com.oner365.sys.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,21 +16,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.exception.ProjectRuntimeException;
-import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
-import com.oner365.common.query.Restrictions;
-import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysMenuTypeDao;
 import com.oner365.sys.entity.SysMenuType;
 import com.oner365.sys.service.ISysMenuTypeService;
-import com.google.common.base.Strings;
 
 /**
  * ISysMenuTypeService实现类
@@ -48,15 +44,10 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
 
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public Page<SysMenuType> pageList(JSONObject paramJson) {
+    public Page<SysMenuType> pageList(QueryCriteriaBean data) {
         try {
-            QueryCriteriaBean data = JSON.toJavaObject(paramJson, QueryCriteriaBean.class);
             Pageable pageable = QueryUtils.buildPageRequest(data);
-            Criteria<SysMenuType> criteria = new Criteria<>();
-            criteria.add(Restrictions.eq(SysConstants.TYPE_CODE, paramJson.getString(SysConstants.TYPE_CODE)));
-            criteria.add(Restrictions.like(SysConstants.TYPE_NAME, paramJson.getString(SysConstants.TYPE_NAME)));
-            criteria.add(Restrictions.eq(SysConstants.STATUS, paramJson.getString(SysConstants.STATUS)));
-            return dao.findAll(criteria, pageable);
+            return dao.findAll(QueryUtils.buildCriteria(data), pageable);
         } catch (Exception e) {
             LOGGER.error("Error pageList: ", e);
         }
@@ -65,10 +56,13 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
 
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public List<SysMenuType> findList(JSONObject paramJson) {
-        Criteria<SysMenuType> criteria = new Criteria<>();
-        criteria.add(Restrictions.eq(SysConstants.STATUS, paramJson.getString(SysConstants.STATUS)));
-        return dao.findAll(criteria);
+    public List<SysMenuType> findList(QueryCriteriaBean data) {
+        try {
+            return dao.findAll(QueryUtils.buildCriteria(data));
+        } catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return new ArrayList<>();
     }
 
     @Override

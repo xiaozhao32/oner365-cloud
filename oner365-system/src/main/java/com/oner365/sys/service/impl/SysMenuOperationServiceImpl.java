@@ -1,6 +1,7 @@
 package com.oner365.sys.service.impl;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,20 +15,17 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.exception.ProjectRuntimeException;
-import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
 import com.oner365.sys.dao.ISysMenuOperDao;
 import com.oner365.sys.dao.ISysMenuOperationDao;
 import com.oner365.sys.entity.SysMenuOperation;
 import com.oner365.sys.service.ISysMenuOperationService;
-import com.google.common.base.Strings;
 
 /**
  * ISysMenuOperationService实现类
@@ -48,22 +46,25 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
 
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public Page<SysMenuOperation> pageList(JSONObject paramJson) {
+    public Page<SysMenuOperation> pageList(QueryCriteriaBean data) {
         try {
-            QueryCriteriaBean data = JSON.toJavaObject(paramJson, QueryCriteriaBean.class);
             Pageable pageable = QueryUtils.buildPageRequest(data);
-            Criteria<SysMenuOperation> criteria = QueryUtils.buildCriteria(data);
-            return menuOperationDao.findAll(criteria, pageable);
+            return menuOperationDao.findAll(QueryUtils.buildCriteria(data), pageable);
         } catch (Exception e) {
             LOGGER.error("Error pageList: ", e);
         }
         return null;
     }
-    
+
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public List<SysMenuOperation> findAll() {
-        return menuOperationDao.findAll();
+    public List<SysMenuOperation> findList() {
+        try {
+            return menuOperationDao.findAll();
+        } catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return new ArrayList<>();
     }
 
     @Override

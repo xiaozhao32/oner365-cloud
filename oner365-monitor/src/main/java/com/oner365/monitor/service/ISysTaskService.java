@@ -3,7 +3,7 @@ package com.oner365.monitor.service;
 import org.quartz.SchedulerException;
 import org.springframework.data.domain.Page;
 
-import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.monitor.entity.SysTask;
 import com.oner365.monitor.exception.TaskException;
 
@@ -16,10 +16,10 @@ public interface ISysTaskService {
     /**
      * 获取quartz调度器的计划任务
      *
-     * @param paramJson 调度信息
+     * @param data 查询参数
      * @return 调度任务集合
      */
-    Page<SysTask> pageList(JSONObject paramJson);
+    Page<SysTask> pageList(QueryCriteriaBean data);
 
     /**
      * 通过调度任务ID查询调度信息

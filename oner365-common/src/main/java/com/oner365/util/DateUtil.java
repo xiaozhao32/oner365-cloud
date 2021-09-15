@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
@@ -125,12 +126,12 @@ public class DateUtil {
     public static final String LONG_TIME_FORMAT = "HH:mm:ss";
 
     public static final String DATE_DD = "dd";
-  public static final String DATE_HH = "HH";
-  public static final String DATE_MM = "mm";
-  public static final String DATE_SS = "ss";
-  public static final char POS_1 = '1';
-  public static final char POS_0 = '0';
-  public static final int POS_10 = 10;
+    public static final String DATE_HH = "HH";
+    public static final String DATE_MM = "mm";
+    public static final String DATE_SS = "ss";
+    public static final char POS_1 = '1';
+    public static final char POS_0 = '0';
+    public static final int POS_10 = 10;
 
     /**
      * 星期名称
@@ -139,6 +140,23 @@ public class DateUtil {
 
     private DateUtil() {
 
+    }
+
+    /**
+     * 格式化日期 字符串型为日期转换为日期型，为时间转换为时间型
+     *
+     * @param strDate 字符串
+     * @return 日期型日期
+     */
+    public static Date stringToDate(String strDate) {
+        String regex = "[0-9]{4}-[0-9]{2}-[0-9]{2}";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher m = pattern.matcher(strDate);
+        boolean dateFlag = m.matches();
+        if (dateFlag) {
+            return stringToDate(strDate, FULL_DATE_FORMAT);
+        }
+        return stringToDate(strDate, FULL_TIME_FORMAT);
     }
 
     /**
@@ -691,8 +709,8 @@ public class DateUtil {
         return result.toString();
     }
 
-    private static void dateToCnDate(StringBuilder result,
-            String charStr, int j, String[] cnDate, String ten, String str) {
+    private static void dateToCnDate(StringBuilder result, String charStr, int j, String[] cnDate, String ten,
+            String str) {
         if (j == POS_0) {
             if (charStr.charAt(j) == POS_1) {
                 result.append(ten);
@@ -1484,8 +1502,7 @@ public class DateUtil {
             if (dateStr.length() < POS_10) {
                 return "";
             }
-            return dateStr.substring(0, 4) + dateStr.substring(5, 7)
-                    + dateStr.substring(8, 10);
+            return dateStr.substring(0, 4) + dateStr.substring(5, 7) + dateStr.substring(8, 10);
         }
         return "";
     }

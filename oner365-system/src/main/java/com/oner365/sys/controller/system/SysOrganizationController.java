@@ -17,15 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.controller.BaseController;
-import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.entity.SysOrganization;
 import com.oner365.sys.entity.TreeSelect;
 import com.oner365.sys.service.ISysOrganizationService;
-import com.google.common.collect.Maps;
 
 /**
  * 机构管理
@@ -189,17 +188,13 @@ public class SysOrganizationController extends BaseController {
     /**
      * 修改状态
      *
-     * @param paramJson 参数
-     * @return Map<String, Object>
+     * @param id     主键
+     * @param status 状态
+     * @return Integer
      */
-    @PostMapping("/changeStatus")
-    public Map<String, Object> changeStatus(@RequestBody JSONObject paramJson) {
-        String status = paramJson.getString(SysConstants.STATUS);
-        String id = paramJson.getString(SysConstants.ID);
-        Integer code = sysOrgService.changeStatus(id, status);
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+    @PostMapping("/changeStatus/{id}")
+    public Integer changeStatus(@PathVariable String id, @RequestParam("status") String status) {
+        return sysOrgService.changeStatus(id, status);
     }
 
 }

@@ -75,7 +75,7 @@ public class SysMenuController extends BaseController {
         result.put("sysMenu", menuService.getById(id));
         List<String> menuOperList = operationService.selectByMenuId(id);
         result.put("menuOperList", menuOperList);
-        List<SysMenuOperation> operationList = operationService.findAll();
+        List<SysMenuOperation> operationList = operationService.findList();
         result.put("operationList", operationList);
         return result;
 

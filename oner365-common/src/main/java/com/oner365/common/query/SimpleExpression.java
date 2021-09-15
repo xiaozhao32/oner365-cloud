@@ -82,8 +82,7 @@ public class SimpleExpression implements Criterion {
         case BE:
             String param = String.valueOf(value);
             String[] array = StringUtils.split(param, "|");
-            return builder.between(expression, DateUtil.stringToDate(array[0], DateUtil.FULL_TIME_FORMAT),
-                    DateUtil.stringToDate(array[1], DateUtil.FULL_TIME_FORMAT));
+            return builder.between(expression, DateUtil.stringToDate(array[0]), DateUtil.stringToDate(array[1]));
         default:
             return null;
         }

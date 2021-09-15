@@ -2,7 +2,7 @@ package com.oner365.monitor.service;
 
 import org.springframework.data.domain.Page;
 
-import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.monitor.entity.SysTaskLog;
 
 /**
@@ -14,10 +14,10 @@ public interface ISysTaskLogService {
     /**
      * 获取quartz调度器日志的计划任务
      *
-     * @param paramJson 调度日志信息
+     * @param data 查询参数
      * @return 调度任务日志集合
      */
-    Page<SysTaskLog> pageList(JSONObject paramJson);
+    Page<SysTaskLog> pageList(QueryCriteriaBean data);
 
     /**
      * 通过调度任务日志ID查询调度信息

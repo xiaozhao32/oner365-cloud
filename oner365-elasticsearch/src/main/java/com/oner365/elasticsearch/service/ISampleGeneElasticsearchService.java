@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.elasticsearch.entity.SampleGene;
 
 /**
@@ -18,10 +18,10 @@ public interface ISampleGeneElasticsearchService {
     /**
      * 查询列表
      * 
-     * @param paramJson 查询条件参数
+     * @param data 查询参数
      * @return Page<SampleGene>
      */
-    Page<SampleGene> findList(JSONObject paramJson);
+    Page<SampleGene> findList(QueryCriteriaBean data);
 
     /**
      * 保存集合

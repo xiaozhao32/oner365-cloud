@@ -1,6 +1,8 @@
 package com.oner365.gateway.query;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 查询条件设置
@@ -20,6 +22,16 @@ public class QueryCriteriaBean implements Serializable {
      * 页大小
      */
     private Integer pageSize = 15;
+
+    /***
+     * 查询条件
+     */
+    private List<AttributeBean> whereList = new ArrayList<>();
+
+    /***
+     * 排序条件
+     */
+    private AttributeBean order;
 
     public QueryCriteriaBean() {
         super();
@@ -41,4 +53,19 @@ public class QueryCriteriaBean implements Serializable {
         this.pageSize = pageSize;
     }
 
+    public List<AttributeBean> getWhereList() {
+        return whereList;
+    }
+
+    public void setWhereList(List<AttributeBean> whereList) {
+        this.whereList = whereList;
+    }
+
+    public AttributeBean getOrder() {
+        return order;
+    }
+
+    public void setOrder(AttributeBean order) {
+        this.order = order;
+    }
 }

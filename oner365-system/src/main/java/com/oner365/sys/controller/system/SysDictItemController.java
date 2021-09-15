@@ -1,5 +1,6 @@
 package com.oner365.sys.controller.system;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,17 +20,20 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.query.AttributeBean;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.entity.SysDictItem;
 import com.oner365.sys.entity.SysDictItemType;
 import com.oner365.sys.service.ISysDictItemService;
 import com.oner365.sys.service.ISysDictItemTypeService;
-import com.google.common.collect.Maps;
 
 /**
  * 字典信息
+ * 
  * @author zhaoyong
  */
 @RestController
@@ -96,9 +100,12 @@ public class SysDictItemController extends BaseController {
      */
     @GetMapping("/findTypeInfoById/{typeId}")
     public List<SysDictItem> findTypeInfoById(@PathVariable String typeId) {
-        JSONObject paramJson = new JSONObject();
-        paramJson.put(SysConstants.TYPE_ID, typeId);
-        return sysDictItemService.findList(paramJson);
+        QueryCriteriaBean data = new QueryCriteriaBean();
+        List<AttributeBean> whereList = new ArrayList<>();
+        AttributeBean attribute = new AttributeBean(SysConstants.TYPE_ID, typeId);
+        whereList.add(attribute);
+        data.setWhereList(whereList);
+        return sysDictItemService.findList(data);
     }
 
     /**
@@ -112,10 +119,13 @@ public class SysDictItemController extends BaseController {
         JSONArray array = paramJson.getJSONArray("codes");
         Map<String, Object> result = Maps.newHashMap();
         array.forEach(obj -> {
-            JSONObject json = new JSONObject();
-            json.put(SysConstants.TYPE_ID, obj);
-            List<SysDictItem> itemList = sysDictItemService.findList(json);
-            result.put((String)obj, itemList);
+            QueryCriteriaBean data = new QueryCriteriaBean();
+            List<AttributeBean> whereList = new ArrayList<>();
+            AttributeBean attribute = new AttributeBean(SysConstants.TYPE_ID, (String) obj);
+            whereList.add(attribute);
+            data.setWhereList(whereList);
+            List<SysDictItem> itemList = sysDictItemService.findList(data);
+            result.put((String) obj, itemList);
         });
         return result;
     }
@@ -123,12 +133,12 @@ public class SysDictItemController extends BaseController {
     /**
      * 获取类别列表
      *
-     * @param paramJson 参数
+     * @param data 查询参数
      * @return Page<SysDictItemType>
      */
     @PostMapping("/findTypeList")
-    public Page<SysDictItemType> findTypeList(@RequestBody JSONObject paramJson) {
-        return sysDictItemTypeService.pageList(paramJson);
+    public Page<SysDictItemType> findTypeList(@RequestBody QueryCriteriaBean data) {
+        return sysDictItemTypeService.pageList(data);
     }
 
     /**
@@ -138,7 +148,7 @@ public class SysDictItemController extends BaseController {
      * @param status 状态
      * @return Integer
      */
-    @PostMapping("/editTypeStatus")
+    @PostMapping("/editTypeStatus/{id}")
     public Integer editTypeStatus(@PathVariable String id, @RequestParam("status") String status) {
         return sysDictItemTypeService.editStatus(id, status);
     }
@@ -150,7 +160,7 @@ public class SysDictItemController extends BaseController {
      * @param status 状态
      * @return Integer
      */
-    @PostMapping("/editItemStatus")
+    @PostMapping("/editItemStatus/{id}")
     public Integer editItemStatus(@PathVariable String id, @RequestParam("status") String status) {
         return sysDictItemService.editStatus(id, status);
     }
@@ -158,12 +168,12 @@ public class SysDictItemController extends BaseController {
     /**
      * 获取字典列表
      *
-     * @param paramJson 参数
+     * @param data 查询参数
      * @return Page<SysDictItem>
      */
     @PostMapping("/findItemList")
-    public Page<SysDictItem> findItemList(@RequestBody JSONObject paramJson) {
-        return sysDictItemService.pageList(paramJson);
+    public Page<SysDictItem> findItemList(@RequestBody QueryCriteriaBean data) {
+        return sysDictItemService.pageList(data);
     }
 
     /**
@@ -243,15 +253,16 @@ public class SysDictItemController extends BaseController {
 
     /**
      * 导出字典类型Excel
-     * @param paramJson 参数
+     * 
+     * @param data 参数
      * @return ResponseEntity<byte[]>
      */
     @PostMapping("/exportItemType")
-    public ResponseEntity<byte[]> exportItemType(@RequestBody JSONObject paramJson){
-        List<SysDictItemType> list = sysDictItemTypeService.findList(paramJson);
+    public ResponseEntity<byte[]> exportItemType(@RequestBody QueryCriteriaBean data) {
+        List<SysDictItemType> list = sysDictItemTypeService.findList(data);
 
-        String[] titleKeys = new String[]{"编号","类型名称","类型标识","描述","排序","状态"};
-        String[] columnNames = {"id","typeName","typeCode","typeDes","typeOrder","status"};
+        String[] titleKeys = new String[] { "编号", "类型名称", "类型标识", "描述", "排序", "状态" };
+        String[] columnNames = { "id", "typeName", "typeCode", "typeDes", "typeOrder", "status" };
 
         String fileName = SysDictItemType.class.getSimpleName() + System.currentTimeMillis();
         return exportExcel(fileName, titleKeys, columnNames, list);
@@ -259,15 +270,16 @@ public class SysDictItemController extends BaseController {
 
     /**
      * 导出字典Excel
-     * @param paramJson 参数
+     * 
+     * @param data 查询参数
      * @return ResponseEntity<byte[]>
      */
     @PostMapping("/exportItem")
-    public ResponseEntity<byte[]> exportItem(@RequestBody JSONObject paramJson){
-        List<SysDictItem> list = sysDictItemService.findList(paramJson);
+    public ResponseEntity<byte[]> exportItem(@RequestBody QueryCriteriaBean data) {
+        List<SysDictItem> list = sysDictItemService.findList(data);
 
-        String[] titleKeys = new String[]{"编号","类型标识","字典名称","字典标识","排序","状态"};
-        String[] columnNames = {"id","typeId","itemName","itemCode","itemOrder","status"};
+        String[] titleKeys = new String[] { "编号", "类型标识", "字典名称", "字典标识", "排序", "状态" };
+        String[] columnNames = { "id", "typeId", "itemName", "itemCode", "itemOrder", "status" };
 
         String fileName = SysDictItem.class.getSimpleName() + System.currentTimeMillis();
         return exportExcel(fileName, titleKeys, columnNames, list);
