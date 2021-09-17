@@ -1,11 +1,11 @@
 package com.oner365.sys.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.data.domain.Page;
 
 import com.oner365.common.query.QueryCriteriaBean;
+import com.oner365.sys.dto.LoginUserDto;
 import com.oner365.sys.entity.SysUser;
 
 /**
@@ -20,9 +20,9 @@ public interface ISysUserService {
      *
      * @param userName 账号
      * @param password 密码
-     * @return Map
+     * @return LoginUserDto
      */
-    Map<String, Object> login(String userName, String password);
+    LoginUserDto login(String userName, String password);
 
     /**
      * 查询分页列表

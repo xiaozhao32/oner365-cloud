@@ -38,6 +38,7 @@ import com.oner365.sys.dao.ISysUserDao;
 import com.oner365.sys.dao.ISysUserJobDao;
 import com.oner365.sys.dao.ISysUserOrgDao;
 import com.oner365.sys.dao.ISysUserRoleDao;
+import com.oner365.sys.dto.LoginUserDto;
 import com.oner365.sys.entity.SysJob;
 import com.oner365.sys.entity.SysOrganization;
 import com.oner365.sys.entity.SysRole;
@@ -96,14 +97,14 @@ public class SysUserServiceImpl implements ISysUserService {
 
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
-    public JSONObject login(String userName, String p) {
+    public LoginUserDto login(String userName, String p) {
         String password = DigestUtils.md5Hex(p).toUpperCase();
         SysUser user = getUserByUserName(userName, password);
         if (user != null) {
             String key = CACHE_LOGIN_NAME + ":" + userName;
-            String cache = redisCache.getCacheObject(key);
+            JSONObject cache = redisCache.getCacheObject(key);
             if (cache != null) {
-                return JSON.parseObject(cache);
+                return JSON.toJavaObject(cache, LoginUserDto.class);
             }
 
             Date time = DateUtil.after(new Date(), 30 * 24, Calendar.HOUR);
@@ -124,18 +125,18 @@ public class SysUserServiceImpl implements ISysUserService {
             tokenJson.put(SysConstants.ORGS, orgs);
             String accessToken = JwtUtils.generateToken(tokenJson.toJSONString(), time, accessTokenSecret);
 
-            JSONObject result = new JSONObject();
-            result.put(RequestUtils.ACCESS_TOKEN, accessToken);
-            result.put(RequestUtils.EXPIRED, time.getTime());
+            LoginUserDto result = new LoginUserDto();
+            result.setAccessToken(accessToken);
+            result.setExpireTime(time.getTime());
 
-            result.put(SysConstants.REAL_NAME, user.getRealName());
-            result.put(SysConstants.USER_ID, user.getId());
-            result.put(SysConstants.IS_ADMIN, user.getIsAdmin());
-            result.put(SysConstants.AVATAR, user.getAvatar());
-            result.put(SysConstants.ROLES, roles);
-            result.put(SysConstants.JOBS, jobs);
-            result.put(SysConstants.ORGS, orgs);
-            redisCache.setCacheObject(key, JSON.toJSONString(result), PublicConstants.EXPIRE_TIME, TimeUnit.MINUTES);
+            result.setRealName(user.getRealName());
+            result.setUserId(user.getId());
+            result.setIsAdmin(user.getIsAdmin());
+            result.setAvatar(user.getAvatar());
+            result.setRoles(roles);
+            result.setJobs(jobs);
+            result.setOrgs(orgs);
+            redisCache.setCacheObject(key, result, PublicConstants.EXPIRE_TIME, TimeUnit.MINUTES);
 
             return result;
         }
