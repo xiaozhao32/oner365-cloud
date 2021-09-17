@@ -21,7 +21,6 @@ public class SysConstants extends PublicConstants {
      * 密码缩写
      */
     public static final String P = "p";
-
     public static final String REAL_NAME = "realName";
     public static final String ROLE_NAME = "roleName";
     public static final String IS_ADMIN = "isAdmin";
@@ -48,6 +47,7 @@ public class SysConstants extends PublicConstants {
     public static final String ITEM_CODE = "itemCode";
     public static final String ITEM_ORDER = "itemOrder";
     public static final String CAPTCHA_IMAGE = "CaptchaImage";
+    public static final String OPERATION_TYPE = "operationType";
     
     public static final String ROLES = "roles";
     public static final String JOBS = "jobs";

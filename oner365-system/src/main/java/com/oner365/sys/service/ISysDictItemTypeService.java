@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.alibaba.fastjson.JSONObject;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.sys.entity.SysDictItemType;
 
@@ -45,13 +44,12 @@ public interface ISysDictItemTypeService {
     List<SysDictItemType> findList(QueryCriteriaBean data);
 
     /**
-     * 检测typeId是否存在
-     *
+     * 检测code是否存在
      * @param id 主键
-     * @param code 类型编号
-     * @return int
+     * @param code 编号
+     * @return long
      */
-    int checkTypeId(String id, String code);
+    long checkCode(String id, String code);
 
     /**
      * 删除
@@ -64,10 +62,10 @@ public interface ISysDictItemTypeService {
     /**
      * 查询列表
      *
-     * @param json 查询参数
+     * @param codeList 查询参数
      * @return List
      */
-    List<SysDictItemType> findListByCodes(JSONObject json);
+    List<SysDictItemType> findListByCodes(List<String> codeList);
 
     /**
      * 修改状态

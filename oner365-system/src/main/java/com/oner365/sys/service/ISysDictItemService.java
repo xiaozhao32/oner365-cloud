@@ -45,6 +45,15 @@ public interface ISysDictItemService {
      * @return List
      */
     List<SysDictItem> findList(QueryCriteriaBean data);
+    
+    /**
+     * 检测code是否存在
+     * @param id 主键
+     * @param typeId 字典类别id
+     * @param code 编号
+     * @return long
+     */
+    long checkCode(String id, String typeId, String code);
 
     /**
      * 删除

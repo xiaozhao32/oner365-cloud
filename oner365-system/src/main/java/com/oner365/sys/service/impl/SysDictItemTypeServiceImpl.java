@@ -15,16 +15,16 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.AttributeBean;
+import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
+import com.oner365.common.query.Restrictions;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysDictItemTypeDao;
 import com.oner365.sys.entity.SysDictItem;
@@ -99,8 +99,18 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
     }
     
     @Override
-    public int checkTypeId(String id, String code) {
-        return dao.countTypeById(id, code);
+    public long checkCode(String id, String code) {
+        try {
+            Criteria<SysDictItemType> criteria = new Criteria<>();
+            criteria.add(Restrictions.eq(SysConstants.TYPE_CODE, DataUtils.trimToNull(code)));
+            if (!Strings.isNullOrEmpty(id)) {
+                criteria.add(Restrictions.ne(SysConstants.ID, id));
+            }
+            return dao.count(criteria);
+        } catch (Exception e) {
+            LOGGER.error("Error checkCode:", e);
+        }
+        return 0L;
     }
 
     @Override
@@ -122,14 +132,8 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
     }
 
     @Override
-    @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public List<SysDictItemType> findListByCodes(JSONObject json) {
-        JSONArray codeArray = json.getJSONArray("codes");
-        if (!codeArray.isEmpty()) {
-            List<String> codes = JSON.parseArray(codeArray.toJSONString(), String.class);
-            return dao.findListByCode(codes);
-        }
-        return new ArrayList<>();
+    public List<SysDictItemType> findListByCodes(List<String> codeList) {
+        return dao.findListByCode(codeList);
     }
 
     @Override

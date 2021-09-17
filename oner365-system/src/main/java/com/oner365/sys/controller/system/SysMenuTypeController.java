@@ -119,7 +119,7 @@ public class SysMenuTypeController extends BaseController {
     public Map<String, Object> checkCode(@RequestBody JSONObject data) {
         String id = data.getString(SysConstants.ID);
         String code = data.getString(PublicConstants.CODE);
-        int check = menuTypeService.checkCode(id, code);
+        long check = menuTypeService.checkCode(id, code);
 
         Map<String, Object> result = Maps.newHashMap();
         result.put(PublicConstants.CODE, check);

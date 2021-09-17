@@ -21,11 +21,15 @@ import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.exception.ProjectRuntimeException;
+import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
+import com.oner365.common.query.Restrictions;
+import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysMenuTypeDao;
 import com.oner365.sys.entity.SysMenuType;
 import com.oner365.sys.service.ISysMenuTypeService;
+import com.oner365.util.DataUtils;
 
 /**
  * ISysMenuTypeService实现类
@@ -111,13 +115,18 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
     }
 
     @Override
-    public int checkCode(String id, String code) {
+    public long checkCode(String id, String code) {
         try {
-            return dao.countTypeById(id, code);
+            Criteria<SysMenuType> criteria = new Criteria<>();
+            criteria.add(Restrictions.eq(SysConstants.TYPE_CODE, DataUtils.trimToNull(code)));
+            if (!Strings.isNullOrEmpty(id)) {
+                criteria.add(Restrictions.ne(SysConstants.ID, id));
+            }
+            return dao.count(criteria);
         } catch (Exception e) {
-            LOGGER.error("Error checkCode: ", e);
+            LOGGER.error("Error checkCode:", e);
         }
-        return 0;
+        return 0L;
     }
 
     @Override

@@ -20,12 +20,16 @@ import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.exception.ProjectRuntimeException;
+import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
+import com.oner365.common.query.Restrictions;
+import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysMenuOperDao;
 import com.oner365.sys.dao.ISysMenuOperationDao;
 import com.oner365.sys.entity.SysMenuOperation;
 import com.oner365.sys.service.ISysMenuOperationService;
+import com.oner365.util.DataUtils;
 
 /**
  * ISysMenuOperationService实现类
@@ -111,13 +115,18 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
     }
 
     @Override
-    public int checkType(String id, String type) {
+    public long checkCode(String id, String code) {
         try {
-            return menuOperationDao.countTypeById(id, type);
+            Criteria<SysMenuOperation> criteria = new Criteria<>();
+            criteria.add(Restrictions.eq(SysConstants.OPERATION_TYPE, DataUtils.trimToNull(code)));
+            if (!Strings.isNullOrEmpty(id)) {
+                criteria.add(Restrictions.ne(SysConstants.ID, id));
+            }
+            return menuOperationDao.count(criteria);
         } catch (Exception e) {
-            LOGGER.error("Error selectByMenuId: ", e);
+            LOGGER.error("Error checkCode:", e);
         }
-        return 0;
+        return 0L;
     }
 
 }

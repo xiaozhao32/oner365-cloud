@@ -59,9 +59,9 @@ public interface ISysMenuTypeService {
      *
      * @param id   编号
      * @param code 编号
-     * @return int
+     * @return long
      */
-    int checkCode(String id, String code);
+    long checkCode(String id, String code);
 
     /**
      * 按菜单类型查询

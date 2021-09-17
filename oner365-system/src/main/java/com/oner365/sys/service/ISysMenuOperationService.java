@@ -59,12 +59,11 @@ public interface ISysMenuOperationService {
     int deleteById(String id);
 
     /**
-     * 检测type
-     *
+     * 检测是否存在
      * @param id 主键
-     * @param type 类型
-     * @return int
+     * @param code 类型
+     * @return long
      */
-    int checkType(String id, String type);
+    long checkCode(String id, String code);
 
 }

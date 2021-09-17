@@ -1,6 +1,7 @@
 package com.oner365.sys.controller.system;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.oner365.common.constants.PublicConstants;
@@ -71,11 +71,30 @@ public class SysDictItemController extends BaseController {
      * @param paramJson 参数
      * @return Map<String, Object>
      */
-    @PostMapping("/checkTypeId")
-    public Map<String, Object> checkTypeId(@RequestBody JSONObject paramJson) {
+    @PostMapping("/checkTypeCode")
+    public Map<String, Object> checkTypeCode(@RequestBody JSONObject paramJson) {
         String id = paramJson.getString(SysConstants.ID);
         String code = paramJson.getString(PublicConstants.CODE);
-        int check = sysDictItemTypeService.checkTypeId(id, code);
+
+        long check = sysDictItemTypeService.checkCode(id, code);
+        Map<String, Object> result = Maps.newHashMap();
+        result.put(PublicConstants.CODE, check);
+        return result;
+    }
+    
+    /**
+     * 判断类别id 是否存在
+     *
+     * @param paramJson 参数
+     * @return Map<String, Object>
+     */
+    @PostMapping("/checkCode")
+    public Map<String, Object> checkCode(@RequestBody JSONObject paramJson) {
+        String id = paramJson.getString(SysConstants.ID);
+        String typeId = paramJson.getString(SysConstants.TYPE_ID);
+        String code = paramJson.getString(PublicConstants.CODE);
+
+        long check = sysDictItemService.checkCode(id, typeId, code);
         Map<String, Object> result = Maps.newHashMap();
         result.put(PublicConstants.CODE, check);
         return result;
@@ -111,22 +130,21 @@ public class SysDictItemController extends BaseController {
     /**
      * 获取类别字典信息
      *
-     * @param paramJson 字典参数
+     * @param typeIds 字典参数
      * @return Map<String, Object>
      */
-    @PostMapping("/findTypeInfoByCodes")
-    public Map<String, Object> findTypeInfoByCodes(@RequestBody JSONObject paramJson) {
-        JSONArray array = paramJson.getJSONArray("codes");
+    @PostMapping("/findItemByTypeIds")
+    public Map<String, Object> findItemByTypeIds(@RequestBody String... typeIds) {
         Map<String, Object> result = Maps.newHashMap();
-        array.forEach(obj -> {
+        for (String typeId : typeIds) {
             QueryCriteriaBean data = new QueryCriteriaBean();
             List<AttributeBean> whereList = new ArrayList<>();
-            AttributeBean attribute = new AttributeBean(SysConstants.TYPE_ID, (String) obj);
+            AttributeBean attribute = new AttributeBean(SysConstants.TYPE_ID, typeId);
             whereList.add(attribute);
             data.setWhereList(whereList);
             List<SysDictItem> itemList = sysDictItemService.findList(data);
-            result.put((String) obj, itemList);
-        });
+            result.put(typeId, itemList);
+        }
         return result;
     }
 
@@ -240,12 +258,12 @@ public class SysDictItemController extends BaseController {
     /**
      * 获取类别列表
      *
-     * @param json 参数
+     * @param codes 参数
      * @return Map<String, Object>
      */
     @PostMapping("/findListByCodes")
-    public Map<String, Object> findListByCode(@RequestBody JSONObject json) {
-        List<SysDictItemType> list = sysDictItemTypeService.findListByCodes(json);
+    public Map<String, Object> findListByCode(@RequestBody String... codes) {
+        List<SysDictItemType> list = sysDictItemTypeService.findListByCodes(Arrays.asList(codes));
         Map<String, Object> result = Maps.newHashMap();
         result.put(PublicConstants.PARAM_LIST, list);
         return result;

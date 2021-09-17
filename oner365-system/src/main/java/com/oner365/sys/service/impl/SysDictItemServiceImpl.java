@@ -15,15 +15,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.exception.ProjectRuntimeException;
+import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
+import com.oner365.common.query.Restrictions;
+import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysDictItemDao;
 import com.oner365.sys.entity.SysDictItem;
 import com.oner365.sys.service.ISysDictItemService;
+import com.oner365.util.DataUtils;
 
 /**
  * ISysDictItemService 实现类
@@ -82,6 +87,22 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
             LOGGER.error("Error findList: ", e);
         }
         return new ArrayList<>();
+    }
+    
+    @Override
+    public long checkCode(String id, String typeId, String code) {
+        try {
+            Criteria<SysDictItem> criteria = new Criteria<>();
+            criteria.add(Restrictions.eq(SysConstants.ITEM_CODE, DataUtils.trimToNull(code)));
+            criteria.add(Restrictions.eq(SysConstants.TYPE_ID, DataUtils.trimToNull(typeId)));
+            if (!Strings.isNullOrEmpty(id)) {
+                criteria.add(Restrictions.ne(SysConstants.ID, id));
+            }
+            return dao.count(criteria);
+        } catch (Exception e) {
+            LOGGER.error("Error checkCode:", e);
+        }
+        return 0L;
     }
     
     @Override
