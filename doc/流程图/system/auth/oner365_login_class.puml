@@ -1,0 +1,106 @@
+@startuml
+
+class AuthController {
+    -ISysUserService sysUserService
+    -RedisCache redisCache
+    +ResponseData<T> login(LoginVo loginVo)
+}
+note right of AuthController::login
+  登录步骤:
+  1.请求地址: /auth/login
+  2.请求参数对象: loginVo
+  3.返回结果: ResponseData.success(loginDto)
+end note
+
+class ResponseData<T> {
+    -code: int
+    -message: String
+    -result: T
+    +success()
+    +error()
+}
+note right of ResponseData
+  code: 1-成功 0-失败
+  message: 消息成功或失败
+  result: 返回结果
+end note
+
+interface RedisCache<T> {
+    +setCacheObject(key, value)
+    +getCacheObject(value)
+    +deleteObject(value)
+}
+note right of RedisCache::setCacheObject
+  key组合方式 (method:key)
+end note
+
+interface ISysUserService {
+    +LoginDto login(String userName, String password)
+}
+
+class SysUserServiceImpl {
+    -ISysUserDao sysUserDao
+    -RedisCache redisCache
+    +LoginDto login(String userName, String password)
+}
+
+interface ISysUserDao {
+    +SysUser findOne(SysUser sysUser)
+}
+
+interface JpaRepository<T> {
+}
+
+class LoginVo {
+    -userName: String
+    -password: String
+    -uuid: String
+    -code: String
+}
+note right of LoginVo
+  userName: 账号
+  password: 密码
+  uuid: 验证码的key
+  code: 验证码
+end note
+
+class LoginDto {
+        -accessToken: String
+        -expired: String
+        -realName: String
+        -userId: String
+        -isAdmin: String
+        -avatar: String
+        -roles: List
+        -jobs: List
+        -orgs: List
+}
+note right of LoginDto
+  封装数据返回属性
+end note
+
+class SysUser {
+    -id: String
+    -userName: String
+    -password: String
+    ...
+}
+note right of SysUser
+  持久化对象
+end note
+
+LoginVo --> AuthController:登陆入参
+AuthController --> RedisCache:获取redis验证码信息
+AuthController --> ISysUserService:验证登录及获取结果
+SysUserServiceImpl --> RedisCache:验证是否还在有效登陆期
+SysUserServiceImpl ..|> ISysUserService:实现类
+SysUserServiceImpl --> ISysUserDao:获取用户信息
+ISysUserDao --|> JpaRepository:Spring JPA
+
+ResponseData <.. AuthController:封装返回参数返回
+AuthController <.. LoginDto:返回登录信息
+LoginDto <.. SysUserServiceImpl:组装登录传输信息
+SysUserServiceImpl <.. SysUser:返回用户信息
+SysUser <.. ISysUserDao:查询登录用户信息
+
+@enduml
