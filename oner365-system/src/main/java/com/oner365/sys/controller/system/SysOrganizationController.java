@@ -15,16 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
+import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
+import com.oner365.common.constants.ErrorInfo;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.entity.SysOrganization;
 import com.oner365.sys.entity.TreeSelect;
 import com.oner365.sys.service.ISysOrganizationService;
+import com.oner365.sys.vo.SysOrganizationVo;
+import com.oner365.sys.vo.check.CheckOrgCodeVo;
 
 /**
  * 机构管理
@@ -40,24 +42,22 @@ public class SysOrganizationController extends BaseController {
     /**
      * 机构信息保存
      *
-     * @param paramJson 机构对象
+     * @param sysOrganizationVo 机构对象
      * @param authUser  登录对象
-     * @return Map<String, Object>
+     * @return ResponseResult<SysOrganization>
      */
     @PutMapping("/save")
-    public Map<String, Object> save(@RequestBody JSONObject paramJson,
+    public ResponseResult<SysOrganization> save(@RequestBody SysOrganizationVo sysOrganizationVo,
             @CurrentUser AuthUser authUser) {
-        SysOrganization sysOrganization = JSON.toJavaObject(paramJson, SysOrganization.class);
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, PublicConstants.ERROR_CODE);
-        if (sysOrganization != null) {
-            sysOrganization.setCreateUser(authUser.getId());
-            SysOrganization entity = sysOrgService.save(sysOrganization);
-
-            result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
-            result.put(PublicConstants.MSG, entity);
+        if (sysOrganizationVo != null) {
+            SysOrganization sysOrganization = sysOrganizationVo.toObject();
+            if (sysOrganization != null) {
+                sysOrganization.setCreateUser(authUser.getId());
+                SysOrganization entity = sysOrgService.save(sysOrganization);
+                return ResponseResult.success(entity);
+            }
         }
-        return result;
+        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
     }
 
     /**
@@ -74,34 +74,40 @@ public class SysOrganizationController extends BaseController {
     /**
      * 直接测试数据源是否连接
      *
-     * @param paramJson 参数
-     * @return Map<String, Object>
+     * @param dstype   数据源类型
+     * @param ip       ip地址
+     * @param port     端口
+     * @param dbname   数据源名称
+     * @param username 账号
+     * @param password 密码
+     * @return boolean
      */
-    @PostMapping("/isConnection")
-    public Map<String, Object> isConnection(@RequestBody JSONObject paramJson) {
-        return sysOrgService.isConnection(paramJson);
+    @PostMapping("/isConnection/{dstype}")
+    public boolean isConnection(@PathVariable String dstype, @RequestParam String ip, @RequestParam int port,
+            @RequestParam String dbname, @RequestParam String username, @RequestParam String password) {
+        return sysOrgService.isConnection(dstype, ip, port, dbname, username, password);
     }
 
     /**
      * 判断保存后数据源是否连接
      *
-     * @param id 变
-     * @return Map<String, Object>
+     * @param id 编号
+     * @return boolean
      */
     @GetMapping("/checkConnection/{id}")
-    public Map<String, Object> checkConnection(@PathVariable String id) {
+    public boolean checkConnection(@PathVariable String id) {
         return sysOrgService.checkConnection(id);
     }
 
     /**
      * 查询列表
      *
-     * @param paramJson 机构对象
+     * @param sysOrganizationVo 机构对象
      * @return List<SysOrganization>
      */
     @PostMapping("/list")
-    public List<SysOrganization> findList(@RequestBody JSONObject paramJson) {
-        SysOrganization sysOrganization = JSON.toJavaObject(paramJson, SysOrganization.class);
+    public List<SysOrganization> findList(@RequestBody SysOrganizationVo sysOrganizationVo) {
+        SysOrganization sysOrganization = sysOrganizationVo.toObject();
         if (sysOrganization != null) {
             return sysOrgService.selectList(sysOrganization);
         }
@@ -137,46 +143,42 @@ public class SysOrganizationController extends BaseController {
     /**
      * 判断机构编号是否存在
      *
-     * @param paramJson 参数
-     * @return Map<String, Object>
+     * @param checkOrgCodeVo 查询参数
+     * @return Long
      */
     @PostMapping("/checkCode")
-    public Map<String, Object> checkCode(@RequestBody JSONObject paramJson) {
-        String type = paramJson.getString("type");
-        String code = paramJson.getString("code");
-        String orgId = paramJson.getString("orgId");
-        long check = sysOrgService.checkCode(orgId, code, type);
-
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, check);
-        return result;
+    public Long checkCode(@RequestBody CheckOrgCodeVo checkOrgCodeVo) {
+        if (checkOrgCodeVo != null) {
+            return sysOrgService.checkCode(checkOrgCodeVo.getId(), checkOrgCodeVo.getCode(), checkOrgCodeVo.getType());
+        }
+        return Long.valueOf(PublicConstants.ERROR_CODE);
     }
 
     /**
      * 获取菜单下拉树列表
      *
-     * @param paramJson 机构对象
+     * @param sysOrganizationVo 机构对象
      * @param authUser  登录对象
      * @return List<TreeSelect>
      */
     @PostMapping("/treeselect")
-    public List<TreeSelect> treeselect(@RequestBody JSONObject paramJson, @CurrentUser AuthUser authUser) {
-        List<SysOrganization> list = sysOrgService.selectList(JSON.toJavaObject(paramJson, SysOrganization.class));
+    public List<TreeSelect> treeselect(@RequestBody SysOrganizationVo sysOrganizationVo, @CurrentUser AuthUser authUser) {
+        List<SysOrganization> list = sysOrgService.selectList(sysOrganizationVo.toObject());
         return sysOrgService.buildTreeSelect(list);
     }
 
     /**
      * 加载对应角色菜单列表树
      *
-     * @param paramJson 机构对象
+     * @param sysOrganizationVo 机构对象
      * @param userId    用户id
      * @param authUser  登录对象
      * @return Map<String, Object>
      */
     @PostMapping("/userTreeselect/{userId}")
-    public Map<String, Object> userTreeselect(@RequestBody JSONObject paramJson, @PathVariable("userId") String userId,
+    public Map<String, Object> userTreeselect(@RequestBody SysOrganizationVo sysOrganizationVo, @PathVariable("userId") String userId,
             @CurrentUser AuthUser authUser) {
-        SysOrganization sysOrganization = JSON.toJavaObject(paramJson, SysOrganization.class);
+        SysOrganization sysOrganization = sysOrganizationVo.toObject();
 
         List<SysOrganization> list = sysOrgService.selectList(sysOrganization);
         Map<String, Object> result = Maps.newHashMap();

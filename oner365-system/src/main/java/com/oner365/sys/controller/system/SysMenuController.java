@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
+import com.google.common.collect.Maps;
+import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.constants.ErrorInfo;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.entity.SysMenu;
@@ -27,7 +27,7 @@ import com.oner365.sys.entity.SysMenuOperation;
 import com.oner365.sys.entity.TreeSelect;
 import com.oner365.sys.service.ISysMenuOperationService;
 import com.oner365.sys.service.ISysMenuService;
-import com.google.common.collect.Maps;
+import com.oner365.sys.vo.SysMenuVo;
 
 /**
  * 系统菜单
@@ -46,21 +46,16 @@ public class SysMenuController extends BaseController {
     /**
      * 保存菜单
      *
-     * @param paramJson 菜单对象
-     * @return Map<String, Object>
+     * @param sysMenuVo 菜单对象
+     * @return ResponseResult<SysMenu>
      */
     @PutMapping("/save")
-    public Map<String, Object> save(@RequestBody JSONObject paramJson) {
-        SysMenu sysMenu = JSON.toJavaObject(paramJson, SysMenu.class);
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, PublicConstants.ERROR_CODE);
-        if (sysMenu != null) {
-            SysMenu entity = menuService.save(sysMenu);
-
-            result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
-            result.put(PublicConstants.MSG, entity);
+    public ResponseResult<SysMenu> save(@RequestBody SysMenuVo sysMenuVo) {
+        if (sysMenuVo != null) {
+            SysMenu entity = menuService.save(sysMenuVo.toObject());
+            return ResponseResult.success(entity);
         }
-        return result;
+        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
     }
 
     /**
@@ -84,12 +79,12 @@ public class SysMenuController extends BaseController {
     /**
      * 菜单列表
      *
-     * @param paramJson 菜单对象
+     * @param sysMenuVo 菜单对象
      * @return List<SysMenu>
      */
     @PostMapping("/list")
-    public List<SysMenu> list(@RequestBody JSONObject paramJson) {
-        SysMenu sysMenu = JSON.toJavaObject(paramJson, SysMenu.class);
+    public List<SysMenu> list(@RequestBody SysMenuVo sysMenuVo) {
+        SysMenu sysMenu = sysMenuVo.toObject();
         if (sysMenu != null) {
             return menuService.selectList(sysMenu);
         }
@@ -113,11 +108,11 @@ public class SysMenuController extends BaseController {
     /**
      * 修改菜单状态
      *
-     * @param id     主键
+     * @param id 主键
      * @param status 状态
      * @return Integer
      */
-    @PostMapping("/editStatusById")
+    @PostMapping("/editStatusById/{id}")
     public Integer editStatusById(@PathVariable String id, @RequestParam("status") String status) {
         return menuService.editStatusById(id, status);
     }
@@ -126,13 +121,13 @@ public class SysMenuController extends BaseController {
      * 获取菜单下拉树列表
      *
      * @param authUser 登录对象
-     * @param paramJson 菜单对象
+     * @param sysMenuVo 菜单对象
      * @return List<TreeSelect>
      */
     @PostMapping("/treeselect")
-    public List<TreeSelect> treeselect(@RequestBody JSONObject paramJson,
+    public List<TreeSelect> treeselect(@RequestBody SysMenuVo sysMenuVo,
             @CurrentUser AuthUser authUser) {
-        SysMenu menu = JSON.toJavaObject(paramJson, SysMenu.class);
+        SysMenu menu = sysMenuVo.toObject();
         List<SysMenu> menus;
         if (SysConstants.DEFAULT_ROLE.equals(authUser.getIsAdmin())) {
             menus = menuService.selectList(menu);
@@ -145,16 +140,16 @@ public class SysMenuController extends BaseController {
 
     /**
      * 加载对应角色菜单列表树
-     * 
+     *
      * @param authUser 登录对象
-     * @param paramJson 菜单对象
-     * @param roleId 角色编号
+     * @param sysMenuVo 菜单对象
+     * @param roleId String
      * @return Map<String, Object>
      */
     @PostMapping("/roleMenuTreeselect/{roleId}")
-    public Map<String, Object> roleMenuTreeselect(@RequestBody JSONObject paramJson,
+    public Map<String, Object> roleMenuTreeselect(@RequestBody SysMenuVo sysMenuVo,
             @PathVariable("roleId") String roleId, @CurrentUser AuthUser authUser) {
-        SysMenu menu = JSON.toJavaObject(paramJson, SysMenu.class);
+        SysMenu menu = sysMenuVo.toObject();
         List<SysMenu> menus;
         if (SysConstants.DEFAULT_ROLE.equals(authUser.getIsAdmin())) {
             menus = menuService.selectList(menu);

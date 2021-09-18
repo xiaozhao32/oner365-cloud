@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.util.Map;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -25,8 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.tobato.fastdfs.domain.fdfs.FileInfo;
-import com.google.common.collect.Maps;
-import com.oner365.common.ResponseData;
+import com.oner365.common.ResponseResult;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -64,30 +62,24 @@ public class FastdfsFileController extends BaseController {
      * 文件上传
      * 
      * @param file MultipartFile
-     * @return Map<String, Object>
+     * @return ResponseResult<String>
      */
     @PostMapping("/uploadMultipartFile")
-    public ResponseData<Map<String, Object>> uploadMultipartFile(@RequestBody MultipartFile file) {
-        Map<String, Object> result = Maps.newHashMap();
+    public ResponseResult<String> uploadMultipartFile(@RequestBody MultipartFile file) {
         String url = fastdfsClient.uploadFile(file);
-        result.put(PublicConstants.MSG, url);
-        result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
-        return ResponseData.success(result);
+        return ResponseResult.success(url);
     }
 
     /**
      * 文件上传 File 类型
      * 
      * @param file File
-     * @return Map<String, Object>
+     * @return ResponseResult<String>
      */
     @PostMapping("/uploadFile")
-    public ResponseData<Map<String, Object>> uploadFile(@RequestBody File file) {
-        Map<String, Object> result = Maps.newHashMap();
+    public ResponseResult<String> uploadFile(@RequestBody File file) {
         String url = fastdfsClient.uploadFile(file);
-        result.put(PublicConstants.MSG, url);
-        result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
-        return ResponseData.success(result);
+        return ResponseResult.success(url);
     }
 
     /**
@@ -140,13 +132,13 @@ public class FastdfsFileController extends BaseController {
      * @return String
      */
     @DeleteMapping("/delete")
-    public ResponseData<String> delete(@RequestBody String... ids) {
+    public String delete(@RequestBody String... ids) {
         if (ids != null) {
             for (String id : ids) {
                 fastdfsClient.deleteFile(id);
             }
         }
-        return ResponseData.success(PublicConstants.SUCCESS);
+        return PublicConstants.SUCCESS;
     }
 
     /**

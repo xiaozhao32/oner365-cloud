@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
+import com.oner365.common.ResponseResult;
+import com.oner365.common.constants.ErrorInfo;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.query.AttributeBean;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -30,6 +30,10 @@ import com.oner365.sys.entity.SysDictItem;
 import com.oner365.sys.entity.SysDictItemType;
 import com.oner365.sys.service.ISysDictItemService;
 import com.oner365.sys.service.ISysDictItemTypeService;
+import com.oner365.sys.vo.SysDictItemTypeVo;
+import com.oner365.sys.vo.SysDictItemVo;
+import com.oner365.sys.vo.check.CheckCodeVo;
+import com.oner365.sys.vo.check.CheckTypeCodeVo;
 
 /**
  * 字典信息
@@ -49,55 +53,44 @@ public class SysDictItemController extends BaseController {
     /**
      * 字典类别保存
      *
-     * @param paramJson 字典类别对象
-     * @return Map<String, Object>
+     * @param sysDictItemTypeVo 字典类别对象
+     * @return ResponseResult<SysDictItemType>
      */
     @PutMapping("/saveDictItemType")
-    public Map<String, Object> saveDictItemType(@RequestBody JSONObject paramJson) {
-        SysDictItemType sysDictItemType = JSON.toJavaObject(paramJson, SysDictItemType.class);
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, PublicConstants.ERROR_CODE);
-        if (sysDictItemType != null) {
-            SysDictItemType entity = sysDictItemTypeService.save(sysDictItemType);
-            result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
-            result.put(PublicConstants.MSG, entity);
+    public ResponseResult<SysDictItemType> saveDictItemType(@RequestBody SysDictItemTypeVo sysDictItemTypeVo) {
+        if (sysDictItemTypeVo != null) {
+            SysDictItemType entity = sysDictItemTypeService.save(sysDictItemTypeVo.toObject());
+            return ResponseResult.success(entity);
         }
-        return result;
+        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
     }
 
     /**
      * 判断类别id 是否存在
      *
-     * @param paramJson 参数
-     * @return Map<String, Object>
+     * @param checkCodeVo 查询参数
+     * @return Long
      */
     @PostMapping("/checkTypeCode")
-    public Map<String, Object> checkTypeCode(@RequestBody JSONObject paramJson) {
-        String id = paramJson.getString(SysConstants.ID);
-        String code = paramJson.getString(PublicConstants.CODE);
-
-        long check = sysDictItemTypeService.checkCode(id, code);
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, check);
-        return result;
+    public Long checkTypeCode(@RequestBody CheckCodeVo checkCodeVo) {
+        if (checkCodeVo != null) {
+            return sysDictItemTypeService.checkCode(checkCodeVo.getId(), checkCodeVo.getCode());
+        }
+        return Long.valueOf(PublicConstants.ERROR_CODE);
     }
     
     /**
      * 判断类别id 是否存在
      *
-     * @param paramJson 参数
-     * @return Map<String, Object>
+     * @param checkTypeCodeVo 查询参数
+     * @return Long
      */
     @PostMapping("/checkCode")
-    public Map<String, Object> checkCode(@RequestBody JSONObject paramJson) {
-        String id = paramJson.getString(SysConstants.ID);
-        String typeId = paramJson.getString(SysConstants.TYPE_ID);
-        String code = paramJson.getString(PublicConstants.CODE);
-
-        long check = sysDictItemService.checkCode(id, typeId, code);
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, check);
-        return result;
+    public Long checkCode(@RequestBody CheckTypeCodeVo checkTypeCodeVo) {
+        if (checkTypeCodeVo != null) {
+            return sysDictItemService.checkCode(checkTypeCodeVo.getId(), checkTypeCodeVo.getTypeId(), checkTypeCodeVo.getCode());
+        }
+        return Long.valueOf(PublicConstants.ERROR_CODE);
     }
 
     /**
@@ -197,21 +190,16 @@ public class SysDictItemController extends BaseController {
     /**
      * 保存字典信息
      *
-     * @param paramJson 字典对象
-     * @return Map<String, Object>
+     * @param sysDictItemVo 字典对象
+     * @return ResponseResult<SysDictItem>
      */
     @PutMapping("/saveDictItem")
-    public Map<String, Object> saveDictItem(@RequestBody JSONObject paramJson) {
-        SysDictItem sysDictItem = JSON.toJavaObject(paramJson, SysDictItem.class);
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, PublicConstants.ERROR_CODE);
-        if (sysDictItem != null) {
-            SysDictItem entity = sysDictItemService.save(sysDictItem);
-
-            result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
-            result.put(PublicConstants.MSG, entity);
+    public ResponseResult<SysDictItem> saveDictItem(@RequestBody SysDictItemVo sysDictItemVo) {
+        if (sysDictItemVo != null) {
+            SysDictItem entity = sysDictItemService.save(sysDictItemVo.toObject());
+            return ResponseResult.success(entity);
         }
-        return result;
+        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
     }
 
     /**
@@ -259,14 +247,11 @@ public class SysDictItemController extends BaseController {
      * 获取类别列表
      *
      * @param codes 参数
-     * @return Map<String, Object>
+     * @return List<SysDictItemType>
      */
     @PostMapping("/findListByCodes")
-    public Map<String, Object> findListByCode(@RequestBody String... codes) {
-        List<SysDictItemType> list = sysDictItemTypeService.findListByCodes(Arrays.asList(codes));
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.PARAM_LIST, list);
-        return result;
+    public List<SysDictItemType> findListByCode(@RequestBody String... codes) {
+        return sysDictItemTypeService.findListByCodes(Arrays.asList(codes));
     }
 
     /**

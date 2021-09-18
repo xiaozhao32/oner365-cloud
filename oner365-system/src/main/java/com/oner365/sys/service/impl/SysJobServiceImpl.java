@@ -82,7 +82,7 @@ public class SysJobServiceImpl implements ISysJobService {
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
-    public SysJob saveJob(SysJob job) {
+    public SysJob save(SysJob job) {
         if (Strings.isNullOrEmpty(job.getId())) {
             job.setStatus(PublicConstants.STATUS_YES);
             job.setCreateTime(new Timestamp(System.currentTimeMillis()));
@@ -106,7 +106,7 @@ public class SysJobServiceImpl implements ISysJobService {
         SysJob entity = this.getById(id);
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
-            this.saveJob(entity);
+            this.save(entity);
             return 1;
         }
         return 0;

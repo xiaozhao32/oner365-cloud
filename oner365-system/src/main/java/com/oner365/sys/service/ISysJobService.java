@@ -42,7 +42,7 @@ public interface ISysJobService {
      * @param job 职位对象
      * @return SysJob
      */
-    SysJob saveJob(SysJob job);
+    SysJob save(SysJob job);
 
     /**
      * 删除职位

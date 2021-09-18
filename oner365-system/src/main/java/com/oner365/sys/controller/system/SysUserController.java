@@ -22,10 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.oner365.common.ResponseData;
+import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.constants.ErrorCodes;
@@ -40,6 +39,10 @@ import com.oner365.sys.entity.SysUser;
 import com.oner365.sys.service.ISysJobService;
 import com.oner365.sys.service.ISysRoleService;
 import com.oner365.sys.service.ISysUserService;
+import com.oner365.sys.vo.ModifyPasswordVo;
+import com.oner365.sys.vo.ResetPasswordVo;
+import com.oner365.sys.vo.SysUserVo;
+import com.oner365.sys.vo.check.CheckUserNameVo;
 import com.oner365.util.DataUtils;
 
 /**
@@ -59,9 +62,9 @@ public class SysUserController extends BaseController {
 
     @Autowired
     private ISysJobService sysJobService;
-
+    
     @Autowired
-    private IFileServiceClient fileServiceClient;
+    private IFileServiceClient fastdfsClient;
 
     /**
      * 用户列表
@@ -77,22 +80,20 @@ public class SysUserController extends BaseController {
     /**
      * 用户保存
      *
-     * @param paramJson 用户对象
-     * @return Map<String, Object>
+     * @param sysUserVo 用户对象
+     * @return ResponseResult<SysUser>
      */
     @PutMapping("/save")
-    public Map<String, Object> save(@RequestBody JSONObject paramJson, HttpServletRequest request) {
-        SysUser sysUser = JSON.toJavaObject(paramJson, SysUser.class);
-
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, PublicConstants.ERROR_CODE);
-        if (sysUser != null) {
+    public ResponseResult<SysUser> save(@RequestBody SysUserVo sysUserVo, HttpServletRequest request) {
+        if (sysUserVo != null) {
+            SysUser sysUser = sysUserVo.toObject();
+            if (sysUser != null) {
             sysUser.setLastIp(DataUtils.getIpAddress(request));
             SysUser entity = sysUserService.saveUser(sysUser);
-            result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
-            result.put(PublicConstants.MSG, entity);
+                return ResponseResult.success(entity);
+            }
         }
-        return result;
+        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
     }
 
     /**
@@ -102,7 +103,7 @@ public class SysUserController extends BaseController {
      * @return Map<String, Object>
      */
     @GetMapping("/get/{id}")
-    public Map<String, Object> get(@PathVariable String id) {
+    public ResponseData<Map<String, Object>> get(@PathVariable String id) {
         SysUser sysUser = sysUserService.getById(id);
 
         Map<String, Object> result = Maps.newHashMap();
@@ -115,7 +116,8 @@ public class SysUserController extends BaseController {
         data.setWhereList(whereList);
         result.put("roleList", sysRoleService.findList(data));
         result.put("jobList", sysJobService.findList(data));
-        return result;
+        
+        return ResponseData.success(result);
     }
 
     /**
@@ -134,13 +136,12 @@ public class SysUserController extends BaseController {
      * 
      * @param authUser 登录对象
      * @param file     文件
-     * @return ResponseData
+     * @return ResponseData<Map<String, Object>>
      */
-    @PostMapping("avatar")
-    public ResponseData<Map<String, Object>> avatar(@CurrentUser AuthUser authUser,
-            @RequestParam("avatarfile") MultipartFile file) {
+    @PostMapping("/avatar")
+    public ResponseData<Map<String, Object>> avatar(@CurrentUser AuthUser authUser, @RequestParam("avatarfile") MultipartFile file) {
         if (!file.isEmpty()) {
-            ResponseData<Map<String, Object>> responseData = fileServiceClient.upload(file);
+            ResponseData<Map<String, Object>> responseData = fastdfsClient.upload(file);
             if (responseData.getCode() == PublicConstants.SUCCESS_CODE) {
                 Map<String, Object> data = responseData.getResult();
 
@@ -156,13 +157,13 @@ public class SysUserController extends BaseController {
     /**
      * 更新个人信息
      * 
-     * @param paramJson 对象
+     * @param sysUserVo 对象
      * @param authUser  登录对象
-     * @return SysUser
+     * @return ResponseData
      */
     @PostMapping("/updateUserProfile")
-    public SysUser updateUserProfile(@RequestBody JSONObject paramJson, @CurrentUser AuthUser authUser) {
-        SysUser vo = JSON.toJavaObject(paramJson, SysUser.class);
+    public SysUser updateUserProfile(@RequestBody SysUserVo sysUserVo, @CurrentUser AuthUser authUser) {
+        SysUser vo = sysUserVo.toObject();
         if (vo != null) {
             SysUser sysUser = sysUserService.getById(authUser.getId());
             sysUser.setEmail(vo.getEmail());
@@ -193,58 +194,51 @@ public class SysUserController extends BaseController {
     /**
      * 判断用户是否存在
      *
-     * @param json 参数
-     * @return Map<String, Object>
+     * @param checkUserNameVo 查询参数
+     * @return Long
      */
     @PostMapping("/checkUserName")
-    public Map<String, Object> checkUserName(@RequestBody JSONObject json) {
-        String userName = json.getString(SysConstants.USER_NAME);
-        String userId = json.getString(SysConstants.ID);
-        long code = sysUserService.checkUserName(userId, userName);
-
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+    public Long checkUserName(@RequestBody CheckUserNameVo checkUserNameVo) {
+        if (checkUserNameVo != null) {
+            return sysUserService.checkUserName(checkUserNameVo.getId(), checkUserNameVo.getUserName());
+        }
+        return Long.valueOf(PublicConstants.ERROR_CODE);
     }
 
     /**
      * 修改密码
      *
-     * @param json 参数
-     * @return Map<String, Object>
+     * @param resetPasswordVo 查询参数
+     * @return Integer
      */
     @PostMapping("/resetPassword")
-    public Map<String, Object> resetPassword(@RequestBody JSONObject json) {
-        String userId = json.getString(SysConstants.USER_ID);
-        String password = json.getString(SysConstants.P);
-        Integer code = sysUserService.editPassword(userId, password);
-
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return result;
+    public Integer resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
+        if (resetPasswordVo != null) {
+            return sysUserService.editPassword(resetPasswordVo.getUserId(), resetPasswordVo.getPassword());
+        }
+        return PublicConstants.ERROR_CODE;
     }
 
     /**
      * 修改密码
      *
-     * @param authUser 登录对象
-     * @param json     参数
-     * @return ResponseData
+     * @param authUser         登录对象
+     * @param modifyPasswordVo 请求参数
+     * @return Integer
      */
     @PostMapping("/editPassword")
-    public ResponseData<Map<String, Object>> editPassword(@CurrentUser AuthUser authUser,
-            @RequestBody JSONObject json) {
-        String oldPassword = DigestUtils.md5Hex(json.getString("oldPassword")).toUpperCase();
-        String password = json.getString(SysConstants.P);
-        SysUser sysUser = sysUserService.getById(authUser.getId());
-        if (!oldPassword.equals(sysUser.getPassword())) {
-            return new ResponseData<>(ErrorCodes.ERR_PASSWORD_ERROR, ErrorInfo.ERR_PASS_ERROR);
-        }
-        Integer code = sysUserService.editPassword(authUser.getId(), password);
+    public ResponseResult<Integer> editPassword(@CurrentUser AuthUser authUser, @RequestBody ModifyPasswordVo modifyPasswordVo) {
+        if (modifyPasswordVo != null) {
+            String oldPassword = DigestUtils.md5Hex(modifyPasswordVo.getOldPassword()).toUpperCase();
+            SysUser sysUser = sysUserService.getById(authUser.getId());
 
-        Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, code);
-        return new ResponseData<>(result);
+            if (!oldPassword.equals(sysUser.getPassword())) {
+                return ResponseResult.error(ErrorInfo.ERR_PASS_ERROR);
+            }
+            int result = sysUserService.editPassword(authUser.getId(), modifyPasswordVo.getPassword());
+            return ResponseResult.success(result);
+        }
+        return ResponseResult.error(ErrorInfo.ERR_PARAM);
     }
 
     /**

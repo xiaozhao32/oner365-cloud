@@ -46,6 +46,21 @@ public class ErrorInfo {
      */
     public static final String ERR_CAPTCHA_ERROR = "验证码不正确!";
 
+    /**
+     * 保存失败
+     */
+    public static final String ERR_SAVE_ERROR = "保存失败!";
+    
+    /**
+     * 查询失败
+     */
+    public static final String ERR_QUERY_ERROR = "查询失败!";
+    
+    /**
+     * 删除失败
+     */
+    public static final String ERR_DELETE_ERROR = "删除失败!";
+    
     private ErrorInfo() {
 
     }
