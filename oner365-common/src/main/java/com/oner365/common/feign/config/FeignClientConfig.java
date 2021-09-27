@@ -22,7 +22,6 @@ public class FeignClientConfig {
     @Bean
     public RequestInterceptor headerInterceptor() {
         return requestTemplate -> {
-//            requestTemplate.header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE);
             try {
                 requestTemplate.header(HttpHeaders.AUTHORIZATION, RequestUtils.getToken());
             } catch (Exception e) {
