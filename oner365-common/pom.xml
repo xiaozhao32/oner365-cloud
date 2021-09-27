@@ -95,17 +95,6 @@
 			<artifactId>jjwt</artifactId>
 		</dependency>
 		
-		<!-- openfeign -->
-		<dependency>
-		    <groupId>io.github.openfeign.form</groupId>
-		    <artifactId>feign-form-spring</artifactId>
-		</dependency>
-					
-		<dependency>
-		    <groupId>io.github.openfeign.form</groupId>
-		    <artifactId>feign-form</artifactId>
-		</dependency>
-		
 		<!-- spring -->
 		<dependency>
 		    <groupId>org.springframework.data</groupId>
