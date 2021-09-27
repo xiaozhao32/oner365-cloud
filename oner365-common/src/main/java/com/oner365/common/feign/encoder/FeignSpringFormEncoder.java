@@ -44,7 +44,7 @@ public class FeignSpringFormEncoder extends FormEncoder {
 
     @Override
     public void encode(Object object, Type bodyType, RequestTemplate template) {
-        if (bodyType.equals(MultipartFile.class)) {
+    	 if (bodyType.equals(MultipartFile.class)) {
             MultipartFile file = (MultipartFile) object;
             Map<String, Object> data = Collections.singletonMap(file.getName(), object);
             super.encode(data, MAP_STRING_WILDCARD, template);
@@ -73,4 +73,5 @@ public class FeignSpringFormEncoder extends FormEncoder {
         }
         super.encode(object, bodyType, template);
     }
+
 }

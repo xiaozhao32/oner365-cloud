@@ -39,7 +39,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<org.springframework.security.version>5.5.2</org.springframework.security.version>
-		<org.springframework.cloud.version>2020.0.3</org.springframework.cloud.version>
+		<org.springframework.cloud.version>2020.0.4</org.springframework.cloud.version>
 		<org.springframework.boot.version>2.5.4</org.springframework.boot.version>
 		<org.springframework.version>5.3.9</org.springframework.version>
 
@@ -60,7 +60,8 @@
 		<io.github.openfeign.version>3.8.0</io.github.openfeign.version>
 		<io.undertow.version>2.2.10.Final</io.undertow.version>
 		<io.netty.version>4.1.67.Final</io.netty.version>
-
+		
+ 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 	</properties>
 
 	<dependencyManagement>

@@ -1,7 +1,7 @@
 #部署目录
 deploy:
-  location: /Users/zhaoyong/Documents/git/oner365-cloud
-  name: /Users/zhaoyong/Documents/deploy_nacos
+  location: d:/gitee/oner365-cloud
+  name: d:/gitee/deploy_nacos
   version: 1.0.0-SNAPSHOT
   suffix: jar
   project: oner365-elasticsearch,oner365-files,oner365-gateway,oner365-hadoop,oner365-kafka,oner365-monitor,oner365-rocketmq,oner365-system
@@ -10,8 +10,8 @@ deploy:
 #服务器配置  
 servers:
   deploy: false
-  name: /usr/local/tomcat/oner365
-  ip: 192.168.101.130
+  name: /home/oner365
+  ip: 192.168.33.44
   port: 22
   username: root
-  password: root
+  password: Ed30158d44

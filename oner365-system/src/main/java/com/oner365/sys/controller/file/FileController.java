@@ -6,12 +6,11 @@ import java.util.Map;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -42,8 +41,8 @@ public class FileController extends BaseController {
      * @param multipartFile 文件
      * @return ResponseData
      */
-    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseData<Map<String, Object>> uploadFile(@RequestPart("multipartFile") MultipartFile multipartFile) {
+    @PostMapping(value = "/upload")
+    public ResponseData<Map<String, Object>> uploadFile(@RequestBody MultipartFile multipartFile) {
         return fileServiceClient.upload(multipartFile);
     }
 
