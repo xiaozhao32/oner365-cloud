@@ -1,0 +1,158 @@
+1、nacos
+	-- nacos-server-2.0.2.zip
+		-- 修改配置文件
+			-- application.properties
+				-- spring.datasource.platform=mysql
+				-- db.url.0=jdbc:mysql://192.168.33.43:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
+				-- db.user.0=root
+				-- db.password.0=1234
+		-- 创建数据库
+			-- 源码中脚本
+				-- \oner365-cloud\scripts\*
+		-- 启动nacos
+			-- ./startup.sh -m standalone
+		-- 访问地址
+			-- http://xxx.xxx.x.xxx:8488/nacos
+				-- http://192.168.33.44:8488/nacos
+2、skywalking
+	-- apache-skywalking-apm-es7-8.6.0.tar.gz
+		-- 解压
+			-- tar -zxvf apache-skywalking-apm-es7-8.6.0.tar.gz
+		-- 修改配置文件
+			-- application.yml
+				-- 注册中心修改
+					-- cluster:
+						 selector: ${SW_CLUSTER:nacos}
+						 nacos:
+						    serviceName: ${SW_SERVICE_NAME:"SkyWalking_OAP_Cluster"}
+						    hostPort: ${SW_CLUSTER_NACOS_HOST_PORT:192.168.33.43:8848}
+						    # Nacos Configuration namespace
+						    namespace: ${SW_CLUSTER_NACOS_NAMESPACE:"public"}
+						    # Nacos auth username
+						    username: ${SW_CLUSTER_NACOS_USERNAME:"nacos"}
+						    password: ${SW_CLUSTER_NACOS_PASSWORD:"nacos"}
+						    # Nacos auth accessKey
+						    accessKey: ${SW_CLUSTER_NACOS_ACCESSKEY:""}
+						    secretKey: ${SW_CLUSTER_NACOS_SECRETKEY:""}
+				-- 数据库连接、es配置修改
+					-- storage:
+						  selector: ${SW_STORAGE:mysql}
+						  elasticsearch:
+						    nameSpace: ${SW_NAMESPACE:""}
+						    clusterNodes: ${SW_STORAGE_ES_CLUSTER_NODES:192.168.33.42:9200}
+						    protocol: ${SW_STORAGE_ES_HTTP_PROTOCOL:"http"}
+						    user: ${SW_ES_USER:""}
+						    password: ${SW_ES_PASSWORD:""}
+						    trustStorePath: ${SW_STORAGE_ES_SSL_JKS_PATH:""}
+						    trustStorePass: ${SW_STORAGE_ES_SSL_JKS_PASS:""}
+						    secretsManagementFile: ${SW_ES_SECRETS_MANAGEMENT_FILE:""} # Secrets management file in the properties format includes the username, password, which are managed by 3rd party tool.
+						    dayStep: ${SW_STORAGE_DAY_STEP:1} # Represent the number of days in the one minute/hour/day index.
+						    indexShardsNumber: ${SW_STORAGE_ES_INDEX_SHARDS_NUMBER:1} # Shard number of new indexes
+						    indexReplicasNumber: ${SW_STORAGE_ES_INDEX_REPLICAS_NUMBER:1} # Replicas number of new indexes
+						    # Super data set has been defined in the codes, such as trace segments.The following 3 config would be improve es performance when storage super size data in es.
+						    superDatasetDayStep: ${SW_SUPERDATASET_STORAGE_DAY_STEP:-1} # Represent the number of days in the super size dataset record index, the default value is the same as dayStep when the value is less than 0
+						    superDatasetIndexShardsFactor: ${SW_STORAGE_ES_SUPER_DATASET_INDEX_SHARDS_FACTOR:5} #  This factor provides more shards for the super data set, shards number = indexShardsNumber * superDatasetIndexShardsFactor. Also, this factor effects Zipkin and Jaeger traces.
+						    superDatasetIndexReplicasNumber: ${SW_STORAGE_ES_SUPER_DATASET_INDEX_REPLICAS_NUMBER:0} # Represent the replicas number in the super size dataset record index, the default value is 0.
+						    bulkActions: ${SW_STORAGE_ES_BULK_ACTIONS:1000} # Execute the async bulk record data every ${SW_STORAGE_ES_BULK_ACTIONS} requests
+						    flushInterval: ${SW_STORAGE_ES_FLUSH_INTERVAL:10} # flush the bulk every 10 seconds whatever the number of requests
+						    concurrentRequests: ${SW_STORAGE_ES_CONCURRENT_REQUESTS:2} # the number of concurrent requests
+						    resultWindowMaxSize: ${SW_STORAGE_ES_QUERY_MAX_WINDOW_SIZE:10000}
+						    metadataQueryMaxSize: ${SW_STORAGE_ES_QUERY_MAX_SIZE:5000}
+						    segmentQueryMaxSize: ${SW_STORAGE_ES_QUERY_SEGMENT_SIZE:200}
+						    profileTaskQueryMaxSize: ${SW_STORAGE_ES_QUERY_PROFILE_TASK_SIZE:200}
+						    oapAnalyzer: ${SW_STORAGE_ES_OAP_ANALYZER:"{\"analyzer\":{\"oap_analyzer\":{\"type\":\"stop\"}}}"} # the oap analyzer.
+						    oapLogAnalyzer: ${SW_STORAGE_ES_OAP_LOG_ANALYZER:"{\"analyzer\":{\"oap_log_analyzer\":{\"type\":\"standard\"}}}"} # the oap log analyzer. It could be customized by the ES analyzer configuration to support more language log formats, such as Chinese log, Japanese log and etc.
+						    advanced: ${SW_STORAGE_ES_ADVANCED:""}
+						  elasticsearch7:
+						    nameSpace: ${SW_NAMESPACE:""}
+						    clusterNodes: ${SW_STORAGE_ES_CLUSTER_NODES:192.168.33.42:9200}
+						    protocol: ${SW_STORAGE_ES_HTTP_PROTOCOL:"http"}
+						    trustStorePath: ${SW_STORAGE_ES_SSL_JKS_PATH:""}
+						    trustStorePass: ${SW_STORAGE_ES_SSL_JKS_PASS:""}
+						    dayStep: ${SW_STORAGE_DAY_STEP:1} # Represent the number of days in the one minute/hour/day index.
+						    indexShardsNumber: ${SW_STORAGE_ES_INDEX_SHARDS_NUMBER:1} # Shard number of new indexes
+						    indexReplicasNumber: ${SW_STORAGE_ES_INDEX_REPLICAS_NUMBER:1} # Replicas number of new indexes
+						    # Super data set has been defined in the codes, such as trace segments.The following 3 config would be improve es performance when storage super size data in es.
+						    superDatasetDayStep: ${SW_SUPERDATASET_STORAGE_DAY_STEP:-1} # Represent the number of days in the super size dataset record index, the default value is the same as dayStep when the value is less than 0
+						    superDatasetIndexShardsFactor: ${SW_STORAGE_ES_SUPER_DATASET_INDEX_SHARDS_FACTOR:5} #  This factor provides more shards for the super data set, shards number = indexShardsNumber * superDatasetIndexShardsFactor. Also, this factor effects Zipkin and Jaeger traces.
+						    superDatasetIndexReplicasNumber: ${SW_STORAGE_ES_SUPER_DATASET_INDEX_REPLICAS_NUMBER:0} # Represent the replicas number in the super size dataset record index, the default value is 0.
+						    user: ${SW_ES_USER:""}
+						    password: ${SW_ES_PASSWORD:""}
+						    secretsManagementFile: ${SW_ES_SECRETS_MANAGEMENT_FILE:""} # Secrets management file in the properties format includes the username, password, which are managed by 3rd party tool.
+						    bulkActions: ${SW_STORAGE_ES_BULK_ACTIONS:1000} # Execute the async bulk record data every ${SW_STORAGE_ES_BULK_ACTIONS} requests
+						    flushInterval: ${SW_STORAGE_ES_FLUSH_INTERVAL:10} # flush the bulk every 10 seconds whatever the number of requests
+						    concurrentRequests: ${SW_STORAGE_ES_CONCURRENT_REQUESTS:2} # the number of concurrent requests
+						    resultWindowMaxSize: ${SW_STORAGE_ES_QUERY_MAX_WINDOW_SIZE:10000}
+						    metadataQueryMaxSize: ${SW_STORAGE_ES_QUERY_MAX_SIZE:5000}
+						    segmentQueryMaxSize: ${SW_STORAGE_ES_QUERY_SEGMENT_SIZE:200}
+						    profileTaskQueryMaxSize: ${SW_STORAGE_ES_QUERY_PROFILE_TASK_SIZE:200}
+						    oapAnalyzer: ${SW_STORAGE_ES_OAP_ANALYZER:"{\"analyzer\":{\"oap_analyzer\":{\"type\":\"stop\"}}}"} # the oap analyzer.
+						    oapLogAnalyzer: ${SW_STORAGE_ES_OAP_LOG_ANALYZER:"{\"analyzer\":{\"oap_log_analyzer\":{\"type\":\"standard\"}}}"} # the oap log analyzer. It could be customized by the ES analyzer configuration to support more language log formats, such as Chinese log, Japanese log and etc.
+						    advanced: ${SW_STORAGE_ES_ADVANCED:""}
+					    mysql:
+						    properties:
+						      jdbcUrl: ${SW_JDBC_URL:"jdbc:mysql://192.168.33.43:3306/swtest"}
+						      dataSource.user: ${SW_DATA_SOURCE_USER:root}
+						      dataSource.password: ${SW_DATA_SOURCE_PASSWORD:1234}
+						      dataSource.cachePrepStmts: ${SW_DATA_SOURCE_CACHE_PREP_STMTS:true}
+						      dataSource.prepStmtCacheSize: ${SW_DATA_SOURCE_PREP_STMT_CACHE_SQL_SIZE:250}
+						      dataSource.prepStmtCacheSqlLimit: ${SW_DATA_SOURCE_PREP_STMT_CACHE_SQL_LIMIT:2048}
+						      dataSource.useServerPrepStmts: ${SW_DATA_SOURCE_USE_SERVER_PREP_STMTS:true}
+						    metadataQueryMaxSize: ${SW_STORAGE_MYSQL_QUERY_MAX_SIZE:5000}
+						    maxSizeOfArrayColumn: ${SW_STORAGE_MAX_SIZE_OF_ARRAY_COLUMN:20}
+						    numOfSearchableValuesPerTag: ${SW_STORAGE_NUM_OF_SEARCHABLE_VALUES_PER_TAG:2}
+				-- 启动
+					-- ./apache-skywalking-apm-bin-es7/bin/.startup.sh
+				-- 访问地址
+					-- http://192.168.33.44:8080
+3、服务组件
+	-- 服务组件打包、部署目录结构
+		-- 组件根目录（oner365）
+			-- lib（依赖包）
+			-- agent（skywalking）
+			-- 服务组件（oner365-getway、oner365-system等）
+				-- xxx.jar（oner365-gateway-1.0.0-SNAPSHOT.jar）
+				-- start.sh
+				-- tpid（启动进程号，启动生成）
+				-- resources
+					-- bootstrap.yml（启动配置）
+					-- logback-spring.xml（日志配置）
+			-- logs（所有服务默认日志目录）
+		-- 程序服务打包
+			-- 打包程序jar
+				-- maven命令
+					-- mvn clean install
+				-- eclipse
+					-- Run As
+						-- maven install
+			-- 打包发布程序包
+				-- 配置
+					-- oner365-deploy
+						-- src
+							-- main
+								-- resources
+									-- application.yml
+										-- 配置
+											-- 源码地址
+											-- 生成包地址
+											-- 需要打包的服务名称
+				-- 打包
+					-- com.oner365.deploy.test.DeployTest.java
+			
+
+	-- 例（所有服务部署步骤相同）
+		-- getway
+			-- 添加、修改配置文件
+				-- 地址
+					-- http://192.168.33.44:8848/nacos
+						-- 配置管理
+							-- 配置列表
+								-- 对应服务的配置文件
+									-- 各种连接地址配置等
+			-- 上传程序包（“程序服务打包”步骤中打成的部署包）
+			-- 启动服务
+				-- window系统生成start.sh可能出现换行错误（\n\r）
+					-- 去掉\r命令
+						-- sed -i 's/\r$//' start.sh 
+				-- ./start.sh
+
