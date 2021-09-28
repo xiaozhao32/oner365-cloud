@@ -19,6 +19,10 @@
             <groupId>com.oner365</groupId>
             <artifactId>oner365-common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.oner365</groupId>
+            <artifactId>oner365-api</artifactId>
+        </dependency>
 
 		<!-- spring-boot -->
         <dependency>

@@ -16,6 +16,7 @@ spring:
     
   cloud:
     nacos:
+      server-addr: 192.168.33.44:8488
       config:
         namespace: ${spring.profiles.active}
         group: DEFAULT_GROUP
