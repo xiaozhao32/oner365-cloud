@@ -6,8 +6,6 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
 /**
  * Swagger服务
  * 
@@ -16,7 +14,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableSwagger2
 @ComponentScan({ "com.oner365.common", "com.oner365.swagger", "com.oner365.api" })
 public class SpringSwaggerApplication {
 

@@ -127,6 +127,12 @@
 		    <groupId>org.springframework.cloud</groupId>
 		    <artifactId>spring-cloud-loadbalancer</artifactId>
 		</dependency>
-
+		
+		<!-- Swagger -->
+		<dependency>
+		    <groupId>com.github.xiaoymin</groupId>
+		    <artifactId>knife4j-spring-boot-starter</artifactId>
+		</dependency>
+				
 	</dependencies>
 </project>

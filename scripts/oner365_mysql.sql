@@ -88,6 +88,7 @@ INSERT INTO `nt_gateway_route` VALUES ('oner365-files', '[{\"name\":\"StripPrefi
 INSERT INTO `nt_gateway_route` VALUES ('oner365-generator', '[{\"args\": {\"parts\": \"1\"}, \"name\": \"StripPrefix\"}]', '[{\"args\": {\"pattern\": \"/generator/**\"}, \"name\": \"Path\"}]', 1, 'lb://oner365-generator', '1');
 INSERT INTO `nt_gateway_route` VALUES ('oner365-monitor', '[{\"args\": {\"parts\": \"1\"}, \"name\": \"StripPrefix\"}]', '[{\"args\": {\"pattern\": \"/monitor/**\"}, \"name\": \"Path\"}]', 1, 'lb://oner365-monitor', '1');
 INSERT INTO `nt_gateway_route` VALUES ('oner365-system', '[{\"args\": {\"parts\": \"1\"}, \"name\": \"StripPrefix\"}]', '[{\"args\": {\"pattern\": \"/system/**\"}, \"name\": \"Path\"}]', 1, 'lb://oner365-system', '1');
+INSERT INTO `nt_gateway_route` VALUES ('oner365-swagger', '[{\"args\": {\"parts\": \"1\"}, \"name\": \"StripPrefix\"}]', '[{\"args\": {\"pattern\": \"/swagger/**\"}, \"name\": \"Path\"}]', 1, 'lb://oner365-swagger', '1');
 COMMIT;
 
 -- ----------------------------

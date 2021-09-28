@@ -336,6 +336,18 @@
 				<artifactId>oshi-core</artifactId>
 				<version>5.8.0</version>
 			</dependency>
+			
+			<!-- Swagger -->
+			<dependency>
+			    <groupId>com.github.xiaoymin</groupId>
+			    <artifactId>knife4j-spring-boot-starter</artifactId>
+			    <version>3.0.3</version>
+			</dependency>
+			<dependency>
+			    <groupId>io.springfox</groupId>
+			    <artifactId>springfox-spring-web</artifactId>
+			    <version>3.0.0</version>
+			</dependency>
 
 			<!-- thoughtworks -->
 			<dependency>
