@@ -156,3 +156,13 @@
 						-- sed -i 's/\r$//' start.sh 
 				-- ./start.sh
 
+4、前端vue部署
+	-- 安装及配置nginx
+		-- 查看《第三方软件安装说明》.docx
+		
+	-- vue部署
+		-- 上传程序
+			-- /home/oner365/oner365-vue
+		-- 启动nginx
+		-- 访问地址
+			--  http://192.168.33.44

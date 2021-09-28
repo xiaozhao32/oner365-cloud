@@ -1,0 +1,14 @@
+[Unit] 
+   
+Description=nginx_vue
+After=network.target remote-fs.target nss-lookup.target 
+   
+[Service] 
+Type=forking
+ExecStart=/usr/sbin/nginx -c /usr/local/nginx/nginx_vue.conf
+ExecReload=/bin/kill -s HUP $MAINPID 
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true 
+     
+[Install] 
+WantedBy=multi-user.target

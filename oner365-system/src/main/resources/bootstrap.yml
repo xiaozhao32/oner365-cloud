@@ -9,6 +9,12 @@ spring:
   profiles:
     active: dev
     
+  boot:
+    admin:
+      client: 
+        url: http://localhost:8706 
+        api-path: 
+        
   cloud:
     nacos:
       server-addr: 192.168.33.44:8848

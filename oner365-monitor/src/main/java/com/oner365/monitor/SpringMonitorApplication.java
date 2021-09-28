@@ -17,6 +17,7 @@ import org.springframework.web.client.RestTemplate;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
+//@EnableAdminServer
 @MapperScan({ "com.oner365.monitor.mapper" })
 @ComponentScan({ "com.oner365.common", "com.oner365.monitor", "com.oner365.api" })
 public class SpringMonitorApplication {
