@@ -65,6 +65,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title(properties.getName())
+                .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.txt")
                 .description(properties.getDescription())
                 .contact(new Contact(properties.getName(), properties.getUrl(), properties.getEmail()))
                 .version(properties.getVersion())
@@ -84,7 +85,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
      */
     private List<SecurityContext> securityContexts() {
         return Collections.singletonList(SecurityContext.builder().securityReferences(Collections.singletonList(
-                new SecurityReference(HttpHeaders.AUTHORIZATION, new AuthorizationScope[] { new AuthorizationScope("global", "") })))
+                new SecurityReference(HttpHeaders.AUTHORIZATION, new AuthorizationScope[] { 
+                        new AuthorizationScope("global", properties.getDescription()) })))
                 .build());
     }
 
