@@ -3,7 +3,6 @@ package com.oner365.swagger.controller.system.auth;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +22,6 @@ import io.swagger.annotations.ApiParam;
  * 
  * @author zhaoyong
  */
-@RefreshScope
 @RestController
 @RequestMapping("/system/auth")
 @Api(value = "用户中心", tags = "用户中心接口")
@@ -32,6 +30,12 @@ public class AuthController extends BaseController {
     @Autowired
     private IAuthServiceClient client;
 
+    /**
+     * 用户中心-用户登录
+     * @param userName 账号
+     * @param password 密码
+     * @return ResponseData<Map<String, Object>>
+     */
     @ApiOperation(value = "用户登录", notes = "用户中心-用户登录", httpMethod = "POST", response = ResponseData.class)
     @PostMapping("/login")
     public ResponseData<Map<String, Object>> login(

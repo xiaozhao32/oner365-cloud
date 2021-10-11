@@ -236,6 +236,7 @@ public class SysTaskVo implements Serializable {
         result.setCronExpression(this.getCronExpression());
         result.setExecuteStatus(this.getExecuteStatus());
         result.setInvokeParam(this.getInvokeParam());
+        result.setInvokeTarget(this.getInvokeTarget());
         result.setMisfirePolicy(this.getMisfirePolicy());
         result.setRemark(this.getRemark());
         result.setStatus(this.getStatus());
