@@ -1,11 +1,13 @@
 package com.oner365.common.enums;
 
+import java.io.Serializable;
+
 /**
  * 枚举 - 状态
  * 
  * @author zhaoyong
  */
-public enum StatusEnum {
+public enum StatusEnum implements Serializable {
     
     /** 有效 */
     YES("1", "有效"),
