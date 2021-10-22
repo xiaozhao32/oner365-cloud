@@ -1,3 +1,4 @@
+
 package com.oner365.common.cache;
 
 import java.util.Optional;
@@ -73,6 +74,7 @@ public class GuavaCache<T> {
      * 构造方法
      */
     public GuavaCache() {
+        super();
     }
 
     /**

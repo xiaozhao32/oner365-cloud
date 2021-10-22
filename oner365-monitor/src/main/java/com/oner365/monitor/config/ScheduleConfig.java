@@ -1,3 +1,4 @@
+
 package com.oner365.monitor.config;
 
 import java.util.Properties;
@@ -28,8 +29,10 @@ public class ScheduleConfig {
         bean.setResources(new ClassPathResource("quartz.yml"));
         Properties prop = bean.getObject();
 
-        factory.setQuartzProperties(prop);
-        factory.setSchedulerName(prop.getProperty("org.quartz.scheduler.instanceName"));
+        if (prop != null) {
+            factory.setQuartzProperties(prop);
+            factory.setSchedulerName(prop.getProperty("org.quartz.scheduler.instanceName"));
+        }
         // 延时启动
         factory.setStartupDelay(1);
         factory.setApplicationContextSchedulerContextKey("applicationContextKey");

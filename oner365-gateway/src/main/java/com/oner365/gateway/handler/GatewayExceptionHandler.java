@@ -1,3 +1,4 @@
+
 package com.oner365.gateway.handler;
 
 import java.util.HashMap;
@@ -10,6 +11,7 @@ import org.springframework.cloud.gateway.support.NotFoundException;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.core.io.buffer.DataBufferFactory;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.server.reactive.ServerHttpRequest;
@@ -44,9 +46,9 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         LOGGER.error("[网关异常] 请求路径:{}, 异常信息:{}", request.getPath(), ex.getMessage());
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         response.setStatusCode(HttpStatus.OK);
-
+        
         Map<String, Object> errorAttributes = setErrorAttribute(
-                request.getMethod().name(), request.getPath().value(), ex);
+                request.getMethod(), request.getPath().value(), ex);
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory bufferFactory = response.bufferFactory();
             return bufferFactory.wrap(JSON.toJSONBytes(errorAttributes));
@@ -60,9 +62,11 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
      * @param ex 异常
      * @return Map<String, Object>
      */
-    private Map<String, Object> setErrorAttribute(String method, String path, Throwable ex) {
+    private Map<String, Object> setErrorAttribute(HttpMethod method, String path, Throwable ex) {
         Map<String, Object> result = new HashMap<>(8);
-        result.put(GatewayConstants.METHOD, method);
+        if (method != null) {
+            result.put(GatewayConstants.METHOD, method.name());
+        }
         result.put(GatewayConstants.PATH, path);
         result.put(GatewayConstants.RESULT, ex.getMessage());
 

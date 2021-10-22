@@ -12,6 +12,9 @@ import java.util.Optional;
  *
  */
 public class DataUtils {
+    
+    private DataUtils() {
+    }
 
     /**
      * 判断一个Object 是否为空

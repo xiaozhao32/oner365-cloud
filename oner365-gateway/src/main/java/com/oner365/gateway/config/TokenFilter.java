@@ -1,6 +1,7 @@
 package com.oner365.gateway.config;
 
 import java.net.InetAddress;
+import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.util.List;
@@ -32,6 +33,7 @@ import com.oner365.gateway.entity.SysLog;
 import com.oner365.gateway.jwt.JwtUtils;
 import com.oner365.gateway.log.event.SysLogEvent;
 
+import io.jsonwebtoken.lang.Assert;
 import reactor.core.publisher.Mono;
 
 /**
@@ -141,10 +143,12 @@ public class TokenFilter implements GlobalFilter, Ordered {
         String uri = request.getURI().getRawPath();
         // 请求方法
         HttpMethod method = request.getMethod();
-        String methodName = null;
-        if (method != null) {
-            methodName = method.name();
+        if (method == null) {
+            Assert.notNull(method, "HttpMethod is not null");
+            return;
         }
+        
+        String methodName = method.name();
         // 除get请求一律保存日志
         if (!HttpMethod.GET.matches(methodName)) {
             SysLog sysLog = new SysLog();
@@ -181,8 +185,12 @@ public class TokenFilter implements GlobalFilter, Ordered {
         if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeaders().getFirst("HTTP_X_FORWARDED_FOR");
         }
-        if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddress().getAddress().getHostAddress();
+        if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip) 
+                && request.getRemoteAddress() != null) {
+            InetSocketAddress address = request.getRemoteAddress();
+            if (address != null && address.getAddress() != null) {
+                ip = address.getAddress().getHostAddress();
+            }
         }
         if (IP_LOCALHOST.equals(ip)) {
             ip = getLocalhost();

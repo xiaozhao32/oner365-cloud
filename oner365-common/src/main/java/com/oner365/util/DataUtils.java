@@ -1,3 +1,5 @@
+
+
 package com.oner365.util;
 
 import java.io.BufferedReader;
@@ -81,7 +83,7 @@ public class DataUtils {
     public static final char C_BACKSLASH = '\\';
     public static final char C_DELIMITER_START = '{';
     public static final char C_DELIMITER_END = '}';
-
+    
     private DataUtils() {
 
     }
@@ -94,7 +96,8 @@ public class DataUtils {
      * @return boolean
      */
     public static boolean judge(String id, Object obj) {
-        synchronized (obj) {
+        final Object object = obj;
+        synchronized (object) {
             // 重复请求判断
             if (CACHE_MAP.containsKey(id)) {
                 // 重复请求

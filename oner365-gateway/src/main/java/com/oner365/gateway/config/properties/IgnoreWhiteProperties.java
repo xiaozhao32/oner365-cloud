@@ -24,6 +24,7 @@ public class IgnoreWhiteProperties {
      * 构造方法
      */
     public IgnoreWhiteProperties() {
+        super();
     }
 
     /**

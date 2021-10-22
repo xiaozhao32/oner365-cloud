@@ -1,3 +1,4 @@
+
 package com.oner365.deploy.utils;
 
 import java.io.BufferedReader;
@@ -26,6 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.Assert;
 
 import com.google.common.collect.Lists;
 import com.oner365.common.exception.ProjectRuntimeException;
@@ -71,6 +73,8 @@ public class DeployUtils {
      */
     public static DeployEntity getDeployEntity() {
         Properties properties = getProperties();
+        Assert.notNull(properties, "Properties is not null");
+        
         List<String> projects = Arrays.asList(StringUtils.split(properties.get("deploy.project").toString(), ","));
         List<String> libs = Arrays.asList(StringUtils.split(properties.get("deploy.lib").toString(), ","));
         
@@ -90,6 +94,7 @@ public class DeployUtils {
      */
     public static ServerEntity getServerEntity() {
         Properties properties = getProperties();
+        Assert.notNull(properties, "Properties is not null");
         
         ServerEntity result = new ServerEntity();
         result.setIsDeploy(Boolean.valueOf(properties.getProperty("servers.deploy")));
@@ -311,8 +316,11 @@ public class DeployUtils {
             exec.setStreamHandler(streamHandler);
             exec.execute(commandLine, handler);
             handler.waitFor();
-        } catch (Exception e) {
-            LOGGER.error("execExecuteCommand error:", e);
+        } catch (IOException e) {
+            LOGGER.error("IOException execExecuteCommand error:", e);
+        } catch (InterruptedException e) {
+            LOGGER.error("InterruptedException execExecuteCommand error:", e);
+            Thread.currentThread().interrupt();
         }
     }
 

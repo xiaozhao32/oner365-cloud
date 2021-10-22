@@ -261,8 +261,11 @@ public class DeployUtils {
             exec.setStreamHandler(streamHandler);
             exec.execute(commandLine, handler);
             handler.waitFor();
-        } catch (Exception e) {
-            LOGGER.error("execExecuteCommand error:", e);
+        } catch (IOException e) {
+            LOGGER.error("IOException execExecuteCommand error:", e);
+        } catch (InterruptedException e) {
+            LOGGER.error("InterruptedException execExecuteCommand error:", e);
+            Thread.currentThread().interrupt();
         }
     }
 
