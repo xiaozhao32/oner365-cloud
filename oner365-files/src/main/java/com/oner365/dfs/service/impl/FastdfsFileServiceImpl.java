@@ -90,8 +90,13 @@ public class FastdfsFileServiceImpl implements IFastdfsFileService {
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public int deleteById(String id) {
-        dao.deleteById(id);
-        return 1;
+        try {
+            dao.deleteById(id);
+            return PublicConstants.SUCCESS_CODE;
+        } catch (Exception e) {
+            LOGGER.error("Error deleteById: ", e);
+        }
+        return PublicConstants.ERROR_CODE;
     }
 
 }

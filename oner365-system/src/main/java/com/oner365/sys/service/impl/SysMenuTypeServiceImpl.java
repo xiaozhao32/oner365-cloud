@@ -20,6 +20,7 @@ import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -90,7 +91,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
     })
     public SysMenuType save(SysMenuType menuType) {
         if (Strings.isNullOrEmpty(menuType.getId())) {
-            menuType.setStatus(PublicConstants.STATUS_YES);
+            menuType.setStatus(StatusEnum.YES.getOrdinal());
             menuType.setCreateTime(new Timestamp(System.currentTimeMillis()));
         } else {
             menuType.setUpdateTime(new Timestamp(System.currentTimeMillis()));
@@ -109,9 +110,9 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             save(entity);
-            return 1;
+            return PublicConstants.SUCCESS_CODE;
         }
-        return 0;
+        return PublicConstants.ERROR_CODE;
     }
 
     @Override
@@ -126,7 +127,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
         } catch (Exception e) {
             LOGGER.error("Error checkCode:", e);
         }
-        return 0L;
+        return PublicConstants.NOT_EXISTS;
     }
 
     @Override
@@ -143,7 +144,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
     })
     public int deleteById(String id) {
         dao.deleteById(id);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
 
 }

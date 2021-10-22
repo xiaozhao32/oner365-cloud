@@ -28,6 +28,7 @@ import com.oner365.common.cache.RedisCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -188,7 +189,7 @@ public class SysUserServiceImpl implements ISysUserService {
         Criteria<SysUser> criteria = new Criteria<>();
         criteria.add(Restrictions.eq(SysConstants.USER_NAME, userName));
         criteria.add(Restrictions.eq(SysConstants.PASS, password));
-        criteria.add(Restrictions.eq(SysConstants.STATUS, PublicConstants.STATUS_YES));
+        criteria.add(Restrictions.eq(SysConstants.STATUS, StatusEnum.YES.getOrdinal()));
         Optional<SysUser> optional = userDao.findOne(criteria);
         return optional.orElse(null);
     }
@@ -215,7 +216,7 @@ public class SysUserServiceImpl implements ISysUserService {
     public SysUser saveUser(SysUser entity) {
         try {
             Timestamp time = new Timestamp(System.currentTimeMillis());
-            entity.setActiveStatus(PublicConstants.STATUS_YES);
+            entity.setActiveStatus(StatusEnum.YES.getOrdinal());
             entity.setCreateTime(time);
             entity.setLastTime(time);
 
@@ -241,8 +242,8 @@ public class SysUserServiceImpl implements ISysUserService {
                 SysUserJob sysUserJob = new SysUserJob();
                 sysUserJob.setSysJob(sysJob);
                 sysUserJob.setSysUser(entity);
-                sysUserJob.setPositionOrder(1);
-                sysUserJob.setStatus(PublicConstants.STATUS_YES);
+                sysUserJob.setPositionOrder(Integer.parseInt(PublicConstants.DEFAULT_VALUE));
+                sysUserJob.setStatus(StatusEnum.YES.getOrdinal());
                 sysUserJob.setCreateTime(time);
                 sysUserJob.setUpdateTime(time);
                 userJobDao.save(sysUserJob);
@@ -255,8 +256,8 @@ public class SysUserServiceImpl implements ISysUserService {
                 SysUserOrg sysUserOrg = new SysUserOrg();
                 sysUserOrg.setSysOrganization(sysOrg);
                 sysUserOrg.setSysUser(entity);
-                sysUserOrg.setPositionOrder(1);
-                sysUserOrg.setStatus(PublicConstants.STATUS_YES);
+                sysUserOrg.setPositionOrder(Integer.parseInt(PublicConstants.DEFAULT_VALUE));
+                sysUserOrg.setStatus(StatusEnum.YES.getOrdinal());
                 sysUserOrg.setCreateTime(time);
                 sysUserOrg.setUpdateTime(time);
                 userOrgDao.save(sysUserOrg);
@@ -281,7 +282,7 @@ public class SysUserServiceImpl implements ISysUserService {
         userOrgDao.deleteUserOrgByUserId(id);
         userRoleDao.deleteUserRoleByUserId(id);
         userDao.deleteById(id);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
 
     @Override
@@ -296,7 +297,7 @@ public class SysUserServiceImpl implements ISysUserService {
         } catch (Exception e) {
             LOGGER.error("Error checkUserName:", e);
         }
-        return 0L;
+        return PublicConstants.NOT_EXISTS;
     }
 
     @Override
@@ -307,9 +308,9 @@ public class SysUserServiceImpl implements ISysUserService {
         if (optional.isPresent()) {
             optional.get().setPassword(DigestUtils.md5Hex(p).toUpperCase());
             userDao.save(optional.get());
-            return 1;
+            return PublicConstants.SUCCESS_CODE;
         }
-        return 0;
+        return PublicConstants.ERROR_CODE;
     }
 
     @Override
@@ -320,9 +321,9 @@ public class SysUserServiceImpl implements ISysUserService {
         if (optional.isPresent()) {
             optional.get().setStatus(status);
             userDao.save(optional.get());
-            return 1;
+            return PublicConstants.SUCCESS_CODE;
         }
-        return 0;
+        return PublicConstants.ERROR_CODE;
     }
 
     @Override

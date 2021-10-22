@@ -19,6 +19,7 @@ import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -89,7 +90,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public SysMenuOperation save(SysMenuOperation menuOperation) {
         if (Strings.isNullOrEmpty(menuOperation.getId())) {
-            menuOperation.setStatus(PublicConstants.STATUS_YES);
+            menuOperation.setStatus(StatusEnum.YES.getOrdinal());
             menuOperation.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }
         menuOperation.setUpdateTime(new Timestamp(System.currentTimeMillis()));
@@ -105,7 +106,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
         // 删除操作与角色关联
         // 删除操作
         menuOperationDao.deleteById(id);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
     
     @Override
@@ -126,7 +127,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
         } catch (Exception e) {
             LOGGER.error("Error checkCode:", e);
         }
-        return 0L;
+        return PublicConstants.NOT_EXISTS;
     }
 
 }

@@ -19,6 +19,7 @@ import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
@@ -84,7 +85,7 @@ public class SysJobServiceImpl implements ISysJobService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public SysJob save(SysJob job) {
         if (Strings.isNullOrEmpty(job.getId())) {
-            job.setStatus(PublicConstants.STATUS_YES);
+            job.setStatus(StatusEnum.YES.getOrdinal());
             job.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }
         job.setUpdateTime(new Timestamp(System.currentTimeMillis()));
@@ -96,7 +97,7 @@ public class SysJobServiceImpl implements ISysJobService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public int deleteById(String id) {
         dao.deleteById(id);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
     
     @Override
@@ -107,9 +108,9 @@ public class SysJobServiceImpl implements ISysJobService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             this.save(entity);
-            return 1;
+            return PublicConstants.SUCCESS_CODE;
         }
-        return 0;
+        return PublicConstants.ERROR_CODE;
     }
 
 }

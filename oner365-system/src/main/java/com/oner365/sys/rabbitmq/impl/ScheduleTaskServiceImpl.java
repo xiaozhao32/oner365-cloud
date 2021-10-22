@@ -14,6 +14,7 @@ import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
 import com.oner365.api.rabbitmq.dto.UpdateTaskExecuteSatusDto;
 import com.oner365.common.ResponseData;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.sys.client.IMonitorServiceClient;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.util.DataUtils;
@@ -51,7 +52,7 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
             ResponseData<Object> data = monitorServiceClient.getInfo(taskId);
             if (data.getCode() == PublicConstants.SUCCESS_CODE) {
                 JSONObject json = JSON.parseObject(data.getResult().toString());
-                if (!PublicConstants.STATUS_NO.equals(json.getString(EXECUTE_STATUS))) {
+                if (!StatusEnum.NO.getOrdinal().equals(json.getString(EXECUTE_STATUS))) {
                     execute(taskId);
                 }
             }
@@ -62,17 +63,17 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
         long time = System.currentTimeMillis();
         UpdateTaskExecuteSatusDto updateTask = new UpdateTaskExecuteSatusDto();
         updateTask.setTaskId(taskId);
-        updateTask.setExecuteStatus(PublicConstants.STATUS_NO);
+        updateTask.setExecuteStatus(StatusEnum.NO.getOrdinal());
         scheduleExecuteService.updateTaskExecuteStatus(updateTask);
         LOGGER.info("taskExecute  update sysTask  executeStatus = 1");
-        updateTask.setExecuteStatus(PublicConstants.STATUS_YES);
+        updateTask.setExecuteStatus(StatusEnum.YES.getOrdinal());
         scheduleExecuteService.updateTaskExecuteStatus(updateTask);
         LOGGER.info("taskExecute  saveTaskLog ");
         SysTaskLogDto log = new SysTaskLogDto();
         log.setTaskId(taskId);
         log.setExecuteIp(DataUtils.getLocalhost());
         log.setExecuteServerName(SysConstants.SCHEDULE_SERVER_NAME);
-        log.setStatus(PublicConstants.STATUS_YES);
+        log.setStatus(StatusEnum.YES.getOrdinal());
         log.setTaskMessage("执行时间：" + (System.currentTimeMillis() - time) + "毫秒");
         scheduleExecuteService.saveExecuteTaskLog(log);
     }

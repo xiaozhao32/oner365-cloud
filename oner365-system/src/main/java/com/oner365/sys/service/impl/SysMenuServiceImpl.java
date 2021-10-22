@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
 import com.oner365.common.query.Restrictions;
@@ -78,7 +79,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         @CacheEvict(value = CACHE_ROLE_NAME, allEntries = true)
     })
     public SysMenu save(SysMenu menu) {
-        menu.setStatus(PublicConstants.STATUS_YES);
+        menu.setStatus(StatusEnum.YES.getOrdinal());
         menu.setCreateTime(new Timestamp(System.currentTimeMillis()));
         menu.setUpdateTime(new Timestamp(System.currentTimeMillis()));
         menuDao.save(menu);
@@ -108,9 +109,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             menuDao.save(entity);
-            return 1;
+            return PublicConstants.SUCCESS_CODE;
         }
-        return 0;
+        return PublicConstants.ERROR_CODE;
     }
 
     @Override
@@ -141,7 +142,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         Criteria<SysMenu> criteria = new Criteria<>();
         criteria.add(Restrictions.eq("menuTypeId", menuTypeId));
         criteria.add(Restrictions.eq("parentId", parentId));
-        criteria.add(Restrictions.eq(SysConstants.STATUS, PublicConstants.STATUS_YES));
+        criteria.add(Restrictions.eq(SysConstants.STATUS, StatusEnum.YES.getOrdinal()));
         return menuDao.findAll(criteria);
     }
 
@@ -236,7 +237,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     public int deleteById(String id) {
         roleMenuDao.deleteByMenuId(id);
         menuDao.deleteById(id);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
 
 }

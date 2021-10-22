@@ -102,7 +102,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
         } catch (Exception e) {
             LOGGER.error("Error checkCode:", e);
         }
-        return 0L;
+        return PublicConstants.NOT_EXISTS;
     }
     
     @Override
@@ -113,7 +113,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
     })
     public int deleteById(String id) {
         dao.deleteById(id);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
     
     @Override
@@ -127,9 +127,9 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             this.save(entity);
-            return 1;
+            return PublicConstants.SUCCESS_CODE;
         }
-        return 0;
+        return PublicConstants.ERROR_CODE;
     }
 
 }

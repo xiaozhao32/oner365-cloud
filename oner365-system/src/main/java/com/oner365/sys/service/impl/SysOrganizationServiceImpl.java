@@ -18,6 +18,7 @@ import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
 import com.oner365.common.query.Restrictions;
@@ -65,7 +66,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public int deleteById(String id) {
         dao.deleteById(id);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
 
     @Override
@@ -80,7 +81,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
         } catch (Exception e) {
             LOGGER.error("Error checkCode:", e);
         }
-        return 0L;
+        return PublicConstants.NOT_EXISTS;
     }
 
     @Override
@@ -119,7 +120,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
     public SysOrganization save(SysOrganization org) {
         if (Strings.isNullOrEmpty(org.getId())) {
             org.setId(org.getOrgCode());
-            org.setStatus(PublicConstants.STATUS_YES);
+            org.setStatus(StatusEnum.YES.getOrdinal());
             org.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }
 
@@ -245,7 +246,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
         SysOrganization entity = this.getById(id);
         entity.setStatus(status);
         this.save(entity);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
 
 }

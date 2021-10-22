@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.constants.ErrorInfo;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.query.AttributeBean;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -86,7 +87,7 @@ public class SysMenuTypeController extends BaseController {
     public List<SysMenuType> findAll() {
         QueryCriteriaBean data = new QueryCriteriaBean();
         List<AttributeBean> whereList = new ArrayList<>();
-        AttributeBean attribute = new AttributeBean(SysConstants.STATUS, PublicConstants.STATUS_YES);
+        AttributeBean attribute = new AttributeBean(SysConstants.STATUS, StatusEnum.YES.getOrdinal());
         whereList.add(attribute);
         data.setWhereList(whereList);
         return menuTypeService.findList(data);

@@ -24,6 +24,7 @@ import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -110,7 +111,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
             @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
     public SysRole save(SysRole role) {
         if (Strings.isNullOrEmpty(role.getId())) {
-            role.setStatus(PublicConstants.STATUS_YES);
+            role.setStatus(StatusEnum.YES.getOrdinal());
             role.setCreateTime(new Timestamp(System.currentTimeMillis()));
         }
         if (Strings.isNullOrEmpty(role.getRoleCode())) {
@@ -133,7 +134,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         roleMenuDao.deleteRoleMenuByRoleId(id);
         // 删除角色
         roleDao.deleteById(id);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
 
     @Override
@@ -148,7 +149,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         } catch (Exception e) {
             LOGGER.error("Error checkRoleName:", e);
         }
-        return 0L;
+        return PublicConstants.NOT_EXISTS;
     }
 
     @Override
@@ -165,7 +166,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
             roleMenu.setId(roleId + menuType + menuId.toString());
             roleMenuDao.save(roleMenu);
         });
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
 
     @Override
@@ -272,9 +273,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             this.save(entity);
-            return 1;
+            return PublicConstants.SUCCESS_CODE;
         }
-        return 0;
+        return PublicConstants.ERROR_CODE;
     }
 
 }

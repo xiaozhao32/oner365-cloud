@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -77,7 +78,7 @@ public class SysLogServiceImpl implements ISysLogService {
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     public int deleteById(String id) {
         dao.deleteById(id);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
 
     @Override
@@ -86,7 +87,7 @@ public class SysLogServiceImpl implements ISysLogService {
         criteria.add(Restrictions.lte(SysConstants.CREATE_TIME, date));
         List<SysLog> list = dao.findAll(criteria);
         dao.deleteAll(list);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
 
 }

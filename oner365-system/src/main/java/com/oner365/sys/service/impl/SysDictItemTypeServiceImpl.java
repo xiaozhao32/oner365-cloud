@@ -110,7 +110,7 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
         } catch (Exception e) {
             LOGGER.error("Error checkCode:", e);
         }
-        return 0L;
+        return PublicConstants.NOT_EXISTS;
     }
 
     @Override
@@ -128,7 +128,7 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
         List<SysDictItem> dictItemList = sysDictItemService.findList(data);
         dictItemList.forEach(dictItem -> sysDictItemService.deleteById(dictItem.getId()));
         dao.deleteById(id);
-        return 1;
+        return PublicConstants.SUCCESS_CODE;
     }
 
     @Override
@@ -147,9 +147,9 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             this.save(entity);
-            return 1;
+            return PublicConstants.SUCCESS_CODE;
         }
-        return 0;
+        return PublicConstants.ERROR_CODE;
     }
 
 }
