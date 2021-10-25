@@ -25,9 +25,7 @@ public class Criteria<T> implements Specification<T> {
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
         if (!criterionList.isEmpty()) {
             List<Predicate> predicates = Lists.newArrayList();
-            for (Criterion c : criterionList) {
-                predicates.add(c.toPredicate(root, query, builder));
-            }
+            criterionList.forEach(c -> predicates.add(c.toPredicate(root, query, builder)));
             query.distinct(true);
             // 将所有条件用 and 联合起来
             if (!predicates.isEmpty()) {

@@ -157,7 +157,6 @@ public class TokenFilter implements GlobalFilter, Ordered {
             sysLog.setOperationIp(ip);
             sysLog.setOperationPath(uri);
             sysLog.setOperationName(StringUtils.substringBefore(uri.substring(1), "/"));
-            sysLog.setOperationContext(JSON.toJSONString(request.getBody()));
             this.publisher.publishEvent(new SysLogEvent(sysLog));
         }
     }

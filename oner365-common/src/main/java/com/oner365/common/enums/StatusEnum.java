@@ -1,6 +1,8 @@
 package com.oner365.common.enums;
 
 import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Optional;
 
 /**
  * 枚举 - 状态
@@ -60,12 +62,10 @@ public enum StatusEnum implements Serializable {
      * @return StatusEnum
      */
     public static StatusEnum getCode(String code) {
-        for (StatusEnum enums : StatusEnum.values()) {
-            if (enums.getOrdinal().equals(code)) {
-                return enums;
-            }
-        }
-        return null;
+        Optional<StatusEnum> result = Arrays.stream(StatusEnum.values())
+                .filter(e -> e.getOrdinal().equals(code))
+                .findFirst();
+        return result.orElse(null);
     }
     
 }

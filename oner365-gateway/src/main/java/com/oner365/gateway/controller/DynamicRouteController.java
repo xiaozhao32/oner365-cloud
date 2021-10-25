@@ -1,5 +1,6 @@
 package com.oner365.gateway.controller;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -83,9 +84,7 @@ public class DynamicRouteController {
      */
     @DeleteMapping("/delete")
     public ResponseData<Map<String, Object>> delete(@RequestBody String... ids) {
-        for (String id : ids) {
-            dynamicRouteService.delete(id);
-        }
+        Arrays.stream(ids).forEach(id -> dynamicRouteService.delete(id));
 
         Map<String, Object> result = Maps.newHashMap();
         result.put(GatewayConstants.CODE, GatewayConstants.SUCCESS_CODE);

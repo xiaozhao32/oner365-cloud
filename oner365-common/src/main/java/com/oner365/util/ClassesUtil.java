@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -61,12 +62,7 @@ public class ClassesUtil {
      * @return boolean
      */
     public static <T> boolean isPrimitive(Class<T> paramClass) {
-        for (Class<?> clazz : CLASSES) {
-            if (clazz.isAssignableFrom(paramClass)) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(CLASSES).anyMatch(clazz -> clazz.isAssignableFrom(paramClass));
     }
 
     /**
@@ -75,12 +71,7 @@ public class ClassesUtil {
      * @return boolean
      */
     public static <T> boolean isPrimitiveArray(Class<T> paramClass) {
-        for (Class<?> clazz : ARRAY_CLASSES) {
-            if (clazz.isAssignableFrom(paramClass)) {
-                return true;
-            }
-        }
-        return false;
+        return Arrays.stream(ARRAY_CLASSES).anyMatch(clazz -> clazz.isAssignableFrom(paramClass));
     }
 
     /**
