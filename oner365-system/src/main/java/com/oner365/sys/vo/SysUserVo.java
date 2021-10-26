@@ -1,7 +1,7 @@
 package com.oner365.sys.vo;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.google.common.base.MoreObjects;
@@ -63,12 +63,12 @@ public class SysUserVo implements Serializable {
     /**
      * 最后登录时间
      */
-    private Timestamp lastTime;
+    private LocalDateTime lastTime;
 
     /**
      * 创建时间
      */
-    private Timestamp createTime;
+    private LocalDateTime createTime;
 
     /**
      * 最后登录ip
@@ -218,28 +218,28 @@ public class SysUserVo implements Serializable {
     /**
      * @return the lastTime
      */
-    public Timestamp getLastTime() {
+    public LocalDateTime getLastTime() {
         return lastTime;
     }
 
     /**
      * @param lastTime the lastTime to set
      */
-    public void setLastTime(Timestamp lastTime) {
+    public void setLastTime(LocalDateTime lastTime) {
         this.lastTime = lastTime;
     }
 
     /**
      * @return the createTime
      */
-    public Timestamp getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
     /**
      * @param createTime the createTime to set
      */
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 

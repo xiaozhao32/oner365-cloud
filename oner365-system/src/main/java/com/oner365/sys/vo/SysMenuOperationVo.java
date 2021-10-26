@@ -1,7 +1,7 @@
 package com.oner365.sys.vo;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import com.google.common.base.MoreObjects;
 import com.oner365.sys.entity.SysMenuOperation;
@@ -40,12 +40,12 @@ public class SysMenuOperationVo implements Serializable {
     /**
      * 创建时间 create_time
      */
-    private Timestamp createTime;
+    private LocalDateTime createTime;
 
     /**
      * 更新时间 update_time
      */
-    private Timestamp updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * Constructor
@@ -86,19 +86,19 @@ public class SysMenuOperationVo implements Serializable {
         this.status = status;
     }
 
-    public Timestamp getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public Timestamp getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
     

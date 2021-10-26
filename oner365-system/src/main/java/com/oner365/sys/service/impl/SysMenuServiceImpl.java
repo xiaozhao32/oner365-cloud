@@ -1,6 +1,6 @@
 package com.oner365.sys.service.impl;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -15,6 +15,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.google.common.collect.Lists;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
@@ -33,7 +34,6 @@ import com.oner365.sys.entity.TreeSelect;
 import com.oner365.sys.mapper.SysMenuMapper;
 import com.oner365.sys.service.ISysMenuService;
 import com.oner365.util.DataUtils;
-import com.google.common.collect.Lists;
 
 /**
  * ISysMenuService实现类
@@ -80,8 +80,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
     })
     public SysMenu save(SysMenu menu) {
         menu.setStatus(StatusEnum.YES.getOrdinal());
-        menu.setCreateTime(new Timestamp(System.currentTimeMillis()));
-        menu.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        menu.setCreateTime(LocalDateTime.now());
+        menu.setUpdateTime(LocalDateTime.now());
         menuDao.save(menu);
 
         menuOperDao.deleteByMenuId(menu.getId());

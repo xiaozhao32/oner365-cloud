@@ -1,7 +1,7 @@
 package com.oner365.sys.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -57,10 +57,10 @@ public class SysUser implements Serializable {
     private String status;
 
     @Column(name = "last_time")
-    private Timestamp lastTime;
+    private LocalDateTime lastTime;
 
     @Column(name = "create_time", updatable = false)
-    private Timestamp createTime;
+    private LocalDateTime createTime;
 
     @Column(name = "last_ip", length = 32)
     private String lastIp;
@@ -196,28 +196,28 @@ public class SysUser implements Serializable {
     /**
      * @return the lastTime
      */
-    public Timestamp getLastTime() {
+    public LocalDateTime getLastTime() {
         return lastTime;
     }
 
     /**
      * @param lastTime the lastTime to set
      */
-    public void setLastTime(Timestamp lastTime) {
+    public void setLastTime(LocalDateTime lastTime) {
         this.lastTime = lastTime;
     }
 
     /**
      * @return the createTime
      */
-    public Timestamp getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
     /**
      * @param createTime the createTime to set
      */
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 

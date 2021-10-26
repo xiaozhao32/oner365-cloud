@@ -1,7 +1,7 @@
 package com.oner365.sys.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -51,7 +51,7 @@ public class SysLog implements Serializable{
      * 创建时间 create_time
      */
     @Column(name = "create_time", updatable = false)
-    private Timestamp createTime;
+    private LocalDateTime createTime;
 
     /**
      * Constructor
@@ -147,14 +147,14 @@ public class SysLog implements Serializable{
     /**
      * @return the createTime
      */
-    public Timestamp getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
     /**
      * @param createTime the createTime to set
      */
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 

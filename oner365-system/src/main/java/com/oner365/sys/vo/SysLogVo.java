@@ -1,7 +1,7 @@
 package com.oner365.sys.vo;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import com.google.common.base.MoreObjects;
 import com.oner365.sys.entity.SysLog;
@@ -51,7 +51,7 @@ public class SysLogVo implements Serializable {
     /**
      * 创建时间 create_time
      */
-    private Timestamp createTime;
+    private LocalDateTime createTime;
 
     /**
      * Constructor
@@ -147,14 +147,14 @@ public class SysLogVo implements Serializable {
     /**
      * @return the createTime
      */
-    public Timestamp getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
     /**
      * @param createTime the createTime to set
      */
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
     

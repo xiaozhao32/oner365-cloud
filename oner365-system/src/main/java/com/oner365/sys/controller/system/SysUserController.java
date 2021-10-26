@@ -1,6 +1,6 @@
 package com.oner365.sys.controller.system;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -171,7 +171,7 @@ public class SysUserController extends BaseController {
             sysUser.setRealName(vo.getRealName());
             sysUser.setPhone(vo.getPhone());
             sysUser.setSex(vo.getSex());
-            sysUser.setLastTime(new Timestamp(System.currentTimeMillis()));
+            sysUser.setLastTime(LocalDateTime.now());
             return sysUserService.update(sysUser);
         }
         return null;

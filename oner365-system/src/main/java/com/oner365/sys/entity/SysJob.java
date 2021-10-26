@@ -1,7 +1,7 @@
 package com.oner365.sys.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -81,13 +81,13 @@ public class SysJob implements Serializable {
      * 创建时间 create_time
      */
     @Column(name = "create_time", updatable = false)
-    private Timestamp createTime;
+    private LocalDateTime createTime;
 
     /**
      * 更新时间 update_time
      */
     @Column(name = "update_time", insertable = false)
-    private Timestamp updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * Generate constructor user_job
@@ -166,19 +166,19 @@ public class SysJob implements Serializable {
         this.status = status;
     }
 
-    public Timestamp getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Timestamp updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
-    public Timestamp getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Timestamp createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 

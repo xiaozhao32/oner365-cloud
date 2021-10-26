@@ -1,6 +1,6 @@
 package com.oner365.sys.service.impl;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -75,7 +75,7 @@ public class DataSourceConfigServiceImpl implements IDataSourceConfigService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public DataSourceConfig save(DataSourceConfig entity) {
         if (DataUtils.isEmpty(entity.getId())) {
-            entity.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            entity.setCreateTime(LocalDateTime.now());
         }
         String driverName = null;
         String url = null;
@@ -88,7 +88,7 @@ public class DataSourceConfigServiceImpl implements IDataSourceConfigService {
         }
         entity.setDriverName(driverName);
         entity.setUrl(url);
-        entity.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        entity.setUpdateTime(LocalDateTime.now());
         return dao.save(entity);
     }
 

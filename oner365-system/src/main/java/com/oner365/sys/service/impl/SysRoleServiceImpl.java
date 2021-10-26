@@ -1,6 +1,6 @@
 package com.oner365.sys.service.impl;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -112,12 +112,12 @@ public class SysRoleServiceImpl implements ISysRoleService {
     public SysRole save(SysRole role) {
         if (Strings.isNullOrEmpty(role.getId())) {
             role.setStatus(StatusEnum.YES.getOrdinal());
-            role.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            role.setCreateTime(LocalDateTime.now());
         }
         if (Strings.isNullOrEmpty(role.getRoleCode())) {
             role.setRoleCode(String.valueOf(System.currentTimeMillis()));
         }
-        role.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        role.setUpdateTime(LocalDateTime.now());
         return roleDao.save(role);
     }
 

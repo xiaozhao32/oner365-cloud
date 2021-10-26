@@ -272,7 +272,17 @@ public class ExportExcelUtils {
                                 Cell cell = row.createCell(n);
                                 cell.setCellValue(value);
                                 cell.setCellStyle(contextStyle);
-                            } else if(type.equals(LocalDateTime.class)){
+                            } else if (type.equals(java.time.LocalDate.class)) {
+                                Method m = object.getClass().getMethod(NAME + name);
+                                java.time.LocalDate d = (java.time.LocalDate) m.invoke(object);
+                                String value = StringUtils.EMPTY;
+                                if (d != null) {
+                                    value = d.toString();
+                                }
+                                Cell cell = row.createCell(n);
+                                cell.setCellValue(value);
+                                cell.setCellStyle(contextStyle);
+                            } else if (type.equals(java.time.LocalDateTime.class)) {
                                 Method m = object.getClass().getMethod(NAME + name);
                                 LocalDateTime d = (LocalDateTime) m.invoke(object);
                                 String value = StringUtils.EMPTY;

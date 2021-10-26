@@ -1,6 +1,6 @@
 package com.oner365.sys.service.impl;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -86,9 +86,9 @@ public class SysJobServiceImpl implements ISysJobService {
     public SysJob save(SysJob job) {
         if (Strings.isNullOrEmpty(job.getId())) {
             job.setStatus(StatusEnum.YES.getOrdinal());
-            job.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            job.setCreateTime(LocalDateTime.now());
         }
-        job.setUpdateTime(new Timestamp(System.currentTimeMillis()));
+        job.setUpdateTime(LocalDateTime.now());
         return dao.save(job);
     }
 

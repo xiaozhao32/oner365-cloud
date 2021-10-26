@@ -1,6 +1,6 @@
 package com.oner365.sys.service.impl;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -215,7 +215,7 @@ public class SysUserServiceImpl implements ISysUserService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public SysUser saveUser(SysUser entity) {
         try {
-            Timestamp time = new Timestamp(System.currentTimeMillis());
+            LocalDateTime time = LocalDateTime.now();
             entity.setActiveStatus(StatusEnum.YES.getOrdinal());
             entity.setCreateTime(time);
             entity.setLastTime(time);

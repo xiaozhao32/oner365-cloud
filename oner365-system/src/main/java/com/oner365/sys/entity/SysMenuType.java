@@ -1,7 +1,7 @@
 package com.oner365.sys.entity;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -45,13 +45,13 @@ public class SysMenuType implements Serializable {
      * 创建时间 create_time
      */
     @Column(name = "create_time", updatable = false)
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 更新时间 update_time
      */
     @Column(name = "update_time", insertable = false)
-    private Date updateTime;
+    private LocalDateTime updateTime;
 
     /**
      * Constructor
@@ -92,19 +92,19 @@ public class SysMenuType implements Serializable {
         this.status = status;
     }
 
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 
-    public Date getUpdateTime() {
+    public LocalDateTime getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(Date updateTime) {
+    public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
 
