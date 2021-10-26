@@ -40,9 +40,10 @@
 2. Dubbo消费者 - 8718 oner365-dubbo-consumer 
 3. Elasticsearch - 8709 oner365-elasticsearch 
 4. Kafka - 8710 oner365-kafka
-5. Hadoop - 8712 oner365-hadoop
-6. Rocketmq 	- 8713 oner365-rocketmq
-7. Swagger - 8714 oner365-swagger 
+5. 生成框架 - 8711 oner365-generator
+6. Hadoop - 8712 oner365-hadoop
+7. Rocketmq 	- 8713 oner365-rocketmq
+8. Swagger - 8714 oner365-swagger 
 
 ### 链路监控
 1. 启动 Skywalking web端口(8080) 服务端口(11800)
