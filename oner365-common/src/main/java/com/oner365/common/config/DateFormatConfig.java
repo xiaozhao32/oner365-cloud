@@ -1,57 +1,43 @@
 package com.oner365.common.config;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import org.springframework.boot.autoconfigure.AutoConfigureBefore;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
+import org.springframework.boot.autoconfigure.jackson.JacksonAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oner365.common.jackson.JavaTimeModule;
+import com.oner365.util.DateUtil;
 
 /**
  * 日期格式化
+ * 
  * @author zhaoyong
  *
  */
 @Configuration
+@ConditionalOnClass({ ObjectMapper.class })
+@AutoConfigureBefore({ JacksonAutoConfiguration.class })
 public class DateFormatConfig {
-
+    
     /**
-     * DateTime格式化字符串
-     */
-    private static final String DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
-    /**
-     * Customizer
+     * customizer
+     * @return Jackson2ObjectMapperBuilderCustomizer
      */
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilder() {
+    public Jackson2ObjectMapperBuilderCustomizer customizer() {
         return builder -> {
-
             builder.locale(Locale.CHINA);
             builder.timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
-            DateFormat dateFormat = new SimpleDateFormat(DATETIME_FORMAT);
-
-            builder.failOnEmptyBeans(false).failOnUnknownProperties(false)
-                    .featuresToDisable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS).dateFormat(dateFormat);
+            builder.simpleDateFormat(DateUtil.FULL_TIME_FORMAT);
+            builder.modules(new JavaTimeModule());
         };
     }
-
-    @Bean
-    public LocalDateTimeSerializer localDateTimeSerializer() {
-        return new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DATETIME_FORMAT));
-    }
-
-    @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
-        return builder -> builder.serializerByType(LocalDateTime.class, localDateTimeSerializer());
-    }
-
+    
 }
