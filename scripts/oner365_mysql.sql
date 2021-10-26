@@ -11,13 +11,90 @@
  Target Server Version : 80021
  File Encoding         : 65001
 
- Date: 03/09/2021 16:24:10
+ Date: 26/10/2021 17:06:15
 */
-
-
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for gen_table
+-- ----------------------------
+DROP TABLE IF EXISTS `gen_table`;
+CREATE TABLE `gen_table` (
+  `table_id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `table_name` varchar(200) DEFAULT '' COMMENT '表名称',
+  `table_comment` varchar(500) DEFAULT '' COMMENT '表描述',
+  `sub_table_name` varchar(64) DEFAULT NULL COMMENT '关联子表的表名',
+  `sub_table_fk_name` varchar(64) DEFAULT NULL COMMENT '子表关联的外键名',
+  `class_name` varchar(100) DEFAULT '' COMMENT '实体类名称',
+  `tpl_category` varchar(200) DEFAULT 'crud' COMMENT '使用的模板（crud单表操作 tree树表操作）',
+  `package_name` varchar(100) DEFAULT NULL COMMENT '生成包路径',
+  `module_name` varchar(30) DEFAULT NULL COMMENT '生成模块名',
+  `business_name` varchar(30) DEFAULT NULL COMMENT '生成业务名',
+  `function_name` varchar(50) DEFAULT NULL COMMENT '生成功能名',
+  `function_author` varchar(50) DEFAULT NULL COMMENT '生成功能作者',
+  `gen_type` char(1) DEFAULT '0' COMMENT '生成代码方式（0zip压缩包 1自定义路径）',
+  `gen_path` varchar(200) DEFAULT '/' COMMENT '生成路径（不填默认项目路径）',
+  `options` varchar(1000) DEFAULT NULL COMMENT '其它生成选项',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  `remark` varchar(500) DEFAULT NULL COMMENT '备注',
+  PRIMARY KEY (`table_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COMMENT='代码生成业务表';
+
+-- ----------------------------
+-- Records of gen_table
+-- ----------------------------
+BEGIN;
+INSERT INTO `gen_table` VALUES (5, 'nt_test_date', '测试时间', NULL, NULL, 'TestDate', 'crud', 'com.oner365.system', 'system', 'date', '测试时间', 'zhaoyong', '0', '/', NULL, 'admin', '2021-10-26 15:03:10', '', NULL, NULL);
+COMMIT;
+
+-- ----------------------------
+-- Table structure for gen_table_column
+-- ----------------------------
+DROP TABLE IF EXISTS `gen_table_column`;
+CREATE TABLE `gen_table_column` (
+  `column_id` bigint NOT NULL AUTO_INCREMENT COMMENT '编号',
+  `table_id` varchar(64) DEFAULT NULL COMMENT '归属表编号',
+  `column_name` varchar(200) DEFAULT NULL COMMENT '列名称',
+  `column_comment` varchar(500) DEFAULT NULL COMMENT '列描述',
+  `column_type` varchar(100) DEFAULT NULL COMMENT '列类型',
+  `java_type` varchar(500) DEFAULT NULL COMMENT 'JAVA类型',
+  `java_field` varchar(200) DEFAULT NULL COMMENT 'JAVA字段名',
+  `is_pk` char(1) DEFAULT NULL COMMENT '是否主键（1是）',
+  `is_increment` char(1) DEFAULT NULL COMMENT '是否自增（1是）',
+  `is_required` char(1) DEFAULT NULL COMMENT '是否必填（1是）',
+  `is_insert` char(1) DEFAULT NULL COMMENT '是否为插入字段（1是）',
+  `is_edit` char(1) DEFAULT NULL COMMENT '是否编辑字段（1是）',
+  `is_list` char(1) DEFAULT NULL COMMENT '是否列表字段（1是）',
+  `is_query` char(1) DEFAULT NULL COMMENT '是否查询字段（1是）',
+  `query_type` varchar(200) DEFAULT 'EQ' COMMENT '查询方式（等于、不等于、大于、小于、范围）',
+  `html_type` varchar(200) DEFAULT NULL COMMENT '显示类型（文本框、文本域、下拉框、复选框、单选框、日期控件）',
+  `dict_type` varchar(200) DEFAULT '' COMMENT '字典类型',
+  `sort` int DEFAULT NULL COMMENT '排序',
+  `create_by` varchar(64) DEFAULT '' COMMENT '创建者',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(64) DEFAULT '' COMMENT '更新者',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`column_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8 COMMENT='代码生成业务表字段';
+
+-- ----------------------------
+-- Records of gen_table_column
+-- ----------------------------
+BEGIN;
+INSERT INTO `gen_table_column` VALUES (27, '5', 'id', '主键', 'int', 'Long', 'id', '1', '1', NULL, '1', NULL, NULL, NULL, 'EQ', 'input', '', 1, 'admin', '2021-10-26 15:03:10', '', NULL);
+INSERT INTO `gen_table_column` VALUES (28, '5', 'name', '名称', 'varchar(32)', 'String', 'name', '0', '0', '1', '1', '1', '1', '1', 'LIKE', 'input', '', 2, 'admin', '2021-10-26 15:03:10', '', NULL);
+INSERT INTO `gen_table_column` VALUES (29, '5', 'phone', '电话', 'bigint', 'Long', 'phone', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 3, 'admin', '2021-10-26 15:03:10', '', NULL);
+INSERT INTO `gen_table_column` VALUES (30, '5', 'description', '描述', 'text', 'String', 'description', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'input', '', 4, 'admin', '2021-10-26 15:03:10', '', NULL);
+INSERT INTO `gen_table_column` VALUES (31, '5', 'test_date', '测试日期', 'date', 'LocalDate', 'testDate', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'date', '', 5, 'admin', '2021-10-26 15:03:10', '', NULL);
+INSERT INTO `gen_table_column` VALUES (32, '5', 'status', '状态', 'varchar(8)', 'String', 'status', '0', '0', NULL, '1', '1', '1', '1', 'EQ', 'radio', '', 6, 'admin', '2021-10-26 15:03:10', '', NULL);
+INSERT INTO `gen_table_column` VALUES (33, '5', 'create_time', '创建时间', 'timestamp', 'LocalDateTime', 'createTime', '0', '0', NULL, '1', NULL, NULL, NULL, 'EQ', 'datetime', '', 7, 'admin', '2021-10-26 15:03:10', '', NULL);
+INSERT INTO `gen_table_column` VALUES (34, '5', 'update_time', '更新时间', 'timestamp', 'LocalDateTime', 'updateTime', '0', '0', NULL, '1', '1', NULL, NULL, 'EQ', 'datetime', '', 8, 'admin', '2021-10-26 15:03:10', '', NULL);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for hibernate_sequence
@@ -48,7 +125,7 @@ CREATE TABLE `nt_data_source_config` (
   `port` int DEFAULT NULL COMMENT '端口号',
   `user_name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户名',
   `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '密码',
-  `driver_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '驱动名称',
+  `driver_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '驱动名称',
   `url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '地址',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
@@ -70,11 +147,11 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_gateway_route`;
 CREATE TABLE `nt_gateway_route` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `filters` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '过滤规则',
   `predicates` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '表达式',
   `route_order` int NOT NULL COMMENT '排序',
-  `uri` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '地址',
+  `uri` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '地址',
   `status` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='路由表';
@@ -83,12 +160,12 @@ CREATE TABLE `nt_gateway_route` (
 -- Records of nt_gateway_route
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_gateway_route` VALUES ('oner365-elasticsearch', '[{\"args\": {\"parts\": \"1\"}, \"name\": \"StripPrefix\"}]', '[{\"args\": {\"pattern\": \"/elasticsearch/**\"}, \"name\": \"Path\"}]', 1, 'lb://oner365-elasticsearch', '1');
+INSERT INTO `nt_gateway_route` VALUES ('oner365-elasticsearch', '[{\"name\":\"StripPrefix\",\"args\":{\"parts\":\"1\"}}]', '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/elasticsearch/**\"}}]', 1, 'lb://oner365-elasticsearch', '1');
 INSERT INTO `nt_gateway_route` VALUES ('oner365-files', '[{\"name\":\"StripPrefix\",\"args\":{\"parts\":\"1\"}}]', '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/files/**\"}}]', 1, 'lb://oner365-files', '1');
-INSERT INTO `nt_gateway_route` VALUES ('oner365-generator', '[{\"args\": {\"parts\": \"1\"}, \"name\": \"StripPrefix\"}]', '[{\"args\": {\"pattern\": \"/generator/**\"}, \"name\": \"Path\"}]', 1, 'lb://oner365-generator', '1');
-INSERT INTO `nt_gateway_route` VALUES ('oner365-monitor', '[{\"args\": {\"parts\": \"1\"}, \"name\": \"StripPrefix\"}]', '[{\"args\": {\"pattern\": \"/monitor/**\"}, \"name\": \"Path\"}]', 1, 'lb://oner365-monitor', '1');
-INSERT INTO `nt_gateway_route` VALUES ('oner365-system', '[{\"args\": {\"parts\": \"1\"}, \"name\": \"StripPrefix\"}]', '[{\"args\": {\"pattern\": \"/system/**\"}, \"name\": \"Path\"}]', 1, 'lb://oner365-system', '1');
-INSERT INTO `nt_gateway_route` VALUES ('oner365-swagger', '[{\"args\": {\"parts\": \"1\"}, \"name\": \"StripPrefix\"}]', '[{\"args\": {\"pattern\": \"/swagger/**\"}, \"name\": \"Path\"}]', 1, 'lb://oner365-swagger', '1');
+INSERT INTO `nt_gateway_route` VALUES ('oner365-generator', '[{\"name\":\"StripPrefix\",\"args\":{\"parts\":\"1\"}}]', '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/generator/**\"}}]', 1, 'lb://oner365-generator', '1');
+INSERT INTO `nt_gateway_route` VALUES ('oner365-monitor', '[{\"name\":\"StripPrefix\",\"args\":{\"parts\":\"1\"}}]', '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/monitor/**\"}}]', 1, 'lb://oner365-monitor', '1');
+INSERT INTO `nt_gateway_route` VALUES ('oner365-swagger', '[{\"name\":\"StripPrefix\",\"args\":{\"parts\":\"1\"}}]', '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/swagger/**\"}}]', 1, 'lb://oner365-swagger', '1');
+INSERT INTO `nt_gateway_route` VALUES ('oner365-system', '[{\"name\":\"StripPrefix\",\"args\":{\"parts\":\"1\"}}]', '[{\"name\":\"Path\",\"args\":{\"pattern\":\"/system/**\"}}]', 1, 'lb://oner365-system', '1');
 COMMIT;
 
 -- ----------------------------
@@ -96,12 +173,12 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_dict_item`;
 CREATE TABLE `nt_sys_dict_item` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `dict_item_type_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典类型id',
   `dict_item_code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '字典编码',
   `dict_item_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '字典名称',
   `dict_item_order` int DEFAULT NULL COMMENT '排序',
-  `parent_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '上级id',
+  `parent_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '上级id',
   `status` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '状态',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_dict_item_code` (`dict_item_code`) USING BTREE,
@@ -130,7 +207,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_dict_item_type`;
 CREATE TABLE `nt_sys_dict_item_type` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
+  `id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '编号',
   `dict_item_type_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '分类名称',
   `dict_type_code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '分类编码',
   `dict_item_type_des` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '分类描述',
@@ -144,7 +221,7 @@ CREATE TABLE `nt_sys_dict_item_type` (
 -- Records of nt_sys_dict_item_type
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_sys_dict_item_type` VALUES ('sys_normal_disable', '状态', 'sys_normal_disable', '222', NULL, '1');
+INSERT INTO `nt_sys_dict_item_type` VALUES ('sys_normal_disable', '状态', 'sys_normal_disable', '2222', NULL, '1');
 INSERT INTO `nt_sys_dict_item_type` VALUES ('sys_normal_hidden', '是否隐藏', 'sys_normal_hidden', NULL, NULL, '1');
 INSERT INTO `nt_sys_dict_item_type` VALUES ('sys_task_group', '任务分组', 'sys_task_group', '任务分组', NULL, '1');
 INSERT INTO `nt_sys_dict_item_type` VALUES ('sys_task_status', '任务状态', 'sys_task_status', '11', NULL, '1');
@@ -156,7 +233,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_fastdfs_file`;
 CREATE TABLE `nt_sys_fastdfs_file` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `file_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文件名称',
   `display_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '显示名称',
   `file_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件路径',
@@ -182,7 +259,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_job`;
 CREATE TABLE `nt_sys_job` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `job_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '职位名称',
   `job_info` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '职位信息',
   `job_logo` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '职位logo',
@@ -200,9 +277,10 @@ CREATE TABLE `nt_sys_job` (
 -- Records of nt_sys_job
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_sys_job` VALUES ('1', '研发部', '管理员', '111', NULL, 1, '1', '1', '2020-04-24 14:31:41', '2021-01-13 17:26:59');
-INSERT INTO `nt_sys_job` VALUES ('2', '总监办', '总监', '111', '222', 3, '1', '1', '2021-06-04 14:12:16', '2021-07-01 22:52:55');
-INSERT INTO `nt_sys_job` VALUES ('4028b881745e46ae01745e4c3cd90008', '财务部', '财务', '111', '222', 2, NULL, '1', '2020-09-05 20:44:49', '2021-05-28 10:59:11');
+INSERT INTO `nt_sys_job` VALUES ('1', '研发部', '管理员', '111', NULL, 1, '1', '1', '2020-04-24 14:31:41', '2021-10-25 16:12:52');
+INSERT INTO `nt_sys_job` VALUES ('2', '总监办', '总监', '111', '222', 3, '1', '1', '2021-06-04 14:12:16', '2021-09-14 15:11:17');
+INSERT INTO `nt_sys_job` VALUES ('4028b881745e46ae01745e4c3cd90008', '财务部', '财务', '111', '222', 2, NULL, '1', '2020-09-05 20:44:49', '2021-09-13 15:08:26');
+INSERT INTO `nt_sys_job` VALUES ('ff8080817cbb7ffa017cbb80c1d70003', '前台', '123', NULL, NULL, 4, NULL, '1', '2021-10-26 15:29:10', '2021-10-26 16:18:49');
 COMMIT;
 
 -- ----------------------------
@@ -225,15 +303,15 @@ CREATE TABLE `nt_sys_log` (
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_menu`;
 CREATE TABLE `nt_sys_menu` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
-  `menu_type_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '菜单类型id',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `menu_type_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '菜单类型id',
   `menu_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单名称',
   `parent_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '上级id',
   `component` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '元素',
   `path` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '路径',
   `menu_order` int NOT NULL COMMENT '排序',
   `menu_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '描述',
-  `icon` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'icon',
+  `icon` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'icon',
   `status` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '状态',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
@@ -265,7 +343,9 @@ INSERT INTO `nt_sys_menu` VALUES ('2016', '1', 'ES监控', '201', 'monitor/elast
 INSERT INTO `nt_sys_menu` VALUES ('2017', '1', '队列监控', '201', 'monitor/rabbitmq/index', '/rabbitmq', 27, '队列监控', 'example', '1', '2020-12-25 14:48:35', '2020-12-25 14:50:19', NULL);
 INSERT INTO `nt_sys_menu` VALUES ('2018', '1', '文档监控', '201', 'monitor/fastdfs/index', '/fastdfs', 28, '文档监控', 'documentation', '1', '2020-12-25 14:49:33', '2020-12-25 14:50:24', NULL);
 INSERT INTO `nt_sys_menu` VALUES ('301', '1', '日志管理', '-1', 'Layout', '/log', 3, '日志管理', 'log', '1', '2020-11-16 15:36:00', '2020-11-16 15:36:00', NULL);
-INSERT INTO `nt_sys_menu` VALUES ('3011', '1', '服务日志', '301', 'system/log/index', '/syslog', 31, '服务日志', 'druid', '1', '2020-11-16 15:36:00', '2021-01-13 17:27:35', NULL);
+INSERT INTO `nt_sys_menu` VALUES ('3011', '1', '服务日志', '301', 'system/log/index', '/syslog', 31, '服务日志', 'druid', '1', '2020-11-16 15:36:00', '2021-09-12 10:59:39', NULL);
+INSERT INTO `nt_sys_menu` VALUES ('401', '1', '生成管理', '-1', 'Layout', '/generator', 4, '生成管理', 'money', '1', '2021-10-26 11:09:27', '2021-10-26 11:10:35', NULL);
+INSERT INTO `nt_sys_menu` VALUES ('4011', '1', '生成框架', '401', 'tool/gen/index', '/generator/gen', 1, '生成框架', 'system', '1', '2021-10-26 11:12:05', '2021-10-26 11:17:07', NULL);
 COMMIT;
 
 -- ----------------------------
@@ -273,9 +353,9 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_menu_oper`;
 CREATE TABLE `nt_sys_menu_oper` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `menu_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单id',
-  `operation_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '操作id',
+  `operation_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '操作id',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_operation_id` (`operation_id`) USING BTREE,
   KEY `idx_menu_id` (`menu_id`) USING BTREE,
@@ -288,7 +368,7 @@ CREATE TABLE `nt_sys_menu_oper` (
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_menu_type`;
 CREATE TABLE `nt_sys_menu_type` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `type_code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型编码',
   `type_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '类型名称',
   `status` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '状态',
@@ -302,7 +382,7 @@ CREATE TABLE `nt_sys_menu_type` (
 -- Records of nt_sys_menu_type
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_sys_menu_type` VALUES ('1', 'nt_sys', '统一用户认证', '1', '2013-01-01 10:00:00', '2013-01-01 10:00:00');
+INSERT INTO `nt_sys_menu_type` VALUES ('1', 'nt_sys', '统一用户认证', '1', '2013-01-01 10:00:00', '2021-09-18 13:47:15');
 COMMIT;
 
 -- ----------------------------
@@ -326,19 +406,11 @@ CREATE TABLE `nt_sys_message` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='系统消息';
 
 -- ----------------------------
--- Records of nt_sys_message
--- ----------------------------
-BEGIN;
-INSERT INTO `nt_sys_message` VALUES ('40288112729c3ca101729cab601d0000', 'sysMessageDirect', 'sysMessageKey', 'test', '测试', NULL, '内容', 'admin', 'admin', '2020-06-10 13:19:20', '2020-06-10 13:19:20');
-INSERT INTO `nt_sys_message` VALUES ('ff80808174dcef8f0174dcf068ec0000', 'sysMessageDirect', 'sysMessageKey', 'test', '测试', NULL, '123456', 'admin', 'admin', '2020-09-30 10:56:17', NULL);
-COMMIT;
-
--- ----------------------------
 -- Table structure for nt_sys_operation
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_operation`;
 CREATE TABLE `nt_sys_operation` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `operation_type` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '操作类型',
   `operation_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '操作名称',
   `status` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '状态',
@@ -365,14 +437,14 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_organization`;
 CREATE TABLE `nt_sys_organization` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
-  `org_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '单位名称',
-  `org_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '机构代码',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `org_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '单位名称',
+  `org_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '机构代码',
   `parent_id` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '父节点',
   `ancestors` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '编码',
   `org_order` int DEFAULT NULL COMMENT '排序',
-  `org_area_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '行政区划代码',
-  `org_credit_code` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '统一社会信用代码',
+  `org_area_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '行政区划代码',
+  `org_credit_code` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '统一社会信用代码',
   `org_logo` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Logo',
   `org_logo_url` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT 'Logo地址',
   `org_type` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '类型',
@@ -396,8 +468,8 @@ CREATE TABLE `nt_sys_organization` (
 -- Records of nt_sys_organization
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_sys_organization` VALUES ('1', '北京市', '100000000000', '-1', '-1', 1, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-11 17:33:58', NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO `nt_sys_organization` VALUES ('110', '北京市', '110000000000', '1', '-1,1', 1, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-11 17:33:58', NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `nt_sys_organization` VALUES ('1', '北京市', '100000000000', '-1', '-1', 1, NULL, NULL, NULL, NULL, '1', '1', '1', '2020-06-11 17:33:58', '2021-09-12 10:50:31', NULL, NULL, NULL, NULL, NULL);
+INSERT INTO `nt_sys_organization` VALUES ('110', '北京市', '110000000000', '1', '-1,1', 1, NULL, NULL, NULL, NULL, '1', '1', '1', '2020-06-11 17:33:58', '2021-09-12 10:49:01', NULL, NULL, NULL, NULL, NULL);
 INSERT INTO `nt_sys_organization` VALUES ('110101', '北京市东城区', '110101000000', '-1,1,110', '-1', 1, NULL, NULL, NULL, NULL, NULL, NULL, '1', '2020-06-11 17:33:58', NULL, NULL, NULL, NULL, NULL, NULL);
 COMMIT;
 
@@ -406,7 +478,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_role`;
 CREATE TABLE `nt_sys_role` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `role_code` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色编号',
   `role_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色名称',
   `role_des` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '角色描述',
@@ -420,8 +492,8 @@ CREATE TABLE `nt_sys_role` (
 -- Records of nt_sys_role
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_sys_role` VALUES ('1', '001', '超管', '权限最大用户', '1', '2018-10-10 16:08:02', '2021-08-23 12:53:29');
-INSERT INTO `nt_sys_role` VALUES ('ff80808172a150110172a159d9c40000', '002', '职员', '普通职员', '1', '2020-06-11 11:08:40', '2021-05-26 10:06:33');
+INSERT INTO `nt_sys_role` VALUES ('1', '001', '超管', '权限最大用户', '1', '2018-10-10 16:08:02', '2021-10-26 11:12:23');
+INSERT INTO `nt_sys_role` VALUES ('ff80808172a150110172a159d9c40000', '002', '职员', '普通职员', '1', '2020-06-11 11:08:40', '2021-09-12 10:51:15');
 INSERT INTO `nt_sys_role` VALUES ('ff80808172a624c00172a67c70c30007', '003', '用户', '普通用户', '0', '2020-06-12 11:04:33', '2021-05-26 10:06:23');
 COMMIT;
 
@@ -430,10 +502,10 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_role_menu`;
 CREATE TABLE `nt_sys_role_menu` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
-  `menu_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '菜单id',
-  `role_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色id',
-  `menu_type_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单类型id',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `menu_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '菜单id',
+  `role_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色id',
+  `menu_type_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单类型id',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_role_menu_menu_id` (`menu_id`) USING BTREE,
   KEY `idx_role_menu_role_id` (`role_id`) USING BTREE,
@@ -465,6 +537,15 @@ INSERT INTO `nt_sys_role_menu` VALUES ('112017', '2017', '1', '1');
 INSERT INTO `nt_sys_role_menu` VALUES ('112018', '2018', '1', '1');
 INSERT INTO `nt_sys_role_menu` VALUES ('11301', '301', '1', '1');
 INSERT INTO `nt_sys_role_menu` VALUES ('113011', '3011', '1', '1');
+INSERT INTO `nt_sys_role_menu` VALUES ('11401', '401', '1', '1');
+INSERT INTO `nt_sys_role_menu` VALUES ('114011', '4011', '1', '1');
+INSERT INTO `nt_sys_role_menu` VALUES ('ff80808172a150110172a159d9c400001101', '101', 'ff80808172a150110172a159d9c40000', '1');
+INSERT INTO `nt_sys_role_menu` VALUES ('ff80808172a150110172a159d9c4000011011', '1011', 'ff80808172a150110172a159d9c40000', '1');
+INSERT INTO `nt_sys_role_menu` VALUES ('ff80808172a150110172a159d9c4000011012', '1012', 'ff80808172a150110172a159d9c40000', '1');
+INSERT INTO `nt_sys_role_menu` VALUES ('ff80808172a150110172a159d9c4000011013', '1013', 'ff80808172a150110172a159d9c40000', '1');
+INSERT INTO `nt_sys_role_menu` VALUES ('ff80808172a150110172a159d9c4000011014', '1014', 'ff80808172a150110172a159d9c40000', '1');
+INSERT INTO `nt_sys_role_menu` VALUES ('ff80808172a150110172a159d9c4000011015', '1015', 'ff80808172a150110172a159d9c40000', '1');
+INSERT INTO `nt_sys_role_menu` VALUES ('ff80808172a150110172a159d9c4000011016', '1016', 'ff80808172a150110172a159d9c40000', '1');
 COMMIT;
 
 -- ----------------------------
@@ -472,11 +553,11 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_role_menu_oper`;
 CREATE TABLE `nt_sys_role_menu_oper` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
-  `menu_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单id',
-  `role_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色id',
-  `menu_type_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单类型id',
-  `operation_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '操作id',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `menu_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单id',
+  `role_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色id',
+  `menu_type_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '菜单类型id',
+  `operation_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '操作id',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_role_menu_oper_menu_id` (`menu_id`) USING BTREE,
   KEY `idx_role_menu_oper_operation_id` (`operation_id`) USING BTREE,
@@ -534,7 +615,7 @@ CREATE TABLE `nt_sys_task` (
 -- Records of nt_sys_task
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_sys_task` VALUES ('8a818b3774bef2910174bef387ec0000', 'DEFAULT', 'test', '1', '{\"taskId\": \"8a818b3774bef2910174bef387ec0000\", \"taskParam\": {}, \"concurrent\": \"1\", \"taskServerName\": \"oner365-system\"}', '0/10 * * * * ?', 'systemTask.taskRun()', '0', '', '1', '0', NULL, 'liutao', NULL);
+INSERT INTO `nt_sys_task` VALUES ('8a818b3774bef2910174bef387ec0000', 'DEFAULT', 'test', '1', '{\"taskId\": \"8a818b3774bef2910174bef387ec0000\", \"taskParam\": {}, \"concurrent\": \"1\", \"taskServerName\": \"oner365-system\"}', '0/10 * * * * ?', 'systemTask.taskNoParams()', '2', '', '1', '0', NULL, 'liutao', NULL);
 INSERT INTO `nt_sys_task` VALUES ('ff80808175cfe8900175d012ecc00002', 'DEFAULT', '删除3天日志', '1', '{\"taskId\": \"ff80808175cfe8900175d012ecc00002\", \"taskParam\": {}, \"concurrent\": null, \"taskServerName\": null}', '0 0 1 * * ?', 'systemTask.taskDeleteLog(3)', '3', NULL, NULL, '0', NULL, 'admin', NULL);
 INSERT INTO `nt_sys_task` VALUES ('ff80808175d015c90175d05958e50001', 'DEFAULT', '111', '1', '{\"taskId\": \"ff80808175d015c90175d05958e50001\", \"taskParam\": {}, \"concurrent\": \"1\", \"taskServerName\": \"oner365-monitor\"}', '0/30 * * * * ?', 'systemTask.taskParams(\'6666\')', '3', '321', NULL, '0', NULL, 'admin', NULL);
 COMMIT;
@@ -576,7 +657,7 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_user`;
 CREATE TABLE `nt_sys_user` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键id',
   `user_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '账号',
   `password` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '密码',
   `real_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '姓名',
@@ -604,7 +685,7 @@ CREATE TABLE `nt_sys_user` (
 -- Records of nt_sys_user
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_sys_user` VALUES ('1', 'admin', 'C4CA4238A0B923820DCC509A6F75849B', '超管', 'https://www.oner365.com/group1/M00/00/04/rBqcll9Qsc-ADt_9AAAk7-agPWw680.jpg', '0', '1', 'admin@qq.com', '110103197707250933', '127.0.0.1', '2021-06-08 17:55:54', '13800138000', '', 'beijing', '1', '12345', '1', '1', '123456', '2018-10-09 14:19:44');
+INSERT INTO `nt_sys_user` VALUES ('1', 'admin', 'C4CA4238A0B923820DCC509A6F75849B', '超管', 'https://www.oner365.com/group1/M00/00/04/rBqcll9Qsc-ADt_9AAAk7-agPWw680.jpg', '0', '1', 'admin@qq.com', '110103197707250933', '127.0.0.1', '2021-10-25 15:45:52', '13800138000', '', NULL, '1', '1234567', '1', '1', '123456', '2018-10-09 14:19:44');
 INSERT INTO `nt_sys_user` VALUES ('2', 'shy', 'C4CA4238A0B923820DCC509A6F75849B', '张3', '', '0', '1', NULL, NULL, NULL, NULL, '13800138000', NULL, NULL, '1', NULL, '0', '1', '123456', '2020-05-12 09:47:07');
 INSERT INTO `nt_sys_user` VALUES ('5', 'ls', 'C4CA4238A0B923820DCC509A6F75849B', '王老师', '', '0', '1', NULL, NULL, NULL, NULL, NULL, '111', NULL, '0', NULL, '1', '1', NULL, '2020-05-12 17:05:23');
 COMMIT;
@@ -614,13 +695,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_user_job`;
 CREATE TABLE `nt_sys_user_job` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `position_order` int NOT NULL COMMENT '排序',
   `status` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `job_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '职位id',
-  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户id',
+  `job_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '职位id',
+  `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户id',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_user_job_job_id` (`job_id`) USING BTREE,
   KEY `idx_user_job_user_id` (`user_id`) USING BTREE,
@@ -633,7 +714,8 @@ CREATE TABLE `nt_sys_user_job` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `nt_sys_user_job` VALUES ('ff8080817640f2d4017640f8fca70001', 1, '1', '2020-12-08 14:10:28', NULL, '1', '2');
-INSERT INTO `nt_sys_user_job` VALUES ('ff80808179eb0b510179eb0cc7bc001b', 1, '1', '2021-06-08 17:55:54', NULL, '1', '1');
+INSERT INTO `nt_sys_user_job` VALUES ('ff8080817cb668bc017cb669b090000b', 1, '1', '2021-10-25 15:45:52', NULL, '2', '1');
+INSERT INTO `nt_sys_user_job` VALUES ('ff8080817cb668bc017cb669b095000c', 1, '1', '2021-10-25 15:45:52', NULL, '1', '1');
 COMMIT;
 
 -- ----------------------------
@@ -641,13 +723,13 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_user_org`;
 CREATE TABLE `nt_sys_user_org` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `position_order` int NOT NULL COMMENT '排序',
   `status` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '状态',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
-  `org_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '单位id',
-  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户id',
+  `org_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '单位id',
+  `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '用户id',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_user_org_org_id` (`org_id`) USING BTREE,
   KEY `idx_user_org_user_id` (`user_id`) USING BTREE,
@@ -659,8 +741,9 @@ CREATE TABLE `nt_sys_user_org` (
 -- Records of nt_sys_user_org
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_sys_user_org` VALUES ('ff8080817640f2d4017640f8fcb10001', 1, '1', '2020-12-08 14:10:28', NULL, '110', '1');
 INSERT INTO `nt_sys_user_org` VALUES ('ff8080817640f2d4017640f8fcb10002', 1, '1', '2020-12-08 14:10:28', NULL, '110101', '2');
+INSERT INTO `nt_sys_user_org` VALUES ('ff8080817cb668bc017cb669b09b000d', 1, '1', '2021-10-25 15:45:52', NULL, '1', '1');
+INSERT INTO `nt_sys_user_org` VALUES ('ff8080817cb668bc017cb669b09f000e', 1, '1', '2021-10-25 15:45:52', NULL, '110', '1');
 COMMIT;
 
 -- ----------------------------
@@ -668,9 +751,9 @@ COMMIT;
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_user_role`;
 CREATE TABLE `nt_sys_user_role` (
-  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
-  `role_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色id',
-  `user_id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户id',
+  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `role_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '角色id',
+  `user_id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户id',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `idx_user_role_role_id` (`role_id`) USING BTREE,
   KEY `idx_user_role_user_id` (`user_id`) USING BTREE,
@@ -684,12 +767,35 @@ CREATE TABLE `nt_sys_user_role` (
 BEGIN;
 INSERT INTO `nt_sys_user_role` VALUES ('ff80808172a7b2ce0172bacc3b9c0009', '1', '5');
 INSERT INTO `nt_sys_user_role` VALUES ('ff8080817640f2d4017640f8fc990000', 'ff80808172a150110172a159d9c40000', '2');
-INSERT INTO `nt_sys_user_role` VALUES ('ff80808179eb0b510179eb0cc7b40019', '1', '1');
-INSERT INTO `nt_sys_user_role` VALUES ('ff80808179eb0b510179eb0cc7b7001a', 'ff80808172a150110172a159d9c40000', '1');
+INSERT INTO `nt_sys_user_role` VALUES ('ff8080817cb668bc017cb669b089000a', '1', '1');
 COMMIT;
 
 -- ----------------------------
--- Table structure for qrtz_blob_triggers
+-- Table structure for nt_test_date
+-- ----------------------------
+DROP TABLE IF EXISTS `nt_test_date`;
+CREATE TABLE `nt_test_date` (
+  `id` int NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '名称',
+  `phone` bigint DEFAULT NULL COMMENT '电话',
+  `description` text COMMENT '描述',
+  `test_date` date DEFAULT NULL COMMENT '测试日期',
+  `status` varchar(8) DEFAULT NULL COMMENT '状态',
+  `create_time` timestamp NULL DEFAULT NULL COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='测试生成框架';
+
+-- ----------------------------
+-- Records of nt_test_date
+-- ----------------------------
+BEGIN;
+INSERT INTO `nt_test_date` VALUES (1, '名字', 12345, '12345', '2010-10-13', '1', '2021-10-26 14:06:18', '2021-10-26 14:43:57');
+INSERT INTO `nt_test_date` VALUES (2, '名字', 12345, '12345', NULL, '1', '2021-10-26 14:04:54', '2021-10-26 14:04:54');
+COMMIT;
+
+-- ----------------------------
+-- Table structure for QRTZ_BLOB_TRIGGERS
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_BLOB_TRIGGERS`;
 CREATE TABLE `QRTZ_BLOB_TRIGGERS` (
@@ -702,7 +808,7 @@ CREATE TABLE `QRTZ_BLOB_TRIGGERS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Table structure for qrtz_calendars
+-- Table structure for QRTZ_CALENDARS
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_CALENDARS`;
 CREATE TABLE `QRTZ_CALENDARS` (
@@ -713,7 +819,7 @@ CREATE TABLE `QRTZ_CALENDARS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Table structure for qrtz_cron_triggers
+-- Table structure for QRTZ_CRON_TRIGGERS
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_CRON_TRIGGERS`;
 CREATE TABLE `QRTZ_CRON_TRIGGERS` (
@@ -727,7 +833,7 @@ CREATE TABLE `QRTZ_CRON_TRIGGERS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Records of qrtz_cron_triggers
+-- Records of QRTZ_CRON_TRIGGERS
 -- ----------------------------
 BEGIN;
 INSERT INTO `QRTZ_CRON_TRIGGERS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAME8a818b3774bef2910174bef387ec0000', 'DEFAULT', '0/10 * * * * ?', 'Asia/Shanghai');
@@ -736,7 +842,7 @@ INSERT INTO `QRTZ_CRON_TRIGGERS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAMEff8
 COMMIT;
 
 -- ----------------------------
--- Table structure for qrtz_fired_triggers
+-- Table structure for QRTZ_FIRED_TRIGGERS
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_FIRED_TRIGGERS`;
 CREATE TABLE `QRTZ_FIRED_TRIGGERS` (
@@ -757,7 +863,7 @@ CREATE TABLE `QRTZ_FIRED_TRIGGERS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Table structure for qrtz_job_details
+-- Table structure for QRTZ_JOB_DETAILS
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_JOB_DETAILS`;
 CREATE TABLE `QRTZ_JOB_DETAILS` (
@@ -775,16 +881,16 @@ CREATE TABLE `QRTZ_JOB_DETAILS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Records of qrtz_job_details
+-- Records of QRTZ_JOB_DETAILS
 -- ----------------------------
 BEGIN;
-INSERT INTO `QRTZ_JOB_DETAILS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAME8a818b3774bef2910174bef387ec0000', 'DEFAULT', NULL, 'com.oner365.monitor.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720022636F6D2E6F6E65723336352E6D6F6E69746F722E656E746974792E5379735461736B000000000000000102000E4C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C000A6372656174655573657271007E00094C000E63726F6E45787072657373696F6E71007E00094C000D6578656375746553746174757371007E00094C0002696471007E00094C000B696E766F6B65506172616D7400284C636F6D2F6F6E65723336352F6D6F6E69746F722F656E746974792F496E766F6B65506172616D3B4C000C696E766F6B6554617267657471007E00094C000D6D697366697265506F6C69637971007E00094C000672656D61726B71007E00094C000673746174757371007E00094C00097461736B47726F757071007E00094C00087461736B4E616D6571007E00094C000A75706461746554696D6571007E000A787074000131707400066C697574616F74000E302F3130202A202A202A202A203F74000131740020386138313862333737346265663239313031373462656633383765633030303073720026636F6D2E6F6E65723336352E6D6F6E69746F722E656E746974792E496E766F6B65506172616D00000000000000010200044C000A636F6E63757272656E7471007E00094C00067461736B496471007E00094C00097461736B506172616D7400214C636F6D2F616C69626162612F666173746A736F6E2F4A534F4E4F626A6563743B4C000E7461736B5365727665724E616D6571007E000978707400013174002038613831386233373734626566323931303137346265663338376563303030307372001F636F6D2E616C69626162612E666173746A736F6E2E4A534F4E4F626A65637400000000000000010200014C00036D617071007E000378707371007E00053F40000000000010770800000010000000007874000E6F6E65723336352D73797374656D74001473797374656D5461736B2E7461736B52756E2829740001307400007400013074000744454641554C5474000474657374707800);
+INSERT INTO `QRTZ_JOB_DETAILS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAME8a818b3774bef2910174bef387ec0000', 'DEFAULT', NULL, 'com.oner365.monitor.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720022636F6D2E6F6E65723336352E6D6F6E69746F722E656E746974792E5379735461736B000000000000000102000E4C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C000A6372656174655573657271007E00094C000E63726F6E45787072657373696F6E71007E00094C000D6578656375746553746174757371007E00094C0002696471007E00094C000B696E766F6B65506172616D7400284C636F6D2F6F6E65723336352F6D6F6E69746F722F656E746974792F496E766F6B65506172616D3B4C000C696E766F6B6554617267657471007E00094C000D6D697366697265506F6C69637971007E00094C000672656D61726B71007E00094C000673746174757371007E00094C00097461736B47726F757071007E00094C00087461736B4E616D6571007E00094C000A75706461746554696D6571007E000A787074000131707400066C697574616F74000E302F3130202A202A202A202A203F74000131740020386138313862333737346265663239313031373462656633383765633030303073720026636F6D2E6F6E65723336352E6D6F6E69746F722E656E746974792E496E766F6B65506172616D00000000000000010200044C000A636F6E63757272656E7471007E00094C00067461736B496471007E00094C00097461736B506172616D7400214C636F6D2F616C69626162612F666173746A736F6E2F4A534F4E4F626A6563743B4C000E7461736B5365727665724E616D6571007E000978707400013174002038613831386233373734626566323931303137346265663338376563303030307372001F636F6D2E616C69626162612E666173746A736F6E2E4A534F4E4F626A65637400000000000000010200014C00036D617071007E000378707371007E00053F40000000000010770800000010000000007874000E6F6E65723336352D73797374656D74001973797374656D5461736B2E7461736B4E6F506172616D732829740001327400007400013074000744454641554C5474000474657374707800);
 INSERT INTO `QRTZ_JOB_DETAILS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAMEff80808175cfe8900175d012ecc00002', 'DEFAULT', NULL, 'com.oner365.monitor.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720022636F6D2E6F6E65723336352E6D6F6E69746F722E656E746974792E5379735461736B000000000000000102000E4C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C000A6372656174655573657271007E00094C000E63726F6E45787072657373696F6E71007E00094C000D6578656375746553746174757371007E00094C0002696471007E00094C000B696E766F6B65506172616D7400284C636F6D2F6F6E65723336352F6D6F6E69746F722F656E746974792F496E766F6B65506172616D3B4C000C696E766F6B6554617267657471007E00094C000D6D697366697265506F6C69637971007E00094C000672656D61726B71007E00094C000673746174757371007E00094C00097461736B47726F757071007E00094C00087461736B4E616D6571007E00094C000A75706461746554696D6571007E000A7870740001317074000561646D696E74000B3020302031202A202A203F70740020666638303830383137356366653839303031373564303132656363303030303273720026636F6D2E6F6E65723336352E6D6F6E69746F722E656E746974792E496E766F6B65506172616D00000000000000010200044C000A636F6E63757272656E7471007E00094C00067461736B496471007E00094C00097461736B506172616D7400214C636F6D2F616C69626162612F666173746A736F6E2F4A534F4E4F626A6563743B4C000E7461736B5365727665724E616D6571007E000978707074002066663830383038313735636665383930303137356430313265636330303030327372001F636F6D2E616C69626162612E666173746A736F6E2E4A534F4E4F626A65637400000000000000010200014C00036D617071007E000378707371007E00053F4000000000001077080000001000000000787074001B73797374656D5461736B2E7461736B44656C6574654C6F6728332974000133707400013074000744454641554C54740010E588A0E999A433E5A4A9E697A5E5BF97707800);
 INSERT INTO `QRTZ_JOB_DETAILS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAMEff80808175d015c90175d05958e50001', 'DEFAULT', NULL, 'com.oner365.monitor.util.QuartzDisallowConcurrentExecution', '0', '1', '0', '0', 0xACED0005737200156F72672E71756172747A2E4A6F62446174614D61709FB083E8BFA9B0CB020000787200266F72672E71756172747A2E7574696C732E537472696E674B65794469727479466C61674D61708208E8C3FBC55D280200015A0013616C6C6F77735472616E7369656E74446174617872001D6F72672E71756172747A2E7574696C732E4469727479466C61674D617013E62EAD28760ACE0200025A000564697274794C00036D617074000F4C6A6176612F7574696C2F4D61703B787001737200116A6176612E7574696C2E486173684D61700507DAC1C31660D103000246000A6C6F6164466163746F724900097468726573686F6C6478703F4000000000000C7708000000100000000174000F5441534B5F50524F5045525449455373720022636F6D2E6F6E65723336352E6D6F6E69746F722E656E746974792E5379735461736B000000000000000102000E4C000A636F6E63757272656E747400124C6A6176612F6C616E672F537472696E673B4C000A63726561746554696D657400104C6A6176612F7574696C2F446174653B4C000A6372656174655573657271007E00094C000E63726F6E45787072657373696F6E71007E00094C000D6578656375746553746174757371007E00094C0002696471007E00094C000B696E766F6B65506172616D7400284C636F6D2F6F6E65723336352F6D6F6E69746F722F656E746974792F496E766F6B65506172616D3B4C000C696E766F6B6554617267657471007E00094C000D6D697366697265506F6C69637971007E00094C000672656D61726B71007E00094C000673746174757371007E00094C00097461736B47726F757071007E00094C00087461736B4E616D6571007E00094C000A75706461746554696D6571007E000A7870740001317074000561646D696E74000E302F3330202A202A202A202A203F70740020666638303830383137356430313563393031373564303539353865353030303173720026636F6D2E6F6E65723336352E6D6F6E69746F722E656E746974792E496E766F6B65506172616D00000000000000010200044C000A636F6E63757272656E7471007E00094C00067461736B496471007E00094C00097461736B506172616D7400214C636F6D2F616C69626162612F666173746A736F6E2F4A534F4E4F626A6563743B4C000E7461736B5365727665724E616D6571007E000978707400013174002066663830383038313735643031356339303137356430353935386535303030317372001F636F6D2E616C69626162612E666173746A736F6E2E4A534F4E4F626A65637400000000000000010200014C00036D617071007E000378707371007E00053F40000000000010770800000010000000007874000F6F6E65723336352D6D6F6E69746F7274001D73797374656D5461736B2E7461736B506172616D732827363636362729740001337400033332317400013074000744454641554C54740003313131707800);
 COMMIT;
 
 -- ----------------------------
--- Table structure for qrtz_locks
+-- Table structure for QRTZ_LOCKS
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_LOCKS`;
 CREATE TABLE `QRTZ_LOCKS` (
@@ -794,7 +900,7 @@ CREATE TABLE `QRTZ_LOCKS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Records of qrtz_locks
+-- Records of QRTZ_LOCKS
 -- ----------------------------
 BEGIN;
 INSERT INTO `QRTZ_LOCKS` VALUES ('ProjectScheduler', 'STATE_ACCESS');
@@ -802,7 +908,7 @@ INSERT INTO `QRTZ_LOCKS` VALUES ('ProjectScheduler', 'TRIGGER_ACCESS');
 COMMIT;
 
 -- ----------------------------
--- Table structure for qrtz_paused_trigger_grps
+-- Table structure for QRTZ_PAUSED_TRIGGER_GRPS
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_PAUSED_TRIGGER_GRPS`;
 CREATE TABLE `QRTZ_PAUSED_TRIGGER_GRPS` (
@@ -812,7 +918,7 @@ CREATE TABLE `QRTZ_PAUSED_TRIGGER_GRPS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Table structure for qrtz_scheduler_state
+-- Table structure for QRTZ_SCHEDULER_STATE
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_SCHEDULER_STATE`;
 CREATE TABLE `QRTZ_SCHEDULER_STATE` (
@@ -824,14 +930,14 @@ CREATE TABLE `QRTZ_SCHEDULER_STATE` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Records of qrtz_scheduler_state
+-- Records of QRTZ_SCHEDULER_STATE
 -- ----------------------------
 BEGIN;
 INSERT INTO `QRTZ_SCHEDULER_STATE` VALUES ('ProjectScheduler', 'bogon1614742494470', 1614746685941, 15000);
 COMMIT;
 
 -- ----------------------------
--- Table structure for qrtz_simple_triggers
+-- Table structure for QRTZ_SIMPLE_TRIGGERS
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_SIMPLE_TRIGGERS`;
 CREATE TABLE `QRTZ_SIMPLE_TRIGGERS` (
@@ -842,11 +948,11 @@ CREATE TABLE `QRTZ_SIMPLE_TRIGGERS` (
   `repeat_interval` bigint NOT NULL,
   `times_triggered` bigint NOT NULL,
   PRIMARY KEY (`sched_name`,`trigger_name`,`trigger_group`) USING BTREE,
-  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `qrtz_simple_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `QRTZ_TRIGGERS` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Table structure for qrtz_simprop_triggers
+-- Table structure for QRTZ_SIMPROP_TRIGGERS
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_SIMPROP_TRIGGERS`;
 CREATE TABLE `QRTZ_SIMPROP_TRIGGERS` (
@@ -865,11 +971,11 @@ CREATE TABLE `QRTZ_SIMPROP_TRIGGERS` (
   `bool_prop_1` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `bool_prop_2` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`sched_name`,`trigger_name`,`trigger_group`) USING BTREE,
-  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `qrtz_triggers` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `qrtz_simprop_triggers_ibfk_1` FOREIGN KEY (`sched_name`, `trigger_name`, `trigger_group`) REFERENCES `QRTZ_TRIGGERS` (`sched_name`, `trigger_name`, `trigger_group`) ON DELETE RESTRICT ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Table structure for qrtz_triggers
+-- Table structure for QRTZ_TRIGGERS
 -- ----------------------------
 DROP TABLE IF EXISTS `QRTZ_TRIGGERS`;
 CREATE TABLE `QRTZ_TRIGGERS` (
@@ -895,12 +1001,12 @@ CREATE TABLE `QRTZ_TRIGGERS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
--- Records of qrtz_triggers
+-- Records of QRTZ_TRIGGERS
 -- ----------------------------
 BEGIN;
-INSERT INTO `QRTZ_TRIGGERS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAME8a818b3774bef2910174bef387ec0000', 'DEFAULT', 'TASK_CLASS_NAME8a818b3774bef2910174bef387ec0000', 'DEFAULT', NULL, 1630655650000, -1, 5, 'PAUSED', 'CRON', 1630655650000, 0, NULL, 0, '');
-INSERT INTO `QRTZ_TRIGGERS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAMEff80808175cfe8900175d012ecc00002', 'DEFAULT', 'TASK_CLASS_NAMEff80808175cfe8900175d012ecc00002', 'DEFAULT', NULL, 1630688400000, -1, 5, 'PAUSED', 'CRON', 1630655650000, 0, NULL, 2, '');
-INSERT INTO `QRTZ_TRIGGERS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAMEff80808175d015c90175d05958e50001', 'DEFAULT', 'TASK_CLASS_NAMEff80808175d015c90175d05958e50001', 'DEFAULT', NULL, 1630655670000, -1, 5, 'PAUSED', 'CRON', 1630655650000, 0, NULL, 2, '');
+INSERT INTO `QRTZ_TRIGGERS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAME8a818b3774bef2910174bef387ec0000', 'DEFAULT', 'TASK_CLASS_NAME8a818b3774bef2910174bef387ec0000', 'DEFAULT', NULL, 1635238940000, -1, 5, 'PAUSED', 'CRON', 1635238936000, 0, NULL, 1, '');
+INSERT INTO `QRTZ_TRIGGERS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAMEff80808175cfe8900175d012ecc00002', 'DEFAULT', 'TASK_CLASS_NAMEff80808175cfe8900175d012ecc00002', 'DEFAULT', NULL, 1635267600000, -1, 5, 'PAUSED', 'CRON', 1635238936000, 0, NULL, 2, '');
+INSERT INTO `QRTZ_TRIGGERS` VALUES ('ProjectScheduler', 'TASK_CLASS_NAMEff80808175d015c90175d05958e50001', 'DEFAULT', 'TASK_CLASS_NAMEff80808175d015c90175d05958e50001', 'DEFAULT', NULL, 1635238950000, -1, 5, 'PAUSED', 'CRON', 1635238936000, 0, NULL, 2, '');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;

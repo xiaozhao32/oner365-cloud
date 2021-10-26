@@ -4,7 +4,7 @@ deploy:
   name: d:/gitee/deploy_nacos
   version: 1.0.0-SNAPSHOT
   suffix: jar
-  project: oner365-elasticsearch,oner365-files,oner365-gateway,oner365-hadoop,oner365-kafka,oner365-monitor,oner365-rocketmq,oner365-system
+  project: oner365-elasticsearch,oner365-files,oner365-gateway,oner365-generator,oner365-hadoop,oner365-kafka,oner365-monitor,oner365-rocketmq,oner365-system
   lib: oner365-common,oner365-api
 
 #服务器配置  

@@ -1,0 +1,19 @@
+package ${packageName}.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+
+import ${packageName}.entity.${ClassName};
+#foreach ($column in $columns)
+#if($column.columnName == 'id')
+#set($AttrName=$column.javaType)
+#end
+#end
+/**
+ * ${functionName} Dao 接口
+ * 
+ * @author ${author}
+ */
+public interface I${ClassName}Dao extends JpaRepository<${ClassName}, $AttrName>, JpaSpecificationExecutor<${ClassName}> {
+    
+}

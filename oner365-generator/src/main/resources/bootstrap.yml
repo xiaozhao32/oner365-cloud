@@ -1,0 +1,22 @@
+
+server: 
+  port: 8711
+
+spring: 
+  application:
+    name: oner365-generator
+    
+  profiles:
+    active: dev
+        
+  cloud:
+    nacos:
+      server-addr: localhost:8848
+      config:
+        namespace: ${spring.profiles.active}
+        group: DEFAULT_GROUP
+        file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+     
+

@@ -1,0 +1,29 @@
+
+-- ----------------------------
+-- Table structure for ${tableName}
+-- ----------------------------
+DROP TABLE IF EXISTS `${tableName}`;
+CREATE TABLE `${tableName}` (
+#foreach ($column in $columns)
+#if($column.isPk == '1' || $column.isRequired == '1')
+  `$column.columnName` $column.columnType NOT NULL COMMENT '$column.columnComment',
+#else
+  `$column.columnName` $column.columnType DEFAULT NULL COMMENT '$column.columnComment',
+#end
+#end
+
+#foreach ($column in $columns)
+#if($column.isPk == '1')  
+  PRIMARY KEY (`id`) USING BTREE,
+#end
+#if($column.isRequired == '1')
+  KEY `uk_$column.columnName` (`$column.columnName`) USING BTREE
+#end
+#end
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='${functionName}';
+
+-- 菜单 SQL
+INSERT INTO `nt_sys_menu` VALUES ('xx', '1', '${functionName}', '101', 'icon', '/${businessName}', '${moduleName}/${businessName}/index', 11, '${businessName}', 1, '2020-01-01 00:00:00', '2020-01-01 00:00:00', NULL);
+
+-- 菜单 权限
+INSERT INTO `nt_sys_role_menu` VALUES ('11xx', 'xx', 1, 1);

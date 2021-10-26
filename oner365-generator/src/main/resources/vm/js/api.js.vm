@@ -1,0 +1,43 @@
+import request from '@/utils/request'
+
+// 查询${functionName}列表
+export function list${BusinessName}(queryParams) {
+  var data = {
+    pageIndex: queryParams.pageIndex,
+    pageSize: queryParams.pageSize,
+    whereList: [
+    ]
+  }
+  return request({
+    url: '/${moduleName}/${businessName}/list',
+    method: 'post',
+    data: data
+  })
+}
+
+// 查询${functionName}详细
+export function get${BusinessName}(id) {
+  return request({
+    url: '/${moduleName}/${businessName}/get/' + id,
+    method: 'get'
+  })
+}
+
+// 保存${functionName}
+export function save${BusinessName}(data) {
+  return request({
+    url: '/${moduleName}/${businessName}/save',
+    method: 'put',
+    data: data
+  })
+}
+
+// 删除${functionName}
+export function del${BusinessName}(data) {
+  return request({
+    url: '/${moduleName}/${businessName}/delete',
+    method: 'delete',
+    data: data
+  })
+}
+

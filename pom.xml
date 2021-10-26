@@ -902,6 +902,8 @@
 		<module>oner365-deploy</module>
 		<!-- swagger文档 -->
 		<module>oner365-swagger</module>
+		<!-- 生成框架 -->
+		<module>oner365-generator</module>
 
 	</modules>
 

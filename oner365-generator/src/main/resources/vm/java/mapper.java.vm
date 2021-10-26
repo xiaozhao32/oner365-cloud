@@ -1,0 +1,10 @@
+package ${packageName}.mapper;
+
+/**
+ * ${functionName} Mapper 接口
+ * 
+ * @author ${author}
+ */
+public interface ${ClassName}Mapper {
+    
+}
