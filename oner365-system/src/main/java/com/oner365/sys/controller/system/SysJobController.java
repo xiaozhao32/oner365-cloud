@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.ResponseResult;
-import com.oner365.common.constants.ErrorInfo;
+import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.entity.SysJob;
@@ -47,7 +47,7 @@ public class SysJobController extends BaseController {
             SysJob entity = sysJobService.save(sysJobVo.toObject());
             return ResponseResult.success(entity);
         }
-        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
+        return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
     }
 
     /**

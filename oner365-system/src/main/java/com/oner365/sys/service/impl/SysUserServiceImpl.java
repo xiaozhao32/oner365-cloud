@@ -28,6 +28,8 @@ import com.oner365.common.cache.RedisCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ExistsEnum;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
@@ -282,7 +284,7 @@ public class SysUserServiceImpl implements ISysUserService {
         userOrgDao.deleteUserOrgByUserId(id);
         userRoleDao.deleteUserRoleByUserId(id);
         userDao.deleteById(id);
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getOrdinal();
     }
 
     @Override
@@ -297,7 +299,7 @@ public class SysUserServiceImpl implements ISysUserService {
         } catch (Exception e) {
             LOGGER.error("Error checkUserName:", e);
         }
-        return PublicConstants.NOT_EXISTS;
+        return ExistsEnum.NO.getOrdinal();
     }
 
     @Override
@@ -308,9 +310,9 @@ public class SysUserServiceImpl implements ISysUserService {
         if (optional.isPresent()) {
             optional.get().setPassword(DigestUtils.md5Hex(p).toUpperCase());
             userDao.save(optional.get());
-            return PublicConstants.SUCCESS_CODE;
+            return ResultEnum.SUCCESS.getOrdinal();
         }
-        return PublicConstants.ERROR_CODE;
+        return ResultEnum.ERROR.getOrdinal();
     }
 
     @Override
@@ -321,9 +323,9 @@ public class SysUserServiceImpl implements ISysUserService {
         if (optional.isPresent()) {
             optional.get().setStatus(status);
             userDao.save(optional.get());
-            return PublicConstants.SUCCESS_CODE;
+            return ResultEnum.SUCCESS.getOrdinal();
         }
-        return PublicConstants.ERROR_CODE;
+        return ResultEnum.ERROR.getOrdinal();
     }
 
     @Override

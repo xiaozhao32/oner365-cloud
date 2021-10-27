@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.ResponseResult;
-import com.oner365.common.constants.ErrorInfo;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ErrorInfoEnum;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.entity.SysMenuOperation;
@@ -46,7 +46,7 @@ public class SysMenuOperationController extends BaseController {
             SysMenuOperation entity = menuOperationService.save(sysMenuOperationVo.toObject());
             return ResponseResult.success(entity);
         }
-        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
+        return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
     }
 
     /**
@@ -97,6 +97,6 @@ public class SysMenuOperationController extends BaseController {
         if (checkCodeVo != null) {
             return menuOperationService.checkCode(checkCodeVo.getId(), checkCodeVo.getCode());
         }
-        return Long.valueOf(PublicConstants.ERROR_CODE);
+        return Long.valueOf(ResultEnum.ERROR.getOrdinal());
     }
 }

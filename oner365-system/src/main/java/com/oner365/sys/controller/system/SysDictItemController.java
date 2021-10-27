@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Maps;
 import com.oner365.common.ResponseResult;
-import com.oner365.common.constants.ErrorInfo;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ErrorInfoEnum;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.query.AttributeBean;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -62,7 +62,7 @@ public class SysDictItemController extends BaseController {
             SysDictItemType entity = sysDictItemTypeService.save(sysDictItemTypeVo.toObject());
             return ResponseResult.success(entity);
         }
-        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
+        return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
     }
 
     /**
@@ -76,7 +76,7 @@ public class SysDictItemController extends BaseController {
         if (checkCodeVo != null) {
             return sysDictItemTypeService.checkCode(checkCodeVo.getId(), checkCodeVo.getCode());
         }
-        return Long.valueOf(PublicConstants.ERROR_CODE);
+        return Long.valueOf(ResultEnum.ERROR.getOrdinal());
     }
     
     /**
@@ -90,7 +90,7 @@ public class SysDictItemController extends BaseController {
         if (checkTypeCodeVo != null) {
             return sysDictItemService.checkCode(checkTypeCodeVo.getId(), checkTypeCodeVo.getTypeId(), checkTypeCodeVo.getCode());
         }
-        return Long.valueOf(PublicConstants.ERROR_CODE);
+        return Long.valueOf(ResultEnum.ERROR.getOrdinal());
     }
 
     /**
@@ -199,7 +199,7 @@ public class SysDictItemController extends BaseController {
             SysDictItem entity = sysDictItemService.save(sysDictItemVo.toObject());
             return ResponseResult.success(entity);
         }
-        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
+        return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
     }
 
     /**

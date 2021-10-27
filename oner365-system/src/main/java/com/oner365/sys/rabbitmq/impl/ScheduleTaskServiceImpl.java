@@ -14,6 +14,7 @@ import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
 import com.oner365.api.rabbitmq.dto.UpdateTaskExecuteSatusDto;
 import com.oner365.common.ResponseData;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.sys.client.IMonitorServiceClient;
 import com.oner365.sys.constants.SysConstants;
@@ -50,7 +51,7 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
             execute(taskId);
         } else {
             ResponseData<Object> data = monitorServiceClient.getInfo(taskId);
-            if (data.getCode() == PublicConstants.SUCCESS_CODE) {
+            if (data.getCode() == ResultEnum.SUCCESS.getOrdinal()) {
                 JSONObject json = JSON.parseObject(data.getResult().toString());
                 if (!StatusEnum.NO.getOrdinal().equals(json.getString(EXECUTE_STATUS))) {
                     execute(taskId);

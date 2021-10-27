@@ -19,8 +19,8 @@ import com.google.common.collect.Maps;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
-import com.oner365.common.constants.ErrorInfo;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ErrorInfoEnum;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.entity.SysOrganization;
 import com.oner365.sys.entity.TreeSelect;
@@ -57,7 +57,7 @@ public class SysOrganizationController extends BaseController {
                 return ResponseResult.success(entity);
             }
         }
-        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
+        return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
     }
 
     /**
@@ -151,7 +151,7 @@ public class SysOrganizationController extends BaseController {
         if (checkOrgCodeVo != null) {
             return sysOrgService.checkCode(checkOrgCodeVo.getId(), checkOrgCodeVo.getCode(), checkOrgCodeVo.getType());
         }
-        return Long.valueOf(PublicConstants.ERROR_CODE);
+        return Long.valueOf(ResultEnum.ERROR.getOrdinal());
     }
 
     /**

@@ -20,16 +20,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.collect.Maps;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.generator.entity.GenTable;
 import com.oner365.generator.entity.GenTableColumn;
 import com.oner365.generator.service.IGenTableColumnService;
 import com.oner365.generator.service.IGenTableService;
 import com.oner365.util.ConvertString;
-import com.google.common.collect.Maps;
 
 /**
  * 代码生成 操作处理
@@ -107,7 +108,7 @@ public class GeneratorController extends BaseController {
         genTableService.importGenTable(tableList, operName);
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
+        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
         return result;
     }
 
@@ -120,7 +121,7 @@ public class GeneratorController extends BaseController {
         genTableService.updateGenTable(genTable);
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
+        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
         return result;
     }
 
@@ -131,7 +132,7 @@ public class GeneratorController extends BaseController {
     public Map<String, Object> remove(@PathVariable Long[] tableIds) {
         genTableService.deleteGenTableByIds(tableIds);
         Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
+        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
         return result;
     }
 
@@ -159,7 +160,7 @@ public class GeneratorController extends BaseController {
     public Map<String, Object> genCode(@PathVariable("tableName") String tableName) {
         genTableService.generatorCode(tableName);
         Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
+        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
         return result;
     }
 
@@ -170,7 +171,7 @@ public class GeneratorController extends BaseController {
     public Map<String, Object> synchDb(@PathVariable("tableName") String tableName) {
         genTableService.synchDb(tableName);
         Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, PublicConstants.SUCCESS_CODE);
+        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
         return result;
     }
 

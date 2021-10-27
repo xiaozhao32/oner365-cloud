@@ -19,6 +19,7 @@ import com.google.common.collect.Lists;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
@@ -109,9 +110,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             menuDao.save(entity);
-            return PublicConstants.SUCCESS_CODE;
+            return ResultEnum.SUCCESS.getOrdinal();
         }
-        return PublicConstants.ERROR_CODE;
+        return ResultEnum.ERROR.getOrdinal();
     }
 
     @Override
@@ -237,7 +238,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     public int deleteById(String id) {
         roleMenuDao.deleteByMenuId(id);
         menuDao.deleteById(id);
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getOrdinal();
     }
 
 }

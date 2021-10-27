@@ -2,6 +2,8 @@ package com.oner365.gateway.constants;
 
 import java.io.Serializable;
 
+import com.oner365.gateway.enums.ResultEnum;
+
 /**
  * 服务响应对象
  *
@@ -39,7 +41,7 @@ public class ResponseData<T> implements Serializable {
      * @param code 编码
      */
     public ResponseData(int code) {
-        this(null, code, GatewayConstants.SUCCESS);
+        this(null, code, ResultEnum.SUCCESS.getName());
     }
 
     /**
@@ -48,7 +50,7 @@ public class ResponseData<T> implements Serializable {
      * @param result 结果
      */
     public ResponseData(T result) {
-        this(result, GatewayConstants.SUCCESS_CODE, GatewayConstants.SUCCESS);
+        this(result, ResultEnum.SUCCESS.getOrdinal(), ResultEnum.SUCCESS.getName());
     }
 
     /**
@@ -83,8 +85,8 @@ public class ResponseData<T> implements Serializable {
     public static <T> ResponseData<T> success(T result) {
         ResponseData<T> response = new ResponseData<>();
         response.setResult(result);
-        response.setCode(GatewayConstants.SUCCESS_CODE);
-        response.setMessage(GatewayConstants.SUCCESS);
+        response.setCode(ResultEnum.SUCCESS.getOrdinal());
+        response.setMessage(ResultEnum.SUCCESS.getName());
         return response;
     }
 

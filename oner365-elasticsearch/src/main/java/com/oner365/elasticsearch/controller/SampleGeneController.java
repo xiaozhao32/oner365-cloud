@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.oner365.common.ResponseResult;
-import com.oner365.common.constants.ErrorInfo;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ErrorInfoEnum;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.elasticsearch.entity.SampleGene;
@@ -61,7 +61,7 @@ public class SampleGeneController extends BaseController {
             SampleGene entity = service.save(sampleGene);
             return ResponseResult.success(entity);
         }
-        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
+        return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
     }
 
     /**
@@ -88,7 +88,7 @@ public class SampleGeneController extends BaseController {
      */
     @DeleteMapping("/delete")
     public Integer delete(@RequestBody String... ids) {
-        Integer result = PublicConstants.SUCCESS_CODE;
+        Integer result = ResultEnum.SUCCESS.getOrdinal();
         for (String id : ids) {
             service.deleteById(id);
         }

@@ -20,6 +20,7 @@ import com.google.common.collect.Maps;
 import com.oner365.gateway.constants.GatewayConstants;
 import com.oner365.gateway.constants.ResponseData;
 import com.oner365.gateway.entity.GatewayRoute;
+import com.oner365.gateway.enums.ResultEnum;
 import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.service.DynamicRouteService;
 
@@ -60,7 +61,7 @@ public class DynamicRouteController {
         String msg = dynamicRouteService.save(gatewayRoute);
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(GatewayConstants.CODE, GatewayConstants.SUCCESS_CODE);
+        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
         result.put(GatewayConstants.MSG, msg);
         return new ResponseData<>(result);
     }
@@ -87,7 +88,7 @@ public class DynamicRouteController {
         Arrays.stream(ids).forEach(id -> dynamicRouteService.delete(id));
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(GatewayConstants.CODE, GatewayConstants.SUCCESS_CODE);
+        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
         return new ResponseData<>(result);
     }
 
@@ -103,7 +104,7 @@ public class DynamicRouteController {
         String msg = dynamicRouteService.update(gatewayRoute);
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(GatewayConstants.CODE, GatewayConstants.SUCCESS_CODE);
+        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
         result.put(GatewayConstants.MSG, msg);
         return new ResponseData<>(result);
     }
@@ -130,7 +131,7 @@ public class DynamicRouteController {
         String msg = dynamicRouteService.updateRouteStatus(id, status);
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(GatewayConstants.CODE, GatewayConstants.SUCCESS_CODE);
+        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
         result.put(GatewayConstants.MSG, msg);
         return new ResponseData<>(result);
     }

@@ -19,7 +19,7 @@ import com.google.common.collect.Maps;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
-import com.oner365.common.constants.ErrorInfo;
+import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.entity.SysMenu;
@@ -55,7 +55,7 @@ public class SysMenuController extends BaseController {
             SysMenu entity = menuService.save(sysMenuVo.toObject());
             return ResponseResult.success(entity);
         }
-        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
+        return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
     }
 
     /**

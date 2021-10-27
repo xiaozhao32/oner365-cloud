@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.ResponseResult;
-import com.oner365.common.constants.ErrorInfo;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ErrorInfoEnum;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.entity.DataSourceConfig;
@@ -73,7 +73,7 @@ public class DataSourceConfigController extends BaseController {
             DataSourceConfig entity = service.save(dataSourceConfigVo.toObject());
             return ResponseResult.success(entity);
         }
-        return ResponseResult.error(ErrorInfo.ERR_SAVE_ERROR);
+        return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
     }
 
     /**
@@ -83,7 +83,7 @@ public class DataSourceConfigController extends BaseController {
      */
     @DeleteMapping("/delete")
     public Integer delete(@RequestBody String... ids) {
-        int code = PublicConstants.ERROR_CODE;
+        int code = ResultEnum.ERROR.getOrdinal();
         for (String id : ids) {
             code = service.deleteById(id);
         }

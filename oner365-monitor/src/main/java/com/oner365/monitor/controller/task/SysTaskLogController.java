@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.monitor.entity.SysTaskLog;
@@ -47,7 +47,7 @@ public class SysTaskLogController extends BaseController {
      */
     @GetMapping("/export")
     public String export(@RequestBody QueryCriteriaBean data) {
-        return PublicConstants.SUCCESS;
+        return ResultEnum.SUCCESS.getName();
     }
 
     /**
@@ -80,6 +80,6 @@ public class SysTaskLogController extends BaseController {
     @DeleteMapping("/clean")
     public String clean() {
         taskLogService.cleanTaskLog();
-        return PublicConstants.SUCCESS;
+        return ResultEnum.SUCCESS.getName();
     }
 }

@@ -2,7 +2,7 @@ package com.oner365.common;
 
 import java.io.Serializable;
 
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ResultEnum;
 
 /**
  * 服务响应对象
@@ -41,7 +41,7 @@ public class ResponseData<T> implements Serializable {
      * @param code 编码
      */
     public ResponseData(int code) {
-        this(null, code, PublicConstants.SUCCESS);
+        this(null, code, ResultEnum.SUCCESS.getName());
     }
 
     /**
@@ -50,7 +50,7 @@ public class ResponseData<T> implements Serializable {
      * @param result 结果
      */
     public ResponseData(T result) {
-        this(result, PublicConstants.SUCCESS_CODE, PublicConstants.SUCCESS);
+        this(result, ResultEnum.SUCCESS.getOrdinal(), ResultEnum.SUCCESS.getName());
     }
 
     /**
@@ -85,8 +85,21 @@ public class ResponseData<T> implements Serializable {
     public static <T> ResponseData<T> success(T result) {
         ResponseData<T> response = new ResponseData<>();
         response.setResult(result);
-        response.setCode(PublicConstants.SUCCESS_CODE);
-        response.setMessage(PublicConstants.SUCCESS);
+        response.setCode(ResultEnum.SUCCESS.getOrdinal());
+        response.setMessage(ResultEnum.SUCCESS.getName());
+        return response;
+    }
+    
+    /**
+     * 返回错误结果
+     *
+     * @param message 消息
+     * @return ResponseData
+     */
+    public static <T> ResponseData<T> error(String message) {
+        ResponseData<T> response = new ResponseData<>();
+        response.setCode(ResultEnum.ERROR.getOrdinal());
+        response.setMessage(message);
         return response;
     }
 

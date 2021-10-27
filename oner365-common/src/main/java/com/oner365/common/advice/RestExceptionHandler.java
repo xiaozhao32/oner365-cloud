@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.oner365.common.ResponseData;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ResultEnum;
 
 /**
  * 全局异常信息
@@ -30,6 +30,6 @@ public class RestExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ResponseData<String> exception(Exception e) {
         LOGGER.error("[请求异常] 异常信息:{}, 堆栈:{}", e.getMessage(), e);
-        return ResponseData.error(PublicConstants.ERROR_CODE, e.getMessage());
+        return ResponseData.error(ResultEnum.ERROR.getOrdinal(), e.getMessage());
     }
 }

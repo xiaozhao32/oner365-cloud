@@ -36,19 +36,6 @@ public class PublicConstants {
   /** 分页对象 */
   public static final String PARAM_PAGE = "pageInfo";
 
-  /** 成功编码 */
-  public static final int SUCCESS_CODE = 1;
-  /** 错误编码 */
-  public static final int ERROR_CODE = 0;
-  /** 存在 */
-  public static final long EXISTS = 1L;
-  /** 不存在 */
-  public static final long NOT_EXISTS = 0L;
-  /** 成功编码 */
-  public static final String SUCCESS = "success";
-  /** 错误编码 */
-  public static final String FAILURE = "failure";
-
   /** 返回编码 */
   public static final String CODE = "code";
   /** 返回消息 */
@@ -56,6 +43,10 @@ public class PublicConstants {
 
   /** 默认值 */
   public static final String DEFAULT_VALUE = "1";
+  
+  /** 雪花算法机器id */
+  public static final long MACHINE_ID = 1L;
+  public static final long DATA_CENTER_ID = 1L;
 
   /** 缓存id */
   public static final String KEY_ID = "#id";

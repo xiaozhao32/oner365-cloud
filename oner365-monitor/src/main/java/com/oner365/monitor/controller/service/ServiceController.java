@@ -22,13 +22,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.alibaba.fastjson.JSONObject;
-import com.oner365.common.constants.PublicConstants;
+import com.google.common.collect.Lists;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.monitor.deploy.DeployMethod;
 import com.oner365.monitor.deploy.DeployServer;
 import com.oner365.monitor.deploy.DeployUtils;
 import com.oner365.util.DataUtils;
-import com.google.common.collect.Lists;
 
 import ch.ethz.ssh2.Connection;
 import reactor.core.publisher.Mono;
@@ -97,7 +97,7 @@ public class ServiceController extends BaseController {
      */
     @GetMapping("/refreshConfig")
     public String refreshConfig() {
-        return PublicConstants.SUCCESS;
+        return ResultEnum.SUCCESS.getName();
     }
 
     /**
@@ -183,7 +183,7 @@ public class ServiceController extends BaseController {
         } catch (IOException e) {
             LOGGER.error("Error uploadService:", e);
         }
-        return PublicConstants.SUCCESS;
+        return ResultEnum.SUCCESS.getName();
     }
 
     /**
@@ -226,7 +226,7 @@ public class ServiceController extends BaseController {
                 DeployUtils.execExecuteCommand(cmd);
             }
         }
-        return PublicConstants.SUCCESS;
+        return ResultEnum.SUCCESS.getName();
     }
 
 }

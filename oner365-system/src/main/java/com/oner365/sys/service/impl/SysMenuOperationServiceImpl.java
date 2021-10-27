@@ -19,6 +19,8 @@ import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ExistsEnum;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
@@ -106,7 +108,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
         // 删除操作与角色关联
         // 删除操作
         menuOperationDao.deleteById(id);
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getOrdinal();
     }
     
     @Override
@@ -127,7 +129,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
         } catch (Exception e) {
             LOGGER.error("Error checkCode:", e);
         }
-        return PublicConstants.NOT_EXISTS;
+        return ExistsEnum.NO.getOrdinal();
     }
 
 }

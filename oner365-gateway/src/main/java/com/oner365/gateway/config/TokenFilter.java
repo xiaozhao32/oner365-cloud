@@ -27,9 +27,9 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
 import com.oner365.gateway.config.properties.IgnoreWhiteProperties;
-import com.oner365.gateway.constants.GatewayConstants;
 import com.oner365.gateway.constants.ResponseData;
 import com.oner365.gateway.entity.SysLog;
+import com.oner365.gateway.enums.ErrorInfoEnum;
 import com.oner365.gateway.jwt.JwtUtils;
 import com.oner365.gateway.log.event.SysLogEvent;
 
@@ -127,7 +127,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory bufferFactory = response.bufferFactory();
             return bufferFactory.wrap(JSON.toJSONBytes(
-                    ResponseData.error(HttpStatus.UNAUTHORIZED.value(), GatewayConstants.ERROR_MESSAGE_401)));
+                    ResponseData.error(HttpStatus.UNAUTHORIZED.value(), ErrorInfoEnum.CODE_401.getName())));
         }));
     }
 

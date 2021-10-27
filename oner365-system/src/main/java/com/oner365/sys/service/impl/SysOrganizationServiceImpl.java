@@ -18,6 +18,8 @@ import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ExistsEnum;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
@@ -66,7 +68,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public int deleteById(String id) {
         dao.deleteById(id);
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getOrdinal();
     }
 
     @Override
@@ -81,7 +83,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
         } catch (Exception e) {
             LOGGER.error("Error checkCode:", e);
         }
-        return PublicConstants.NOT_EXISTS;
+        return ExistsEnum.NO.getOrdinal();
     }
 
     @Override
@@ -246,7 +248,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
         SysOrganization entity = this.getById(id);
         entity.setStatus(status);
         this.save(entity);
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getOrdinal();
     }
 
 }

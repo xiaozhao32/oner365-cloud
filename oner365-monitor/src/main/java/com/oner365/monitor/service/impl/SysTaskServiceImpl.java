@@ -19,7 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.base.Strings;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
@@ -107,7 +107,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
         task.setStatus(ScheduleConstants.Status.PAUSE.getValue());
         save(task);
         scheduler.pauseJob(ScheduleUtils.getJobKey(taskId, taskGroup));
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getOrdinal();
     }
 
     /**
@@ -123,7 +123,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
         task.setStatus(ScheduleConstants.Status.NORMAL.getValue());
         save(task);
         scheduler.resumeJob(ScheduleUtils.getJobKey(taskId, taskGroup));
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getOrdinal();
     }
 
     /**
@@ -138,7 +138,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
         String taskGroup = task.getTaskGroup();
         dao.deleteById(id);
         scheduler.deleteJob(ScheduleUtils.getJobKey(id, taskGroup));
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getOrdinal();
     }
 
     /**
@@ -210,7 +210,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
         if (isAdd) {
             ScheduleUtils.createScheduleJob(scheduler, task);
         }
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getOrdinal();
     }
 
     /**
@@ -224,7 +224,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
         SysTask properties = selectTaskById(task.getId());
         save(task);
         updateSchedulerTask(task, properties.getTaskGroup());
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getOrdinal();
     }
 
     /**

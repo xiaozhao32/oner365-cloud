@@ -26,9 +26,8 @@ import com.oner365.common.ResponseData;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.cache.RedisCache;
-import com.oner365.common.constants.ErrorCodes;
-import com.oner365.common.constants.ErrorInfo;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ErrorInfoEnum;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dto.LoginUserDto;
@@ -71,18 +70,18 @@ public class AuthController extends BaseController {
             String captcha = redisCache.getCacheObject(verifyKey);
             redisCache.deleteObject(verifyKey);
             if (captcha == null || !captcha.equalsIgnoreCase(loginUserVo.getCode())) {
-                return ResponseData.error(ErrorCodes.ERR_PARAM, ErrorInfo.ERR_CAPTCHA_ERROR);
+                return ResponseData.error(ErrorInfoEnum.CAPCHA_ERROR.getName());
             }
         }
         
         // 验证参数
         String userName = loginUserVo.getUserName();
         if (Strings.isNullOrEmpty(userName)) {
-            return ResponseData.error(ErrorCodes.ERR_USER_NAME_NOT_NULL, ErrorInfo.ERR_USER_NAME_NOT_NULL);
+            return ResponseData.error(ErrorInfoEnum.USER_NAME_NOT_NULL.getName());
         }
         String password = loginUserVo.getPassword();
         if (Strings.isNullOrEmpty(password)) {
-            return ResponseData.error(ErrorCodes.ERR_PASSWORD_NOT_NULL, ErrorInfo.ERR_PASS_NOT_NULL);
+            return ResponseData.error(ErrorInfoEnum.PASSWORD_NOT_NULL.getName());
         }
         // ip地址
         String ip = DataUtils.getIpAddress(request);
@@ -95,7 +94,7 @@ public class AuthController extends BaseController {
         if (result != null) {
             return ResponseData.success(result);
         }
-        return ResponseData.error(ErrorCodes.ERR_USER_NOT_FOUND, ErrorInfo.ERR_USER_NOT_FOUND);
+        return ResponseData.error(ErrorInfoEnum.USER_PASSWORD_ERROR.getName());
     }
 
     /**
@@ -106,7 +105,7 @@ public class AuthController extends BaseController {
     public String logout(@CurrentUser AuthUser authUser) {
         String key = CACHE_LOGIN_NAME + ":" + authUser.getUserName();
         redisCache.deleteObject(key);
-        return PublicConstants.SUCCESS;
+        return ResultEnum.SUCCESS.getName();
     }
 
     /**

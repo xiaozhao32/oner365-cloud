@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
@@ -92,11 +93,11 @@ public class FastdfsFileServiceImpl implements IFastdfsFileService {
     public int deleteById(String id) {
         try {
             dao.deleteById(id);
-            return PublicConstants.SUCCESS_CODE;
+            return ResultEnum.SUCCESS.getOrdinal();
         } catch (Exception e) {
             LOGGER.error("Error deleteById: ", e);
         }
-        return PublicConstants.ERROR_CODE;
+        return ResultEnum.ERROR.getOrdinal();
     }
 
 }

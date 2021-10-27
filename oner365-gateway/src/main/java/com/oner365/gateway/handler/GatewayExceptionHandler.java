@@ -21,6 +21,7 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
 import com.oner365.gateway.constants.GatewayConstants;
+import com.oner365.gateway.enums.ErrorInfoEnum;
 
 import reactor.core.publisher.Mono;
 
@@ -71,14 +72,14 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         result.put(GatewayConstants.RESULT, ex.getMessage());
 
         if (ex instanceof NotFoundException) {
-            result.put(GatewayConstants.CODE, 503);
-            result.put(GatewayConstants.MESSAGE, GatewayConstants.ERROR_MESSAGE_503);
+            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_503.getOrdinal());
+            result.put(GatewayConstants.MESSAGE, ErrorInfoEnum.CODE_503.getName());
         } else if (ex instanceof ResponseStatusException) {
-            result.put(GatewayConstants.CODE, 404);
-            result.put(GatewayConstants.MESSAGE, GatewayConstants.ERROR_MESSAGE_404);
+            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_404.getOrdinal());
+            result.put(GatewayConstants.MESSAGE, ErrorInfoEnum.CODE_404.getName());
         } else {
-            result.put(GatewayConstants.CODE, 500);
-            result.put(GatewayConstants.MESSAGE, GatewayConstants.ERROR_MESSAGE_500);
+            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_500.getOrdinal());
+            result.put(GatewayConstants.MESSAGE, ErrorInfoEnum.CODE_500.getName());
         }
         return result;
     }
