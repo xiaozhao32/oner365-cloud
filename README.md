@@ -45,6 +45,9 @@
 7. Rocketmq 	- 8713 oner365-rocketmq
 8. Swagger - 8714 oner365-swagger 
 
+### 启动服务
+1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos
+
 ### 链路监控
 1. 启动 Skywalking web端口(8080) 服务端口(11800)
 2. 修改服务start.sh 启动服务如下: 
