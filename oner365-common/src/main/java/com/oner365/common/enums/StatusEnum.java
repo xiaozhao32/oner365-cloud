@@ -19,12 +19,12 @@ public enum StatusEnum implements Serializable {
     /**
      * 编码
      */
-    private String code;
+    private final String code;
 
     /**
      * 名称
      */
-    private String name;
+    private final String name;
 
     /**
      * 构造方法

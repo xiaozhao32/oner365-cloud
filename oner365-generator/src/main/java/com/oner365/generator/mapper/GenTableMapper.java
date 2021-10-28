@@ -2,6 +2,8 @@ package com.oner365.generator.mapper;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.oner365.generator.entity.GenTable;
 
 /**
@@ -9,6 +11,7 @@ import com.oner365.generator.entity.GenTable;
  * 
  * @author zhaoyong
  */
+@Repository
 public interface GenTableMapper {
     /**
      * 查询业务列表

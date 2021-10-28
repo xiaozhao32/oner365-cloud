@@ -2,6 +2,8 @@ package com.oner365.generator.mapper;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.oner365.generator.entity.GenTableColumn;
 
 /**
@@ -9,6 +11,7 @@ import com.oner365.generator.entity.GenTableColumn;
  * 
  * @author zhaoyong
  */
+@Repository
 public interface GenTableColumnMapper {
     /**
      * 根据表名称查询列信息

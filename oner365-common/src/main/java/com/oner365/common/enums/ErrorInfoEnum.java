@@ -39,12 +39,12 @@ public enum ErrorInfoEnum implements Serializable {
     /**
      * 编码
      */
-    private Integer code;
+    private final Integer code;
 
     /**
      * 名称
      */
-    private String name;
+    private final String name;
 
     /**
      * 构造方法

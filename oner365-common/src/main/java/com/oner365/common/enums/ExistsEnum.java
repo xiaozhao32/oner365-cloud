@@ -19,12 +19,12 @@ public enum ExistsEnum implements Serializable {
     /**
      * 编码
      */
-    private Long code;
+    private final Long code;
 
     /**
      * 名称
      */
-    private String name;
+    private final String name;
 
     /**
      * 构造方法
