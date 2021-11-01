@@ -66,6 +66,9 @@ public class PublicConstants {
   /** 队列键值 */
   public static final String MQ_KEY = "key";
   public static final String MQ_FANOUT = "fanout";
+  
+  /** 文件存储 */
+  public static final String FILE_STORAGE = "file.storage";
 
   /** 分隔符 */
   public static final String DELIMITER = "/";

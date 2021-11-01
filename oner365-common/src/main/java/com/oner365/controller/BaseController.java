@@ -20,7 +20,7 @@ public class BaseController {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
 
-    @Value("${file.path}")
+    @Value("${file.download}")
     protected String filePath;
 
     @Value("${file.excel.suffix}")

@@ -236,6 +236,7 @@ CREATE TABLE `nt_sys_fastdfs_file` (
   `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
   `file_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '文件名称',
   `display_name` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '显示名称',
+  `file_storage` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '存储方式',
   `file_path` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件路径',
   `file_suffix` varchar(8) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件后缀',
   `file_size` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '文件大小',
@@ -249,9 +250,9 @@ CREATE TABLE `nt_sys_fastdfs_file` (
 -- Records of nt_sys_fastdfs_file
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', 'wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', '123.txt', 'http://192.168.101.130/group1/M00/00/00/wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', 'txt', '1.1 KB', 'http://192.168.101.130', '0', '2021-02-22 16:52:55');
-INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', 'wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', '3242.jpg', 'http://192.168.101.130/group1/M00/00/00/wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', 'jpg', '481 KB', 'http://192.168.101.130', '0', '2021-02-22 16:53:56');
-INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', 'wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', '456.pdf', 'http://192.168.101.130/group1/M00/00/00/wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', 'pdf', '499 KB', 'http://192.168.101.130', '0', '2021-02-22 16:50:24');
+INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', 'wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', '123.txt', 'fdfs', 'http://192.168.101.130/group1/M00/00/00/wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', 'txt', '1.1 KB', 'http://192.168.101.130', '0', '2021-02-22 16:52:55');
+INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', 'wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', '3242.jpg', 'fdfs', 'http://192.168.101.130/group1/M00/00/00/wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', 'jpg', '481 KB', 'http://192.168.101.130', '0', '2021-02-22 16:53:56');
+INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', 'wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', '456.pdf', 'fdfs', 'http://192.168.101.130/group1/M00/00/00/wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', 'pdf', '499 KB', 'http://192.168.101.130', '0', '2021-02-22 16:50:24');
 COMMIT;
 
 -- ----------------------------
