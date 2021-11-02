@@ -32,6 +32,7 @@ import com.oner365.files.entity.SysFileStorage;
 import com.oner365.files.service.IFileStorageService;
 import com.oner365.files.storage.IFileStorageClient;
 import com.oner365.util.DataUtils;
+import com.oner365.util.DateUtil;
 
 /**
  * 文件上传
@@ -67,7 +68,11 @@ public class FileController extends BaseController {
      */
     @PostMapping("/uploadMultipartFile")
     public ResponseResult<String> uploadMultipartFile(@RequestBody MultipartFile file, String dictory) {
-        String url = fileStorageClient.uploadFile(file, dictory);
+    	String targetDictory = null;
+    	if (DataUtils.isEmpty(dictory)) {
+    		targetDictory = DateUtil.getCurrentDate();
+    	}
+        String url = fileStorageClient.uploadFile(file, targetDictory);
         return ResponseResult.success(url);
     }
 
@@ -80,7 +85,11 @@ public class FileController extends BaseController {
      */
     @PostMapping("/uploadFile")
     public ResponseResult<String> uploadFile(@RequestBody File file, String dictory) {
-        String url = fileStorageClient.uploadFile(file, dictory);
+    	String targetDictory = null;
+    	if (DataUtils.isEmpty(dictory)) {
+    		targetDictory = DateUtil.getCurrentDate();
+    	}
+        String url = fileStorageClient.uploadFile(file, targetDictory);
         return ResponseResult.success(url);
     }
 
