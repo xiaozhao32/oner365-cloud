@@ -1,6 +1,6 @@
 package com.oner365.sys.controller.system;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +88,7 @@ public class SysMenuController extends BaseController {
         if (sysMenu != null) {
             return menuService.selectList(sysMenu);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     /**

@@ -1,6 +1,6 @@
 package com.oner365.sys.controller.system;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -111,7 +111,7 @@ public class SysOrganizationController extends BaseController {
         if (sysOrganization != null) {
             return sysOrgService.selectList(sysOrganization);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     /**

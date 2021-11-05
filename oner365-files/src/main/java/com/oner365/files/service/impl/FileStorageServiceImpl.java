@@ -1,7 +1,7 @@
 package com.oner365.files.service.impl;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,7 +63,7 @@ public class FileStorageServiceImpl implements IFileStorageService {
         } catch (Exception e) {
             LOGGER.error("Error findList: ", e);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     @Override

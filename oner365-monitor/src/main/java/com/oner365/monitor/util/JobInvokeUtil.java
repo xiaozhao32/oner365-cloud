@@ -2,7 +2,7 @@ package com.oner365.monitor.util;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -132,7 +132,7 @@ public class JobInvokeUtil {
     public static List<Object[]> getMethodParams(String invokeTarget) {
         String methodStr = StringUtils.substringBetween(invokeTarget, "(", ")");
         if (DataUtils.isEmpty(methodStr)) {
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         String[] methodParams = methodStr.split(",");
         List<Object[]> classes = new LinkedList<>();

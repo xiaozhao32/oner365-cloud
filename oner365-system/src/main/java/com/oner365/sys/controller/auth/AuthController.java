@@ -2,7 +2,7 @@ package com.oner365.sys.controller.auth;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -170,7 +170,7 @@ public class AuthController extends BaseController {
         } catch (Exception e) {
             LOGGER.error("Error findMenuOperByRoles: ", e);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     

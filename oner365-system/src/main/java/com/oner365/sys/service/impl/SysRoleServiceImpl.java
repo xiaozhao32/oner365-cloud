@@ -1,7 +1,7 @@
 package com.oner365.sys.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -91,7 +91,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         } catch (Exception e) {
             LOGGER.error("Error findList: ", e);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     @Override

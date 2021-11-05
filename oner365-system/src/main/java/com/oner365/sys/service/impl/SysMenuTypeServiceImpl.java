@@ -1,7 +1,7 @@
 package com.oner365.sys.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -69,7 +69,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
         } catch (Exception e) {
             LOGGER.error("Error findList: ", e);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
 
     @Override
