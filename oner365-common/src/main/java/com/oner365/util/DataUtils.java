@@ -27,6 +27,7 @@ import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -147,7 +148,7 @@ public class DataUtils {
         } catch (Exception e) {
             LOGGER.error("Error getBeanAnnotationCol: ", e);
         }
-        return Lists.newArrayList();
+        return Collections.emptyList();
     }
 
     /**

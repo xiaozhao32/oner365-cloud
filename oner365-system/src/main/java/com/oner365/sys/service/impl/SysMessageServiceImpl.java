@@ -1,5 +1,6 @@
 package com.oner365.sys.service.impl;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,6 @@ import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.sys.dao.ISysMessageDao;
 import com.oner365.sys.entity.SysMessage;
 import com.oner365.sys.service.ISysMessageService;
-import com.google.common.collect.Lists;
 
 /**
  * ISysMessageService实现类
@@ -63,7 +63,7 @@ public class SysMessageServiceImpl implements ISysMessageService {
         } catch (Exception e) {
             LOGGER.error("Error findList: ", e);
         }
-        return Lists.newArrayList();
+        return Collections.emptyList();
     }
 
     @Override
