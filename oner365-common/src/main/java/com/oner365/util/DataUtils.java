@@ -345,6 +345,15 @@ public class DataUtils {
     public static String trimToNull(@Nullable String str) {
         return isEmpty(str) ? null : str.trim();
     }
+    
+    /**
+     * 过滤空字符串 返回空字符串
+     * @param str 字符串
+     * @return String
+     */
+    public static String trimToEmpty(String str) {
+        return isEmpty(str) ? "" : str.trim();
+    }
 
     /**
      * 字节转换
