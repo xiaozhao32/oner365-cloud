@@ -169,19 +169,16 @@ public class HttpClientUtils {
 
     @Override
     public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-      // TODO Auto-generated method stub
 
     }
 
     @Override
     public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-      // TODO Auto-generated method stub
 
     }
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-      // TODO Auto-generated method stub
       return null;
     }
 
@@ -218,7 +215,6 @@ public class HttpClientUtils {
     try {
       httpGet = new HttpGet(ub.build());
     } catch (URISyntaxException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return getResult(httpGet);
@@ -235,7 +231,6 @@ public class HttpClientUtils {
     try {
       httpGet = new HttpGet(ub.build());
     } catch (URISyntaxException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     for (Map.Entry<String, Object> param : headers.entrySet()) {
@@ -256,7 +251,6 @@ public class HttpClientUtils {
     try {
       httpGet = new HttpGet(ub.build());
     } catch (URISyntaxException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     for (Map.Entry<String, Object> param : headers.entrySet()) {
@@ -281,7 +275,6 @@ public class HttpClientUtils {
     try {
       httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
     } catch (UnsupportedEncodingException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return getResult(httpPost);
@@ -296,7 +289,6 @@ public class HttpClientUtils {
     try {
       httpDelete.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
     } catch (UnsupportedEncodingException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return getResult(httpDelete);
@@ -333,7 +325,6 @@ public class HttpClientUtils {
     try {
       httpPost.setEntity(new UrlEncodedFormEntity(pairs, chartset));
     } catch (UnsupportedEncodingException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return getResult(httpPost);
@@ -350,7 +341,6 @@ public class HttpClientUtils {
     try {
       httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
     } catch (UnsupportedEncodingException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return getResult(httpPost);
@@ -367,7 +357,6 @@ public class HttpClientUtils {
     try {
       httpPost.setEntity(new UrlEncodedFormEntity(pairs, chartset));
     } catch (UnsupportedEncodingException e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
     return getResult(httpPost);

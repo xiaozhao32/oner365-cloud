@@ -21,6 +21,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Maps;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.controller.BaseController;
+import com.oner365.monitor.enums.RabbitmqTypeEnum;
 import com.oner365.util.Base64Utils;
 import com.oner365.util.DataUtils;
 import com.oner365.util.HttpClientUtils;
@@ -69,9 +70,9 @@ public class RabbitController extends BaseController {
      */
     @GetMapping("/list/{type}")
     @ApiOperation("获取队列列表")
-    public JSONObject list(@PathVariable("type") String type, @RequestParam("pageIndex") int pageIndex,
+    public JSONObject list(@PathVariable("type") RabbitmqTypeEnum type, @RequestParam("pageIndex") int pageIndex,
             @RequestParam("pageSize") int pageSize, String name) {
-        String url = getUrl(type, name, pageIndex, pageSize);
+        String url = getUrl(type.getOrdinal(), name, pageIndex, pageSize);
         return request(url);
     }
 
