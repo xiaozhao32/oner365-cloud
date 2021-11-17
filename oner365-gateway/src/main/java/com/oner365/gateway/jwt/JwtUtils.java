@@ -17,11 +17,15 @@ package com.oner365.gateway.jwt;
 
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.base.Strings;
+import com.oner365.gateway.util.DataUtils;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 
 /**
@@ -30,6 +34,8 @@ import io.jsonwebtoken.Jwts;
  * @author zhaoyong
  */
 public class JwtUtils {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtils.class);
 
     private JwtUtils() {
 
@@ -43,12 +49,14 @@ public class JwtUtils {
      * @return String
      */
     public static String getUsernameFromToken(String token, String secret) {
-        String username = null;
+        if (DataUtils.isEmpty(token)) {
+            return null;
+        }
         final Claims claims = getClaimsFromToken(token, secret);
         if (claims != null) {
-            username = claims.getSubject();
+            return claims.getSubject();
         }
-        return username;
+        return null;
     }
 
     /**
@@ -58,8 +66,13 @@ public class JwtUtils {
      * @param secret 加密秘钥
      * @return Claims
      */
-    public static Claims getClaimsFromToken(String token, String secret) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+    private static Claims getClaimsFromToken(String token, String secret) {
+        try {
+            return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            LOGGER.error("token 已过期: {}", token, e.getMessage());
+            return e.getClaims();
+        }
     }
 
     /**
@@ -73,7 +86,7 @@ public class JwtUtils {
         final String username = getUsernameFromToken(token, secret);
         if (username != null) {
             JSONObject json = JSON.parseObject(username);
-            return (!Strings.isNullOrEmpty(json.getString("userName")) && !isTokenExpired(token, secret));
+            return (!DataUtils.isEmpty(json.getString("userName")) && !isTokenExpired(token, secret));
         }
         return false;
     }
@@ -85,7 +98,7 @@ public class JwtUtils {
      * @param secret 加密秘钥
      * @return Boolean
      */
-    public static Boolean isTokenExpired(String token, String secret) {
+    private static Boolean isTokenExpired(String token, String secret) {
         final Date expiration = getExpirationDateFromToken(token, secret);
         if (expiration != null) {
             return expiration.before(new Date());
