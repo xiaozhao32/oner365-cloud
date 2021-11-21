@@ -1,6 +1,5 @@
 package com.oner365.monitor.service.impl;
 
-import java.util.Date;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -10,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.google.common.base.Strings;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -19,6 +17,8 @@ import com.oner365.monitor.dao.ISysTaskLogDao;
 import com.oner365.monitor.entity.SysTaskLog;
 import com.oner365.monitor.mapper.SysTaskLogMapper;
 import com.oner365.monitor.service.ISysTaskLogService;
+import com.oner365.util.DataUtils;
+import com.oner365.util.DateUtil;
 
 /**
  * 定时任务调度日志信息 服务层
@@ -55,8 +55,8 @@ public class SysTaskLogServiceImpl implements ISysTaskLogService {
 
     @Override
     public void addTaskLog(SysTaskLog taskLog) {
-        if (Strings.isNullOrEmpty(taskLog.getId())) {
-            taskLog.setCreateTime(new Date());
+        if (DataUtils.isEmpty(taskLog.getId())) {
+            taskLog.setCreateTime(DateUtil.getDate());
         }
         dao.save(taskLog);
     }

@@ -1,6 +1,5 @@
 package com.oner365.monitor.service.impl;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.base.Strings;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -30,6 +28,8 @@ import com.oner365.monitor.exception.TaskException;
 import com.oner365.monitor.service.ISysTaskService;
 import com.oner365.monitor.util.CronUtils;
 import com.oner365.monitor.util.ScheduleUtils;
+import com.oner365.util.DataUtils;
+import com.oner365.util.DateUtil;
 
 /**
  * 定时任务调度信息 服务层
@@ -201,10 +201,10 @@ public class SysTaskServiceImpl implements ISysTaskService {
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     public int save(SysTask task) throws SchedulerException, TaskException {
-        boolean isAdd = Strings.isNullOrEmpty(task.getId());
-        if(isAdd && Strings.isNullOrEmpty(task.getStatus())){
+        boolean isAdd = DataUtils.isEmpty(task.getId());
+        if(isAdd && DataUtils.isEmpty(task.getStatus())){
             task.setStatus(ScheduleConstants.Status.PAUSE.getValue());
-            task.setCreateTime(new Date());
+            task.setCreateTime(DateUtil.getDate());
         }
         task = dao.save(task);
         if (isAdd) {

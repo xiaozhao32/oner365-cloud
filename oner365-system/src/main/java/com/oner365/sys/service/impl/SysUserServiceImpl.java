@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.base.Strings;
 import com.oner365.common.cache.RedisCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
@@ -113,7 +112,7 @@ public class SysUserServiceImpl implements ISysUserService {
                 return JSON.toJavaObject(cache, LoginUserDto.class);
             }
 
-            Date time = DateUtil.after(new Date(), accessTokenExpireTime, Calendar.MINUTE);
+            Date time = DateUtil.after(DateUtil.getDate(), accessTokenExpireTime, Calendar.MINUTE);
             JSONObject tokenJson = new JSONObject();
             tokenJson.put(RequestUtils.TOKEN_TYPE, "login");
 
@@ -295,7 +294,7 @@ public class SysUserServiceImpl implements ISysUserService {
         try {
             Criteria<SysUser> criteria = new Criteria<>();
             criteria.add(Restrictions.eq(SysConstants.USER_NAME, DataUtils.trimToNull(userName)));
-            if (!Strings.isNullOrEmpty(userId)) {
+            if (!DataUtils.isEmpty(userId)) {
                 criteria.add(Restrictions.ne(SysConstants.ID, userId));
             }
             return userDao.count(criteria);

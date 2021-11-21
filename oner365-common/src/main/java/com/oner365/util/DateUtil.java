@@ -202,7 +202,7 @@ public class DateUtil {
      * @return Date
      */
     public static Date getDateAgo(int days) {
-        return getDateAgo(new Date(), days);
+        return getDateAgo(getDate(), days);
     }
 
     /**
@@ -226,7 +226,7 @@ public class DateUtil {
      * @return Date
      */
     public static Date getDateAfter(int days) {
-        return getDateAgo(new Date(), -days);
+        return getDateAgo(getDate(), -days);
     }
 
     /**
@@ -390,7 +390,7 @@ public class DateUtil {
      * @return Date
      */
     public static Date getDate(Date date) {
-        date = (date == null ? new Date() : date);
+        date = (date == null ? getDate() : date);
         return truncate(date, Calendar.DATE);
     }
 
@@ -472,7 +472,16 @@ public class DateUtil {
     public static String getCurrentTime(String pattern) {
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         format.setTimeZone(TimeZone.getTimeZone(DATE_TIMEZONE));
-        return format.format(new Date());
+        return format.format(getDate());
+    }
+    
+    /**
+     * 获取当前时间
+     * 
+     * @return Date
+     */
+    public static Date getDate() {
+        return localDateTimeToDate(LocalDateTime.now());
     }
 
     /**
@@ -959,7 +968,7 @@ public class DateUtil {
      */
     public static String nextDay(int day, String format) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(new Date());
+        cal.setTime(getDate());
         cal.add(Calendar.DAY_OF_YEAR, day);
         return dateToString(cal.getTime(), format);
     }
@@ -1027,14 +1036,14 @@ public class DateUtil {
      * 获取当前的日期 yyyy-MM-dd
      */
     public static String getCurrentDate() {
-        return dateToString(new Date(), FULL_DATE_FORMAT);
+        return dateToString(getDate(), FULL_DATE_FORMAT);
     }
 
     /**
      * 获取当前的时间 yyyy-MM-dd HH:mm:ss
      */
     public static String getCurrentTime() {
-        return dateToString(new Date(), FULL_TIME_FORMAT);
+        return dateToString(getDate(), FULL_TIME_FORMAT);
     }
 
     /**
@@ -1453,14 +1462,14 @@ public class DateUtil {
      * @return String
      */
     public static String yesterday(String format) {
-        return dateToString(nextDay(new Date(), -1), format);
+        return dateToString(nextDay(getDate(), -1), format);
     }
 
     /**
      * 获取明天的日期
      */
     public static String getNextDay() {
-        return dateToString(nextDay(new Date(), 1), FULL_DATE_FORMAT);
+        return dateToString(nextDay(getDate(), 1), FULL_DATE_FORMAT);
     }
 
     /**
@@ -1640,7 +1649,7 @@ public class DateUtil {
      */
     public static Date addDateByDay(Date time, int addDay) {
         if (time == null) {
-            return new Date();
+            return getDate();
         }
         Calendar cal = Calendar.getInstance();
         cal.setTime(time);

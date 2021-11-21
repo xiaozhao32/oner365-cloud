@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
@@ -27,6 +26,7 @@ import com.oner365.common.query.QueryUtils;
 import com.oner365.sys.dao.ISysJobDao;
 import com.oner365.sys.entity.SysJob;
 import com.oner365.sys.service.ISysJobService;
+import com.oner365.util.DataUtils;
 
 /**
  * ISysJobService实现类
@@ -85,7 +85,7 @@ public class SysJobServiceImpl implements ISysJobService {
     @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public SysJob save(SysJob job) {
-        if (Strings.isNullOrEmpty(job.getId())) {
+        if (DataUtils.isEmpty(job.getId())) {
             job.setStatus(StatusEnum.YES.getOrdinal());
             job.setCreateTime(LocalDateTime.now());
         }

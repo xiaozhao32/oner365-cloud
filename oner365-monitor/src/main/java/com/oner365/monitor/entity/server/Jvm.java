@@ -1,7 +1,6 @@
 package com.oner365.monitor.entity.server;
 
 import java.lang.management.ManagementFactory;
-import java.util.Date;
 
 import com.oner365.util.Arith;
 import com.oner365.util.DateUtil;
@@ -103,6 +102,6 @@ public class Jvm {
      * JDK运行时间
      */
     public String getRunTime() {
-        return DateUtil.getDatePoor(new Date(), DateUtil.getServerStartDate());
+        return DateUtil.getDatePoor(DateUtil.getDate(), DateUtil.getServerStartDate());
     }
 }

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
-import com.google.common.base.Strings;
 import com.google.common.collect.Maps;
 import com.oner365.common.ResponseData;
 import com.oner365.common.auth.AuthUser;
@@ -76,11 +75,11 @@ public class AuthController extends BaseController {
         
         // 验证参数
         String userName = loginUserVo.getUserName();
-        if (Strings.isNullOrEmpty(userName)) {
+        if (DataUtils.isEmpty(userName)) {
             return ResponseData.error(ErrorInfoEnum.USER_NAME_NOT_NULL.getName());
         }
         String password = loginUserVo.getPassword();
-        if (Strings.isNullOrEmpty(password)) {
+        if (DataUtils.isEmpty(password)) {
             return ResponseData.error(ErrorInfoEnum.PASSWORD_NOT_NULL.getName());
         }
         // ip地址

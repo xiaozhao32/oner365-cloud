@@ -21,7 +21,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.oner365.gateway.constants.GatewayConstants;
@@ -33,6 +32,7 @@ import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.query.QueryUtils;
 import com.oner365.gateway.rabbitmq.ISyncRouteMqService;
 import com.oner365.gateway.service.DynamicRouteService;
+import com.oner365.gateway.util.DataUtils;
 
 import reactor.core.publisher.Mono;
 
@@ -175,7 +175,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
                             predicates.getArgs().get(GatewayConstants.PREDICATE_ARGS_PATTERN), 0,
                             predicates.getArgs().get(GatewayConstants.PREDICATE_ARGS_PATTERN).length() - 2);
                     predicateMap.put(pattern,
-                            Strings.isNullOrEmpty(route.getStatus()) ? GatewayConstants.ROUT_STATUS_DISABLE
+                            DataUtils.isEmpty(route.getStatus()) ? GatewayConstants.ROUT_STATUS_DISABLE
                                     : route.getStatus());
                 });
         return predicateMap;

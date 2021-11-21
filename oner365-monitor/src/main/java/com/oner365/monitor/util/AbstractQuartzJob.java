@@ -1,14 +1,16 @@
 package com.oner365.monitor.util;
 
-import com.oner365.monitor.constants.ScheduleConstants;
-import com.oner365.monitor.entity.SysTask;
+import java.util.Date;
+
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 
-import java.util.Date;
+import com.oner365.monitor.constants.ScheduleConstants;
+import com.oner365.monitor.entity.SysTask;
+import com.oner365.util.DateUtil;
 
 /**
  * 抽象quartz调用
@@ -44,7 +46,7 @@ public abstract class AbstractQuartzJob implements Job {
      * @param sysTask 系统计划任务
      */
     protected void before(JobExecutionContext context, SysTask sysTask) {
-        threadLocal.set(new Date());
+        threadLocal.set(DateUtil.getDate());
     }
 
     /**

@@ -14,7 +14,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
@@ -33,6 +32,7 @@ import com.oner365.sys.entity.SysOrganization;
 import com.oner365.sys.entity.TreeSelect;
 import com.oner365.sys.mapper.SysOrganizationMapper;
 import com.oner365.sys.service.ISysOrganizationService;
+import com.oner365.util.DataUtils;
 
 /**
  * ISysOrganizationService实现类
@@ -76,7 +76,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
         try {
             Criteria<SysOrganization> criteria = new Criteria<>();
             criteria.add(Restrictions.eq(type, code));
-            if (!Strings.isNullOrEmpty(orgId)) {
+            if (!DataUtils.isEmpty(orgId)) {
                 criteria.add(Restrictions.ne(SysConstants.ID, orgId));
             }
             return dao.count(criteria);
@@ -120,7 +120,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
     @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public SysOrganization save(SysOrganization org) {
-        if (Strings.isNullOrEmpty(org.getId())) {
+        if (DataUtils.isEmpty(org.getId())) {
             org.setId(org.getOrgCode());
             org.setStatus(StatusEnum.YES.getOrdinal());
             org.setCreateTime(LocalDateTime.now());

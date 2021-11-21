@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
@@ -97,7 +96,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
             Criteria<SysDictItem> criteria = new Criteria<>();
             criteria.add(Restrictions.eq(SysConstants.ITEM_CODE, DataUtils.trimToNull(code)));
             criteria.add(Restrictions.eq(SysConstants.TYPE_ID, DataUtils.trimToNull(typeId)));
-            if (!Strings.isNullOrEmpty(id)) {
+            if (!DataUtils.isEmpty(id)) {
                 criteria.add(Restrictions.ne(SysConstants.ID, id));
             }
             return dao.count(criteria);

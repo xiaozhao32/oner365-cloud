@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
@@ -112,11 +111,11 @@ public class SysRoleServiceImpl implements ISysRoleService {
     @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
             @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
     public SysRole save(SysRole role) {
-        if (Strings.isNullOrEmpty(role.getId())) {
+        if (DataUtils.isEmpty(role.getId())) {
             role.setStatus(StatusEnum.YES.getOrdinal());
             role.setCreateTime(LocalDateTime.now());
         }
-        if (Strings.isNullOrEmpty(role.getRoleCode())) {
+        if (DataUtils.isEmpty(role.getRoleCode())) {
             role.setRoleCode(String.valueOf(System.currentTimeMillis()));
         }
         role.setUpdateTime(LocalDateTime.now());
@@ -144,7 +143,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         try {
             Criteria<SysRole> criteria = new Criteria<>();
             criteria.add(Restrictions.eq(SysConstants.ROLE_NAME, DataUtils.trimToNull(roleName)));
-            if (!Strings.isNullOrEmpty(id)) {
+            if (!DataUtils.isEmpty(id)) {
                 criteria.add(Restrictions.ne(SysConstants.ID, id));
             }
             return roleDao.count(criteria);

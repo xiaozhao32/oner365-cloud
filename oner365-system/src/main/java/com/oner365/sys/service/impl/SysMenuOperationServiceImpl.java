@@ -15,7 +15,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.google.common.base.Strings;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
@@ -91,7 +90,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
     @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public SysMenuOperation save(SysMenuOperation menuOperation) {
-        if (Strings.isNullOrEmpty(menuOperation.getId())) {
+        if (DataUtils.isEmpty(menuOperation.getId())) {
             menuOperation.setStatus(StatusEnum.YES.getOrdinal());
             menuOperation.setCreateTime(LocalDateTime.now());
         }
@@ -122,7 +121,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
         try {
             Criteria<SysMenuOperation> criteria = new Criteria<>();
             criteria.add(Restrictions.eq(SysConstants.OPERATION_TYPE, DataUtils.trimToNull(code)));
-            if (!Strings.isNullOrEmpty(id)) {
+            if (!DataUtils.isEmpty(id)) {
                 criteria.add(Restrictions.ne(SysConstants.ID, id));
             }
             return menuOperationDao.count(criteria);
