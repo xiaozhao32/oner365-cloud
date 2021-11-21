@@ -96,7 +96,10 @@ public class SysUserServiceImpl implements ISysUserService {
     private ISysUserJobDao userJobDao;
 
     @Value("${ACCESS_TOKEN_SECRET}")
-    public String accessTokenSecret;
+    private String accessTokenSecret;
+    
+    @Value("${ACCESS_TOKEN_EXPIRY_MIN}")
+    private int accessTokenExpireTime;
 
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
@@ -110,7 +113,7 @@ public class SysUserServiceImpl implements ISysUserService {
                 return JSON.toJavaObject(cache, LoginUserDto.class);
             }
 
-            Date time = DateUtil.after(new Date(), 30 * 24, Calendar.HOUR);
+            Date time = DateUtil.after(new Date(), accessTokenExpireTime, Calendar.MINUTE);
             JSONObject tokenJson = new JSONObject();
             tokenJson.put(RequestUtils.TOKEN_TYPE, "login");
 
