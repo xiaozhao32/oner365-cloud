@@ -112,7 +112,7 @@ public class SysUserController extends BaseController {
 
         QueryCriteriaBean data = new QueryCriteriaBean();
         List<AttributeBean> whereList = new ArrayList<>();
-        AttributeBean attribute = new AttributeBean(SysConstants.STATUS, StatusEnum.YES.getOrdinal());
+        AttributeBean attribute = new AttributeBean(SysConstants.STATUS, StatusEnum.YES.getCode());
         whereList.add(attribute);
         data.setWhereList(whereList);
         result.put("roleList", sysRoleService.findList(data));
@@ -143,7 +143,7 @@ public class SysUserController extends BaseController {
     public ResponseData<Map<String, Object>> avatar(@CurrentUser AuthUser authUser, @RequestParam("avatarfile") MultipartFile file) {
         if (!file.isEmpty()) {
             ResponseData<Map<String, Object>> responseData = fastdfsClient.upload(file);
-            if (responseData.getCode() == ResultEnum.SUCCESS.getOrdinal()) {
+            if (responseData.getCode() == ResultEnum.SUCCESS.getCode()) {
                 Map<String, Object> data = responseData.getResult();
 
                 SysUser sysUser = sysUserService.getById(authUser.getId());
@@ -152,7 +152,7 @@ public class SysUserController extends BaseController {
             }
             return responseData;
         }
-        return new ResponseData<>(ResultEnum.ERROR.getOrdinal(), ErrorInfoEnum.PARAM.getName());
+        return new ResponseData<>(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
     }
 
     /**
@@ -203,7 +203,7 @@ public class SysUserController extends BaseController {
         if (checkUserNameVo != null) {
             return sysUserService.checkUserName(checkUserNameVo.getId(), checkUserNameVo.getUserName());
         }
-        return Long.valueOf(ResultEnum.ERROR.getOrdinal());
+        return Long.valueOf(ResultEnum.ERROR.getCode());
     }
 
     /**
@@ -217,7 +217,7 @@ public class SysUserController extends BaseController {
         if (resetPasswordVo != null) {
             return sysUserService.editPassword(resetPasswordVo.getUserId(), resetPasswordVo.getPassword());
         }
-        return ResultEnum.ERROR.getOrdinal();
+        return ResultEnum.ERROR.getCode();
     }
 
     /**

@@ -42,7 +42,7 @@ public enum ResultEnum implements Serializable {
      * 
      * @return code
      */
-    public Integer getOrdinal() {
+    public Integer getCode() {
         return code;
     }
 
@@ -62,7 +62,7 @@ public enum ResultEnum implements Serializable {
      * @return StatusEnum
      */
     public static ResultEnum getCode(Integer code) {
-        Optional<ResultEnum> result = Arrays.stream(ResultEnum.values()).filter(e -> e.getOrdinal().equals(code))
+        Optional<ResultEnum> result = Arrays.stream(ResultEnum.values()).filter(e -> e.getCode().equals(code))
                 .findFirst();
         return result.orElse(null);
     }

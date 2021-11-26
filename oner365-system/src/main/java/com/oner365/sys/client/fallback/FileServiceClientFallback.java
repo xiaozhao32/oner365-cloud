@@ -20,17 +20,17 @@ public class FileServiceClientFallback implements IFileServiceClient {
 
     @Override
     public ResponseData<Map<String, Object>> upload(MultipartFile multipartFile) {
-        return new ResponseData<>(ResultEnum.ERROR.getOrdinal(), ErrorInfoEnum.PARAM.getName());
+        return new ResponseData<>(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
     }
 
     @Override
     public ResponseData<Map<String, Object>> upload(File file) {
-        return new ResponseData<>(ResultEnum.ERROR.getOrdinal(), ErrorInfoEnum.PARAM.getName());
+        return new ResponseData<>(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
     }
 
     @Override
     public ResponseData<String> delete(String... ids) {
-        return new ResponseData<>(ResultEnum.ERROR.getOrdinal(), ErrorInfoEnum.PARAM.getName());
+        return new ResponseData<>(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
     }
 
 }

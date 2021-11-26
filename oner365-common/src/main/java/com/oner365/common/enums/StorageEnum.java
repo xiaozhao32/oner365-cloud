@@ -42,7 +42,7 @@ public enum StorageEnum implements Serializable {
      *
      * @return code
      */
-    public String getOrdinal() {
+    public String getCode() {
         return code;
     }
 
@@ -63,7 +63,7 @@ public enum StorageEnum implements Serializable {
      */
     public static StorageEnum getCode(String code) {
         Optional<StorageEnum> result = Arrays.stream(StorageEnum.values())
-                .filter(e -> e.getOrdinal().equals(code))
+                .filter(e -> e.getCode().equals(code))
                 .findFirst();
         return result.orElse(null);
     }

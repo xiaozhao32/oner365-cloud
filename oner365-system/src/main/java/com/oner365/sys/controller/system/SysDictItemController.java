@@ -76,7 +76,7 @@ public class SysDictItemController extends BaseController {
         if (checkCodeVo != null) {
             return sysDictItemTypeService.checkCode(checkCodeVo.getId(), checkCodeVo.getCode());
         }
-        return Long.valueOf(ResultEnum.ERROR.getOrdinal());
+        return Long.valueOf(ResultEnum.ERROR.getCode());
     }
     
     /**
@@ -90,7 +90,7 @@ public class SysDictItemController extends BaseController {
         if (checkTypeCodeVo != null) {
             return sysDictItemService.checkCode(checkTypeCodeVo.getId(), checkTypeCodeVo.getTypeId(), checkTypeCodeVo.getCode());
         }
-        return Long.valueOf(ResultEnum.ERROR.getOrdinal());
+        return Long.valueOf(ResultEnum.ERROR.getCode());
     }
 
     /**

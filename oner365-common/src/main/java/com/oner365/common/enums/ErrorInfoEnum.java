@@ -6,7 +6,7 @@ import java.util.Optional;
 
 /**
  * 枚举 - 错误编码和信息
- * 
+ *
  * @author zhaoyong
  */
 public enum ErrorInfoEnum implements Serializable {
@@ -48,7 +48,7 @@ public enum ErrorInfoEnum implements Serializable {
 
     /**
      * 构造方法
-     * 
+     *
      * @param code  编码
      * @param name 名称
      */
@@ -59,16 +59,16 @@ public enum ErrorInfoEnum implements Serializable {
 
     /**
      * get code
-     * 
+     *
      * @return code
      */
-    public Integer getOrdinal() {
+    public Integer getCode() {
         return code;
     }
 
     /**
      * get name
-     * 
+     *
      * @return name
      */
     public String getName() {
@@ -77,12 +77,12 @@ public enum ErrorInfoEnum implements Serializable {
 
     /**
      * 获取枚举
-     * 
+     *
      * @param code 编码
      * @return StatusEnum
      */
     public static ErrorInfoEnum getCode(Integer code) {
-        Optional<ErrorInfoEnum> result = Arrays.stream(ErrorInfoEnum.values()).filter(e -> e.getOrdinal().equals(code))
+        Optional<ErrorInfoEnum> result = Arrays.stream(ErrorInfoEnum.values()).filter(e -> e.getCode().equals(code))
                 .findFirst();
         return result.orElse(null);
     }

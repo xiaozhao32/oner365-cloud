@@ -46,7 +46,7 @@ public enum ErrorInfoEnum implements Serializable {
      * 
      * @return code
      */
-    public Integer getOrdinal() {
+    public Integer getCode() {
         return code;
     }
 
@@ -66,7 +66,7 @@ public enum ErrorInfoEnum implements Serializable {
      * @return StatusEnum
      */
     public static ErrorInfoEnum getCode(Integer code) {
-        Optional<ErrorInfoEnum> result = Arrays.stream(ErrorInfoEnum.values()).filter(e -> e.getOrdinal().equals(code))
+        Optional<ErrorInfoEnum> result = Arrays.stream(ErrorInfoEnum.values()).filter(e -> e.getCode().equals(code))
                 .findFirst();
         return result.orElse(null);
     }

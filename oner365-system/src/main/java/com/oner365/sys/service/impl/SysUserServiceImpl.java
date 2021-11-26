@@ -193,7 +193,7 @@ public class SysUserServiceImpl implements ISysUserService {
         Criteria<SysUser> criteria = new Criteria<>();
         criteria.add(Restrictions.eq(SysConstants.USER_NAME, userName));
         criteria.add(Restrictions.eq(SysConstants.PASS, password));
-        criteria.add(Restrictions.eq(SysConstants.STATUS, StatusEnum.YES.getOrdinal()));
+        criteria.add(Restrictions.eq(SysConstants.STATUS, StatusEnum.YES.getCode()));
         Optional<SysUser> optional = userDao.findOne(criteria);
         return optional.orElse(null);
     }
@@ -220,7 +220,7 @@ public class SysUserServiceImpl implements ISysUserService {
     public SysUser saveUser(SysUser entity) {
         try {
             LocalDateTime time = LocalDateTime.now();
-            entity.setActiveStatus(StatusEnum.YES.getOrdinal());
+            entity.setActiveStatus(StatusEnum.YES.getCode());
             entity.setCreateTime(time);
             entity.setLastTime(time);
 
@@ -247,7 +247,7 @@ public class SysUserServiceImpl implements ISysUserService {
                 sysUserJob.setSysJob(sysJob);
                 sysUserJob.setSysUser(entity);
                 sysUserJob.setPositionOrder(Integer.parseInt(PublicConstants.DEFAULT_VALUE));
-                sysUserJob.setStatus(StatusEnum.YES.getOrdinal());
+                sysUserJob.setStatus(StatusEnum.YES.getCode());
                 sysUserJob.setCreateTime(time);
                 sysUserJob.setUpdateTime(time);
                 userJobDao.save(sysUserJob);
@@ -261,7 +261,7 @@ public class SysUserServiceImpl implements ISysUserService {
                 sysUserOrg.setSysOrganization(sysOrg);
                 sysUserOrg.setSysUser(entity);
                 sysUserOrg.setPositionOrder(Integer.parseInt(PublicConstants.DEFAULT_VALUE));
-                sysUserOrg.setStatus(StatusEnum.YES.getOrdinal());
+                sysUserOrg.setStatus(StatusEnum.YES.getCode());
                 sysUserOrg.setCreateTime(time);
                 sysUserOrg.setUpdateTime(time);
                 userOrgDao.save(sysUserOrg);
@@ -286,7 +286,7 @@ public class SysUserServiceImpl implements ISysUserService {
         userOrgDao.deleteUserOrgByUserId(id);
         userRoleDao.deleteUserRoleByUserId(id);
         userDao.deleteById(id);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
 
     @Override
@@ -301,7 +301,7 @@ public class SysUserServiceImpl implements ISysUserService {
         } catch (Exception e) {
             LOGGER.error("Error checkUserName:", e);
         }
-        return ExistsEnum.NO.getOrdinal();
+        return ExistsEnum.NO.getCode();
     }
 
     @Override
@@ -312,9 +312,9 @@ public class SysUserServiceImpl implements ISysUserService {
         if (optional.isPresent()) {
             optional.get().setPassword(DigestUtils.md5Hex(p).toUpperCase());
             userDao.save(optional.get());
-            return ResultEnum.SUCCESS.getOrdinal();
+            return ResultEnum.SUCCESS.getCode();
         }
-        return ResultEnum.ERROR.getOrdinal();
+        return ResultEnum.ERROR.getCode();
     }
 
     @Override
@@ -325,9 +325,9 @@ public class SysUserServiceImpl implements ISysUserService {
         if (optional.isPresent()) {
             optional.get().setStatus(status);
             userDao.save(optional.get());
-            return ResultEnum.SUCCESS.getOrdinal();
+            return ResultEnum.SUCCESS.getCode();
         }
-        return ResultEnum.ERROR.getOrdinal();
+        return ResultEnum.ERROR.getCode();
     }
 
     @Override

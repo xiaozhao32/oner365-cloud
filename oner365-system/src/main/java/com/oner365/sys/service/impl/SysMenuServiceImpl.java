@@ -80,7 +80,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         @CacheEvict(value = CACHE_ROLE_NAME, allEntries = true)
     })
     public SysMenu save(SysMenu menu) {
-        menu.setStatus(StatusEnum.YES.getOrdinal());
+        menu.setStatus(StatusEnum.YES.getCode());
         menu.setCreateTime(LocalDateTime.now());
         menu.setUpdateTime(LocalDateTime.now());
         menuDao.save(menu);
@@ -110,9 +110,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             menuDao.save(entity);
-            return ResultEnum.SUCCESS.getOrdinal();
+            return ResultEnum.SUCCESS.getCode();
         }
-        return ResultEnum.ERROR.getOrdinal();
+        return ResultEnum.ERROR.getCode();
     }
 
     @Override
@@ -143,7 +143,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
         Criteria<SysMenu> criteria = new Criteria<>();
         criteria.add(Restrictions.eq("menuTypeId", menuTypeId));
         criteria.add(Restrictions.eq("parentId", parentId));
-        criteria.add(Restrictions.eq(SysConstants.STATUS, StatusEnum.YES.getOrdinal()));
+        criteria.add(Restrictions.eq(SysConstants.STATUS, StatusEnum.YES.getCode()));
         return menuDao.findAll(criteria);
     }
 
@@ -238,7 +238,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     public int deleteById(String id) {
         roleMenuDao.deleteByMenuId(id);
         menuDao.deleteById(id);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
 
 }

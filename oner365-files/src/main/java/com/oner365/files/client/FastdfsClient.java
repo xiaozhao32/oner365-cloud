@@ -93,7 +93,7 @@ public class FastdfsClient implements IFileStorageClient {
         entity.setId(StringUtils.replace(url, entity.getFastdfsUrl() + PublicConstants.DELIMITER, ""));
         entity.setCreateTime(DateUtil.getDate());
         entity.setDirectory(false);
-        entity.setFileStorage(getName().getOrdinal());
+        entity.setFileStorage(getName().getCode());
         entity.setFilePath(url);
         entity.setFileName(StringUtils.substringAfterLast(url, PublicConstants.DELIMITER));
         entity.setDisplayName(fileName);

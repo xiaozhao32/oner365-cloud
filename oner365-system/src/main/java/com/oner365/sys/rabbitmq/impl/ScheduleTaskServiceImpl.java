@@ -51,9 +51,9 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
             execute(taskId);
         } else {
             ResponseData<Object> data = monitorServiceClient.getInfo(taskId);
-            if (data.getCode() == ResultEnum.SUCCESS.getOrdinal()) {
+            if (data.getCode() == ResultEnum.SUCCESS.getCode()) {
                 JSONObject json = JSON.parseObject(data.getResult().toString());
-                if (!StatusEnum.NO.getOrdinal().equals(json.getString(EXECUTE_STATUS))) {
+                if (!StatusEnum.NO.getCode().equals(json.getString(EXECUTE_STATUS))) {
                     execute(taskId);
                 }
             }
@@ -64,17 +64,17 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
         long time = System.currentTimeMillis();
         UpdateTaskExecuteSatusDto updateTask = new UpdateTaskExecuteSatusDto();
         updateTask.setTaskId(taskId);
-        updateTask.setExecuteStatus(StatusEnum.NO.getOrdinal());
+        updateTask.setExecuteStatus(StatusEnum.NO.getCode());
         scheduleExecuteService.updateTaskExecuteStatus(updateTask);
         LOGGER.info("taskExecute  update sysTask  executeStatus = 1");
-        updateTask.setExecuteStatus(StatusEnum.YES.getOrdinal());
+        updateTask.setExecuteStatus(StatusEnum.YES.getCode());
         scheduleExecuteService.updateTaskExecuteStatus(updateTask);
         LOGGER.info("taskExecute  saveTaskLog ");
         SysTaskLogDto log = new SysTaskLogDto();
         log.setTaskId(taskId);
         log.setExecuteIp(DataUtils.getLocalhost());
         log.setExecuteServerName(SysConstants.SCHEDULE_SERVER_NAME);
-        log.setStatus(StatusEnum.YES.getOrdinal());
+        log.setStatus(StatusEnum.YES.getCode());
         log.setTaskMessage("执行时间：" + (System.currentTimeMillis() - time) + "毫秒");
         scheduleExecuteService.saveExecuteTaskLog(log);
     }

@@ -72,13 +72,13 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         result.put(GatewayConstants.RESULT, ex.getMessage());
 
         if (ex instanceof NotFoundException) {
-            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_503.getOrdinal());
+            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_503.getCode());
             result.put(GatewayConstants.MESSAGE, ErrorInfoEnum.CODE_503.getName());
         } else if (ex instanceof ResponseStatusException) {
-            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_404.getOrdinal());
+            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_404.getCode());
             result.put(GatewayConstants.MESSAGE, ErrorInfoEnum.CODE_404.getName());
         } else {
-            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_500.getOrdinal());
+            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_500.getCode());
             result.put(GatewayConstants.MESSAGE, ErrorInfoEnum.CODE_500.getName());
         }
         return result;

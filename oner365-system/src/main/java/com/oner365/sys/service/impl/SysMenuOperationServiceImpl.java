@@ -91,7 +91,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public SysMenuOperation save(SysMenuOperation menuOperation) {
         if (DataUtils.isEmpty(menuOperation.getId())) {
-            menuOperation.setStatus(StatusEnum.YES.getOrdinal());
+            menuOperation.setStatus(StatusEnum.YES.getCode());
             menuOperation.setCreateTime(LocalDateTime.now());
         }
         menuOperation.setUpdateTime(LocalDateTime.now());
@@ -107,7 +107,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
         // 删除操作与角色关联
         // 删除操作
         menuOperationDao.deleteById(id);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
     
     @Override
@@ -128,7 +128,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
         } catch (Exception e) {
             LOGGER.error("Error checkCode:", e);
         }
-        return ExistsEnum.NO.getOrdinal();
+        return ExistsEnum.NO.getCode();
     }
 
 }

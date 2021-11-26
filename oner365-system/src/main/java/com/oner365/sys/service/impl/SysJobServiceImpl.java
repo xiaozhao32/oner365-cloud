@@ -86,7 +86,7 @@ public class SysJobServiceImpl implements ISysJobService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public SysJob save(SysJob job) {
         if (DataUtils.isEmpty(job.getId())) {
-            job.setStatus(StatusEnum.YES.getOrdinal());
+            job.setStatus(StatusEnum.YES.getCode());
             job.setCreateTime(LocalDateTime.now());
         }
         job.setUpdateTime(LocalDateTime.now());
@@ -98,7 +98,7 @@ public class SysJobServiceImpl implements ISysJobService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public int deleteById(String id) {
         dao.deleteById(id);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
     
     @Override
@@ -109,9 +109,9 @@ public class SysJobServiceImpl implements ISysJobService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             this.save(entity);
-            return ResultEnum.SUCCESS.getOrdinal();
+            return ResultEnum.SUCCESS.getCode();
         }
-        return ResultEnum.ERROR.getOrdinal();
+        return ResultEnum.ERROR.getCode();
     }
 
 }

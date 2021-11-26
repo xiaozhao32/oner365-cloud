@@ -112,7 +112,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
             @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
     public SysRole save(SysRole role) {
         if (DataUtils.isEmpty(role.getId())) {
-            role.setStatus(StatusEnum.YES.getOrdinal());
+            role.setStatus(StatusEnum.YES.getCode());
             role.setCreateTime(LocalDateTime.now());
         }
         if (DataUtils.isEmpty(role.getRoleCode())) {
@@ -135,7 +135,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         roleMenuDao.deleteRoleMenuByRoleId(id);
         // 删除角色
         roleDao.deleteById(id);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
 
     @Override
@@ -150,7 +150,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
         } catch (Exception e) {
             LOGGER.error("Error checkRoleName:", e);
         }
-        return ExistsEnum.NO.getOrdinal();
+        return ExistsEnum.NO.getCode();
     }
 
     @Override
@@ -167,7 +167,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
             roleMenu.setId(roleId + menuType + menuId.toString());
             roleMenuDao.save(roleMenu);
         });
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
 
     @Override
@@ -274,9 +274,9 @@ public class SysRoleServiceImpl implements ISysRoleService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             this.save(entity);
-            return ResultEnum.SUCCESS.getOrdinal();
+            return ResultEnum.SUCCESS.getCode();
         }
-        return ResultEnum.ERROR.getOrdinal();
+        return ResultEnum.ERROR.getCode();
     }
 
 }

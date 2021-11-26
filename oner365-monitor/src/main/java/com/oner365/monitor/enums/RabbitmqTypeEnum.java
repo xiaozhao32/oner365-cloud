@@ -46,7 +46,7 @@ public enum RabbitmqTypeEnum implements Serializable {
      *
      * @return code
      */
-    public String getOrdinal() {
+    public String getCode() {
         return code;
     }
 
@@ -67,7 +67,7 @@ public enum RabbitmqTypeEnum implements Serializable {
      */
     public static RabbitmqTypeEnum getCode(String code) {
         Optional<RabbitmqTypeEnum> result = Arrays.stream(RabbitmqTypeEnum.values())
-                .filter(e -> e.getOrdinal().equals(code))
+                .filter(e -> e.getCode().equals(code))
                 .findFirst();
         return result.orElse(null);
     }

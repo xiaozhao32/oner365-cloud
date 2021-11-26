@@ -83,7 +83,7 @@ public class DataSourceConfigController extends BaseController {
      */
     @DeleteMapping("/delete")
     public Integer delete(@RequestBody String... ids) {
-        int code = ResultEnum.ERROR.getOrdinal();
+        int code = ResultEnum.ERROR.getCode();
         for (String id : ids) {
             code = service.deleteById(id);
         }

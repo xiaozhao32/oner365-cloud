@@ -108,7 +108,7 @@ public class GeneratorController extends BaseController {
         genTableService.importGenTable(tableList, operName);
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
+        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
         return result;
     }
 
@@ -121,7 +121,7 @@ public class GeneratorController extends BaseController {
         genTableService.updateGenTable(genTable);
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
+        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
         return result;
     }
 
@@ -132,7 +132,7 @@ public class GeneratorController extends BaseController {
     public Map<String, Object> remove(@PathVariable Long[] tableIds) {
         genTableService.deleteGenTableByIds(tableIds);
         Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
+        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
         return result;
     }
 
@@ -160,7 +160,7 @@ public class GeneratorController extends BaseController {
     public Map<String, Object> genCode(@PathVariable("tableName") String tableName) {
         genTableService.generatorCode(tableName);
         Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
+        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
         return result;
     }
 
@@ -171,7 +171,7 @@ public class GeneratorController extends BaseController {
     public Map<String, Object> synchDb(@PathVariable("tableName") String tableName) {
         genTableService.synchDb(tableName);
         Map<String, Object> result = Maps.newHashMap();
-        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
+        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
         return result;
     }
 

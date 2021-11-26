@@ -71,7 +71,7 @@ public class SysMessageServiceImpl implements ISysMessageService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public int deleteById(String id) {
         dao.deleteById(id);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
 
 }

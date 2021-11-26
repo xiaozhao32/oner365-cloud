@@ -93,11 +93,11 @@ public class FileStorageServiceImpl implements IFileStorageService {
     public int deleteById(String id) {
         try {
             dao.deleteById(id);
-            return ResultEnum.SUCCESS.getOrdinal();
+            return ResultEnum.SUCCESS.getCode();
         } catch (Exception e) {
             LOGGER.error("Error deleteById: ", e);
         }
-        return ResultEnum.ERROR.getOrdinal();
+        return ResultEnum.ERROR.getCode();
     }
 
 }

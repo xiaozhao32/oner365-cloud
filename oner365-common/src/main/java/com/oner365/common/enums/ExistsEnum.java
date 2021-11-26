@@ -6,20 +6,20 @@ import java.util.Optional;
 
 /**
  * 枚举 - 存在不存在
- * 
+ *
  * @author zhaoyong
  */
 public enum ExistsEnum implements Serializable {
 
-    /** 成功 */
-    YES(1L, "yes"),
     /** 失败 */
-    NO(0L, "no");
+    NO(0, "no"),
+    /** 成功 */
+    YES(1, "yes");
 
     /**
      * 编码
      */
-    private final Long code;
+    private final Integer code;
 
     /**
      * 名称
@@ -28,27 +28,27 @@ public enum ExistsEnum implements Serializable {
 
     /**
      * 构造方法
-     * 
+     *
      * @param code  编码
      * @param name 名称
      */
-    ExistsEnum(Long code, String name) {
+    ExistsEnum(Integer code, String name) {
         this.code = code;
         this.name = name;
     }
 
     /**
      * get code
-     * 
+     *
      * @return code
      */
-    public Long getOrdinal() {
+    public Integer getCode() {
         return code;
     }
 
     /**
      * get name
-     * 
+     *
      * @return name
      */
     public String getName() {
@@ -57,12 +57,12 @@ public enum ExistsEnum implements Serializable {
 
     /**
      * 获取枚举
-     * 
+     *
      * @param code 编码
      * @return StatusEnum
      */
-    public static ExistsEnum getCode(Long code) {
-        Optional<ExistsEnum> result = Arrays.stream(ExistsEnum.values()).filter(e -> e.getOrdinal().equals(code))
+    public static ExistsEnum getCode(Integer code) {
+        Optional<ExistsEnum> result = Arrays.stream(ExistsEnum.values()).filter(e -> e.getCode().equals(code))
                 .findFirst();
         return result.orElse(null);
     }

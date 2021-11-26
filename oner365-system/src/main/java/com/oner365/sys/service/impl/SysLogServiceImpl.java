@@ -78,7 +78,7 @@ public class SysLogServiceImpl implements ISysLogService {
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     public int deleteById(String id) {
         dao.deleteById(id);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
 
     @Override
@@ -87,7 +87,7 @@ public class SysLogServiceImpl implements ISysLogService {
         criteria.add(Restrictions.lte(SysConstants.CREATE_TIME, date));
         List<SysLog> list = dao.findAll(criteria);
         dao.deleteAll(list);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
 
 }

@@ -112,7 +112,7 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
         } catch (Exception e) {
             LOGGER.error("Error checkCode:", e);
         }
-        return ExistsEnum.NO.getOrdinal();
+        return ExistsEnum.NO.getCode();
     }
 
     @Override
@@ -130,7 +130,7 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
         List<SysDictItem> dictItemList = sysDictItemService.findList(data);
         dictItemList.forEach(dictItem -> sysDictItemService.deleteById(dictItem.getId()));
         dao.deleteById(id);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
 
     @Override
@@ -149,9 +149,9 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
         if (entity != null && entity.getId() != null) {
             entity.setStatus(status);
             this.save(entity);
-            return ResultEnum.SUCCESS.getOrdinal();
+            return ResultEnum.SUCCESS.getCode();
         }
-        return ResultEnum.ERROR.getOrdinal();
+        return ResultEnum.ERROR.getCode();
     }
 
 }

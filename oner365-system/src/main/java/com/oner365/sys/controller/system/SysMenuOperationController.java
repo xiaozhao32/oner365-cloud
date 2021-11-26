@@ -97,6 +97,6 @@ public class SysMenuOperationController extends BaseController {
         if (checkCodeVo != null) {
             return menuOperationService.checkCode(checkCodeVo.getId(), checkCodeVo.getCode());
         }
-        return Long.valueOf(ResultEnum.ERROR.getOrdinal());
+        return Long.valueOf(ResultEnum.ERROR.getCode());
     }
 }

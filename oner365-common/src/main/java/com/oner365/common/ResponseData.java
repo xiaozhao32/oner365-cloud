@@ -50,7 +50,7 @@ public class ResponseData<T> implements Serializable {
      * @param result 结果
      */
     public ResponseData(T result) {
-        this(result, ResultEnum.SUCCESS.getOrdinal(), ResultEnum.SUCCESS.getName());
+        this(result, ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getName());
     }
 
     /**
@@ -85,7 +85,7 @@ public class ResponseData<T> implements Serializable {
     public static <T> ResponseData<T> success(T result) {
         ResponseData<T> response = new ResponseData<>();
         response.setResult(result);
-        response.setCode(ResultEnum.SUCCESS.getOrdinal());
+        response.setCode(ResultEnum.SUCCESS.getCode());
         response.setMessage(ResultEnum.SUCCESS.getName());
         return response;
     }
@@ -98,7 +98,7 @@ public class ResponseData<T> implements Serializable {
      */
     public static <T> ResponseData<T> error(String message) {
         ResponseData<T> response = new ResponseData<>();
-        response.setCode(ResultEnum.ERROR.getOrdinal());
+        response.setCode(ResultEnum.ERROR.getCode());
         response.setMessage(message);
         return response;
     }

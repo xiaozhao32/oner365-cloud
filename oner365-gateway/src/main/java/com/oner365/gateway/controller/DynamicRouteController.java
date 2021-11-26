@@ -61,7 +61,7 @@ public class DynamicRouteController {
         String msg = dynamicRouteService.save(gatewayRoute);
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
+        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getCode());
         result.put(GatewayConstants.MSG, msg);
         return new ResponseData<>(result);
     }
@@ -88,7 +88,7 @@ public class DynamicRouteController {
         Arrays.stream(ids).forEach(id -> dynamicRouteService.delete(id));
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
+        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getCode());
         return new ResponseData<>(result);
     }
 
@@ -104,7 +104,7 @@ public class DynamicRouteController {
         String msg = dynamicRouteService.update(gatewayRoute);
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
+        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getCode());
         result.put(GatewayConstants.MSG, msg);
         return new ResponseData<>(result);
     }
@@ -131,7 +131,7 @@ public class DynamicRouteController {
         String msg = dynamicRouteService.updateRouteStatus(id, status);
 
         Map<String, Object> result = Maps.newHashMap();
-        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getOrdinal());
+        result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getCode());
         result.put(GatewayConstants.MSG, msg);
         return new ResponseData<>(result);
     }

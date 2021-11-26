@@ -68,7 +68,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public int deleteById(String id) {
         dao.deleteById(id);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
 
     @Override
@@ -83,7 +83,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
         } catch (Exception e) {
             LOGGER.error("Error checkCode:", e);
         }
-        return ExistsEnum.NO.getOrdinal();
+        return ExistsEnum.NO.getCode();
     }
 
     @Override
@@ -122,7 +122,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
     public SysOrganization save(SysOrganization org) {
         if (DataUtils.isEmpty(org.getId())) {
             org.setId(org.getOrgCode());
-            org.setStatus(StatusEnum.YES.getOrdinal());
+            org.setStatus(StatusEnum.YES.getCode());
             org.setCreateTime(LocalDateTime.now());
         }
 
@@ -248,7 +248,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
         SysOrganization entity = this.getById(id);
         entity.setStatus(status);
         this.save(entity);
-        return ResultEnum.SUCCESS.getOrdinal();
+        return ResultEnum.SUCCESS.getCode();
     }
 
 }
