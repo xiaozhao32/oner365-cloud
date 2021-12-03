@@ -12,11 +12,11 @@ import java.net.HttpURLConnection;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,14 +25,12 @@ import java.util.Map;
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLSession;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
@@ -60,17 +58,17 @@ import org.apache.http.util.EntityUtils;
 public class HttpClientUtils {
 
   // 将最大连接数增加到
-  public static final int MAX_TOTAL = 60;
+  private static final int MAX_TOTAL = 60;
   // 将每个路由基础的连接增加到
-  public static final int MAX_ROUTE_TOTAL = 30;
+  private static final int MAX_ROUTE_TOTAL = 30;
 
   //设置超时时间
-  public static final int REQUEST_TIMEOUT = 60 * 1000;
-  public static final int REQUEST_SOCKET_TIME = 30 * 1000;
+  private static final int REQUEST_TIMEOUT = 60 * 1000;
+  private static final int REQUEST_SOCKET_TIME = 30 * 1000;
+  private static final String UTF_8 = "UTF-8";
 
   private static PoolingHttpClientConnectionManager httpClientConnectionManager;
-  private static String EMPTY_STR = "";
-  private static String UTF_8 = "UTF-8";
+  private static final String EMPTY_STR = "";
 
   private static void init() {
     if (httpClientConnectionManager == null) {
@@ -80,23 +78,14 @@ public class HttpClientUtils {
     }
   }
 
-  public static CloseableHttpClient createSSLClientDefault() {
+  private static CloseableHttpClient createSSLClientDefault() {
     try {
-      SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, new TrustStrategy() {
-        // 信任所有
-        @Override
-        public boolean isTrusted(X509Certificate[] chain, String authType) throws CertificateException {
-          return true;
-        }
-      }).build();
+      // 信任所有
+      SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, (TrustStrategy) (chain, authType) -> true).build();
       RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(REQUEST_TIMEOUT).setSocketTimeout(REQUEST_SOCKET_TIME).build();
       SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
       return HttpClients.custom().setSSLSocketFactory(sslsf).setDefaultRequestConfig(requestConfig).build();
-    } catch (KeyManagementException e) {
-      e.printStackTrace();
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    } catch (KeyStoreException e) {
+    } catch (KeyManagementException | NoSuchAlgorithmException | KeyStoreException e) {
       e.printStackTrace();
     }
     return HttpClients.createDefault();
@@ -104,34 +93,29 @@ public class HttpClientUtils {
 
   public static String httpsPost(String path, Map<String, String> headers, String body) throws IOException {
     URL url = new URL(path);
-    HostnameVerifier ignoreHostnameVerifier = new HostnameVerifier() {
-      @Override
-      public boolean verify(String s, SSLSession sslsession) {
-        System.out.println("WARNING: Hostname is not matched for cert.");
-        return true;
-      }
+    HostnameVerifier ignoreHostnameVerifier = (s, sslsession) -> {
+      System.out.println("WARNING: Hostname is not matched for cert.");
+      return true;
     };
     HttpsURLConnection.setDefaultHostnameVerifier(ignoreHostnameVerifier);
     HttpsURLConnection.setDefaultSSLSocketFactory(getSSLContext().getSocketFactory());
     //这边是HttpURLConnection
-    OutputStream outPutStream = null;
-    BufferedReader bufferReader = null;
-    InputStream inputStream = null;
+    OutputStream outPutStream;
+    BufferedReader bufferReader;
+    InputStream inputStream;
     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
     connection.setDoOutput(true);
     connection.setDoInput(true);
     connection.setRequestProperty("Content-Type",
             "application/octet-stream");
-    headers.keySet().forEach(key -> {
-      connection.setRequestProperty(key, headers.get(key));
-    });
+    headers.keySet().forEach(key -> connection.setRequestProperty(key, headers.get(key)));
     connection.setRequestMethod("POST");
     connection.setUseCaches(false);
     connection.setAllowUserInteraction(true);
     connection.setChunkedStreamingMode(body.getBytes().length);
     connection.connect();
     outPutStream = connection.getOutputStream();
-    int perLength = 0;
+    int perLength;
     inputStream = new ByteArrayInputStream(body.getBytes());
     BufferedInputStream bis = new BufferedInputStream(inputStream);
     byte[] bufferRead = new byte[1024 * 100];
@@ -141,9 +125,9 @@ public class HttpClientUtils {
       outPutStream.flush();
     }
     bufferReader = new BufferedReader(new InputStreamReader(
-            connection.getInputStream(), "UTF-8"));
-    String line = null;
-    StringBuffer sb = new StringBuffer();
+            connection.getInputStream(), StandardCharsets.UTF_8));
+    String line;
+    StringBuilder sb = new StringBuilder();
     while ((line = bufferReader.readLine()) != null) {
       sb.append(line);
     }
@@ -155,25 +139,21 @@ public class HttpClientUtils {
     try {
       sslcontext = SSLContext.getInstance("SSL", "SunJSSE");
       sslcontext.init(null, new TrustManager[]{new MyX509TrustManager()}, new java.security.SecureRandom());
-    } catch (NoSuchAlgorithmException e) {
-      e.printStackTrace();
-    } catch (NoSuchProviderException e) {
-      e.printStackTrace();
-    } catch (KeyManagementException e) {
+    } catch (NoSuchAlgorithmException | KeyManagementException | NoSuchProviderException e) {
       e.printStackTrace();
     }
     return sslcontext;
   }
 
-  public static class MyX509TrustManager implements X509TrustManager {
+  private static class MyX509TrustManager implements X509TrustManager {
 
     @Override
-    public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+    public void checkClientTrusted(X509Certificate[] arg0, String arg1) {
 
     }
 
     @Override
-    public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+    public void checkServerTrusted(X509Certificate[] arg0, String arg1) {
 
     }
 
@@ -187,7 +167,7 @@ public class HttpClientUtils {
   /**
    * 通过连接池获取HttpClient
    *
-   * @return
+   * @return CloseableHttpClient
    */
   private static CloseableHttpClient getHttpClient() {
     init();
@@ -196,8 +176,8 @@ public class HttpClientUtils {
   }
 
   /**
-   * @param url
-   * @return
+   * @param url 地址
+   * @return String 结果
    */
   public static String httpGetRequest(String url) {
     HttpGet httpGet = new HttpGet(url);
@@ -234,6 +214,7 @@ public class HttpClientUtils {
       e.printStackTrace();
     }
     for (Map.Entry<String, Object> param : headers.entrySet()) {
+      assert httpGet != null;
       httpGet.addHeader(param.getKey(), String.valueOf(param.getValue()));
     }
     return getResultHttps(httpGet);
@@ -254,6 +235,7 @@ public class HttpClientUtils {
       e.printStackTrace();
     }
     for (Map.Entry<String, Object> param : headers.entrySet()) {
+      assert httpGet != null;
       httpGet.addHeader(param.getKey(), String.valueOf(param.getValue()));
     }
     return getResult(httpGet);
@@ -261,8 +243,8 @@ public class HttpClientUtils {
 
   /***
    * HTTP POST
-   * @param url
-   * @return
+   * @param url 地址
+   * @return String 结果字符串
    */
   public static String httpPostRequest(String url) {
     HttpPost httpPost = new HttpPost(url);
@@ -272,11 +254,7 @@ public class HttpClientUtils {
   public static String httpPostRequest(String url, Map<String, Object> params) {
     HttpPost httpPost = new HttpPost(url);
     ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
-    try {
-      httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    }
+    httpPost.setEntity(new UrlEncodedFormEntity(pairs, StandardCharsets.UTF_8));
     return getResult(httpPost);
   }
 
@@ -286,11 +264,7 @@ public class HttpClientUtils {
       httpDelete.addHeader(param.getKey(), String.valueOf(param.getValue()));
     }
     ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
-    try {
-      httpDelete.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    }
+    httpDelete.setEntity(new UrlEncodedFormEntity(pairs, StandardCharsets.UTF_8));
     return getResult(httpDelete);
   }
 
@@ -298,7 +272,7 @@ public class HttpClientUtils {
     HttpPost httpPost = new HttpPost(url);
     httpPost.addHeader("Content-type", "application/json; charset=utf-8");
     httpPost.setHeader("Accept", "application/json");
-    httpPost.setEntity(new StringEntity(requestJson, Charset.forName("UTF-8")));
+    httpPost.setEntity(new StringEntity(requestJson, StandardCharsets.UTF_8));
     return getResult(httpPost);
   }
 
@@ -313,11 +287,10 @@ public class HttpClientUtils {
 
   /***
    * Http Post请求
-   * @param url
+   * @param url 地址
    * @param params 请求参数
    * @param chartset 字符编写,缺省为UTF-8
-   * @return
-   * @throws UnsupportedEncodingException
+   * @return String 结果字符串
    */
   public static String httpPostRequest(String url, Map<String, Object> params, String chartset) {
     HttpPost httpPost = new HttpPost(url);
@@ -338,11 +311,7 @@ public class HttpClientUtils {
     }
 
     ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
-    try {
-      httpPost.setEntity(new UrlEncodedFormEntity(pairs, UTF_8));
-    } catch (UnsupportedEncodingException e) {
-      e.printStackTrace();
-    }
+    httpPost.setEntity(new UrlEncodedFormEntity(pairs, StandardCharsets.UTF_8));
     return getResult(httpPost);
   }
 
@@ -362,23 +331,11 @@ public class HttpClientUtils {
     return getResult(httpPost);
   }
 
-  /***
-   * HTTPS POST
-   * @param url
-   * @param params
-   * @return
-   */
-  public static String httpsPostRequest(String url, Map<String, Object> params) {
-    return httpsPostRequest(url, params, UTF_8);
-  }
+
 
   public static String httpsPostRequest(String url, Map<String, Object> headers, Map<String, Object> params) {
-    return httpsPostRequest(url, headers, params, UTF_8);
-  }
-
-  public static String httpsPostRequest(String url, Map<String, Object> headers, Map<String, Object> params, String chartset) {
-    HttpClient httpClient = null;
-    HttpPost httpPost = null;
+    HttpClient httpClient;
+    HttpPost httpPost;
     String result = null;
     try {
       httpClient = createSSLClientDefault();
@@ -390,12 +347,12 @@ public class HttpClientUtils {
 
       //设置参数
       ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
-      httpPost.setEntity(new UrlEncodedFormEntity(pairs, chartset));
+      httpPost.setEntity(new UrlEncodedFormEntity(pairs, HttpClientUtils.UTF_8));
       HttpResponse response = httpClient.execute(httpPost);
       if (response != null) {
         HttpEntity resEntity = response.getEntity();
         if (resEntity != null) {
-          result = EntityUtils.toString(resEntity, chartset);
+          result = EntityUtils.toString(resEntity, HttpClientUtils.UTF_8);
         }
       }
     } catch (Exception ex) {
@@ -404,9 +361,9 @@ public class HttpClientUtils {
     return result;
   }
 
-  public static String httpsPostRequest(String url, Map<String, Object> params, String chartset) {
-    HttpClient httpClient = null;
-    HttpPost httpPost = null;
+  public static String httpsPostRequest(String url, Map<String, Object> params) {
+    HttpClient httpClient;
+    HttpPost httpPost;
     String result = null;
     try {
       httpClient = createSSLClientDefault();
@@ -414,12 +371,12 @@ public class HttpClientUtils {
 
       //设置参数
       ArrayList<NameValuePair> pairs = covertParams2NVPS(params);
-      httpPost.setEntity(new UrlEncodedFormEntity(pairs, chartset));
+      httpPost.setEntity(new UrlEncodedFormEntity(pairs, HttpClientUtils.UTF_8));
       HttpResponse response = httpClient.execute(httpPost);
       if (response != null) {
         HttpEntity resEntity = response.getEntity();
         if (resEntity != null) {
-          result = EntityUtils.toString(resEntity, chartset);
+          result = EntityUtils.toString(resEntity, HttpClientUtils.UTF_8);
         }
       }
     } catch (Exception ex) {
@@ -431,8 +388,8 @@ public class HttpClientUtils {
   public static String httpsPostRequest(String url, Map<String, Object> headers, String requestJson,
                                         String chartset) {
     String result = null;
-    HttpClient httpClient = null;
-    HttpPost httpPost = null;
+    HttpClient httpClient;
+    HttpPost httpPost;
     try {
       httpClient = createSSLClientDefault();
       httpPost = new HttpPost(url);
@@ -455,7 +412,7 @@ public class HttpClientUtils {
   }
 
   private static ArrayList<NameValuePair> covertParams2NVPS(Map<String, Object> params) {
-    ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+    ArrayList<NameValuePair> pairs = new ArrayList<>();
     for (Map.Entry<String, Object> param : params.entrySet()) {
       pairs.add(new BasicNameValuePair(param.getKey(), String.valueOf(param.getValue())));
     }
@@ -465,8 +422,8 @@ public class HttpClientUtils {
   /**
    * 处理Http请求
    *
-   * @param request
-   * @return
+   * @param request 请求参数
+   * @return respContent 结果字符串
    */
   private static String getResult(HttpRequestBase request) {
     // CloseableHttpClient httpClient = HttpClients.createDefault();
@@ -483,12 +440,8 @@ public class HttpClientUtils {
         // httpClient.close();
         return respContent;
       }
-    } catch (ClientProtocolException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
-    } finally {
-
     }
     return EMPTY_STR;
   }
@@ -497,12 +450,12 @@ public class HttpClientUtils {
   /**
    * 处理Http请求
    *
-   * @param request
-   * @return
+   * @param request 请求参数
+   * @return respContent 结果字符串
    */
   private static String getResultHttps(HttpRequestBase request) {
     // CloseableHttpClient httpClient = HttpClients.createDefault();
-    CloseableHttpClient httpClient = getHttpClient();
+    CloseableHttpClient httpClient ;
     try {
       httpClient = createSSLClientDefault();
       CloseableHttpResponse response = httpClient.execute(request);
@@ -516,19 +469,15 @@ public class HttpClientUtils {
         // httpClient.close();
         return respContent;
       }
-    } catch (ClientProtocolException e) {
-      e.printStackTrace();
     } catch (IOException e) {
       e.printStackTrace();
-    } finally {
-
     }
     return EMPTY_STR;
   }
 
   public static String httpsGetRequest(String url, Map<String, Object> headers) {
-    HttpClient httpClient = null;
-    HttpGet httpGet = null;
+    HttpClient httpClient;
+    HttpGet httpGet;
     String result = null;
     try {
       httpClient = createSSLClientDefault();
