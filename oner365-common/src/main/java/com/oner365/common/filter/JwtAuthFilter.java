@@ -62,9 +62,9 @@ public class JwtAuthFilter implements Filter {
                 JSONObject json = JSON.parseObject(tokenInfo);
                 httpRequest.setAttribute(RequestUtils.AUTH_USER, new AuthUser(json));
                 httpRequest.setAttribute(RequestUtils.ACCESS_TOKEN, authToken);
-                RequestUtils.setHttpRequest(httpRequest);
             }
         }
+        RequestUtils.setHttpRequest(httpRequest);
         chain.doFilter(request, response);
     }
 
