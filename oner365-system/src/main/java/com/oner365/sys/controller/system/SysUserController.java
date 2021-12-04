@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -45,6 +43,7 @@ import com.oner365.sys.vo.ResetPasswordVo;
 import com.oner365.sys.vo.SysUserVo;
 import com.oner365.sys.vo.check.CheckUserNameVo;
 import com.oner365.util.DataUtils;
+import com.oner365.util.RequestUtils;
 
 /**
  * 用户管理
@@ -85,11 +84,11 @@ public class SysUserController extends BaseController {
      * @return ResponseResult<SysUser>
      */
     @PutMapping("/save")
-    public ResponseResult<SysUser> save(@RequestBody SysUserVo sysUserVo, HttpServletRequest request) {
+    public ResponseResult<SysUser> save(@RequestBody SysUserVo sysUserVo) {
         if (sysUserVo != null) {
             SysUser sysUser = sysUserVo.toObject();
             if (sysUser != null) {
-            sysUser.setLastIp(DataUtils.getIpAddress(request));
+            sysUser.setLastIp(DataUtils.getIpAddress(RequestUtils.getHttpRequest()));
             SysUser entity = sysUserService.saveUser(sysUser);
                 return ResponseResult.success(entity);
             }

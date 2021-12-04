@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,6 +32,7 @@ import com.oner365.sys.service.ISysRoleService;
 import com.oner365.sys.service.ISysUserService;
 import com.oner365.sys.vo.LoginUserVo;
 import com.oner365.util.DataUtils;
+import com.oner365.util.RequestUtils;
 import com.oner365.util.VerifyCodeUtils;
 
 /**
@@ -62,7 +61,7 @@ public class AuthController extends BaseController {
      * @return ResponseData
      */
     @PostMapping("/login")
-    public ResponseData<LoginUserDto> login(HttpServletRequest request, @RequestBody LoginUserVo loginUserVo) {
+    public ResponseData<LoginUserDto> login(@RequestBody LoginUserVo loginUserVo) {
         // 验证码
         if (!DataUtils.isEmpty(loginUserVo.getUuid())) {
             String verifyKey = SysConstants.CAPTCHA_IMAGE + ":" + loginUserVo.getUuid();
@@ -83,7 +82,7 @@ public class AuthController extends BaseController {
             return ResponseData.error(ErrorInfoEnum.PASSWORD_NOT_NULL.getName());
         }
         // ip地址
-        String ip = DataUtils.getIpAddress(request);
+        String ip = DataUtils.getIpAddress(RequestUtils.getHttpRequest());
         LOGGER.info("ip: {}", ip);
 
         // 登录
