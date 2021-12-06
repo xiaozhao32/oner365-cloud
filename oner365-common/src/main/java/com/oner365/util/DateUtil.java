@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -1671,5 +1672,33 @@ public class DateUtil {
         cal.add(calProp, -1);
         return dateToString(new Date(cal.getTimeInMillis()), FULL_TIME_FORMAT);
     }
+    
+    /**
+     * 判断字符串是否是LocalDateTime格式
+     *
+     * @param timeString 日期字符串
+     * @return isLocalDateTime
+     */
+	public static boolean isLocalDateTime(String timeString) {
+		boolean isLocalDateTime = true;
+		DateTimeFormatter df = DateTimeFormatter.ofPattern(FULL_TIME_FORMAT);
+		try {
+			LocalDateTime.parse(timeString,df);
+		} catch (Exception e) {
+			isLocalDateTime = false;
+		}
+		return isLocalDateTime;
+	}
+	
+	/**
+     * 字符串转LocalDateTime
+     *
+     * @param timeString 日期字符串
+     * @return LocalDateTime
+     */
+	public static LocalDateTime toLocalDateTime(String timeString) {
+		DateTimeFormatter df = DateTimeFormatter.ofPattern(FULL_TIME_FORMAT);
+		return LocalDateTime.parse(timeString,df);
+	}
 
 }

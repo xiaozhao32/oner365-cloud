@@ -72,17 +72,37 @@ public class SimpleExpression implements Criterion {
         case LIKE:
             return builder.like((Expression<String>) expression, "%" + value + "%");
         case LT:
-            return builder.lessThan(expression, (Comparable) value);
+        	if(DateUtil.isLocalDateTime(String.valueOf(value)) ){
+            	return builder.lessThan(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
+            } else {
+            	return builder.lessThan(expression, (Comparable)value);
+            }
         case GT:
-            return builder.greaterThan(expression, (Comparable) value);
+        	if(DateUtil.isLocalDateTime(String.valueOf(value)) ){
+            	return builder.greaterThan(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
+            } else {
+            	return builder.greaterThan(expression, (Comparable)value);
+            }
         case LTE:
-            return builder.lessThanOrEqualTo(expression, (Comparable) value);
+        	if(DateUtil.isLocalDateTime(String.valueOf(value)) ){
+            	return builder.lessThanOrEqualTo(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
+            } else {
+            	return builder.lessThanOrEqualTo(expression, (Comparable)value);
+            }
         case GTE:
-            return builder.greaterThanOrEqualTo(expression, (Comparable) value);
+        	if(DateUtil.isLocalDateTime(String.valueOf(value)) ){
+            	return builder.greaterThanOrEqualTo(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
+            } else {
+            	return builder.greaterThanOrEqualTo(expression, (Comparable)value);
+            }
         case BE:
             String param = String.valueOf(value);
             String[] array = StringUtils.split(param, "|");
-            return builder.between(expression, DateUtil.stringToDate(array[0]), DateUtil.stringToDate(array[1]));
+            if(DateUtil.isLocalDateTime(array[0]) && DateUtil.isLocalDateTime(array[1])){
+            	return builder.between(expression, DateUtil.toLocalDateTime(array[0]), DateUtil.toLocalDateTime(array[1]));
+            } else {
+            	return builder.between(expression, (Comparable)array[0], (Comparable)array[1]);
+            }
         default:
             return null;
         }
