@@ -69,7 +69,7 @@ public class RedisCacheAspect {
             String arg0 = joinPoint.getArgs()[0].toString();
 
             Class<?> returnClassType = ((MethodSignature) joinPoint.getSignature()).getMethod().getReturnType();
-            key = preKey + ":" + arg0;
+            key = preKey + "::" + arg0;
             String rtObject = redisCache.getCacheObject(key);
 
             // Return Cache
@@ -101,7 +101,7 @@ public class RedisCacheAspect {
             String preKey = rd.value();
             String arg0 = joinPoint.getArgs()[0].toString();
 
-            String key = preKey + ":" + arg0;
+            String key = preKey + "::" + arg0;
             redisCache.deleteObject(key);
         }
     }
@@ -135,7 +135,7 @@ public class RedisCacheAspect {
         String getter = "get" + firstLetter + key.substring(1);
         Object keyValue = ClassesUtil.invokeMethod(sourceObject, getter);
 
-        return rd.value() + ":" + keyValue.toString();
+        return rd.value() + "::" + keyValue.toString();
     }
 
 }
