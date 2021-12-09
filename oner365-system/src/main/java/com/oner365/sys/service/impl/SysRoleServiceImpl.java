@@ -210,7 +210,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
     }
 
     @Override
-    @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
     public JSONArray findMenuByRoles(List<String> roles, String menuType) {
         JSONArray jsonArray = new JSONArray();
         List<SysMenu> list = sysMenuService.selectMenuByRoles(roles, menuType, SysConstants.DEFAULT_PARENT_ID);

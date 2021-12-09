@@ -100,10 +100,10 @@ public class AuthController extends BaseController {
      * @return String
      */
     @PostMapping("/logout")
-    public String logout(@CurrentUser AuthUser authUser) {
+    public ResponseData<String> logout(@CurrentUser AuthUser authUser) {
         String key = CACHE_LOGIN_NAME + ":" + authUser.getUserName();
         redisCache.deleteObject(key);
-        return ResultEnum.SUCCESS.getName();
+        return ResponseData.success(ResultEnum.SUCCESS.getName());
     }
 
     /**
@@ -116,7 +116,8 @@ public class AuthController extends BaseController {
     public JSONArray findMenuByRoles(@CurrentUser AuthUser user, @PathVariable String menuType) {
         try {
             if (user != null && !user.getRoleList().isEmpty()) {
-                return sysRoleService.findMenuByRoles(user.getRoleList(), menuType);
+              JSONArray result = sysRoleService.findMenuByRoles(user.getRoleList(), menuType);
+              return result;
             }
         } catch (Exception e) {
             LOGGER.error("Error findMenuByRoles: ", e);
