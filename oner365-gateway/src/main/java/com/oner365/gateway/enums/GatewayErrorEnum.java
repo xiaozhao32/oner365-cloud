@@ -1,7 +1,5 @@
 package com.oner365.gateway.enums;
 
-import org.apache.logging.log4j.util.Strings;
-
 /**
  * 服务错误信息
  * 
@@ -45,7 +43,7 @@ public enum GatewayErrorEnum {
                 return e.getDescription();
             }
         }
-        return Strings.EMPTY;
+        return "";
     }
 
 }
