@@ -9,6 +9,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.oner365.elasticsearch.dto.SampleGeneDto;
+
 import org.springframework.data.elasticsearch.annotations.Setting;
 
 /**
@@ -21,145 +23,162 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 @Setting(shards = 5, replicas = 1, refreshInterval = "-1")
 public class SampleGene implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    /**
-     * 主键
-     */
-    @Id
-    private String id;
+  /**
+   * 主键
+   */
+  @Id
+  private String id;
 
-    /**
-     * 基因类型 (格式: 1:X 2:Y)
-     */
-    @Field(type = FieldType.Keyword)
-    private String geneType;
+  /**
+   * 基因类型 (格式: 1:X 2:Y)
+   */
+  @Field(type = FieldType.Keyword)
+  private String geneType;
 
-    /**
-     * 人员编号
-     */
-    @Field(type = FieldType.Keyword)
-    private String personCode;
+  /**
+   * 人员编号
+   */
+  @Field(type = FieldType.Keyword)
+  private String personCode;
 
-    /**
-     * 实验室编号
-     */
-    @Field(type = FieldType.Keyword)
-    private String initServerNo;
+  /**
+   * 实验室编号
+   */
+  @Field(type = FieldType.Keyword)
+  private String initServerNo;
 
-    /**
-     * 基因型信息 (格式: {key:value} )
-     */
-    @Field(type = FieldType.Object)
-    private JSONObject geneInfo;
+  /**
+   * 基因型信息 (格式: {key:value} )
+   */
+  @Field(type = FieldType.Object)
+  private JSONObject geneInfo;
 
-    /**
-     * 比对的基因型信息 (过滤空值)
-     */
-    @Field(type = FieldType.Object)
-    private JSONObject matchJson;
+  /**
+   * 比对的基因型信息 (过滤空值)
+   */
+  @Field(type = FieldType.Object)
+  private JSONObject matchJson;
 
-    /**
-     * 页面使用的基因型 {key:value} 转换成 {"name":key, "value":value} 格式
-     */
-    private JSONArray geneList;
+  /**
+   * 页面使用的基因型 {key:value} 转换成 {"name":key, "value":value} 格式
+   */
+  private JSONArray geneList;
 
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
+  /**
+   * @return the id
+   */
+  public String getId() {
+    return id;
+  }
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
+  /**
+   * @param id the id to set
+   */
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    /**
-     * @return the geneType
-     */
-    public String getGeneType() {
-        return geneType;
-    }
+  /**
+   * @return the geneType
+   */
+  public String getGeneType() {
+    return geneType;
+  }
 
-    /**
-     * @param geneType the geneType to set
-     */
-    public void setGeneType(String geneType) {
-        this.geneType = geneType;
-    }
+  /**
+   * @param geneType the geneType to set
+   */
+  public void setGeneType(String geneType) {
+    this.geneType = geneType;
+  }
 
-    /**
-     * @return the personCode
-     */
-    public String getPersonCode() {
-        return personCode;
-    }
+  /**
+   * @return the personCode
+   */
+  public String getPersonCode() {
+    return personCode;
+  }
 
-    /**
-     * @param personCode the personCode to set
-     */
-    public void setPersonCode(String personCode) {
-        this.personCode = personCode;
-    }
+  /**
+   * @param personCode the personCode to set
+   */
+  public void setPersonCode(String personCode) {
+    this.personCode = personCode;
+  }
 
-    /**
-     * @return the initServerNo
-     */
-    public String getInitServerNo() {
-        return initServerNo;
-    }
+  /**
+   * @return the initServerNo
+   */
+  public String getInitServerNo() {
+    return initServerNo;
+  }
 
-    /**
-     * @param initServerNo the initServerNo to set
-     */
-    public void setInitServerNo(String initServerNo) {
-        this.initServerNo = initServerNo;
-    }
+  /**
+   * @param initServerNo the initServerNo to set
+   */
+  public void setInitServerNo(String initServerNo) {
+    this.initServerNo = initServerNo;
+  }
 
-    /**
-     * @return the geneInfo
-     */
-    public JSONObject getGeneInfo() {
-        return geneInfo;
-    }
+  /**
+   * @return the geneInfo
+   */
+  public JSONObject getGeneInfo() {
+    return geneInfo;
+  }
 
-    /**
-     * @param geneInfo the geneInfo to set
-     */
-    public void setGeneInfo(JSONObject geneInfo) {
-        this.geneInfo = geneInfo;
-    }
+  /**
+   * @param geneInfo the geneInfo to set
+   */
+  public void setGeneInfo(JSONObject geneInfo) {
+    this.geneInfo = geneInfo;
+  }
 
-    /**
-     * @return the matchJson
-     */
-    public JSONObject getMatchJson() {
-        return matchJson;
-    }
+  /**
+   * @return the matchJson
+   */
+  public JSONObject getMatchJson() {
+    return matchJson;
+  }
 
-    /**
-     * @param matchJson the matchJson to set
-     */
-    public void setMatchJson(JSONObject matchJson) {
-        this.matchJson = matchJson;
-    }
+  /**
+   * @param matchJson the matchJson to set
+   */
+  public void setMatchJson(JSONObject matchJson) {
+    this.matchJson = matchJson;
+  }
 
-    /**
-     * @return the geneList
-     */
-    public JSONArray getGeneList() {
-        return geneList;
-    }
+  /**
+   * @return the geneList
+   */
+  public JSONArray getGeneList() {
+    return geneList;
+  }
 
-    /**
-     * @param geneList the geneList to set
-     */
-    public void setGeneList(JSONArray geneList) {
-        this.geneList = geneList;
-    }
+  /**
+   * @param geneList the geneList to set
+   */
+  public void setGeneList(JSONArray geneList) {
+    this.geneList = geneList;
+  }
+
+  /**
+   * 转换对象
+   * 
+   * @return SampleGeneDto
+   */
+  public SampleGeneDto toDto() {
+    SampleGeneDto result = new SampleGeneDto();
+    result.setId(this.getId());
+    result.setGeneInfo(this.getGeneInfo());
+    result.setGeneList(this.getGeneList());
+    result.setGeneType(this.getGeneType());
+    result.setInitServerNo(this.getInitServerNo());
+    result.setMatchJson(this.getMatchJson());
+    result.setPersonCode(this.getPersonCode());
+    return result;
+  }
 
 }

@@ -9,9 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.files.dto.SysFileStorageDto;
 
 /**
  * 文件对象
+ * 
  * @author zhaoyong
  *
  */
@@ -20,209 +22,229 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class SysFileStorage implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-    /**
-     * 主键 id
-     */
-    @Id
-    private String id;
-    
-    /**
-     * 文件名称 file_name
-     */
-    @Column(name = "file_name", nullable = false, length = 64)
-    private String fileName;
-    
-    /**
-     * 显示名称 display_name
-     */
-    @Column(name = "display_name", nullable = false, length = 64)
-    private String displayName;
-    
-    /**
-     * 存储方式
-     */
-    @Column(name = "file_storage", nullable = false)
-    private String fileStorage;
-    
-    /**
-     * 文件路径 file_path
-     */
-    @Column(name = "file_path", nullable = false, length = 255)
-    private String filePath;
-    
-    /**
-     * 文件地址 fastdfs_url
-     */
-    @Column(name = "fastdfs_url", nullable = false, length = 255)
-    private String fastdfsUrl;
-    
-    /**
-     * 文件后缀 file_suffix
-     */
-    @Column(name = "file_suffix", nullable = false, length = 8)
-    private String fileSuffix;
-    
-    /**
-     * 文件大小 file_size
-     */
-    @Column(name = "file_size", nullable = false, length = 64)
-    private String size;
-    
-    /**
-     * 创建时间 create_time
-     */
-    @Column(name = "create_time")
-    private Date createTime;
-    
-    /**
-     * 是否目录 is_directory
-     */
-    @Column(name = "is_directory")
-    private boolean isDirectory;
+  private static final long serialVersionUID = 1L;
 
-    public SysFileStorage() {
-        super();
-    }
+  /**
+   * 主键 id
+   */
+  @Id
+  private String id;
 
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
+  /**
+   * 文件名称 file_name
+   */
+  @Column(name = "file_name", nullable = false, length = 64)
+  private String fileName;
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
+  /**
+   * 显示名称 display_name
+   */
+  @Column(name = "display_name", nullable = false, length = 64)
+  private String displayName;
 
-    /**
-     * @return the fileName
-     */
-    public String getFileName() {
-        return fileName;
-    }
+  /**
+   * 存储方式
+   */
+  @Column(name = "file_storage", nullable = false)
+  private String fileStorage;
 
-    /**
-     * @param fileName the fileName to set
-     */
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+  /**
+   * 文件路径 file_path
+   */
+  @Column(name = "file_path", nullable = false, length = 255)
+  private String filePath;
 
-    /**
-     * @return the filePath
-     */
-    public String getFilePath() {
-        return filePath;
-    }
+  /**
+   * 文件地址 fastdfs_url
+   */
+  @Column(name = "fastdfs_url", nullable = false, length = 255)
+  private String fastdfsUrl;
 
-    /**
-     * @param filePath the filePath to set
-     */
-    public void setFilePath(String filePath) {
-        this.filePath = filePath;
-    }
+  /**
+   * 文件后缀 file_suffix
+   */
+  @Column(name = "file_suffix", nullable = false, length = 8)
+  private String fileSuffix;
 
-    /**
-     * @return the fileSuffix
-     */
-    public String getFileSuffix() {
-        return fileSuffix;
-    }
+  /**
+   * 文件大小 file_size
+   */
+  @Column(name = "file_size", nullable = false, length = 64)
+  private String size;
 
-    /**
-     * @param fileSuffix the fileSuffix to set
-     */
-    public void setFileSuffix(String fileSuffix) {
-        this.fileSuffix = fileSuffix;
-    }
+  /**
+   * 创建时间 create_time
+   */
+  @Column(name = "create_time")
+  private Date createTime;
 
-    /**
-     * @return the size
-     */
-    public String getSize() {
-        return size;
-    }
+  /**
+   * 是否目录 is_directory
+   */
+  @Column(name = "is_directory")
+  private boolean isDirectory;
 
-    /**
-     * @param size the size to set
-     */
-    public void setSize(String size) {
-        this.size = size;
-    }
+  public SysFileStorage() {
+    super();
+  }
 
-    /**
-     * @return the createTime
-     */
-    public Date getCreateTime() {
-        return createTime;
-    }
+  /**
+   * @return the id
+   */
+  public String getId() {
+    return id;
+  }
 
-    /**
-     * @param createTime the createTime to set
-     */
-    public void setCreateTime(Date createTime) {
-        this.createTime = createTime;
-    }
+  /**
+   * @param id the id to set
+   */
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    /**
-     * @return the fastdfsUrl
-     */
-    public String getFastdfsUrl() {
-        return fastdfsUrl;
-    }
+  /**
+   * @return the fileName
+   */
+  public String getFileName() {
+    return fileName;
+  }
 
-    /**
-     * @param fastdfsUrl the fastdfsUrl to set
-     */
-    public void setFastdfsUrl(String fastdfsUrl) {
-        this.fastdfsUrl = fastdfsUrl;
-    }
-    
-    /**
-     * @return the isDirectory
-     */
-    public boolean isDirectory() {
-        return isDirectory;
-    }
+  /**
+   * @param fileName the fileName to set
+   */
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
+  }
 
-    /**
-     * @param isDirectory the isDirectory to set
-     */
-    public void setDirectory(boolean isDirectory) {
-        this.isDirectory = isDirectory;
-    }
+  /**
+   * @return the filePath
+   */
+  public String getFilePath() {
+    return filePath;
+  }
 
-    /**
-     * @return the displayName
-     */
-    public String getDisplayName() {
-        return displayName;
-    }
+  /**
+   * @param filePath the filePath to set
+   */
+  public void setFilePath(String filePath) {
+    this.filePath = filePath;
+  }
 
-    /**
-     * @param displayName the displayName to set
-     */
-    public void setDisplayName(String displayName) {
-        this.displayName = displayName;
-    }
-    
-    /**
-     * @return the fileStorage
-     */
-    public String getFileStorage() {
-        return fileStorage;
-    }
+  /**
+   * @return the fileSuffix
+   */
+  public String getFileSuffix() {
+    return fileSuffix;
+  }
 
-    /**
-     * @param fileStorage the fileStorage to set
-     */
-    public void setFileStorage(String fileStorage) {
-        this.fileStorage = fileStorage;
-    }
+  /**
+   * @param fileSuffix the fileSuffix to set
+   */
+  public void setFileSuffix(String fileSuffix) {
+    this.fileSuffix = fileSuffix;
+  }
+
+  /**
+   * @return the size
+   */
+  public String getSize() {
+    return size;
+  }
+
+  /**
+   * @param size the size to set
+   */
+  public void setSize(String size) {
+    this.size = size;
+  }
+
+  /**
+   * @return the createTime
+   */
+  public Date getCreateTime() {
+    return createTime;
+  }
+
+  /**
+   * @param createTime the createTime to set
+   */
+  public void setCreateTime(Date createTime) {
+    this.createTime = createTime;
+  }
+
+  /**
+   * @return the fastdfsUrl
+   */
+  public String getFastdfsUrl() {
+    return fastdfsUrl;
+  }
+
+  /**
+   * @param fastdfsUrl the fastdfsUrl to set
+   */
+  public void setFastdfsUrl(String fastdfsUrl) {
+    this.fastdfsUrl = fastdfsUrl;
+  }
+
+  /**
+   * @return the isDirectory
+   */
+  public boolean isDirectory() {
+    return isDirectory;
+  }
+
+  /**
+   * @param isDirectory the isDirectory to set
+   */
+  public void setDirectory(boolean isDirectory) {
+    this.isDirectory = isDirectory;
+  }
+
+  /**
+   * @return the displayName
+   */
+  public String getDisplayName() {
+    return displayName;
+  }
+
+  /**
+   * @param displayName the displayName to set
+   */
+  public void setDisplayName(String displayName) {
+    this.displayName = displayName;
+  }
+
+  /**
+   * @return the fileStorage
+   */
+  public String getFileStorage() {
+    return fileStorage;
+  }
+
+  /**
+   * @param fileStorage the fileStorage to set
+   */
+  public void setFileStorage(String fileStorage) {
+    this.fileStorage = fileStorage;
+  }
+
+  /**
+   * DTO对象
+   * 
+   * @return SysFileStorageDto
+   */
+  public SysFileStorageDto toDto() {
+    SysFileStorageDto result = new SysFileStorageDto();
+    result.setCreateTime(this.getCreateTime());
+    result.setDirectory(this.isDirectory());
+    result.setDisplayName(this.getDisplayName());
+    result.setFastdfsUrl(this.getFastdfsUrl());
+    result.setFileName(this.getFileName());
+    result.setFilePath(this.getFilePath());
+    result.setFileStorage(this.getFileStorage());
+    result.setFileSuffix(this.getFileSuffix());
+    result.setId(this.getId());
+    result.setSize(this.getSize());
+    return result;
+  }
 }
