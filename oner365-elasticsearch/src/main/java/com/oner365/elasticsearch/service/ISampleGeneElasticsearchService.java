@@ -5,7 +5,9 @@ import java.util.List;
 import org.springframework.data.domain.Page;
 
 import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.elasticsearch.entity.SampleGene;
+import com.oner365.common.service.BaseService;
+import com.oner365.elasticsearch.dto.SampleGeneDto;
+import com.oner365.elasticsearch.vo.SampleGeneVo;
 
 /**
  * Elasticsearch 接口
@@ -13,44 +15,44 @@ import com.oner365.elasticsearch.entity.SampleGene;
  * @author zhaoyong
  *
  */
-public interface ISampleGeneElasticsearchService {
+public interface ISampleGeneElasticsearchService extends BaseService {
 
-    /**
-     * 查询列表
-     * 
-     * @param data 查询参数
-     * @return Page<SampleGene>
-     */
-    Page<SampleGene> findList(QueryCriteriaBean data);
+  /**
+   * 查询列表
+   * 
+   * @param data 查询条件参数
+   * @return Iterable<SampleGeneDto>
+   */
+  Page<SampleGeneDto> findList(QueryCriteriaBean data);
 
-    /**
-     * 保存集合
-     * 
-     * @param list 集合
-     * @return Iterable
-     */
-    Iterable<SampleGene> saveAll(List<SampleGene> list);
+  /**
+   * 保存集合
+   * 
+   * @param list 集合
+   * @return Iterable<SampleGeneDto>
+   */
+  Iterable<SampleGeneDto> saveAll(List<SampleGeneVo> list);
 
-    /**
-     * 保存对象
-     * 
-     * @param entity 对象
-     * @return SampleGene
-     */
-    SampleGene save(SampleGene entity);
+  /**
+   * 保存对象
+   * 
+   * @param entity 对象
+   * @return SampleGeneDto
+   */
+  SampleGeneDto save(SampleGeneVo entity);
 
-    /**
-     * 查询对象
-     * 
-     * @param id 主键
-     * @return SampleGene
-     */
-    SampleGene findById(String id);
+  /**
+   * 查询对象
+   * 
+   * @param id 主键
+   * @return SampleGeneDto
+   */
+  SampleGeneDto findById(String id);
 
-    /**
-     * 删除对象
-     * 
-     * @param id 主键
-     */
-    void deleteById(String id);
+  /**
+   * 删除对象
+   * 
+   * @param id 主键
+   */
+  void deleteById(String id);
 }

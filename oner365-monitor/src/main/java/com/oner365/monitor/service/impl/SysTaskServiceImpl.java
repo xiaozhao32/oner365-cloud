@@ -17,17 +17,20 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSON;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
 import com.oner365.monitor.constants.ScheduleConstants;
 import com.oner365.monitor.dao.ISysTaskDao;
+import com.oner365.monitor.dto.SysTaskDto;
 import com.oner365.monitor.entity.SysTask;
 import com.oner365.monitor.exception.TaskException;
 import com.oner365.monitor.service.ISysTaskService;
 import com.oner365.monitor.util.CronUtils;
 import com.oner365.monitor.util.ScheduleUtils;
+import com.oner365.monitor.vo.SysTaskVo;
 import com.oner365.util.DataUtils;
 import com.oner365.util.DateUtil;
 
@@ -39,219 +42,246 @@ import com.oner365.util.DateUtil;
 @Service
 public class SysTaskServiceImpl implements ISysTaskService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SysTaskServiceImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SysTaskServiceImpl.class);
 
-    @Autowired
-    private Scheduler scheduler;
+  @Autowired
+  private Scheduler scheduler;
 
-    @Autowired
-    private ISysTaskDao dao;
+  @Autowired
+  private ISysTaskDao dao;
 
+  /**
+   * 项目启动时，初始化定时器 主要是防止手动修改数据库导致未同步到定时任务处理（注：不能手动修改数据库ID和任务组名，否则会导致脏数据）
+   */
+  @PostConstruct
+  public void init() throws SchedulerException {
+    scheduler.clear();
+    List<SysTask> taskList = dao.findAll();
+    taskList.forEach(task -> {
+      try {
+        ScheduleUtils.createScheduleJob(scheduler, convertDto(task));
+      } catch (Exception e) {
+        LOGGER.error(e.getMessage());
+      }
+    });
+  }
 
-    /**
-     * 项目启动时，初始化定时器 主要是防止手动修改数据库导致未同步到定时任务处理（注：不能手动修改数据库ID和任务组名，否则会导致脏数据）
-     */
-    @PostConstruct
-    public void init() throws SchedulerException {
-        scheduler.clear();
-        List<SysTask> taskList = dao.findAll();
-        taskList.forEach(task -> {
-            try {
-                ScheduleUtils.createScheduleJob(scheduler, task);
-            } catch (Exception e) {
-                LOGGER.error(e.getMessage());
-            }
-        });
+  /**
+   * 获取quartz调度器的计划任务列表
+   *
+   * @param data 查询参数
+   * @return Page<SysTaskDto>
+   */
+  @Override
+  public Page<SysTaskDto> pageList(QueryCriteriaBean data) {
+    try {
+      Pageable pageable = QueryUtils.buildPageRequest(data);
+      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), pageable));
+    } catch (Exception e) {
+      LOGGER.error("Error pageList: ", e);
     }
+    return null;
+  }
 
-    /**
-     * 获取quartz调度器的计划任务列表
-     *
-     * @param data 查询参数
-     * @return Page<SysTask>
-     */
-    @Override
-    public Page<SysTask> pageList(QueryCriteriaBean data) {
-        try {
-            Pageable pageable = QueryUtils.buildPageRequest(data);
-            return dao.findAll(QueryUtils.buildCriteria(data), pageable);
-        } catch (Exception e) {
-            LOGGER.error("Error pageList: ", e);
-        }
-        return null;
-    }
+  /**
+   * 通过调度任务ID查询调度信息
+   *
+   * @param id 调度任务ID
+   * @return 调度任务对象信息
+   */
+  @Override
+  public SysTaskDto selectTaskById(String id) {
+    Optional<SysTask> optional = dao.findById(id);
+    return convertDto(optional.orElse(null));
+  }
 
-    /**
-     * 通过调度任务ID查询调度信息
-     *
-     * @param id 调度任务ID
-     * @return 调度任务对象信息
-     */
-    @Override
-    public SysTask selectTaskById(String id) {
-        Optional<SysTask> optional = dao.findById(id);
-        return optional.orElse(null);
-    }
+  /**
+   * 暂停任务
+   *
+   * @param task 调度信息
+   * @throws TaskException 异常
+   */
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  public int pauseTask(SysTaskVo task) throws SchedulerException, TaskException {
+    String taskId = task.getId();
+    String taskGroup = task.getTaskGroup();
+    task.setStatus(ScheduleConstants.Status.PAUSE.getValue());
+    save(task);
+    scheduler.pauseJob(ScheduleUtils.getJobKey(taskId, taskGroup));
+    return ResultEnum.SUCCESS.getCode();
+  }
 
-    /**
-     * 暂停任务
-     *
-     * @param task 调度信息
-     * @throws TaskException 异常
-     */
-    @Override
-    @Transactional(rollbackFor = ProjectRuntimeException.class)
-    public int pauseTask(SysTask task) throws SchedulerException, TaskException {
-        String taskId = task.getId();
-        String taskGroup = task.getTaskGroup();
-        task.setStatus(ScheduleConstants.Status.PAUSE.getValue());
-        save(task);
-        scheduler.pauseJob(ScheduleUtils.getJobKey(taskId, taskGroup));
-        return ResultEnum.SUCCESS.getCode();
-    }
+  /**
+   * 恢复任务
+   *
+   * @param task 调度信息
+   */
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  public int resumeTask(SysTaskVo task) throws SchedulerException, TaskException {
+    String taskId = task.getId();
+    String taskGroup = task.getTaskGroup();
+    task.setStatus(ScheduleConstants.Status.NORMAL.getValue());
+    save(task);
+    scheduler.resumeJob(ScheduleUtils.getJobKey(taskId, taskGroup));
+    return ResultEnum.SUCCESS.getCode();
+  }
 
-    /**
-     * 恢复任务
-     *
-     * @param task 调度信息
-     */
-    @Override
-    @Transactional(rollbackFor = ProjectRuntimeException.class)
-    public int resumeTask(SysTask task) throws SchedulerException,TaskException {
-        String taskId = task.getId();
-        String taskGroup = task.getTaskGroup();
-        task.setStatus(ScheduleConstants.Status.NORMAL.getValue());
-        save(task);
-        scheduler.resumeJob(ScheduleUtils.getJobKey(taskId, taskGroup));
-        return ResultEnum.SUCCESS.getCode();
+  /**
+   * 删除任务后，所对应的trigger也将被删除
+   *
+   * @param task 调度信息
+   */
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  public int deleteTask(String id) throws SchedulerException {
+    SysTask task = dao.getById(id);
+    if (task != null) {
+      String taskGroup = task.getTaskGroup();
+      dao.deleteById(id);
+      scheduler.deleteJob(ScheduleUtils.getJobKey(id, taskGroup));
+      return ResultEnum.SUCCESS.getCode();
     }
+    return ResultEnum.ERROR.getCode();
+  }
 
-    /**
-     * 删除任务后，所对应的trigger也将被删除
-     *
-     * @param task 调度信息
-     */
-    @Override
-    @Transactional(rollbackFor = ProjectRuntimeException.class)
-    public int deleteTask(SysTask task) throws SchedulerException {
-        String id = task.getId();
-        String taskGroup = task.getTaskGroup();
-        dao.deleteById(id);
-        scheduler.deleteJob(ScheduleUtils.getJobKey(id, taskGroup));
-        return ResultEnum.SUCCESS.getCode();
+  /**
+   * 批量删除调度信息
+   *
+   * @param ids 需要删除的任务ID
+   */
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  public void deleteTaskByIds(String[] ids) throws SchedulerException {
+    for (String id : ids) {
+      deleteTask(id);
     }
+  }
 
-    /**
-     * 批量删除调度信息
-     *
-     * @param ids 需要删除的任务ID
-     */
-    @Override
-    @Transactional(rollbackFor = ProjectRuntimeException.class)
-    public void deleteTaskByIds(String[] ids) throws SchedulerException {
-        for (String id : ids) {
-            SysTask task = selectTaskById(id);
-            deleteTask(task);
-        }
+  /**
+   * 任务调度状态修改
+   *
+   * @param task 调度信息
+   * @return int
+   * @throws SchedulerException 异常
+   * @throws TaskException      异常
+   */
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  public int changeStatus(SysTaskVo task) throws SchedulerException, TaskException {
+    int rows = 0;
+    if (ScheduleConstants.Status.NORMAL.getValue().equals(task.getStatus())) {
+      rows = resumeTask(task);
+    } else if (ScheduleConstants.Status.PAUSE.getValue().equals(task.getStatus())) {
+      rows = pauseTask(task);
     }
+    return rows;
+  }
 
-    /**
-     * 任务调度状态修改
-     *
-     * @param task 调度信息
-     * @return int
-     * @throws SchedulerException 异常
-     * @throws TaskException 异常
-     */
-    @Override
-    @Transactional(rollbackFor = ProjectRuntimeException.class)
-    public int changeStatus(SysTask task) throws SchedulerException, TaskException {
-        int rows = 0;
-        String status = task.getStatus();
-        if (ScheduleConstants.Status.NORMAL.getValue().equals(status)) {
-            rows = resumeTask(task);
-        } else if (ScheduleConstants.Status.PAUSE.getValue().equals(status)) {
-            rows = pauseTask(task);
-        }
-        return rows;
+  /**
+   * 立即运行任务
+   *
+   * @param task 调度信息
+   */
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  public void run(SysTaskVo task) throws SchedulerException {
+    String taskGroup = task.getTaskGroup();
+    Optional<SysTask> optional = dao.findById(task.getId());
+    if (optional.isPresent()) {
+      SysTask sysTask = optional.get();
+      sysTask.setTaskGroup(taskGroup);
+      JobDataMap dataMap = new JobDataMap();
+      dataMap.put(ScheduleConstants.TASK_PROPERTIES, JSON.toJSONString(convertDto(sysTask)));
+      scheduler.triggerJob(ScheduleUtils.getJobKey(task.getId(), taskGroup), dataMap);
     }
+  }
 
-    /**
-     * 立即运行任务
-     *
-     * @param task 调度信息
-     */
-    @Override
-    @Transactional(rollbackFor = ProjectRuntimeException.class)
-    public void run(SysTask task) throws SchedulerException {
-        String id = task.getId();
-        String taskGroup = task.getTaskGroup();
-        SysTask properties = selectTaskById(task.getId());
-        // 参数
-        JobDataMap dataMap = new JobDataMap();
-        dataMap.put(ScheduleConstants.TASK_PROPERTIES, properties);
-        scheduler.triggerJob(ScheduleUtils.getJobKey(id, taskGroup), dataMap);
+  /**
+   * 保存任务
+   *
+   * @param task 调度信息 调度信息
+   */
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  public int save(SysTaskVo task) throws SchedulerException, TaskException {
+    boolean isAdd = DataUtils.isEmpty(task.getId());
+    if (isAdd && DataUtils.isEmpty(task.getStatus())) {
+      task.setStatus(ScheduleConstants.Status.PAUSE.getValue());
+      task.setCreateTime(DateUtil.getDate());
     }
+    SysTask entity = toPojo(task);
+    dao.save(entity);
+    if (isAdd) {
+      ScheduleUtils.createScheduleJob(scheduler, convertDto(entity));
+    }
+    return ResultEnum.SUCCESS.getCode();
+  }
+  
+  /**
+   * 转换对象
+   * 
+   * @return SysTaskDto
+   */
+  private SysTask toPojo(SysTaskVo vo) {
+    SysTask result = new SysTask();
+    result.setId(vo.getId());
+    result.setConcurrent(vo.getConcurrent());
+    result.setCreateTime(vo.getCreateTime());
+    result.setCreateUser(vo.getCreateUser());
+    result.setCronExpression(vo.getCronExpression());
+    result.setExecuteStatus(vo.getExecuteStatus());
+    result.setInvokeParam(vo.getInvokeParam());
+    result.setInvokeTarget(vo.getInvokeTarget());
+    result.setMisfirePolicy(vo.getMisfirePolicy());
+    result.setRemark(vo.getRemark());
+    result.setStatus(vo.getStatus());
+    result.setTaskGroup(vo.getTaskGroup());
+    result.setTaskName(vo.getTaskName());
+    result.setUpdateTime(vo.getUpdateTime());
+    return result;
+  }
 
-    /**
-     * 保存任务
-     *
-     * @param task 调度信息 调度信息
-     */
-    @Override
-    @Transactional(rollbackFor = ProjectRuntimeException.class)
-    public int save(SysTask task) throws SchedulerException, TaskException {
-        boolean isAdd = DataUtils.isEmpty(task.getId());
-        if(isAdd && DataUtils.isEmpty(task.getStatus())){
-            task.setStatus(ScheduleConstants.Status.PAUSE.getValue());
-            task.setCreateTime(DateUtil.getDate());
-        }
-        task = dao.save(task);
-        if (isAdd) {
-            ScheduleUtils.createScheduleJob(scheduler, task);
-        }
-        return ResultEnum.SUCCESS.getCode();
-    }
+  /**
+   * 更新任务的时间表达式
+   *
+   * @param task 调度信息
+   */
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  public int updateTask(SysTaskVo task) throws SchedulerException, TaskException {
+    SysTask properties = dao.getById(task.getId());
+    save(task);
+    updateSchedulerTask(task, properties.getTaskGroup());
+    return ResultEnum.SUCCESS.getCode();
+  }
 
-    /**
-     * 更新任务的时间表达式
-     *
-     * @param task 调度信息
-     */
-    @Override
-    @Transactional(rollbackFor = ProjectRuntimeException.class)
-    public int updateTask(SysTask task) throws SchedulerException, TaskException {
-        SysTask properties = selectTaskById(task.getId());
-        save(task);
-        updateSchedulerTask(task, properties.getTaskGroup());
-        return ResultEnum.SUCCESS.getCode();
+  /**
+   * 更新任务
+   *
+   * @param task      任务对象
+   * @param taskGroup 任务组名
+   */
+  public void updateSchedulerTask(SysTaskVo task, String taskGroup) throws SchedulerException, TaskException {
+    String taskId = task.getId();
+    // 判断是否存在
+    JobKey taskKey = ScheduleUtils.getJobKey(taskId, taskGroup);
+    if (scheduler.checkExists(taskKey)) {
+      // 防止创建时存在数据问题 先移除，然后在执行创建操作
+      scheduler.deleteJob(taskKey);
     }
+    ScheduleUtils.createScheduleJob(scheduler, convertDto(toPojo(task)));
+  }
 
-    /**
-     * 更新任务
-     *
-     * @param task      任务对象
-     * @param taskGroup 任务组名
-     */
-    public void updateSchedulerTask(SysTask task, String taskGroup) throws SchedulerException, TaskException {
-        String taskId = task.getId();
-        // 判断是否存在
-        JobKey taskKey = ScheduleUtils.getJobKey(taskId, taskGroup);
-        if (scheduler.checkExists(taskKey)) {
-            // 防止创建时存在数据问题 先移除，然后在执行创建操作
-            scheduler.deleteJob(taskKey);
-        }
-        ScheduleUtils.createScheduleJob(scheduler, task);
-    }
-
-    /**
-     * 校验cron表达式是否有效
-     *
-     * @param cronExpression 表达式
-     * @return 结果
-     */
-    @Override
-    public boolean checkCronExpressionIsValid(String cronExpression) {
-        return CronUtils.isValid(cronExpression);
-    }
+  /**
+   * 校验cron表达式是否有效
+   *
+   * @param cronExpression 表达式
+   * @return 结果
+   */
+  @Override
+  public boolean checkCronExpressionIsValid(String cronExpression) {
+    return CronUtils.isValid(cronExpression);
+  }
 }

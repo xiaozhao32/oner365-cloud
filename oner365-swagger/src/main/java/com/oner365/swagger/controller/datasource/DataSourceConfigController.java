@@ -88,11 +88,11 @@ public class DataSourceConfigController extends BaseController {
   @ApiOperation("4.保存")
   @ApiOperationSupport(order = 4)
   @PutMapping("/save")
-  public ResponseResult<DataSourceConfigDto> save(@RequestBody DataSourceConfigVo dataSourceConfigVo) {
+  public ResponseData<ResponseResult<DataSourceConfigDto>> save(@RequestBody DataSourceConfigVo dataSourceConfigVo) {
     if (dataSourceConfigVo != null) {
       return service.save(dataSourceConfigVo);
     }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+    return ResponseData.error(ErrorInfoEnum.SAVE_ERROR.getName());
   }
 
   /**

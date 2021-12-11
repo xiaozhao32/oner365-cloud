@@ -56,10 +56,10 @@ public interface IDataSourceConfigServiceClient {
    * 保存
    * 
    * @param dataSourceConfigVo 数据源对象
-   * @return ResponseResult<DataSourceConfigDto>
+   * @return ResponseData<ResponseResult<DataSourceConfigDto>>
    */
   @PutMapping("/datasource/save")
-  ResponseResult<DataSourceConfigDto> save(@RequestBody DataSourceConfigVo dataSourceConfigVo);
+  ResponseData<ResponseResult<DataSourceConfigDto>> save(@RequestBody DataSourceConfigVo dataSourceConfigVo);
 
   /**
    * 删除

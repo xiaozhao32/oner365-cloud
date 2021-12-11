@@ -12,10 +12,11 @@ import com.oner365.api.rabbitmq.dto.InvokeParamDto;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.monitor.constants.ScheduleConstants;
-import com.oner365.monitor.entity.SysTask;
-import com.oner365.monitor.entity.SysTaskLog;
+import com.oner365.monitor.dto.SysTaskDto;
 import com.oner365.monitor.service.ISysTaskLogService;
 import com.oner365.monitor.service.ISysTaskService;
+import com.oner365.monitor.vo.SysTaskLogVo;
+import com.oner365.monitor.vo.SysTaskVo;
 import com.oner365.util.DataUtils;
 import com.oner365.util.DateUtil;
 
@@ -45,7 +46,7 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
 
     private void taskExecute(String concurrent, String taskId, JSONObject param) {
         String status = StatusEnum.YES.getCode();
-        SysTask sysTask = sysTaskService.selectTaskById(taskId);
+        SysTaskDto sysTask = sysTaskService.selectTaskById(taskId);
         if (sysTask != null) {
             if (PublicConstants.SCHEDULE_CONCURRENT.equals(concurrent)) {
                 LOGGER.info("taskExecute  concurrent : {} , update sysTask  executeStatus = 0", concurrent);
@@ -62,17 +63,17 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
         }
     }
 
-    private String execute(String taskId, JSONObject param, SysTask sysTask) {
+    private String execute(String taskId, JSONObject param, SysTaskDto sysTask) {
         try {
             sysTask.setExecuteStatus(StatusEnum.NO.getCode());
-            sysTaskService.save(sysTask);
+            sysTaskService.save(toVo(sysTask));
             Integer day = param.getInteger("day");
             if (day != null) {
                 String time = DateUtil.nextDay(day - 2 * day, DateUtil.FULL_TIME_FORMAT);
                 sysTaskLogService.deleteTaskLogByCreateTime(time);
             }
             sysTask.setExecuteStatus(StatusEnum.YES.getCode());
-            sysTaskService.save(sysTask);
+            sysTaskService.save(toVo(sysTask));
             return sysTask.getExecuteStatus();
         } catch (Exception e) {
             LOGGER.error("update sysTask Exception:", e);
@@ -80,11 +81,30 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
         }
 
     }
+    
+    private SysTaskVo toVo(SysTaskDto dto) {
+      SysTaskVo result = new SysTaskVo();
+      result.setId(dto.getId());
+      result.setConcurrent(dto.getConcurrent());
+      result.setCreateTime(dto.getCreateTime());
+      result.setCreateUser(dto.getCreateUser());
+      result.setCronExpression(dto.getCronExpression());
+      result.setExecuteStatus(dto.getExecuteStatus());
+      result.setInvokeParam(dto.getInvokeParam());
+      result.setInvokeTarget(dto.getInvokeTarget());
+      result.setMisfirePolicy(dto.getMisfirePolicy());
+      result.setRemark(dto.getRemark());
+      result.setStatus(dto.getStatus());
+      result.setTaskGroup(dto.getTaskGroup());
+      result.setTaskName(dto.getTaskName());
+      result.setUpdateTime(dto.getUpdateTime());
+      return result;
+    }
 
-    private void executeLog(SysTask sysTask, String status) {
+    private void executeLog(SysTaskDto sysTask, String status) {
         long time = System.currentTimeMillis();
         LOGGER.info("taskExecute  saveTaskLog ");
-        SysTaskLog log = new SysTaskLog();
+        SysTaskLogVo log = new SysTaskLogVo();
         log.setExecuteIp(DataUtils.getLocalhost());
         log.setExecuteServerName(ScheduleConstants.SCHEDULE_SERVER_NAME);
         log.setStatus(StatusEnum.YES.getCode());

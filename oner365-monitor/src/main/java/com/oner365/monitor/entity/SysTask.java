@@ -11,17 +11,16 @@ import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
-import com.oner365.monitor.constants.ScheduleConstants;
-import com.oner365.monitor.util.CronUtils;
-import com.oner365.util.DataUtils;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.monitor.constants.ScheduleConstants;
+import com.oner365.monitor.dto.SysTaskDto;
+import com.oner365.monitor.util.CronUtils;
+import com.oner365.util.DataUtils;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 /**
@@ -227,15 +226,28 @@ public class SysTask implements Serializable {
         this.executeStatus = executeStatus;
     }
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("id", getId())
-                .append("taskName", getTaskName()).append("taskGroup", getTaskGroup())
-                .append("cronExpression", getCronExpression()).append("nextValidTime", getNextValidTime())
-                .append("misfirePolicy", getMisfirePolicy()).append("concurrent", getConcurrent())
-                .append("status", getStatus()).append("createUser", getCreateUser()).append("createTime", getCreateTime())
-                .append("updateTime", getUpdateTime()).append("remark", getRemark())
-                .toString();
+    /**
+     * 转换对象
+     * 
+     * @return SysTaskDto
+     */
+    public SysTaskDto toDto() {
+      SysTaskDto result = new SysTaskDto();
+      result.setId(this.getId());
+      result.setConcurrent(this.getConcurrent());
+      result.setCreateTime(this.getCreateTime());
+      result.setCreateUser(this.getCreateUser());
+      result.setCronExpression(this.getCronExpression());
+      result.setExecuteStatus(this.getExecuteStatus());
+      result.setInvokeParam(this.getInvokeParam());
+      result.setInvokeTarget(this.getInvokeTarget());
+      result.setMisfirePolicy(this.getMisfirePolicy());
+      result.setRemark(this.getRemark());
+      result.setStatus(this.getStatus());
+      result.setTaskGroup(this.getTaskGroup());
+      result.setTaskName(this.getTaskName());
+      result.setUpdateTime(this.getUpdateTime());
+      return result;
     }
 
 }

@@ -11,11 +11,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oner365.common.enums.StorageEnum;
-import com.oner365.files.entity.SysFileStorage;
+import com.oner365.common.sequence.sequence.SnowflakeSequence;
 import com.oner365.files.service.IFileStorageService;
 import com.oner365.files.storage.IFileStorageClient;
 import com.oner365.files.storage.condition.LocalStorageCondition;
 import com.oner365.files.util.FileLocalUploadUtils;
+import com.oner365.files.vo.SysFileStorageVo;
 import com.oner365.util.DataUtils;
 
 /**
@@ -27,57 +28,60 @@ import com.oner365.util.DataUtils;
 @Conditional(LocalStorageCondition.class)
 public class LocalClient implements IFileStorageClient {
 
-    private final Logger logger = LoggerFactory.getLogger(LocalClient.class);
+  private final Logger logger = LoggerFactory.getLogger(LocalClient.class);
 
-    @Value("${file.local.web:''}")
-    private String fileWeb;
+  @Value("${file.local.web:''}")
+  private String fileWeb;
 
-    @Value("${file.local.upload:''}")
-    private String filePath;
+  @Value("${file.local.upload:''}")
+  private String filePath;
 
-    @Autowired
-    private IFileStorageService fileStorageService;
+  @Autowired
+  private IFileStorageService fileStorageService;
 
-    @Override
-    public String uploadFile(MultipartFile file, String dictory) {
-        try {
-            SysFileStorage fileStorage = FileLocalUploadUtils.upload(file, getName(), fileWeb, filePath, dictory, file.getSize() + 1);
-            fileStorageService.save(fileStorage);
-            return fileStorage.getFilePath();
-        } catch (Exception e) {
-            logger.error("upload MultipartFile IOException:", e);
-        }
-        return null;
+  @Autowired
+  private SnowflakeSequence snowflakeSequence;
+
+  @Override
+  public String uploadFile(MultipartFile file, String directory) {
+    try {
+      SysFileStorageVo entity = FileLocalUploadUtils.upload(file, getName(), snowflakeSequence.nextNo(), fileWeb,
+          filePath, directory, file.getSize() + 1);
+      fileStorageService.save(entity);
+      return entity.getFilePath();
+    } catch (Exception e) {
+      logger.error("upload MultipartFile IOException:", e);
     }
+    return null;
+  }
 
-    @Override
-    public String uploadFile(File file, String dictory) {
-        try {
-            MultipartFile multipartFile = DataUtils.convertMultipartFile(file);
-            SysFileStorage fileStorage = FileLocalUploadUtils.upload(multipartFile, getName(), fileWeb, filePath, dictory,
-                    file.length() + 1);
-            fileStorageService.save(fileStorage);
-            return fileStorage.getFilePath();
-        } catch (Exception e) {
-            logger.error("upload MultipartFile IOException:", e);
-        }
-        return null;
+  @Override
+  public String uploadFile(File file, String directory) {
+    try {
+      MultipartFile multipartFile = DataUtils.convertMultipartFile(file);
+      SysFileStorageVo entity = FileLocalUploadUtils.upload(multipartFile, getName(), snowflakeSequence.nextNo(),
+          fileWeb, filePath, directory, file.length() + 1);
+      fileStorageService.save(entity);
+      return entity.getFilePath();
+    } catch (Exception e) {
+      logger.error("upload MultipartFile IOException:", e);
     }
+    return null;
+  }
 
-    @Override
-    public byte[] download(String fileUrl) {
-        return FileLocalUploadUtils.download(filePath, fileUrl);
-    }
+  @Override
+  public byte[] download(String fileUrl) {
+    return FileLocalUploadUtils.download(filePath, fileUrl);
+  }
 
-    @Override
-    public void deleteFile(String id) {
-        FileLocalUploadUtils.delete(filePath, id);
-        fileStorageService.deleteById(id);
-    }
+  @Override
+  public void deleteFile(String id) {
+    fileStorageService.deleteById(id);
+  }
 
-    @Override
-    public StorageEnum getName() {
-        return StorageEnum.LOCAL;
-    }
+  @Override
+  public StorageEnum getName() {
+    return StorageEnum.LOCAL;
+  }
 
 }

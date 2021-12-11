@@ -10,8 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oner365.monitor.dto.SysTaskDto;
 import com.oner365.monitor.entity.InvokeParam;
-import com.oner365.monitor.entity.SysTask;
 import com.oner365.util.DataUtils;
 
 /**
@@ -32,7 +32,7 @@ public class JobInvokeUtil {
      *
      * @param sysTask 系统任务
      */
-    public static void invokeMethod(SysTask sysTask) {
+    public static void invokeMethod(SysTaskDto sysTask) {
         String invokeTarget = sysTask.getInvokeTarget();
         String beanName = getBeanName(invokeTarget);
         String methodName = getMethodName(invokeTarget);

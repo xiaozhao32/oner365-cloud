@@ -13,10 +13,12 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.gateway.dto.GatewayRouteDto;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 /**
  * Gateway的路由定义模型
+ * 
  * @author zhaoyong
  */
 @Entity
@@ -25,113 +27,130 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler", "transportOrders" })
 public class GatewayRoute implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+  /**
+   *
+   */
+  private static final long serialVersionUID = 1L;
 
-    /**
-     * 路由的Id
-     */
-    @Id
-    private String id;
+  /**
+   * 路由的Id
+   */
+  @Id
+  private String id;
 
-    /**
-     * 路由断言集合配置
-     */
-    @Type(type = "json")
-    @Column(name = "predicates")
-    private List<GatewayPredicate> predicates;
+  /**
+   * 路由断言集合配置
+   */
+  @Type(type = "json")
+  @Column(name = "predicates")
+  private List<GatewayPredicate> predicates;
 
-    /**
-     * 路由过滤器集合配置
-     */
-    @Type(type = "json")
-    @Column(name = "filters")
-    private List<GatewayFilter> filters;
+  /**
+   * 路由过滤器集合配置
+   */
+  @Type(type = "json")
+  @Column(name = "filters")
+  private List<GatewayFilter> filters;
 
-    /**
-     * 路由规则转发的目标uri
-     */
-    @Column(name = "uri", nullable = false)
-    private String uri;
+  /**
+   * 路由规则转发的目标uri
+   */
+  @Column(name = "uri", nullable = false)
+  private String uri;
 
-    /**
-     * 路由执行的顺序
-     */
-    @Column(name = "route_order", nullable = false, length = 11)
-    private Integer routeOrder = 0;
+  /**
+   * 路由执行的顺序
+   */
+  @Column(name = "route_order", nullable = false, length = 11)
+  private Integer routeOrder = 0;
 
-    /**
-     * 路由状态 0：可用 1：不可用
-     */
-    @Column(name = "status", nullable = false, length = 8)
-    private String status;
+  /**
+   * 路由状态 0：可用 1：不可用
+   */
+  @Column(name = "status", nullable = false, length = 8)
+  private String status;
 
-    /**
-     * 界面使用的谓词
-     */
-    @Transient
-    private String pattern;
+  /**
+   * 界面使用的谓词
+   */
+  @Transient
+  private String pattern;
 
-    public GatewayRoute() {
-        super();
-    }
+  public GatewayRoute() {
+    super();
+  }
 
-    public String getId() {
-        return id;
-    }
+  public String getId() {
+    return id;
+  }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public List<GatewayPredicate> getPredicates() {
-        return predicates;
-    }
+  public List<GatewayPredicate> getPredicates() {
+    return predicates;
+  }
 
-    public void setPredicates(List<GatewayPredicate> predicates) {
-        this.predicates = predicates;
-    }
+  public void setPredicates(List<GatewayPredicate> predicates) {
+    this.predicates = predicates;
+  }
 
-    public List<GatewayFilter> getFilters() {
-        return filters;
-    }
+  public List<GatewayFilter> getFilters() {
+    return filters;
+  }
 
-    public void setFilters(List<GatewayFilter> filters) {
-        this.filters = filters;
-    }
+  public void setFilters(List<GatewayFilter> filters) {
+    this.filters = filters;
+  }
 
-    public String getUri() {
-        return uri;
-    }
+  public String getUri() {
+    return uri;
+  }
 
-    public void setUri(String uri) {
-        this.uri = uri;
-    }
+  public void setUri(String uri) {
+    this.uri = uri;
+  }
 
-    public Integer getRouteOrder() {
-        return routeOrder;
-    }
+  public Integer getRouteOrder() {
+    return routeOrder;
+  }
 
-    public void setRouteOrder(Integer routeOrder) {
-        this.routeOrder = routeOrder;
-    }
+  public void setRouteOrder(Integer routeOrder) {
+    this.routeOrder = routeOrder;
+  }
 
-    public String getStatus() {
-        return status;
-    }
+  public String getStatus() {
+    return status;
+  }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
-    public String getPattern() {
-        return pattern;
-    }
+  public String getPattern() {
+    return pattern;
+  }
 
-    public void setPattern(String pattern) {
-        this.pattern = pattern;
-    }
+  public void setPattern(String pattern) {
+    this.pattern = pattern;
+  }
+
+  /**
+   * 转换对象
+   * 
+   * @return GatewayRouteDto
+   */
+  public GatewayRouteDto toDto() {
+    GatewayRouteDto result = new GatewayRouteDto();
+    result.setId(this.getId());
+    result.setFilters(this.getFilters());
+    result.setPattern(this.getPattern());
+    result.setPredicates(this.getPredicates());
+    result.setRouteOrder(this.getRouteOrder());
+    result.setStatus(this.getStatus());
+    result.setUri(this.getUri());
+    return result;
+  }
 
 }

@@ -14,11 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.oner365.common.ResponseResult;
-import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
-import com.oner365.elasticsearch.entity.SampleGene;
+import com.oner365.elasticsearch.dto.SampleGeneDto;
 import com.oner365.elasticsearch.service.ISampleGeneElasticsearchService;
 import com.oner365.elasticsearch.vo.SampleGeneVo;
 import com.oner365.util.DataUtils;
@@ -35,75 +34,71 @@ import com.oner365.util.GeneTransFormUtils;
 @RequestMapping("/sampleGene")
 public class SampleGeneController extends BaseController {
 
-    @Autowired
-    private ISampleGeneElasticsearchService service;
+  @Autowired
+  private ISampleGeneElasticsearchService service;
 
-    /**
-     * 保存
-     *
-     * @param sampleGeneVo 基因对象
-     * @return ResponseResult<SampleGene>
-     */
-    @PutMapping("/save")
-    public ResponseResult<SampleGene> save(@RequestBody SampleGeneVo sampleGeneVo) {
-        if (sampleGeneVo == null) {
-            return ResponseResult.error("基因对象为空!");
-        }
-        SampleGene sampleGene = sampleGeneVo.toObject();
-        if (sampleGene != null) {
-            if (!sampleGene.getGeneList().isEmpty()) {
-                // 基因型格式转换
-                String jsonArray = JSON.toJSONString(sampleGene.getGeneList());
-                sampleGene.setGeneInfo(GeneTransFormUtils.geneFormatString(jsonArray));
-                String s = GeneTransFormUtils.geneTrimString(sampleGene.getGeneInfo().toJSONString());
-                sampleGene.setMatchJson(JSON.parseObject(s));
-            }
-            SampleGene entity = service.save(sampleGene);
-            return ResponseResult.success(entity);
-        }
-        return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
-    }
+  /**
+   * 列表
+   *
+   * @param data 查询条件参数
+   * @return Page<SampleGeneDto>
+   */
+  @PostMapping("/list")
+  public Page<SampleGeneDto> list(@RequestBody QueryCriteriaBean data) {
+    return this.service.findList(data);
+  }
 
-    /**
-     * id查询
-     *
-     * @param id 编号
-     * @return SampleGene
-     */
-    @GetMapping("/get/{id}")
-    public SampleGene get(@PathVariable("id") String id) {
-        SampleGene sampleGene = service.findById(id);
-        if (sampleGene != null && !DataUtils.isEmpty(sampleGene.getGeneInfo())) {
-            // 基因型格式转换
-            sampleGene.setGeneList(GeneTransFormUtils.geneFormatList(sampleGene.getGeneInfo().toJSONString()));
-        }
-        return sampleGene;
+  /**
+   * id查询
+   *
+   * @param id 编号
+   * @return SampleGeneDto
+   */
+  @GetMapping("/get/{id}")
+  public SampleGeneDto get(@PathVariable("id") String id) {
+    SampleGeneDto sampleGene = service.findById(id);
+    if (sampleGene != null && !DataUtils.isEmpty(sampleGene.getGeneInfo())) {
+      // 基因型格式转换
+      sampleGene.setGeneList(GeneTransFormUtils.geneFormatList(sampleGene.getGeneInfo().toJSONString()));
     }
+    return sampleGene;
+  }
 
-    /**
-     * 删除
-     *
-     * @param ids 编号
-     * @return Integer
-     */
-    @DeleteMapping("/delete")
-    public Integer delete(@RequestBody String... ids) {
-        Integer result = ResultEnum.SUCCESS.getCode();
-        for (String id : ids) {
-            service.deleteById(id);
-        }
-        return result;
+  /**
+   * 保存
+   *
+   * @param sampleGeneVo 基因对象
+   * @return ResponseResult<SampleGeneDto>
+   */
+  @PutMapping("/save")
+  public ResponseResult<SampleGeneDto> save(@RequestBody SampleGeneVo sampleGeneVo) {
+    if (sampleGeneVo == null) {
+      return ResponseResult.error("基因对象为空!");
     }
+    if (!sampleGeneVo.getGeneList().isEmpty()) {
+      // 基因型格式转换
+      String jsonArray = JSON.toJSONString(sampleGeneVo.getGeneList());
+      sampleGeneVo.setGeneInfo(GeneTransFormUtils.geneFormatString(jsonArray));
+      String s = GeneTransFormUtils.geneTrimString(sampleGeneVo.getGeneInfo().toJSONString());
+      sampleGeneVo.setMatchJson(JSON.parseObject(s));
+    }
+    SampleGeneDto entity = service.save(sampleGeneVo);
+    return ResponseResult.success(entity);
+  }
 
-    /**
-     * 列表
-     *
-     * @param data 查询参数
-     * @return Page<SampleGene>
-     */
-    @PostMapping("/list")
-    public Page<SampleGene> list(@RequestBody QueryCriteriaBean data) {
-        return this.service.findList(data);
+  /**
+   * 删除
+   *
+   * @param ids 编号
+   * @return Integer
+   */
+  @DeleteMapping("/delete")
+  public Integer delete(@RequestBody String... ids) {
+    Integer result = ResultEnum.SUCCESS.getCode();
+    for (String id : ids) {
+      service.deleteById(id);
     }
+    return result;
+  }
 
 }

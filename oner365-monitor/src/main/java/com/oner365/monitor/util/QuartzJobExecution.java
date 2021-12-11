@@ -2,7 +2,7 @@ package com.oner365.monitor.util;
 
 import org.quartz.JobExecutionContext;
 
-import com.oner365.monitor.entity.SysTask;
+import com.oner365.monitor.dto.SysTaskDto;
 
 /**
  * 定时任务处理（允许并发执行）
@@ -12,7 +12,7 @@ import com.oner365.monitor.entity.SysTask;
  */
 public class QuartzJobExecution extends AbstractQuartzJob {
     @Override
-    protected void doExecute(JobExecutionContext context, SysTask sysTask) {
+    protected void doExecute(JobExecutionContext context, SysTaskDto sysTask) {
         JobInvokeUtil.invokeMethod(sysTask);
     }
 }
