@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
 import com.oner365.controller.BaseController;
 import com.oner365.swagger.client.IAuthServiceClient;
@@ -27,8 +28,8 @@ import io.swagger.annotations.ApiOperation;
  * @author zhaoyong
  */
 @RestController
-@RequestMapping("/system/auth")
 @Api(tags = "用户认证")
+@RequestMapping("/system/auth")
 public class AuthController extends BaseController {
 
   @Autowired
@@ -40,21 +41,23 @@ public class AuthController extends BaseController {
    * @param loginUserVo 登录对象
    * @return ResponseData
    */
+  @ApiOperation("1.登录")
+  @ApiOperationSupport(order = 1)
   @PostMapping("/login")
-  @ApiOperation("登录")
   public ResponseData<LoginUserDto> login(@RequestBody LoginUserVo loginUserVo) {
     return client.login(loginUserVo);
   }
-
+  
   /**
-   * 退出登录
+   * 获取验证码
    * 
-   * @return String
+   * @return Map<String, Object>
    */
-  @PostMapping("/logout")
-  @ApiOperation("退出登录")
-  public ResponseData<String> logout() {
-    return client.logout();
+  @ApiOperation("2.获取验证码")
+  @ApiOperationSupport(order = 2)
+  @GetMapping("/captchaImage")
+  public ResponseData<Map<String, Object>> captchaImage() {
+    return client.captchaImage();
   }
 
   /**
@@ -63,21 +66,11 @@ public class AuthController extends BaseController {
    * @param menuType 菜单类型
    * @return JSONArray
    */
+  @ApiOperation("3.获取菜单权限")
+  @ApiOperationSupport(order = 3)
   @GetMapping("/menu/{menuType}")
-  @ApiOperation("获取菜单权限")
   public ResponseData<JSONArray> findMenuByRoles(@PathVariable String menuType) {
     return client.findMenuByRoles(menuType);
-  }
-
-  /**
-   * 获取验证码
-   * 
-   * @return Map<String, Object>
-   */
-  @GetMapping("/captchaImage")
-  @ApiOperation("获取验证码")
-  public ResponseData<Map<String, Object>> captchaImage() {
-    return client.captchaImage();
   }
 
   /**
@@ -86,10 +79,23 @@ public class AuthController extends BaseController {
    * @param menuId 菜单id
    * @return List<Map<String, Object>>
    */
+  @ApiOperation("4.获取菜单操作权限")
+  @ApiOperationSupport(order = 4)
   @GetMapping("/menu/operation/{menuId}")
-  @ApiOperation("获取菜单操作权限")
   public ResponseData<List<Map<String, String>>> findMenuOperByRoles(@PathVariable String menuId) {
     return client.findMenuOperByRoles(menuId);
+  }
+  
+  /**
+   * 退出登录
+   * 
+   * @return String
+   */
+  @ApiOperation("5.退出登录")
+  @ApiOperationSupport(order = 5)
+  @PostMapping("/logout")
+  public ResponseData<String> logout() {
+    return client.logout();
   }
 
 }

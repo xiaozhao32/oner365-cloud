@@ -1,7 +1,7 @@
 package com.oner365.sys.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,9 +82,9 @@ public class SysLogServiceImpl implements ISysLogService {
     }
 
     @Override
-    public int deleteLog(Date date) {
+    public int deleteLog(LocalDateTime dateTime) {
         Criteria<SysLog> criteria = new Criteria<>();
-        criteria.add(Restrictions.lte(SysConstants.CREATE_TIME, date));
+        criteria.add(Restrictions.lte(SysConstants.CREATE_TIME, dateTime));
         List<SysLog> list = dao.findAll(criteria);
         dao.deleteAll(list);
         return ResultEnum.SUCCESS.getCode();

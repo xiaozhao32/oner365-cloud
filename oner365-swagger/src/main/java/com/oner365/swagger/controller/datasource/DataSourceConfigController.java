@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
+import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -31,8 +33,8 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@RequestMapping("/system/datasource")
 @Api(tags = "数据源信息")
+@RequestMapping("/system/datasource")
 public class DataSourceConfigController extends BaseController {
 
   @Autowired
@@ -44,8 +46,9 @@ public class DataSourceConfigController extends BaseController {
    * @param data 查询参数
    * @return Page<DataSourceConfigDto>
    */
+  @ApiOperation("1.列表")
+  @ApiOperationSupport(order = 1)
   @PostMapping("/list")
-  @ApiOperation("列表")
   public ResponseData<Page<DataSourceConfigDto>> findList(@RequestBody QueryCriteriaBean data) {
     return service.pageList(data);
   }
@@ -56,8 +59,9 @@ public class DataSourceConfigController extends BaseController {
    * @param id 编号
    * @return DataSourceConfig
    */
+  @ApiOperation("2.按id查询")
+  @ApiOperationSupport(order = 2)
   @GetMapping("/get/{id}")
-  @ApiOperation("按id查询")
   public ResponseData<DataSourceConfigDto> get(@PathVariable String id) {
     return service.getById(id);
   }
@@ -68,8 +72,9 @@ public class DataSourceConfigController extends BaseController {
    * @param connectName 连接名称
    * @return DataSourceConfig
    */
+  @ApiOperation("3.按连接名称查询")
+  @ApiOperationSupport(order = 3)
   @GetMapping("/getConnectName")
-  @ApiOperation("按连接名称查询")
   public ResponseData<DataSourceConfigDto> getConnectName(@RequestParam String connectName) {
     return service.getConnectName(connectName);
   }
@@ -78,15 +83,16 @@ public class DataSourceConfigController extends BaseController {
    * 保存
    * 
    * @param dataSourceConfigVo 数据源对象
-   * @return ResponseData<DataSourceConfigDto>
+   * @return ResponseResult<DataSourceConfigDto>
    */
+  @ApiOperation("4.保存")
+  @ApiOperationSupport(order = 4)
   @PutMapping("/save")
-  @ApiOperation("保存")
-  public ResponseData<DataSourceConfigDto> save(@RequestBody DataSourceConfigVo dataSourceConfigVo) {
+  public ResponseResult<DataSourceConfigDto> save(@RequestBody DataSourceConfigVo dataSourceConfigVo) {
     if (dataSourceConfigVo != null) {
       return service.save(dataSourceConfigVo);
     }
-    return ResponseData.error(ErrorInfoEnum.SAVE_ERROR.getName());
+    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
   }
 
   /**
@@ -95,8 +101,9 @@ public class DataSourceConfigController extends BaseController {
    * @param ids 编号
    * @return Integer
    */
+  @ApiOperation("5.删除")
+  @ApiOperationSupport(order = 5)
   @DeleteMapping("/delete")
-  @ApiOperation("删除")
   public Integer delete(@RequestBody String... ids) {
     int code = ResultEnum.ERROR.getCode();
     for (String id : ids) {

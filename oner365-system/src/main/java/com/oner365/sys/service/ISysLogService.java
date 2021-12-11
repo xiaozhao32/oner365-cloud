@@ -1,6 +1,6 @@
 package com.oner365.sys.service;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -51,9 +51,9 @@ public interface ISysLogService {
 
     /**
      * 按日期删除
-     * @param date 日期
+     * @param dateTime 日期
      * @return int
      */
-    int deleteLog(Date date);
+    int deleteLog(LocalDateTime dateTime);
 
 }
