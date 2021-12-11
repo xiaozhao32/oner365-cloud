@@ -61,7 +61,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
       try {
         ScheduleUtils.createScheduleJob(scheduler, convertDto(task));
       } catch (Exception e) {
-        LOGGER.error(e.getMessage());
+        LOGGER.error("init task error:", e);
       }
     });
   }

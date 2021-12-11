@@ -12,7 +12,7 @@ import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 
 import com.oner365.monitor.constants.ScheduleConstants;
-import com.oner365.monitor.entity.SysTask;
+import com.oner365.monitor.dto.SysTaskDto;
 import com.oner365.monitor.exception.TaskException;
 import com.oner365.monitor.exception.TaskException.Code;
 
@@ -34,7 +34,7 @@ public class ScheduleUtils {
      * @param sysTask 执行计划
      * @return 具体执行任务类
      */
-    private static Class<? extends Job> getQuartzJobClass(SysTask sysTask) {
+    private static Class<? extends Job> getQuartzJobClass(SysTaskDto sysTask) {
         boolean isConcurrent = "0".equals(sysTask.getConcurrent());
         return isConcurrent ? QuartzJobExecution.class : QuartzDisallowConcurrentExecution.class;
     }
@@ -56,7 +56,7 @@ public class ScheduleUtils {
     /**
      * 创建定时任务
      */
-    public static void createScheduleJob(Scheduler scheduler, SysTask sysTask) throws SchedulerException, TaskException {
+    public static void createScheduleJob(Scheduler scheduler, SysTaskDto sysTask) throws SchedulerException, TaskException {
         Class<? extends Job> jobClass = getQuartzJobClass(sysTask);
         // 构建job信息
         String jobId = sysTask.getId();
@@ -91,7 +91,7 @@ public class ScheduleUtils {
     /**
      * 设置定时任务策略
      */
-    public static CronScheduleBuilder handleCronScheduleMisfirePolicy(SysTask job, CronScheduleBuilder cb)
+    public static CronScheduleBuilder handleCronScheduleMisfirePolicy(SysTaskDto job, CronScheduleBuilder cb)
             throws TaskException {
         switch (job.getMisfirePolicy()) {
         case ScheduleConstants.MISFIRE_DEFAULT:
