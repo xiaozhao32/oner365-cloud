@@ -13,6 +13,8 @@ public enum StorageEnum implements Serializable {
 
     /** 本地上传 */
     LOCAL("local", "本地上传"),
+    /** Minio上传 */
+    MINIO("minio", "Minio上传"),
     /** Fastdfs上传 */
     FDFS("fdfs", "Fastdfs上传");
 

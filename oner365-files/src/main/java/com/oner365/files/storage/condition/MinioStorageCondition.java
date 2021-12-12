@@ -10,19 +10,19 @@ import com.oner365.common.enums.StorageEnum;
 import org.springframework.lang.NonNull;
 
 /**
- * fdfs上传模式
+ * minio上传模式
  * 
  * @author zhaoyong
  *
  */
-public class FdfsStorageCondition implements Condition {
+public class MinioStorageCondition implements Condition {
 
 	@Override
 	public boolean matches(ConditionContext conditionContext, @NonNull AnnotatedTypeMetadata metadata) {
 		Environment environment = conditionContext.getEnvironment();
 		String type = environment.getProperty(PublicConstants.FILE_STORAGE);
-		// fdfs上传
-		return type != null && type.equals(StorageEnum.FDFS.getCode());
+		// minio上传
+		return type != null && type.equals(StorageEnum.MINIO.getCode());
 	}
 
 }

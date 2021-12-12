@@ -13,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +25,7 @@ import com.github.tobato.fastdfs.exception.FdfsUnsupportStorePathException;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StorageEnum;
+import com.oner365.files.config.properties.FileFdfsProperties;
 import com.oner365.files.service.IFileStorageService;
 import com.oner365.files.storage.IFileStorageClient;
 import com.oner365.files.storage.condition.FdfsStorageCondition;
@@ -40,15 +40,12 @@ import com.oner365.util.DateUtil;
  */
 @Component
 @Conditional(FdfsStorageCondition.class)
-public class FastdfsClient implements IFileStorageClient {
+public class FileFdfsClient implements IFileStorageClient {
 
-  private final Logger logger = LoggerFactory.getLogger(FastdfsClient.class);
+  private final Logger logger = LoggerFactory.getLogger(FileFdfsClient.class);
 
-  @Value("${fdfs.storage.path}")
-  private String path;
-
-  @Value("${fdfs.ip}")
-  private String ip;
+  @Autowired
+  private FileFdfsProperties fileFdfsProperties;
 
   @Autowired
   private FastFileStorageClient fastFileStorageClient;
@@ -72,7 +69,7 @@ public class FastdfsClient implements IFileStorageClient {
       StorePath storePath = fastFileStorageClient.uploadFile(in, file.getSize(),
           getExtName(file.getOriginalFilename(), file.getContentType()), null);
       String url = getResAccessUrl(storePath);
-      saveFastdfsFile(url, file.getOriginalFilename(), file.getSize());
+      saveFileStorage(url, file.getOriginalFilename(), file.getSize());
       return url;
     } catch (IOException e) {
       logger.error("upload MultipartFile IOException:", e);
@@ -92,7 +89,7 @@ public class FastdfsClient implements IFileStorageClient {
       StorePath storePath = fastFileStorageClient.uploadFile(inputStream, file.length(),
           getExtName(file.getName(), null), null);
       String url = getResAccessUrl(storePath);
-      saveFastdfsFile(url, file.getName(), file.length());
+      saveFileStorage(url, file.getName(), file.length());
       return url;
     } catch (IOException e) {
       logger.error("upload File IOException:", e);
@@ -100,10 +97,10 @@ public class FastdfsClient implements IFileStorageClient {
     return null;
   }
 
-  private void saveFastdfsFile(String url, String fileName, long fileSize) {
+  private void saveFileStorage(String url, String fileName, long fileSize) {
     // save
     SysFileStorageVo entity = new SysFileStorageVo();
-    entity.setFastdfsUrl("http://" + ip);
+    entity.setFastdfsUrl("http://" + fileFdfsProperties.getIp());
     entity.setId(StringUtils.replace(url, entity.getFastdfsUrl() + PublicConstants.DELIMITER, ""));
     entity.setCreateTime(DateUtil.getDate());
     entity.setDirectory(false);

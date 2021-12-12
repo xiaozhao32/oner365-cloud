@@ -7,6 +7,7 @@ import org.springframework.core.type.AnnotatedTypeMetadata;
 
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StorageEnum;
+import org.springframework.lang.NonNull;
 
 /**
  * 本地上传模式
@@ -16,12 +17,12 @@ import com.oner365.common.enums.StorageEnum;
  */
 public class LocalStorageCondition implements Condition {
 
-    @Override
-    public boolean matches(ConditionContext conditionContext, AnnotatedTypeMetadata metadata) {
-        Environment environment = conditionContext.getEnvironment();
-        String type = environment.getProperty(PublicConstants.FILE_STORAGE);
-        // 本地上传
-        return type == null || type.equals(StorageEnum.LOCAL.getCode());
-    }
+	@Override
+	public boolean matches(ConditionContext conditionContext, @NonNull AnnotatedTypeMetadata metadata) {
+		Environment environment = conditionContext.getEnvironment();
+		String type = environment.getProperty(PublicConstants.FILE_STORAGE);
+		// 本地上传
+		return type == null || type.equals(StorageEnum.LOCAL.getCode());
+	}
 
 }

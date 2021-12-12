@@ -5,13 +5,13 @@ import java.io.File;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oner365.common.enums.StorageEnum;
 import com.oner365.common.sequence.sequence.SnowflakeSequence;
+import com.oner365.files.config.properties.FileLocalProperties;
 import com.oner365.files.service.IFileStorageService;
 import com.oner365.files.storage.IFileStorageClient;
 import com.oner365.files.storage.condition.LocalStorageCondition;
@@ -21,20 +21,17 @@ import com.oner365.util.DataUtils;
 
 /**
  * 本地上传工具类
- * 
+ *
  * @author zhaoyong
  */
 @Component
 @Conditional(LocalStorageCondition.class)
-public class LocalClient implements IFileStorageClient {
+public class FileLocalClient implements IFileStorageClient {
 
-  private final Logger logger = LoggerFactory.getLogger(LocalClient.class);
+  private final Logger logger = LoggerFactory.getLogger(FileLocalClient.class);
 
-  @Value("${file.local.web:''}")
-  private String fileWeb;
-
-  @Value("${file.local.upload:''}")
-  private String filePath;
+  @Autowired
+  private FileLocalProperties fileLocalProperties;
 
   @Autowired
   private IFileStorageService fileStorageService;
@@ -45,8 +42,8 @@ public class LocalClient implements IFileStorageClient {
   @Override
   public String uploadFile(MultipartFile file, String directory) {
     try {
-      SysFileStorageVo entity = FileLocalUploadUtils.upload(file, getName(), snowflakeSequence.nextNo(), fileWeb,
-          filePath, directory, file.getSize() + 1);
+      SysFileStorageVo entity = FileLocalUploadUtils.upload(file, getName(), snowflakeSequence.nextNo(),
+          fileLocalProperties.getWeb(), fileLocalProperties.getUpload(), directory, file.getSize() + 1);
       fileStorageService.save(entity);
       return entity.getFilePath();
     } catch (Exception e) {
@@ -60,7 +57,7 @@ public class LocalClient implements IFileStorageClient {
     try {
       MultipartFile multipartFile = DataUtils.convertMultipartFile(file);
       SysFileStorageVo entity = FileLocalUploadUtils.upload(multipartFile, getName(), snowflakeSequence.nextNo(),
-          fileWeb, filePath, directory, file.length() + 1);
+          fileLocalProperties.getWeb(), fileLocalProperties.getUpload(), directory, file.length() + 1);
       fileStorageService.save(entity);
       return entity.getFilePath();
     } catch (Exception e) {
@@ -71,7 +68,7 @@ public class LocalClient implements IFileStorageClient {
 
   @Override
   public byte[] download(String fileUrl) {
-    return FileLocalUploadUtils.download(filePath, fileUrl);
+    return FileLocalUploadUtils.download(fileLocalProperties.getUpload(), fileUrl);
   }
 
   @Override
