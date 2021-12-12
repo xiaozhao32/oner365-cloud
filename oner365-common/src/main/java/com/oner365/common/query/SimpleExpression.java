@@ -14,98 +14,106 @@ import com.oner365.util.DateUtil;
 
 /**
  * 简单条件表达式
+ * 
  * @author zhaoyong
  */
 public class SimpleExpression implements Criterion {
-  
+
   private static final String POINT = ".";
   private static final String COLLECTION = "List";
 
-    /** 属性名 */
-    private String fieldName;
-    /** 对应值 */
-    private Object value;
-    /** 计算符 */
-    private Operator operator;
+  /**
+   * 属性名
+   */
+  private final String fieldName;
 
-    protected SimpleExpression(String fieldName, Object value, Operator operator) {
-        this.fieldName = fieldName;
-        this.value = value;
-        this.operator = operator;
+  /**
+   * 对应值
+   */
+  private final Object value;
+
+  /**
+   * 计算符
+   */
+  private final Operator operator;
+
+  protected SimpleExpression(String fieldName, Object value, Operator operator) {
+    this.fieldName = fieldName;
+    this.value = value;
+    this.operator = operator;
+  }
+
+  public String getFieldName() {
+    return fieldName;
+  }
+
+  public Object getValue() {
+    return value;
+  }
+
+  public Operator getOperator() {
+    return operator;
+  }
+
+  @Override
+  @SuppressWarnings({ "rawtypes" })
+  public Predicate toPredicate(Root<?> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
+    Path expression;
+    if (fieldName.contains(POINT)) {
+      String[] names = StringUtils.split(fieldName, POINT);
+      if (names[0].contains(COLLECTION)) {
+        expression = root.join(names[0], JoinType.LEFT);
+      } else {
+        expression = root.get(names[0]);
+      }
+      for (int i = 1; i < names.length; i++) {
+        expression = expression.get(names[i]);
+      }
+    } else {
+      expression = root.get(fieldName);
     }
+    return getOperator(builder, expression);
+  }
 
-    public String getFieldName() {
-        return fieldName;
+  @SuppressWarnings({ "unchecked", "rawtypes" })
+  private Predicate getOperator(CriteriaBuilder builder, Path expression) {
+    switch (operator) {
+    case EQ:
+      return builder.equal(expression, value);
+    case NE:
+      return builder.notEqual(expression, value);
+    case LIKE:
+      return builder.like((Expression<String>) expression, "%" + value + "%");
+    case LT:
+      if (DateUtil.isLocalDateTime(String.valueOf(value))) {
+        return builder.lessThan(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
+      }
+      return builder.lessThan(expression, (Comparable) value);
+    case GT:
+      if (DateUtil.isLocalDateTime(String.valueOf(value))) {
+        return builder.greaterThan(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
+      }
+      return builder.greaterThan(expression, (Comparable) value);
+    case LTE:
+      if (DateUtil.isLocalDateTime(String.valueOf(value))) {
+        return builder.lessThanOrEqualTo(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
+      }
+      return builder.lessThanOrEqualTo(expression, (Comparable) value);
+    case GTE:
+      if (DateUtil.isLocalDateTime(String.valueOf(value))) {
+        return builder.greaterThanOrEqualTo(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
+      }
+      return builder.greaterThanOrEqualTo(expression, (Comparable) value);
+    case BE:
+      String param = String.valueOf(value);
+      String[] array = StringUtils.split(param, "|");
+      if (DateUtil.isLocalDateTime(array[0]) && DateUtil.isLocalDateTime(array[1])) {
+        return builder.between(expression, DateUtil.toLocalDateTime(array[0]), DateUtil.toLocalDateTime(array[1]));
+      }
+      return builder.between(expression, (Comparable) array[0], (Comparable) array[1]);
+    default:
+      return null;
     }
-
-    public Object getValue() {
-        return value;
-    }
-
-    public Operator getOperator() {
-        return operator;
-    }
-
-    @SuppressWarnings({ "rawtypes", "unchecked" })
-    @Override
-    public Predicate toPredicate(Root<?> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        Path expression;
-        if (fieldName.contains(POINT)) {
-            String[] names = StringUtils.split(fieldName, POINT);
-            if(names[0].contains(COLLECTION)){
-                expression = root.join(names[0], JoinType.LEFT);
-            }else{
-                expression = root.get(names[0]);
-            }
-            for (int i = 1; i < names.length; i++) {
-                expression = expression.get(names[i]);
-            }
-        } else {
-            expression = root.get(fieldName);
-        }
-
-        switch (operator) {
-        case EQ:
-            return builder.equal(expression, value);
-        case NE:
-            return builder.notEqual(expression, value);
-        case LIKE:
-            return builder.like((Expression<String>) expression, "%" + value + "%");
-        case LT:
-        	if(DateUtil.isLocalDateTime(String.valueOf(value)) ){
-            	return builder.lessThan(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
-            } else {
-            	return builder.lessThan(expression, (Comparable)value);
-            }
-        case GT:
-        	if(DateUtil.isLocalDateTime(String.valueOf(value)) ){
-            	return builder.greaterThan(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
-            } else {
-            	return builder.greaterThan(expression, (Comparable)value);
-            }
-        case LTE:
-        	if(DateUtil.isLocalDateTime(String.valueOf(value)) ){
-            	return builder.lessThanOrEqualTo(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
-            } else {
-            	return builder.lessThanOrEqualTo(expression, (Comparable)value);
-            }
-        case GTE:
-        	if(DateUtil.isLocalDateTime(String.valueOf(value)) ){
-            	return builder.greaterThanOrEqualTo(expression, DateUtil.toLocalDateTime(String.valueOf(value)));
-            } else {
-            	return builder.greaterThanOrEqualTo(expression, (Comparable)value);
-            }
-        case BE:
-            String param = String.valueOf(value);
-            String[] array = StringUtils.split(param, "|");
-            if(DateUtil.isLocalDateTime(array[0]) && DateUtil.isLocalDateTime(array[1])){
-            	return builder.between(expression, DateUtil.toLocalDateTime(array[0]), DateUtil.toLocalDateTime(array[1]));
-            } else {
-            	return builder.between(expression, (Comparable)array[0], (Comparable)array[1]);
-            }
-        default:
-            return null;
-        }
-    }
+  }
 
 }

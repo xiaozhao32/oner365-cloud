@@ -1,6 +1,7 @@
 package com.oner365.sys.controller.system;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Maps;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
@@ -66,7 +66,7 @@ public class SysMenuController extends BaseController {
      */
     @GetMapping("/get/{id}")
     public Map<String, Object> get(@PathVariable String id) {
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put("sysMenu", menuService.getById(id));
         List<String> menuOperList = operationService.selectByMenuId(id);
         result.put("menuOperList", menuOperList);
@@ -157,7 +157,7 @@ public class SysMenuController extends BaseController {
             menu.setUserId(authUser.getId());
             menus = menuService.selectListByUserId(menu);
         }
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put("checkedKeys", menuService.selectListByRoleId(roleId, menu.getMenuTypeId()));
         result.put("menus", menuService.buildTreeSelect(menus));
         return result;

@@ -1,6 +1,7 @@
 package com.oner365.gateway.controller;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Maps;
 import com.oner365.gateway.constants.GatewayConstants;
 import com.oner365.gateway.constants.ResponseData;
 import com.oner365.gateway.dto.GatewayRouteDto;
@@ -67,7 +67,7 @@ public class DynamicRouteController {
    */
   @PostMapping("/add")
   public ResponseData<Map<String, Object>> add(@RequestBody GatewayRouteVo gatewayRouteVo) {
-    Map<String, Object> result = Maps.newHashMap();
+    Map<String, Object> result = new HashMap<>();
     result.put(GatewayConstants.CODE, ResultEnum.ERROR.getCode());
     String msg = dynamicRouteService.save(gatewayRouteVo);
     if (msg != null) {
@@ -95,7 +95,7 @@ public class DynamicRouteController {
    */
   @PostMapping("/update")
   public ResponseData<Map<String, Object>> update(@RequestBody GatewayRouteVo gatewayRouteVo) {
-    Map<String, Object> result = Maps.newHashMap();
+    Map<String, Object> result = new HashMap<>();
     result.put(GatewayConstants.CODE, ResultEnum.ERROR.getCode());
     String msg = dynamicRouteService.update(gatewayRouteVo);
     if (msg != null) {
@@ -115,7 +115,7 @@ public class DynamicRouteController {
    */
   @GetMapping("/updateRouteStatus/{id}/{status}")
   public ResponseData<Map<String, Object>> updateRouteStatus(@PathVariable String id, @PathVariable String status) {
-    Map<String, Object> result = Maps.newHashMap();
+    Map<String, Object> result = new HashMap<>();
     result.put(GatewayConstants.CODE, ResultEnum.ERROR.getCode());
     String msg = dynamicRouteService.updateRouteStatus(id, status);
     if (msg != null) {
@@ -135,7 +135,7 @@ public class DynamicRouteController {
   public ResponseData<Map<String, Object>> delete(@RequestBody String... ids) {
     Arrays.stream(ids).forEach(id -> dynamicRouteService.delete(id));
 
-    Map<String, Object> result = Maps.newHashMap();
+    Map<String, Object> result = new HashMap<>();
     result.put(GatewayConstants.CODE, ResultEnum.SUCCESS.getCode());
     return new ResponseData<>(result);
   }

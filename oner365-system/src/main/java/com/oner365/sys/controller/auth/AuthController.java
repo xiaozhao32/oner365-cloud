@@ -3,6 +3,7 @@ package com.oner365.sys.controller.auth;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
@@ -18,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONArray;
-import com.google.common.collect.Maps;
 import com.oner365.common.ResponseData;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
@@ -138,7 +138,7 @@ public class AuthController extends BaseController {
         String verifyKey = SysConstants.CAPTCHA_IMAGE + ":" + uuid;
         redisCache.setCacheObject(verifyKey, verifyCode, 3, TimeUnit.MINUTES);
 
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         try (ByteArrayOutputStream stream = new ByteArrayOutputStream()) {
             // 生成图片
             int w = 111;

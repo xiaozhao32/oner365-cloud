@@ -26,8 +26,10 @@ import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -54,8 +56,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.oner365.common.constants.PublicConstants;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 /**
  * 功能：数据工具类
@@ -123,12 +123,12 @@ public class DataUtils {
             for (Field value : fields) {
                 value.setAccessible(true);
             }
-            List<Map<String, Object>> list = Lists.newArrayList();
+            List<Map<String, Object>> list = new ArrayList<>();
             for (Field value : fields) {
                 field = clazz.getDeclaredField(value.getName());
                 Column column = field.getAnnotation(Column.class);
                 Method[] methods = Column.class.getDeclaredMethods();
-                Map<String, Object> map = Maps.newHashMap();
+                Map<String, Object> map = new HashMap<>();
                 map.put(Field.class.getSimpleName().toLowerCase(), field.getName());
                 if (column != null) {
                     for (Method method : methods) {

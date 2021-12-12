@@ -1,6 +1,7 @@
 package com.oner365.generator.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Maps;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.constants.PublicConstants;
@@ -53,7 +53,7 @@ public class GeneratorController extends BaseController {
     @PostMapping("/list")
     public Map<String, Object> genList(@RequestBody GenTable genTable) {
         List<GenTable> list = genTableService.selectGenTableList(genTable);
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put(PublicConstants.PARAM_LIST, list);
         result.put(PublicConstants.PARAM_COUNT, list.size());
         return result;
@@ -66,7 +66,7 @@ public class GeneratorController extends BaseController {
     public Map<String, Object> getInfo(@PathVariable Long tableId) {
         GenTable table = genTableService.selectGenTableById(tableId);
         List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put(PublicConstants.MSG, table);
         result.put(PublicConstants.PARAM_LIST, list);
         return result;
@@ -78,7 +78,7 @@ public class GeneratorController extends BaseController {
     @PostMapping("/db/list")
     public Map<String, Object> dataList(@RequestBody GenTable genTable) {
         List<GenTable> list = genTableService.selectDbTableList(genTable);
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put(PublicConstants.PARAM_LIST, list);
         result.put(PublicConstants.PARAM_COUNT, list.size());
         return result;
@@ -90,7 +90,7 @@ public class GeneratorController extends BaseController {
     @GetMapping(value = "/column/{tableId}")
     public Map<String, Object> columnList(@PathVariable Long tableId) {
         List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put(PublicConstants.PARAM_LIST, list);
         result.put(PublicConstants.PARAM_COUNT, list.size());
         return result;
@@ -107,7 +107,7 @@ public class GeneratorController extends BaseController {
         List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
         genTableService.importGenTable(tableList, operName);
 
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
         return result;
     }
@@ -120,7 +120,7 @@ public class GeneratorController extends BaseController {
         genTableService.validateEdit(genTable);
         genTableService.updateGenTable(genTable);
 
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
         return result;
     }
@@ -131,7 +131,7 @@ public class GeneratorController extends BaseController {
     @DeleteMapping("/{tableIds}")
     public Map<String, Object> remove(@PathVariable Long[] tableIds) {
         genTableService.deleteGenTableByIds(tableIds);
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
         return result;
     }
@@ -159,7 +159,7 @@ public class GeneratorController extends BaseController {
     @GetMapping("/genCode/{tableName}")
     public Map<String, Object> genCode(@PathVariable("tableName") String tableName) {
         genTableService.generatorCode(tableName);
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
         return result;
     }
@@ -170,7 +170,7 @@ public class GeneratorController extends BaseController {
     @GetMapping("/synchDb/{tableName}")
     public Map<String, Object> synchDb(@PathVariable("tableName") String tableName) {
         genTableService.synchDb(tableName);
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
         return result;
     }

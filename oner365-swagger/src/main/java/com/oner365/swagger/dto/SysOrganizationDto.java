@@ -2,10 +2,10 @@ package com.oner365.swagger.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.Lists;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -141,7 +141,7 @@ public class SysOrganizationDto implements Serializable {
     @ApiModelProperty(value = "数据源")
     private DataSourceConfigDto dataSourceConfigDto;
     
-    private List<SysOrganizationDto> children = Lists.newArrayList();
+    private List<SysOrganizationDto> children = new ArrayList<>();
 
     /**
      * Generate constructor

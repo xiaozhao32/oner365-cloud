@@ -1,6 +1,7 @@
 package com.oner365.sys.controller.system;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Maps;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
@@ -181,7 +181,7 @@ public class SysOrganizationController extends BaseController {
         SysOrganization sysOrganization = sysOrganizationVo.toObject();
 
         List<SysOrganization> list = sysOrgService.selectList(sysOrganization);
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         result.put("checkedKeys", sysOrgService.selectListByUserId(userId));
         result.put("orgList", sysOrgService.buildTreeSelect(list));
         return result;

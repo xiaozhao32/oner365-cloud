@@ -1,5 +1,6 @@
 package com.oner365.hadoop.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -18,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.oner365.hadoop.config.ResponseData;
 import com.oner365.hadoop.entity.User;
 import com.oner365.hadoop.service.HdfsService;
-import com.google.common.collect.Lists;
 
 /**
  * Hadoop控制器
@@ -55,7 +55,7 @@ public class HdfsController {
      */
     @GetMapping("/readPathInfo")
     public ResponseData<List<Map<String, Object>>> readPathInfo(@RequestParam("path") String path) {
-        List<Map<String, Object>> list = Lists.newArrayList();
+        List<Map<String, Object>> list = new ArrayList<>();
         try (FileSystem fs = HdfsService.getFileSystem()) {
             list = HdfsService.readPathInfo(fs, path);
         } catch (Exception e) {
@@ -157,7 +157,7 @@ public class HdfsController {
      */
     @GetMapping("/listFile")
     public ResponseData<List<Map<String, String>>> listFile(@RequestParam("path") String path) {
-        List<Map<String, String>> result = Lists.newArrayList();
+        List<Map<String, String>> result = new ArrayList<>();
         try (FileSystem fs = HdfsService.getFileSystem()) {
             result = HdfsService.listFile(fs, path);
         } catch (Exception e) {

@@ -2,6 +2,7 @@ package com.oner365.sys.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -14,7 +15,6 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.common.collect.Lists;
 
 /**
  * 系统用户对象
@@ -93,17 +93,17 @@ public class SysUser implements Serializable {
     private String remark;
 
     @Transient
-    private List<String> roles = Lists.newArrayList();
+    private List<String> roles = new ArrayList<>();
     @Transient
-    private List<String> roleNameList = Lists.newArrayList();
+    private List<String> roleNameList = new ArrayList<>();
     @Transient
-    private List<String> jobs = Lists.newArrayList();
+    private List<String> jobs = new ArrayList<>();
     @Transient
-    private List<String> jobNameList = Lists.newArrayList();
+    private List<String> jobNameList = new ArrayList<>();
     @Transient
-    private List<String> orgs = Lists.newArrayList();
+    private List<String> orgs = new ArrayList<>();
     @Transient
-    private List<String> orgNameList = Lists.newArrayList();
+    private List<String> orgNameList = new ArrayList<>();
 
     public SysUser() {
         super();

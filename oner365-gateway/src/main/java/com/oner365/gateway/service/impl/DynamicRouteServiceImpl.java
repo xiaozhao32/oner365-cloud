@@ -3,6 +3,7 @@ package com.oner365.gateway.service.impl;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,8 +25,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.oner365.gateway.constants.GatewayConstants;
 import com.oner365.gateway.dao.IGatewayRouteDao;
 import com.oner365.gateway.dto.GatewayRouteDto;
@@ -64,7 +63,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 
   private ApplicationEventPublisher publisher;
 
-  protected static Map<String, String> predicateMap = Maps.newHashMap();
+  protected static Map<String, String> predicateMap = new HashMap<>();
 
   @Override
   public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
@@ -114,20 +113,20 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
   public String save(GatewayRouteVo gatewayRoute) {
 
     // Filter
-    List<GatewayFilter> filters = Lists.newArrayList();
+    List<GatewayFilter> filters = new ArrayList<>();
     GatewayFilter gatewayFilter = new GatewayFilter();
     gatewayFilter.setName("StripPrefix");
-    Map<String, String> argsFilter = Maps.newHashMap();
+    Map<String, String> argsFilter = new HashMap<>();
     argsFilter.put("parts", "1");
     gatewayFilter.setArgs(argsFilter);
     filters.add(gatewayFilter);
     gatewayRoute.setFilters(filters);
 
     // Predicates
-    List<GatewayPredicate> predicates = Lists.newArrayList();
+    List<GatewayPredicate> predicates = new ArrayList<>();
     GatewayPredicate gatewayPredicate = new GatewayPredicate();
     gatewayPredicate.setName("Path");
-    Map<String, String> args = Maps.newHashMap();
+    Map<String, String> args = new HashMap<>();
     args.put("pattern", gatewayRoute.getPattern());
     gatewayPredicate.setArgs(args);
     predicates.add(gatewayPredicate);

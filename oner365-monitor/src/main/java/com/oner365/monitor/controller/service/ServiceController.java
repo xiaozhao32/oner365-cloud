@@ -22,7 +22,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.Lists;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.monitor.deploy.DeployMethod;
@@ -135,7 +134,7 @@ public class ServiceController extends BaseController {
                 List<DeployServer> serverList = DeployMethod.getServerList(ipList, portList, usernameList, passwordList);
                 for (DeployServer server : serverList) {
                     if (ip.equals(server.getIp())) {
-                        List<String> commandList = Lists.newArrayList();
+                        List<String> commandList = new ArrayList<>();
 
                         // get connection
                         Connection con = DeployUtils.getConnection(server.getIp(), server.getPort());
@@ -199,7 +198,7 @@ public class ServiceController extends BaseController {
             List<DeployServer> serverList = DeployMethod.getServerList(ipList, portList, usernameList, passwordList);
             serverList.forEach(server -> {
                 if (deployServer.getIp().equals(server.getIp())) {
-                    List<String> commandList = Lists.newArrayList();
+                    List<String> commandList = new ArrayList<>();
 
                     // get connection
                     Connection con = DeployUtils.getConnection(server.getIp(), server.getPort());

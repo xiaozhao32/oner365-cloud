@@ -2,10 +2,10 @@ package com.oner365.sys.vo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.Lists;
 import com.oner365.sys.entity.SysOrganization;
 
 /**
@@ -118,7 +118,7 @@ public class SysOrganizationVo implements Serializable {
      */
     private DataSourceConfigVo dataSourceConfigVo;
     
-    private List<SysOrganization> children = Lists.newArrayList();
+    private List<SysOrganization> children = new ArrayList<>();
 
     /**
      * Generate constructor

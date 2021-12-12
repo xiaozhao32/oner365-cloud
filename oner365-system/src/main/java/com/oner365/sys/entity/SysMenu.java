@@ -2,6 +2,7 @@ package com.oner365.sys.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -11,7 +12,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.common.collect.Lists;
 
 /**
  * 系统菜单对象
@@ -107,7 +107,7 @@ public class SysMenu implements Serializable {
 
     /** 子菜单 */
     @Transient
-    private List<SysMenu> children = Lists.newArrayList();
+    private List<SysMenu> children = new ArrayList<>();
 
     @Transient
     private String userId;

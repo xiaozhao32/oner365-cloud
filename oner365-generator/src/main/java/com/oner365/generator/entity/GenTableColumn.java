@@ -2,6 +2,7 @@ package com.oner365.generator.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.validation.constraints.NotBlank;
@@ -9,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 import org.apache.commons.lang3.StringUtils;
 
 import com.oner365.util.DataUtils;
-import com.google.common.collect.Maps;
 
 /**
  * 代码生成业务字段表 gen_table_column
@@ -89,7 +89,7 @@ public class GenTableColumn implements Serializable {
     private Date updateTime;
 
     /** 请求参数 */
-    private Map<String, Object> params = Maps.newHashMap();
+    private Map<String, Object> params = new HashMap<>();
 
     public void setColumnId(Long columnId) {
         this.columnId = columnId;

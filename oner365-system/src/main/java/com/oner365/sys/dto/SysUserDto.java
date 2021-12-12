@@ -2,10 +2,10 @@ package com.oner365.sys.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.Lists;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -143,12 +143,12 @@ public class SysUserDto implements Serializable {
     @ApiModelProperty(value = "备注")
     private String remark;
     
-    private List<String> roles = Lists.newArrayList();
-    private List<String> roleNameList = Lists.newArrayList();
-    private List<String> jobs = Lists.newArrayList();
-    private List<String> jobNameList = Lists.newArrayList();
-    private List<String> orgs = Lists.newArrayList();
-    private List<String> orgNameList = Lists.newArrayList();
+    private List<String> roles = new ArrayList<>();
+    private List<String> roleNameList = new ArrayList<>();
+    private List<String> jobs = new ArrayList<>();
+    private List<String> jobNameList = new ArrayList<>();
+    private List<String> orgs = new ArrayList<>();
+    private List<String> orgNameList = new ArrayList<>();
 
     public SysUserDto() {
         super();

@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.oner365.common.constants.PublicConstants;
-import com.google.common.collect.Lists;
 
 import ch.ethz.ssh2.Connection;
 
@@ -34,7 +33,7 @@ public class DeployMethod {
     public static List<DeployServer> getServerList(List<String> ipList, List<Integer> portList,
             List<String> usernameList, List<String> passwordList) {
         // 服务器信息
-        List<DeployServer> deployServerList = Lists.newArrayList();
+        List<DeployServer> deployServerList = new ArrayList<>();
 
         for (int i = 0; i < ipList.size(); i++) {
             DeployServer server = new DeployServer(ipList.get(i), portList.get(i), usernameList.get(i),
@@ -53,7 +52,7 @@ public class DeployMethod {
         //kill tomcat
         String cmd = "kill -9 `cat "+targetServer+".pid 2>/dev/null` 2>/dev/null || true";
         LOGGER.info("> {}", cmd);
-        List<String> commandList = Lists.newArrayList();
+        List<String> commandList = new ArrayList<>();
         commandList.add(cmd);
         List<List<String>> execList = DeployUtils.execCommand(con, commandList);
         for (List<String> list : execList) {
@@ -72,7 +71,7 @@ public class DeployMethod {
         //tomcat启动找不到java_home,需要设置 ln -s /opt/jdk1.6.0_32/bin/java /bin/java
         String cmd = targetServer + "/bin/startup.sh";
         LOGGER.info("> {}", cmd);
-        List<String> commandList = Lists.newArrayList();
+        List<String> commandList = new ArrayList<>();
         commandList.add(cmd);
         List<List<String>> execList = DeployUtils.execCommand(con, commandList);
         for (List<String> list : execList) {
@@ -172,7 +171,7 @@ public class DeployMethod {
 
     public static List<String> deploy(Connection con, DeployServer server,
             String[] projectNames, String local, String targetRoot, String version, String suffix) {
-        List<String> commandList = Lists.newArrayList();
+        List<String> commandList = new ArrayList<>();
         for (String projectName : projectNames) {
             String localFile = local + File.separator + projectName + File.separator + projectName + "-" + version + "." + suffix;
             String targetPath = targetRoot + PublicConstants.DELIMITER + projectName + PublicConstants.DELIMITER;

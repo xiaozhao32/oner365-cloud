@@ -9,6 +9,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.oner365.common.exception.ProjectRuntimeException;
-import com.google.common.collect.Lists;
 
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.SCPClient;
@@ -153,7 +153,7 @@ public class DeployUtils {
      * @return List<List<String>>
      */
     public static List<List<String>> execCommand(Connection con, List<String> commands) {
-        List<List<String>> result = Lists.newArrayList();
+        List<List<String>> result = new ArrayList<>();
         try {
             for (String s : commands) {
                 LOGGER.info("> {}", s);
@@ -175,7 +175,7 @@ public class DeployUtils {
                 }
             }
         } catch (Exception e) {
-            List<String> list = Lists.newArrayList();
+            List<String> list = new ArrayList<>();
             list.add("ssh exec command error.");
             result.add(list);
             LOGGER.error("execCommand error:", e);
@@ -193,7 +193,7 @@ public class DeployUtils {
             return Collections.emptyList();
         }
 
-        List<String> result = Lists.newArrayList();
+        List<String> result = new ArrayList<>();
         for (String command : commands) {
             result.add(execExecute(command));
         }
@@ -314,7 +314,7 @@ public class DeployUtils {
     @SuppressWarnings("unchecked")
     public static List<SFTPv3DirectoryEntry> directoryList(String ip, int port, String user, String password,
             String directory) {
-        List<SFTPv3DirectoryEntry> result = Lists.newArrayList();
+        List<SFTPv3DirectoryEntry> result = new ArrayList<>();
         try {
             Connection con = DeployUtils.getConnection(ip, port);
             SFTPv3Client sftpClient = null;

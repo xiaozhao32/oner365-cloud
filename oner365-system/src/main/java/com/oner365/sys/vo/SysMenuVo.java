@@ -2,10 +2,10 @@ package com.oner365.sys.vo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.Lists;
 import com.oner365.sys.entity.SysMenu;
 
 /**
@@ -84,7 +84,7 @@ public class SysMenuVo implements Serializable {
      */
     private String icon;
     
-    private List<SysMenu> children = Lists.newArrayList();
+    private List<SysMenu> children = new ArrayList<>();
     private String userId;
     private List<String> operIds;
 

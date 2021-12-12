@@ -2,10 +2,10 @@ package com.oner365.swagger.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.Lists;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -100,7 +100,7 @@ public class SysMenuDto implements Serializable {
     @ApiModelProperty(value = "图标")
     private String icon;
     
-    private List<SysMenuDto> children = Lists.newArrayList();
+    private List<SysMenuDto> children = new ArrayList<>();
     private String userId;
     private List<String> operIds;
 

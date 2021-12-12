@@ -8,9 +8,11 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -21,9 +23,6 @@ import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 /**
  * 功能：时间处理工具类
@@ -1563,7 +1562,7 @@ public class DateUtil {
         Calendar c2 = Calendar.getInstance();
         c1.setTime(stringToDate(startDate, FULL_DATE_FORMAT));
         c2.setTime(stringToDate(endDate, FULL_DATE_FORMAT));
-        List<String> resultList = Lists.newArrayList();
+        List<String> resultList = new ArrayList<>();
         while (!c1.after(c2)) {
             resultList.add(dateToString(c1.getTime(), FULL_DATE_FORMAT));
             c1.add(Calendar.DATE, 1);
@@ -1586,9 +1585,9 @@ public class DateUtil {
         c1.setTime(stringToDate(startDate, FULL_DATE_FORMAT));
         c2.setTime(stringToDate(endDate, FULL_DATE_FORMAT));
 
-        List<Map<String, String>> resultList = Lists.newArrayList();
+        List<Map<String, String>> resultList = new ArrayList<>();
         while (c1.compareTo(c2) < 0) {
-            Map<String, String> map = Maps.newHashMap();
+            Map<String, String> map = new HashMap<>();
             String date = dateToString(c1.getTime(), FULL_DATE_END_TIME_FORMAT);
             map.put(startString,
                     dateToString(
@@ -1614,7 +1613,7 @@ public class DateUtil {
         lastEndTime.setTime(
                 addDateByDay(stringToDate(resultList.get(resultList.size() - 1).get("end"), FULL_DATE_FORMAT), 1));
         if (lastEndTime.compareTo(c2) < 0) {
-            Map<String, String> map = Maps.newHashMap();
+            Map<String, String> map = new HashMap<>();
             map.put(startString, dateToString(getDateStartTime(dateToString(
                     stringToDate(dateToString(lastEndTime.getTime(), FULL_DATE_END_TIME_FORMAT), FULL_DATE_TIME_FORMAT),
                     FULL_DATE_FORMAT)), FULL_TIME_FORMAT));
@@ -1624,7 +1623,7 @@ public class DateUtil {
                             FULL_DATE_FORMAT)), FULL_TIME_FORMAT));
             resultList.add(map);
         } else if (lastEndTime.compareTo(c2) == 0) {
-            Map<String, String> map = Maps.newHashMap();
+            Map<String, String> map = new HashMap<>();
             map.put(startString, dateToString(getDateStartTime(dateToString(
                     stringToDate(dateToString(lastEndTime.getTime(), FULL_DATE_END_TIME_FORMAT), FULL_DATE_TIME_FORMAT),
                     FULL_DATE_FORMAT)), FULL_TIME_FORMAT));

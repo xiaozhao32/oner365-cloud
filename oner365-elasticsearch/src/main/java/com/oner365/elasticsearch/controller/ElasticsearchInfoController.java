@@ -2,6 +2,8 @@ package com.oner365.elasticsearch.controller;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,8 +18,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 import com.oner365.controller.BaseController;
 
 /**
@@ -46,7 +46,7 @@ public class ElasticsearchInfoController extends BaseController {
         // 指定集群
         Settings settings = Settings.builder().build();
         // 创建客户端
-        Map<String, Object> result = Maps.newHashMap();
+        Map<String, Object> result = new HashMap<>();
         try (final TransportClient client = new PreBuiltTransportClient(settings)
                 .addTransportAddress(new TransportAddress(InetAddress.getByName(hostname), port))) {
             ClusterHealthResponse response = client.admin().cluster().prepareHealth().get();
@@ -59,9 +59,9 @@ public class ElasticsearchInfoController extends BaseController {
             result.put("status", response.getStatus().name());
             result.put("taskMaxWaitingTime", response.getTaskMaxWaitingTime());
             // 索引信息
-            List<Map<String, Object>> clusterList = Lists.newArrayList();
+            List<Map<String, Object>> clusterList = new ArrayList<>();
             response.getIndices().values().forEach(health -> {
-                Map<String, Object> map = Maps.newHashMap();
+                Map<String, Object> map = new HashMap<>();
                 map.put("index", health.getIndex());
                 map.put("numberOfShards", health.getNumberOfShards());
                 map.put("numberOfReplicas", health.getNumberOfReplicas());

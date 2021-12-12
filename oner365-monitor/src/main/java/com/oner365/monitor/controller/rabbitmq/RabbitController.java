@@ -2,6 +2,7 @@ package com.oner365.monitor.controller.rabbitmq;
 
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +19,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.Maps;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.controller.BaseController;
 import com.oner365.monitor.enums.RabbitmqTypeEnum;
@@ -95,7 +95,7 @@ public class RabbitController extends BaseController {
 
             String url = getHost() + "/api/" + type + PublicConstants.DELIMITER
                     + URLEncoder.encode(vhost, Charset.defaultCharset().name()) + PublicConstants.DELIMITER + name;
-            Map<String, Object> headers = Maps.newHashMap();
+            Map<String, Object> headers = new HashMap<>();
             headers.put(HttpHeaders.AUTHORIZATION, getAuthorization());
             String result = HttpClientUtils.httpDeleteRequest(url, headers, paramJson);
             return JSON.parseObject(result);

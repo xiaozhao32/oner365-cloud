@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
@@ -19,7 +20,6 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.util.ClassUtils;
 
 import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Lists;
 
 /**
  * 工具类 - 类加载器
@@ -256,7 +256,7 @@ public class ClassesUtil {
      */
     public static <T> Method[] getGetters(Class<T> clazz) {
         Method[] methods = clazz.getMethods();
-        List<Method> getters = Lists.newArrayList();
+        List<Method> getters = new ArrayList<>();
         for (Method method : methods) {
             if (method.getName().startsWith("get") || method.getName().startsWith("is")) {
                 Class<?>[] paramTypes = method.getParameterTypes();
@@ -282,7 +282,7 @@ public class ClassesUtil {
      */
     public static <T> Method[] getSetters(Class<T> clazz) {
         Method[] methods = clazz.getMethods();
-        List<Method> setters = Lists.newArrayList();
+        List<Method> setters = new ArrayList<>();
         for (Method method : methods) {
             if (method.getName().startsWith("set")) {
                 Class<?>[] paramTypes = method.getParameterTypes();
@@ -337,7 +337,7 @@ public class ClassesUtil {
      * @return List<Class<?>>
      */
     public static List<Class<?>> findNoneAtomicClass(Class<?> clazz) {
-        List<Class<?>> result = Lists.newArrayList();
+        List<Class<?>> result = new ArrayList<>();
         Method[] setters = getSetters(clazz);
         for (Method setter : setters) {
             String property = getProperty(setter);

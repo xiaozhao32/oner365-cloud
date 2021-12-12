@@ -1,7 +1,7 @@
 #部署目录
 deploy:
-  location: d:/gitee/oner365-cloud
-  name: d:/gitee/deploy_nacos
+  location: /Users/zhaoyong/Documents/git/oner365-cloud
+  name: /Users/zhaoyong/Documents/deploy/nacos
   version: 1.0.0-SNAPSHOT
   suffix: jar
   project: oner365-elasticsearch,oner365-files,oner365-gateway,oner365-generator,oner365-hadoop,oner365-kafka,oner365-monitor,oner365-rocketmq,oner365-system

@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Lists;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.util.DataUtils;
@@ -91,7 +90,7 @@ public class CacheController extends BaseController {
         }
         LOGGER.info("info: {}", auth);
 
-        List<Map<String, Object>> result = Lists.newArrayList();
+        List<Map<String, Object>> result = new ArrayList<>();
         if (jedis.isConnected()) {
             for (int i = 0; i <= DB_SIZE; i++) {
                 jedis.select(i);

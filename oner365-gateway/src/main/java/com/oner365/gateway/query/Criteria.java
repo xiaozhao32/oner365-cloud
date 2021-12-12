@@ -1,5 +1,6 @@
 package com.oner365.gateway.query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -9,8 +10,6 @@ import javax.persistence.criteria.Root;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import com.google.common.collect.Lists;
-
 /**
  * 定义一个查询条件容器
  * @author zhaoyong
@@ -18,13 +17,13 @@ import com.google.common.collect.Lists;
 public class Criteria<T> implements Specification<T>{
 
     private static final long serialVersionUID = 1L;
-    private List<Criterion> criterionList = Lists.newArrayList();
+    private List<Criterion> criterionList = new ArrayList<>();
 
     @Override
     public Predicate toPredicate(Root<T> root, CriteriaQuery<?> query,
             CriteriaBuilder builder) {
         if (!criterionList.isEmpty()) {
-            List<Predicate> predicates = Lists.newArrayList();
+            List<Predicate> predicates = new ArrayList<>();
             for(Criterion c : criterionList){
                 predicates.add(c.toPredicate(root, query,builder));
             }

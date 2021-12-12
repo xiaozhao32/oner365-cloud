@@ -19,7 +19,7 @@ public class ServerEntity implements Serializable {
     
     private Boolean isDeploy;
     
-    private List<Server> serverList;
+    private List<DeployServer> serverList;
 
     public String getServerName() {
         return serverName;
@@ -37,11 +37,11 @@ public class ServerEntity implements Serializable {
         this.isDeploy = isDeploy;
     }
     
-    public List<Server> getServerList() {
+    public List<DeployServer> getServerList() {
         return serverList;
     }
 
-    public void setServerList(List<Server> serverList) {
+    public void setServerList(List<DeployServer> serverList) {
         this.serverList = serverList;
     }
     

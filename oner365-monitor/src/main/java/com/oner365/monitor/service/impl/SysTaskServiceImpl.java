@@ -136,8 +136,9 @@ public class SysTaskServiceImpl implements ISysTaskService {
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   public int deleteTask(String id) throws SchedulerException {
-    SysTask task = dao.getById(id);
-    if (task != null) {
+    Optional<SysTask> optional = dao.findById(id);
+    if (optional.isPresent()) {
+      SysTask task = optional.get();
       String taskGroup = task.getTaskGroup();
       dao.deleteById(id);
       scheduler.deleteJob(ScheduleUtils.getJobKey(id, taskGroup));
@@ -251,9 +252,12 @@ public class SysTaskServiceImpl implements ISysTaskService {
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   public int updateTask(SysTaskVo task) throws SchedulerException, TaskException {
-    SysTask properties = dao.getById(task.getId());
-    save(task);
-    updateSchedulerTask(task, properties.getTaskGroup());
+    Optional<SysTask> optional = dao.findById(task.getId());
+    if (optional.isPresent()) {
+      SysTask sysTask = optional.get();
+      save(task);
+      updateSchedulerTask(task, sysTask.getTaskGroup());
+    }
     return ResultEnum.SUCCESS.getCode();
   }
 

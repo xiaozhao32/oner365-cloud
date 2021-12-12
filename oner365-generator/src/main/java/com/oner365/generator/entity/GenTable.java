@@ -2,6 +2,7 @@ package com.oner365.generator.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,6 @@ import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import com.oner365.generator.constants.GenConstants;
-import com.google.common.collect.Maps;
 
 /**
  * 业务表 gen_table
@@ -108,7 +108,7 @@ public class GenTable implements Serializable {
     protected static final String[] TREE_ENTITY = { "parentName", "parentId", "orderNum", "ancestors", "children" };
     
     /** 请求参数 */
-    private Map<String, Object> params = Maps.newHashMap();
+    private Map<String, Object> params = new HashMap<>();
     
     public Long getTableId() {
         return tableId;

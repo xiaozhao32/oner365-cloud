@@ -10,7 +10,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -27,8 +29,6 @@ import com.oner365.common.constants.PublicConstants;
 import com.oner365.datasource.constants.DataSourceConstants;
 import com.oner365.util.ClassesUtil;
 import com.oner365.util.DataUtils;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
 
 /**
  * 数据源工具类
@@ -212,7 +212,7 @@ public class DataSourceUtil {
             return Collections.emptyList();
         }
 
-        List<Map<String, String>> resultList = Lists.newArrayList();
+        List<Map<String, String>> resultList = new ArrayList<>();
 
         try (PreparedStatement ps = con.prepareStatement(sql)) {
             // 判断是否是执行语句
@@ -231,7 +231,7 @@ public class DataSourceUtil {
             }
 
         } catch (Exception e) {
-            Map<String, String> map = Maps.newHashMap();
+            Map<String, String> map = new HashMap<>();
             map.put("Error:", e.getMessage());
             resultList.add(map);
             LOGGER.error("execute error:", e);
@@ -256,7 +256,7 @@ public class DataSourceUtil {
         con.commit();
 
         // 返回结果
-        Map<String, String> map = Maps.newHashMap();
+        Map<String, String> map = new HashMap<>();
         map.put("result", String.valueOf(result));
         resultList.add(map);
     }
@@ -274,7 +274,7 @@ public class DataSourceUtil {
             ResultSetMetaData md = rs.getMetaData();
             int column = md.getColumnCount();
             while (rs.next()) {
-                Map<String, String> map = Maps.newHashMap();
+                Map<String, String> map = new HashMap<>();
                 for (int i = 1; i <= column; i++) {
                     map.put(md.getColumnName(i).toLowerCase(), rs.getString(i));
                 }

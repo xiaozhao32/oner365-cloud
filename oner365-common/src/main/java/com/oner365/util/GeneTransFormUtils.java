@@ -2,6 +2,7 @@ package com.oner365.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -10,9 +11,8 @@ import java.util.Set;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.oner365.common.constants.PublicConstants;
-import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
+import com.oner365.common.constants.PublicConstants;
 
 /**
  * 基因型工具类
@@ -139,7 +139,7 @@ public class GeneTransFormUtils {
             }
         }
 
-        Map<String, Integer> result = Maps.newHashMap();
+        Map<String, Integer> result = new HashMap<>();
         result.put("totalCount", matchJson.keySet().size());
         result.put("matchCount", m);
         result.put("diffCount", diff);
@@ -174,7 +174,7 @@ public class GeneTransFormUtils {
                 }
             }
         }
-        Map<String, Integer> result = Maps.newHashMap();
+        Map<String, Integer> result = new HashMap<>();
         result.put("totalCount", matchJson.keySet().size());
         result.put("matchCount", m);
         result.put("diffCount", diff);

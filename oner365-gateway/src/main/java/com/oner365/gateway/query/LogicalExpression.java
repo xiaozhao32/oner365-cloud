@@ -1,13 +1,12 @@
 package com.oner365.gateway.query;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import com.google.common.collect.Lists;
 
 /**
  * 逻辑条件表达式 用于复杂条件时使用，如但属性多对应值的OR查询等
@@ -26,7 +25,7 @@ public class LogicalExpression implements Criterion {
 
     @Override
     public Predicate toPredicate(Root<?> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-        List<Predicate> predicates = Lists.newArrayList();
+        List<Predicate> predicates = new ArrayList<>();
         for (Criterion value : this.criterion) {
             predicates.add(value.toPredicate(root, query, builder));
         }

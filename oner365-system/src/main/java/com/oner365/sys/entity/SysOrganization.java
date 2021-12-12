@@ -2,6 +2,7 @@ package com.oner365.sys.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -18,7 +19,6 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.common.collect.Lists;
 
 /**
  * 机构表 - nt_sys_organization
@@ -158,7 +158,7 @@ public class SysOrganization implements Serializable {
 
     /** 子菜单 */
     @Transient
-    private List<SysOrganization> children = Lists.newArrayList();
+    private List<SysOrganization> children = new ArrayList<>();
 
     /**
      * Generate constructor

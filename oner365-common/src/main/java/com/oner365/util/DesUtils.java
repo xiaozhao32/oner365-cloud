@@ -4,6 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.Key;
 import java.security.SecureRandom;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.crypto.Cipher;
@@ -14,8 +15,6 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.collect.Maps;
 
 /**
  * DES加密算法工具类
@@ -44,7 +43,7 @@ public class DesUtils {
      * 加密类型
      */
     private static final String ALGORITHM = "AES/GCM/NoPadding";
-    private static final Map<String, Key> KEY_MAP = Maps.newHashMap();
+    private static final Map<String, Key> KEY_MAP = new HashMap<>();
 
     private DesUtils() {
 
