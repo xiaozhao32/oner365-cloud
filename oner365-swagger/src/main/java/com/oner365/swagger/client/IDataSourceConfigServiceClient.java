@@ -1,7 +1,6 @@
 package com.oner365.swagger.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.swagger.dto.DataSourceConfigDto;
 import com.oner365.swagger.vo.DataSourceConfigVo;
@@ -32,7 +32,7 @@ public interface IDataSourceConfigServiceClient {
    * @return ResponseData
    */
   @PostMapping("/datasource/list")
-  ResponseData<Page<DataSourceConfigDto>> pageList(@RequestBody QueryCriteriaBean data);
+  ResponseData<PageInfo<DataSourceConfigDto>> pageList(@RequestBody QueryCriteriaBean data);
 
   /**
    * 按id获取信息

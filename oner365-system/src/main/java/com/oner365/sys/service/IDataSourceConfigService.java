@@ -1,7 +1,6 @@
 package com.oner365.sys.service;
 
-import org.springframework.data.domain.Page;
-
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
 import com.oner365.sys.dto.DataSourceConfigDto;
@@ -18,9 +17,9 @@ public interface IDataSourceConfigService extends BaseService {
    * 查询分页列表
    *
    * @param data 查询参数
-   * @return Page
+   * @return PageInfo
    */
-  Page<DataSourceConfigDto> pageList(QueryCriteriaBean data);
+  PageInfo<DataSourceConfigDto> pageList(QueryCriteriaBean data);
 
   /**
    * 查询详情

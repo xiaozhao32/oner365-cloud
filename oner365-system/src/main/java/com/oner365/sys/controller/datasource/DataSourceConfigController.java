@@ -1,7 +1,6 @@
 package com.oner365.sys.controller.datasource;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,13 +14,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.common.enums.ResultEnum;
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.dto.DataSourceConfigDto;
 import com.oner365.sys.service.IDataSourceConfigService;
 import com.oner365.sys.vo.DataSourceConfigVo;
-
-import io.swagger.annotations.ApiOperation;
 
 /**
  * 数据源
@@ -30,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
  *
  */
 @RestController
-@RequestMapping("/datasource")
+@RequestMapping("/system/datasource")
 public class DataSourceConfigController extends BaseController {
 
   @Autowired
@@ -40,11 +38,10 @@ public class DataSourceConfigController extends BaseController {
    * 列表
    * 
    * @param data 查询参数
-   * @return Page<DataSourceConfigDto>
+   * @return PageInfo<DataSourceConfigDto>
    */
   @PostMapping("/list")
-  @ApiOperation("列表")
-  public Page<DataSourceConfigDto> list(@RequestBody QueryCriteriaBean data) {
+  public PageInfo<DataSourceConfigDto> list(@RequestBody QueryCriteriaBean data) {
     return service.pageList(data);
   }
 
@@ -55,7 +52,6 @@ public class DataSourceConfigController extends BaseController {
    * @return DataSourceConfigDto
    */
   @GetMapping("/get/{id}")
-  @ApiOperation("按id查询")
   public DataSourceConfigDto get(@PathVariable String id) {
     return service.getById(id);
   }
@@ -67,7 +63,6 @@ public class DataSourceConfigController extends BaseController {
    * @return DataSourceConfigDto
    */
   @GetMapping("/getConnectName")
-  @ApiOperation("按连接名称查询")
   public DataSourceConfigDto getConnectName(@RequestParam String connectName) {
     return service.getConnectName(connectName);
   }
@@ -79,7 +74,6 @@ public class DataSourceConfigController extends BaseController {
    * @return ResponseResult<DataSourceConfigDto>
    */
   @PutMapping("/save")
-  @ApiOperation("保存")
   public ResponseResult<DataSourceConfigDto> save(@RequestBody DataSourceConfigVo dataSourceConfigVo) {
     if (dataSourceConfigVo != null) {
       DataSourceConfigDto entity = service.save(dataSourceConfigVo);
@@ -95,7 +89,6 @@ public class DataSourceConfigController extends BaseController {
    * @return Integer
    */
   @DeleteMapping("/delete")
-  @ApiOperation("删除")
   public Integer delete(@RequestBody String... ids) {
     int code = ResultEnum.ERROR.getCode();
     for (String id : ids) {

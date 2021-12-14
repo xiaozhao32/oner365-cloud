@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +18,7 @@ import com.oner365.gateway.constants.GatewayConstants;
 import com.oner365.gateway.constants.ResponseData;
 import com.oner365.gateway.dto.GatewayRouteDto;
 import com.oner365.gateway.enums.ResultEnum;
+import com.oner365.gateway.page.PageInfo;
 import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.service.DynamicRouteService;
 import com.oner365.gateway.vo.GatewayRouteVo;
@@ -43,8 +43,8 @@ public class DynamicRouteController {
    * @return ResponseData
    */
   @PostMapping("/list")
-  public ResponseData<Page<GatewayRouteDto>> list(@RequestBody QueryCriteriaBean data) {
-    Page<GatewayRouteDto> page = dynamicRouteService.pageList(data);
+  public ResponseData<PageInfo<GatewayRouteDto>> list(@RequestBody QueryCriteriaBean data) {
+    PageInfo<GatewayRouteDto> page = dynamicRouteService.pageList(data);
     return new ResponseData<>(page);
   }
 

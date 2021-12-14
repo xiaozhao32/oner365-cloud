@@ -1,4 +1,4 @@
-package ${packageName}.vo;
+package ${packageName}.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -13,7 +13,7 @@ import io.swagger.annotations.ApiModelProperty;
  * @author ${author}
  */
  @ApiModel(value = "${functionName}")
-public class ${ClassName}Vo implements Serializable {
+public class ${ClassName}Dto implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

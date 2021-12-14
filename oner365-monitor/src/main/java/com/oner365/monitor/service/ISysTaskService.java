@@ -1,8 +1,8 @@
 package com.oner365.monitor.service;
 
 import org.quartz.SchedulerException;
-import org.springframework.data.domain.Page;
 
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
 import com.oner365.monitor.dto.SysTaskDto;
@@ -21,7 +21,7 @@ public interface ISysTaskService extends BaseService {
    * @param data 查询参数
    * @return 调度任务集合
    */
-  Page<SysTaskDto> pageList(QueryCriteriaBean data);
+  PageInfo<SysTaskDto> pageList(QueryCriteriaBean data);
 
   /**
    * 通过调度任务ID查询调度信息

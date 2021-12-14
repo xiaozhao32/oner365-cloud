@@ -1,10 +1,11 @@
-package com.oner365.sys.entity;
+package com.oner365.sys.dto;
 
 import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.oner365.util.DataUtils;
 
 /**
  * Treeselect树结构实体类
@@ -28,18 +29,18 @@ public class TreeSelect implements Serializable {
 
     }
     
-    public TreeSelect(SysOrganization organization) {
+    public TreeSelect(SysOrganizationDto organization) {
         this.id = organization.getId();
         this.label = organization.getOrgName();
-        if (organization.getChildren() != null && !organization.getChildren().isEmpty()) {
+        if (!DataUtils.isEmpty(organization.getChildren())) {
             this.children = organization.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());
         }
     }
 
-    public TreeSelect(SysMenu menu) {
+    public TreeSelect(SysMenuDto menu) {
         this.id = menu.getId();
         this.label = menu.getMenuName();
-        if (menu.getChildren() != null && !menu.getChildren().isEmpty()) {
+        if (!DataUtils.isEmpty(menu.getChildren())) {
             this.children = menu.getChildren().stream().map(TreeSelect::new).collect(Collectors.toList());
         }
     }

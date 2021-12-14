@@ -1,10 +1,8 @@
-package com.oner365.common.page;
+package com.oner365.gateway.page;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import com.oner365.common.constants.PublicConstants;
 
 /**
  * 分页
@@ -23,7 +21,7 @@ public class PageInfo<T> implements Serializable {
   /**
    * 每页记录数
    */
-  private int size = PublicConstants.PAGE_SIZE;
+  private int size = 15;
 
   /**
    * 对象集合

@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,6 +25,7 @@ import com.oner365.common.ResponseResult;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StorageEnum;
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.files.dto.SysFileStorageDto;
@@ -54,10 +53,10 @@ public class FileController extends BaseController {
    * 查询列表
    *
    * @param data 查询参数
-   * @return Page<SysFileStorage>
+   * @return PageInfo<SysFileStorage>
    */
   @PostMapping("/list")
-  public Page<SysFileStorageDto> list(@RequestBody QueryCriteriaBean data) {
+  public PageInfo<SysFileStorageDto> list(@RequestBody QueryCriteriaBean data) {
     return fileStorageService.pageList(data);
   }
   
@@ -70,24 +69,6 @@ public class FileController extends BaseController {
    */
   @PostMapping("/uploadMultipartFile")
   public ResponseResult<String> uploadMultipartFile(@RequestBody MultipartFile file,
-      @RequestParam(name = "dictory", required = false) String dictory) {
-    String targetDictory = null;
-    if (DataUtils.isEmpty(dictory)) {
-      targetDictory = DateUtil.getCurrentDate();
-    }
-    String url = fileStorageClient.uploadFile(file, targetDictory);
-    return ResponseResult.success(url);
-  }
-
-  /**
-   * 文件上传 File 类型
-   * 
-   * @param file    File
-   * @param dictory 目录
-   * @return Map<String, Object>
-   */
-  @PostMapping("/uploadFile")
-  public ResponseResult<String> uploadFile(@RequestPart("file") MultipartFile file,
       @RequestParam(name = "dictory", required = false) String dictory) {
     String targetDictory = null;
     if (DataUtils.isEmpty(dictory)) {

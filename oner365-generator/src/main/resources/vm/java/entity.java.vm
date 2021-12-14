@@ -15,8 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 #foreach ($column in $columns)
 #if($column.columnName == 'id' && $column.javaType == 'String')
 import org.hibernate.annotations.GenericGenerator;
@@ -24,6 +22,7 @@ import org.hibernate.annotations.GenericGenerator;
 #end
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import ${packageName}.dto.${ClassName}Dto;
 
 /**
  * ${functionName} 对象 ${tableName}
@@ -69,17 +68,16 @@ public class ${ClassName} implements Serializable {
     }
 #end
 
-    @Override
-    public String toString() {
-        return new ToStringBuilder(this,ToStringStyle.MULTI_LINE_STYLE)
+    public ${ClassName}Dto toDto() {
+        ${ClassName}Dto result = new ${ClassName}Dto();
 #foreach ($column in $columns)
 #if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
 #set($AttrName=$column.javaField)
 #else
 #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
 #end
-            .append("${column.javaField}", get${AttrName}())
+        result.set${AttrName}(this.get${AttrName}());
 #end
-            .toString();
+        return result;
     }
 }

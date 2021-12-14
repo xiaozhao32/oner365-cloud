@@ -1,6 +1,6 @@
 package com.oner365.gateway.service;
 
-import com.oner365.gateway.entity.SysLog;
+import com.oner365.gateway.vo.SysLogVo;
 
 /**
  * 系统日志
@@ -11,7 +11,7 @@ public interface SysLogService {
 
     /**
      * 保存日志
-     * @param sysLog 对象
+     * @param sysLogVo 对象
      */
-    void save(SysLog sysLog);
+    void save(SysLogVo sysLog);
 }

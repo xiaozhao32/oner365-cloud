@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.ResponseResult;
 import com.oner365.controller.BaseController;
-import com.oner365.sys.entity.SysMessage;
+import com.oner365.sys.dto.SysMessageDto;
 import com.oner365.sys.service.ISysMessageService;
 
 /**
@@ -31,7 +31,7 @@ public class SysMessageController extends BaseController {
      */
     @GetMapping("/refresh")
     public ResponseResult<Boolean> refresh(@RequestParam("messageType") String messageType) {
-        List<SysMessage> list = sysMessageService.findList(messageType);
+        List<SysMessageDto> list = sysMessageService.findList(messageType);
         if (!list.isEmpty()) {
             list.forEach(entity -> sysMessageService.deleteById(entity.getId()));
             return ResponseResult.success(Boolean.TRUE);

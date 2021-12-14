@@ -22,6 +22,6 @@ public class SysLogListener {
     @Order
     @EventListener({ SysLogEvent.class })
     public void saveSysLog(SysLogEvent event) {
-        this.sysLogService.save(event.getSysLog());
+        this.sysLogService.save(event.getSysLogVo());
     }
 }

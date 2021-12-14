@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHitSupport;
 import org.springframework.data.elasticsearch.core.SearchHits;
@@ -17,6 +16,7 @@ import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilde
 import org.springframework.data.elasticsearch.repository.support.SimpleElasticsearchRepository.OperationsCallback;
 import org.springframework.stereotype.Service;
 
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
 import com.oner365.elasticsearch.dao.ISampleGeneElasticsearchDao;
@@ -45,9 +45,7 @@ public class SampleGeneElasticsearchServiceImpl implements ISampleGeneElasticsea
 
   @Override
   @SuppressWarnings("unchecked")
-  public Page<SampleGeneDto> findList(QueryCriteriaBean data) {
-    Pageable pageable = QueryUtils.buildPageRequest(data);
-
+  public PageInfo<SampleGeneDto> findList(QueryCriteriaBean data) {
     BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
     data.getWhereList().forEach(entity -> {
       if (!DataUtils.isEmpty(entity.getVal())) {
@@ -56,7 +54,7 @@ public class SampleGeneElasticsearchServiceImpl implements ISampleGeneElasticsea
     });
 
     // 版本更新
-    NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(queryBuilder).withPageable(pageable)
+    NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(queryBuilder).withPageable(QueryUtils.buildPageRequest(data))
         .build();
     SearchHits<SampleGene> searchHits = execute(search -> search.search(searchQuery, SampleGene.class));
     SearchPage<SampleGene> page = SearchHitSupport.searchPageFor(searchHits, searchQuery.getPageable());

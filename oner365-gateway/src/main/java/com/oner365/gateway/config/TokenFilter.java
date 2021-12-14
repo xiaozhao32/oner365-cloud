@@ -3,7 +3,7 @@ package com.oner365.gateway.config;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
@@ -28,10 +28,10 @@ import org.springframework.web.server.ServerWebExchange;
 import com.alibaba.fastjson.JSON;
 import com.oner365.gateway.config.properties.IgnoreWhiteProperties;
 import com.oner365.gateway.constants.ResponseData;
-import com.oner365.gateway.entity.SysLog;
 import com.oner365.gateway.enums.ErrorInfoEnum;
 import com.oner365.gateway.jwt.JwtUtils;
 import com.oner365.gateway.log.event.SysLogEvent;
+import com.oner365.gateway.vo.SysLogVo;
 
 import io.jsonwebtoken.lang.Assert;
 import reactor.core.publisher.Mono;
@@ -151,8 +151,8 @@ public class TokenFilter implements GlobalFilter, Ordered {
         String methodName = method.name();
         // 除get请求一律保存日志
         if (!HttpMethod.GET.matches(methodName)) {
-            SysLog sysLog = new SysLog();
-            sysLog.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            SysLogVo sysLog = new SysLogVo();
+            sysLog.setCreateTime(LocalDateTime.now());
             sysLog.setMethodName(methodName);
             sysLog.setOperationIp(ip);
             sysLog.setOperationPath(uri);

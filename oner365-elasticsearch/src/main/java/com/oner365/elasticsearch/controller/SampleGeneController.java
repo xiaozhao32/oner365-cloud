@@ -2,7 +2,6 @@ package com.oner365.elasticsearch.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ResultEnum;
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.elasticsearch.dto.SampleGeneDto;
@@ -44,8 +44,8 @@ public class SampleGeneController extends BaseController {
    * @return Page<SampleGeneDto>
    */
   @PostMapping("/list")
-  public Page<SampleGeneDto> list(@RequestBody QueryCriteriaBean data) {
-    return this.service.findList(data);
+  public PageInfo<SampleGeneDto> list(@RequestBody QueryCriteriaBean data) {
+    return service.findList(data);
   }
 
   /**

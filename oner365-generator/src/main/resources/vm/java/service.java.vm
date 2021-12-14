@@ -2,56 +2,63 @@ package ${packageName}.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
-import ${packageName}.entity.${ClassName};
+import com.oner365.service.BaseService;
+import ${packageName}.dto.${ClassName}Dto;
+import ${packageName}.vo.${ClassName}Vo;
 #foreach ($column in $columns)
 #if($column.columnName == 'id')
 #set($AttrName=$column.javaType)
 #end
 #end
+
 /**
  * ${functionName} Service 接口
  * 
  * @author ${author}
  *
  */
-public interface I${ClassName}Service {
+public interface I${ClassName}Service extends BaseService {
 
-    /**
-     * 分页查询列表
-     * @param data 参数
-     * @return Page
-     */
-    Page<${ClassName}> pageList(QueryCriteriaBean data);
+  /**
+   * 分页查询列表
+   *
+   * @param data 参数
+   * @return PageInfo<${ClassName}Dto>
+   */
+  PageInfo<${ClassName}Dto> pageList(QueryCriteriaBean data);
 
-    /**
-     * 查询全部
-     * @param data 参数
-     * @return List
-     */
-    List<${ClassName}> findList(QueryCriteriaBean data);
+  /**
+   * 查询全部
+   *
+   * @param data 参数
+   * @return List<${ClassName}Dto>
+   */
+  List<${ClassName}Dto> findList(QueryCriteriaBean data);
 
-    /**
-     * 查询详情
-     * @param id 编号
-     * @return ${ClassName}
-     */
-    ${ClassName} getById($AttrName id);
+  /**
+   * 查询详情
+   *
+   * @param id 编号
+   * @return ${ClassName}Dto
+   */
+  ${ClassName}Dto getById($AttrName id);
 
-    /**
-     * 保存
-     * @param entity 对象
-     * @return ${ClassName}
-     */
-    ${ClassName} save(${ClassName} entity);
+  /**
+   * 保存
+   *
+   * @param entity 对象
+   * @return ${ClassName}
+   */
+  ${ClassName}Dto save(${ClassName}Vo entity);
 
-    /**
-     * 删除
-     * @param id 编号
-     * @return int
-     */
-    int deleteById($AttrName id);
+  /**
+   * 删除
+   *
+   * @param id 编号
+   * @return int
+   */
+  int deleteById($AttrName id);
 
 }

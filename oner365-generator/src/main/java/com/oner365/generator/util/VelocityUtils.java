@@ -34,6 +34,7 @@ public class VelocityUtils {
 
     private static final String ENTITY_JAVA_VM = "entity.java.vm";
     private static final String VO_JAVA_VM = "vo.java.vm";
+    private static final String DTO_JAVA_VM = "dto.java.vm";
     private static final String MAPPER_JAVA_VM = "mapper.java.vm";
     private static final String DAO_JAVA_VM = "dao.java.vm";
     private static final String SERVICE_JAVA_VM = "service.java.vm";
@@ -124,6 +125,7 @@ public class VelocityUtils {
         // java code
         templates.add("vm/java/entity.java.vm");
         templates.add("vm/java/vo.java.vm");
+        templates.add("vm/java/dto.java.vm");
         templates.add("vm/java/mapper.java.vm");
         templates.add("vm/java/dao.java.vm");
         templates.add("vm/java/service.java.vm");
@@ -167,6 +169,8 @@ public class VelocityUtils {
             fileName = DataUtils.format("{}/entity/{}.java", javaPath, className);
         } else if (template.contains(VO_JAVA_VM)) {
             fileName = DataUtils.format("{}/vo/{}Vo.java", javaPath, className);
+        } else if (template.contains(DTO_JAVA_VM)) {
+          fileName = DataUtils.format("{}/dto/{}Dto.java", javaPath, className);
         } else if (template.contains(MAPPER_JAVA_VM)) {
             fileName = DataUtils.format("{}/mapper/{}Mapper.java", javaPath, className);
         } else if (template.contains(DAO_JAVA_VM)) {

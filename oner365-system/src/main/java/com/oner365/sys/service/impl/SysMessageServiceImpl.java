@@ -18,60 +18,85 @@ import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.sys.dao.ISysMessageDao;
+import com.oner365.sys.dto.SysMessageDto;
 import com.oner365.sys.entity.SysMessage;
 import com.oner365.sys.service.ISysMessageService;
+import com.oner365.sys.vo.SysMessageVo;
 
 /**
- * ISysMessageService实现类
+ * 消息接口实现类
+ *
  * @author zhaoyong
  */
 @Service
 public class SysMessageServiceImpl implements ISysMessageService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SysMessageServiceImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SysMessageServiceImpl.class);
 
-    private static final String CACHE_NAME = "SysMessage";
+  private static final String CACHE_NAME = "SysMessage";
 
-    @Autowired
-    private ISysMessageDao dao;
+  @Autowired
+  private ISysMessageDao sysMessageDao;
 
-    @Override
-    @Transactional(rollbackFor = ProjectRuntimeException.class)
-    @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
-    @CacheEvict(value = CACHE_NAME, allEntries = true)
-    public SysMessage save(SysMessage sysMessage) {
-        return dao.save(sysMessage);
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
+  @CacheEvict(value = CACHE_NAME, allEntries = true)
+  public SysMessageDto save(SysMessageVo vo) {
+    SysMessage entity = toPojo(vo);
+    return convertDto(sysMessageDao.save(entity));
+  }
+
+  /**
+   * 转换对象
+   * 
+   * @return SysMessage
+   */
+  private SysMessage toPojo(SysMessageVo vo) {
+    SysMessage result = new SysMessage();
+    result.setId(vo.getId());
+    result.setContext(vo.getContext());
+    result.setCreateTime(vo.getCreateTime());
+    result.setMessageName(vo.getMessageName());
+    result.setMessageType(vo.getMessageType());
+    result.setQueueKey(vo.getQueueKey());
+    result.setQueueType(vo.getQueueType());
+    result.setReceiveUser(vo.getReceiveUser());
+    result.setSendUser(vo.getSendUser());
+    result.setTypeId(vo.getTypeId());
+    result.setUpdateTime(vo.getUpdateTime());
+    return result;
+  }
+
+  @Override
+  @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
+  public SysMessageDto getById(String id) {
+    try {
+      Optional<SysMessage> optional = sysMessageDao.findById(id);
+      return convertDto(optional.orElse(null));
+    } catch (Exception e) {
+      LOGGER.error("Error getById:", e);
     }
+    return null;
+  }
 
-    @Override
-    @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
-    public SysMessage getById(String id) {
-        try {
-            Optional<SysMessage> optional = dao.findById(id);
-            return optional.orElse(null);
-        } catch (Exception e) {
-            LOGGER.error("Error getById:", e);
-        }
-        return null;
+  @Override
+  @Cacheable(value = CACHE_NAME, key = "#messageType")
+  public List<SysMessageDto> findList(String messageType) {
+    try {
+      return convertDto(sysMessageDao.findList(messageType));
+    } catch (Exception e) {
+      LOGGER.error("Error findList: ", e);
     }
+    return Collections.emptyList();
+  }
 
-    @Override
-    @Cacheable(value = CACHE_NAME, key = "#messageType")
-    public List<SysMessage> findList(String messageType) {
-        try {
-            return dao.findList(messageType);
-        } catch (Exception e) {
-            LOGGER.error("Error findList: ", e);
-        }
-        return Collections.emptyList();
-    }
-
-    @Override
-    @Transactional(rollbackFor = ProjectRuntimeException.class)
-    @CacheEvict(value = CACHE_NAME, allEntries = true)
-    public int deleteById(String id) {
-        dao.deleteById(id);
-        return ResultEnum.SUCCESS.getCode();
-    }
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  @CacheEvict(value = CACHE_NAME, allEntries = true)
+  public int deleteById(String id) {
+    sysMessageDao.deleteById(id);
+    return ResultEnum.SUCCESS.getCode();
+  }
 
 }

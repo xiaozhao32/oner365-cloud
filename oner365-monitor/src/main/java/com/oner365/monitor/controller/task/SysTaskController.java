@@ -2,7 +2,6 @@ package com.oner365.monitor.controller.task;
 
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +16,7 @@ import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.common.enums.ResultEnum;
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.monitor.dto.SysTaskDto;
@@ -41,10 +41,10 @@ public class SysTaskController extends BaseController {
    * 查询定时任务列表
    *
    * @param data 查询参数
-   * @return Page<SysTaskDto>
+   * @return PageInfo<SysTaskDto>
    */
   @PostMapping("/list")
-  public Page<SysTaskDto> list(@RequestBody QueryCriteriaBean data) {
+  public PageInfo<SysTaskDto> list(@RequestBody QueryCriteriaBean data) {
     return taskService.pageList(data);
   }
 

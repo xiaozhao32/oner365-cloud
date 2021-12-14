@@ -8,8 +8,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +16,7 @@ import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.Criteria;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
@@ -31,8 +30,8 @@ import com.oner365.sys.vo.DataSourceConfigVo;
 import com.oner365.util.DataUtils;
 
 /**
- * IDataSourceConfigService实现类
- * 
+ * 数据源设置实现类
+ *
  * @author zhaoyong
  */
 @Service
@@ -47,11 +46,10 @@ public class DataSourceConfigServiceImpl implements IDataSourceConfigService {
 
   @Override
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-  public Page<DataSourceConfigDto> pageList(QueryCriteriaBean data) {
+  public PageInfo<DataSourceConfigDto> pageList(QueryCriteriaBean data) {
     try {
-      Pageable pageable = QueryUtils.buildPageRequest(data);
       Criteria<DataSourceConfig> criteria = QueryUtils.buildCriteria(data);
-      return convertDto(dao.findAll(criteria, pageable));
+      return convertDto(dao.findAll(criteria, QueryUtils.buildPageRequest(data)));
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }

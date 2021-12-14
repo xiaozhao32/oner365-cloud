@@ -1,7 +1,6 @@
 package com.oner365.monitor.service;
 
-import org.springframework.data.domain.Page;
-
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
 import com.oner365.monitor.dto.SysTaskLogDto;
@@ -19,7 +18,7 @@ public interface ISysTaskLogService extends BaseService {
    * @param data 查询参数
    * @return 调度任务日志集合
    */
-  Page<SysTaskLogDto> pageList(QueryCriteriaBean data);
+  PageInfo<SysTaskLogDto> pageList(QueryCriteriaBean data);
 
   /**
    * 通过调度任务日志ID查询调度信息

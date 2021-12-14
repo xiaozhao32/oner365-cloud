@@ -5,9 +5,9 @@ import java.util.Map;
 
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.ApplicationEventPublisherAware;
-import org.springframework.data.domain.Page;
 
 import com.oner365.gateway.dto.GatewayRouteDto;
+import com.oner365.gateway.page.PageInfo;
 import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.vo.GatewayRouteVo;
 
@@ -29,9 +29,9 @@ public interface DynamicRouteService extends ApplicationEventPublisherAware {
    * 分页查询路由列表
    * 
    * @param data 查询参数
-   * @return Page<GatewayRouteDto>
+   * @return PageInfo<GatewayRouteDto>
    */
-  Page<GatewayRouteDto> pageList(QueryCriteriaBean data);
+  PageInfo<GatewayRouteDto> pageList(QueryCriteriaBean data);
 
   /**
    * 添加路由

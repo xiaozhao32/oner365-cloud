@@ -26,7 +26,6 @@ import com.oner365.util.Base64Utils;
 import com.oner365.util.DataUtils;
 import com.oner365.util.HttpClientUtils;
 
-import io.swagger.annotations.ApiOperation;
 import reactor.core.publisher.Mono;
 
 /**
@@ -54,7 +53,6 @@ public class RabbitController extends BaseController {
      * @return JSONObject
      */
     @GetMapping("/index")
-    @ApiOperation("首页")
     public JSONObject index() {
         return request("/api/overview");
     }
@@ -69,7 +67,6 @@ public class RabbitController extends BaseController {
      * @return JSONObject
      */
     @GetMapping("/list/{type}")
-    @ApiOperation("获取队列列表")
     public JSONObject list(@PathVariable("type") RabbitmqTypeEnum type, @RequestParam("pageIndex") int pageIndex,
             @RequestParam("pageSize") int pageSize, String name) {
         String url = getUrl(type.getCode(), name, pageIndex, pageSize);
@@ -84,7 +81,6 @@ public class RabbitController extends BaseController {
      * @return JSONObject
      */
     @DeleteMapping("/delete/{type}/{name}")
-    @ApiOperation("删除不同类型的队列")
     public JSONObject delete(@PathVariable("type") String type, @PathVariable("name") String name) {
         try {
             String vhost = "/";

@@ -1,7 +1,6 @@
 package com.oner365.monitor.controller.task;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -11,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.enums.ResultEnum;
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.monitor.dto.SysTaskLogDto;
@@ -32,10 +32,10 @@ public class SysTaskLogController extends BaseController {
    * 查询定时任务调度日志列表
    * 
    * @param data 查询参数
-   * @return Page<SysTaskLogDto>
+   * @return PageInfo<SysTaskLogDto>
    */
   @PostMapping("/list")
-  public Page<SysTaskLogDto> list(@RequestBody QueryCriteriaBean data) {
+  public PageInfo<SysTaskLogDto> list(@RequestBody QueryCriteriaBean data) {
     return taskLogService.pageList(data);
   }
 

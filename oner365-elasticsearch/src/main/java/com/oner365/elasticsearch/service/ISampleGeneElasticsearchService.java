@@ -2,8 +2,7 @@ package com.oner365.elasticsearch.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
 import com.oner365.elasticsearch.dto.SampleGeneDto;
@@ -21,9 +20,9 @@ public interface ISampleGeneElasticsearchService extends BaseService {
    * 查询列表
    * 
    * @param data 查询条件参数
-   * @return Iterable<SampleGeneDto>
+   * @return PageInfo<SampleGeneDto>
    */
-  Page<SampleGeneDto> findList(QueryCriteriaBean data);
+  PageInfo<SampleGeneDto> findList(QueryCriteriaBean data);
 
   /**
    * 保存集合

@@ -1,7 +1,7 @@
 package com.oner365.gateway.entity;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,151 +12,169 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.gateway.dto.SysLogDto;
 
 /**
  * 系统日志对象
+ * 
  * @author zhaoyong
  */
 @Entity
 @Table(name = "nt_sys_log")
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
-public class SysLog implements Serializable{
+public class SysLog implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 1L;
+  /**
+   *
+   */
+  private static final long serialVersionUID = 1L;
 
-    @Id
-    @GeneratedValue(generator = "generator")
-    @GenericGenerator(name = "generator", strategy = "uuid.hex")
-    private String id;
+  @Id
+  @GeneratedValue(generator = "generator")
+  @GenericGenerator(name = "generator", strategy = "uuid.hex")
+  private String id;
 
-    @Column(name = "operation_ip", length = 32)
-    private String operationIp;
+  @Column(name = "operation_ip", length = 32)
+  private String operationIp;
 
-    @Column(name = "method_name", length = 8)
-    private String methodName;
+  @Column(name = "method_name", length = 8)
+  private String methodName;
 
-    @Column(name = "operation_name")
-    private String operationName;
+  @Column(name = "operation_name")
+  private String operationName;
 
-    @Column(name = "operation_path")
-    private String operationPath;
+  @Column(name = "operation_path")
+  private String operationPath;
 
-    @Column(name = "operation_context")
-    private String operationContext;
+  @Column(name = "operation_context")
+  private String operationContext;
 
-    /**
-     * 创建时间 create_time
-     */
-    @Column(name = "create_time", updatable = false)
-    private Timestamp createTime;
+  /**
+   * 创建时间 create_time
+   */
+  @Column(name = "create_time", updatable = false)
+  private LocalDateTime createTime;
 
-    /**
-     * Constructor
-     */
-    public SysLog(){
-        super();
-    }
+  /**
+   * Constructor
+   */
+  public SysLog() {
+    super();
+  }
 
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
+  /**
+   * @return the id
+   */
+  public String getId() {
+    return id;
+  }
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
+  /**
+   * @param id the id to set
+   */
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    /**
-     * @return the operationIp
-     */
-    public String getOperationIp() {
-        return operationIp;
-    }
+  /**
+   * @return the operationIp
+   */
+  public String getOperationIp() {
+    return operationIp;
+  }
 
-    /**
-     * @param operationIp the operationIp to set
-     */
-    public void setOperationIp(String operationIp) {
-        this.operationIp = operationIp;
-    }
+  /**
+   * @param operationIp the operationIp to set
+   */
+  public void setOperationIp(String operationIp) {
+    this.operationIp = operationIp;
+  }
 
-    /**
-     * @return the methodName
-     */
-    public String getMethodName() {
-        return methodName;
-    }
+  /**
+   * @return the methodName
+   */
+  public String getMethodName() {
+    return methodName;
+  }
 
-    /**
-     * @param methodName the methodName to set
-     */
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
-    }
+  /**
+   * @param methodName the methodName to set
+   */
+  public void setMethodName(String methodName) {
+    this.methodName = methodName;
+  }
 
-    /**
-     * @return the operationName
-     */
-    public String getOperationName() {
-        return operationName;
-    }
+  /**
+   * @return the operationName
+   */
+  public String getOperationName() {
+    return operationName;
+  }
 
-    /**
-     * @param operationName the operationName to set
-     */
-    public void setOperationName(String operationName) {
-        this.operationName = operationName;
-    }
+  /**
+   * @param operationName the operationName to set
+   */
+  public void setOperationName(String operationName) {
+    this.operationName = operationName;
+  }
 
-    /**
-     * @return the operationPath
-     */
-    public String getOperationPath() {
-        return operationPath;
-    }
+  /**
+   * @return the operationPath
+   */
+  public String getOperationPath() {
+    return operationPath;
+  }
 
-    /**
-     * @param operationPath the operationPath to set
-     */
-    public void setOperationPath(String operationPath) {
-        this.operationPath = operationPath;
-    }
+  /**
+   * @param operationPath the operationPath to set
+   */
+  public void setOperationPath(String operationPath) {
+    this.operationPath = operationPath;
+  }
 
-    /**
-     * @return the operationContext
-     */
-    public String getOperationContext() {
-        return operationContext;
-    }
+  /**
+   * @return the operationContext
+   */
+  public String getOperationContext() {
+    return operationContext;
+  }
 
-    /**
-     * @param operationContext the operationContext to set
-     */
-    public void setOperationContext(String operationContext) {
-        this.operationContext = operationContext;
-    }
+  /**
+   * @param operationContext the operationContext to set
+   */
+  public void setOperationContext(String operationContext) {
+    this.operationContext = operationContext;
+  }
 
-    /**
-     * @return the createTime
-     */
-    public Timestamp getCreateTime() {
-        return createTime;
-    }
+  /**
+   * @return the createTime
+   */
+  public LocalDateTime getCreateTime() {
+    return createTime;
+  }
 
-    /**
-     * @param createTime the createTime to set
-     */
-    public void setCreateTime(Timestamp createTime) {
-        this.createTime = createTime;
-    }
-
+  /**
+   * @param createTime the createTime to set
+   */
+  public void setCreateTime(LocalDateTime createTime) {
+    this.createTime = createTime;
+  }
+  
+  /**
+   * 转换对象
+   * 
+   * @return SysLogDto
+   */
+  public SysLogDto toDto() {
+    SysLogDto result = new SysLogDto();
+    result.setId(this.getId());
+    result.setCreateTime(this.getCreateTime());
+    result.setMethodName(this.getMethodName());
+    result.setOperationContext(this.getOperationContext());
+    result.setOperationIp(this.getOperationIp());
+    result.setOperationName(this.getOperationName());
+    result.setOperationPath(this.getOperationPath());
+    return result;
+  }
 
 }

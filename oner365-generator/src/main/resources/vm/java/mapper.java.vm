@@ -1,10 +1,13 @@
 package ${packageName}.mapper;
 
+import org.springframework.stereotype.Repository;
+
 /**
  * ${functionName} Mapper 接口
  * 
  * @author ${author}
  */
+@Repository
 public interface ${ClassName}Mapper {
     
 }

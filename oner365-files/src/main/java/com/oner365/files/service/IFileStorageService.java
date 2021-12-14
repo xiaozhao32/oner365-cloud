@@ -2,8 +2,7 @@ package com.oner365.files.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
 import com.oner365.files.dto.SysFileStorageDto;
@@ -20,9 +19,9 @@ public interface IFileStorageService extends BaseService {
    * 查询文件列表
    *
    * @param data 参数
-   * @return Page
+   * @return PageInfo
    */
-  Page<SysFileStorageDto> pageList(QueryCriteriaBean data);
+  PageInfo<SysFileStorageDto> pageList(QueryCriteriaBean data);
 
   /**
    * 查询列表

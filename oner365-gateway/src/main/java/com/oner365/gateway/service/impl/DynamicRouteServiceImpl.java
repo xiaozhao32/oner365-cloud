@@ -20,7 +20,6 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -31,6 +30,7 @@ import com.oner365.gateway.dto.GatewayRouteDto;
 import com.oner365.gateway.entity.GatewayFilter;
 import com.oner365.gateway.entity.GatewayPredicate;
 import com.oner365.gateway.entity.GatewayRoute;
+import com.oner365.gateway.page.PageInfo;
 import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.query.QueryUtils;
 import com.oner365.gateway.rabbitmq.ISyncRouteMqService;
@@ -84,11 +84,11 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
     return list.stream().map(po -> convertDto(po)).collect(Collectors.toList());
   }
 
-  private Page<GatewayRouteDto> convertDto(Page<GatewayRoute> page) {
+  private PageInfo<GatewayRouteDto> convertDto(Page<GatewayRoute> page) {
     if (page == null) {
       return null;
     }
-    return new PageImpl<>(convertDto(page.getContent()), page.getPageable(), page.getTotalElements());
+    return new PageInfo<GatewayRouteDto>(convertDto(page.getContent()), page.getNumber() + 1, page.getSize(), page.getTotalElements());
   }
 
   @Override
@@ -99,7 +99,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
   }
 
   @Override
-  public Page<GatewayRouteDto> pageList(QueryCriteriaBean data) {
+  public PageInfo<GatewayRouteDto> pageList(QueryCriteriaBean data) {
     try {
       Pageable pageable = QueryUtils.buildPageRequest(data);
       return convertDto(gatewayRouteDao.findAll(QueryUtils.buildCriteria(data), pageable));

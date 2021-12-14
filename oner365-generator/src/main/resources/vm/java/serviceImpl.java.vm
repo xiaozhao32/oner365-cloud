@@ -1,7 +1,7 @@
 package ${packageName}.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,27 +10,30 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
+import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
 import ${packageName}.dao.I${ClassName}Dao;
+import ${packageName}.dto.${ClassName}Dto;
 import ${packageName}.entity.${ClassName};
 import ${packageName}.service.I${ClassName}Service;
+import ${packageName}.vo.${ClassName}Vo;
 import com.oner365.util.DataUtils;
 #foreach ($column in $columns)
 #if($column.columnName == 'id')
 #set($AttrName=$column.javaType)
 #end
 #end
+
 /**
  * ${functionName} Service 实现类
  * 
@@ -49,10 +52,9 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public Page<${ClassName}> pageList(QueryCriteriaBean data) {
+    public PageInfo<${ClassName}Dto> pageList(QueryCriteriaBean data) {
         try {
-            Pageable pageable = QueryUtils.buildPageRequest(data);
-            return dao.findAll(QueryUtils.buildCriteria(data), pageable);
+            return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
         } catch (Exception e) {
             LOGGER.error("Error pageList: ", e);
         }
@@ -61,24 +63,26 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
 
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-    public List<${ClassName}> findList(QueryCriteriaBean data) {
+    public List<${ClassName}Dto> findList(QueryCriteriaBean data) {
         try {
             if (data.getOrder() == null) {
-                return dao.findAll(QueryUtils.buildCriteria(data));
+                return convertDto(dao.findAll(QueryUtils.buildCriteria(data)));
             }
-            return dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+            return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder())));
         } catch (Exception e) {
             LOGGER.error("Error findList: ", e);
         }
-        return new ArrayList<>();
+        return Collections.emptyList();
     }
     
     @Override
     @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
-    public ${ClassName} getById($AttrName id) {
+    public ${ClassName}Dto getById($AttrName id) {
         try {
             Optional<${ClassName}> optional = dao.findById(id);
-            return optional.orElse(null);
+            if (optional.isPresent()) {
+                return convertDto(optional.orElse(null));
+            }
         } catch (Exception e) {
             LOGGER.error("Error getById: ", e);
         }
@@ -89,21 +93,35 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
-    public ${ClassName} save(${ClassName} entity) {
+    public ${ClassName}Dto save(${ClassName}Vo vo) {
+        ${ClassName} entity = toPojo(vo);
         if (DataUtils.isEmpty(entity.getId())) {
-        	entity.setStatus(StatusEnum.YES.getOrdinal());
+        	entity.setStatus(StatusEnum.YES.getCode());
             entity.setCreateTime(LocalDateTime.now());
         }
         entity.setUpdateTime(LocalDateTime.now());
-        return dao.save(entity);
+        return convertDto(dao.save(entity));
     }
-
+    
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public int deleteById($AttrName id) {
         dao.deleteById(id);
-        return PublicConstants.SUCCESS_CODE;
+        return ResultEnum.SUCCESS.getCode();
+    }
+    
+    private ${ClassName} toPojo(${ClassName}Vo vo) {
+        ${ClassName} result = new ${ClassName}();
+#foreach ($column in $columns)
+#if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
+#set($AttrName=$column.javaField)
+#else
+#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
+#end
+        result.set${AttrName}(vo.get${AttrName}());
+#end        
+        return result;
     }
 
 }

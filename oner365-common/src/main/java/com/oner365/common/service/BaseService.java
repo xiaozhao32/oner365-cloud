@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 
+import com.oner365.common.page.PageInfo;
 import com.oner365.util.ClassesUtil;
 
 /**
@@ -42,20 +42,20 @@ public interface BaseService {
     if (list.isEmpty()) {
       return Collections.emptyList();
     }
-    return (List<T>) list.stream().map(po -> ClassesUtil.invokeMethod(po, METHOD_NAME)).collect(Collectors.toList());
+    return (List<T>) list.stream().map(this::convertDto).collect(Collectors.toList());
   }
 
   /**
    * 转换分页对象
    *
    * @param page 分页po对象
-   * @return Page<T>
+   * @return PageInfo<T>
    */
-  default <T, E> Page<T> convertDto(Page<E> page) {
+  default <T, E> PageInfo<T> convertDto(Page<E> page) {
     if (page == null) {
       return null;
     }
-    return new PageImpl<>(convertDto(page.getContent()), page.getPageable(), page.getTotalElements());
+    return new PageInfo<T>(convertDto(page.getContent()), page.getNumber() + 1, page.getSize(), page.getTotalElements());
   }
 
 }

@@ -1,6 +1,6 @@
 package com.oner365.gateway.log.event;
 
-import com.oner365.gateway.entity.SysLog;
+import com.oner365.gateway.vo.SysLogVo;
 
 /**
  * 系统日志监听
@@ -8,18 +8,18 @@ import com.oner365.gateway.entity.SysLog;
  */
 public class SysLogEvent {
     
-    private SysLog sysLog;
+    private SysLogVo sysLogVo;
 
-    public SysLogEvent(SysLog sysLog) {
+    public SysLogEvent(SysLogVo sysLogVo) {
         super();
-        this.sysLog = sysLog;
+        this.sysLogVo = sysLogVo;
     }
 
     /**
-     * Get SysLog
-     * @return the sysLog
+     * Get SysLogVo
+     * @return the sysLogVo
      */
-    public SysLog getSysLog() {
-        return sysLog;
+    public SysLogVo getSysLogVo() {
+        return sysLogVo;
     }
 }

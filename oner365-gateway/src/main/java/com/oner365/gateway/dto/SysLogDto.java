@@ -1,16 +1,14 @@
-package com.oner365.sys.vo;
+package com.oner365.gateway.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import com.google.common.base.MoreObjects;
 
 /**
  * 系统日志对象
  * 
  * @author zhaoyong
  */
-public class SysLogVo implements Serializable {
+public class SysLogDto implements Serializable {
 
   /**
    *
@@ -55,7 +53,7 @@ public class SysLogVo implements Serializable {
   /**
    * Constructor
    */
-  public SysLogVo() {
+  public SysLogDto() {
     super();
   }
 
@@ -155,14 +153,6 @@ public class SysLogVo implements Serializable {
    */
   public void setCreateTime(LocalDateTime createTime) {
     this.createTime = createTime;
-  }
-
-  /**
-   * toString Method
-   */
-  @Override
-  public String toString() {
-    return MoreObjects.toStringHelper(this).add("id", id).toString();
   }
 
 }
