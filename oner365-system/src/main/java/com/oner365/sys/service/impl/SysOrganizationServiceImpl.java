@@ -187,7 +187,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
     result.setTechnicalName(vo.getTechnicalName());
     result.setTechnicalPhone(vo.getTechnicalPhone());
     result.setUpdateTime(vo.getUpdateTime());
-    result.setChildren(vo.getChildren());
+    result.setChildren(vo.getChildren().stream().map(this::toPojo).collect(Collectors.toList()));
     return result;
   }
   

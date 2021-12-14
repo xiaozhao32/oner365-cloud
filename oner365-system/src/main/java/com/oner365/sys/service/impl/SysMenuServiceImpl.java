@@ -124,7 +124,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
       result.setStatus(vo.getStatus());
       result.setUpdateTime(vo.getUpdateTime());
       
-      result.setChildren(vo.getChildren());
+      result.setChildren(vo.getChildren().stream().map(this::toPojo).collect(Collectors.toList()));
       result.setUserId(vo.getUserId());
       result.setOperIds(vo.getOperIds());
       return result;

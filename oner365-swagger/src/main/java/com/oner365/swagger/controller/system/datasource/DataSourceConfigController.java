@@ -1,4 +1,4 @@
-package com.oner365.swagger.controller.datasource;
+package com.oner365.swagger.controller.system.datasource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +19,7 @@ import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
-import com.oner365.swagger.client.IDataSourceConfigServiceClient;
+import com.oner365.swagger.client.system.ISystemDataSourceConfigClient;
 import com.oner365.swagger.dto.DataSourceConfigDto;
 import com.oner365.swagger.vo.DataSourceConfigVo;
 
@@ -38,7 +38,7 @@ import io.swagger.annotations.ApiOperation;
 public class DataSourceConfigController extends BaseController {
 
   @Autowired
-  private IDataSourceConfigServiceClient service;
+  private ISystemDataSourceConfigClient client;
 
   /**
    * 列表
@@ -50,7 +50,7 @@ public class DataSourceConfigController extends BaseController {
   @ApiOperationSupport(order = 1)
   @PostMapping("/list")
   public ResponseData<PageInfo<DataSourceConfigDto>> findList(@RequestBody QueryCriteriaBean data) {
-    return service.pageList(data);
+    return client.pageList(data);
   }
 
   /**
@@ -63,7 +63,7 @@ public class DataSourceConfigController extends BaseController {
   @ApiOperationSupport(order = 2)
   @GetMapping("/get/{id}")
   public ResponseData<DataSourceConfigDto> get(@PathVariable String id) {
-    return service.getById(id);
+    return client.getById(id);
   }
 
   /**
@@ -76,7 +76,7 @@ public class DataSourceConfigController extends BaseController {
   @ApiOperationSupport(order = 3)
   @GetMapping("/getConnectName")
   public ResponseData<DataSourceConfigDto> getConnectName(@RequestParam String connectName) {
-    return service.getConnectName(connectName);
+    return client.getConnectName(connectName);
   }
 
   /**
@@ -90,7 +90,7 @@ public class DataSourceConfigController extends BaseController {
   @PutMapping("/save")
   public ResponseData<ResponseResult<DataSourceConfigDto>> save(@RequestBody DataSourceConfigVo dataSourceConfigVo) {
     if (dataSourceConfigVo != null) {
-      return service.save(dataSourceConfigVo);
+      return client.save(dataSourceConfigVo);
     }
     return ResponseData.error(ErrorInfoEnum.SAVE_ERROR.getName());
   }
@@ -107,7 +107,7 @@ public class DataSourceConfigController extends BaseController {
   public Integer delete(@RequestBody String... ids) {
     int code = ResultEnum.ERROR.getCode();
     for (String id : ids) {
-      ResponseData<Integer> result = service.deleteById(id);
+      ResponseData<Integer> result = client.deleteById(id);
       code = result.getResult();
     }
     return code;

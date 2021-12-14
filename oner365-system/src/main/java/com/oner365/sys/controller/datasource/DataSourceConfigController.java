@@ -28,7 +28,7 @@ import com.oner365.sys.vo.DataSourceConfigVo;
  *
  */
 @RestController
-@RequestMapping("/system/datasource")
+@RequestMapping("/datasource")
 public class DataSourceConfigController extends BaseController {
 
   @Autowired

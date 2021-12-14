@@ -15,7 +15,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
 import com.oner365.controller.BaseController;
-import com.oner365.swagger.client.IAuthServiceClient;
+import com.oner365.swagger.client.system.ISystemAuthClient;
 import com.oner365.swagger.dto.LoginUserDto;
 import com.oner365.swagger.vo.LoginUserVo;
 
@@ -33,7 +33,7 @@ import io.swagger.annotations.ApiOperation;
 public class AuthController extends BaseController {
 
   @Autowired
-  private IAuthServiceClient client;
+  private ISystemAuthClient client;
 
   /**
    * 系统登录

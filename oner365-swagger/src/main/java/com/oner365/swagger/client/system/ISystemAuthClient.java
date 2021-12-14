@@ -1,4 +1,4 @@
-package com.oner365.swagger.client;
+package com.oner365.swagger.client.system;
 
 import java.util.List;
 import java.util.Map;
@@ -11,58 +11,59 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.alibaba.fastjson.JSONArray;
 import com.oner365.common.ResponseData;
+import com.oner365.swagger.constants.PathConstants;
 import com.oner365.swagger.dto.LoginUserDto;
 import com.oner365.swagger.vo.LoginUserVo;
 
 /**
- * 权限认证服务
+ * 系统服务 - 权限认证
  * 
  * @author zhaoyong
  */
-@FeignClient(value = "oner365-system", contextId = "IAuthServiceClient")
-public interface IAuthServiceClient {
+@FeignClient(value = PathConstants.FEIGN_CLIENT_SYSTEM, contextId = PathConstants.CONTEXT_SYSTEM_AUTH_ID)
+public interface ISystemAuthClient {
 
   /**
    * 登录
    * 
    * @param json 登录参数
-   * @return ResponseData
+   * @return ResponseData<LoginUserDto>
    */
-  @PostMapping("/auth/login")
+  @PostMapping(PathConstants.REQUEST_SYSTEM_AUTH_LOGIN)
   ResponseData<LoginUserDto> login(@RequestBody LoginUserVo loginUserVo);
 
   /**
-   * 登出
+   * 获取验证码
    * 
-   * @return
+   * @return ResponseData<Map<String, Object>>
    */
-  @PostMapping("/auth/logout")
-  ResponseData<String> logout();
+  @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_CAPTCHA_IMAGE)
+  ResponseData<Map<String, Object>> captchaImage();
 
   /**
    * 获取左侧菜单
    *
    * @param menuType 菜单类型
-   * @return JSONArray
+   * @return ResponseData<JSONArray>
    */
-  @GetMapping("/auth/menu/{menuType}")
+  @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_MENU)
   ResponseData<JSONArray> findMenuByRoles(@PathVariable(value = "menuType") String menuType);
-
-  /**
-   * 获取验证码
-   * 
-   * @return Map<String, Object>
-   */
-  @GetMapping("/auth/captchaImage")
-  ResponseData<Map<String, Object>> captchaImage();
 
   /**
    * 获取菜单对应权限
    *
    * @param menuId 菜单id
-   * @return List<Map<String, Object>>
+   * @return ResponseData<List<Map<String, String>>>
    */
-  @GetMapping("/auth/menu/operation/{menuId}")
+  @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_MENU_OPERATION)
   ResponseData<List<Map<String, String>>> findMenuOperByRoles(@PathVariable(value = "menuId") String menuId);
 
+  /**
+   * 登出
+   * 
+   * @return ResponseData<String>
+   */
+  @PostMapping(PathConstants.REQUEST_SYSTEM_AUTH_LOGOUT)
+  ResponseData<String> logout();
+  
 }
