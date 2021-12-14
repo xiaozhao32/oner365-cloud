@@ -149,6 +149,7 @@ public class HttpClientUtils {
     while ((line = bufferReader.readLine()) != null) {
       sb.append(line);
     }
+    bufferReader.close();
     return sb.toString();
   }
 
