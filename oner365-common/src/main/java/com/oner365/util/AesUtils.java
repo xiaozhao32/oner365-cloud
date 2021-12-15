@@ -17,14 +17,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * DES加密算法工具类
+ * AES加密算法工具类
  *
  * @author zhaoyong
  *
  */
-public class DesUtils {
+public class AesUtils {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DesUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(AesUtils.class);
 
     /**
      * 密钥
@@ -45,7 +45,7 @@ public class DesUtils {
     private static final String ALGORITHM = "AES/GCM/NoPadding";
     private static final Map<String, Key> KEY_MAP = new HashMap<>();
 
-    private DesUtils() {
+    private AesUtils() {
 
     }
 
@@ -64,7 +64,7 @@ public class DesUtils {
     }
 
     /**
-     * 对str进行DES加密
+     * 对str进行AES加密
      *
      * @param str 字符串
      * @return String
@@ -91,7 +91,7 @@ public class DesUtils {
     }
 
     /**
-     * 对str进行DES解密
+     * 对str进行AES解密
      *
      * @param str 字符串
      * @return String
@@ -124,7 +124,7 @@ public class DesUtils {
     }
 
     /**
-     * 对str进行DES加密
+     * 对str进行AES加密
      *
      * @param str 字符串
      * @param key 键
@@ -152,7 +152,7 @@ public class DesUtils {
     }
 
     /**
-     * 对str进行DES解密
+     * 对str进行AES解密
      *
      * @param str 字符串
      * @param key 键
