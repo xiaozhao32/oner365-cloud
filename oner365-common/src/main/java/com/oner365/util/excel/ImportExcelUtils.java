@@ -38,16 +38,15 @@ public class ImportExcelUtils {
   /**
    * 获取Excel
    * 
-   * @param is         输入流
-   * @param extension  扩展名
-   * @param fileSuffix 默认扩展名
+   * @param is        输入流
+   * @param extension 扩展名
    * @return Workbook
    * @throws IOException 异常
    */
-  public static Workbook getWorkbook(InputStream is, String extension, String fileSuffix) throws IOException {
+  public static Workbook getWorkbook(InputStream is, String extension) throws IOException {
     // 创建工作表
     Workbook workbook;
-    if (extension.contains(fileSuffix)) {
+    if (extension.contains("xlsx")) {
       workbook = new XSSFWorkbook(is);
     } else {
       workbook = new HSSFWorkbook(is);
@@ -58,16 +57,14 @@ public class ImportExcelUtils {
   /***
    * 读取Excel数据
    *
-   * @param is         Excel文件输入流
-   * @param sheetAt    Sheet所在页，默认第一页0
-   * @param titleRow   标题所在行，默认首行0
-   * @param extension  excel后缀
-   * @param fileSuffix 默认扩展名
+   * @param is        Excel文件输入流
+   * @param sheetAt   Sheet所在页，默认第一页0
+   * @param titleRow  标题所在行，默认首行0
+   * @param extension excel后缀
    * @return ExcelData
    */
-  public static ExcelData readExcel(InputStream is, Integer sheetAt, Integer titleRow, String extension,
-      String fileSuffix) {
-    try (Workbook workbook = getWorkbook(is, extension, fileSuffix)) {
+  public static ExcelData readExcel(InputStream is, Integer sheetAt, Integer titleRow, String extension) {
+    try (Workbook workbook = getWorkbook(is, extension)) {
       return readExcel(workbook, sheetAt, titleRow);
     } catch (IOException e) {
       LOGGER.error("Error readXlsExcelData: ", e);
@@ -111,7 +108,7 @@ public class ImportExcelUtils {
     excelData.setDataList(dataList);
     return excelData;
   }
-  
+
   private static void getCellDataList(List<List<Object>> dataList, Sheet sheet, int colNum, int i) {
     List<Object> objs = new ArrayList<>(colNum);
     Row row = sheet.getRow(i);
@@ -122,10 +119,10 @@ public class ImportExcelUtils {
       for (int j = 0; j < colNum; j++) {
         Cell cell = row.getCell((short) j);
         Object val = null;
-        if (cell != null && cell.getCellType() != CellType.BLANK) {
+        if (cell != null) {
           val = getCellValue(cell);
         }
-        Object o = val != null ? val.toString().trim() : null;
+        Object o = val != null ? val.toString().trim() : "";
         objs.add(o);
       }
       dataList.add(objs);
@@ -145,13 +142,11 @@ public class ImportExcelUtils {
       value = cell.getStringCellValue().trim();
       break;
     case _NONE:
-      value = null;
+    case BLANK:
+      value = "";
       break;
     case BOOLEAN:
       value = cell.getBooleanCellValue();
-      break;
-    case BLANK:
-      value = null;
       break;
     case NUMERIC:
       if (DateUtil.isCellDateFormatted(cell)) {
