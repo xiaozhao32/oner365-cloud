@@ -112,12 +112,4 @@ public interface ISysRoleService extends BaseService {
    */
   List<String> findMenuByRoleId(String menuType, String roleId);
 
-  /**
-   * 菜单列表
-   * 
-   * @param menuType 菜单类型
-   * @return JSONArray
-   */
-  JSONArray findTreeList(String menuType);
-
 }

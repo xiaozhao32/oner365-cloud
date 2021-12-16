@@ -198,39 +198,6 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
   @Override
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-  public JSONArray findTreeList(String menuType) {
-    JSONArray jsonArray = new JSONArray();
-    List<SysMenuDto> list = sysMenuService.findMenu(menuType, SysConstants.DEFAULT_PARENT_ID);
-    list.forEach(entity -> {
-      JSONObject jsonObject = setMenu(entity, true);
-      JSONArray childArray = new JSONArray();
-      List<SysMenuDto> childList = sysMenuService.findMenu(menuType, entity.getId());
-      childList.forEach(child -> {
-        JSONObject childJsonObject = setMenu(child, false);
-        JSONArray aArray = new JSONArray();
-        List<SysMenuDto> aList = sysMenuService.findMenu(menuType, child.getId());
-        aList.forEach(c -> {
-          JSONObject j = setMenu(c, false);
-          aArray.add(j);
-        });
-        if (!aArray.isEmpty()) {
-          childJsonObject.put(SysConstants.EXPAND, true);
-          childJsonObject.put(SysConstants.CHILDREN, aArray);
-        }
-        childArray.add(childJsonObject);
-      });
-      if (!childArray.isEmpty()) {
-        jsonObject.put(SysConstants.EXPAND, true);
-        jsonObject.put(SysConstants.CHILDREN, childArray);
-      }
-      jsonArray.add(jsonObject);
-    });
-
-    return jsonArray;
-  }
-
-  @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public JSONArray findMenuByRoles(List<String> roles, String menuType) {
     JSONArray jsonArray = new JSONArray();
     List<SysMenuDto> list = sysMenuService.selectMenuByRoles(roles, menuType, SysConstants.DEFAULT_PARENT_ID);

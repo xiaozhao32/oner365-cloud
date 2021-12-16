@@ -225,13 +225,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
    * 得到子节点列表
    */
   private List<SysMenuDto> getChildList(List<SysMenuDto> list, SysMenuDto t) {
-    List<SysMenuDto> result = new ArrayList<>();
-    for (SysMenuDto n : list) {
-      if (n.getParentId().equals(t.getId())) {
-        result.add(n);
-      }
-    }
-    return result;
+    return list.stream().filter(e -> e.getParentId().equals(t.getId())).collect(Collectors.toList());
   }
 
   /**
