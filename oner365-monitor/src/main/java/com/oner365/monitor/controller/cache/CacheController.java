@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oner365.common.ResponseData;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.util.DataUtils;
@@ -31,108 +32,111 @@ import redis.clients.jedis.Jedis;
 @RequestMapping("/cache")
 public class CacheController extends BaseController {
 
-    @Value("${spring.redis.host}")
-    private String host;
+  @Value("${spring.redis.host}")
+  private String host;
 
-    @Value("${spring.redis.password}")
-    private String p;
+  @Value("${spring.redis.password}")
+  private String p;
 
-    @Value("${spring.redis.port}")
-    private int port;
+  @Value("${spring.redis.port}")
+  private int port;
 
-    private static final int DB_SIZE = 15;
+  private static final int DB_SIZE = 15;
 
-    @Autowired
-    private RedisTemplate<String, String> redisTemplate;
+  @Autowired
+  private RedisTemplate<String, String> redisTemplate;
 
-    /**
-     * 缓存信息
-     * @return Map<String, Object>
-     */
-    @GetMapping("/index")
-    public Map<String, Object> index() {
-        Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
-        Properties commandStats = (Properties) redisTemplate
-                .execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
-        Object dbSize = redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);
+  /**
+   * 缓存信息
+   * 
+   * @return Map<String, Object>
+   */
+  @GetMapping("/index")
+  public Map<String, Object> index() {
+    Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
+    Properties commandStats = (Properties) redisTemplate
+        .execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
+    Object dbSize = redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);
 
-        Map<String, Object> result = new HashMap<>(3);
-        result.put("info", info);
-        result.put("dbSize", dbSize);
+    Map<String, Object> result = new HashMap<>(3);
+    result.put("info", info);
+    result.put("dbSize", dbSize);
 
-        List<Map<String, String>> pieList = new ArrayList<>();
-        if (commandStats != null) {
-            commandStats.stringPropertyNames().forEach(key -> {
-                Map<String, String> data = new HashMap<>(2);
-                String property = commandStats.getProperty(key);
-                data.put("name", StringUtils.removeStart(key, "cmdstat_"));
-                data.put("value", StringUtils.substringBetween(property, "calls=", ",usec"));
-                pieList.add(data);
-            });
-        }
-        result.put("commandStats", pieList);
-        return result;
+    List<Map<String, String>> pieList = new ArrayList<>();
+    if (commandStats != null) {
+      commandStats.stringPropertyNames().forEach(key -> {
+        Map<String, String> data = new HashMap<>(2);
+        String property = commandStats.getProperty(key);
+        data.put("name", StringUtils.removeStart(key, "cmdstat_"));
+        data.put("value", StringUtils.substringBetween(property, "calls=", ",usec"));
+        pieList.add(data);
+      });
     }
+    result.put("commandStats", pieList);
+    return result;
+  }
 
-    /**
-     * 缓存列表
-     * @return List<Map<String, Object>>
-     */
-    @GetMapping("/cacheList")
-    public List<Map<String, Object>> cacheList() {
-        Jedis jedis = new Jedis(host, port);
+  /**
+   * 缓存列表
+   * 
+   * @return List<Map<String, Object>>
+   */
+  @GetMapping("/cacheList")
+  public List<Map<String, Object>> cacheList() {
+    Jedis jedis = new Jedis(host, port);
 
-        String auth = "ok";
-        if (!DataUtils.isEmpty(p)) {
-            auth = jedis.auth(p);
-        } else {
-            jedis.connect();
-        }
-        LOGGER.info("info: {}", auth);
-
-        List<Map<String, Object>> result = new ArrayList<>();
-        if (jedis.isConnected()) {
-            for (int i = 0; i <= DB_SIZE; i++) {
-                jedis.select(i);
-                Long size = jedis.dbSize();
-                if (size != 0L) {
-                    Map<String, Object> map = new HashMap<>(3);
-                    map.put("name", "DB" + i);
-                    map.put("index", i);
-                    map.put("size", size);
-                    result.add(map);
-                }
-            }
-        }
-        jedis.close();
-
-        return result;
+    String auth = "ok";
+    if (!DataUtils.isEmpty(p)) {
+      auth = jedis.auth(p);
+    } else {
+      jedis.connect();
     }
+    LOGGER.info("info: {}", auth);
 
-    /**
-     * 清理缓存
-     * @param index db
-     * @return String
-     */
-    @GetMapping("/clean")
-    public String clean(int index) {
-        Jedis jedis = new Jedis(host, port);
-
-        String auth = "ok";
-        if (!DataUtils.isEmpty(p)) {
-            auth = jedis.auth(p);
-        } else {
-            jedis.connect();
+    List<Map<String, Object>> result = new ArrayList<>();
+    if (jedis.isConnected()) {
+      for (int i = 0; i <= DB_SIZE; i++) {
+        jedis.select(i);
+        Long size = jedis.dbSize();
+        if (size != 0L) {
+          Map<String, Object> map = new HashMap<>(3);
+          map.put("name", "DB" + i);
+          map.put("index", i);
+          map.put("size", size);
+          result.add(map);
         }
-        LOGGER.info("info: {}", auth);
-
-        if (jedis.isConnected()) {
-            jedis.select(index);
-            jedis.flushDB();
-        }
-        jedis.close();
-        return ResultEnum.SUCCESS.getName();
-
+      }
     }
+    jedis.close();
+
+    return result;
+  }
+
+  /**
+   * 清理缓存
+   * 
+   * @param index db
+   * @return String
+   */
+  @GetMapping("/clean")
+  public ResponseData<String> clean(int index) {
+    Jedis jedis = new Jedis(host, port);
+
+    String auth = "ok";
+    if (!DataUtils.isEmpty(p)) {
+      auth = jedis.auth(p);
+    } else {
+      jedis.connect();
+    }
+    LOGGER.debug("info: {}", auth);
+
+    if (jedis.isConnected()) {
+      jedis.select(index);
+      jedis.flushDB();
+    }
+    jedis.close();
+    return ResponseData.success(ResultEnum.SUCCESS.getName());
+
+  }
 
 }

@@ -32,7 +32,7 @@ public interface ISystemDataSourceConfigClient {
    * @param data 查询参数
    * @return ResponseData<PageInfo<DataSourceConfigDto>>
    */
-  @PostMapping("/datasource/list")
+  @PostMapping(PathConstants.REQUEST_SYSTEM_DATASOURCE_LIST)
   ResponseData<PageInfo<DataSourceConfigDto>> pageList(@RequestBody QueryCriteriaBean data);
 
   /**
@@ -41,7 +41,7 @@ public interface ISystemDataSourceConfigClient {
    * @param id 编号
    * @return ResponseData<DataSourceConfigDto>
    */
-  @GetMapping("/datasource/get/{id}")
+  @GetMapping(PathConstants.REQUEST_SYSTEM_DATASOURCE_GET_ID)
   ResponseData<DataSourceConfigDto> getById(@PathVariable(value = "id") String id);
 
   /**
@@ -50,7 +50,7 @@ public interface ISystemDataSourceConfigClient {
    * @param connectName 连接名称
    * @return ResponseData<DataSourceConfigDto>
    */
-  @GetMapping("/datasource/getConnectName")
+  @GetMapping(PathConstants.REQUEST_SYSTEM_DATASOURCE_GET_CONNECT_NAME)
   ResponseData<DataSourceConfigDto> getConnectName(@RequestParam(value = "connectName") String connectName);
 
   /**
@@ -59,7 +59,7 @@ public interface ISystemDataSourceConfigClient {
    * @param dataSourceConfigVo 数据源对象
    * @return ResponseData<ResponseResult<DataSourceConfigDto>>
    */
-  @PutMapping("/datasource/save")
+  @PutMapping(PathConstants.REQUEST_SYSTEM_DATASOURCE_SAVE)
   ResponseData<ResponseResult<DataSourceConfigDto>> save(@RequestBody DataSourceConfigVo dataSourceConfigVo);
 
   /**
@@ -68,6 +68,6 @@ public interface ISystemDataSourceConfigClient {
    * @param ids 编号
    * @return ResponseData<Integer>
    */
-  @DeleteMapping("/datasource/delete")
+  @DeleteMapping(PathConstants.REQUEST_SYSTEM_DATASOURCE_DELETE)
   ResponseData<Integer> deleteById(@RequestBody String... ids);
 }

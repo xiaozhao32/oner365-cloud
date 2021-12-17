@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONArray;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
 import com.oner365.controller.BaseController;
@@ -18,6 +17,7 @@ import com.oner365.swagger.client.system.ISystemAuthClient;
 import com.oner365.swagger.dto.CaptchaImageDto;
 import com.oner365.swagger.dto.LoginUserDto;
 import com.oner365.swagger.dto.SysMenuOperDto;
+import com.oner365.swagger.dto.SysMenuTreeDto;
 import com.oner365.swagger.vo.LoginUserVo;
 
 import io.swagger.annotations.Api;
@@ -65,12 +65,12 @@ public class AuthController extends BaseController {
    * 获取左侧菜单
    *
    * @param menuType 菜单类型
-   * @return JSONArray
+   * @return ArrayList<SysMenuTreeDto>
    */
   @ApiOperation("3.获取菜单权限")
   @ApiOperationSupport(order = 3)
   @GetMapping("/menu/{menuType}")
-  public ResponseData<JSONArray> findMenuByRoles(@PathVariable String menuType) {
+  public ResponseData<ArrayList<SysMenuTreeDto>> findMenuByRoles(@PathVariable String menuType) {
     return client.findMenuByRoles(menuType);
   }
 
@@ -78,7 +78,7 @@ public class AuthController extends BaseController {
    * 获取菜单对应权限
    *
    * @param menuId 菜单id
-   * @return List<Map<String, Object>>
+   * @return ArrayList<SysMenuOperDto>
    */
   @ApiOperation("4.获取菜单操作权限")
   @ApiOperationSupport(order = 4)

@@ -1,11 +1,8 @@
-package com.oner365.sys.dto;
+package com.oner365.swagger.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 菜单树
@@ -13,7 +10,6 @@ import io.swagger.annotations.ApiModelProperty;
  * @author zhaoyong
  *
  */
-@ApiModel(value = "菜单树信息")
 public class SysMenuTreeDto implements Serializable {
 
   /**
@@ -21,70 +17,16 @@ public class SysMenuTreeDto implements Serializable {
    */
   private static final long serialVersionUID = 1L;
   
-  /**
-   * 主键
-   */
-  @ApiModelProperty(value = "主键")
   private String id;
-  
-  /**
-   * 菜单名称
-   */
-  @ApiModelProperty(value = "菜单名称")
   private String name;
-  
-  /**
-   * 路径
-   */
-  @ApiModelProperty(value = "路径")
   private String path;
-  
-  /**
-   * 模块
-   */
-  @ApiModelProperty(value = "模块")
   private String component;
-  
-  /**
-   * 是否父级
-   */
-  @ApiModelProperty(value = "是否父级")
   private Boolean parent;
-  
-  /**
-   * 是否隐藏
-   */
-  @ApiModelProperty(value = "是否隐藏")
   private Boolean hidden;
-  
-  /**
-   * 是否显示
-   */
-  @ApiModelProperty(value = "是否显示")
   private Boolean alwaysShow;
-  
-  /**
-   * 重定向
-   */
-  @ApiModelProperty(value = "重定向")
   private String redirect;
-  
-  /**
-   * 图标对象
-   */
-  @ApiModelProperty(value = "图标对象")
   private SysMenuIconDto meta;
-  
-  /**
-   * 是否扩展
-   */
-  @ApiModelProperty(value = "是否扩展")
   private Boolean expand = false;
-  
-  /**
-   * 子节点
-   */
-  @ApiModelProperty(value = "子节点")
   private List<SysMenuTreeDto> children = new ArrayList<>();
   
   public SysMenuTreeDto() {

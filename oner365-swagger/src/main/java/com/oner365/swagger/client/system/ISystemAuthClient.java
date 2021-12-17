@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.alibaba.fastjson.JSONArray;
 import com.oner365.common.ResponseData;
 import com.oner365.swagger.constants.PathConstants;
 import com.oner365.swagger.dto.CaptchaImageDto;
 import com.oner365.swagger.dto.LoginUserDto;
 import com.oner365.swagger.dto.SysMenuOperDto;
+import com.oner365.swagger.dto.SysMenuTreeDto;
 import com.oner365.swagger.vo.LoginUserVo;
 
 /**
@@ -36,7 +36,7 @@ public interface ISystemAuthClient {
   /**
    * 获取验证码
    * 
-   * @return ResponseData<Map<String, Object>>
+   * @return ResponseData<CaptchaImageDto>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_CAPTCHA_IMAGE)
   ResponseData<CaptchaImageDto> captchaImage();
@@ -45,10 +45,10 @@ public interface ISystemAuthClient {
    * 获取左侧菜单
    *
    * @param menuType 菜单类型
-   * @return ResponseData<JSONArray>
+   * @return ResponseData<ArrayList<SysMenuTreeDto>>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_MENU)
-  ResponseData<JSONArray> findMenuByRoles(@PathVariable(value = "menuType") String menuType);
+  ResponseData<ArrayList<SysMenuTreeDto>> findMenuByRoles(@PathVariable(value = "menuType") String menuType);
 
   /**
    * 获取菜单对应权限

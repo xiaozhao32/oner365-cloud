@@ -70,8 +70,8 @@ public class FileController extends BaseController {
   @PostMapping("/uploadMultipartFile")
   public ResponseResult<String> uploadMultipartFile(@RequestBody MultipartFile file,
       @RequestParam(name = "dictory", required = false) String dictory) {
-    String targetDictory = null;
-    if (DataUtils.isEmpty(dictory)) {
+    String targetDictory = dictory;
+    if (DataUtils.isEmpty(targetDictory)) {
       targetDictory = DateUtil.getCurrentDate();
     }
     String url = fileStorageClient.uploadFile(file, targetDictory);
