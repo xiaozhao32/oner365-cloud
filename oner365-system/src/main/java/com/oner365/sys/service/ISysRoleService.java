@@ -1,12 +1,13 @@
 package com.oner365.sys.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.alibaba.fastjson.JSONArray;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
+import com.oner365.sys.dto.SysMenuOperDto;
+import com.oner365.sys.dto.SysMenuTreeDto;
 import com.oner365.sys.dto.SysRoleDto;
 import com.oner365.sys.vo.SysRoleVo;
 
@@ -80,18 +81,18 @@ public interface ISysRoleService extends BaseService {
    * 
    * @param roles    角色
    * @param menuType 菜单类型
-   * @return JSONArray
+   * @return List<SysMenuTreeDto>
    */
-  JSONArray findMenuByRoles(List<String> roles, String menuType);
+  List<SysMenuTreeDto> findMenuByRoles(List<String> roles, String menuType);
 
   /**
    * 根据用户角色菜单获取菜单操作
    * 
    * @param roles  角色
    * @param menuId 菜单id
-   * @return List
+   * @return List<SysMenuOperDto>
    */
-  List<Map<String, String>> findMenuOperByRoles(List<String> roles, String menuId);
+  List<SysMenuOperDto> findMenuOperByRoles(List<String> roles, String menuId);
 
   /**
    * 角色授权 不带操作权限

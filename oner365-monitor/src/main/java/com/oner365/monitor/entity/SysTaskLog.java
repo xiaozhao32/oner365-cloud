@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.monitor.dto.SysTaskLogDto;
+import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
 
 /**
  * 定时任务调度日志表 nt_sys_task_log

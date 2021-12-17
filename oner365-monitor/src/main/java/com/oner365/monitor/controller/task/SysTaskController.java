@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oner365.api.rabbitmq.dto.SysTaskDto;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
@@ -19,7 +20,6 @@ import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
-import com.oner365.monitor.dto.SysTaskDto;
 import com.oner365.monitor.exception.TaskException;
 import com.oner365.monitor.service.ISysTaskService;
 import com.oner365.monitor.util.CronUtils;

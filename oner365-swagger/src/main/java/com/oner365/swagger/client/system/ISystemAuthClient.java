@@ -1,7 +1,6 @@
 package com.oner365.swagger.client.system;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.alibaba.fastjson.JSONArray;
 import com.oner365.common.ResponseData;
 import com.oner365.swagger.constants.PathConstants;
+import com.oner365.swagger.dto.CaptchaImageDto;
 import com.oner365.swagger.dto.LoginUserDto;
+import com.oner365.swagger.dto.SysMenuOperDto;
 import com.oner365.swagger.vo.LoginUserVo;
 
 /**
@@ -38,7 +39,7 @@ public interface ISystemAuthClient {
    * @return ResponseData<Map<String, Object>>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_CAPTCHA_IMAGE)
-  ResponseData<Map<String, Object>> captchaImage();
+  ResponseData<CaptchaImageDto> captchaImage();
 
   /**
    * 获取左侧菜单
@@ -53,10 +54,10 @@ public interface ISystemAuthClient {
    * 获取菜单对应权限
    *
    * @param menuId 菜单id
-   * @return ResponseData<List<Map<String, String>>>
+   * @return ResponseData<ArrayList<SysMenuOperDto>>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_MENU_OPERATION)
-  ResponseData<List<Map<String, String>>> findMenuOperByRoles(@PathVariable(value = "menuId") String menuId);
+  ResponseData<ArrayList<SysMenuOperDto>> findMenuOperByRoles(@PathVariable(value = "menuId") String menuId);
 
   /**
    * 登出

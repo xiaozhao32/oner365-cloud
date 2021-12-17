@@ -1,9 +1,7 @@
 package com.oner365.sys.controller.system;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +21,6 @@ import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
-import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
@@ -39,6 +36,7 @@ import com.oner365.sys.service.ISysRoleService;
 import com.oner365.sys.service.ISysUserService;
 import com.oner365.sys.vo.ModifyPasswordVo;
 import com.oner365.sys.vo.ResetPasswordVo;
+import com.oner365.sys.vo.SysUserInfoVo;
 import com.oner365.sys.vo.SysUserVo;
 import com.oner365.sys.vo.check.CheckUserNameVo;
 import com.oner365.util.DataUtils;
@@ -80,22 +78,22 @@ public class SysUserController extends BaseController {
    * 获取信息
    *
    * @param id 编号
-   * @return Map<String, Object>
+   * @return ResponseData<SysUserInfoVo>
    */
   @GetMapping("/get/{id}")
-  public ResponseData<Map<String, Object>> get(@PathVariable String id) {
+  public ResponseData<SysUserInfoVo> get(@PathVariable String id) {
     SysUserDto sysUser = sysUserService.getById(id);
 
-    Map<String, Object> result = new HashMap<>();
-    result.put(PublicConstants.MSG, sysUser);
+    SysUserInfoVo result = new SysUserInfoVo();
+    result.setSysUser(sysUser);
 
     QueryCriteriaBean data = new QueryCriteriaBean();
     List<AttributeBean> whereList = new ArrayList<>();
     AttributeBean attribute = new AttributeBean(SysConstants.STATUS, StatusEnum.YES.getCode());
     whereList.add(attribute);
     data.setWhereList(whereList);
-    result.put("roleList", sysRoleService.findList(data));
-    result.put("jobList", sysJobService.findList(data));
+    result.setRoleList(sysRoleService.findList(data));
+    result.setJobList(sysJobService.findList(data));
 
     return ResponseData.success(result);
   }

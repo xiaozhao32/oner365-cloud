@@ -9,14 +9,14 @@ import com.oner365.common.sequence.range.BizName;
  */
 public class DefaultBizName implements BizName {
 
-    private String bizName;
+  private final String bizName;
 
-    public DefaultBizName(String bizName) {
-        this.bizName = bizName;
-    }
+  public DefaultBizName(String bizName) {
+      this.bizName = bizName;
+  }
 
-    @Override
-    public String create() {
-        return this.bizName;
-    }
+  @Override
+  public String create() {
+      return this.bizName;
+  }
 }

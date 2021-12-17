@@ -1,6 +1,7 @@
 package com.oner365.sys.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
@@ -36,6 +36,9 @@ import com.oner365.sys.dao.ISysRoleMenuDao;
 import com.oner365.sys.dao.ISysRoleMenuOperDao;
 import com.oner365.sys.dao.ISysUserRoleDao;
 import com.oner365.sys.dto.SysMenuDto;
+import com.oner365.sys.dto.SysMenuIconDto;
+import com.oner365.sys.dto.SysMenuOperDto;
+import com.oner365.sys.dto.SysMenuTreeDto;
 import com.oner365.sys.dto.SysRoleDto;
 import com.oner365.sys.entity.SysRole;
 import com.oner365.sys.entity.SysRoleMenu;
@@ -198,58 +201,68 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
   @Override
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-  public JSONArray findMenuByRoles(List<String> roles, String menuType) {
-    JSONArray jsonArray = new JSONArray();
+  public List<SysMenuTreeDto> findMenuByRoles(List<String> roles, String menuType) {
+    List<SysMenuTreeDto> result = new ArrayList<>();
     List<SysMenuDto> list = sysMenuService.selectMenuByRoles(roles, menuType, SysConstants.DEFAULT_PARENT_ID);
     list.forEach(entity -> {
-      JSONObject jsonObject = setMenu(entity, true);
-      JSONArray childArray = new JSONArray();
+      SysMenuTreeDto sysMenuTreeDto = setMenu(entity, true);
+      List<SysMenuTreeDto> childArray = new ArrayList<>();
       List<SysMenuDto> childList = sysMenuService.selectMenuByRoles(roles, menuType, entity.getId());
       childList.forEach(child -> {
-        JSONObject childJsonObject = setMenu(child, false);
-        JSONArray aArray = new JSONArray();
+        SysMenuTreeDto childJsonObject = setMenu(child, false);
+        List<SysMenuTreeDto> aArray = new ArrayList<>();
         List<SysMenuDto> aList = sysMenuService.selectMenuByRoles(roles, menuType, child.getId());
         aList.forEach(c -> {
-          JSONObject j = setMenu(c, false);
+          SysMenuTreeDto j = setMenu(c, false);
           aArray.add(j);
         });
         if (!aArray.isEmpty()) {
-          childJsonObject.put(SysConstants.EXPAND, true);
-          childJsonObject.put(SysConstants.CHILDREN, aArray);
+          childJsonObject.setExpand(true);
+          childJsonObject.setChildren(aArray);
         }
         childArray.add(childJsonObject);
       });
       if (!childArray.isEmpty()) {
-        jsonObject.put(SysConstants.EXPAND, true);
-        jsonObject.put(SysConstants.CHILDREN, childArray);
+        sysMenuTreeDto.setExpand(true);
+        sysMenuTreeDto.setChildren(childArray);
       }
-      jsonArray.add(jsonObject);
+      result.add(sysMenuTreeDto);
     });
 
-    return jsonArray;
+    return result;
   }
 
-  private JSONObject setMenu(SysMenuDto menu, boolean isParent) {
-    JSONObject json = new JSONObject();
-    json.put("id", menu.getId());
-    json.put("name", StringUtils.capitalize(menu.getPath()));
-    json.put("path", menu.getPath());
-    json.put("component", menu.getComponent());
+  private SysMenuTreeDto setMenu(SysMenuDto menu, boolean isParent) {
+    SysMenuTreeDto result = new SysMenuTreeDto();
+    result.setId(menu.getId());
+    result.setName(StringUtils.capitalize(menu.getPath()));
+    result.setPath(menu.getPath());
+    result.setComponent(menu.getComponent());
+    result.setParent(isParent);
     if (isParent) {
-      json.put("hidden", false);
-      json.put("alwaysShow", true);
-      json.put("redirect", "noRedirect");
+      result.setHidden(false);
+      result.setAlwaysShow(true);
+      result.setRedirect("noRedirect");
     }
-    JSONObject j = new JSONObject();
-    j.put("title", menu.getMenuName());
-    j.put("icon", menu.getIcon());
-    json.put("meta", j);
-    return json;
+    SysMenuIconDto meta = new SysMenuIconDto();
+    meta.setTitle(menu.getMenuName());
+    meta.setIcon(menu.getIcon());
+    result.setMeta(meta);
+    return result;
   }
 
   @Override
-  public List<Map<String, String>> findMenuOperByRoles(List<String> roles, String menuId) {
-    return roleMenuOperDao.findMenuOperByRoles(roles, menuId);
+  public List<SysMenuOperDto> findMenuOperByRoles(List<String> roles, String menuId) {
+    List<Map<String, String>> list = roleMenuOperDao.findMenuOperByRoles(roles, menuId);
+    List<SysMenuOperDto> result = new ArrayList<>();
+    list.forEach(map -> {
+      SysMenuOperDto entity = new SysMenuOperDto();
+      entity.setOperId(map.get("operId"));
+      entity.setOperName(map.get("operName"));
+      entity.setOperType(map.get("operType"));
+      result.add(entity);
+    });
+    return result;
   }
 
   @Override

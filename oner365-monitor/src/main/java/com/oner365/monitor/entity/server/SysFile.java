@@ -1,99 +1,103 @@
 package com.oner365.monitor.entity.server;
 
+import java.io.Serializable;
+
 /**
  * 系统文件相关信息
  * 
  * @author zhaoyong
  */
-public class SysFile {
-    /**
-     * 盘符路径
-     */
-    private String dirName;
+public class SysFile implements Serializable {
 
-    /**
-     * 盘符类型
-     */
-    private String sysTypeName;
+  private static final long serialVersionUID = 1L;
+  /**
+   * 盘符路径
+   */
+  private String dirName;
 
-    /**
-     * 文件类型
-     */
-    private String typeName;
+  /**
+   * 盘符类型
+   */
+  private String sysTypeName;
 
-    /**
-     * 总大小
-     */
-    private String total;
+  /**
+   * 文件类型
+   */
+  private String typeName;
 
-    /**
-     * 剩余大小
-     */
-    private String free;
+  /**
+   * 总大小
+   */
+  private String total;
 
-    /**
-     * 已经使用量
-     */
-    private String used;
+  /**
+   * 剩余大小
+   */
+  private String free;
 
-    /**
-     * 资源的使用率
-     */
-    private double usage;
+  /**
+   * 已经使用量
+   */
+  private String used;
 
-    public String getDirName() {
-        return dirName;
-    }
+  /**
+   * 资源的使用率
+   */
+  private double usage;
 
-    public void setDirName(String dirName) {
-        this.dirName = dirName;
-    }
+  public String getDirName() {
+    return dirName;
+  }
 
-    public String getSysTypeName() {
-        return sysTypeName;
-    }
+  public void setDirName(String dirName) {
+    this.dirName = dirName;
+  }
 
-    public void setSysTypeName(String sysTypeName) {
-        this.sysTypeName = sysTypeName;
-    }
+  public String getSysTypeName() {
+    return sysTypeName;
+  }
 
-    public String getTypeName() {
-        return typeName;
-    }
+  public void setSysTypeName(String sysTypeName) {
+    this.sysTypeName = sysTypeName;
+  }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
-    }
+  public String getTypeName() {
+    return typeName;
+  }
 
-    public String getTotal() {
-        return total;
-    }
+  public void setTypeName(String typeName) {
+    this.typeName = typeName;
+  }
 
-    public void setTotal(String total) {
-        this.total = total;
-    }
+  public String getTotal() {
+    return total;
+  }
 
-    public String getFree() {
-        return free;
-    }
+  public void setTotal(String total) {
+    this.total = total;
+  }
 
-    public void setFree(String free) {
-        this.free = free;
-    }
+  public String getFree() {
+    return free;
+  }
 
-    public String getUsed() {
-        return used;
-    }
+  public void setFree(String free) {
+    this.free = free;
+  }
 
-    public void setUsed(String used) {
-        this.used = used;
-    }
+  public String getUsed() {
+    return used;
+  }
 
-    public double getUsage() {
-        return usage;
-    }
+  public void setUsed(String used) {
+    this.used = used;
+  }
 
-    public void setUsage(double usage) {
-        this.usage = usage;
-    }
+  public double getUsage() {
+    return usage;
+  }
+
+  public void setUsage(double usage) {
+    this.usage = usage;
+  }
 }

@@ -5,7 +5,6 @@ import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.oner365.monitor.constants.ScheduleConstants;
-import com.oner365.monitor.entity.InvokeParam;
 import com.oner365.monitor.util.CronUtils;
 import com.oner365.util.DataUtils;
 
@@ -40,7 +39,7 @@ public class SysTaskVo implements Serializable {
   /**
    * 调用目标参数
    */
-  private InvokeParam invokeParam;
+  private InvokeParamVo invokeParamVo;
 
   /**
    * cron执行表达式
@@ -195,12 +194,12 @@ public class SysTaskVo implements Serializable {
     this.updateTime = updateTime;
   }
 
-  public InvokeParam getInvokeParam() {
-    return invokeParam;
+  public InvokeParamVo getInvokeParamVo() {
+    return invokeParamVo;
   }
 
-  public void setInvokeParam(InvokeParam invokeParam) {
-    this.invokeParam = invokeParam;
+  public void setInvokeParamVo(InvokeParamVo invokeParamVo) {
+    this.invokeParamVo = invokeParamVo;
   }
 
   public String getExecuteStatus() {

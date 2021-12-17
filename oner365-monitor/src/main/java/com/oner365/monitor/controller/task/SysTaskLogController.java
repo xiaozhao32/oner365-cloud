@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
-import com.oner365.monitor.dto.SysTaskLogDto;
 import com.oner365.monitor.service.ISysTaskLogService;
 
 /**

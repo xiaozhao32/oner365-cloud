@@ -7,13 +7,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
 import com.oner365.monitor.dao.ISysTaskLogDao;
-import com.oner365.monitor.dto.SysTaskLogDto;
 import com.oner365.monitor.entity.SysTaskLog;
 import com.oner365.monitor.mapper.SysTaskLogMapper;
 import com.oner365.monitor.service.ISysTaskLogService;

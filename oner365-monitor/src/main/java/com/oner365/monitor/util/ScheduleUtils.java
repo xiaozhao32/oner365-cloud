@@ -11,8 +11,8 @@ import org.quartz.SchedulerException;
 import org.quartz.TriggerBuilder;
 import org.quartz.TriggerKey;
 
+import com.oner365.api.rabbitmq.dto.SysTaskDto;
 import com.oner365.monitor.constants.ScheduleConstants;
-import com.oner365.monitor.dto.SysTaskDto;
 import com.oner365.monitor.exception.TaskException;
 import com.oner365.monitor.exception.TaskException.Code;
 

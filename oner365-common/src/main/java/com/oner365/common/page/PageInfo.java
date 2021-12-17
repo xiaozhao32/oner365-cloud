@@ -11,7 +11,7 @@ import com.oner365.common.constants.PublicConstants;
  * 
  * @author zhaoyong
  */
-public class PageInfo<T> implements Serializable {
+public class PageInfo<T extends Serializable> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
@@ -56,11 +56,11 @@ public class PageInfo<T> implements Serializable {
 
   /**
    * jpa page
-   * 
-   * @param content     集合
-   * @param pageIndex   页码
-   * @param pageSize    分页条数
-   * @param totalResult 总条数
+   *
+   * @param content       集合
+   * @param pageIndex     页码
+   * @param size          分页条数
+   * @param totalElements 总条数
    */
   public PageInfo(List<T> content, int pageIndex, int size, long totalElements) {
     this.content = content;

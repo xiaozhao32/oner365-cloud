@@ -1,14 +1,9 @@
-package com.oner365.monitor.dto;
+package com.oner365.api.rabbitmq.dto;
 
 import java.io.Serializable;
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.base.MoreObjects;
-import com.oner365.monitor.constants.ScheduleConstants;
-import com.oner365.monitor.entity.InvokeParam;
-import com.oner365.monitor.util.CronUtils;
-import com.oner365.util.DataUtils;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -50,7 +45,7 @@ public class SysTaskDto implements Serializable {
    * 调用目标参数
    */
   @ApiModelProperty(value = "目标参数")
-  private InvokeParam invokeParam;
+  private InvokeParamDto invokeParamDto;
 
   /**
    * cron执行表达式
@@ -62,7 +57,7 @@ public class SysTaskDto implements Serializable {
    * cron计划策略
    */
   @ApiModelProperty(value = "计划策略")
-  private String misfirePolicy = ScheduleConstants.MISFIRE_DEFAULT;
+  private String misfirePolicy = "0";
 
   /**
    * 是否并发执行（0允许 1禁止）
@@ -150,14 +145,6 @@ public class SysTaskDto implements Serializable {
     this.cronExpression = cronExpression;
   }
 
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  public Date getNextValidTime() {
-    if (!DataUtils.isEmpty(cronExpression)) {
-      return CronUtils.getNextExecution(cronExpression);
-    }
-    return null;
-  }
-
   public String getMisfirePolicy() {
     return misfirePolicy;
   }
@@ -214,12 +201,12 @@ public class SysTaskDto implements Serializable {
     this.updateTime = updateTime;
   }
 
-  public InvokeParam getInvokeParam() {
-    return invokeParam;
+  public InvokeParamDto getInvokeParamDto() {
+    return invokeParamDto;
   }
 
-  public void setInvokeParam(InvokeParam invokeParam) {
-    this.invokeParam = invokeParam;
+  public void setInvokeParamDto(InvokeParamDto invokeParamDto) {
+    this.invokeParamDto = invokeParamDto;
   }
 
   public String getExecuteStatus() {

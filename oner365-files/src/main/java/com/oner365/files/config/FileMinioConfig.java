@@ -2,7 +2,6 @@ package com.oner365.files.config;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
@@ -27,17 +26,14 @@ public class FileMinioConfig {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(FileMinioConfig.class);
 
-  @Autowired
-  private FileMinioProperties minioProperties;
-
   @Bean
-  public MinioClient minioClient() {
+  public MinioClient minioClient(FileMinioProperties minioProperties) {
     try {
       MinioClient minioClient = MinioClient.builder().endpoint(minioProperties.getUrl())
           .credentials(minioProperties.getUsername(), minioProperties.getPassword()).build();
 
       // 创建根文件夹 bucket
-      BucketExistsArgs bucket = (BucketExistsArgs) BucketExistsArgs.builder().bucket(minioProperties.getBucket())
+      BucketExistsArgs bucket = BucketExistsArgs.builder().bucket(minioProperties.getBucket())
           .build();
       if (!minioClient.bucketExists(bucket)) {
         minioClient.makeBucket(MakeBucketArgs.builder().bucket(minioProperties.getBucket()).build());

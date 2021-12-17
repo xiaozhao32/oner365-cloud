@@ -1,16 +1,16 @@
-package com.oner365.monitor.entity;
+package com.oner365.sys.dto;
 
 import java.io.Serializable;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.oner365.api.rabbitmq.dto.InvokeParamDto;
 
 /**
  * 定时任务调度
  * 
  * @author liutao
  */
-public class InvokeParam implements Serializable {
+public class InvokeParamDto implements Serializable {
   private static final long serialVersionUID = 1L;
 
   /**
@@ -27,6 +27,11 @@ public class InvokeParam implements Serializable {
    * 执行计划任务是否可并发 0：不允许 1:允许
    */
   private String concurrent;
+  
+  /**
+   * 任务所需参数
+   */
+  private JSONObject taskParam;
 
   public String getTaskId() {
     return taskId;
@@ -36,14 +41,9 @@ public class InvokeParam implements Serializable {
     this.taskId = taskId;
   }
 
-  /**
-   * 任务所需参数
-   */
-  private JSONObject taskParam;
-
-  public InvokeParam() {
-    super();
-  }
+  public InvokeParamDto() {
+        super();
+    }
 
   public String getTaskServerName() {
     return taskServerName;
@@ -69,13 +69,9 @@ public class InvokeParam implements Serializable {
     this.taskParam = taskParam;
   }
 
-  public InvokeParamDto toDto() {
-    InvokeParamDto result = new InvokeParamDto();
-    result.setConcurrent(this.getConcurrent());
-    result.setTaskId(this.getTaskId());
-    result.setTaskParam(this.getTaskParam());
-    result.setTaskServerName(this.getTaskServerName());
-    return result;
+  @Override
+  public String toString() {
+    return JSON.toJSONString(this);
   }
 
 }

@@ -1,7 +1,6 @@
 package com.oner365.swagger.controller.system.auth;
 
-import java.util.List;
-import java.util.Map;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +15,9 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
 import com.oner365.controller.BaseController;
 import com.oner365.swagger.client.system.ISystemAuthClient;
+import com.oner365.swagger.dto.CaptchaImageDto;
 import com.oner365.swagger.dto.LoginUserDto;
+import com.oner365.swagger.dto.SysMenuOperDto;
 import com.oner365.swagger.vo.LoginUserVo;
 
 import io.swagger.annotations.Api;
@@ -51,12 +52,12 @@ public class AuthController extends BaseController {
   /**
    * 获取验证码
    * 
-   * @return Map<String, Object>
+   * @return CaptchaImageDto
    */
   @ApiOperation("2.获取验证码")
   @ApiOperationSupport(order = 2)
   @GetMapping("/captchaImage")
-  public ResponseData<Map<String, Object>> captchaImage() {
+  public ResponseData<CaptchaImageDto> captchaImage() {
     return client.captchaImage();
   }
 
@@ -82,7 +83,7 @@ public class AuthController extends BaseController {
   @ApiOperation("4.获取菜单操作权限")
   @ApiOperationSupport(order = 4)
   @GetMapping("/menu/operation/{menuId}")
-  public ResponseData<List<Map<String, String>>> findMenuOperByRoles(@PathVariable String menuId) {
+  public ResponseData<ArrayList<SysMenuOperDto>> findMenuOperByRoles(@PathVariable String menuId) {
     return client.findMenuOperByRoles(menuId);
   }
   

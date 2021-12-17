@@ -10,7 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.oner365.monitor.dto.SysTaskDto;
+import com.oner365.api.rabbitmq.dto.InvokeParamDto;
+import com.oner365.api.rabbitmq.dto.SysTaskDto;
 import com.oner365.monitor.entity.InvokeParam;
 import com.oner365.util.DataUtils;
 
@@ -37,7 +38,7 @@ public class JobInvokeUtil {
         String beanName = getBeanName(invokeTarget);
         String methodName = getMethodName(invokeTarget);
 //        List<Object[]> methodParams = getMethodParams(invokeTarget);
-        InvokeParam param = sysTask.getInvokeParam();
+        InvokeParamDto param = sysTask.getInvokeParamDto();
         param.setConcurrent(sysTask.getConcurrent());
         param.setTaskId(sysTask.getId());
 
@@ -61,7 +62,7 @@ public class JobInvokeUtil {
      * @param methodName 方法名称
      * @param param      方法参数
      */
-    private static void invokeMethod(Object bean, String methodName, InvokeParam param)
+    private static void invokeMethod(Object bean, String methodName, InvokeParamDto param)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (param != null) {
             Method method = bean.getClass().getDeclaredMethod(methodName, InvokeParam.class);

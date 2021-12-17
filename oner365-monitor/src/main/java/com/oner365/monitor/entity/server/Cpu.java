@@ -1,5 +1,7 @@
 package com.oner365.monitor.entity.server;
 
+import java.io.Serializable;
+
 import com.oner365.util.Arith;
 
 /**
@@ -7,82 +9,84 @@ import com.oner365.util.Arith;
  * 
  * @author zhaoyong
  */
-public class Cpu {
-    /**
-     * 核心数
-     */
-    private int cpuNum;
+public class Cpu implements Serializable {
 
-    /**
-     * CPU总的使用率
-     */
-    private double total;
+  private static final long serialVersionUID = 1L;
+  /**
+   * 核心数
+   */
+  private int cpuNum;
 
-    /**
-     * CPU系统使用率
-     */
-    private double sys;
+  /**
+   * CPU总的使用率
+   */
+  private double total;
 
-    /**
-     * CPU用户使用率
-     */
-    private double used;
+  /**
+   * CPU系统使用率
+   */
+  private double sys;
 
-    /**
-     * CPU当前等待率
-     */
-    private double wait;
+  /**
+   * CPU用户使用率
+   */
+  private double used;
 
-    /**
-     * CPU当前空闲率
-     */
-    private double free;
+  /**
+   * CPU当前等待率
+   */
+  private double wait;
 
-    public int getCpuNum() {
-        return cpuNum;
-    }
+  /**
+   * CPU当前空闲率
+   */
+  private double free;
 
-    public void setCpuNum(int cpuNum) {
-        this.cpuNum = cpuNum;
-    }
+  public int getCpuNum() {
+    return cpuNum;
+  }
 
-    public double getTotal() {
-        return Arith.round(Arith.mul(total, 100), 2);
-    }
+  public void setCpuNum(int cpuNum) {
+    this.cpuNum = cpuNum;
+  }
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
+  public double getTotal() {
+    return Arith.round(Arith.mul(total, 100), 2);
+  }
 
-    public double getSys() {
-        return Arith.round(Arith.mul(sys / total, 100), 2);
-    }
+  public void setTotal(double total) {
+    this.total = total;
+  }
 
-    public void setSys(double sys) {
-        this.sys = sys;
-    }
+  public double getSys() {
+    return Arith.round(Arith.mul(sys / total, 100), 2);
+  }
 
-    public double getUsed() {
-        return Arith.round(Arith.mul(used / total, 100), 2);
-    }
+  public void setSys(double sys) {
+    this.sys = sys;
+  }
 
-    public void setUsed(double used) {
-        this.used = used;
-    }
+  public double getUsed() {
+    return Arith.round(Arith.mul(used / total, 100), 2);
+  }
 
-    public double getWait() {
-        return Arith.round(Arith.mul(wait / total, 100), 2);
-    }
+  public void setUsed(double used) {
+    this.used = used;
+  }
 
-    public void setWait(double wait) {
-        this.wait = wait;
-    }
+  public double getWait() {
+    return Arith.round(Arith.mul(wait / total, 100), 2);
+  }
 
-    public double getFree() {
-        return Arith.round(Arith.mul(free / total, 100), 2);
-    }
+  public void setWait(double wait) {
+    this.wait = wait;
+  }
 
-    public void setFree(double free) {
-        this.free = free;
-    }
+  public double getFree() {
+    return Arith.round(Arith.mul(free / total, 100), 2);
+  }
+
+  public void setFree(double free) {
+    this.free = free;
+  }
 }
