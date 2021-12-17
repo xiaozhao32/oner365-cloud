@@ -31,7 +31,7 @@ import springfox.documentation.swagger.web.SwaggerResource;
  *
  */
 @ControllerAdvice
-public class ResponseAdvice implements ResponseBodyAdvice<Serializable> {
+public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ResponseAdvice.class);
 
@@ -44,12 +44,12 @@ public class ResponseAdvice implements ResponseBodyAdvice<Serializable> {
   }
 
   @Override
-  public Serializable beforeBodyWrite(@Nullable Serializable body, @NonNull MethodParameter returnType,
+  public Object beforeBodyWrite(@Nullable Object body, @NonNull MethodParameter returnType,
       @NonNull MediaType selectedContentType, @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
       @NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response) {
     if (body instanceof String) {
       try {
-        return objectMapper.writeValueAsString(ResponseData.success(body));
+        return objectMapper.writeValueAsString(ResponseData.success(String.valueOf(body)));
       } catch (JsonProcessingException e) {
         LOGGER.error("beforeBodyWrite error:", e);
       }
@@ -57,7 +57,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Serializable> {
     if (body instanceof byte[] || body instanceof ResponseData || isSwaggerResource(body)) {
       return body;
     }
-    return ResponseData.success(body);
+    return ResponseData.success((Serializable)body);
   }
 
   private boolean isSwaggerResource(Object body) {
