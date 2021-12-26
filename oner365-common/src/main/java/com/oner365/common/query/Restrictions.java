@@ -5,6 +5,7 @@ import java.util.Collection;
 import com.oner365.common.query.Criterion.Operator;
 import com.oner365.util.DataUtils;
 
+
 /**
  * 条件构造器-用于创建条件表达式
  * @author zhaoyong

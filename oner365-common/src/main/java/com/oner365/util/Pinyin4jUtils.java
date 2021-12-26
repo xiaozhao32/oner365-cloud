@@ -10,6 +10,8 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinVCharType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
+import java.util.stream.IntStream;
+
 /**
  * 拼音工具类
  * @author zhaoyong
@@ -19,15 +21,15 @@ public class Pinyin4jUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(Pinyin4jUtils.class);
 
     public enum Type {
-        /** 全部大写 */
+        /* 全部大写 */
         UPPERCASE,
-        /** 全部小写 */
+        /* 全部小写 */
         LOWERCASE,
     }
 
     /**
      * 将汉字转换为全拼(大写)
-     * 
+     *
      * @param src 转换内容
      * @return String 转换后的定符串
      */
@@ -37,7 +39,7 @@ public class Pinyin4jUtils {
 
     /**
      * 将汉字转换为全拼(小写)
-     * 
+     *
      * @param src 转换内容
      * @return String 转换后的定符串
      */
@@ -67,23 +69,23 @@ public class Pinyin4jUtils {
 
     /***
      * 获取拼间首字母
-     * 
+     *
      * @param src  转换内容
      * @param type 大小写类型,默认大写
      * @return String
      */
     public static String toPinYinInitials(String src, Type type) {
         StringBuilder convert = new StringBuilder();
-        for (int j = 0; j < src.length(); j++) {
+        // 提取汉字的首字母
+        IntStream.range(0, src.length()).forEach(j -> {
             char word = src.charAt(j);
-            // 提取汉字的首字母
             String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
             if (pinyinArray != null) {
                 convert.append(pinyinArray[0].charAt(0));
             } else {
                 convert.append(word);
             }
-        }
+        });
         if (type == Type.LOWERCASE) {
             return convert.toString().toLowerCase();
         } else {
@@ -93,7 +95,7 @@ public class Pinyin4jUtils {
 
     /**
      * 将汉字转换为全拼
-     * 
+     *
      * @param src  转换内容
      * @param type 大小写类型,默认大写
      * @return String 转换后的定符串

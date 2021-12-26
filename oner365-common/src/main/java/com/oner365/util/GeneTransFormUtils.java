@@ -18,6 +18,7 @@ import com.oner365.common.constants.PublicConstants;
  * 基因型工具类
  *
  * @author zhaoyong
+ *
  */
 public class GeneTransFormUtils {
 
@@ -29,8 +30,11 @@ public class GeneTransFormUtils {
 
     /**
      * 转换基因格式
-     * 转换格式 {"D7S820": "10/11", "D12S391": "18/18", "D13S317": "11/12", "D16S539": "10/13"}
-     * 目标类型 [{"name": "D8S1179", "value": "11,12"}, {"name": "D2S11", "value": "9,10"} ......]
+     *     转换格式 {"D7S820": "10/11", "D12S391": "18/18", "D13S317": "11/12", "D16S539": "10/13"}
+     *     目标类型 [{"name": "D8S1179", "value": "11,12"}, {"name": "D2S11", "value": "9,10"} ......]
+     *
+     * @param geneInfo 基因型
+     * @return JSONArray
      */
     public static JSONArray geneFormatList(String geneInfo) {
         JSONArray result = new JSONArray();
@@ -48,8 +52,11 @@ public class GeneTransFormUtils {
 
     /**
      * 转换基因格式
-     * 目标类型 [{"name": "D8S1179", "value": "11,12"}, {"name": "D2S11", "value": "9,10"} ......]
-     * 转换格式 {"D7S820": "10/11", "D12S391": "18/18", "D13S317": "11/12", "D16S539": "10/13"}
+     *     目标类型 [{"name": "D8S1179", "value": "11,12"}, {"name": "D2S11", "value": "9,10"} ......]
+     *     转换格式 {"D7S820": "10/11", "D12S391": "18/18", "D13S317": "11/12", "D16S539": "10/13"}
+     *
+     * @param geneInfo 基因型
+     * @return JSONObject
      */
     public static JSONObject geneFormatString(String geneInfo) {
         JSONObject result = new JSONObject();
@@ -65,8 +72,11 @@ public class GeneTransFormUtils {
 
     /**
      * 过滤空基因 (字符串冒号后面不能有空格)
-     * 转换格式 {"D7S820":"", "D12S391":"18/18", "D13S317":"11/12", "D16S539":"10/13"}
-     * 目标类型 {"D12S391":"18/18", "D13S317":"11/12", "D16S539":"10/13"}
+     *     转换格式 {"D7S820":"", "D12S391":"18/18", "D13S317":"11/12", "D16S539":"10/13"}
+     *     目标类型 {"D12S391":"18/18", "D13S317":"11/12", "D16S539":"10/13"}
+     *
+     * @param geneInfo 基因型
+     * @return String
      */
     public static String geneTrimString(String geneInfo) {
         return geneInfo.replaceAll("((?<=\\{)\"\\w+\":\"\",|,*\"\\w+\":\"\")", "");
@@ -119,7 +129,7 @@ public class GeneTransFormUtils {
      * 同一比对测试 使用 matchEquals 测试用本方法
      *
      * @param matchJson 比对基因
-     * @param geneJson  目标基因
+     * @param geneJson 目标基因
      * @return Map
      */
     public static Map<String, Integer> matchGeneEquals(JSONObject matchJson, JSONObject geneJson) {
@@ -138,20 +148,14 @@ public class GeneTransFormUtils {
                 trim++;
             }
         }
-
-        Map<String, Integer> result = new HashMap<>();
-        result.put("totalCount", matchJson.keySet().size());
-        result.put("matchCount", m);
-        result.put("diffCount", diff);
-        result.put("trimCount", trim);
-        return result;
+        return getCount(matchJson, m, diff, trim);
     }
 
     /**
      * 混合比对测试 使用 match 测试用本方法
      *
      * @param matchJson 比对基因
-     * @param geneJson  目标基因
+     * @param geneJson 目标基因
      * @return Map
      */
     public static Map<String, Integer> matchGeneContains(JSONObject matchJson, JSONObject geneJson) {
@@ -174,11 +178,24 @@ public class GeneTransFormUtils {
                 }
             }
         }
-        Map<String, Integer> result = new HashMap<>();
+        return getCount(matchJson, m, diff, trim);
+    }
+    
+    /**
+     * 返回结果
+     *
+     * @param matchJson  比对数据
+     * @param matchCount 比中数
+     * @param diffCount  不同数
+     * @param trimCount  空的数
+     * @return Map<String, Integer>
+     */
+    private static Map<String, Integer> getCount(JSONObject matchJson, int matchCount, int diffCount, int trimCount) {
+        Map<String, Integer> result = new HashMap<>(4);
         result.put("totalCount", matchJson.keySet().size());
-        result.put("matchCount", m);
-        result.put("diffCount", diff);
-        result.put("trimCount", trim);
+        result.put("matchCount", matchCount);
+        result.put("diffCount", diffCount);
+        result.put("trimCount", trimCount);
         return result;
     }
 

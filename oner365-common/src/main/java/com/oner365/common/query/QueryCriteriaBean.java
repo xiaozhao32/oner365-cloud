@@ -8,6 +8,7 @@ import com.oner365.common.constants.PublicConstants;
 
 /**
  * 查询条件设置
+ * 
  * @author zhaoyong
  */
 public class QueryCriteriaBean implements Serializable {

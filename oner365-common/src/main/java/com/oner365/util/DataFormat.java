@@ -1,6 +1,7 @@
 package com.oner365.util;
 
 import java.math.BigDecimal;
+import java.util.stream.IntStream;
 
 /**
  * 工具类
@@ -11,6 +12,7 @@ public class DataFormat {
     private static final String[] CHN_NUMBER = {"零", "一", "二", "三", "四", "五", "六", "七", "八", "九"};
     private static final String[] CHN_UNIT = {"", "十", "百", "千"};
     private static final String[] CHN_UNIT_SECTION = {"", "万", "亿", "万亿"};
+
     private static final String E = "E";
 
     private DataFormat() {
@@ -42,18 +44,14 @@ public class DataFormat {
             pattern.append("'0'");
         }
         // else create integer part with the given length
-        for (int i = 0; i < integerLength; i++) {
-            pattern.append("0");
-        }
+        IntStream.range(0, integerLength).mapToObj(i -> "0").forEach(pattern::append);
         // add symbol "."
         if (totalLength > integerLength) {
             pattern.append(".");
         }
         // create decimal part with the given length ( = total-length minus
         // integer-length)
-        for (int i = 0; i < totalLength - integerLength; i++) {
-            pattern.append(fixed ? "0" : "#");
-        }
+        IntStream.range(0, totalLength - integerLength).mapToObj(i -> fixed ? "0" : "#").forEach(pattern::append);
         // create the power part
         pattern.append("E0");
 

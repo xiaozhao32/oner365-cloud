@@ -7,15 +7,11 @@ import java.util.List;
 
 import com.google.common.base.MoreObjects;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * 系统用户
  *
  * @author zhaoyong
  */
-@ApiModel(value = "用户信息")
 public class SysUserDto implements Serializable {
 
     /**
@@ -26,121 +22,101 @@ public class SysUserDto implements Serializable {
     /**
      * 主键
      */
-    @ApiModelProperty(value = "主键")
     private String id;
 
     /**
      * 用户标识
      */
-    @ApiModelProperty(value = "用户标识")
     private String userCode;
 
     /**
      * 账号
      */
-    @ApiModelProperty(value = "账号", required = true)
     private String userName;
 
     /**
      * 密码
      */
-    @ApiModelProperty(value = "密码", required = true)
     private String password;
 
     /**
      * 真实姓名
      */
-    @ApiModelProperty(value = "真实姓名")
     private String realName;
 
     /**
      * 头像
      */
-    @ApiModelProperty(value = "头像")
     private String avatar;
 
     /**
      * 性别
      */
-    @ApiModelProperty(value = "性别")
     private String sex;
 
     /**
      * 状态
      */
-    @ApiModelProperty(value = "状态")
     private String status;
 
     /**
      * 最后登录时间
      */
-    @ApiModelProperty(value = "最后登录时间")
     private LocalDateTime lastTime;
 
     /**
      * 创建时间
      */
-    @ApiModelProperty(value = "创建时间")
     private LocalDateTime createTime;
 
     /**
      * 最后登录ip
      */
-    @ApiModelProperty(value = "最后登录ip")
     private String lastIp;
 
     /**
      * 邮箱
      */
-    @ApiModelProperty(value = "邮箱")
     private String email;
 
     /**
      * 电话
      */
-    @ApiModelProperty(value = "电话")
     private String phone;
 
     /**
      * 身份证
      */
-    @ApiModelProperty(value = "身份证")
     private String idCard;
 
     /**
      * 是否管理员
      */
-    @ApiModelProperty(value = "是否管理员")
     private String isAdmin;
 
     /**
      * 默认密码
      */
-    @ApiModelProperty(value = "默认密码")
     private String defaultPassword;
 
     /**
      * 状态
      */
-    @ApiModelProperty(value = "状态")
     private String activeStatus;
 
     /**
      * 用户类型
      */
-    @ApiModelProperty(value = "用户类型")
     private String userType;
 
     /**
      * 证件类型
      */
-    @ApiModelProperty(value = "证件类型")
     private String idType;
 
     /**
      * 备注
      */
-    @ApiModelProperty(value = "备注")
     private String remark;
     
     private List<String> roles = new ArrayList<>();

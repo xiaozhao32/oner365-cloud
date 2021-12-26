@@ -8,12 +8,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
+import com.google.common.base.Joiner;
 import com.oner365.common.query.Criterion.Operator;
 import com.oner365.util.DataUtils;
 
 /**
  * 查询工具类
- * 
+ *
  * @author zhaoyong
  */
 public class QueryUtils {
@@ -40,16 +41,16 @@ public class QueryUtils {
     if (data == null || DataUtils.isEmpty(data.getWhereList())) {
       return criteria;
     }
-    for (AttributeBean attr : data.getWhereList()) {
+    data.getWhereList().forEach(attr -> {
       String key = attr.getKey();
       String opt = !DataUtils.isEmpty(attr.getOpt()) ? attr.getOpt().toUpperCase() : Operator.EQ.name();
-      Operator operator = Criterion.Operator.valueOf(opt);
+      Operator operator = Operator.valueOf(opt);
       String value = attr.getVal();
       if (DataUtils.isEmpty(key) || DataUtils.isEmpty(value)) {
-        continue;
+        return;
       }
       getOperator(criteria, operator, key, value);
-    }
+    });
     return criteria;
   }
 
@@ -93,7 +94,7 @@ public class QueryUtils {
 
   /**
    * 构造分页内容
-   * 
+   *
    * @param data 数据
    * @return PageRequest
    */
@@ -114,7 +115,7 @@ public class QueryUtils {
 
   /**
    * 构造排序内容
-   * 
+   *
    * @param order 数据
    * @return Sort
    */
@@ -132,21 +133,21 @@ public class QueryUtils {
 
   /**
    * 构造查询条件字符串
-   * 
+   *
    * @param whereList 条件
    * @return String
    */
   public static String buildWhereCriterion(List<AttributeBean> whereList) {
     StringBuilder sb = new StringBuilder();
-    for (AttributeBean attr : whereList) {
+    whereList.forEach(attr -> {
       String key = attr.getKey();
       String value = attr.getVal();
       String opt = attr.getOpt();
       if (DataUtils.isEmpty(key) || DataUtils.isEmpty(value)) {
-        continue;
+        return;
       }
       getCriterion(sb, key, opt, value);
-    }
+    });
     return sb.toString();
   }
 
@@ -190,12 +191,7 @@ public class QueryUtils {
   public static String getInCriterion(List<String> list) {
     String result = null;
     if (list != null && !list.isEmpty()) {
-      StringBuilder sb = new StringBuilder();
-      for (String str : list) {
-        sb.append("'").append(str).append("',");
-      }
-      result = sb.toString();
-      result = result.substring(0, result.length() - 1);
+      result = "'" + Joiner.on("','").join(list) + "'";
     }
     return result;
   }

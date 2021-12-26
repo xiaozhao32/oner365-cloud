@@ -70,9 +70,9 @@ public class VerifyCodeUtils {
     /**
      * 输出指定验证码图片流
      *
-     * @param w    宽度
-     * @param h    高度
-     * @param os   输出流
+     * @param w 宽度
+     * @param h 高度
+     * @param os 输出流
      * @param code 验证码
      * @throws IOException 异常
      */
@@ -82,8 +82,8 @@ public class VerifyCodeUtils {
         Graphics2D g2 = image.createGraphics();
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         Color[] colors = new Color[5];
-        Color[] colorSpaces = new Color[]{Color.WHITE, Color.CYAN, Color.GRAY, Color.LIGHT_GRAY, Color.MAGENTA,
-                Color.ORANGE, Color.PINK, Color.YELLOW};
+        Color[] colorSpaces = new Color[] { Color.WHITE, Color.CYAN, Color.GRAY, Color.LIGHT_GRAY, Color.MAGENTA,
+                Color.ORANGE, Color.PINK, Color.YELLOW };
         float[] fractions = new float[colors.length];
         for (int i = 0; i < colors.length; i++) {
             colors[i] = colorSpaces[RANDOM.nextInt(colorSpaces.length)];
@@ -131,7 +131,7 @@ public class VerifyCodeUtils {
         for (int i = 0; i < verifySize; i++) {
             AffineTransform affine = new AffineTransform();
             affine.setToRotation(Math.PI / 4 * RANDOM.nextDouble() * (RANDOM.nextBoolean() ? 1 : -1),
-                    ((float) w / verifySize) * i + fontSize / 2d, h / 2d);
+                    ((float)w / verifySize) * i + fontSize / 2d, h / 2d);
             g2.setTransform(affine);
             g2.drawChars(chars, i, 1, ((w - 10) / verifySize) * i + 5, h / 2 + fontSize / 2 - 10);
         }

@@ -43,21 +43,13 @@ public class SnowFlakeUtils {
     private static final long DATA_CENTER_LEFT = SEQUENCE_BIT + MACHINE_BIT;
     private static final long TIMESTAMP_LEFT = DATA_CENTER_LEFT + DATA_CENTER_BIT;
 
-    /**
-     * 数据中心
-     */
-    private long dataCenterId;
-    /**
-     * 机器标识
-     */
-    private long machineId;
-    /**
-     * 序列号
-     */
+    /** 数据中心 */
+    private final long dataCenterId;
+    /** 机器标识 */
+    private final long machineId;
+    /** 序列号 */
     private long sequence = 0L;
-    /**
-     * 上一次时间戳
-     */
+    /** 上一次时间戳 */
     private long lastTimeStamp = -1L;
 
     private long getNextMill() {

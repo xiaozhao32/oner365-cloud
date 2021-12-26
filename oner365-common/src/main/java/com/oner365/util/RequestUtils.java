@@ -21,7 +21,7 @@ import com.oner365.common.auth.AuthUser;
 
 /**
  * JavaWebToken常用类
- * 
+ *
  * @author zhaoyong
  */
 public class RequestUtils {
@@ -46,7 +46,7 @@ public class RequestUtils {
 
     /**
      * set method
-     * 
+     *
      * @param request HttpServletRequest
      */
     public static void setHttpRequest(HttpServletRequest request) {
@@ -55,7 +55,7 @@ public class RequestUtils {
 
     /**
      * get method
-     * 
+     *
      * @return HttpServletRequest
      */
     public static HttpServletRequest getHttpRequest() {

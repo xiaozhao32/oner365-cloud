@@ -6,163 +6,150 @@ import java.time.LocalDateTime;
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.MoreObjects;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * 基础权限--角色表nt_sys_role
  *
  * @author liutao
  */
-@ApiModel(value = "角色信息")
 public class SysRoleDto implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    /**
-     * 编号 id
-     */
-    @ApiModelProperty(value = "主键")
-    private String id;
+  /**
+   * 编号 id
+   */
+  private String id;
 
-    /**
-     * 角色标识 role_code
-     */
-    @ApiModelProperty(value = "角色标识")
-    private String roleCode;
+  /**
+   * 角色标识 role_code
+   */
+  private String roleCode;
 
-    /**
-     * 角色名称 role_name
-     */
-    @ApiModelProperty(value = "角色名称", required = true)
-    private String roleName;
+  /**
+   * 角色名称 role_name
+   */
+  private String roleName;
 
-    /**
-     * 角色描述 role_des
-     */
-    @ApiModelProperty(value = "角色描述")
-    private String roleDes;
+  /**
+   * 角色描述 role_des
+   */
+  private String roleDes;
 
-    /**
-     * 状态 status
-     */
-    @ApiModelProperty(value = "状态")
-    private String status;
+  /**
+   * 状态 status
+   */
+  private String status;
 
-    /**
-     * 创建时间 create_time
-     */
-    @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+  /**
+   * 创建时间 create_time
+   */
+  private LocalDateTime createTime;
 
-    /**
-     * 更新时间 update_time
-     */
-    @ApiModelProperty(value = "更新时间")
-    private LocalDateTime updateTime;
-    
-    /**
-     * 菜单id
-     */
-    @ApiModelProperty(value = "菜单id")
-    private JSONArray menuIds;
-    
-    /**
-     * 菜单类型
-     */
-    @ApiModelProperty(value = "菜单类型")
-    private String menuType;
+  /**
+   * 更新时间 update_time
+   */
+  private LocalDateTime updateTime;
 
-    /**
-     * Generate constructor
-     */
-    public SysRoleDto() {
-        super();
-    }
+  /**
+   * 菜单id
+   */
+  private JSONArray menuIds;
 
-    /**
-     * @return the id
-     */
-    public String getId() {
-        return id;
-    }
+  /**
+   * 菜单类型
+   */
+  private String menuType;
 
-    /**
-     * @param id the id to set
-     */
-    public void setId(String id) {
-        this.id = id;
-    }
+  /**
+   * Generate constructor
+   */
+  public SysRoleDto() {
+    super();
+  }
 
-    public String getRoleCode() {
-        return roleCode;
-    }
+  /**
+   * @return the id
+   */
+  public String getId() {
+    return id;
+  }
 
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
-    }
+  /**
+   * @param id the id to set
+   */
+  public void setId(String id) {
+    this.id = id;
+  }
 
-    public String getRoleName() {
-        return roleName;
-    }
+  public String getRoleCode() {
+    return roleCode;
+  }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
+  public void setRoleCode(String roleCode) {
+    this.roleCode = roleCode;
+  }
 
-    public String getRoleDes() {
-        return roleDes;
-    }
+  public String getRoleName() {
+    return roleName;
+  }
 
-    public void setRoleDes(String roleDes) {
-        this.roleDes = roleDes;
-    }
+  public void setRoleName(String roleName) {
+    this.roleName = roleName;
+  }
 
-    public String getStatus() {
-        return status;
-    }
+  public String getRoleDes() {
+    return roleDes;
+  }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+  public void setRoleDes(String roleDes) {
+    this.roleDes = roleDes;
+  }
 
-    public LocalDateTime getCreateTime() {
-        return createTime;
-    }
+  public String getStatus() {
+    return status;
+  }
 
-    public void setCreateTime(LocalDateTime createTime) {
-        this.createTime = createTime;
-    }
+  public void setStatus(String status) {
+    this.status = status;
+  }
 
-    public LocalDateTime getUpdateTime() {
-        return updateTime;
-    }
+  public LocalDateTime getCreateTime() {
+    return createTime;
+  }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
-        this.updateTime = updateTime;
-    }
+  public void setCreateTime(LocalDateTime createTime) {
+    this.createTime = createTime;
+  }
 
-    /**
-     * toString Method
-     */
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", id).toString();
-    }
+  public LocalDateTime getUpdateTime() {
+    return updateTime;
+  }
 
-    public JSONArray getMenuIds() {
-        return menuIds;
-    }
+  public void setUpdateTime(LocalDateTime updateTime) {
+    this.updateTime = updateTime;
+  }
 
-    public void setMenuIds(JSONArray menuIds) {
-        this.menuIds = menuIds;
-    }
+  /**
+   * toString Method
+   */
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this).add("id", id).toString();
+  }
 
-    public String getMenuType() {
-        return menuType;
-    }
+  public JSONArray getMenuIds() {
+    return menuIds;
+  }
 
-    public void setMenuType(String menuType) {
-        this.menuType = menuType;
-    }
+  public void setMenuIds(JSONArray menuIds) {
+    this.menuIds = menuIds;
+  }
+
+  public String getMenuType() {
+    return menuType;
+  }
+
+  public void setMenuType(String menuType) {
+    this.menuType = menuType;
+  }
 }

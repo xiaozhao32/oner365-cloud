@@ -7,16 +7,12 @@ import java.util.List;
 
 import com.google.common.base.MoreObjects;
 
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 /**
  * 机构表 - nt_sys_organization
  *
  * @author liutao
  *
  */
-@ApiModel(value = "机构")
 public class SysOrganizationDto implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -24,121 +20,101 @@ public class SysOrganizationDto implements Serializable {
     /**
      * 编号 id
      */
-    @ApiModelProperty(value = "主键")
     private String id;
 
     /**
      * 机构名称 org_name
      */
-    @ApiModelProperty(value = "机构名称")
     private String orgName;
 
     /**
      * 机构名称 ancestors
      */
-    @ApiModelProperty(value = "机构编号")
     private String ancestors;
 
     /**
      * 机构代码 org_code
      */
-    @ApiModelProperty(value = "机构代码")
     private String orgCode;
 
     /**
      * 机构统一社会信用代码 org_credit_code
      */
-    @ApiModelProperty(value = "信用代码")
     private String orgCreditCode;
 
     /**
      * 机构行政划区代码 org_area_code
      */
-    @ApiModelProperty(value = "行政区域代码")
     private String orgAreaCode;
 
     /**
      * 机构类型 org_type
      */
-    @ApiModelProperty(value = "机构类型")
     private String orgType;
 
     /**
      * 机构图标 org_logo
      */
-    @ApiModelProperty(value = "图标")
     private String orgLogo;
 
     /**
      * 机构图标地址 org_logo_url
      */
-    @ApiModelProperty(value = "图标地址")
     private String orgLogoUrl;
 
     /**
      * 机构排序 org_order
      */
-    @ApiModelProperty(value = "排序")
     private Integer orgOrder;
 
     /**
      * 机构父级机构编号 parent_id
      */
-    @ApiModelProperty(value = "上级id")
     private String parentId;
 
     /**
      * 状态 status
      */
-    @ApiModelProperty(value = "状态")
     private String status;
 
     /**
      * 更新时间update_time
      */
-    @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
 
     /**
      * 创建时间 create_time
      */
-    @ApiModelProperty(value = "修改时间")
     private LocalDateTime createTime;
 
     /**
      * 业务负责人
      */
-    @ApiModelProperty(value = "业务负责人")
     private String businessName;
 
     /**
      * 业务负责人电话
      */
-    @ApiModelProperty(value = "业务负责人电话")
     private String businessPhone;
 
     /**
      * 技术负责人
      */
-    @ApiModelProperty(value = "技术负责人")
     private String technicalName;
 
     /**
      * 技术负责人电话
      */
-    @ApiModelProperty(value = "技术负责人电话")
     private String technicalPhone;
 
     /**
      * 技术负责人电话
      */
-    @ApiModelProperty(value = "账号id")
     private String createUser;
 
     /**
      * 数据源
      */
-    @ApiModelProperty(value = "数据源")
     private DataSourceConfigDto dataSourceConfigDto;
     
     private List<SysOrganizationDto> children = new ArrayList<>();

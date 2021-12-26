@@ -3,15 +3,12 @@ package com.oner365.monitor.vo;
 import java.io.Serializable;
 import java.util.Date;
 
-import io.swagger.annotations.ApiModel;
-
 /**
  * SysTaskLog
  * 
  * @author zhaoyong
  *
  */
-@ApiModel(value = "定时任务日志")
 public class SysTaskLogVo implements Serializable {
   private static final long serialVersionUID = 1L;
 

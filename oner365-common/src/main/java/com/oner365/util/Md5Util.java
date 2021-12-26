@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * MD5加密工具类
+ * Md5加密工具类
  * @author zhaoyong
  */
 public class Md5Util {
@@ -33,7 +33,7 @@ public class Md5Util {
 
     /**
      * 获取单例
-     * @return MD5Util
+     * @return Md5Util
      */
     public static Md5Util getInstance() {
         Md5Util instance = LOCAL.get();

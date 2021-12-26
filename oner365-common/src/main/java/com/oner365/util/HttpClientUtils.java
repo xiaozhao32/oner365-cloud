@@ -15,7 +15,6 @@ import java.nio.charset.Charset;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,6 +47,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
+import org.apache.logging.log4j.util.Strings;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpMethod;
@@ -99,9 +99,10 @@ public class HttpClientUtils {
       // 信任所有
       SSLContext sslContext = new SSLContextBuilder().loadTrustMaterial(null, (chain, authType) -> true).build();
       RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(REQUEST_TIMEOUT)
-          .setSocketTimeout(REQUEST_SOCKET_TIME).build();
+              .setSocketTimeout(REQUEST_SOCKET_TIME).build();
       SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(sslContext);
-      return HttpClients.custom().setSSLSocketFactory(socketFactory).setDefaultRequestConfig(requestConfig).build();
+      return HttpClients.custom().setSSLSocketFactory(socketFactory).setDefaultRequestConfig(requestConfig)
+              .build();
     } catch (KeyManagementException e) {
       LOGGER.error("KeyManagementException", e);
     } catch (NoSuchAlgorithmException e) {
@@ -113,7 +114,7 @@ public class HttpClientUtils {
   }
 
   public static String httpsPost(String path, Map<String, String> headers, String body)
-      throws IOException, KeyManagementException, NoSuchAlgorithmException {
+          throws IOException, KeyManagementException, NoSuchAlgorithmException {
     URL url = new URL(path);
     HostnameVerifier ignoreHostnameVerifier = (s, sslSession) -> {
       LOGGER.warn("WARNING: Hostname is not matched for cert.");
@@ -143,7 +144,7 @@ public class HttpClientUtils {
       outPutStream.flush();
     }
     BufferedReader bufferReader = new BufferedReader(
-        new InputStreamReader(connection.getInputStream(), Charset.defaultCharset()));
+            new InputStreamReader(connection.getInputStream(), Charset.defaultCharset()));
     String line;
     StringBuilder sb = new StringBuilder();
     while ((line = bufferReader.readLine()) != null) {
@@ -153,43 +154,28 @@ public class HttpClientUtils {
     return sb.toString();
   }
 
-  private static SSLContext getSslContext() throws NoSuchAlgorithmException, KeyManagementException {
+  private static SSLContext getSslContext()
+          throws NoSuchAlgorithmException, KeyManagementException {
     SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
-    sslContext.init(null, new TrustManager[] { new MyX509TrustManager(false) }, new java.security.SecureRandom());
+    sslContext.init(null, new TrustManager[]{new MyX509TrustManager()}, new java.security.SecureRandom());
     return sslContext;
   }
 
   public static class MyX509TrustManager implements X509TrustManager {
 
-    private final boolean checkTrusted;
-
-    MyX509TrustManager(boolean checkTrusted) {
-      this.checkTrusted = checkTrusted;
+    @Override
+    public void checkClientTrusted(X509Certificate[] arg0, String arg1) {
+      // checkClientTrusted
     }
 
     @Override
-    public void checkClientTrusted(X509Certificate[] certificates, String authType) throws CertificateException {
-      if (checkTrusted) {
-        // checkClientTrusted
-        for (X509Certificate certificate : certificates) {
-          certificate.checkValidity();
-        }
-      }
-    }
-
-    @Override
-    public void checkServerTrusted(X509Certificate[] certificates, String authType) throws CertificateException {
-      if (checkTrusted) {
-        // checkServerTrusted
-        for (X509Certificate certificate : certificates) {
-          certificate.checkValidity();
-        }
-      }
+    public void checkServerTrusted(X509Certificate[] arg0, String arg1) {
+      // checkServerTrusted
     }
 
     @Override
     public X509Certificate[] getAcceptedIssuers() {
-      return new X509Certificate[]{};
+      return new X509Certificate[0];
     }
 
   }
@@ -202,9 +188,9 @@ public class HttpClientUtils {
   private static CloseableHttpClient getHttpClient() {
     init();
     RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(REQUEST_TIMEOUT)
-        .setSocketTimeout(REQUEST_SOCKET_TIME).build();
-    return HttpClients.custom().setConnectionManager(httpClientConnectionManager).setDefaultRequestConfig(requestConfig)
-        .build();
+            .setSocketTimeout(REQUEST_SOCKET_TIME).build();
+    return HttpClients.custom().setConnectionManager(httpClientConnectionManager)
+            .setDefaultRequestConfig(requestConfig).build();
   }
 
   /**
@@ -274,7 +260,7 @@ public class HttpClientUtils {
 
   /***
    * HTTP POST
-   * 
+   *
    * @param url 请求地址
    * @return String
    */
@@ -319,7 +305,7 @@ public class HttpClientUtils {
 
   /***
    * Http Post请求
-   * 
+   *
    * @param url     请求地址
    * @param params  请求参数
    * @param charset 字符编写,缺省为UTF-8
@@ -349,7 +335,7 @@ public class HttpClientUtils {
   }
 
   public static String httpPostRequest(String url, Map<String, Object> headers, Map<String, Object> params,
-      String charset) {
+                                       String charset) {
     HttpPost httpPost = new HttpPost(url);
 
     for (Map.Entry<String, Object> param : headers.entrySet()) {
@@ -367,7 +353,7 @@ public class HttpClientUtils {
 
   /***
    * HTTPS POST
-   * 
+   *
    * @param url    请求地址
    * @param params 参数
    * @return String
@@ -381,7 +367,7 @@ public class HttpClientUtils {
   }
 
   public static String httpsPostRequest(String url, Map<String, Object> headers, Map<String, Object> params,
-      String charset) {
+                                        String charset) {
     String result = null;
     try {
       HttpClient httpClient = createSslClientDefault();
@@ -481,7 +467,7 @@ public class HttpClientUtils {
     } catch (IOException e) {
       LOGGER.error("IOException", e);
     }
-    return "";
+    return Strings.EMPTY;
   }
 
   /**
@@ -505,7 +491,7 @@ public class HttpClientUtils {
     } catch (IOException e) {
       LOGGER.error("IOException", e);
     }
-    return "";
+    return Strings.EMPTY;
   }
 
   public static String httpsGetRequest(String url, Map<String, Object> headers) {
