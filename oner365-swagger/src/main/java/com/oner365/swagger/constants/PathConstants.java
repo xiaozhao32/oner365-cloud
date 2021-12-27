@@ -39,16 +39,37 @@ public class PathConstants {
   public static final String REQUEST_FILES_STORAGE_UPLOAD = "/fdfs/uploadMultipartFile";
   public static final String REQUEST_FILES_STORAGE_DOWNLOAD = "/fdfs/downloadFile";
   
+  /** elasticsearch */
+  public static final String FEIGN_CLIENT_ELASTICSEARCH = "oner365-elasticsearch";
+  /** elasticsearch context */
+  public static final String CONTEXT_ELASTICSEARCH_INFO_ID = "IElasticsearchInfoClient";
+  public static final String CONTEXT_ELASTICSEARCH_SAMPLE_GENE_ID = "IElasticsearchSampleGeneClient";
+  
+  /** Elasticsearch信息 */
+  public static final String REQUEST_ELASTICSEARCH_INFO_INDEX = "/info/index";
+  /** 基因信息 */
+  public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_LIST = "/sampleGene/list";
+  public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_GET_ID = "/sampleGene/get/{id}";
+  public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_SAVE = "/sampleGene/save";
+  public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_DELETE = "/sampleGene/delete";
+  
   /** monitor */
   public static final String FEIGN_CLIENT_MONITOR = "oner365-monitor";
-  
   /** monitor context */
   public static final String CONTEXT_MONITOR_CACHE_ID = "IMonitorCacheClient";
+  public static final String CONTEXT_MONITOR_RABBITMQ_ID = "IMonitorRabbitmqClient";
+  public static final String CONTEXT_MONITOR_SERVER_ID = "IMonitorServerClient";
   
   /** 缓存 */
   public static final String REQUEST_MONITOR_CACHE_INDEX = "/cache/index";
   public static final String REQUEST_MONITOR_CACHE_LIST = "/cache/cacheList";
   public static final String REQUEST_MONITOR_CACHE_CLEAN = "/cache/clean";
+  /** 队列 */
+  public static final String REQUEST_MONITOR_RABBITMQ_INDEX = "/rabbitmq/index";
+  public static final String REQUEST_MONITOR_RABBITMQ_LIST = "/rabbitmq/list/{type}";
+  public static final String REQUEST_MONITOR_RABBITMQ_DELETE = "/rabbitmq/delete/{type}/{name}";
+  /** 服务器 */
+  public static final String REQUEST_MONITOR_SERVER_INDEX = "/server/index";
 
   private PathConstants() {
   }

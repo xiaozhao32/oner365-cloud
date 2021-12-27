@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "缓存管理")
 @RequestMapping("/monitor/cache")
-public class CacheController extends BaseController {
+public class MonitorCacheController extends BaseController {
 
   @Autowired
   private IMonitorCacheClient client;
