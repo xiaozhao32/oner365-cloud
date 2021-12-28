@@ -14,6 +14,8 @@ public class PathConstants {
   /** system context */
   public static final String CONTEXT_SYSTEM_AUTH_ID = "ISystemAuthClient";
   public static final String CONTEXT_SYSTEM_DATASOURCE_CONFIG_ID = "ISystemDataSourceConfigClient";
+  public static final String CONTEXT_SYSTEM_JOB_ID = "ISystemJobClient";
+  public static final String CONTEXT_SYSTEM_MENU_ID = "ISystemMenuClient";
   
   /** 用户认证 */
   public static final String REQUEST_SYSTEM_AUTH_LOGIN = "/auth/login";
@@ -28,6 +30,18 @@ public class PathConstants {
   public static final String REQUEST_SYSTEM_DATASOURCE_GET_CONNECT_NAME = "/datasource/getConnectName";
   public static final String REQUEST_SYSTEM_DATASOURCE_SAVE = "/datasource/save";
   public static final String REQUEST_SYSTEM_DATASOURCE_DELETE = "/datasource/delete";
+  
+  /** 职位信息 */
+  public static final String REQUEST_SYSTEM_JOB_LIST = "/job/list";
+  public static final String REQUEST_SYSTEM_JOB_GET_ID = "/job/get/{id}";
+  public static final String REQUEST_SYSTEM_JOB_EDIT_STATUS = "/job/editStatus/{id}";
+  public static final String REQUEST_SYSTEM_JOB_SAVE = "/job/save";
+  public static final String REQUEST_SYSTEM_JOB_DELETE = "/job/delete";
+  public static final String REQUEST_SYSTEM_JOB_EXPORT = "/job/export";
+  
+  /** 菜单 */
+  public static final String REQUEST_SYSTEM_MENU_LIST = "/menu/list";
+  public static final String REQUEST_SYSTEM_MENU_GET_ID = "/menu/get/{id}";
   
   /** files */
   public static final String FEIGN_CLIENT_FILES = "oner365-files";

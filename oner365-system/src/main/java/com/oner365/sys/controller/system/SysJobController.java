@@ -39,7 +39,7 @@ public class SysJobController extends BaseController {
    * 用户职位列表
    *
    * @param data 查询参数
-   * @return PageInfo<SysJob>
+   * @return PageInfo<SysJobDto>
    */
   @PostMapping("/list")
   public PageInfo<SysJobDto> list(@RequestBody QueryCriteriaBean data) {
@@ -50,7 +50,7 @@ public class SysJobController extends BaseController {
    * 获取用户职位
    *
    * @param id 编号
-   * @return SysJob
+   * @return SysJobDto
    */
   @GetMapping("/get/{id}")
   public SysJobDto get(@PathVariable String id) {
@@ -73,7 +73,7 @@ public class SysJobController extends BaseController {
    * 用户职位保存
    *
    * @param sysJobVo 职位对象
-   * @return ResponseResult<SysJob>
+   * @return ResponseResult<SysJobDto>
    */
   @PutMapping("/save")
   public ResponseResult<SysJobDto> save(@RequestBody SysJobVo sysJobVo) {

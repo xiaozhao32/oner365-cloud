@@ -1,9 +1,7 @@
 package com.oner365.sys.controller.system;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -23,7 +21,8 @@ import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dto.SysMenuDto;
-import com.oner365.sys.dto.SysMenuOperationDto;
+import com.oner365.sys.dto.SysMenuInfoDto;
+import com.oner365.sys.dto.SysMenuTreeSelectDto;
 import com.oner365.sys.dto.TreeSelect;
 import com.oner365.sys.service.ISysMenuOperationService;
 import com.oner365.sys.service.ISysMenuService;
@@ -62,16 +61,14 @@ public class SysMenuController extends BaseController {
    * 获取菜单
    *
    * @param id 编号
-   * @return Map<String, Object>
+   * @return SysMenuInfoDto
    */
   @GetMapping("/get/{id}")
-  public Map<String, Object> get(@PathVariable String id) {
-    Map<String, Object> result = new HashMap<>();
-    result.put("sysMenu", menuService.getById(id));
-    List<String> menuOperList = operationService.selectByMenuId(id);
-    result.put("menuOperList", menuOperList);
-    List<SysMenuOperationDto> operationList = operationService.findList();
-    result.put("operationList", operationList);
+  public SysMenuInfoDto get(@PathVariable String id) {
+    SysMenuInfoDto result = new SysMenuInfoDto();
+    result.setSysMenu(menuService.getById(id));
+    result.setMenuOperList(operationService.selectByMenuId(id));
+    result.setOperationList(operationService.findList());
     return result;
   }
 
@@ -112,10 +109,10 @@ public class SysMenuController extends BaseController {
    * @param authUser  登录对象
    * @param sysMenuVo 菜单对象
    * @param roleId    String
-   * @return Map<String, Object>
+   * @return SysMenuTreeSelectDto
    */
   @PostMapping("/roleMenuTreeselect/{roleId}")
-  public Map<String, Object> roleMenuTreeselect(@RequestBody SysMenuVo sysMenuVo, @PathVariable("roleId") String roleId,
+  public SysMenuTreeSelectDto roleMenuTreeselect(@RequestBody SysMenuVo sysMenuVo, @PathVariable("roleId") String roleId,
       @CurrentUser AuthUser authUser) {
     List<SysMenuDto> menus;
     if (SysConstants.DEFAULT_ROLE.equals(authUser.getIsAdmin())) {
@@ -124,9 +121,9 @@ public class SysMenuController extends BaseController {
       sysMenuVo.setUserId(authUser.getId());
       menus = menuService.selectListByUserId(sysMenuVo);
     }
-    Map<String, Object> result = new HashMap<>();
-    result.put("checkedKeys", menuService.selectListByRoleId(roleId, sysMenuVo.getMenuTypeId()));
-    result.put("menus", menuService.buildTreeSelect(menus));
+    SysMenuTreeSelectDto result = new SysMenuTreeSelectDto();
+    result.setCheckedKeys(menuService.selectListByRoleId(roleId, sysMenuVo.getMenuTypeId()));
+    result.setMenus(menuService.buildTreeSelect(menus));
     return result;
   }
 

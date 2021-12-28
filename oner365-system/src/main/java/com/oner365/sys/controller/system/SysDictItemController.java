@@ -65,7 +65,7 @@ public class SysDictItemController extends BaseController {
    * 获取类别列表
    *
    * @param codes 参数
-   * @return List<SysDictItemType>
+   * @return List<SysDictItemTypeDto>
    */
   @PostMapping("/findListByCodes")
   public List<SysDictItemTypeDto> findListByCode(@RequestBody String... codes) {
