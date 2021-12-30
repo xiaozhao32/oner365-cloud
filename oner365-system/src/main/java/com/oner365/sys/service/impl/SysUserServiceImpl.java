@@ -104,9 +104,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public LoginUserDto login(String userName, String p) {
+  public LoginUserDto login(String userName, String p, String ip) {
     String password = DigestUtils.md5Hex(p).toUpperCase();
-    SysUser user = getUserByUserName(userName, password);
+    SysUser user = getUserByUserName(userName, password, ip);
     if (user != null) {
       String key = CACHE_LOGIN_NAME + ":" + userName;
       JSONObject cache = redisCache.getCacheObject(key);
@@ -190,13 +190,19 @@ public class SysUserServiceImpl implements ISysUserService {
     return null;
   }
 
-  private SysUser getUserByUserName(String userName, String password) {
+  private SysUser getUserByUserName(String userName, String password, String ip) {
     Criteria<SysUser> criteria = new Criteria<>();
     criteria.add(Restrictions.eq(SysConstants.USER_NAME, userName));
     criteria.add(Restrictions.eq(SysConstants.PASS, password));
     criteria.add(Restrictions.eq(SysConstants.STATUS, StatusEnum.YES.getCode()));
     Optional<SysUser> optional = userDao.findOne(criteria);
-    return optional.orElse(null);
+    if (optional.isPresent()) {
+      SysUser sysUser = optional.get();
+      sysUser.setLastIp(ip);
+      sysUser.setLastTime(LocalDateTime.now());
+      return userDao.save(sysUser);
+    }
+    return null;
   }
 
   private void setName(SysUser entity) {

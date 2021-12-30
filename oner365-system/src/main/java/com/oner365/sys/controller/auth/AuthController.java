@@ -84,10 +84,9 @@ public class AuthController extends BaseController {
     }
     // ip地址
     String ip = DataUtils.getIpAddress(RequestUtils.getHttpRequest());
-    LOGGER.info("ip: {}", ip);
 
     // 登录
-    LoginUserDto result = sysUserService.login(userName, password);
+    LoginUserDto result = sysUserService.login(userName, password, ip);
 
     // 返回结果
     if (result != null) {

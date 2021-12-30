@@ -17,13 +17,14 @@ import com.oner365.sys.vo.SysUserVo;
 public interface ISysUserService extends BaseService {
 
   /**
-   * 登陆
+   * 登录
    *
    * @param userName 账号
    * @param password 密码
+   * @param ip       ip
    * @return LoginUserDto
    */
-  LoginUserDto login(String userName, String password);
+  LoginUserDto login(String userName, String password, String ip);
 
   /**
    * 查询分页列表
