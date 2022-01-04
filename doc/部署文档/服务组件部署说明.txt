@@ -3,6 +3,7 @@
 		-- 修改配置文件
 			-- application.properties
 				-- spring.datasource.platform=mysql
+				-- db.num=1
 				-- db.url.0=jdbc:mysql://192.168.33.43:3306/nacos?characterEncoding=utf8&connectTimeout=1000&socketTimeout=3000&autoReconnect=true&useUnicode=true&useSSL=false&serverTimezone=UTC
 				-- db.user.0=root
 				-- db.password.0=1234
@@ -14,6 +15,27 @@
 		-- 访问地址
 			-- http://xxx.xxx.x.xxx:8488/nacos
 				-- http://192.168.33.44:8488/nacos
+					-- nacos
+					-- nacos
+		-- jdk11不兼容修改
+			-- vi startup.sh
+				-- 找到注释
+					-- #JAVA_OPT_EXT_FIX="-Djava.ext.dirs=${JAVA_HOME}/jre/lib/ext:${JAVA_HOME}/lib/ext"
+				-- 修改成
+  					-- JAVA_OPT="${JAVA_OPT} -Djava.ext.dirs=${JAVA_HOME}/jre/lib/ext:${JAVA_HOME}/lib/ext"
+  				-- 找到注释
+  					-- #echo "$JAVA $JAVA_OPT_EXT_FIX ${JAVA_OPT}"
+  				-- 修改成
+					-- echo "$JAVA ${JAVA_OPT}"
+				-- 找到注释
+					-- #echo "$JAVA $JAVA_OPT_EXT_FIX ${JAVA_OPT}" > ${BASE_DIR}/logs/start.out 2>&1 &
+				-- 修改成
+					-- echo "$JAVA ${JAVA_OPT}" > ${BASE_DIR}/logs/start.out 2>&1 &
+				-- 找到注释
+					-- #nohup "$JAVA" "$JAVA_OPT_EXT_FIX" ${JAVA_OPT} nacos.nacos >> ${BASE_DIR}/logs/start.out 2>&1 &
+				-- 修改成
+					-- nohup "$JAVA" ${JAVA_OPT} nacos.nacos >> ${BASE_DIR}/logs/start.out 2>&1 &
+
 2、skywalking
 	-- apache-skywalking-apm-es7-8.6.0.tar.gz
 		-- 解压
@@ -166,3 +188,19 @@
 		-- 启动nginx
 		-- 访问地址
 			--  http://192.168.33.44
+
+5、jdk证书支持
+	-- CFCA证书jdk暂时不支持
+		-- 执行命令导入相关需要访问的CFCA颁发的证书的网站
+			-- sudo keytool -import -v -trustcacerts -alias 别名 -keystore "${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts" -file /证书路径/server.cer -storepass 
+			-- 删除导入证书
+				-- sudo keytool -delete -alias 别名 -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts
+			-- 查看导入证书（jdk 默认密码 changeit）
+				-- sudo keytool -list -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts -v |grep 别名
+				-- sudo keytool -list -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts -v -alias 别名
+
+
+
+
+
+
