@@ -115,9 +115,9 @@ public class JwtUtils {
      * @return Boolean
      */
     public static Boolean validateToken(String token, String secret) {
-        final String username = getUsernameFromToken(token, secret);
-        if (username != null) {
-            return (!DataUtils.isEmpty(JSON.parseObject(username).getString("userName")) && !isTokenExpired(token, secret));
+        final String userName = getUsernameFromToken(token, secret);
+        if (userName != null) {
+            return (!DataUtils.isEmpty(JSON.parseObject(userName).getString("userName")) && !isTokenExpired(token, secret));
         }
         return false;
     }
