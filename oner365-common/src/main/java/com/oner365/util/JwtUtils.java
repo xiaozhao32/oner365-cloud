@@ -1,5 +1,4 @@
-/*
- *    Copyright 2016 10gen Inc.
+ /*    Copyright 2016 10gen Inc.
  *
  *    Licensed under the Apache License, Version 2.0 (the "License");
  *    you may not use this file except in compliance with the License.
@@ -23,7 +22,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -36,7 +34,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  * @author zhaoyong
  */
 public class JwtUtils {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtils.class);
 
     private JwtUtils() {
@@ -52,8 +50,8 @@ public class JwtUtils {
      * @return String
      */
     public static String generateToken(String username, int days, String secret) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("sub", username);
+        Map<String, Object> claims = new HashMap<>(2);
+        claims.put("sub", RsaUtils.encrypt(username));
         claims.put("created", DateUtil.getDate());
         return Jwts.builder().setClaims(claims).setExpiration(DateUtil.getDateAfter(days))
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
@@ -68,8 +66,8 @@ public class JwtUtils {
      * @return String
      */
     public static String generateToken(String username, Date expired, String secret) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("sub", username);
+        Map<String, Object> claims = new HashMap<>(2);
+        claims.put("sub", RsaUtils.encrypt(username));
         claims.put("created", DateUtil.getDate());
         return Jwts.builder().setClaims(claims).setExpiration(expired).signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
@@ -88,7 +86,7 @@ public class JwtUtils {
         }
         final Claims claims = getClaimsFromToken(token, secret);
         if (claims != null) {
-            return claims.getSubject();
+            return RsaUtils.decrypt(claims.getSubject());
         }
         return null;
     }
@@ -104,14 +102,14 @@ public class JwtUtils {
         try {
             return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
         } catch (ExpiredJwtException e) {
-            LOGGER.error("token 已过期: {}", token, e.getMessage());
+            LOGGER.error("token: {}, 已过期: {}", token, e.getMessage());
             return e.getClaims();
         }
     }
 
     /**
      * 验证token有效性
-     * 
+     *
      * @param token  令牌
      * @param secret 加密秘钥
      * @return Boolean
@@ -119,15 +117,14 @@ public class JwtUtils {
     public static Boolean validateToken(String token, String secret) {
         final String username = getUsernameFromToken(token, secret);
         if (username != null) {
-            JSONObject json = JSON.parseObject(username);
-            return (!DataUtils.isEmpty(json.getString("userName")) && !isTokenExpired(token, secret));
+            return (!DataUtils.isEmpty(JSON.parseObject(username).getString("userName")) && !isTokenExpired(token, secret));
         }
         return false;
     }
 
     /**
      * 验证token是否过期
-     * 
+     *
      * @param token  令牌
      * @param secret 加密秘钥
      * @return Boolean
@@ -155,5 +152,7 @@ public class JwtUtils {
         }
         return expiration;
     }
+    
+    
 
 }
