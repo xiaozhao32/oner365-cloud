@@ -138,7 +138,7 @@ public class SysUserController extends BaseController {
    * @param authUser  登录对象
    * @return ResponseData
    */
-  @PostMapping("/updateUserProfile")
+  @PostMapping("/update/profile")
   public SysUserDto updateUserProfile(@RequestBody SysUserVo sysUserVo, @CurrentUser AuthUser authUser) {
     if (sysUserVo != null) {
       sysUserVo.setId(authUser.getId());
@@ -153,7 +153,7 @@ public class SysUserController extends BaseController {
    * @param checkUserNameVo 查询参数
    * @return Long
    */
-  @PostMapping("/checkUserName")
+  @PostMapping("/check")
   public Long checkUserName(@RequestBody CheckUserNameVo checkUserNameVo) {
     if (checkUserNameVo != null) {
       return sysUserService.checkUserName(checkUserNameVo.getId(), checkUserNameVo.getUserName());
@@ -167,7 +167,7 @@ public class SysUserController extends BaseController {
    * @param resetPasswordVo 查询参数
    * @return Integer
    */
-  @PostMapping("/resetPassword")
+  @PostMapping("/reset")
   public Integer resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
     if (resetPasswordVo != null) {
       return sysUserService.editPassword(resetPasswordVo.getUserId(), resetPasswordVo.getPassword());
@@ -182,7 +182,7 @@ public class SysUserController extends BaseController {
    * @param modifyPasswordVo 请求参数
    * @return Integer
    */
-  @PostMapping("/editPassword")
+  @PostMapping("/update/password")
   public ResponseResult<Integer> editPassword(@CurrentUser AuthUser authUser,
       @RequestBody ModifyPasswordVo modifyPasswordVo) {
     if (modifyPasswordVo != null) {
@@ -205,7 +205,7 @@ public class SysUserController extends BaseController {
    * @param status 状态
    * @return Integer
    */
-  @PostMapping("/editStatus/{id}")
+  @PostMapping("/status/{id}")
   public Integer editStatus(@PathVariable String id, @RequestParam("status") String status) {
     return sysUserService.editStatus(id, status);
   }

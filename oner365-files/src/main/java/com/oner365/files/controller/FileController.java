@@ -40,7 +40,7 @@ import com.oner365.util.DateUtil;
  * @author zhaoyong
  */
 @RestController
-@RequestMapping("/fdfs")
+@RequestMapping("/storage")
 public class FileController extends BaseController {
   
   @Autowired
@@ -67,7 +67,7 @@ public class FileController extends BaseController {
    * @param dictory 目录
    * @return ResponseResult<String>
    */
-  @PostMapping("/uploadMultipartFile")
+  @PostMapping("/upload")
   public ResponseResult<String> uploadMultipartFile(@RequestBody MultipartFile file,
       @RequestParam(name = "dictory", required = false) String dictory) {
     String targetDictory = dictory;
@@ -115,7 +115,7 @@ public class FileController extends BaseController {
    * @param fileUrl url 开头从组名开始
    * @return byte[]
    */
-  @GetMapping("/downloadFile")
+  @GetMapping("/byte/download")
   public byte[] downloadFile(@RequestParam("fileUrl") String fileUrl) {
     return fileStorageClient.download(fileUrl);
   }
@@ -141,7 +141,7 @@ public class FileController extends BaseController {
    * 
    * @return String
    */
-  @GetMapping("/getStorageName")
+  @GetMapping("/name")
   public String getStorageName() {
     StorageEnum result = fileStorageClient.getName();
     return result.getCode();

@@ -64,7 +64,7 @@ public class SysJobController extends BaseController {
    * @param status 状态
    * @return Integer
    */
-  @PostMapping("/editStatus/{id}")
+  @PostMapping("/status/{id}")
   public Integer editStatus(@PathVariable String id, @RequestParam("status") String status) {
     return sysJobService.editStatus(id, status);
   }

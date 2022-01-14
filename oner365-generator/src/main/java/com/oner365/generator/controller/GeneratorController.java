@@ -99,7 +99,7 @@ public class GeneratorController extends BaseController {
     /**
      * 导入表结构（保存）
      */
-    @PostMapping("/importTable")
+    @PostMapping("/import")
     public Map<String, Object> importTableSave(@CurrentUser AuthUser authUser, String tables) {
         String operName = authUser == null ? null : authUser.getUserName();
         String[] tableNames = ConvertString.toStrArray(tables);
@@ -156,7 +156,7 @@ public class GeneratorController extends BaseController {
     /**
      * 生成代码（自定义路径）
      */
-    @GetMapping("/genCode/{tableName}")
+    @GetMapping("/code/{tableName}")
     public Map<String, Object> genCode(@PathVariable("tableName") String tableName) {
         genTableService.generatorCode(tableName);
         Map<String, Object> result = new HashMap<>();
@@ -167,7 +167,7 @@ public class GeneratorController extends BaseController {
     /**
      * 同步数据库
      */
-    @GetMapping("/synchDb/{tableName}")
+    @GetMapping("/sync/{tableName}")
     public Map<String, Object> synchDb(@PathVariable("tableName") String tableName) {
         genTableService.synchDb(tableName);
         Map<String, Object> result = new HashMap<>();
@@ -178,7 +178,7 @@ public class GeneratorController extends BaseController {
     /**
      * 批量生成代码
      */
-    @GetMapping("/batchGenCode")
+    @GetMapping("/batch")
     public void batchGenCode(HttpServletResponse response, String tables) {
         String[] tableNames = ConvertString.toStrArray(tables);
         byte[] data = genTableService.downloadCode(tableNames);

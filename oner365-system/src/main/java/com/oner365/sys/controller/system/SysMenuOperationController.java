@@ -28,7 +28,7 @@ import com.oner365.sys.vo.check.CheckCodeVo;
  *
  */
 @RestController
-@RequestMapping("/menuOperation")
+@RequestMapping("/menu/operation")
 public class SysMenuOperationController extends BaseController {
 
   @Autowired
@@ -62,7 +62,7 @@ public class SysMenuOperationController extends BaseController {
    * @param checkCodeVo 查询参数
    * @return Long
    */
-  @PostMapping("/checkCode")
+  @PostMapping("/check")
   public Long checkCode(@RequestBody CheckCodeVo checkCodeVo) {
     if (checkCodeVo != null) {
       return menuOperationService.checkCode(checkCodeVo.getId(), checkCodeVo.getCode());

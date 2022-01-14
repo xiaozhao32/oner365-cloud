@@ -95,7 +95,7 @@ public class SysLogController extends BaseController {
 	 * @param days 天数
 	 * @return Integer
 	 */
-	@DeleteMapping("/deleteLog")
+	@DeleteMapping("/days/delete")
 	public Integer deleteLog(@RequestParam("days") Integer days) {
 		Date date = DateUtil.getDateAgo(days);
 		return logService.deleteLog(DateUtil.dateToLocalDateTime(date));

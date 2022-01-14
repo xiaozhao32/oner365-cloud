@@ -31,7 +31,7 @@ import com.oner365.util.GeneTransFormUtils;
  */
 @RefreshScope
 @RestController
-@RequestMapping("/sampleGene")
+@RequestMapping("/sample/gene")
 public class SampleGeneController extends BaseController {
 
   @Autowired

@@ -30,7 +30,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @Api(tags = "Elasticsearch 基因型信息")
-@RequestMapping("/elasticsearch/sampleGene")
+@RequestMapping("/elasticsearch/sample/gene")
 public class ElasticsearchSampleGeneController extends BaseController {
 
   @Autowired

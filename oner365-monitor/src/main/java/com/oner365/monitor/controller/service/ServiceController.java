@@ -94,7 +94,7 @@ public class ServiceController extends BaseController {
      * 动态刷新配置
      * @return String
      */
-    @GetMapping("/refreshConfig")
+    @GetMapping("/refresh")
     public String refreshConfig() {
         return ResultEnum.SUCCESS.getName();
     }
@@ -104,7 +104,7 @@ public class ServiceController extends BaseController {
      * @param paramJson 属性
      * @return JSONObject
      */
-    @PostMapping("/getActuatorEnv")
+    @PostMapping("/info")
     public JSONObject getActuatorEnv(@RequestBody JSONObject paramJson) {
         ClientHttpConnector httpConnector = new ReactorClientHttpConnector();
         WebClient client = WebClient.builder().clientConnector(httpConnector).baseUrl(paramJson.getString("uri")).build();
@@ -121,7 +121,7 @@ public class ServiceController extends BaseController {
      * @param multipartFile 文件
      * @return String
      */
-    @PostMapping("/uploadService")
+    @PostMapping("/upload")
     public String uploadService(@RequestParam("multipartFile") MultipartFile multipartFile,
             String ip, int port, String serviceName) {
         String fileName = serverPath + File.separator + multipartFile.getOriginalFilename();
@@ -190,7 +190,7 @@ public class ServiceController extends BaseController {
      * @param deployServer 对象
      * @return String
      */
-    @PostMapping("/resetService")
+    @PostMapping("/reset")
     public String resetService(@RequestBody DeployServer deployServer) {
 
         if (deploy) {

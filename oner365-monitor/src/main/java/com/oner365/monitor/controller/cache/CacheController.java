@@ -81,7 +81,7 @@ public class CacheController extends BaseController {
    * 
    * @return List<Map<String, Object>>
    */
-  @GetMapping("/cacheList")
+  @GetMapping("/list")
   public List<Map<String, Object>> cacheList() {
     Jedis jedis = new Jedis(host, port);
 

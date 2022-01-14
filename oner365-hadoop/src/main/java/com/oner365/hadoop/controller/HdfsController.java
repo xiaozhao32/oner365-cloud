@@ -53,7 +53,7 @@ public class HdfsController {
      * @param path 文件
      * @return ResponseData
      */
-    @GetMapping("/readPathInfo")
+    @GetMapping("/info")
     public ResponseData<List<Map<String, Object>>> readPathInfo(@RequestParam("path") String path) {
         List<Map<String, Object>> list = new ArrayList<>();
         try (FileSystem fs = HdfsService.getFileSystem()) {
@@ -70,7 +70,7 @@ public class HdfsController {
      * @param path 文件
      * @return ResponseData
      */
-    @GetMapping("/getFileBlockLocations")
+    @GetMapping("/locations")
     public ResponseData<BlockLocation[]> getFileBlockLocations(@RequestParam("path") String path) {
         try (FileSystem fs = HdfsService.getFileSystem()) {
             BlockLocation[] result = HdfsService.getFileBlockLocations(fs, path);
@@ -88,7 +88,7 @@ public class HdfsController {
      * @param file 文件
      * @return ResponseData
      */
-    @PostMapping("/createFile")
+    @PostMapping("/create")
     public ResponseData<String> createFile(@RequestParam("path") String path, @RequestParam("file") MultipartFile file) {
         try (FileSystem fs = HdfsService.getFileSystem()) {
             HdfsService.createFile(fs, path, file);
@@ -104,7 +104,7 @@ public class HdfsController {
      * @param path 文件
      * @return ResponseData
      */
-    @GetMapping("/readFile")
+    @GetMapping("/read")
     public ResponseData<String> readFile(@RequestParam("path") String path) {
         String result = null;
         try (FileSystem fs = HdfsService.getFileSystem()) {
@@ -121,7 +121,7 @@ public class HdfsController {
      * @param path 文件
      * @return ResponseData
      */
-    @GetMapping("/openFileToBytes")
+    @GetMapping("/bytes")
     public ResponseData<byte[]> openFileToBytes(@RequestParam("path") String path) {
         byte[] result = null;
         try (FileSystem fs = HdfsService.getFileSystem()) {
@@ -133,12 +133,12 @@ public class HdfsController {
     }
 
     /**
-     * 读取HDFS文件装换成User对象
+     * 读取HDFS文件转换成User对象
      *
      * @param path 文件
      * @return ResponseData
      */
-    @GetMapping("/openFileToUser")
+    @GetMapping("/user")
     public ResponseData<User> openFileToUser(@RequestParam("path") String path) {
         User result = null;
         try (FileSystem fs = HdfsService.getFileSystem()) {
@@ -155,7 +155,7 @@ public class HdfsController {
      * @param path 文件
      * @return ResponseData
      */
-    @GetMapping("/listFile")
+    @GetMapping("/list")
     public ResponseData<List<Map<String, String>>> listFile(@RequestParam("path") String path) {
         List<Map<String, String>> result = new ArrayList<>();
         try (FileSystem fs = HdfsService.getFileSystem()) {
@@ -173,7 +173,7 @@ public class HdfsController {
      * @param newName 重命名文件
      * @return ResponseData
      */
-    @GetMapping("/renameFile")
+    @GetMapping("/rename")
     public ResponseData<Boolean> renameFile(@RequestParam("oldName") String oldName, @RequestParam("newName") String newName) {
         boolean result = false;
         try (FileSystem fs = HdfsService.getFileSystem()) {
@@ -190,7 +190,7 @@ public class HdfsController {
      * @param path 文件
      * @return ResponseData
      */
-    @DeleteMapping("/deleteFile")
+    @DeleteMapping("/delete")
     public ResponseData<Boolean> deleteFile(@RequestParam("path") String path) {
         boolean result = false;
         try (FileSystem fs = HdfsService.getFileSystem()) {
@@ -208,7 +208,7 @@ public class HdfsController {
      * @param uploadPath 上传目录
      * @return ResponseData
      */
-    @PostMapping("/uploadFile")
+    @PostMapping("/upload")
     public ResponseData<String> uploadFile(@RequestParam("path") String path, @RequestParam("uploadPath") String uploadPath) {
         try (FileSystem fs = HdfsService.getFileSystem()) {
             HdfsService.uploadFile(fs, path, uploadPath);
@@ -225,7 +225,7 @@ public class HdfsController {
      * @param downloadPath 下载目录
      * @return ResponseData
      */
-    @PostMapping("/downloadFile")
+    @PostMapping("/download")
     public ResponseData<String> downloadFile(@RequestParam("path") String path,
             @RequestParam("downloadPath") String downloadPath) {
         try (FileSystem fs = HdfsService.getFileSystem()) {
@@ -243,7 +243,7 @@ public class HdfsController {
      * @param targetPath 目标文件
      * @return ResponseData
      */
-    @GetMapping("/copyFile")
+    @GetMapping("/copy")
     public ResponseData<String> copyFile(@RequestParam("sourcePath") String sourcePath,
             @RequestParam("targetPath") String targetPath) {
         try (FileSystem fs = HdfsService.getFileSystem()) {
@@ -260,7 +260,7 @@ public class HdfsController {
      * @param path 文件
      * @return ResponseData
      */
-    @GetMapping("/existFile")
+    @GetMapping("/exist")
     public ResponseData<Boolean> existFile(@RequestParam("path") String path) {
         boolean result = false;
         try (FileSystem fs = HdfsService.getFileSystem()) {

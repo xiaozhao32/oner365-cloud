@@ -47,7 +47,7 @@ public class MonitorCacheController extends BaseController {
    */
   @ApiOperation("2.缓存列表")
   @ApiOperationSupport(order = 2)
-  @GetMapping("/cacheList")
+  @GetMapping("/list")
   public ResponseData<Serializable> cacheList() {
     return client.list();
   }

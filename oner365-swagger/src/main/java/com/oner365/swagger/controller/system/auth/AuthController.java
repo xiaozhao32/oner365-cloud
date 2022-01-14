@@ -56,7 +56,7 @@ public class AuthController extends BaseController {
    */
   @ApiOperation("2.获取验证码")
   @ApiOperationSupport(order = 2)
-  @GetMapping("/captchaImage")
+  @GetMapping("/captcha")
   public ResponseData<CaptchaImageDto> captchaImage() {
     return client.captchaImage();
   }

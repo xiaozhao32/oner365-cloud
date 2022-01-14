@@ -100,7 +100,7 @@ public class AuthController extends BaseController {
    * 
    * @return CaptchaImageDto
    */
-  @GetMapping("/captchaImage")
+  @GetMapping("/captcha")
   public CaptchaImageDto captchaImage() {
     // 生成随机字串
     String verifyCode = VerifyCodeUtils.generateVerifyCode(4);

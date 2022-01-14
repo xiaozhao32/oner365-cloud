@@ -62,7 +62,7 @@ public class DataSourceConfigController extends BaseController {
    * @param connectName 连接名称
    * @return DataSourceConfigDto
    */
-  @GetMapping("/getConnectName")
+  @GetMapping("/name")
   public DataSourceConfigDto getConnectName(@RequestParam String connectName) {
     return service.getConnectName(connectName);
   }

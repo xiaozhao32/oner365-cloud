@@ -113,7 +113,7 @@ public class DynamicRouteController {
    * @param status 状态
    * @return ResponseData
    */
-  @GetMapping("/updateRouteStatus/{id}/{status}")
+  @GetMapping("/status/{id}/{status}")
   public ResponseData<Map<String, Object>> updateRouteStatus(@PathVariable String id, @PathVariable String status) {
     Map<String, Object> result = new HashMap<>();
     result.put(GatewayConstants.CODE, ResultEnum.ERROR.getCode());

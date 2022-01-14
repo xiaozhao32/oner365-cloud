@@ -34,7 +34,7 @@ import com.oner365.sys.vo.SysMenuVo;
  * @author zhaoyong
  */
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/menus")
 public class SysMenuController extends BaseController {
 
   @Autowired
@@ -79,7 +79,7 @@ public class SysMenuController extends BaseController {
    * @param status 状态
    * @return Integer
    */
-  @PostMapping("/editStatusById/{id}")
+  @PostMapping("/status/{id}")
   public Integer editStatusById(@PathVariable String id, @RequestParam("status") String status) {
     return menuService.editStatusById(id, status);
   }
@@ -91,7 +91,7 @@ public class SysMenuController extends BaseController {
    * @param sysMenuVo 菜单对象
    * @return List<TreeSelect>
    */
-  @PostMapping("/treeselect")
+  @PostMapping("/tree")
   public List<TreeSelect> treeselect(@RequestBody SysMenuVo sysMenuVo, @CurrentUser AuthUser authUser) {
     List<SysMenuDto> menus;
     if (SysConstants.DEFAULT_ROLE.equals(authUser.getIsAdmin())) {
@@ -111,7 +111,7 @@ public class SysMenuController extends BaseController {
    * @param roleId    String
    * @return SysMenuTreeSelectDto
    */
-  @PostMapping("/roleMenuTreeselect/{roleId}")
+  @PostMapping("/role/{roleId}")
   public SysMenuTreeSelectDto roleMenuTreeselect(@RequestBody SysMenuVo sysMenuVo, @PathVariable("roleId") String roleId,
       @CurrentUser AuthUser authUser) {
     List<SysMenuDto> menus;

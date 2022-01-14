@@ -56,7 +56,7 @@ public class SysDictItemController extends BaseController {
    * @param data 查询参数
    * @return PageInfo<SysDictItemTypeDto>
    */
-  @PostMapping("/findTypeList")
+  @PostMapping("/type/list")
   public PageInfo<SysDictItemTypeDto> findTypeList(@RequestBody QueryCriteriaBean data) {
     return sysDictItemTypeService.pageList(data);
   }
@@ -67,7 +67,7 @@ public class SysDictItemController extends BaseController {
    * @param codes 参数
    * @return List<SysDictItemTypeDto>
    */
-  @PostMapping("/findListByCodes")
+  @PostMapping("/type/codes/list")
   public List<SysDictItemTypeDto> findListByCode(@RequestBody String... codes) {
     return sysDictItemTypeService.findListByCodes(Arrays.asList(codes));
   }
@@ -78,7 +78,7 @@ public class SysDictItemController extends BaseController {
    * @param id 编号
    * @return SysDictItemTypeDto
    */
-  @GetMapping("/getTypeById/{id}")
+  @GetMapping("/type/get/{id}")
   public SysDictItemTypeDto getTypeById(@PathVariable String id) {
     return sysDictItemTypeService.getById(id);
   }
@@ -89,7 +89,7 @@ public class SysDictItemController extends BaseController {
    * @param checkCodeVo 查询参数
    * @return Long
    */
-  @PostMapping("/checkTypeCode")
+  @PostMapping("/type/check")
   public Long checkTypeCode(@RequestBody CheckCodeVo checkCodeVo) {
     if (checkCodeVo != null) {
       return sysDictItemTypeService.checkCode(checkCodeVo.getId(), checkCodeVo.getCode());
@@ -103,7 +103,7 @@ public class SysDictItemController extends BaseController {
    * @param typeId 类型id
    * @return List<SysDictItemDto>
    */
-  @GetMapping("/findTypeInfoById/{typeId}")
+  @GetMapping("/item/type/{typeId}")
   public List<SysDictItemDto> findTypeInfoById(@PathVariable String typeId) {
     QueryCriteriaBean data = new QueryCriteriaBean();
     List<AttributeBean> whereList = new ArrayList<>();
@@ -119,7 +119,7 @@ public class SysDictItemController extends BaseController {
    * @param typeIds 字典参数
    * @return Map<String, Object>
    */
-  @PostMapping("/findItemByTypeIds")
+  @PostMapping("/item/type/ids")
   public Map<String, Object> findItemByTypeIds(@RequestBody String... typeIds) {
     Map<String, Object> result = new HashMap<>();
     Arrays.stream(typeIds).forEach(typeId -> {
@@ -141,7 +141,7 @@ public class SysDictItemController extends BaseController {
    * @param status 状态
    * @return Integer
    */
-  @PostMapping("/editTypeStatus/{id}")
+  @PostMapping("/type/status/{id}")
   public Integer editTypeStatus(@PathVariable String id, @RequestParam("status") String status) {
     return sysDictItemTypeService.editStatus(id, status);
   }
@@ -152,7 +152,7 @@ public class SysDictItemController extends BaseController {
    * @param sysDictItemTypeVo 字典类别对象
    * @return ResponseResult<SysDictItemTypeDto>
    */
-  @PutMapping("/saveDictItemType")
+  @PutMapping("/type/save")
   public ResponseResult<SysDictItemTypeDto> saveDictItemType(@RequestBody SysDictItemTypeVo sysDictItemTypeVo) {
     if (sysDictItemTypeVo != null) {
       SysDictItemTypeDto entity = sysDictItemTypeService.save(sysDictItemTypeVo);
@@ -167,7 +167,7 @@ public class SysDictItemController extends BaseController {
    * @param ids 字典编号
    * @return Integer
    */
-  @DeleteMapping("/deleteItemType")
+  @DeleteMapping("/type/delete")
   public Integer deleteItemType(@RequestBody String... ids) {
     int code = 0;
     for (String id : ids) {
@@ -182,7 +182,7 @@ public class SysDictItemController extends BaseController {
    * @param data 参数
    * @return ResponseEntity<byte[]>
    */
-  @PostMapping("/exportItemType")
+  @PostMapping("/type/export")
   public ResponseEntity<byte[]> exportItemType(@RequestBody QueryCriteriaBean data) {
     List<SysDictItemTypeDto> list = sysDictItemTypeService.findList(data);
 
@@ -199,7 +199,7 @@ public class SysDictItemController extends BaseController {
    * @param data 查询参数
    * @return PageInfo<SysDictItemDto>
    */
-  @PostMapping("/findItemList")
+  @PostMapping("/item/list")
   public PageInfo<SysDictItemDto> findItemList(@RequestBody QueryCriteriaBean data) {
     return sysDictItemService.pageList(data);
   }
@@ -210,7 +210,7 @@ public class SysDictItemController extends BaseController {
    * @param id 字典编号
    * @return SysDictItemDto
    */
-  @GetMapping("/getItemById/{id}")
+  @GetMapping("/item/get/{id}")
   public SysDictItemDto getItemById(@PathVariable String id) {
     return sysDictItemService.getById(id);
   }
@@ -221,7 +221,7 @@ public class SysDictItemController extends BaseController {
    * @param checkTypeCodeVo 查询参数
    * @return Long
    */
-  @PostMapping("/checkCode")
+  @PostMapping("/item/check")
   public Long checkCode(@RequestBody CheckTypeCodeVo checkTypeCodeVo) {
     if (checkTypeCodeVo != null) {
       return sysDictItemService.checkCode(checkTypeCodeVo.getId(), checkTypeCodeVo.getTypeId(),
@@ -237,7 +237,7 @@ public class SysDictItemController extends BaseController {
    * @param status 状态
    * @return Integer
    */
-  @PostMapping("/editItemStatus/{id}")
+  @PostMapping("/item/status/{id}")
   public Integer editItemStatus(@PathVariable String id, @RequestParam("status") String status) {
     return sysDictItemService.editStatus(id, status);
   }
@@ -248,7 +248,7 @@ public class SysDictItemController extends BaseController {
    * @param sysDictItemVo 字典对象
    * @return ResponseResult<SysDictItemDto>
    */
-  @PutMapping("/saveDictItem")
+  @PutMapping("/item/save")
   public ResponseResult<SysDictItemDto> saveDictItem(@RequestBody SysDictItemVo sysDictItemVo) {
     if (sysDictItemVo != null) {
       SysDictItemDto entity = sysDictItemService.save(sysDictItemVo);
@@ -263,7 +263,7 @@ public class SysDictItemController extends BaseController {
    * @param ids 编号
    * @return Integer
    */
-  @DeleteMapping("/deleteItem")
+  @DeleteMapping("/item/delete")
   public Integer deleteItem(@RequestBody String... ids) {
     int code = 0;
     for (String id : ids) {
@@ -278,7 +278,7 @@ public class SysDictItemController extends BaseController {
    * @param data 查询参数
    * @return ResponseEntity<byte[]>
    */
-  @PostMapping("/exportItem")
+  @PostMapping("/item/export")
   public ResponseEntity<byte[]> exportItem(@RequestBody QueryCriteriaBean data) {
     List<SysDictItemDto> list = sysDictItemService.findList(data);
 

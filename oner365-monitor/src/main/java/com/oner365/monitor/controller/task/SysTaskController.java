@@ -104,7 +104,7 @@ public class SysTaskController extends BaseController {
    * @return ResponseResult<Integer>
    * @throws SchedulerException, TaskException 异常
    */
-  @PutMapping("/changeStatus")
+  @PutMapping("/status")
   public ResponseResult<Integer> changeStatus(@RequestBody SysTaskVo sysTaskVo)
       throws SchedulerException, TaskException {
     if (sysTaskVo != null) {

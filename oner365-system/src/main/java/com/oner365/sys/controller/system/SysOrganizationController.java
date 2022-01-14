@@ -76,7 +76,7 @@ public class SysOrganizationController extends BaseController {
    * @param password 密码
    * @return boolean
    */
-  @PostMapping("/isConnection/{ds}")
+  @PostMapping("/connection/{ds}")
   public boolean isConnection(@PathVariable String ds, @RequestParam String ip, @RequestParam int port,
       @RequestParam String dbname, @RequestParam String username, @RequestParam String password) {
     return sysOrgService.isConnection(ds, ip, port, dbname, username, password);
@@ -88,7 +88,7 @@ public class SysOrganizationController extends BaseController {
    * @param id 编号
    * @return boolean
    */
-  @GetMapping("/checkConnection/{id}")
+  @GetMapping("/check/{id}")
   public boolean checkConnection(@PathVariable String id) {
     return sysOrgService.checkConnection(id);
   }
@@ -99,7 +99,7 @@ public class SysOrganizationController extends BaseController {
    * @param parentId 父级编号
    * @return List<SysOrganizationDto>
    */
-  @GetMapping("/findListByParentId")
+  @GetMapping("/parent")
   public List<SysOrganizationDto> findListByParentId(@RequestParam("parentId") String parentId) {
     return sysOrgService.findListByParentId(parentId);
   }
@@ -110,7 +110,7 @@ public class SysOrganizationController extends BaseController {
    * @param checkOrgCodeVo 查询参数
    * @return Long
    */
-  @PostMapping("/checkCode")
+  @PostMapping("/check")
   public Long checkCode(@RequestBody CheckOrgCodeVo checkOrgCodeVo) {
     if (checkOrgCodeVo != null) {
       return sysOrgService.checkCode(checkOrgCodeVo.getId(), checkOrgCodeVo.getCode(), checkOrgCodeVo.getType());
@@ -125,7 +125,7 @@ public class SysOrganizationController extends BaseController {
    * @param authUser          登录对象
    * @return List<TreeSelect>
    */
-  @PostMapping("/treeselect")
+  @PostMapping("/tree")
   public List<TreeSelect> treeselect(@RequestBody SysOrganizationVo sysOrganizationVo, @CurrentUser AuthUser authUser) {
     List<SysOrganizationDto> list = sysOrgService.selectList(sysOrganizationVo);
     return sysOrgService.buildTreeSelect(list);
@@ -139,7 +139,7 @@ public class SysOrganizationController extends BaseController {
    * @param authUser          登录对象
    * @return Map<String, Object>
    */
-  @PostMapping("/userTreeselect/{userId}")
+  @PostMapping("/user/{userId}")
   public Map<String, Object> userTreeselect(@RequestBody SysOrganizationVo sysOrganizationVo,
       @PathVariable("userId") String userId, @CurrentUser AuthUser authUser) {
     List<SysOrganizationDto> list = sysOrgService.selectList(sysOrganizationVo);
@@ -156,7 +156,7 @@ public class SysOrganizationController extends BaseController {
    * @param status 状态
    * @return Integer
    */
-  @PostMapping("/changeStatus/{id}")
+  @PostMapping("/status/{id}")
   public Integer changeStatus(@PathVariable String id, @RequestParam("status") String status) {
     return sysOrgService.changeStatus(id, status);
   }

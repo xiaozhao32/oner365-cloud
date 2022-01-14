@@ -74,7 +74,7 @@ public class DataSourceConfigController extends BaseController {
    */
   @ApiOperation("3.按连接名称查询")
   @ApiOperationSupport(order = 3)
-  @GetMapping("/getConnectName")
+  @GetMapping("/name")
   public ResponseData<DataSourceConfigDto> getConnectName(@RequestParam String connectName) {
     return client.getConnectName(connectName);
   }

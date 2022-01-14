@@ -35,7 +35,7 @@ import com.oner365.sys.vo.check.CheckCodeVo;
  *
  */
 @RestController
-@RequestMapping("/menuType")
+@RequestMapping("/menu/type")
 public class SysMenuTypeController extends BaseController {
 
   @Autowired
@@ -57,7 +57,7 @@ public class SysMenuTypeController extends BaseController {
    * 
    * @return List<SysMenuTypeDto>
    */
-  @GetMapping("/findAll")
+  @GetMapping("/all")
   public List<SysMenuTypeDto> findAll() {
     QueryCriteriaBean data = new QueryCriteriaBean();
     List<AttributeBean> whereList = new ArrayList<>();
@@ -85,7 +85,7 @@ public class SysMenuTypeController extends BaseController {
    * @param status 状态
    * @return Integer
    */
-  @PostMapping("/editStatusById/{id}")
+  @PostMapping("/status/{id}")
   public Integer editStatusById(@PathVariable String id, @RequestParam("status") String status) {
     return menuTypeService.editStatusById(id, status);
   }
@@ -96,7 +96,7 @@ public class SysMenuTypeController extends BaseController {
    * @param checkCodeVo 查询参数
    * @return Long
    */
-  @PostMapping("/checkCode")
+  @PostMapping("/check")
   public Long checkCode(@RequestBody CheckCodeVo checkCodeVo) {
     if (checkCodeVo != null) {
       return menuTypeService.checkCode(checkCodeVo.getId(), checkCodeVo.getCode());

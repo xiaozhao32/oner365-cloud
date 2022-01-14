@@ -66,7 +66,7 @@ public class SysRoleController extends BaseController {
    * @param status 状态
    * @return Integer
    */
-  @PostMapping("/editStatus/{id}")
+  @PostMapping("/status/{id}")
   public Integer editStatus(@PathVariable String id, @RequestParam("status") String status) {
     return roleService.editStatus(id, status);
   }
@@ -77,7 +77,7 @@ public class SysRoleController extends BaseController {
    * @param checkRoleNameVo 查询参数
    * @return Long
    */
-  @PostMapping("/checkRoleName")
+  @PostMapping("/check")
   public Long checkRoleName(@RequestBody CheckRoleNameVo checkRoleNameVo) {
     if (checkRoleNameVo != null) {
       return roleService.checkRoleName(checkRoleNameVo.getId(), checkRoleNameVo.getRoleName());
