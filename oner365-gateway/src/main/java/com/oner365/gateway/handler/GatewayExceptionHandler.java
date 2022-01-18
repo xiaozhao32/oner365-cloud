@@ -21,7 +21,6 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
 import com.oner365.gateway.constants.GatewayConstants;
-import com.oner365.gateway.enums.ErrorInfoEnum;
 
 import reactor.core.publisher.Mono;
 
@@ -72,14 +71,14 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         result.put(GatewayConstants.RESULT, ex.getMessage());
 
         if (ex instanceof NotFoundException) {
-            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_503.getCode());
-            result.put(GatewayConstants.MESSAGE, ErrorInfoEnum.CODE_503.getName());
+            result.put(GatewayConstants.CODE, HttpStatus.SERVICE_UNAVAILABLE.value());
+            result.put(GatewayConstants.MESSAGE, HttpStatus.SERVICE_UNAVAILABLE.name());
         } else if (ex instanceof ResponseStatusException) {
-            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_404.getCode());
-            result.put(GatewayConstants.MESSAGE, ErrorInfoEnum.CODE_404.getName());
+            result.put(GatewayConstants.CODE, HttpStatus.NOT_FOUND.value());
+            result.put(GatewayConstants.MESSAGE, HttpStatus.NOT_FOUND.name());
         } else {
-            result.put(GatewayConstants.CODE, ErrorInfoEnum.CODE_500.getCode());
-            result.put(GatewayConstants.MESSAGE, ErrorInfoEnum.CODE_500.getName());
+            result.put(GatewayConstants.CODE, HttpStatus.SERVICE_UNAVAILABLE.value());
+            result.put(GatewayConstants.MESSAGE, HttpStatus.SERVICE_UNAVAILABLE.name());
         }
         return result;
     }
