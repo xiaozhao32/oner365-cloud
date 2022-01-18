@@ -11,7 +11,6 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
@@ -19,6 +18,7 @@ import com.oner365.common.cache.RedisCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCacheEvict;
 import com.oner365.common.cache.annotation.RedisCachePut;
+import com.oner365.common.config.properties.CommonProperties;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.util.ClassesUtil;
 
@@ -34,8 +34,8 @@ public class RedisCacheAspect {
     @Autowired
     private RedisCache redisCache;
 
-    @Value("${spring.redis.enable}")
-    private boolean redisEnabled;
+    @Autowired
+    private CommonProperties commonProperties;
 
     @Pointcut("@annotation(com.oner365.common.cache.annotation.RedisCachePut)")
     public void annotationPut() {
@@ -64,7 +64,7 @@ public class RedisCacheAspect {
     public Object redisCacheAble(ProceedingJoinPoint joinPoint, RedisCacheAble rd) throws Throwable {
 
         String key = "";
-        if (redisEnabled) {
+        if (commonProperties.isRedisEnabled()) {
             String preKey = rd.value();
             String arg0 = joinPoint.getArgs()[0].toString();
 
@@ -83,7 +83,7 @@ public class RedisCacheAspect {
             return null;
         }
 
-        if (redisEnabled) {
+        if (commonProperties.isRedisEnabled()) {
             // Set cache
             redisCache.setCacheObject(key, JSON.toJSONString(sourceObject), PublicConstants.EXPIRE_TIME, TimeUnit.MINUTES);
         }
@@ -97,7 +97,7 @@ public class RedisCacheAspect {
      */
     @After("annotationEvict()&& @annotation(rd)")
     public void redisCacheEvict(JoinPoint joinPoint, RedisCacheEvict rd) {
-        if (redisEnabled) {
+        if (commonProperties.isRedisEnabled()) {
             String preKey = rd.value();
             String arg0 = joinPoint.getArgs()[0].toString();
 
@@ -118,7 +118,7 @@ public class RedisCacheAspect {
         if (resultValue == null) {
             return;
         }
-        if (redisEnabled) {
+        if (commonProperties.isRedisEnabled()) {
             String key = getRedisKey(rd, resultValue);
             redisCache.deleteObject(key);
 

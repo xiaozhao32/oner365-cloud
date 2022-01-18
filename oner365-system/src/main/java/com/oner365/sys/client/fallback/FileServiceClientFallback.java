@@ -21,6 +21,11 @@ public class FileServiceClientFallback implements IFileServiceClient {
   public ResponseData<ResponseResult<String>> uploadFile(MultipartFile multipartFile, String dictory) {
     return new ResponseData<>(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
   }
+  
+  @Override
+  public ResponseData<byte[]> download(String fileUrl) {
+    return new ResponseData<>(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
+  }
 
   @Override
   public ResponseData<String> delete(String... ids) {

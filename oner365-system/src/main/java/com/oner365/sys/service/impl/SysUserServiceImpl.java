@@ -13,7 +13,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -25,6 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.oner365.common.cache.RedisCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
+import com.oner365.common.config.properties.AccessTokenProperties;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ExistsEnum;
 import com.oner365.common.enums.ResultEnum;
@@ -96,11 +96,8 @@ public class SysUserServiceImpl implements ISysUserService {
   @Autowired
   private ISysUserJobDao userJobDao;
 
-  @Value("${ACCESS_TOKEN_SECRET}")
-  private String accessTokenSecret;
-
-  @Value("${ACCESS_TOKEN_EXPIRY_MIN}")
-  private int accessTokenExpireTime;
+  @Autowired
+  private AccessTokenProperties tokenProperties;
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
@@ -114,7 +111,7 @@ public class SysUserServiceImpl implements ISysUserService {
         return JSON.toJavaObject(cache, LoginUserDto.class);
       }
 
-      Date time = DateUtil.after(DateUtil.getDate(), accessTokenExpireTime, Calendar.MINUTE);
+      Date time = DateUtil.after(DateUtil.getDate(), tokenProperties.getAccessTokenExpireTime(), Calendar.MINUTE);
       JSONObject tokenJson = new JSONObject();
       tokenJson.put(RequestUtils.TOKEN_TYPE, "login");
 
@@ -130,7 +127,7 @@ public class SysUserServiceImpl implements ISysUserService {
       tokenJson.put(SysConstants.ROLES, roles);
       tokenJson.put(SysConstants.JOBS, jobs);
       tokenJson.put(SysConstants.ORGS, orgs);
-      String accessToken = JwtUtils.generateToken(tokenJson.toJSONString(), time, accessTokenSecret);
+      String accessToken = JwtUtils.generateToken(tokenJson.toJSONString(), time, tokenProperties.getAccessTokenSecret());
 
       LoginUserDto result = new LoginUserDto();
       result.setAccessToken(accessToken);

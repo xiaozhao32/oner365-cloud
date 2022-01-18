@@ -13,12 +13,13 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.TransportAddress;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.controller.BaseController;
+import com.oner365.elasticsearch.config.properties.ElasticsearchProperties;
 
 /**
  * Elasticsearch 信息
@@ -31,8 +32,8 @@ import com.oner365.controller.BaseController;
 @SuppressWarnings({ "deprecation", "resource" })
 public class ElasticsearchInfoController extends BaseController {
 
-    @Value("${spring.elasticsearch.rest.uris}")
-    private String uris;
+    @Autowired
+    private ElasticsearchProperties elasticsearchProperties;
 
     /**
      * Elasticsearch 信息
@@ -41,7 +42,7 @@ public class ElasticsearchInfoController extends BaseController {
      */
     @GetMapping("/index")
     public Map<String, Object> index() {
-        String hostname = StringUtils.substringBefore(uris, ":");
+        String hostname = StringUtils.substringBefore(elasticsearchProperties.getUris(), ":");
         int port = 9300;
         // 指定集群
         Settings settings = Settings.builder().build();

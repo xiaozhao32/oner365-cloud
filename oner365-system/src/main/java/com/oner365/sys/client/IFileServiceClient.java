@@ -3,6 +3,7 @@ package com.oner365.sys.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,9 +30,18 @@ public interface IFileServiceClient {
    * @param file MultipartFile
    * @return ResponseData
    */
-  @PostMapping(value = "/fdfs/uploadMultipartFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PostMapping(value = "/storage/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   ResponseData<ResponseResult<String>> uploadFile(@RequestPart("file") MultipartFile file,
       @RequestParam("dictory") String dictory);
+  
+  /**
+   * 下载文件
+   * 
+   * @param fileUrl
+   * @return ResponseData<byte[]>
+   */
+  @GetMapping("/storage/download")
+  ResponseData<byte[]> download(@RequestParam("fileUrl") String fileUrl);
 
   /**
    * 删除文件
@@ -39,7 +49,7 @@ public interface IFileServiceClient {
    * @param ids 文件id
    * @return ResponseData
    */
-  @DeleteMapping("/fdfs/delete")
+  @DeleteMapping("/storage/delete")
   ResponseData<String> delete(@RequestBody String... ids);
 
 }

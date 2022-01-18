@@ -8,7 +8,7 @@ import java.util.Properties;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -32,19 +32,13 @@ import redis.clients.jedis.Jedis;
 @RequestMapping("/cache")
 public class CacheController extends BaseController {
 
-  @Value("${spring.redis.host}")
-  private String host;
-
-  @Value("${spring.redis.password}")
-  private String p;
-
-  @Value("${spring.redis.port}")
-  private int port;
-
   private static final int DB_SIZE = 15;
 
   @Autowired
   private RedisTemplate<String, String> redisTemplate;
+  
+  @Autowired
+  private RedisProperties redisProperties;
 
   /**
    * 缓存信息
@@ -83,11 +77,11 @@ public class CacheController extends BaseController {
    */
   @GetMapping("/list")
   public List<Map<String, Object>> cacheList() {
-    Jedis jedis = new Jedis(host, port);
+    Jedis jedis = new Jedis(redisProperties.getHost(), redisProperties.getPort());
 
     String auth = "ok";
-    if (!DataUtils.isEmpty(p)) {
-      auth = jedis.auth(p);
+    if (!DataUtils.isEmpty(redisProperties.getPassword())) {
+      auth = jedis.auth(redisProperties.getPassword());
     } else {
       jedis.connect();
     }
@@ -120,11 +114,11 @@ public class CacheController extends BaseController {
    */
   @GetMapping("/clean")
   public ResponseData<String> clean(int index) {
-    Jedis jedis = new Jedis(host, port);
+    Jedis jedis = new Jedis(redisProperties.getHost(), redisProperties.getPort());
 
     String auth = "ok";
-    if (!DataUtils.isEmpty(p)) {
-      auth = jedis.auth(p);
+    if (!DataUtils.isEmpty(redisProperties.getPassword())) {
+      auth = jedis.auth(redisProperties.getPassword());
     } else {
       jedis.connect();
     }

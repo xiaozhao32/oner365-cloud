@@ -10,11 +10,11 @@ import org.aspectj.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.oner365.common.config.properties.DefaultFileProperties;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StorageEnum;
 import com.oner365.files.config.properties.FileMinioProperties;
@@ -42,8 +42,8 @@ public class FileMinioClient implements IFileStorageClient {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(FileMinioClient.class);
 
-  @Value("${file.download}")
-  private String filePath;
+  @Autowired
+  private DefaultFileProperties fileProperties;
 
   @Autowired
   private FileMinioProperties minioProperties;
@@ -96,7 +96,7 @@ public class FileMinioClient implements IFileStorageClient {
   @Override
   public byte[] download(String path) {
     try {
-      String fullpath = filePath + PublicConstants.DELIMITER + path;
+      String fullpath = fileProperties.getDownload() + PublicConstants.DELIMITER + path;
       // 判断文件夹是否存在则创建
       File file = new File(fullpath);
       FileUtils.forceMkdirParent(file);

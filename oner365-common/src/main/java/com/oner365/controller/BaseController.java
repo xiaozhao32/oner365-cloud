@@ -5,9 +5,10 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 
+import com.oner365.common.config.properties.DefaultFileProperties;
 import com.oner365.util.DataUtils;
 import com.oner365.util.excel.ExportExcelUtils;
 
@@ -20,11 +21,8 @@ public class BaseController {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
 
-    @Value("${file.download}")
-    protected String filePath;
-
-    @Value("${file.excel.suffix}")
-    protected String fileSuffix;
+    @Autowired
+    protected DefaultFileProperties fileProperties;
 
     /**
      * 导出excel
@@ -35,9 +33,9 @@ public class BaseController {
      * @return ResponseEntity<byte[]>
      */
     protected <T> ResponseEntity<byte[]> exportExcel(String fileName, String[] titleKeys, String[] columnNames, List<T> content) {
-        String name = fileName + "." + fileSuffix;
-        ExportExcelUtils.exportExcel(name, titleKeys, columnNames, content, filePath, fileSuffix);
-        File file = new File(filePath + File.separator + name);
+        String name = fileName + "." +fileProperties.getExcelSuffix();
+        ExportExcelUtils.exportExcel(name, titleKeys, columnNames, content, fileProperties.getDownload(), fileProperties.getExcelSuffix());
+        File file = new File(fileProperties.getDownload() + File.separator + name);
         return DataUtils.download(file, name);
     }
 
