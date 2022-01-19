@@ -11,7 +11,10 @@ spring:
 dubbo:
   application:
     name: oner365-dubbo
-  registry:    address: nacos://${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
+  registry:
+    address: nacos://${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
   protocol:
-    name: dubbo    port: -1
-  provider:    version: 1.0
+    name: dubbo
+    port: -1
+  provider:
+    version: 1.0
