@@ -132,6 +132,7 @@ public class DeployMethod {
       Map<String, Object> items = new HashMap<>(1);
       items.put("SERVICE_NAME=", "SERVICE_NAME=" + projectName);
       items.put("VERSION=", "VERSION=" + deployEntity.getVersion());
+      items.put("ACTIVE=", "ACTIVE=" + deployEntity.getActive());
       DeployUtils.replaceContextFileCreate(readFile, writeFile, items);
 
       // 制作 Windows 启动脚本

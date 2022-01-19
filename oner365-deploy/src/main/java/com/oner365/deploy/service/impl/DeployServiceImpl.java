@@ -36,6 +36,7 @@ public class DeployServiceImpl implements DeployService {
     result.setSuffix(localDeployProperties.getSuffix());
     result.setVersion(localDeployProperties.getVersion());
     result.setProjects(localDeployProperties.getProjects());
+    result.setActive(localDeployProperties.getActive());
     result.setLibs(localDeployProperties.getLibs());
     return result;
   }

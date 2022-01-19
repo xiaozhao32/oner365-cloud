@@ -24,6 +24,8 @@ public class DeployEntity implements Serializable {
     private String version;
     /** 部署路径 */
     private String suffix;
+    /** 部署环境 */
+    private String active;
     /** 项目名称 */
     private List<String> projects = new ArrayList<>();
     /** jar包 */
@@ -82,6 +84,14 @@ public class DeployEntity implements Serializable {
 
     public void setLibs(List<String> libs) {
         this.libs = libs;
+    }
+    
+    public String getActive() {
+      return active;
+    }
+
+    public void setActive(String active) {
+      this.active = active;
     }
 
     @Override

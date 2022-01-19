@@ -1,26 +1,10 @@
-#部署目录
-deploy:
-  local:
-    location: /Users/zhaoyong/Documents/git/oner365-cloud
-    name: /Users/zhaoyong/Documents/deploy/nacos
-    version: 1.0.0-SNAPSHOT
-    suffix: jar
-    projects: 
-      - oner365-elasticsearch
-      - oner365-files
-      - oner365-gateway
-      - oner365-generator
-      - oner365-hadoop
-      - oner365-kafka
-      - oner365-monitor
-      - oner365-rocketmq
-      - oner365-system
-    libs: 
-      - oner365-common
-      - oner365-api
+
+spring:
+  application:
+    name: oner365-deploy
     
-  server:
-    deploy: false
-    name: /home/oner365
-    servers:
-    - 192.168.33.44:22@root:Ed30158d44
+  config:
+    activate:
+      on-profile: 
+      - lt
+      - zy
