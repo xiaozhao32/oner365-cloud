@@ -1,6 +1,6 @@
 package com.oner365.hadoop.config.properties;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -9,12 +9,11 @@ import org.springframework.context.annotation.Configuration;
  * @author zhaoyong
  */
 @Configuration
+@ConfigurationProperties(prefix = "hdfs")
 public class HdfsProperties {
 
-  @Value("${hdfs.path}")
   private String path;
 
-  @Value("${hdfs.username}")
   private String username;
   
   public HdfsProperties() {

@@ -6,8 +6,9 @@ import org.slf4j.LoggerFactory;
 
 import com.oner365.deploy.entity.DeployEntity;
 import com.oner365.deploy.entity.ServerEntity;
+import com.oner365.deploy.service.DeployService;
+import com.oner365.deploy.service.impl.DeployServiceImpl;
 import com.oner365.deploy.utils.DeployMethod;
-import com.oner365.deploy.utils.DeployUtils;
 
 /**
  * 自动化本地项目
@@ -20,13 +21,15 @@ import com.oner365.deploy.utils.DeployUtils;
 public class DeployTest {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(DeployTest.class);
+  
+  private DeployService deployService = new DeployServiceImpl();
 
   /**
    * 本地部署
    */
   @Test
   public void deployNativeTest() {
-    DeployEntity entity = DeployUtils.getDeployEntity();
+    DeployEntity entity = deployService.getDeployEntity();
     LOGGER.info("Deploy project: {}", entity);
     // 部署目录
     DeployMethod.deployNative(entity);
@@ -37,8 +40,8 @@ public class DeployTest {
    */
   @Test
   public void deployServerTest() {
-    DeployEntity deploy = DeployUtils.getDeployEntity();
-    ServerEntity server = DeployUtils.getServerEntity();
+    DeployEntity deploy = deployService.getDeployEntity();
+    ServerEntity server = deployService.getServerEntity();
     LOGGER.info("Deploy project: {}", server);
     LOGGER.info("Server: {}", server);
     // 部署服务器开关

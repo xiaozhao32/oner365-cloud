@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.ApplicationEventPublisher;
@@ -26,6 +25,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
+import com.oner365.gateway.config.properties.AccessTokenProperties;
 import com.oner365.gateway.config.properties.IgnoreWhiteProperties;
 import com.oner365.gateway.constants.ResponseData;
 import com.oner365.gateway.jwt.JwtUtils;
@@ -52,17 +52,14 @@ public class TokenFilter implements GlobalFilter, Ordered {
     private static final int IP_LENGTH = 15;
     private static final String IP_LOCALHOST = "0:0:0:0:0:0:0:1";
 
-    /**
-     * 项目密钥
-     */
-    @Value("${ACCESS_TOKEN_SECRET}")
-    private String secret;
-
     @Autowired
     private ApplicationEventPublisher publisher;
 
     @Autowired
     private IgnoreWhiteProperties ignoreWhiteProperties;
+    
+    @Autowired
+    private AccessTokenProperties accessTokenProperties;
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
@@ -106,7 +103,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
         List<String> authList = request.getHeaders().get(HttpHeaders.AUTHORIZATION);
         if (authList != null && !authList.isEmpty()) {
             try {
-                return JwtUtils.validateToken(authList.get(0), secret);
+                return JwtUtils.validateToken(authList.get(0), accessTokenProperties.getAccessTokenSecret());
             } catch (Exception e) {
                 LOGGER.error("TokenInterceptor validateToken error: {}", request.getURI().getRawPath(), e);
             }

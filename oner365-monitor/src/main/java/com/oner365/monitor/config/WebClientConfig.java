@@ -34,18 +34,18 @@ public class WebClientConfig {
 
     @Bean
     public WebClient webClient() {
-    	ClientHttpConnector httpConnector = new ReactorClientHttpConnector();
-    	if(!sslVaild) {
-			httpConnector = new ReactorClientHttpConnector(HttpClient.create().secure(sslSpec -> {
-				try {
-					sslSpec.sslContext(
-							SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build());
-				} catch (SSLException e) {
-					LOGGER.error("webClient error:",e);
-				}
-			}));
-    	}
-		return WebClient.builder().clientConnector(httpConnector).build();
+      ClientHttpConnector httpConnector = new ReactorClientHttpConnector();
+      if (!sslVaild) {
+        httpConnector = new ReactorClientHttpConnector(HttpClient.create().secure(sslSpec -> {
+          try {
+            sslSpec
+                .sslContext(SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build());
+          } catch (SSLException e) {
+            LOGGER.error("webClient error:", e);
+          }
+        }));
+      }
+      return WebClient.builder().clientConnector(httpConnector).build();
     }
 
 }
