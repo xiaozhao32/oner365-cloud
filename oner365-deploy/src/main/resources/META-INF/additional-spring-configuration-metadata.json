@@ -1,62 +1,42 @@
 {"properties": [
   {
-    "name": "deploy.name",
+    "name": "deploy.local.location",
     "type": "java.lang.String",
-    "description": "A description for 'deploy.name'."
+    "description": "A description for 'deploy.local.location'."
   },
   {
-    "name": "deploy.version",
+    "name": "deploy.local.version",
     "type": "java.lang.String",
-    "description": "A description for 'deploy.version'."
+    "description": "A description for 'deploy.local.version'."
   },
   {
-    "name": "deploy.suffix",
+    "name": "deploy.local.name",
     "type": "java.lang.String",
-    "description": "A description for 'deploy.suffix'."
+    "description": "A description for 'deploy.local.name'."
   },
   {
-    "name": "deploy.project",
+    "name": "deploy.local.suffix",
     "type": "java.lang.String",
-    "description": "A description for 'deploy.project'."
+    "description": "A description for 'deploy.local.suffix'."
   },
   {
-    "name": "servers.deploy",
-    "type": "java.lang.String",
-    "description": "A description for 'servers.deploy'."
+    "name": "deploy.local.projects",
+    "type": "java.lang.String[]",
+    "description": "A description for 'deploy.local.projects'."
   },
   {
-    "name": "servers.name",
-    "type": "java.lang.String",
-    "description": "A description for 'servers.name'."
+    "name": "deploy.local.libs",
+    "type": "java.lang.String[]",
+    "description": "A description for 'deploy.local.libs'."
   },
   {
-    "name": "servers.ip",
+    "name": "deploy.server.deploy",
     "type": "java.lang.String",
-    "description": "A description for 'servers.ip'."
+    "description": "A description for 'deploy.server.deploy'."
   },
   {
-    "name": "servers.port",
+    "name": "deploy.server.name",
     "type": "java.lang.String",
-    "description": "A description for 'servers.port'."
-  },
-  {
-    "name": "servers.username",
-    "type": "java.lang.String",
-    "description": "A description for 'servers.username'."
-  },
-  {
-    "name": "servers.password",
-    "type": "java.lang.String",
-    "description": "A description for 'servers.password'."
-  },
-  {
-    "name": "deploy.location",
-    "type": "java.lang.String",
-    "description": "A description for 'deploy.location'."
-  },
-  {
-    "name": "deploy.lib",
-    "type": "java.lang.String",
-    "description": "A description for 'deploy.lib'."
+    "description": "A description for 'deploy.server.name'."
   }
 ]}

@@ -9,11 +9,9 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.oner365.common.constants.PublicConstants;
 import com.oner365.deploy.entity.DeployEntity;
 import com.oner365.deploy.entity.DeployServer;
 import com.oner365.deploy.entity.ServerEntity;
-import com.oner365.util.DataUtils;
 
 import ch.ethz.ssh2.Connection;
 
@@ -29,6 +27,8 @@ public class DeployMethod {
   private static final String FILE_LIB = "lib";
   private static final String FILE_TARGET = "target";
   private static final String FILE_RESOURCES = "resources";
+  /** 分隔符 */
+  private static final String DELIMITER = "/";
 
   private DeployMethod() {
   }
@@ -188,7 +188,7 @@ public class DeployMethod {
       String localFile = deployEntity.getLocation() + File.separator + projectName + File.separator + projectName + "-"
           + deployEntity.getVersion() + "." + deployEntity.getSuffix();
       // 上传的路径
-      String targetPath = targetRoot + PublicConstants.DELIMITER + projectName + PublicConstants.DELIMITER;
+      String targetPath = targetRoot + DELIMITER + projectName + DELIMITER;
       // 配置文件
       String resourcesFile = deployEntity.getLocation() + File.separator + projectName + File.separator + FILE_RESOURCES;
       // 依赖包上传到lib
@@ -204,7 +204,7 @@ public class DeployMethod {
         deployWindows(con, deployEntity, targetPath, resourcesFile, targetRoot);
       }
       // 准备执行的命令
-      commands.add(targetRoot + PublicConstants.DELIMITER + projectName + PublicConstants.DELIMITER + "start.sh");
+      commands.add(targetRoot + DELIMITER + projectName + DELIMITER + "start.sh");
     }
     return commands;
   }
@@ -214,7 +214,7 @@ public class DeployMethod {
       DeployMethod.deploy(server,
           deployEntity.getLocation() + File.separator + FILE_LIB + File.separator + lib + "-"
               + deployEntity.getVersion() + "." + deployEntity.getSuffix(),
-          targetRoot + PublicConstants.DELIMITER + FILE_LIB + PublicConstants.DELIMITER);
+          targetRoot + DELIMITER + FILE_LIB + DELIMITER);
     }
   }
   
@@ -223,14 +223,14 @@ public class DeployMethod {
     File[] files = new File(resourcesFile).listFiles();
     for (File f : files) {
       if (!f.isDirectory()) {
-        DeployUtils.uploadFileMap(con, new String[] { f.getPath() }, targetPath + FILE_RESOURCES + PublicConstants.DELIMITER);
+        DeployUtils.uploadFileMap(con, new String[] { f.getPath() }, targetPath + FILE_RESOURCES + DELIMITER);
       }
     }
     for (String lib : deployEntity.getLibs()) {
       DeployUtils.uploadFileMap(con,
           new String[] { deployEntity.getLocation() + File.separator + FILE_LIB + File.separator + lib + "-"
               + deployEntity.getVersion() + "." + deployEntity.getSuffix() },
-          targetRoot + PublicConstants.DELIMITER + FILE_LIB + PublicConstants.DELIMITER);
+          targetRoot + DELIMITER + FILE_LIB + DELIMITER);
     }
   }
 }

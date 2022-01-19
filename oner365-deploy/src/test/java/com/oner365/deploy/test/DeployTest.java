@@ -1,13 +1,14 @@
 package com.oner365.deploy.test;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import com.oner365.deploy.entity.DeployEntity;
 import com.oner365.deploy.entity.ServerEntity;
 import com.oner365.deploy.service.DeployService;
-import com.oner365.deploy.service.impl.DeployServiceImpl;
 import com.oner365.deploy.utils.DeployMethod;
 
 /**
@@ -18,11 +19,13 @@ import com.oner365.deploy.utils.DeployMethod;
  * @author zhaoyong
  *
  */
+@SpringBootTest
 public class DeployTest {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(DeployTest.class);
   
-  private DeployService deployService = new DeployServiceImpl();
+  @Autowired
+  private DeployService deployService;
 
   /**
    * 本地部署

@@ -25,8 +25,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.oner365.common.exception.ProjectRuntimeException;
-
 import ch.ethz.ssh2.Connection;
 import ch.ethz.ssh2.SCPClient;
 import ch.ethz.ssh2.SFTPv3Client;
@@ -75,7 +73,7 @@ public class DeployUtils {
       return con;
     } catch (IOException e) {
       LOGGER.error("getConnection error:", e);
-      throw new ProjectRuntimeException();
+      throw new RuntimeException();
     }
   }
 
@@ -90,7 +88,7 @@ public class DeployUtils {
       return con.openSession();
     } catch (IOException e) {
       LOGGER.error("getSession error:", e);
-      throw new ProjectRuntimeException();
+      throw new RuntimeException();
     }
   }
 
@@ -99,7 +97,7 @@ public class DeployUtils {
       return new SFTPv3Client(con);
     } catch (IOException e) {
       LOGGER.error("getSFTPv3Client error:", e);
-      throw new ProjectRuntimeException();
+      throw new RuntimeException();
     }
   }
 
