@@ -1,4 +1,4 @@
-package com.oner365.swagger.controller.system.job;
+package com.oner365.swagger.controller.system;
 
 import javax.servlet.http.HttpServletResponse;
 

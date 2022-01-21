@@ -9,7 +9,7 @@ import com.oner365.common.enums.ResultEnum;
  *
  * @author zhaoyong
  */
-public class ResponseData<T extends Serializable> implements Serializable {
+public class ResponseData<T> implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
