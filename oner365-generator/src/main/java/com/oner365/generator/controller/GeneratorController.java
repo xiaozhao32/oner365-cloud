@@ -62,7 +62,7 @@ public class GeneratorController extends BaseController {
     /**
      * 修改代码生成业务
      */
-    @GetMapping(value = "/{tableId}")
+    @GetMapping("/{tableId}")
     public Map<String, Object> getInfo(@PathVariable Long tableId) {
         GenTable table = genTableService.selectGenTableById(tableId);
         List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);

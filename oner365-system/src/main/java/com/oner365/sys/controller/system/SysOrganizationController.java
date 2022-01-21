@@ -88,7 +88,7 @@ public class SysOrganizationController extends BaseController {
    * @param id 编号
    * @return boolean
    */
-  @GetMapping("/check/{id}")
+  @GetMapping("/connection/check/{id}")
   public boolean checkConnection(@PathVariable String id) {
     return sysOrgService.checkConnection(id);
   }

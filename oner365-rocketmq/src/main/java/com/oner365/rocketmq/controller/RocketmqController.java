@@ -15,7 +15,7 @@ import com.oner365.rocketmq.config.properties.RocketmqProperties;
  * @author zhaoyong
  */
 @RestController
-@RequestMapping("/rocketmq")
+@RequestMapping("/message")
 public class RocketmqController extends BaseController {
 
   @Autowired

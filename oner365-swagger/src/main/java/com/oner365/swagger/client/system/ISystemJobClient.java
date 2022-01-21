@@ -52,7 +52,7 @@ public interface ISystemJobClient {
    * @param status 状态
    * @return ResponseData<Integer>
    */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_JOB_EDIT_STATUS)
+  @PostMapping(PathConstants.REQUEST_SYSTEM_JOB_STATUS)
   ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") String status);
 
   /**

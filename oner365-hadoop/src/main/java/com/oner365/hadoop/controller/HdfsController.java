@@ -25,7 +25,7 @@ import com.oner365.hadoop.service.HdfsService;
  * @author zhaoyong
  */
 @RestController
-@RequestMapping("/hadoop/hdfs")
+@RequestMapping("/hdfs")
 public class HdfsController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HdfsController.class);

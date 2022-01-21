@@ -12,14 +12,14 @@ import com.oner365.dubbo.api.service.IEchoService;
  * @author zhaoyong
  */
 @RestController
-@RequestMapping("/consumer")
+@RequestMapping("/message")
 public class ConsumerController {
 
     @DubboReference
     private IEchoService service;
 
-    @GetMapping("/test")
-    public String test(String message) {
+    @GetMapping("/send")
+    public String send(String message) {
         return service.echo(message);
     }
 }

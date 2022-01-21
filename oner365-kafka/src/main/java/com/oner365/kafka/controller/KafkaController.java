@@ -14,7 +14,7 @@ import com.oner365.kafka.constants.KafkaConstants;
  * @author zhaoyong
  */
 @RestController
-@RequestMapping("/kafka")
+@RequestMapping("/message")
 public class KafkaController extends BaseController {
 
     @Autowired
