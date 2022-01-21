@@ -2,12 +2,10 @@ package com.oner365.gateway.service.impl;
 
 import java.net.URI;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -20,7 +18,6 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.cloud.gateway.route.RouteDefinitionWriter;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -70,30 +67,9 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
     this.publisher = applicationEventPublisher;
   }
 
-  private GatewayRouteDto convertDto(GatewayRoute po) {
-    if (po == null) {
-      return null;
-    }
-    return po.toDto();
-  }
-
-  private List<GatewayRouteDto> convertDto(List<GatewayRoute> list) {
-    if (list.isEmpty()) {
-      return Collections.emptyList();
-    }
-    return list.stream().map(po -> convertDto(po)).collect(Collectors.toList());
-  }
-
-  private PageInfo<GatewayRouteDto> convertDto(Page<GatewayRoute> page) {
-    if (page == null) {
-      return null;
-    }
-    return new PageInfo<GatewayRouteDto>(convertDto(page.getContent()), page.getNumber() + 1, page.getSize(), page.getTotalElements());
-  }
-
   @Override
   public List<GatewayRouteDto> findList() {
-    List<GatewayRouteDto> list = convertDto(gatewayRouteDao.findAll());
+    List<GatewayRouteDto> list = convert(gatewayRouteDao.findAll(), GatewayRouteDto.class);
     list.forEach(gatewayRoute -> publishEvent(assembleRouteDefinition(gatewayRoute)));
     return list;
   }
@@ -101,8 +77,8 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
   @Override
   public PageInfo<GatewayRouteDto> pageList(QueryCriteriaBean data) {
     try {
-      Pageable pageable = QueryUtils.buildPageRequest(data);
-      return convertDto(gatewayRouteDao.findAll(QueryUtils.buildCriteria(data), pageable));
+      Page<GatewayRoute> page = gatewayRouteDao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, GatewayRouteDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -133,37 +109,12 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
     gatewayRoute.setPredicates(predicates);
 
     // 页面保存信息
-    GatewayRoute entity = toPojo(gatewayRoute);
-    gatewayRouteDao.save(entity);
-    publishEvent(assembleRouteDefinition(entity.toDto()));
+    gatewayRouteDao.save(convert(gatewayRoute, GatewayRoute.class));
+    publishEvent(assembleRouteDefinition(convert(gatewayRoute, GatewayRouteDto.class)));
     syncRouteMqService.syncRoute();
     return "success";
   }
   
-  private GatewayRoute toPojo(GatewayRouteVo vo) {
-    GatewayRoute result = new GatewayRoute();
-    result.setId(vo.getId());
-    result.setFilters(vo.getFilters());
-    result.setPattern(vo.getPattern());
-    result.setPredicates(vo.getPredicates());
-    result.setRouteOrder(vo.getRouteOrder());
-    result.setStatus(vo.getStatus());
-    result.setUri(vo.getUri());
-    return result;
-  }
-  
-  private GatewayRouteVo toVo(GatewayRoute po) {
-    GatewayRouteVo result = new GatewayRouteVo();
-    result.setId(po.getId());
-    result.setFilters(po.getFilters());
-    result.setPattern(po.getPattern());
-    result.setPredicates(po.getPredicates());
-    result.setRouteOrder(po.getRouteOrder());
-    result.setStatus(po.getStatus());
-    result.setUri(po.getUri());
-    return result;
-  }
-
   @Override
   public String update(GatewayRouteVo gatewayRoute) {
     try {
@@ -199,7 +150,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
     GatewayRoute gatewayRoute = findById(id);
     if (gatewayRoute != null) {
       gatewayRoute.setStatus(status);
-      return update(toVo(gatewayRoute));
+      return update(convert(gatewayRoute, GatewayRouteVo.class));
     }
     return null;
   }
@@ -218,11 +169,10 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 
   @Override
   public GatewayRouteDto getById(String id) {
-    return convertDto(findById(id));
+    return convert(findById(id), GatewayRouteDto.class);
   }
 
-  @Override
-  public Map<String, String> mapRoute(GatewayRouteDto route) {
+  private Map<String, String> mapRoute(GatewayRouteDto route) {
     route.getPredicates().stream().filter(predicate -> predicate.getName().equals(GatewayConstants.PREDICATE_NAME))
         .forEach(predicates -> {
           String pattern = StringUtils.substring(predicates.getArgs().get(GatewayConstants.PREDICATE_ARGS_PATTERN), 0,

@@ -14,8 +14,16 @@ public class PathConstants {
   /** system context */
   public static final String CONTEXT_SYSTEM_AUTH_ID = "ISystemAuthClient";
   public static final String CONTEXT_SYSTEM_DATASOURCE_CONFIG_ID = "ISystemDataSourceConfigClient";
+  public static final String CONTEXT_SYSTEM_DICT_ID = "ISystemDictClient";
   public static final String CONTEXT_SYSTEM_JOB_ID = "ISystemJobClient";
+  public static final String CONTEXT_SYSTEM_LOG_ID = "ISystemLogClient";
   public static final String CONTEXT_SYSTEM_MENU_ID = "ISystemMenuClient";
+  public static final String CONTEXT_SYSTEM_MENU_OPERATION_ID = "ISystemMenuOperationClient";
+  public static final String CONTEXT_SYSTEM_MENU_TYPE_ID = "ISystemMenuTypeClient";
+  public static final String CONTEXT_SYSTEM_MESSAGE_ID = "ISystemMessageClient";
+  public static final String CONTEXT_SYSTEM_ORG_ID = "ISystemOrgClient";
+  public static final String CONTEXT_SYSTEM_ROLE_ID = "ISystemRoleClient";
+  public static final String CONTEXT_SYSTEM_USER_ID = "ISystemUserClient";
   
   /** 用户认证 */
   public static final String REQUEST_SYSTEM_AUTH_LOGIN = "/auth/login";

@@ -1,7 +1,6 @@
-package com.oner365.gateway.controller;
+package com.oner365.swagger.controller.gateway;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,14 +11,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.gateway.constants.ResponseData;
-import com.oner365.gateway.constants.ResponseResult;
-import com.oner365.gateway.dto.GatewayRouteDto;
-import com.oner365.gateway.enums.ResultEnum;
-import com.oner365.gateway.page.PageInfo;
-import com.oner365.gateway.query.QueryCriteriaBean;
-import com.oner365.gateway.service.DynamicRouteService;
-import com.oner365.gateway.vo.GatewayRouteVo;
+import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
+import com.oner365.common.ResponseData;
+import com.oner365.common.ResponseResult;
+import com.oner365.common.page.PageInfo;
+import com.oner365.common.query.QueryCriteriaBean;
+import com.oner365.swagger.client.gateway.IGatewayRouteClient;
+import com.oner365.swagger.dto.GatewayRouteDto;
+import com.oner365.swagger.vo.GatewayRouteVo;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
  * 动态路由控制
@@ -28,11 +30,12 @@ import com.oner365.gateway.vo.GatewayRouteVo;
  *
  */
 @RestController
+@Api(tags = "动态路由控制")
 @RequestMapping("/route")
 public class DynamicRouteController {
 
   @Autowired
-  private DynamicRouteService dynamicRouteService;
+  private IGatewayRouteClient client;
 
   /**
    * 路由列表
@@ -40,10 +43,11 @@ public class DynamicRouteController {
    * @param data 查询参数
    * @return ResponseData
    */
+  @ApiOperation("1.列表")
+  @ApiOperationSupport(order = 1)
   @PostMapping("/list")
   public ResponseData<PageInfo<GatewayRouteDto>> list(@RequestBody QueryCriteriaBean data) {
-    PageInfo<GatewayRouteDto> page = dynamicRouteService.pageList(data);
-    return ResponseData.success(page);
+    return client.list(data);
   }
 
   /**
@@ -52,9 +56,11 @@ public class DynamicRouteController {
    * @param id 编号
    * @return ResponseData
    */
+  @ApiOperation("2.按id查询")
+  @ApiOperationSupport(order = 2)
   @GetMapping("/get/{id}")
   public ResponseData<GatewayRouteDto> get(@PathVariable String id) {
-    return ResponseData.success(dynamicRouteService.getById(id));
+    return client.get(id);
   }
 
   /**
@@ -63,13 +69,11 @@ public class DynamicRouteController {
    * @param gatewayRouteVo 路由对象
    * @return ResponseData
    */
+  @ApiOperation("3.添加路由")
+  @ApiOperationSupport(order = 3)
   @PostMapping("/add")
   public ResponseData<ResponseResult<String>> add(@RequestBody GatewayRouteVo gatewayRouteVo) {
-    String msg = dynamicRouteService.save(gatewayRouteVo);
-    if (msg != null) {
-      return ResponseData.success(ResponseResult.success(msg));
-    }
-    return ResponseData.error(ResultEnum.ERROR.getName());
+    return client.add(gatewayRouteVo);
   }
 
   /**
@@ -77,10 +81,11 @@ public class DynamicRouteController {
    *
    * @return ResponseData
    */
+  @ApiOperation("4.刷新路由")
+  @ApiOperationSupport(order = 4)
   @GetMapping("/refresh")
-  public ResponseData<List<GatewayRouteDto>> refresh() {
-    List<GatewayRouteDto> list = dynamicRouteService.refreshRoute();
-    return ResponseData.success(list);
+  public ResponseData<ArrayList<GatewayRouteDto>> refresh() {
+    return client.refresh();
   }
 
   /**
@@ -89,14 +94,11 @@ public class DynamicRouteController {
    * @param gatewayRouteVo 路由对象
    * @return ResponseData
    */
+  @ApiOperation("5.更新路由")
+  @ApiOperationSupport(order = 5)
   @PostMapping("/update")
   public ResponseData<ResponseResult<String>> update(@RequestBody GatewayRouteVo gatewayRouteVo) {
-    String msg = dynamicRouteService.update(gatewayRouteVo);
-    if (msg != null) {
-      return ResponseData.success(ResponseResult.success(msg));
-    }
-    return ResponseData.error(ResultEnum.ERROR.getName());
-
+    return client.update(gatewayRouteVo);
   }
 
   /**
@@ -106,13 +108,11 @@ public class DynamicRouteController {
    * @param status 状态
    * @return ResponseData
    */
+  @ApiOperation("6.更新路由状态")
+  @ApiOperationSupport(order = 6)
   @GetMapping("/status/{id}/{status}")
   public ResponseData<ResponseResult<String>> updateRouteStatus(@PathVariable String id, @PathVariable String status) {
-    String msg = dynamicRouteService.updateRouteStatus(id, status);
-    if (msg != null) {
-      return ResponseData.success(ResponseResult.success(msg));
-    }
-    return ResponseData.error(ResultEnum.ERROR.getName());
+    return client.updateRouteStatus(id, status);
   }
 
   /**
@@ -121,10 +121,11 @@ public class DynamicRouteController {
    * @param ids 编号
    * @return ResponseData
    */
+  @ApiOperation("7.删除路由")
+  @ApiOperationSupport(order = 7)
   @DeleteMapping("/delete")
   public ResponseData<ResponseResult<String>> delete(@RequestBody String... ids) {
-    Arrays.stream(ids).forEach(id -> dynamicRouteService.delete(id));
-    return ResponseData.success(ResponseResult.success(ResultEnum.SUCCESS.getName()));
+    return client.delete(ids);
   }
 
 }

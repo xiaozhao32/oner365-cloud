@@ -1,7 +1,6 @@
 package com.oner365.gateway.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.ApplicationEventPublisherAware;
@@ -16,7 +15,7 @@ import com.oner365.gateway.vo.GatewayRouteVo;
  * 
  * @author zhaoyong
  */
-public interface DynamicRouteService extends ApplicationEventPublisherAware {
+public interface DynamicRouteService extends BaseService, ApplicationEventPublisherAware {
 
   /**
    * 路由列表
@@ -87,13 +86,5 @@ public interface DynamicRouteService extends ApplicationEventPublisherAware {
    * @return String
    */
   String updateRouteStatus(String id, String status);
-
-  /**
-   * 映射路由path状态
-   *
-   * @param route 路由对象
-   * @return Map
-   */
-  Map<String, String> mapRoute(GatewayRouteDto route);
 
 }

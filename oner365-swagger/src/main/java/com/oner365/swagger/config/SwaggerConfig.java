@@ -56,15 +56,25 @@ public class SwaggerConfig implements WebMvcConfigurer {
     public Docket monitorApi() {
       return buildApi("Monitor(监控中心)", "com.oner365.swagger.controller.monitor");
     }
-
+    
     @Bean
     public Docket elasticsearchApi() {
       return buildApi("Elasticsearch(索引查询)", "com.oner365.swagger.controller.elasticsearch");
     }
     
     @Bean
+    public Docket gatewayApi() {
+      return buildApi("Cloud 专用(网关管理)", "com.oner365.swagger.controller.gateway");
+    }
+    
+    @Bean
     public Docket filesApi() {
       return buildApi("Files(文件中心)", "com.oner365.swagger.controller.files");
+    }
+    
+    @Bean
+    public Docket rabbitmqApi() {
+      return buildApi("Rabbitmq(消息队列)", "com.oner365.swagger.controller.rabbitmq");
     }
     
     private Docket buildApi(String groupName, String packageName) {
