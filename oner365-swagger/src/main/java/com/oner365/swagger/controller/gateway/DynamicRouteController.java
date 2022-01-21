@@ -16,6 +16,7 @@ import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
+import com.oner365.controller.BaseController;
 import com.oner365.swagger.client.gateway.IGatewayRouteClient;
 import com.oner365.swagger.dto.GatewayRouteDto;
 import com.oner365.swagger.vo.GatewayRouteVo;
@@ -31,8 +32,8 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @Api(tags = "动态路由控制")
-@RequestMapping("/route")
-public class DynamicRouteController {
+@RequestMapping("/gateway/route")
+public class DynamicRouteController extends BaseController {
 
   @Autowired
   private IGatewayRouteClient client;

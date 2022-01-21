@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oner365.common.ResponseData;
 import com.oner365.controller.BaseController;
 import com.oner365.rocketmq.config.properties.RocketmqProperties;
 
@@ -31,9 +32,9 @@ public class RocketmqController extends BaseController {
    * @return String
    */
   @GetMapping("/send")
-  public String send(String message) {
+  public ResponseData<String> send(String message) {
     LOGGER.info("Send topic:{}, message:{}", rocketmqProperties.getTopic(), message);
     rocketmqTemplate.convertAndSend(rocketmqProperties.getTopic(), message);
-    return message;
+    return ResponseData.success(message);
   }
 }

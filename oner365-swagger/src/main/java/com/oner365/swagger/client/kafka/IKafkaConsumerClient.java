@@ -2,6 +2,7 @@ package com.oner365.swagger.client.kafka;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.common.ResponseData;
 import com.oner365.swagger.constants.PathConstants;
@@ -22,5 +23,5 @@ public interface IKafkaConsumerClient {
    * @return ResponseData<String>
    */
   @GetMapping(PathConstants.REQUEST_KAFKA_CONSUMER_MESSAGE_SEND)
-  ResponseData<String> send(String message);
+  ResponseData<String> send(@RequestParam(value = "message") String message);
 }

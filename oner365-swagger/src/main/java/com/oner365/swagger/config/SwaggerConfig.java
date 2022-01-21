@@ -77,6 +77,21 @@ public class SwaggerConfig implements WebMvcConfigurer {
       return buildApi("Rabbitmq(消息队列)", "com.oner365.swagger.controller.rabbitmq");
     }
     
+    @Bean
+    public Docket kafkaApi() {
+      return buildApi("Kafka(消息队列)", "com.oner365.swagger.controller.kafka");
+    }
+    
+    @Bean
+    public Docket rocketmqApi() {
+      return buildApi("Rocketmq(消息队列)", "com.oner365.swagger.controller.rocketmq");
+    }
+    
+    @Bean
+    public Docket dubboApi() {
+      return buildApi("Dubbo(Dubbo服务)", "com.oner365.swagger.controller.dubbo");
+    }
+    
     private Docket buildApi(String groupName, String packageName) {
     	 return new Docket(DocumentationType.OAS_30).pathMapping(PublicConstants.DELIMITER)
          		.groupName(groupName)

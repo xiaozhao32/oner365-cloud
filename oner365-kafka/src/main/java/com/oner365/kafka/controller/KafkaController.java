@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oner365.common.ResponseData;
 import com.oner365.controller.BaseController;
 import com.oner365.kafka.constants.KafkaConstants;
 
@@ -26,9 +27,9 @@ public class KafkaController extends BaseController {
      * @return String
      */
     @GetMapping("/send")
-    public String send(String message) {
+    public ResponseData<String> send(String message) {
         LOGGER.info("Send topic:{}, message:{}", KafkaConstants.TOPIC, message);
         kafkaTemplate.send(KafkaConstants.TOPIC, message);
-        return message;
+        return ResponseData.success(message);
     }
 }
