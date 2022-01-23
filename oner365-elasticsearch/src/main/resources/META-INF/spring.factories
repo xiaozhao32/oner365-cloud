@@ -1,0 +1,1 @@
+org.springframework.context.ApplicationContextInitializer=com.oner365.elasticsearch.config.ElasticsearchInitializer
