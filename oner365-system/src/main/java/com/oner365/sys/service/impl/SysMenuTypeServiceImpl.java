@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
@@ -150,8 +151,11 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
 
   @Override
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-  public SysMenuTypeDto getMenuTypeByTypeCode(String menuType) {
-    return convertDto(dao.getMenuTypeByTypeCode(menuType));
+  public SysMenuTypeDto getMenuTypeByTypeCode(String typeCode) {
+    Assert.notNull(typeCode, "typeCode is not empty.");
+    Criteria<SysMenuType> criteria = new Criteria<>();
+    criteria.add(Restrictions.eq(SysConstants.TYPE_CODE, typeCode));
+    return convertDto(dao.findOne(criteria));
   }
 
   @Override

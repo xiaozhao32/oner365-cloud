@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
@@ -225,7 +226,10 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   @Override
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public SysOrganizationDto getByCode(String orgCode) {
-    return convertDto(dao.getByCode(orgCode));
+    Assert.notNull(orgCode, "orgCode is not empty.");
+    Criteria<SysOrganization> criteria = new Criteria<>();
+    criteria.add(Restrictions.eq("orgCode", orgCode));
+    return convertDto(dao.findAll(criteria));
   }
 
   @Override

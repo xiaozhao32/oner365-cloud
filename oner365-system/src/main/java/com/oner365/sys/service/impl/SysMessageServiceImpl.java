@@ -17,6 +17,8 @@ import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
+import com.oner365.common.query.Criteria;
+import com.oner365.common.query.Restrictions;
 import com.oner365.sys.dao.ISysMessageDao;
 import com.oner365.sys.dto.SysMessageDto;
 import com.oner365.sys.entity.SysMessage;
@@ -84,7 +86,9 @@ public class SysMessageServiceImpl implements ISysMessageService {
   @Cacheable(value = CACHE_NAME, key = "#messageType")
   public List<SysMessageDto> findList(String messageType) {
     try {
-      return convertDto(sysMessageDao.findList(messageType));
+      Criteria<SysMessage> criteria = new Criteria<>();
+      criteria.add(Restrictions.eq("messageType", messageType));
+      return convertDto(sysMessageDao.findAll(criteria));
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
     }

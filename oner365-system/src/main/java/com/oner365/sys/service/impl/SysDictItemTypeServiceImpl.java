@@ -157,7 +157,9 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
   @Override
   public List<SysDictItemTypeDto> findListByCodes(List<String> codeList) {
     try {
-      return convertDto(dao.findListByCode(codeList));
+      Criteria<SysDictItemType> criteria = new Criteria<>();
+      criteria.add(Restrictions.in(SysConstants.TYPE_CODE, codeList, false));
+      return convertDto(dao.findAll(criteria));
     } catch (Exception e) {
       LOGGER.error("Error findListByCodes: ", e);
     }
