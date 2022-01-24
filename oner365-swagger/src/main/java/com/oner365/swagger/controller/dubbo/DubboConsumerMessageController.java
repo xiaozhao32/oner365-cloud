@@ -37,6 +37,6 @@ public class DubboConsumerMessageController extends BaseController {
   @ApiOperationSupport(order = 1)
   @GetMapping("/send")
   public ResponseData<String> send(String message) {
-    return client.send(message);
+    return ResponseData.success(client.send(message));
   }
 }

@@ -4,7 +4,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.oner365.common.ResponseData;
 import com.oner365.swagger.constants.PathConstants;
 
 /**
@@ -20,8 +19,8 @@ public interface IDubboConsumerClient {
    * 发送消息
    * 
    * @param message 消息
-   * @return ResponseData<String>
+   * @return String
    */
   @GetMapping(PathConstants.REQUEST_DUBBO_CONSUMER_MESSAGE_SEND)
-  ResponseData<String> send(@RequestParam(value = "message") String message);
+  String send(@RequestParam(value = "message") String message);
 }
