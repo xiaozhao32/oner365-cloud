@@ -7,12 +7,6 @@ package com.oner365.rocketmq.constants;
  */
 public class RocketmqConstants {
 
-    /** topic */
-    public static final String TOPIC = "example";
-    
-    /** group */
-    public static final String GROUP = "test";
-
     private RocketmqConstants() {
     }
     

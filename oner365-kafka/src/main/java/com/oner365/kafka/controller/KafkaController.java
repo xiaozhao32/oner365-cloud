@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.ResponseData;
 import com.oner365.controller.BaseController;
-import com.oner365.kafka.constants.KafkaConstants;
+import com.oner365.kafka.config.properties.KafkaProperties;
 
 /**
  * Kafka控制器
@@ -17,6 +17,9 @@ import com.oner365.kafka.constants.KafkaConstants;
 @RestController
 @RequestMapping("/message")
 public class KafkaController extends BaseController {
+  
+    @Autowired
+    private KafkaProperties kafkaProperties;
 
     @Autowired
     private KafkaTemplate<String, Object> kafkaTemplate;
@@ -28,8 +31,8 @@ public class KafkaController extends BaseController {
      */
     @GetMapping("/send")
     public ResponseData<String> send(String message) {
-        LOGGER.info("Send topic:{}, message:{}", KafkaConstants.TOPIC, message);
-        kafkaTemplate.send(KafkaConstants.TOPIC, message);
+        LOGGER.info("Send topic:{}, message:{}", kafkaProperties.getTopic(), message);
+        kafkaTemplate.send(kafkaProperties.getTopic(), message);
         return ResponseData.success(message);
     }
 }
