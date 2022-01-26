@@ -1,6 +1,6 @@
 package com.oner365.common.config.properties;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -9,20 +9,19 @@ import org.springframework.context.annotation.Configuration;
  * @author zhaoyong
  */
 @Configuration
+@ConfigurationProperties(prefix = "token")
 public class AccessTokenProperties {
-  
+
   /**
    * token密钥
    */
-  @Value("${ACCESS_TOKEN_SECRET}")
-  private String accessTokenSecret;
+  private String secret;
 
   /**
    * token过期分钟
    */
-  @Value("${ACCESS_TOKEN_EXPIRY_MIN}")
-  private int accessTokenExpireTime;
-  
+  private int expireTime;
+
   /**
    * 构造方法
    */
@@ -30,20 +29,20 @@ public class AccessTokenProperties {
     super();
   }
 
-  public String getAccessTokenSecret() {
-    return accessTokenSecret;
+  public String getSecret() {
+    return secret;
   }
 
-  public void setAccessTokenSecret(String accessTokenSecret) {
-    this.accessTokenSecret = accessTokenSecret;
+  public void setSecret(String secret) {
+    this.secret = secret;
   }
 
-  public int getAccessTokenExpireTime() {
-    return accessTokenExpireTime;
+  public int getExpireTime() {
+    return expireTime;
   }
 
-  public void setAccessTokenExpireTime(int accessTokenExpireTime) {
-    this.accessTokenExpireTime = accessTokenExpireTime;
+  public void setExpireTime(int expireTime) {
+    this.expireTime = expireTime;
   }
-  
+
 }

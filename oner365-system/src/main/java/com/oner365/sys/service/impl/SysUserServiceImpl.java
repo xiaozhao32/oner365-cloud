@@ -111,7 +111,7 @@ public class SysUserServiceImpl implements ISysUserService {
         return JSON.toJavaObject(cache, LoginUserDto.class);
       }
 
-      Date time = DateUtil.after(DateUtil.getDate(), tokenProperties.getAccessTokenExpireTime(), Calendar.MINUTE);
+      Date time = DateUtil.after(DateUtil.getDate(), tokenProperties.getExpireTime(), Calendar.MINUTE);
       JSONObject tokenJson = new JSONObject();
       tokenJson.put(RequestUtils.TOKEN_TYPE, "login");
 
@@ -127,7 +127,7 @@ public class SysUserServiceImpl implements ISysUserService {
       tokenJson.put(SysConstants.ROLES, roles);
       tokenJson.put(SysConstants.JOBS, jobs);
       tokenJson.put(SysConstants.ORGS, orgs);
-      String accessToken = JwtUtils.generateToken(tokenJson.toJSONString(), time, tokenProperties.getAccessTokenSecret());
+      String accessToken = JwtUtils.generateToken(tokenJson.toJSONString(), time, tokenProperties.getSecret());
 
       LoginUserDto result = new LoginUserDto();
       result.setAccessToken(accessToken);

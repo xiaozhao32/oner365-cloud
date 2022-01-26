@@ -103,7 +103,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
         List<String> authList = request.getHeaders().get(HttpHeaders.AUTHORIZATION);
         if (authList != null && !authList.isEmpty()) {
             try {
-                return JwtUtils.validateToken(authList.get(0), accessTokenProperties.getAccessTokenSecret());
+                return JwtUtils.validateToken(authList.get(0), accessTokenProperties.getSecret());
             } catch (Exception e) {
                 LOGGER.error("TokenInterceptor validateToken error: {}", request.getURI().getRawPath(), e);
             }
