@@ -107,6 +107,7 @@ public class PathConstants {
   public static final String REQUEST_SYSTEM_MESSAGE_STATUS = "/message/status/{id}";
   public static final String REQUEST_SYSTEM_MESSAGE_SAVE = "/message/save";
   public static final String REQUEST_SYSTEM_MESSAGE_DELETE = "/message/delete";
+  public static final String REQUEST_SYSTEM_MESSAGE_EXPORT = "/message/export";
   
   /** 机构管理 */
   public static final String REQUEST_SYSTEM_ORG_LIST = "/org/list";

@@ -58,6 +58,11 @@ public class SysMessageDto implements Serializable {
    * 接收者
    */
   private String receiveUser;
+  
+  /**
+   * 状态
+   */
+  private String status;
 
   /**
    * 创建时间 create_time
@@ -228,6 +233,20 @@ public class SysMessageDto implements Serializable {
    */
   public void setUpdateTime(LocalDateTime updateTime) {
     this.updateTime = updateTime;
+  }
+  
+  /**
+   * @return the status
+   */
+  public String getStatus() {
+    return status;
+  }
+
+  /**
+   * @param status the status to set
+   */
+  public void setStatus(String status) {
+    this.status = status;
   }
 
   /**

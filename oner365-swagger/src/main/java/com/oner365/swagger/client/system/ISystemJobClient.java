@@ -34,7 +34,7 @@ public interface ISystemJobClient {
    * @return ResponseData<PageInfo<SysJobDto>>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_JOB_LIST)
-  ResponseData<PageInfo<SysJobDto>> list(QueryCriteriaBean data);
+  ResponseData<PageInfo<SysJobDto>> list(@RequestBody QueryCriteriaBean data);
 
   /**
    * 按id获取查询
@@ -79,6 +79,6 @@ public interface ISystemJobClient {
    * @return ResponseEntity<byte[]>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_JOB_EXPORT)
-  ResponseEntity<byte[]> export(QueryCriteriaBean data);
+  ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data);
 
 }
