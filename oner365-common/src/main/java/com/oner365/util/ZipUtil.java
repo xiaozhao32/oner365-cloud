@@ -175,7 +175,7 @@ public class ZipUtil {
    * @param deleteFile 是否删除
    */
   public static void unZip(String srcFile, String dest, boolean deleteFile) {
-    File file = new File(srcFile);
+    File file = DataUtils.getFile(srcFile);
     if (file.exists()) {
       try (ZipFile zipFile = new ZipFile(file)) {
         Enumeration<?> e = zipFile.getEntries();
@@ -196,14 +196,14 @@ public class ZipUtil {
     if (zipEntry.isDirectory()) {
       String name = zipEntry.getName();
       name = name.substring(0, name.length() - 1);
-      File f = new File(dest + name);
+      File f = DataUtils.getFile(dest + name);
       f.mkdirs();
     } else {
       String fileName = dest + zipEntry.getName();
       DataUtils.createFile(fileName, null);
 
       try (InputStream is = zipFile.getInputStream(zipEntry);
-          FileOutputStream fos = new FileOutputStream(new File(fileName))) {
+          FileOutputStream fos = DataUtils.getFileOutputStream(fileName)) {
         int length;
         byte[] b = new byte[SIZE];
         while ((length = is.read(b, 0, SIZE)) != -1) {

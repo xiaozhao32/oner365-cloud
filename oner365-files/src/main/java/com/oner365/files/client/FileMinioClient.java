@@ -98,7 +98,7 @@ public class FileMinioClient implements IFileStorageClient {
     try {
       String fullpath = fileProperties.getDownload() + PublicConstants.DELIMITER + path;
       // 判断文件夹是否存在则创建
-      File file = new File(fullpath);
+      File file = DataUtils.getFile(fullpath);
       FileUtils.forceMkdirParent(file);
       // 下载
       minioClient.downloadObject(

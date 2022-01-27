@@ -71,7 +71,7 @@ public class FileLocalUploadUtils {
       
       String absoluteFile = filePath + File.separator + upath + fileName;
       LOGGER.info("Local upload File path: {}", absoluteFile);
-      File desc = new File(absoluteFile);
+      File desc = DataUtils.getFile(absoluteFile);
 
       if (!desc.exists() && !desc.getParentFile().exists()) {
           desc.getParentFile().mkdirs();
@@ -114,7 +114,7 @@ public class FileLocalUploadUtils {
   public static byte[] download(String filePath, String fileUrl) {
       String path = filePath + PublicConstants.DELIMITER + fileUrl;
       LOGGER.info("Local download File path: {}", path);
-      File file = new File(path);
+      File file = DataUtils.getFile(path);
       try {
           return FileUtil.readAsByteArray(file);
       } catch (Exception e) {

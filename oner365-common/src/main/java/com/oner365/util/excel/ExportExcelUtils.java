@@ -1,6 +1,5 @@
 package com.oner365.util.excel;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -85,7 +84,7 @@ public class ExportExcelUtils {
     public static void exportExcel(String fileName, String[] columnName,
             String[] titleKey, List<?> dataList, String filePath, String fileSuffix) {
         try (Workbook workbook = exportExcel(fileName, DataUtils.getFileName(fileName), columnName, titleKey, dataList, fileSuffix);
-                FileOutputStream fileOut = new FileOutputStream(filePath + File.separator + fileName)) {
+                FileOutputStream fileOut = DataUtils.getFileOutputStream(filePath, fileName)) {
             workbook.write(fileOut);
             fileOut.flush();
         } catch (FileNotFoundException e) {
@@ -112,7 +111,7 @@ public class ExportExcelUtils {
 
         String extension = DataUtils.getExtension(fileName);
         try (Workbook workbook = createWorkbook(extension, fileSuffix);
-                FileOutputStream fileOut = new FileOutputStream(filePath + File.separator + fileName)) {
+                FileOutputStream fileOut = DataUtils.getFileOutputStream(filePath, fileName)) {
             for (Map.Entry<String, List<?>> map : mapList.entrySet()) {
                 String sheetName = map.getKey();
                 List<?> dataList = map.getValue();

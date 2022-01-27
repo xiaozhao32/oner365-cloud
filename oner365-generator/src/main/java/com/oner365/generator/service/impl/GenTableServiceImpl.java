@@ -235,7 +235,7 @@ public class GenTableServiceImpl implements IGenTableService {
                 tpl.merge(context, sw);
                 try {
                     String path = getGenPath(table, template);
-                    FileUtils.writeStringToFile(new File(path), sw.toString(), Charset.defaultCharset().name());
+                    FileUtils.writeStringToFile(DataUtils.getFile(path), sw.toString(), Charset.defaultCharset().name());
                 } catch (Exception e) {
                     LOGGER.error("渲染模板失败，表名：{}", table.getTableName());
                 }
