@@ -60,11 +60,10 @@ public class JavaTimeModule extends SimpleModule {
     @Override
     public void serialize(Instant instant, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
         throws IOException {
-      if (instant == null) {
-        return;
+      if (instant != null) {
+        String jsonValue = format.format(instant.atZone(ZoneId.systemDefault()));
+        jsonGenerator.writeString(jsonValue);
       }
-      String jsonValue = format.format(instant.atZone(ZoneId.systemDefault()));
-      jsonGenerator.writeString(jsonValue);
     }
   }
 
