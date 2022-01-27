@@ -56,14 +56,14 @@ public class FileMinioClient implements IFileStorageClient {
 
   @Override
   public String uploadFile(MultipartFile file, String directory) {
-    try {
+    try (InputStream inputStream = file.getInputStream()) {
       String path = file.getOriginalFilename();
       if (!DataUtils.isEmpty(directory)) {
         path = directory + PublicConstants.DELIMITER + file.getOriginalFilename();
       }
       ObjectWriteResponse writeResponse = minioClient
           .putObject(PutObjectArgs.builder().bucket(minioProperties.getBucket()).object(path)
-              .stream(file.getInputStream(), file.getSize(), -1).contentType(file.getContentType()).build());
+              .stream(inputStream, file.getSize(), -1).contentType(file.getContentType()).build());
       String url = writeResponse.object();
       LOGGER.info("file path: {}", url);
       saveFileStorage(url, file.getOriginalFilename(), file.getSize());

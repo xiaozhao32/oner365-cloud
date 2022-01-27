@@ -38,7 +38,7 @@ public interface SysMenuMapper {
      * @param menuTypeId 菜单类型编号
      * @return 选中菜单列表
      */
-    List<Integer> selectListByRoleId(@Param("roleId") String roleId, @Param("menuTypeId") String menuTypeId);
+    List<String> selectListByRoleId(@Param("roleId") String roleId, @Param("menuTypeId") String menuTypeId);
 
     /**
      * 根据角色ID查询菜单树信息

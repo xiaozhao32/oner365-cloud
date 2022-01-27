@@ -32,7 +32,6 @@ import com.oner365.gateway.jwt.JwtUtils;
 import com.oner365.gateway.log.event.SysLogEvent;
 import com.oner365.gateway.vo.SysLogVo;
 
-import io.jsonwebtoken.lang.Assert;
 import reactor.core.publisher.Mono;
 
 /**
@@ -140,7 +139,6 @@ public class TokenFilter implements GlobalFilter, Ordered {
         // 请求方法
         HttpMethod method = request.getMethod();
         if (method == null) {
-            Assert.notNull(method, "HttpMethod is not null");
             return;
         }
         

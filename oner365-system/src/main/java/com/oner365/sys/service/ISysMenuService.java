@@ -113,5 +113,5 @@ public interface ISysMenuService extends BaseService {
    * @param menuTypeId 菜单类型id
    * @return 选中菜单列表
    */
-  List<Integer> selectListByRoleId(String roleId, String menuTypeId);
+  List<String> selectListByRoleId(String roleId, String menuTypeId);
 }

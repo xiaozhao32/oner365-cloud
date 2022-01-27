@@ -1,3 +1,4 @@
+
 package com.oner365.monitor.deploy;
 
 import java.io.BufferedReader;
@@ -214,8 +215,6 @@ public class DeployUtils {
             CommandLine commandLine = CommandLine.parse(command);
 
             DefaultExecutor exec = new DefaultExecutor();
-            exec.setExitValues(null);
-
             PumpStreamHandler streamHandler = new PumpStreamHandler(outStream);
             exec.setStreamHandler(streamHandler);
             exec.execute(commandLine);
@@ -253,8 +252,6 @@ public class DeployUtils {
             CommandLine commandLine = CommandLine.parse(command);
 
             DefaultExecutor exec = new DefaultExecutor();
-            exec.setExitValues(null);
-
             DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
 
             PumpStreamHandler streamHandler = new PumpStreamHandler(outStream);

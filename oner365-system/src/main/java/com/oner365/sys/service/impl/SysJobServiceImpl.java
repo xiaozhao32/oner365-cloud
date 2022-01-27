@@ -124,11 +124,11 @@ public class SysJobServiceImpl implements ISysJobService {
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public Integer editStatus(String id, String status) {
-    SysJob entity = dao.findById(id).orElse(null);
-    if (entity != null && entity.getId() != null) {
-      entity.setStatus(status);
-      entity.setUpdateTime(LocalDateTime.now());
-      dao.save(entity);
+    Optional<SysJob> optional = dao.findById(id);
+    if (optional.isPresent()) {
+      optional.get().setStatus(status);
+      optional.get().setUpdateTime(LocalDateTime.now());
+      dao.save(optional.get());
       return ResultEnum.SUCCESS.getCode();
     }
     return ResultEnum.ERROR.getCode();

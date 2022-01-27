@@ -248,7 +248,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
   @Override
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-  public List<Integer> selectListByRoleId(String roleId, String menuTypeId) {
+  public List<String> selectListByRoleId(String roleId, String menuTypeId) {
     return menuMapper.selectListByRoleId(roleId, menuTypeId);
   }
 

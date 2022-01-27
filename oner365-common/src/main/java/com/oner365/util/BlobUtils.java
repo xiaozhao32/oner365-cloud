@@ -67,7 +67,8 @@ public class BlobUtils implements Blob {
      * @return byte[]
      */
     private byte[] blobToBytes(Blob blob) {
-        try (BufferedInputStream is = new BufferedInputStream(blob.getBinaryStream())) {
+        try (InputStream inputStream = blob.getBinaryStream();
+            BufferedInputStream is = new BufferedInputStream(inputStream)) {
             byte[] bytes = new byte[(int) blob.length()];
             int len = bytes.length;
             int offset = 0;
