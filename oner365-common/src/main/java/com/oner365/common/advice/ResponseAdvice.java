@@ -49,7 +49,8 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         LOGGER.error("beforeBodyWrite error:", e);
       }
     }
-    if (body instanceof byte[] || body instanceof ResponseData) {
+    if (body instanceof byte[] || body instanceof ResponseData
+        || body.getClass().getName().contains("org.springframework")) {
       return body;
     }
     return ResponseData.success((Serializable)body);
