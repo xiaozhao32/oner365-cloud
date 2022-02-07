@@ -24,6 +24,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.oner365.common.cache.RedisCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.annotation.RedisCachePut;
+import com.oner365.common.cache.constants.CacheConstants;
 import com.oner365.common.config.properties.AccessTokenProperties;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ExistsEnum;
@@ -69,7 +70,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
-  private static final String CACHE_LOGIN_NAME = "Auth:Login";
   private static final String CACHE_NAME = "SysUser";
 
   @Autowired
@@ -105,7 +105,7 @@ public class SysUserServiceImpl implements ISysUserService {
     String password = DigestUtils.md5Hex(p).toUpperCase();
     SysUser user = getUserByUserName(userName, password, ip);
     if (user != null) {
-      String key = CACHE_LOGIN_NAME + ":" + userName;
+      String key = CacheConstants.CACHE_LOGIN_NAME + userName;
       JSONObject cache = redisCache.getCacheObject(key);
       if (cache != null) {
         return JSON.toJavaObject(cache, LoginUserDto.class);
@@ -380,7 +380,7 @@ public class SysUserServiceImpl implements ISysUserService {
     entity.setAvatar(avatar);
     userDao.save(entity);
     
-    String key = CACHE_LOGIN_NAME + ":" + entity.getUserName();
+    String key = CacheConstants.CACHE_LOGIN_NAME + entity.getUserName();
     redisCache.deleteObject(key);
     return convertDto(entity);
   }
@@ -398,7 +398,7 @@ public class SysUserServiceImpl implements ISysUserService {
     entity.setLastTime(LocalDateTime.now());
     userDao.save(entity);
     
-    String key = CACHE_LOGIN_NAME + ":" + entity.getUserName();
+    String key = CacheConstants.CACHE_LOGIN_NAME + entity.getUserName();
     redisCache.deleteObject(key);
     return convertDto(entity);
   }
