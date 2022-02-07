@@ -23,7 +23,7 @@ public class AttributeBean implements Serializable {
     /**
      * 值
      */
-    private String val;
+    private Object val;
 
     /**
      * 构造对象
@@ -45,11 +45,11 @@ public class AttributeBean implements Serializable {
         this.key = key;
     }
 
-    public String getVal() {
+    public Object getVal() {
         return val;
     }
 
-    public void setVal(String val) {
+    public void setVal(Object val) {
         this.val = val;
     }
 

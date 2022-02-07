@@ -24,7 +24,7 @@ import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.swagger.client.system.ISystemMessageClient;
 import com.oner365.swagger.dto.SysMessageDto;
-import com.oner365.swagger.enums.SysMessageTypeEnum;
+import com.oner365.swagger.enums.MessageTypeEnum;
 import com.oner365.swagger.vo.SysMessageVo;
 
 import io.swagger.annotations.Api;
@@ -52,7 +52,7 @@ public class SysMessageController extends BaseController {
   @ApiOperation("1.刷新结果")
   @ApiOperationSupport(order = 1)
   @GetMapping("/refresh")
-  public ResponseData<ResponseResult<Boolean>> refresh(@RequestParam("messageType") SysMessageTypeEnum messageType) {
+  public ResponseData<ResponseResult<Boolean>> refresh(@RequestParam("messageType") MessageTypeEnum messageType) {
     return client.refresh(messageType);
   }
   

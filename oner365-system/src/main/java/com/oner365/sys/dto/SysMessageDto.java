@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.google.common.base.MoreObjects;
+import com.oner365.sys.enums.MessageStatusEnum;
+import com.oner365.sys.enums.MessageTypeEnum;
 
 /**
  * 消息对象
@@ -32,7 +34,7 @@ public class SysMessageDto implements Serializable {
   /**
    * 消息类型
    */
-  private String messageType;
+  private MessageTypeEnum messageType;
 
   /**
    * 消息名称
@@ -62,7 +64,7 @@ public class SysMessageDto implements Serializable {
   /**
    * 状态
    */
-  private String status;
+  private MessageStatusEnum status;
 
   /**
    * 创建时间 create_time
@@ -126,14 +128,14 @@ public class SysMessageDto implements Serializable {
   /**
    * @return the messageType
    */
-  public String getMessageType() {
+  public MessageTypeEnum getMessageType() {
     return messageType;
   }
 
   /**
    * @param messageType the messageType to set
    */
-  public void setMessageType(String messageType) {
+  public void setMessageType(MessageTypeEnum messageType) {
     this.messageType = messageType;
   }
 
@@ -238,14 +240,14 @@ public class SysMessageDto implements Serializable {
   /**
    * @return the status
    */
-  public String getStatus() {
+  public MessageStatusEnum getStatus() {
     return status;
   }
 
   /**
    * @param status the status to set
    */
-  public void setStatus(String status) {
+  public void setStatus(MessageStatusEnum status) {
     this.status = status;
   }
 

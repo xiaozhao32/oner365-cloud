@@ -5,16 +5,16 @@ import java.util.Arrays;
 import java.util.Optional;
 
 /**
- * 枚举 - 消息类型
+ * 枚举 - 消息状态
  *
  * @author zhaoyong
  */
-public enum SysMessageTypeEnum implements Serializable {
+public enum MessageStatusEnum implements Serializable {
 
-    /** default */
-    DEFAULT("default", "默认类型"),
-    /** queues */
-    QUEUES("queues", "队列类型");
+    /** 未读 */
+    READ_NONE("0", "未读"),
+    /** 已读 */
+    READ("1", "已读");
 
     /**
      * 编码
@@ -32,7 +32,7 @@ public enum SysMessageTypeEnum implements Serializable {
      * @param code  编码
      * @param name 名称
      */
-    SysMessageTypeEnum(String code, String name) {
+    MessageStatusEnum(String code, String name) {
         this.code = code;
         this.name = name;
     }
@@ -59,10 +59,10 @@ public enum SysMessageTypeEnum implements Serializable {
      * 获取枚举
      *
      * @param code 编码
-     * @return StatusEnum
+     * @return MessageStatusEnum
      */
-    public static SysMessageTypeEnum getCode(String code) {
-        Optional<SysMessageTypeEnum> result = Arrays.stream(SysMessageTypeEnum.values())
+    public static MessageStatusEnum getCode(String code) {
+        Optional<MessageStatusEnum> result = Arrays.stream(MessageStatusEnum.values())
                 .filter(e -> e.getCode().equals(code))
                 .findFirst();
         return result.orElse(null);

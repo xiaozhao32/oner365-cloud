@@ -50,7 +50,7 @@ public class QueryUtils {
       String key = attr.getKey();
       String opt = !DataUtils.isEmpty(attr.getOpt()) ? attr.getOpt().toUpperCase() : Operator.EQ.name();
       Operator operator = Criterion.Operator.valueOf(opt);
-      String value = attr.getVal();
+      Object value = attr.getVal();
       if (DataUtils.isEmpty(key) || DataUtils.isEmpty(value)) {
         continue;
       }
@@ -59,7 +59,7 @@ public class QueryUtils {
     return criteria;
   }
   
-  private static <T> void getOperator(Criteria<T> criteria, Operator operator, String key, String value) {
+  private static <T> void getOperator(Criteria<T> criteria, Operator operator, String key, Object value) {
     switch (operator) {
     case LIKE:
       criteria.add(Restrictions.like(key, value));
@@ -81,13 +81,13 @@ public class QueryUtils {
       break;
     case IN:
       // 格式: 条件1,条件2
-      if (value.length() > 1) {
-        criteria.add(Restrictions.in(key, Arrays.asList(value.split(",")), true));
+      if (value.toString().length() > 1) {
+        criteria.add(Restrictions.in(key, Arrays.asList(value.toString().split(",")), true));
       }
       break;
     case BE:
       // 格式: 开始条件|结束条件
-      if (value.length() > 1) {
+      if (value.toString().length() > 1) {
         criteria.add(Restrictions.between(key, value));
       }
       break;

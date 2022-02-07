@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -13,6 +15,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.oner365.sys.dto.SysMessageDto;
+import com.oner365.sys.enums.MessageStatusEnum;
+import com.oner365.sys.enums.MessageTypeEnum;
 
 /**
  * 消息对象
@@ -49,8 +53,9 @@ public class SysMessage implements Serializable {
   /**
    * 消息类型
    */
-  @Column(name = "message_type", nullable = false, length = 32)
-  private String messageType;
+  @Enumerated(EnumType.STRING)
+  @Column(name = "message_type", nullable = false)
+  private MessageTypeEnum messageType;
 
   /**
    * 消息名称
@@ -85,8 +90,9 @@ public class SysMessage implements Serializable {
   /**
    * 状态 status
    */
-  @Column(name = "status", nullable = false, length = 32)
-  private String status;
+  @Enumerated
+  @Column(name = "status", nullable = false)
+  private MessageStatusEnum status;
 
   /**
    * 创建时间 create_time
@@ -152,14 +158,14 @@ public class SysMessage implements Serializable {
   /**
    * @return the messageType
    */
-  public String getMessageType() {
+  public MessageTypeEnum getMessageType() {
     return messageType;
   }
 
   /**
    * @param messageType the messageType to set
    */
-  public void setMessageType(String messageType) {
+  public void setMessageType(MessageTypeEnum messageType) {
     this.messageType = messageType;
   }
 
@@ -278,15 +284,16 @@ public class SysMessage implements Serializable {
     result.setReceiveUser(this.getReceiveUser());
     result.setSendUser(this.getSendUser());
     result.setTypeId(this.getTypeId());
+    result.setStatus(this.getStatus());
     result.setUpdateTime(this.getUpdateTime());
     return result;
   }
 
-  public String getStatus() {
+  public MessageStatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(MessageStatusEnum status) {
     this.status = status;
   }
 }

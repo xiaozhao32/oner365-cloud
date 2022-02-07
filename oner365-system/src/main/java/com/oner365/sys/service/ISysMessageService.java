@@ -2,8 +2,11 @@ package com.oner365.sys.service;
 
 import java.util.List;
 
+import com.oner365.common.page.PageInfo;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
 import com.oner365.sys.dto.SysMessageDto;
+import com.oner365.sys.enums.MessageStatusEnum;
 import com.oner365.sys.vo.SysMessageVo;
 
 /**
@@ -14,12 +17,20 @@ import com.oner365.sys.vo.SysMessageVo;
 public interface ISysMessageService extends BaseService {
 
   /**
-   * 添加
+   * 查询列表
    *
-   * @param sysMessage 对象
-   * @return SysMessageDto
+   * @param data 查询参数
+   * @return PageInfo
    */
-  SysMessageDto save(SysMessageVo sysMessage);
+  PageInfo<SysMessageDto> pageList(QueryCriteriaBean data);
+
+  /**
+   * 查询列表
+   *
+   * @param data 查询参数
+   * @return List
+   */
+  List<SysMessageDto> findList(QueryCriteriaBean data);
 
   /**
    * 按编号查询详情
@@ -30,12 +41,21 @@ public interface ISysMessageService extends BaseService {
   SysMessageDto getById(String id);
 
   /**
-   * 按分类查询详情
+   * 添加
    *
-   * @param messageType 类型
-   * @return List
+   * @param sysMessage 对象
+   * @return SysMessageDto
    */
-  List<SysMessageDto> findList(String messageType);
+  SysMessageDto save(SysMessageVo sysMessage);
+
+  /**
+   * 修改状态
+   *
+   * @param id     编号
+   * @param status 状态
+   * @return int
+   */
+  Integer editStatus(String id, MessageStatusEnum status);
 
   /**
    * 删除

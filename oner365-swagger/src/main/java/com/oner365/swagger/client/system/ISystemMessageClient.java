@@ -18,7 +18,7 @@ import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
 import com.oner365.swagger.dto.SysMessageDto;
-import com.oner365.swagger.enums.SysMessageTypeEnum;
+import com.oner365.swagger.enums.MessageTypeEnum;
 import com.oner365.swagger.vo.SysMessageVo;
 
 /**
@@ -37,7 +37,7 @@ public interface ISystemMessageClient {
    * @return ResponseResult<Boolean>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_REFRESH)
-  ResponseData<ResponseResult<Boolean>> refresh(@RequestParam("messageType") SysMessageTypeEnum messageType);
+  ResponseData<ResponseResult<Boolean>> refresh(@RequestParam("messageType") MessageTypeEnum messageType);
 
   /**
    * 列表
