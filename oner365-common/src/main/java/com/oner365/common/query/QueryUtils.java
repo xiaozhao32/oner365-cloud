@@ -45,7 +45,7 @@ public class QueryUtils {
       String key = attr.getKey();
       String opt = !DataUtils.isEmpty(attr.getOpt()) ? attr.getOpt().toUpperCase() : Operator.EQ.name();
       Operator operator = Operator.valueOf(opt);
-      String value = attr.getVal();
+      Object value = attr.getVal();
       if (DataUtils.isEmpty(key) || DataUtils.isEmpty(value)) {
         return;
       }
@@ -54,7 +54,7 @@ public class QueryUtils {
     return criteria;
   }
 
-  private static <T> void getOperator(Criteria<T> criteria, Operator operator, String key, String value) {
+  private static <T> void getOperator(Criteria<T> criteria, Operator operator, String key, Object value) {
     switch (operator) {
     case LIKE:
       criteria.add(Restrictions.like(key, value));
@@ -76,13 +76,13 @@ public class QueryUtils {
       break;
     case IN:
       // 格式: 条件1,条件2
-      if (value.length() > 1) {
-        criteria.add(Restrictions.in(key, Arrays.asList(value.split(",")), true));
+      if (value.toString().length() > 1) {
+        criteria.add(Restrictions.in(key, Arrays.asList(value.toString().split(",")), true));
       }
       break;
     case BE:
       // 格式: 开始条件|结束条件
-      if (value.length() > 1) {
+      if (value.toString().length() > 1) {
         criteria.add(Restrictions.between(key, value));
       }
       break;
@@ -122,7 +122,7 @@ public class QueryUtils {
   public static Sort buildSortRequest(AttributeBean order) {
     Sort sort = null;
     if (!DataUtils.isEmpty(order) && !DataUtils.isEmpty(order.getKey())) {
-      if (PARAM_ORDER_DESC.equalsIgnoreCase(order.getVal())) {
+      if (PARAM_ORDER_DESC.equalsIgnoreCase(order.getVal().toString())) {
         sort = Sort.by(Direction.DESC, order.getKey().split(","));
       } else {
         sort = Sort.by(Direction.ASC, order.getKey().split(","));
@@ -141,7 +141,7 @@ public class QueryUtils {
     StringBuilder sb = new StringBuilder();
     whereList.forEach(attr -> {
       String key = attr.getKey();
-      String value = attr.getVal();
+      Object value = attr.getVal();
       String opt = attr.getOpt();
       if (DataUtils.isEmpty(key) || DataUtils.isEmpty(value)) {
         return;
@@ -151,7 +151,7 @@ public class QueryUtils {
     return sb.toString();
   }
 
-  private static void getCriterion(StringBuilder sb, String key, String opt, String value) {
+  private static void getCriterion(StringBuilder sb, String key, String opt, Object value) {
     if (Operator.LIKE.name().equals(opt)) {
       sb.append(PARAM_QUERY_AND).append(key).append(" like '%").append(value).append("%'");
     } else if (Operator.NE.name().equals(opt)) {
@@ -166,14 +166,14 @@ public class QueryUtils {
       sb.append(PARAM_QUERY_AND).append(key).append(" >= '").append(value).append("'");
     } else if (Operator.IN.name().equals(opt)) {
       // 格式: 条件1,条件2
-      if (value.length() > 1) {
-        String valueString = getInCriterion(Arrays.asList(value.split(",")));
+      if (value.toString().length() > 1) {
+        String valueString = getInCriterion(Arrays.asList(value.toString().split(",")));
         sb.append(PARAM_QUERY_AND).append(key).append(" in (").append(valueString).append(")");
       }
     } else if (Operator.BE.name().equals(opt)) {
       // 格式: 开始条件|结束条件
-      if (value.length() > 1) {
-        String[] array = StringUtils.split(value, "|");
+      if (value.toString().length() > 1) {
+        String[] array = StringUtils.split(value.toString(), "|");
         sb.append(PARAM_QUERY_AND).append(key).append(" between '").append(array[0]).append("' and '").append(array[1])
             .append("'");
       }

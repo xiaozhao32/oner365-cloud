@@ -79,7 +79,7 @@ public enum ErrorInfoEnum implements Serializable {
      * 获取枚举
      *
      * @param code 编码
-     * @return StatusEnum
+     * @return ErrorInfoEnum
      */
     public static ErrorInfoEnum getCode(Integer code) {
         Optional<ErrorInfoEnum> result = Arrays.stream(ErrorInfoEnum.values()).filter(e -> e.getCode().equals(code))

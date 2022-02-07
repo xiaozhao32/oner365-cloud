@@ -61,7 +61,7 @@ public enum StorageEnum implements Serializable {
      * 获取枚举
      *
      * @param code 编码
-     * @return StatusEnum
+     * @return StorageEnum
      */
     public static StorageEnum getCode(String code) {
         Optional<StorageEnum> result = Arrays.stream(StorageEnum.values())

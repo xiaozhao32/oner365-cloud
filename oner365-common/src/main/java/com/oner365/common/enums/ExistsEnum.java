@@ -59,7 +59,7 @@ public enum ExistsEnum implements Serializable {
      * 获取枚举
      *
      * @param code 编码
-     * @return StatusEnum
+     * @return ExistsEnum
      */
     public static ExistsEnum getCode(Integer code) {
         Optional<ExistsEnum> result = Arrays.stream(ExistsEnum.values()).filter(e -> e.getCode().equals(code))

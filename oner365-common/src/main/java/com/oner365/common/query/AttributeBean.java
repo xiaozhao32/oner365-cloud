@@ -23,7 +23,7 @@ public class AttributeBean implements Serializable {
     /**
      * 值
      */
-    private String val;
+    private Object val;
 
     /**
      * 构造对象
@@ -32,7 +32,7 @@ public class AttributeBean implements Serializable {
         super();
     }
 
-    public AttributeBean(String key, String val) {
+    public AttributeBean(String key, Object val) {
         this.key = key;
         this.val = val;
     }
@@ -45,7 +45,7 @@ public class AttributeBean implements Serializable {
         this.key = key;
     }
 
-    public String getVal() {
+    public Object getVal() {
         return val;
     }
 

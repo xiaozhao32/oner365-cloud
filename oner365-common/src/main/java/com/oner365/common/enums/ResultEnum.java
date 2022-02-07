@@ -59,7 +59,7 @@ public enum ResultEnum implements Serializable {
      * 获取枚举
      *
      * @param code 编码
-     * @return StatusEnum
+     * @return ResultEnum
      */
     public static ResultEnum getCode(Integer code) {
         Optional<ResultEnum> result = Arrays.stream(ResultEnum.values()).filter(e -> e.getCode().equals(code))
