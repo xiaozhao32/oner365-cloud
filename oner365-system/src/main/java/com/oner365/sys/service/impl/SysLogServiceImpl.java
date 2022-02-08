@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +43,8 @@ public class SysLogServiceImpl implements ISysLogService {
   @Override
   public PageInfo<SysLogDto> pageList(QueryCriteriaBean data) {
     try {
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
+      Page<SysLog> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, SysLogDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -52,7 +54,7 @@ public class SysLogServiceImpl implements ISysLogService {
   @Override
   public List<SysLogDto> findList(QueryCriteriaBean data) {
     try {
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data)));
+      return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysLogDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
     }
@@ -63,7 +65,7 @@ public class SysLogServiceImpl implements ISysLogService {
   public SysLogDto getById(String id) {
     try {
       Optional<SysLog> optional = dao.findById(id);
-      return convertDto(optional.orElse(null));
+      return convert(optional.orElse(null), SysLogDto.class);
     } catch (Exception e) {
       LOGGER.error("Error getById: ", e);
     }
@@ -73,28 +75,10 @@ public class SysLogServiceImpl implements ISysLogService {
   @Async
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public SysLogDto save(SysLogVo vo) {
-    SysLog entity = toPojo(vo);
-    return convertDto(dao.save(entity));
+  public void save(SysLogVo vo) {
+    dao.save(convert(vo, SysLog.class));
   }
   
-  /**
-   * 转换对象
-   * 
-   * @return SysLog
-   */
-  private SysLog toPojo(SysLogVo vo) {
-    SysLog result = new SysLog();
-    result.setId(vo.getId());
-    result.setCreateTime(vo.getCreateTime());
-    result.setMethodName(vo.getMethodName());
-    result.setOperationContext(vo.getOperationContext());
-    result.setOperationIp(vo.getOperationIp());
-    result.setOperationName(vo.getOperationName());
-    result.setOperationPath(vo.getOperationPath());
-    return result;
-  }
-
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   public int deleteById(String id) {

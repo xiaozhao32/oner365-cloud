@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.oner365.api.constants.ScheduleTaskConstants;
 import com.oner365.api.rabbitmq.dto.InvokeParamDto;
+import com.oner365.common.service.BaseService;
 
 /**
  * 定时任务监听
@@ -19,7 +20,7 @@ import com.oner365.api.rabbitmq.dto.InvokeParamDto;
  *
  */
 @Component
-public interface IScheduleTaskService {
+public interface IScheduleTaskService extends BaseService {
 
   /**
    * 定时任务监听

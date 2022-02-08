@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -55,7 +56,8 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public PageInfo<SysMenuTypeDto> pageList(QueryCriteriaBean data) {
     try {
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
+      Page<SysMenuType> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, SysMenuTypeDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -66,7 +68,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysMenuTypeDto> findList(QueryCriteriaBean data) {
     try {
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data)));
+      return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysMenuTypeDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
     }
@@ -78,7 +80,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
   public SysMenuTypeDto getById(String id) {
     try {
       Optional<SysMenuType> optional = dao.findById(id);
-      return convertDto(optional.orElse(null));
+      return convert(optional.orElse(null), SysMenuTypeDto.class);
     } catch (Exception e) {
       LOGGER.error("Error getById: ", e);
     }
@@ -92,32 +94,16 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
   public SysMenuTypeDto save(SysMenuTypeVo vo) {
-    SysMenuType entity = toPojo(vo);
-    if (DataUtils.isEmpty(entity.getId())) {
-      entity.setStatus(StatusEnum.YES.getCode());
-      entity.setCreateTime(LocalDateTime.now());
+    if (DataUtils.isEmpty(vo.getId())) {
+      vo.setStatus(StatusEnum.YES.getCode());
+      vo.setCreateTime(LocalDateTime.now());
     } else {
-      entity.setUpdateTime(LocalDateTime.now());
+      vo.setUpdateTime(LocalDateTime.now());
     }
-    return convertDto(dao.save(entity));
+    SysMenuType entity = dao.save(convert(vo, SysMenuType.class));
+    return convert(entity, SysMenuTypeDto.class);
   }
   
-  /**
-   * 转换对象
-   * 
-   * @return SysMenuType
-   */
-  public SysMenuType toPojo(SysMenuTypeVo vo) {
-      SysMenuType result = new SysMenuType();
-      result.setId(vo.getId());
-      result.setCreateTime(vo.getCreateTime());
-      result.setStatus(vo.getStatus());
-      result.setTypeCode(vo.getTypeCode());
-      result.setTypeName(vo.getTypeName());
-      result.setUpdateTime(vo.getUpdateTime());
-      return result;
-  }
-
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @Caching(evict = { 
@@ -155,7 +141,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
     Assert.notNull(typeCode, "typeCode is not empty.");
     Criteria<SysMenuType> criteria = new Criteria<>();
     criteria.add(Restrictions.eq(SysConstants.TYPE_CODE, typeCode));
-    return convertDto(dao.findOne(criteria));
+    return convert(dao.findOne(criteria), SysMenuTypeDto.class);
   }
 
   @Override

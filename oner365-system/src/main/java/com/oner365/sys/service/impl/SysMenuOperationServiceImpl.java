@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,7 +57,8 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public PageInfo<SysMenuOperationDto> pageList(QueryCriteriaBean data) {
     try {
-      return convertDto(menuOperationDao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
+      Page<SysMenuOperation> page = menuOperationDao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, SysMenuOperationDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -67,7 +69,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysMenuOperationDto> findList() {
     try {
-      return convertDto(menuOperationDao.findAll());
+      return convert(menuOperationDao.findAll(), SysMenuOperationDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
     }
@@ -79,7 +81,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
   public SysMenuOperationDto getById(String id) {
     try {
       Optional<SysMenuOperation> optional = menuOperationDao.findById(id);
-      return convertDto(optional.orElse(null));
+      return convert(optional.orElse(null), SysMenuOperationDto.class);
     } catch (Exception e) {
       LOGGER.error("Error getById: ", e);
     }
@@ -96,24 +98,8 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
       vo.setCreateTime(LocalDateTime.now());
     }
     vo.setUpdateTime(LocalDateTime.now());
-    SysMenuOperation entity = toPojo(vo);
-    return convertDto(menuOperationDao.save(entity));
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return SysMenuOperation
-   */
-  private SysMenuOperation toPojo(SysMenuOperationVo vo) {
-    SysMenuOperation result = new SysMenuOperation();
-    result.setId(vo.getId());
-    result.setCreateTime(vo.getCreateTime());
-    result.setOperationName(vo.getOperationName());
-    result.setOperationType(vo.getOperationType());
-    result.setStatus(vo.getStatus());
-    result.setUpdateTime(vo.getUpdateTime());
-    return result;
+    SysMenuOperation entity = menuOperationDao.save(convert(vo, SysMenuOperation.class));
+    return convert(entity, SysMenuOperationDto.class);
   }
 
   @Override

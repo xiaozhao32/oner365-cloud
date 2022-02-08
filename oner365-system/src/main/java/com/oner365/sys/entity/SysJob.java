@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.sys.dto.SysJobDto;
 
 /**
  * 职位表 - nt_sys_job
@@ -182,23 +181,4 @@ public class SysJob implements Serializable {
     this.createTime = createTime;
   }
 
-  /**
-   * 转换对象
-   * 
-   * @return SysJobDto
-   */
-  public SysJobDto toDto() {
-    SysJobDto result = new SysJobDto();
-    result.setCreateTime(this.getCreateTime());
-    result.setId(this.getId());
-    result.setJobInfo(this.getJobInfo());
-    result.setJobLogo(this.getJobLogo());
-    result.setJobLogoUrl(this.getJobLogoUrl());
-    result.setJobName(this.getJobName());
-    result.setJobOrder(this.getJobOrder());
-    result.setParentId(this.getParentId());
-    result.setStatus(this.getStatus());
-    result.setUpdateTime(this.getUpdateTime());
-    return result;
-  }
 }

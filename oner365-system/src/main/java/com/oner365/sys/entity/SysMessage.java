@@ -14,7 +14,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.sys.dto.SysMessageDto;
 import com.oner365.sys.enums.MessageStatusEnum;
 import com.oner365.sys.enums.MessageTypeEnum;
 
@@ -268,31 +267,15 @@ public class SysMessage implements Serializable {
   }
 
   /**
-   * 转换对象
-   * 
-   * @return SysMessageDto
+   * @return the status
    */
-  public SysMessageDto toDto() {
-    SysMessageDto result = new SysMessageDto();
-    result.setId(this.getId());
-    result.setContext(this.getContext());
-    result.setCreateTime(this.getCreateTime());
-    result.setMessageName(this.getMessageName());
-    result.setMessageType(this.getMessageType());
-    result.setQueueKey(this.getQueueKey());
-    result.setQueueType(this.getQueueType());
-    result.setReceiveUser(this.getReceiveUser());
-    result.setSendUser(this.getSendUser());
-    result.setTypeId(this.getTypeId());
-    result.setStatus(this.getStatus());
-    result.setUpdateTime(this.getUpdateTime());
-    return result;
-  }
-
   public MessageStatusEnum getStatus() {
     return status;
   }
 
+  /**
+   * @param status the status to set
+   */
   public void setStatus(MessageStatusEnum status) {
     this.status = status;
   }

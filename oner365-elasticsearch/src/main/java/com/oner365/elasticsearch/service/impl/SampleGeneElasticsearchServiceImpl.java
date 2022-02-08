@@ -3,6 +3,7 @@ package com.oner365.elasticsearch.service.impl;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
@@ -59,7 +60,7 @@ public class SampleGeneElasticsearchServiceImpl implements ISampleGeneElasticsea
     SearchHits<SampleGene> searchHits = execute(search -> search.search(searchQuery, SampleGene.class));
     SearchPage<SampleGene> page = SearchHitSupport.searchPageFor(searchHits, searchQuery.getPageable());
     Page<SampleGene> pageList = (Page<SampleGene>) SearchHitSupport.unwrapSearchHits(page);
-    return convertDto(pageList);
+    return convert(pageList, SampleGeneDto.class);
   }
 
   public <R> R execute(OperationsCallback<R> callback) {
@@ -68,37 +69,21 @@ public class SampleGeneElasticsearchServiceImpl implements ISampleGeneElasticsea
 
   @Override
   public Iterable<SampleGeneDto> saveAll(List<SampleGeneVo> voList) {
-    List<SampleGene> list = voList.stream().map(e -> toPojo(e)).collect(Collectors.toList());
-    return convertDto(dao.saveAll(list));
+    Iterable<SampleGene> iterable = dao.saveAll(convert(voList, SampleGene.class));
+    List<SampleGene> list = StreamSupport.stream(iterable.spliterator(), false).collect(Collectors.toList());
+    return convert(list, SampleGeneDto.class);
   }
 
   @Override
   public SampleGeneDto save(SampleGeneVo vo) {
-    SampleGene entity = toPojo(vo);
-    return convertDto(dao.save(entity));
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return SampleGeneDto
-   */
-  private SampleGene toPojo(SampleGeneVo vo) {
-    SampleGene result = new SampleGene();
-    result.setId(vo.getId());
-    result.setGeneInfo(vo.getGeneInfo());
-    result.setGeneList(vo.getGeneList());
-    result.setGeneType(vo.getGeneType());
-    result.setInitServerNo(vo.getInitServerNo());
-    result.setMatchJson(vo.getMatchJson());
-    result.setPersonCode(vo.getPersonCode());
-    return result;
+    SampleGene entity = dao.save(convert(vo, SampleGene.class));
+    return convert(entity, SampleGeneDto.class);
   }
 
   @Override
   public SampleGeneDto findById(String id) {
     Optional<SampleGene> optional = dao.findById(id);
-    return convertDto(optional.orElse(null));
+    return convert(optional.orElse(null), SampleGeneDto.class);
   }
 
   @Override

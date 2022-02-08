@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
-import com.oner365.api.rabbitmq.dto.InvokeParamDto;
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
 import com.oner365.api.rabbitmq.dto.UpdateTaskExecuteSatusDto;
@@ -15,7 +14,6 @@ import com.oner365.monitor.exception.TaskException;
 import com.oner365.monitor.rabbitmq.IScheduleSendExecuteService;
 import com.oner365.monitor.service.ISysTaskLogService;
 import com.oner365.monitor.service.ISysTaskService;
-import com.oner365.monitor.vo.InvokeParamVo;
 import com.oner365.monitor.vo.SysTaskLogVo;
 import com.oner365.monitor.vo.SysTaskVo;
 
@@ -41,36 +39,8 @@ public class ScheduleSendExecuteServiceImpl implements IScheduleSendExecuteServi
     SysTaskDto sysTask = sysTaskService.selectTaskById(updateTask.getTaskId());
     if (sysTask != null) {
       sysTask.setExecuteStatus(updateTask.getExecuteStatus());
-      sysTaskService.save(toVo(sysTask));
+      sysTaskService.save(convert(sysTask, SysTaskVo.class));
     }
-  }
-
-  private SysTaskVo toVo(SysTaskDto dto) {
-    SysTaskVo result = new SysTaskVo();
-    result.setId(dto.getId());
-    result.setConcurrent(dto.getConcurrent());
-    result.setCreateTime(dto.getCreateTime());
-    result.setCreateUser(dto.getCreateUser());
-    result.setCronExpression(dto.getCronExpression());
-    result.setExecuteStatus(dto.getExecuteStatus());
-    result.setInvokeParamVo(toPojo(dto.getInvokeParamDto()));
-    result.setInvokeTarget(dto.getInvokeTarget());
-    result.setMisfirePolicy(dto.getMisfirePolicy());
-    result.setRemark(dto.getRemark());
-    result.setStatus(dto.getStatus());
-    result.setTaskGroup(dto.getTaskGroup());
-    result.setTaskName(dto.getTaskName());
-    result.setUpdateTime(dto.getUpdateTime());
-    return result;
-  }
-  
-  private InvokeParamVo toPojo(InvokeParamDto vo) {
-    InvokeParamVo result = new InvokeParamVo();
-    result.setConcurrent(vo.getConcurrent());
-    result.setTaskId(vo.getTaskId());
-    result.setTaskParam(vo.getTaskParam());
-    result.setTaskServerName(vo.getTaskServerName());
-    return result;
   }
 
   @Override

@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,8 +49,8 @@ public class DataSourceConfigServiceImpl implements IDataSourceConfigService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public PageInfo<DataSourceConfigDto> pageList(QueryCriteriaBean data) {
     try {
-      Criteria<DataSourceConfig> criteria = QueryUtils.buildCriteria(data);
-      return convertDto(dao.findAll(criteria, QueryUtils.buildPageRequest(data)));
+      Page<DataSourceConfig> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, DataSourceConfigDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -62,7 +63,7 @@ public class DataSourceConfigServiceImpl implements IDataSourceConfigService {
     try {
       Optional<DataSourceConfig> optional = dao.findById(id);
       if (optional.isPresent()) {
-        return convertDto(optional.orElse(null));
+        return convert(optional.orElse(null), DataSourceConfigDto.class);
       }
     } catch (Exception e) {
       LOGGER.error("Error getById: ", e);
@@ -77,7 +78,7 @@ public class DataSourceConfigServiceImpl implements IDataSourceConfigService {
     criteria.add(Restrictions.eq("connectName", connectName));
     Optional<DataSourceConfig> optional = dao.findOne(criteria);
     if (optional.isPresent()) {
-      return convertDto(optional.orElse(null));
+      return convert(optional.orElse(null), DataSourceConfigDto.class);
     }
     return null;
   }
@@ -87,46 +88,23 @@ public class DataSourceConfigServiceImpl implements IDataSourceConfigService {
   @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public DataSourceConfigDto save(DataSourceConfigVo vo) {
-    DataSourceConfig entity = toPojo(vo);
-    if (DataUtils.isEmpty(entity.getId())) {
-      entity.setCreateTime(LocalDateTime.now());
+    if (DataUtils.isEmpty(vo.getId())) {
+      vo.setCreateTime(LocalDateTime.now());
     }
     String driverName = null;
     String url = null;
-    if (DataSourceConstants.DB_TYPE_MYSQL.equals(entity.getDbType())) {
+    if (DataSourceConstants.DB_TYPE_MYSQL.equals(vo.getDbType())) {
       driverName = DataSourceConstants.DRIVER_NAME_MYSQL;
-      url = "jdbc:mysql://" + entity.getIp() + ":" + entity.getPort() + PublicConstants.DELIMITER + entity.getDbName();
-    } else if (DataSourceConstants.DB_TYPE_ORACLE.equals(entity.getDbType())) {
+      url = "jdbc:mysql://" + vo.getIp() + ":" + vo.getPort() + PublicConstants.DELIMITER + vo.getDbName();
+    } else if (DataSourceConstants.DB_TYPE_ORACLE.equals(vo.getDbType())) {
       driverName = DataSourceConstants.DRIVER_NAME_ORACLE;
-      url = "jdbc:oracle:thin:@" + entity.getIp() + ":" + entity.getPort() + ":" + entity.getDbName();
+      url = "jdbc:oracle:thin:@" + vo.getIp() + ":" + vo.getPort() + ":" + vo.getDbName();
     }
-    entity.setDriverName(driverName);
-    entity.setUrl(url);
-    entity.setUpdateTime(LocalDateTime.now());
-    return convertDto(dao.save(entity));
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return DataSourceConfig
-   */
-  private DataSourceConfig toPojo(DataSourceConfigVo vo) {
-    DataSourceConfig result = new DataSourceConfig();
-    result.setId(vo.getId());
-    result.setConnectName(vo.getConnectName());
-    result.setCreateTime(vo.getCreateTime());
-    result.setDbName(vo.getDbName());
-    result.setDbType(vo.getDbType());
-    result.setDriverName(vo.getDriverName());
-    result.setDsType(vo.getDsType());
-    result.setIp(vo.getIp());
-    result.setPassword(vo.getPassword());
-    result.setPort(vo.getPort());
-    result.setUpdateTime(vo.getUpdateTime());
-    result.setUrl(vo.getUrl());
-    result.setUserName(vo.getUserName());
-    return result;
+    vo.setDriverName(driverName);
+    vo.setUrl(url);
+    vo.setUpdateTime(LocalDateTime.now());
+    DataSourceConfig entity = dao.save(convert(vo, DataSourceConfig.class));
+    return convert(entity, DataSourceConfigDto.class);
   }
 
   @Override

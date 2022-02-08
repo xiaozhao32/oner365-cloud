@@ -15,7 +15,6 @@ import com.oner365.common.enums.StatusEnum;
 import com.oner365.monitor.constants.ScheduleConstants;
 import com.oner365.monitor.service.ISysTaskLogService;
 import com.oner365.monitor.service.ISysTaskService;
-import com.oner365.monitor.vo.InvokeParamVo;
 import com.oner365.monitor.vo.SysTaskLogVo;
 import com.oner365.monitor.vo.SysTaskVo;
 import com.oner365.util.DataUtils;
@@ -65,49 +64,19 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
 
   private String execute(String taskId, JSONObject param, SysTaskDto sysTask) {
     try {
+      LOGGER.info("taskId:{}", taskId);
       sysTask.setExecuteStatus(StatusEnum.NO.getCode());
-      sysTaskService.save(toVo(sysTask));
-      Integer day = param.getInteger("day");
-      if (day != null) {
-        String time = DateUtil.nextDay(day - 2 * day, DateUtil.FULL_TIME_FORMAT);
-        sysTaskLogService.deleteTaskLogByCreateTime(time);
-      }
+      sysTaskService.save(convert(sysTask, SysTaskVo.class));
+      int day = param.getInteger("day");
+      String time = DateUtil.nextDay(day - 2 * day, DateUtil.FULL_TIME_FORMAT);
+      String status = sysTaskLogService.deleteTaskLogByCreateTime(time);
       sysTask.setExecuteStatus(StatusEnum.YES.getCode());
-      sysTaskService.save(toVo(sysTask));
-      return sysTask.getExecuteStatus();
+      sysTaskService.save(convert(sysTask, SysTaskVo.class));
+      return status;
     } catch (Exception e) {
       LOGGER.error("update sysTask Exception:", e);
       return StatusEnum.NO.getCode();
     }
-
-  }
-
-  private SysTaskVo toVo(SysTaskDto dto) {
-    SysTaskVo result = new SysTaskVo();
-    result.setId(dto.getId());
-    result.setConcurrent(dto.getConcurrent());
-    result.setCreateTime(dto.getCreateTime());
-    result.setCreateUser(dto.getCreateUser());
-    result.setCronExpression(dto.getCronExpression());
-    result.setExecuteStatus(dto.getExecuteStatus());
-    result.setInvokeParamVo(toPojo(dto.getInvokeParamDto()));
-    result.setInvokeTarget(dto.getInvokeTarget());
-    result.setMisfirePolicy(dto.getMisfirePolicy());
-    result.setRemark(dto.getRemark());
-    result.setStatus(dto.getStatus());
-    result.setTaskGroup(dto.getTaskGroup());
-    result.setTaskName(dto.getTaskName());
-    result.setUpdateTime(dto.getUpdateTime());
-    return result;
-  }
-  
-  private InvokeParamVo toPojo(InvokeParamDto vo) {
-    InvokeParamVo result = new InvokeParamVo();
-    result.setConcurrent(vo.getConcurrent());
-    result.setTaskId(vo.getTaskId());
-    result.setTaskParam(vo.getTaskParam());
-    result.setTaskServerName(vo.getTaskServerName());
-    return result;
   }
 
   private void executeLog(SysTaskDto sysTask, String status) {

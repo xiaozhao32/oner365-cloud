@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.sys.dto.SysMenuTypeDto;
 
 /**
  * 菜单类型对象
@@ -110,19 +109,4 @@ public class SysMenuType implements Serializable {
     this.updateTime = updateTime;
   }
 
-  /**
-   * 转换对象
-   * 
-   * @return SysMenuTypeDto
-   */
-  public SysMenuTypeDto toDto() {
-    SysMenuTypeDto result = new SysMenuTypeDto();
-    result.setId(this.getId());
-    result.setCreateTime(this.getCreateTime());
-    result.setStatus(this.getStatus());
-    result.setTypeCode(this.getTypeCode());
-    result.setTypeName(this.getTypeName());
-    result.setUpdateTime(this.getUpdateTime());
-    return result;
-  }
 }

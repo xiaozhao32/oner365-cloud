@@ -53,7 +53,7 @@
 
 		<org.elasticsearch.version>7.15.2</org.elasticsearch.version>
 		<org.eclipse.jetty.version>11.0.6</org.eclipse.jetty.version>
-		<org.hibernate.version>5.6.3.Final</org.hibernate.version>
+		<org.hibernate.version>5.6.4.Final</org.hibernate.version>
 
 		<com.fasterxml.jackson.version>2.13.1</com.fasterxml.jackson.version>
 
@@ -552,6 +552,13 @@
 				<artifactId>hibernate-types-52</artifactId>
 				<version>2.12.1</version>
 			</dependency>
+			
+			<!-- okhttp -->
+			<dependency>
+				<groupId>com.squareup.okhttp3</groupId>
+    			<artifactId>okhttp</artifactId>
+    			<version>4.8.1</version>
+    		</dependency>
 
 			<!-- netty -->
 			<dependency>

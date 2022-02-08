@@ -54,7 +54,8 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
     public PageInfo<${ClassName}Dto> pageList(QueryCriteriaBean data) {
         try {
-            return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
+            Page<SysDictItem> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      		return convert(page, ${ClassName}Dto.class);
         } catch (Exception e) {
             LOGGER.error("Error pageList: ", e);
         }
@@ -66,9 +67,10 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     public List<${ClassName}Dto> findList(QueryCriteriaBean data) {
         try {
             if (data.getOrder() == null) {
-                return convertDto(dao.findAll(QueryUtils.buildCriteria(data)));
-            }
-            return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder())));
+                return convert(dao.findAll(QueryUtils.buildCriteria(data)), ${ClassName}Dto.class);
+      		}
+      		List<SysDictItem> list = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+      		return convert(list, ${ClassName}Dto.class);
         } catch (Exception e) {
             LOGGER.error("Error findList: ", e);
         }
@@ -80,9 +82,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     public ${ClassName}Dto getById($AttrName id) {
         try {
             Optional<${ClassName}> optional = dao.findById(id);
-            if (optional.isPresent()) {
-                return convertDto(optional.orElse(null));
-            }
+            return convert(optional.orElse(null), ${ClassName}Dto.class);
         } catch (Exception e) {
             LOGGER.error("Error getById: ", e);
         }
@@ -94,13 +94,13 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public ${ClassName}Dto save(${ClassName}Vo vo) {
-        ${ClassName} entity = toPojo(vo);
-        if (DataUtils.isEmpty(entity.getId())) {
-        	entity.setStatus(StatusEnum.YES.getCode());
-            entity.setCreateTime(LocalDateTime.now());
+        if (DataUtils.isEmpty(vo.getId())) {
+        	vo.setStatus(StatusEnum.YES.getCode());
+            vo.setCreateTime(LocalDateTime.now());
         }
-        entity.setUpdateTime(LocalDateTime.now());
-        return convertDto(dao.save(entity));
+        vo.setUpdateTime(LocalDateTime.now());
+        ${ClassName} entity = dao.save(convert(vo, ${ClassName}.class));
+    	return convert(entity, ${ClassName}Dto.class);
     }
     
     @Override
@@ -111,17 +111,4 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
         return ResultEnum.SUCCESS.getCode();
     }
     
-    private ${ClassName} toPojo(${ClassName}Vo vo) {
-        ${ClassName} result = new ${ClassName}();
-#foreach ($column in $columns)
-#if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
-#set($AttrName=$column.javaField)
-#else
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#end
-        result.set${AttrName}(vo.get${AttrName}());
-#end        
-        return result;
-    }
-
 }

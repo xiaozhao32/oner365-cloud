@@ -76,9 +76,6 @@ public class PublicConstants {
   /** 分隔符 */
   public static final String DELIMITER = "/";
   
-  /** toDto */
-  public static final String INVOKE_METHOD_DTO_NAME = "toDto";
-
   /**
    * Constructor
    */

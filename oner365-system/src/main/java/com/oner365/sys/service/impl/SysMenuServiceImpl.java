@@ -68,7 +68,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
   public SysMenuDto getById(String id) {
     try {
       Optional<SysMenu> optional = menuDao.findById(id);
-      return convertDto(optional.orElse(null));
+      return convert(optional.orElse(null), SysMenuDto.class);
     } catch (Exception e) {
       LOGGER.error("Error getById: ", e);
     }
@@ -85,9 +85,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
     vo.setStatus(StatusEnum.YES.getCode());
     vo.setCreateTime(LocalDateTime.now());
     vo.setUpdateTime(LocalDateTime.now());
-    
-    SysMenu menu = toPojo(vo);
-    menuDao.save(menu);
+
+    SysMenu menu = menuDao.save(convert(vo, SysMenu.class));
 
     menuOperDao.deleteByMenuId(menu.getId());
     if (!DataUtils.isEmpty(menu.getOperIds())) {
@@ -100,36 +99,9 @@ public class SysMenuServiceImpl implements ISysMenuService {
         menuOperDao.save(menuOper);
       });
     }
-    return convertDto(menu);
+    return convert(menu, SysMenuDto.class);
   }
   
-  /**
-   * 转换对象
-   * 
-   * @return SysMenu
-   */
-  private SysMenu toPojo(SysMenuVo vo) {
-      SysMenu result = new SysMenu();
-      result.setId(vo.getId());
-      result.setAnotherName(vo.getAnotherName());
-      result.setComponent(vo.getComponent());
-      result.setCreateTime(vo.getCreateTime());
-      result.setIcon(vo.getIcon());
-      result.setMenuDescription(vo.getMenuDescription());
-      result.setMenuName(vo.getMenuName());
-      result.setMenuOrder(vo.getMenuOrder());
-      result.setMenuTypeId(vo.getMenuTypeId());
-      result.setParentId(vo.getParentId());
-      result.setPath(vo.getPath());
-      result.setStatus(vo.getStatus());
-      result.setUpdateTime(vo.getUpdateTime());
-      
-      result.setChildren(vo.getChildren().stream().map(this::toPojo).collect(Collectors.toList()));
-      result.setUserId(vo.getUserId());
-      result.setOperIds(vo.getOperIds());
-      return result;
-  }
-
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @Caching(evict = { 
@@ -150,7 +122,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysMenuDto> findMenuByTypeCode(String typeCode) {
     try {
-      return convertDto(menuDao.findMenuByTypeCode(typeCode));
+      return convert(menuDao.findMenuByTypeCode(typeCode), SysMenuDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findMenuByTypeCode: ", e);
     }
@@ -160,7 +132,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
   @Override
   public List<SysMenuDto> selectMenuByRoles(List<String> roles, String menuTypeId, String parentId) {
     try {
-      return convertDto(menuMapper.selectMenuByRoles(roles, menuTypeId, parentId));
+      return convert(menuMapper.selectMenuByRoles(roles, menuTypeId, parentId), SysMenuDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findMenuByRoles: ", e);
     }
@@ -174,7 +146,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
     criteria.add(Restrictions.eq("menuTypeId", menuTypeId));
     criteria.add(Restrictions.eq("parentId", parentId));
     criteria.add(Restrictions.eq(SysConstants.STATUS, StatusEnum.YES.getCode()));
-    return convertDto(menuDao.findAll(criteria));
+    return convert(menuDao.findAll(criteria), SysMenuDto.class);
   }
 
   @Override
@@ -237,13 +209,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
 
   @Override
   public List<SysMenuDto> selectList(SysMenuVo vo) {
-    return convertDto(menuMapper.selectList(toPojo(vo)));
+    List<SysMenu> list = menuMapper.selectList(convert(vo, SysMenu.class));
+    return convert(list, SysMenuDto.class);
   }
 
   @Override
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysMenuDto> selectListByUserId(SysMenuVo vo) {
-    return convertDto(menuMapper.selectListByUserId(toPojo(vo)));
+    List<SysMenu> list = menuMapper.selectListByUserId(convert(vo, SysMenu.class));
+    return convert(list, SysMenuDto.class);
   }
 
   @Override

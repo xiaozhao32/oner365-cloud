@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
@@ -40,7 +41,8 @@ public class SysTaskLogServiceImpl implements ISysTaskLogService {
   @Override
   public PageInfo<SysTaskLogDto> pageList(QueryCriteriaBean data) {
     try {
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
+      Page<SysTaskLog> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, SysTaskLogDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -50,36 +52,15 @@ public class SysTaskLogServiceImpl implements ISysTaskLogService {
   @Override
   public SysTaskLogDto selectTaskLogById(String id) {
     Optional<SysTaskLog> optional = dao.findById(id);
-    return convertDto(optional.orElse(null));
+    return convert(optional.orElse(null), SysTaskLogDto.class);
   }
 
   @Override
-  public void addTaskLog(SysTaskLogVo taskLog) {
-    if (DataUtils.isEmpty(taskLog.getId())) {
-      taskLog.setCreateTime(DateUtil.getDate());
+  public void addTaskLog(SysTaskLogVo vo) {
+    if (DataUtils.isEmpty(vo.getId())) {
+      vo.setCreateTime(DateUtil.getDate());
     }
-    SysTaskLog entity = toPojo(taskLog);
-    dao.save(entity);
-  }
-
-  private SysTaskLog toPojo(SysTaskLogVo vo) {
-    SysTaskLog result = new SysTaskLog();
-    result.setCreateTime(vo.getCreateTime());
-    result.setCreateUser(vo.getCreateUser());
-    result.setExceptionInfo(vo.getExceptionInfo());
-    result.setExecuteIp(vo.getExecuteIp());
-    result.setExecuteServerName(vo.getExecuteServerName());
-    result.setId(vo.getId());
-    result.setInvokeTarget(vo.getInvokeTarget());
-    result.setRemark(vo.getRemark());
-    result.setStartTime(vo.getStartTime());
-    result.setStatus(vo.getStatus());
-    result.setStopTime(vo.getStopTime());
-    result.setTaskGroup(vo.getTaskGroup());
-    result.setTaskMessage(vo.getTaskMessage());
-    result.setTaskName(vo.getTaskName());
-    result.setUpdateTime(vo.getUpdateTime());
-    return result;
+    dao.save(convert(vo, SysTaskLog.class));
   }
 
   @Override

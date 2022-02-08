@@ -68,16 +68,4 @@ public class ${ClassName} implements Serializable {
     }
 #end
 
-    public ${ClassName}Dto toDto() {
-        ${ClassName}Dto result = new ${ClassName}Dto();
-#foreach ($column in $columns)
-#if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
-#set($AttrName=$column.javaField)
-#else
-#set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
-#end
-        result.set${AttrName}(this.get${AttrName}());
-#end
-        return result;
-    }
 }

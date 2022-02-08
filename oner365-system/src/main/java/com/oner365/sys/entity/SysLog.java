@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.sys.dto.SysLogDto;
 
 /**
  * 系统日志对象
@@ -160,20 +159,4 @@ public class SysLog implements Serializable {
     this.createTime = createTime;
   }
 
-  /**
-   * 转换对象
-   * 
-   * @return SysLogDto
-   */
-  public SysLogDto toDto() {
-    SysLogDto result = new SysLogDto();
-    result.setId(this.getId());
-    result.setCreateTime(this.getCreateTime());
-    result.setMethodName(this.getMethodName());
-    result.setOperationContext(this.getOperationContext());
-    result.setOperationIp(this.getOperationIp());
-    result.setOperationName(this.getOperationName());
-    result.setOperationPath(this.getOperationPath());
-    return result;
-  }
 }

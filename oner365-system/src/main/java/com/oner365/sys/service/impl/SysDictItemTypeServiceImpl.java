@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,27 +63,11 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ITEM_NAME, allEntries = true) })
   public SysDictItemTypeDto save(SysDictItemTypeVo vo) {
-    SysDictItemType entity = toPojo(vo);
-    if (DataUtils.isEmpty(entity.getId())) {
-      entity.setId(entity.getTypeCode());
+    if (DataUtils.isEmpty(vo.getId())) {
+      vo.setId(vo.getTypeCode());
     }
-    return convertDto(dao.save(entity));
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return SysDictItemType
-   */
-  private SysDictItemType toPojo(SysDictItemTypeVo vo) {
-    SysDictItemType result = new SysDictItemType();
-    result.setId(vo.getId());
-    result.setStatus(vo.getStatus());
-    result.setTypeCode(vo.getTypeCode());
-    result.setTypeDes(vo.getTypeDes());
-    result.setTypeName(vo.getTypeName());
-    result.setTypeOrder(vo.getTypeOrder());
-    return result;
+    SysDictItemType entity = dao.save(convert(vo, SysDictItemType.class));
+    return convert(entity, SysDictItemTypeDto.class);
   }
 
   @Override
@@ -90,7 +75,7 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
   public SysDictItemTypeDto getById(String id) {
     try {
       Optional<SysDictItemType> optional = dao.findById(id);
-      return convertDto(optional.orElse(null));
+      return convert(optional.orElse(null), SysDictItemTypeDto.class);
     } catch (Exception e) {
       LOGGER.error("Error getById: ", e);
     }
@@ -101,7 +86,8 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public PageInfo<SysDictItemTypeDto> pageList(QueryCriteriaBean data) {
     try {
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
+      Page<SysDictItemType> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, SysDictItemTypeDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -113,9 +99,10 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
   public List<SysDictItemTypeDto> findList(QueryCriteriaBean data) {
     try {
       if (data.getOrder() == null) {
-        return convertDto(dao.findAll(QueryUtils.buildCriteria(data)));
+        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysDictItemTypeDto.class);
       }
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder())));
+      List<SysDictItemType> list = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+      return convert(list, SysDictItemTypeDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
     }
@@ -159,7 +146,7 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
     try {
       Criteria<SysDictItemType> criteria = new Criteria<>();
       criteria.add(Restrictions.in(SysConstants.TYPE_CODE, codeList, false));
-      return convertDto(dao.findAll(criteria));
+      return convert(dao.findAll(criteria), SysDictItemTypeDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findListByCodes: ", e);
     }

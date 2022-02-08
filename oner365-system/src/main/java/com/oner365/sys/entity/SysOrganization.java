@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +19,6 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.sys.dto.SysOrganizationDto;
 
 /**
  * 机构表 - nt_sys_organization
@@ -457,36 +455,4 @@ public class SysOrganization implements Serializable {
     this.ancestors = ancestors;
   }
 
-  /**
-   * 转换对象
-   * 
-   * @return SysOrganizationDto
-   */
-  public SysOrganizationDto toDto() {
-    SysOrganizationDto result = new SysOrganizationDto();
-    result.setId(this.getId());
-    result.setAncestors(this.getAncestors());
-    result.setBusinessName(this.getBusinessName());
-    result.setBusinessPhone(this.getBusinessPhone());
-    result.setCreateTime(this.getCreateTime());
-    result.setCreateUser(this.getCreateUser());
-    if (this.getDataSourceConfig() != null) {
-      result.setDataSourceConfigDto(this.getDataSourceConfig().toDto());
-    }
-    result.setOrgAreaCode(this.getOrgAreaCode());
-    result.setOrgCode(this.getOrgCode());
-    result.setOrgCreditCode(this.getOrgCreditCode());
-    result.setOrgLogo(this.getOrgLogo());
-    result.setOrgLogoUrl(this.getOrgLogoUrl());
-    result.setOrgName(this.getOrgName());
-    result.setOrgOrder(this.getOrgOrder());
-    result.setOrgType(this.getOrgType());
-    result.setParentId(this.getParentId());
-    result.setStatus(this.getStatus());
-    result.setTechnicalName(this.getTechnicalName());
-    result.setTechnicalPhone(this.getTechnicalPhone());
-    result.setUpdateTime(this.getUpdateTime());
-    result.setChildren(this.getChildren().stream().map(SysOrganization::toDto).collect(Collectors.toList()));
-    return result;
-  }
 }

@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -79,7 +80,8 @@ public class SysRoleServiceImpl implements ISysRoleService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public PageInfo<SysRoleDto> pageList(QueryCriteriaBean data) {
     try {
-      return convertDto(roleDao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
+      Page<SysRole> page = roleDao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, SysRoleDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -90,7 +92,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysRoleDto> findList(QueryCriteriaBean data) {
     try {
-      return convertDto(roleDao.findAll(QueryUtils.buildCriteria(data)));
+      return convert(roleDao.findAll(QueryUtils.buildCriteria(data)), SysRoleDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
     }
@@ -102,7 +104,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
   public SysRoleDto getById(String id) {
     try {
       Optional<SysRole> optional = roleDao.findById(id);
-      return convertDto(optional.orElse(null));
+      return convert(optional.orElse(null), SysRoleDto.class);
     } catch (Exception e) {
       LOGGER.error("Error getInfoById: ", e);
     }
@@ -115,33 +117,16 @@ public class SysRoleServiceImpl implements ISysRoleService {
   @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
   public SysRoleDto save(SysRoleVo vo) {
-    SysRole role = toPojo(vo);
-    if (DataUtils.isEmpty(role.getId())) {
-      role.setStatus(StatusEnum.YES.getCode());
-      role.setCreateTime(LocalDateTime.now());
+    if (DataUtils.isEmpty(vo.getId())) {
+      vo.setStatus(StatusEnum.YES.getCode());
+      vo.setCreateTime(LocalDateTime.now());
     }
-    if (DataUtils.isEmpty(role.getRoleCode())) {
-      role.setRoleCode(String.valueOf(System.currentTimeMillis()));
+    if (DataUtils.isEmpty(vo.getRoleCode())) {
+      vo.setRoleCode(String.valueOf(System.currentTimeMillis()));
     }
-    role.setUpdateTime(LocalDateTime.now());
-    return convertDto(roleDao.save(role));
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return SysRole
-   */
-  private SysRole toPojo(SysRoleVo vo) {
-    SysRole result = new SysRole();
-    result.setId(vo.getId());
-    result.setCreateTime(vo.getCreateTime());
-    result.setRoleCode(vo.getRoleCode());
-    result.setRoleDes(vo.getRoleDes());
-    result.setRoleName(vo.getRoleName());
-    result.setStatus(vo.getStatus());
-    result.setUpdateTime(vo.getUpdateTime());
-    return result;
+    vo.setUpdateTime(LocalDateTime.now());
+    SysRole entity = roleDao.save(convert(vo, SysRole.class));
+    return convert(entity, SysRoleDto.class);
   }
 
   @Override

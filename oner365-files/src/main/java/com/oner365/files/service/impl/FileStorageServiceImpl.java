@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,7 +47,8 @@ public class FileStorageServiceImpl implements IFileStorageService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public PageInfo<SysFileStorageDto> pageList(QueryCriteriaBean data) {
     try {
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
+      Page<SysFileStorage> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, SysFileStorageDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -58,9 +60,10 @@ public class FileStorageServiceImpl implements IFileStorageService {
   public List<SysFileStorageDto> findList(QueryCriteriaBean data) {
     try {
       if (data.getOrder() == null) {
-        return convertDto(dao.findAll(QueryUtils.buildCriteria(data)));
+        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysFileStorageDto.class);
       }
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder())));
+      List<SysFileStorage> list = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+      return convert(list, SysFileStorageDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
     }
@@ -72,7 +75,7 @@ public class FileStorageServiceImpl implements IFileStorageService {
   public SysFileStorageDto getById(String id) {
     try {
       Optional<SysFileStorage> optional = dao.findById(id);
-      return convertDto(optional.orElse(null));
+      return convert(optional.orElse(null), SysFileStorageDto.class);
     } catch (Exception e) {
       LOGGER.error("Error getById: ", e);
     }
@@ -85,28 +88,8 @@ public class FileStorageServiceImpl implements IFileStorageService {
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public SysFileStorageDto save(SysFileStorageVo vo) {
     vo.setCreateTime(new Timestamp(System.currentTimeMillis()));
-    SysFileStorage entity = toPojo(vo);
-    return convertDto(dao.save(entity));
-  }
-
-  /**
-   * PO对象
-   * 
-   * @return SysFileStorage
-   */
-  private SysFileStorage toPojo(SysFileStorageVo vo) {
-    SysFileStorage result = new SysFileStorage();
-    result.setCreateTime(vo.getCreateTime());
-    result.setDirectory(vo.isDirectory());
-    result.setDisplayName(vo.getDisplayName());
-    result.setFastdfsUrl(vo.getFastdfsUrl());
-    result.setFileName(vo.getFileName());
-    result.setFilePath(vo.getFilePath());
-    result.setFileStorage(vo.getFileStorage());
-    result.setFileSuffix(vo.getFileSuffix());
-    result.setId(vo.getId());
-    result.setSize(vo.getSize());
-    return result;
+    SysFileStorage entity = dao.save(convert(vo, SysFileStorage.class));
+    return convert(entity, SysFileStorageDto.class);
   }
 
   @Override

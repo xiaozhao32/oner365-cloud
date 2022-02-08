@@ -17,7 +17,6 @@ import org.hibernate.annotations.TypeDef;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.api.rabbitmq.dto.SysTaskDto;
 import com.oner365.monitor.constants.ScheduleConstants;
 import com.oner365.monitor.util.CronUtils;
 import com.oner365.util.DataUtils;
@@ -222,30 +221,6 @@ public class SysTask implements Serializable {
 
   public void setExecuteStatus(String executeStatus) {
     this.executeStatus = executeStatus;
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return SysTaskDto
-   */
-  public SysTaskDto toDto() {
-    SysTaskDto result = new SysTaskDto();
-    result.setId(this.getId());
-    result.setConcurrent(this.getConcurrent());
-    result.setCreateTime(this.getCreateTime());
-    result.setCreateUser(this.getCreateUser());
-    result.setCronExpression(this.getCronExpression());
-    result.setExecuteStatus(this.getExecuteStatus());
-    result.setInvokeParamDto(this.getInvokeParam().toDto());
-    result.setInvokeTarget(this.getInvokeTarget());
-    result.setMisfirePolicy(this.getMisfirePolicy());
-    result.setRemark(this.getRemark());
-    result.setStatus(this.getStatus());
-    result.setTaskGroup(this.getTaskGroup());
-    result.setTaskName(this.getTaskName());
-    result.setUpdateTime(this.getUpdateTime());
-    return result;
   }
 
 }

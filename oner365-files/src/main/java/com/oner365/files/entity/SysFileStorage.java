@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.files.dto.SysFileStorageDto;
 
 /**
  * 文件对象
@@ -228,23 +227,4 @@ public class SysFileStorage implements Serializable {
     this.fileStorage = fileStorage;
   }
 
-  /**
-   * DTO对象
-   * 
-   * @return SysFileStorageDto
-   */
-  public SysFileStorageDto toDto() {
-    SysFileStorageDto result = new SysFileStorageDto();
-    result.setCreateTime(this.getCreateTime());
-    result.setDirectory(this.isDirectory());
-    result.setDisplayName(this.getDisplayName());
-    result.setFastdfsUrl(this.getFastdfsUrl());
-    result.setFileName(this.getFileName());
-    result.setFilePath(this.getFilePath());
-    result.setFileStorage(this.getFileStorage());
-    result.setFileSuffix(this.getFileSuffix());
-    result.setId(this.getId());
-    result.setSize(this.getSize());
-    return result;
-  }
 }

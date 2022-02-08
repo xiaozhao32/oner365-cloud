@@ -44,9 +44,8 @@ public interface ISysLogService extends BaseService {
    * 保存
    * 
    * @param sysLog 对象
-   * @return SysLogDto
    */
-  SysLogDto save(SysLogVo sysLog);
+  void save(SysLogVo sysLog);
 
   /**
    * 删除

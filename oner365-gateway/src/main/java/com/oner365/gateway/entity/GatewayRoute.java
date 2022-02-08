@@ -13,7 +13,6 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.gateway.dto.GatewayRouteDto;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 /**
@@ -134,23 +133,6 @@ public class GatewayRoute implements Serializable {
 
   public void setPattern(String pattern) {
     this.pattern = pattern;
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return GatewayRouteDto
-   */
-  public GatewayRouteDto toDto() {
-    GatewayRouteDto result = new GatewayRouteDto();
-    result.setId(this.getId());
-    result.setFilters(this.getFilters());
-    result.setPattern(this.getPattern());
-    result.setPredicates(this.getPredicates());
-    result.setRouteOrder(this.getRouteOrder());
-    result.setStatus(this.getStatus());
-    result.setUri(this.getUri());
-    return result;
   }
 
 }

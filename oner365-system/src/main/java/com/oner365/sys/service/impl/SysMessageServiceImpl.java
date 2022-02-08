@@ -50,7 +50,7 @@ public class SysMessageServiceImpl implements ISysMessageService {
   public PageInfo<SysMessageDto> pageList(QueryCriteriaBean data) {
     try {
       Page<SysMessage> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
-      return convertDto(page);
+      return convert(page, SysMessageDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -62,10 +62,10 @@ public class SysMessageServiceImpl implements ISysMessageService {
   public List<SysMessageDto> findList(QueryCriteriaBean data) {
     try {
       if (data.getOrder() == null) {
-        return convertDto(dao.findAll(QueryUtils.buildCriteria(data)));
+        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysMessageDto.class);
       }
       List<SysMessage> list = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
-      return convertDto(list);
+      return convert(list, SysMessageDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
     }
@@ -77,7 +77,7 @@ public class SysMessageServiceImpl implements ISysMessageService {
   public SysMessageDto getById(String id) {
     try {
       Optional<SysMessage> optional = dao.findById(id);
-      return convertDto(optional.orElse(null));
+      return convert(optional.orElse(null), SysMessageDto.class);
     } catch (Exception e) {
       LOGGER.error("Error getById:", e);
     }
@@ -93,29 +93,8 @@ public class SysMessageServiceImpl implements ISysMessageService {
       vo.setCreateTime(LocalDateTime.now());
     }
     vo.setUpdateTime(LocalDateTime.now());
-    SysMessage entity = toPojo(vo);
-    return convertDto(dao.save(entity));
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return SysMessage
-   */
-  private SysMessage toPojo(SysMessageVo vo) {
-    SysMessage result = new SysMessage();
-    result.setId(vo.getId());
-    result.setContext(vo.getContext());
-    result.setCreateTime(vo.getCreateTime());
-    result.setMessageName(vo.getMessageName());
-    result.setMessageType(vo.getMessageType());
-    result.setQueueKey(vo.getQueueKey());
-    result.setQueueType(vo.getQueueType());
-    result.setReceiveUser(vo.getReceiveUser());
-    result.setSendUser(vo.getSendUser());
-    result.setTypeId(vo.getTypeId());
-    result.setUpdateTime(vo.getUpdateTime());
-    return result;
+    SysMessage entity = dao.save(convert(vo, SysMessage.class));
+    return convert(entity, SysMessageDto.class);
   }
 
   @Override

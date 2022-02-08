@@ -3,7 +3,6 @@ package com.oner365.monitor.entity;
 import java.io.Serializable;
 
 import com.alibaba.fastjson.JSONObject;
-import com.oner365.api.rabbitmq.dto.InvokeParamDto;
 
 /**
  * 定时任务调度
@@ -67,15 +66,6 @@ public class InvokeParam implements Serializable {
 
   public void setTaskParam(JSONObject taskParam) {
     this.taskParam = taskParam;
-  }
-
-  public InvokeParamDto toDto() {
-    InvokeParamDto result = new InvokeParamDto();
-    result.setConcurrent(this.getConcurrent());
-    result.setTaskId(this.getTaskId());
-    result.setTaskParam(this.getTaskParam());
-    result.setTaskServerName(this.getTaskServerName());
-    return result;
   }
 
 }

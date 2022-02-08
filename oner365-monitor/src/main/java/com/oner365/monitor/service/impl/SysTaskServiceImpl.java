@@ -12,6 +12,7 @@ import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,13 +25,11 @@ import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
 import com.oner365.monitor.constants.ScheduleConstants;
 import com.oner365.monitor.dao.ISysTaskDao;
-import com.oner365.monitor.entity.InvokeParam;
 import com.oner365.monitor.entity.SysTask;
 import com.oner365.monitor.exception.TaskException;
 import com.oner365.monitor.service.ISysTaskService;
 import com.oner365.monitor.util.CronUtils;
 import com.oner365.monitor.util.ScheduleUtils;
-import com.oner365.monitor.vo.InvokeParamVo;
 import com.oner365.monitor.vo.SysTaskVo;
 import com.oner365.util.DataUtils;
 import com.oner365.util.DateUtil;
@@ -60,7 +59,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
     List<SysTask> taskList = dao.findAll();
     taskList.forEach(task -> {
       try {
-        ScheduleUtils.createScheduleJob(scheduler, convertDto(task));
+        ScheduleUtils.createScheduleJob(scheduler, convert(task, SysTaskDto.class));
       } catch (Exception e) {
         LOGGER.error("init task error:", e);
       }
@@ -76,7 +75,8 @@ public class SysTaskServiceImpl implements ISysTaskService {
   @Override
   public PageInfo<SysTaskDto> pageList(QueryCriteriaBean data) {
     try {
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
+      Page<SysTask> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, SysTaskDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -92,7 +92,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
   @Override
   public SysTaskDto selectTaskById(String id) {
     Optional<SysTask> optional = dao.findById(id);
-    return convertDto(optional.orElse(null));
+    return convert(optional.orElse(null), SysTaskDto.class);
   }
 
   /**
@@ -194,7 +194,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
       SysTask sysTask = optional.get();
       sysTask.setTaskGroup(taskGroup);
       JobDataMap dataMap = new JobDataMap();
-      dataMap.put(ScheduleConstants.TASK_PROPERTIES, JSON.toJSONString(convertDto(sysTask)));
+      dataMap.put(ScheduleConstants.TASK_PROPERTIES, JSON.toJSONString(convert(sysTask, SysTaskDto.class)));
       scheduler.triggerJob(ScheduleUtils.getJobKey(task.getId(), taskGroup), dataMap);
     }
   }
@@ -212,45 +212,11 @@ public class SysTaskServiceImpl implements ISysTaskService {
       task.setStatus(ScheduleConstants.Status.PAUSE.getValue());
       task.setCreateTime(DateUtil.getDate());
     }
-    SysTask entity = toPojo(task);
-    dao.save(entity);
+    SysTask entity = dao.save(convert(task, SysTask.class));
     if (isAdd) {
-      ScheduleUtils.createScheduleJob(scheduler, convertDto(entity));
+      ScheduleUtils.createScheduleJob(scheduler, convert(entity, SysTaskDto.class));
     }
     return ResultEnum.SUCCESS.getCode();
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return SysTaskDto
-   */
-  private SysTask toPojo(SysTaskVo vo) {
-    SysTask result = new SysTask();
-    result.setId(vo.getId());
-    result.setConcurrent(vo.getConcurrent());
-    result.setCreateTime(vo.getCreateTime());
-    result.setCreateUser(vo.getCreateUser());
-    result.setCronExpression(vo.getCronExpression());
-    result.setExecuteStatus(vo.getExecuteStatus());
-    result.setInvokeParam(toPojo(vo.getInvokeParamVo()));
-    result.setInvokeTarget(vo.getInvokeTarget());
-    result.setMisfirePolicy(vo.getMisfirePolicy());
-    result.setRemark(vo.getRemark());
-    result.setStatus(vo.getStatus());
-    result.setTaskGroup(vo.getTaskGroup());
-    result.setTaskName(vo.getTaskName());
-    result.setUpdateTime(vo.getUpdateTime());
-    return result;
-  }
-  
-  private InvokeParam toPojo(InvokeParamVo vo) {
-    InvokeParam result = new InvokeParam();
-    result.setConcurrent(vo.getConcurrent());
-    result.setTaskId(vo.getTaskId());
-    result.setTaskParam(vo.getTaskParam());
-    result.setTaskServerName(vo.getTaskServerName());
-    return result;
   }
 
   /**
@@ -284,7 +250,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
       // 防止创建时存在数据问题 先移除，然后在执行创建操作
       scheduler.deleteJob(taskKey);
     }
-    ScheduleUtils.createScheduleJob(scheduler, convertDto(toPojo(task)));
+    ScheduleUtils.createScheduleJob(scheduler, convert(task, SysTaskDto.class));
   }
 
   /**

@@ -23,25 +23,7 @@ public class SysLogServiceImpl implements SysLogService {
   @Override
   @Transactional(rollbackFor = RuntimeException.class)
   public void save(SysLogVo vo) {
-    SysLog entity = toPojo(vo);
-    dao.save(entity);
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return SysLog
-   */
-  private SysLog toPojo(SysLogVo vo) {
-    SysLog result = new SysLog();
-    result.setId(vo.getId());
-    result.setCreateTime(vo.getCreateTime());
-    result.setMethodName(vo.getMethodName());
-    result.setOperationContext(vo.getOperationContext());
-    result.setOperationIp(vo.getOperationIp());
-    result.setOperationName(vo.getOperationName());
-    result.setOperationPath(vo.getOperationPath());
-    return result;
+    dao.save(convert(vo, SysLog.class));
   }
 
 }

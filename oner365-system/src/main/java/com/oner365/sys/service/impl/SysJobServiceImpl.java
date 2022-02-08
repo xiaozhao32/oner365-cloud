@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,7 +49,8 @@ public class SysJobServiceImpl implements ISysJobService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public PageInfo<SysJobDto> pageList(QueryCriteriaBean data) {
     try {
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data)));
+      Page<SysJob> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+      return convert(page, SysJobDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList: ", e);
     }
@@ -60,9 +62,10 @@ public class SysJobServiceImpl implements ISysJobService {
   public List<SysJobDto> findList(QueryCriteriaBean data) {
     try {
       if (data.getOrder() == null) {
-        return convertDto(dao.findAll(QueryUtils.buildCriteria(data)));
+        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysJobDto.class);
       }
-      return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder())));
+      List<SysJob> list = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+      return convert(list, SysJobDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
     }
@@ -75,7 +78,7 @@ public class SysJobServiceImpl implements ISysJobService {
     try {
       Optional<SysJob> optional = dao.findById(id);
       if (optional.isPresent()) {
-        return convertDto(optional.orElse(null));
+        return convert(optional.orElse(null), SysJobDto.class);
       }
     } catch (Exception e) {
       LOGGER.error("Error getById: ", e);
@@ -88,30 +91,15 @@ public class SysJobServiceImpl implements ISysJobService {
   @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public SysJobDto save(SysJobVo vo) {
-    SysJob job = toPojo(vo);
-    if (DataUtils.isEmpty(job.getId())) {
-      job.setStatus(StatusEnum.YES.getCode());
-      job.setCreateTime(LocalDateTime.now());
+    if (DataUtils.isEmpty(vo.getId())) {
+      vo.setStatus(StatusEnum.YES.getCode());
+      vo.setCreateTime(LocalDateTime.now());
     }
-    job.setUpdateTime(LocalDateTime.now());
-    return convertDto(dao.save(job));
+    vo.setUpdateTime(LocalDateTime.now());
+    SysJob entity = dao.save(convert(vo, SysJob.class));
+    return convert(entity, SysJobDto.class);
   }
   
-  private SysJob toPojo(SysJobVo vo) {
-    SysJob result = new SysJob();
-    result.setCreateTime(vo.getCreateTime());
-    result.setId(vo.getId());
-    result.setJobInfo(vo.getJobInfo());
-    result.setJobLogo(vo.getJobLogo());
-    result.setJobLogoUrl(vo.getJobLogoUrl());
-    result.setJobName(vo.getJobName());
-    result.setJobOrder(vo.getJobOrder());
-    result.setParentId(vo.getParentId());
-    result.setStatus(vo.getStatus());
-    result.setUpdateTime(vo.getUpdateTime());
-    return result;
-  }
-
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @CacheEvict(value = CACHE_NAME, allEntries = true)

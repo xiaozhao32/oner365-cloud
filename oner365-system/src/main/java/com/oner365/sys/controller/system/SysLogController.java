@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ErrorInfoEnum;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -63,16 +64,16 @@ public class SysLogController extends BaseController {
 	 * 保存
 	 *
 	 * @param sysLogVo 菜单类型对象
-	 * @return ResponseResult<SysLogDto>
+	 * @return ResponseResult<String>
 	 */
 	@PutMapping("/save")
-	public ResponseResult<SysLogDto> save(@RequestBody SysLogVo sysLogVo) {
-		if (sysLogVo != null) {
-			SysLogDto entity = logService.save(sysLogVo);
-			return ResponseResult.success(entity);
-		}
-		return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
-	}
+	public ResponseResult<String> save(@RequestBody SysLogVo sysLogVo) {
+    if (sysLogVo != null) {
+      logService.save(sysLogVo);
+      return ResponseResult.success(ResultEnum.SUCCESS.getName());
+    }
+    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+  }
 
 	/**
 	 * 删除

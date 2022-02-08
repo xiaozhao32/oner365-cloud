@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.oner365.api.constants.ScheduleTaskConstants;
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
 import com.oner365.api.rabbitmq.dto.UpdateTaskExecuteSatusDto;
+import com.oner365.common.service.BaseService;
 import com.oner365.monitor.exception.TaskException;
 
 /**
@@ -19,7 +20,7 @@ import com.oner365.monitor.exception.TaskException;
  * @author liutao
  */
 @Component
-public interface IScheduleSendExecuteService {
+public interface IScheduleSendExecuteService extends BaseService {
 
   /**
    * 更新任务执行状态

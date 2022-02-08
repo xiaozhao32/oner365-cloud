@@ -153,7 +153,7 @@ public class SysUserServiceImpl implements ISysUserService {
     try {
       Page<SysUser> page = userDao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
       page.getContent().forEach(this::setName);
-      return convertDto(page);
+      return convert(page, SysUserDto.class);
     } catch (Exception e) {
       LOGGER.error("Error pageList:", e);
     }
@@ -164,7 +164,7 @@ public class SysUserServiceImpl implements ISysUserService {
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysUserDto> findList(QueryCriteriaBean data) {
     try {
-      return convertDto(userDao.findAll(QueryUtils.buildCriteria(data)));
+      return convert(userDao.findAll(QueryUtils.buildCriteria(data)), SysUserDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList:", e);
     }
@@ -179,7 +179,7 @@ public class SysUserServiceImpl implements ISysUserService {
       if (optional.isPresent()) {
         SysUser entity = optional.get();
         setName(entity);
-        return convertDto(entity);
+        return convert(entity, SysUserDto.class);
       }
     } catch (Exception e) {
       LOGGER.error("Error getById:", e);
@@ -218,71 +218,34 @@ public class SysUserServiceImpl implements ISysUserService {
         orgList.stream().map(s -> sysOrganizationDao.getById(s).getOrgName()).collect(Collectors.toList()));
   }
 
-  /**
-   * 转换对象
-   * 
-   * @return SysUser
-   */
-  private SysUser toPojo(SysUserVo vo) {
-    SysUser result = new SysUser();
-    result.setId(vo.getId());
-    result.setActiveStatus(vo.getActiveStatus());
-    result.setAvatar(vo.getAvatar());
-    result.setCreateTime(vo.getCreateTime());
-    result.setDefaultPassword(vo.getDefaultPassword());
-    result.setEmail(vo.getEmail());
-    result.setIdCard(vo.getIdCard());
-    result.setIsAdmin(vo.getIsAdmin());
-    result.setLastIp(vo.getLastIp());
-    result.setLastTime(vo.getLastTime());
-    result.setPassword(vo.getPassword());
-    result.setPhone(vo.getPhone());
-    result.setRealName(vo.getRealName());
-    result.setRemark(vo.getRemark());
-    result.setSex(vo.getSex());
-    result.setStatus(vo.getStatus());
-    result.setUserCode(vo.getUserCode());
-    result.setUserName(vo.getUserName());
-    result.setUserType(vo.getUserType());
-
-    result.setJobNameList(vo.getJobNameList());
-    result.setJobs(vo.getJobs());
-    result.setRoleNameList(vo.getRoleNameList());
-    result.setRoles(vo.getRoles());
-    result.setOrgNameList(vo.getOrgNameList());
-    result.setOrgs(vo.getOrgs());
-
-    return result;
-  }
-
   @Override
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public SysUserDto saveUser(SysUserVo vo) {
     try {
-      SysUser entity = toPojo(vo);
       LocalDateTime time = LocalDateTime.now();
-      entity.setActiveStatus(StatusEnum.YES.getCode());
-      entity.setCreateTime(time);
-      entity.setLastTime(time);
+      vo.setActiveStatus(StatusEnum.YES.getCode());
+      vo.setCreateTime(time);
+      vo.setLastTime(time);
 
-      List<String> roles = entity.getRoles();
-      List<String> jobs = entity.getJobs();
-      List<String> orgs = entity.getOrgs();
-      entity = userDao.save(entity);
+      List<String> roles = vo.getRoles();
+      List<String> jobs = vo.getJobs();
+      List<String> orgs = vo.getOrgs();
+      
+      SysUser entity = userDao.save(convert(vo, SysUser.class));
 
       // 删除用户角色关联
       userRoleDao.deleteUserRoleByUserId(entity.getId());
-      for (String id : roles) {
+      roles.forEach(id -> {
         SysRole sysRole = sysRoleDao.getById(id);
         SysUserRole sysUserRole = new SysUserRole();
         sysUserRole.setSysRole(sysRole);
         sysUserRole.setSysUser(entity);
         userRoleDao.save(sysUserRole);
-      }
+      });
 
       // 删除用户职位关联
       userJobDao.deleteUserJobByUserId(entity.getId());
-      for (String id : jobs) {
+      jobs.forEach(id -> {
         SysJob sysJob = sysJobDao.getById(id);
         SysUserJob sysUserJob = new SysUserJob();
         sysUserJob.setSysJob(sysJob);
@@ -292,11 +255,11 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUserJob.setCreateTime(time);
         sysUserJob.setUpdateTime(time);
         userJobDao.save(sysUserJob);
-      }
+      });
 
       // 删除用户单位关联
       userOrgDao.deleteUserOrgByUserId(entity.getId());
-      for (String id : orgs) {
+      orgs.forEach(id -> {
         SysOrganization sysOrg = sysOrganizationDao.getById(id);
         SysUserOrg sysUserOrg = new SysUserOrg();
         sysUserOrg.setSysOrganization(sysOrg);
@@ -306,12 +269,12 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUserOrg.setCreateTime(time);
         sysUserOrg.setUpdateTime(time);
         userOrgDao.save(sysUserOrg);
-      }
+      });
       entity.setRoles(roles);
       entity.setJobs(jobs);
       entity.setOrgs(orgs);
       setName(entity);
-      return convertDto(entity);
+      return convert(entity, SysUserDto.class);
     } catch (Exception e) {
       LOGGER.error("Error saveUser: ", e);
 
@@ -382,7 +345,7 @@ public class SysUserServiceImpl implements ISysUserService {
     
     String key = CacheConstants.CACHE_LOGIN_NAME + entity.getUserName();
     redisCache.deleteObject(key);
-    return convertDto(entity);
+    return convert(entity, SysUserDto.class);
   }
 
   @Override
@@ -400,7 +363,7 @@ public class SysUserServiceImpl implements ISysUserService {
     
     String key = CacheConstants.CACHE_LOGIN_NAME + entity.getUserName();
     redisCache.deleteObject(key);
-    return convertDto(entity);
+    return convert(entity, SysUserDto.class);
   }
 
 }

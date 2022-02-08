@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.sys.dto.SysMenuOperationDto;
 
 /**
  * 菜单操作对象
@@ -108,22 +107,6 @@ public class SysMenuOperation implements Serializable {
 
   public void setUpdateTime(LocalDateTime updateTime) {
     this.updateTime = updateTime;
-  }
-
-  /**
-   * 转换对象
-   * 
-   * @return SysMenuOperationDto
-   */
-  public SysMenuOperationDto toDto() {
-    SysMenuOperationDto result = new SysMenuOperationDto();
-    result.setId(this.getId());
-    result.setCreateTime(this.getCreateTime());
-    result.setOperationName(this.getOperationName());
-    result.setOperationType(this.getOperationType());
-    result.setStatus(this.getStatus());
-    result.setUpdateTime(this.getUpdateTime());
-    return result;
   }
 
 }

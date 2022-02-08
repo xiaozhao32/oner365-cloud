@@ -15,6 +15,7 @@ deploy:
       - oner365-kafka
       - oner365-monitor
       - oner365-rocketmq
+      - oner365-swagger
       - oner365-system
     libs: 
       - oner365-common

@@ -12,7 +12,6 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.sys.dto.DataSourceConfigDto;
 
 /**
  * 数据源配置
@@ -295,26 +294,4 @@ public class DataSourceConfig implements Serializable {
     this.url = url;
   }
 
-  /**
-   * 转换对象
-   * 
-   * @return DataSourceConfigDto
-   */
-  public DataSourceConfigDto toDto() {
-    DataSourceConfigDto result = new DataSourceConfigDto();
-    result.setId(this.getId());
-    result.setConnectName(this.getConnectName());
-    result.setCreateTime(this.getCreateTime());
-    result.setDbName(this.getDbName());
-    result.setDbType(this.getDbType());
-    result.setDriverName(this.getDriverName());
-    result.setDsType(this.getDsType());
-    result.setIp(this.getIp());
-    result.setPassword(this.getPassword());
-    result.setPort(this.getPort());
-    result.setUpdateTime(this.getUpdateTime());
-    result.setUrl(this.getUrl());
-    result.setUserName(this.getUserName());
-    return result;
-  }
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,7 +12,6 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.sys.dto.SysMenuDto;
 
 /**
  * 系统菜单对象
@@ -349,30 +347,4 @@ public class SysMenu implements Serializable {
     this.menuTypeId = menuTypeId;
   }
 
-  /**
-   * 转换对象
-   *
-   * @return SysMenuDto
-   */
-  public SysMenuDto toDto() {
-    SysMenuDto result = new SysMenuDto();
-    result.setId(this.getId());
-    result.setAnotherName(this.getAnotherName());
-    result.setComponent(this.getComponent());
-    result.setCreateTime(this.getCreateTime());
-    result.setIcon(this.getIcon());
-    result.setMenuDescription(this.getMenuDescription());
-    result.setMenuName(this.getMenuName());
-    result.setMenuOrder(this.getMenuOrder());
-    result.setMenuTypeId(this.getMenuTypeId());
-    result.setParentId(this.getParentId());
-    result.setPath(this.getPath());
-    result.setStatus(this.getStatus());
-    result.setUpdateTime(this.getUpdateTime());
-
-    result.setChildren(this.getChildren().stream().map(SysMenu::toDto).collect(Collectors.toList()));
-    result.setUserId(this.getUserId());
-    result.setOperIds(this.getOperIds());
-    return result;
-  }
 }

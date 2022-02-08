@@ -15,7 +15,6 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.sys.dto.SysUserDto;
 
 /**
  * 系统用户对象
@@ -475,40 +474,4 @@ public class SysUser implements Serializable {
     this.orgNameList = orgNameList;
   }
 
-  /**
-   * 转换对象
-   * 
-   * @return SysUserDto
-   */
-  public SysUserDto toDto() {
-    SysUserDto result = new SysUserDto();
-    result.setId(this.getId());
-    result.setActiveStatus(this.getActiveStatus());
-    result.setAvatar(this.getAvatar());
-    result.setCreateTime(this.getCreateTime());
-    result.setDefaultPassword(this.getDefaultPassword());
-    result.setEmail(this.getEmail());
-    result.setIdCard(this.getIdCard());
-    result.setIsAdmin(this.getIsAdmin());
-    result.setLastIp(this.getLastIp());
-    result.setLastTime(this.getLastTime());
-    result.setPassword(this.getPassword());
-    result.setPhone(this.getPhone());
-    result.setRealName(this.getRealName());
-    result.setRemark(this.getRemark());
-    result.setSex(this.getSex());
-    result.setStatus(this.getStatus());
-    result.setUserCode(this.getUserCode());
-    result.setUserName(this.getUserName());
-    result.setUserType(this.getUserType());
-
-    result.setJobNameList(this.getJobNameList());
-    result.setJobs(this.getJobs());
-    result.setRoleNameList(this.getRoleNameList());
-    result.setRoles(this.getRoles());
-    result.setOrgNameList(this.getOrgNameList());
-    result.setOrgs(this.getOrgs());
-
-    return result;
-  }
 }
