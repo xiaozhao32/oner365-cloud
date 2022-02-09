@@ -19,7 +19,7 @@ import com.oner365.util.excel.ExportExcelUtils;
  */
 public class BaseController {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(BaseController.class);
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     protected DefaultFileProperties fileProperties;

@@ -71,7 +71,7 @@ public class ElasticsearchInfoController extends BaseController {
             });
             result.put("clusterList", clusterList);
         } catch (UnknownHostException e) {
-            LOGGER.error("index error:", e);
+            logger.error("index error:", e);
         }
         return result;
     }

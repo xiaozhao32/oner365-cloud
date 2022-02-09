@@ -33,7 +33,7 @@ public class RocketmqController extends BaseController {
    */
   @GetMapping("/send")
   public ResponseData<String> send(String message) {
-    LOGGER.info("Send topic:{}, message:{}", rocketmqProperties.getTopic(), message);
+    logger.info("Send topic:{}, message:{}", rocketmqProperties.getTopic(), message);
     rocketmqTemplate.convertAndSend(rocketmqProperties.getTopic(), message);
     return ResponseData.success(message);
   }

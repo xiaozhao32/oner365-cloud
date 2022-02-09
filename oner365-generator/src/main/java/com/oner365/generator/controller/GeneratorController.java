@@ -198,7 +198,7 @@ public class GeneratorController extends BaseController {
             response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
             IOUtils.write(data, response.getOutputStream());
         } catch (IOException e) {
-            LOGGER.error("batchGenCode error: ", e);
+            logger.error("batchGenCode error: ", e);
         }
     }
 }
