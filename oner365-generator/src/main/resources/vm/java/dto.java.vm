@@ -20,9 +20,9 @@ public class ${ClassName}Dto implements Serializable {
 #foreach ($column in $columns)
     /** $column.columnComment */
 #if($column.columnName == 'id')
-	@ApiModelProperty(value = "$column.columnComment")
+    @ApiModelProperty(value = "$column.columnComment")
 #else
-    @ApiModelProperty(value = "$column.columnComment", required =#if($column.isRequired == '1') true #else false #end)
+    @ApiModelProperty(value = "$column.columnComment", required =#if($column.isRequired == '1') true#else false#end)
 #end
     private $column.javaType $column.javaField;
     

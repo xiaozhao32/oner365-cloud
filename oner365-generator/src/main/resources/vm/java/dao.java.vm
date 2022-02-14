@@ -9,6 +9,7 @@ import ${packageName}.entity.${ClassName};
 #set($AttrName=$column.javaType)
 #end
 #end
+
 /**
  * ${functionName} Dao 接口
  * 

@@ -20,9 +20,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 #end
 #end
-
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import ${packageName}.dto.${ClassName}Dto;
 
 /**
  * ${functionName} 对象 ${tableName}
@@ -42,13 +40,13 @@ public class ${ClassName} implements Serializable {
 #if($column.javaType == 'String')
     @Id
     @GeneratedValue(generator = "generator")
-    @GenericGenerator(name = "generator", strategy = "uuid.hex")
+    @GenericGenerator(name = "generator", strategy = "uuid")
 #else
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 #end
 #else
-    @Column(name = "$column.columnName", nullable =#if($column.isRequired == '1') true #else false #end)
+    @Column(#if($column.isRequired == '1') name = "$column.columnName", nullable = false#else name = "$column.columnName"#end)
 #end
     private $column.javaType $column.javaField;
     

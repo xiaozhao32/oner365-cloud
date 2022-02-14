@@ -66,7 +66,9 @@ public class PageInfo<T extends Serializable> implements Serializable {
     this.content = content;
     this.pageIndex = pageIndex;
     this.size = size;
-    this.totalPages = (totalElements - 1) / size + 1;
+    if (size > 0) {
+      this.totalPages = (totalElements - 1) / size + 1;
+    }
     this.totalElements = totalElements;
 
     this.prePage = this.pageIndex - 1;

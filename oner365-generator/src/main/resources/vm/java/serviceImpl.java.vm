@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,8 +55,8 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
     public PageInfo<${ClassName}Dto> pageList(QueryCriteriaBean data) {
         try {
-            Page<SysDictItem> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
-      		return convert(page, ${ClassName}Dto.class);
+            Page<${ClassName}> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+            return convert(page, ${ClassName}Dto.class);
         } catch (Exception e) {
             LOGGER.error("Error pageList: ", e);
         }
@@ -67,10 +68,9 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     public List<${ClassName}Dto> findList(QueryCriteriaBean data) {
         try {
             if (data.getOrder() == null) {
-                return convert(dao.findAll(QueryUtils.buildCriteria(data)), ${ClassName}Dto.class);
-      		}
-      		List<SysDictItem> list = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
-      		return convert(list, ${ClassName}Dto.class);
+                return convertDto(dao.findAll(QueryUtils.buildCriteria(data)));
+            }
+            return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder())));
         } catch (Exception e) {
             LOGGER.error("Error findList: ", e);
         }
@@ -82,7 +82,9 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     public ${ClassName}Dto getById($AttrName id) {
         try {
             Optional<${ClassName}> optional = dao.findById(id);
-            return convert(optional.orElse(null), ${ClassName}Dto.class);
+            if (optional.isPresent()) {
+                return convertDto(optional.orElse(null));
+            }
         } catch (Exception e) {
             LOGGER.error("Error getById: ", e);
         }
@@ -95,7 +97,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @CacheEvict(value = CACHE_NAME, allEntries = true)
     public ${ClassName}Dto save(${ClassName}Vo vo) {
         if (DataUtils.isEmpty(vo.getId())) {
-        	vo.setStatus(StatusEnum.YES.getCode());
+            vo.setStatus(StatusEnum.YES.getCode());
             vo.setCreateTime(LocalDateTime.now());
         }
         vo.setUpdateTime(LocalDateTime.now());

@@ -1,7 +1,6 @@
 package com.oner365.generator.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +24,9 @@ import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ResultEnum;
+import com.oner365.common.page.PageInfo;
 import com.oner365.controller.BaseController;
+import com.oner365.generator.dto.GenTableInfoDto;
 import com.oner365.generator.entity.GenTable;
 import com.oner365.generator.entity.GenTableColumn;
 import com.oner365.generator.service.IGenTableColumnService;
@@ -41,164 +42,140 @@ import com.oner365.util.ConvertString;
 @RequestMapping("/gen")
 public class GeneratorController extends BaseController {
 
-    @Autowired
-    private IGenTableService genTableService;
+  @Autowired
+  private IGenTableService genTableService;
 
-    @Autowired
-    private IGenTableColumnService genTableColumnService;
+  @Autowired
+  private IGenTableColumnService genTableColumnService;
 
-    /**
-     * 查询代码生成列表
-     */
-    @PostMapping("/list")
-    public Map<String, Object> genList(@RequestBody GenTable genTable) {
-        List<GenTable> list = genTableService.selectGenTableList(genTable);
-        Map<String, Object> result = new HashMap<>();
-        result.put(PublicConstants.PARAM_LIST, list);
-        result.put(PublicConstants.PARAM_COUNT, list.size());
-        return result;
+  /**
+   * 查询代码生成列表
+   */
+  @PostMapping("/list")
+  public PageInfo<GenTable> genList(@RequestBody GenTable genTable) {
+    List<GenTable> list = genTableService.selectGenTableList(genTable);
+    return new PageInfo<GenTable>(list, 1, PublicConstants.PAGE_SIZE, list.size());
+  }
+  
+  /**
+   * 查询数据库列表
+   */
+  @PostMapping("/db/list")
+  public PageInfo<GenTable> dataList(@RequestBody GenTable genTable) {
+    List<GenTable> list = genTableService.selectDbTableList(genTable);
+    return new PageInfo<GenTable>(list, 1, PublicConstants.PAGE_SIZE, list.size());
+  }
+  
+  /**
+   * 查询数据表字段列表
+   */
+  @GetMapping(value = "/column/{tableId}")
+  public PageInfo<GenTableColumn> columnList(@PathVariable Long tableId) {
+    List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
+    return new PageInfo<GenTableColumn>(list, 1, PublicConstants.PAGE_SIZE, list.size());
+  }
+
+  /**
+   * 修改代码生成业务
+   */
+  @GetMapping("/{tableId}")
+  public GenTableInfoDto getInfo(@PathVariable Long tableId) {
+    GenTable table = genTableService.selectGenTableById(tableId);
+    List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
+    return new GenTableInfoDto(table, list);
+  }
+  
+  /**
+   * 修改保存代码生成业务
+   */
+  @PutMapping
+  public Integer updateGenTable(@Validated @RequestBody GenTable genTable) {
+    genTableService.validateEdit(genTable);
+    genTableService.updateGenTable(genTable);
+    return ResultEnum.SUCCESS.getCode();
+  }
+  
+  /**
+   * 预览代码
+   */
+  @GetMapping("/preview/{tableId}")
+  public Map<String, String> preview(@PathVariable("tableId") Long tableId) {
+    return genTableService.previewCode(tableId);
+  }
+  
+  /**
+   * 生成代码（下载方式）
+   */
+  @GetMapping("/download/{tableName}")
+  public void download(HttpServletResponse response, @PathVariable("tableName") String tableName) {
+    byte[] data = genTableService.downloadCode(tableName);
+    genCode(response, data);
+  }
+  
+  /**
+   * 生成代码（自定义路径）
+   */
+  @GetMapping("/code/{tableName}")
+  public Integer genCode(@PathVariable("tableName") String tableName) {
+    genTableService.generatorCode(tableName);
+    return ResultEnum.SUCCESS.getCode();
+  }
+
+  /**
+   * 同步数据库
+   */
+  @GetMapping("/sync/{tableName}")
+  public Integer synchDb(@PathVariable("tableName") String tableName) {
+    genTableService.synchDb(tableName);
+    return ResultEnum.SUCCESS.getCode();
+  }
+  
+  /**
+   * 批量生成代码
+   */
+  @GetMapping("/batch")
+  public void batchGenCode(HttpServletResponse response, String tables) {
+    String[] tableNames = ConvertString.toStrArray(tables);
+    byte[] data = genTableService.downloadCode(tableNames);
+    genCode(response, data);
+  }
+  
+  /**
+   * 删除代码生成
+   */
+  @DeleteMapping("/{tableIds}")
+  public Integer remove(@PathVariable Long[] tableIds) {
+    genTableService.deleteGenTableByIds(tableIds);
+    return ResultEnum.SUCCESS.getCode();
+  }
+
+  /**
+   * 导入表结构（保存）
+   */
+  @PostMapping("/import")
+  public Integer importTableSave(@CurrentUser AuthUser authUser, String tables) {
+    String operName = authUser == null ? null : authUser.getUserName();
+    String[] tableNames = ConvertString.toStrArray(tables);
+    // 查询表信息
+    List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
+    genTableService.importGenTable(tableList, operName);
+    return ResultEnum.SUCCESS.getCode();
+  }
+
+  /**
+   * 生成zip文件
+   */
+  private void genCode(HttpServletResponse response, byte[] data) {
+    try {
+      response.reset();
+      response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
+      response.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
+      response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Generator.zip\"");
+      response.setContentLength(data.length);
+      response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+      IOUtils.write(data, response.getOutputStream());
+    } catch (IOException e) {
+      logger.error("batchGenCode error: ", e);
     }
-
-    /**
-     * 修改代码生成业务
-     */
-    @GetMapping("/{tableId}")
-    public Map<String, Object> getInfo(@PathVariable Long tableId) {
-        GenTable table = genTableService.selectGenTableById(tableId);
-        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
-        Map<String, Object> result = new HashMap<>();
-        result.put(PublicConstants.MSG, table);
-        result.put(PublicConstants.PARAM_LIST, list);
-        return result;
-    }
-
-    /**
-     * 查询数据库列表
-     */
-    @PostMapping("/db/list")
-    public Map<String, Object> dataList(@RequestBody GenTable genTable) {
-        List<GenTable> list = genTableService.selectDbTableList(genTable);
-        Map<String, Object> result = new HashMap<>();
-        result.put(PublicConstants.PARAM_LIST, list);
-        result.put(PublicConstants.PARAM_COUNT, list.size());
-        return result;
-    }
-
-    /**
-     * 查询数据表字段列表
-     */
-    @GetMapping(value = "/column/{tableId}")
-    public Map<String, Object> columnList(@PathVariable Long tableId) {
-        List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
-        Map<String, Object> result = new HashMap<>();
-        result.put(PublicConstants.PARAM_LIST, list);
-        result.put(PublicConstants.PARAM_COUNT, list.size());
-        return result;
-    }
-
-    /**
-     * 导入表结构（保存）
-     */
-    @PostMapping("/import")
-    public Map<String, Object> importTableSave(@CurrentUser AuthUser authUser, String tables) {
-        String operName = authUser == null ? null : authUser.getUserName();
-        String[] tableNames = ConvertString.toStrArray(tables);
-        // 查询表信息
-        List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
-        genTableService.importGenTable(tableList, operName);
-
-        Map<String, Object> result = new HashMap<>();
-        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
-        return result;
-    }
-
-    /**
-     * 修改保存代码生成业务
-     */
-    @PutMapping
-    public Map<String, Object> editSave(@Validated @RequestBody GenTable genTable) {
-        genTableService.validateEdit(genTable);
-        genTableService.updateGenTable(genTable);
-
-        Map<String, Object> result = new HashMap<>();
-        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
-        return result;
-    }
-
-    /**
-     * 删除代码生成
-     */
-    @DeleteMapping("/{tableIds}")
-    public Map<String, Object> remove(@PathVariable Long[] tableIds) {
-        genTableService.deleteGenTableByIds(tableIds);
-        Map<String, Object> result = new HashMap<>();
-        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
-        return result;
-    }
-
-    /**
-     * 预览代码
-     */
-    @GetMapping("/preview/{tableId}")
-    public Map<String, String> preview(@PathVariable("tableId") Long tableId) {
-        return genTableService.previewCode(tableId);
-    }
-
-    /**
-     * 生成代码（下载方式）
-     */
-    @GetMapping("/download/{tableName}")
-    public void download(HttpServletResponse response, @PathVariable("tableName") String tableName) {
-        byte[] data = genTableService.downloadCode(tableName);
-        genCode(response, data);
-    }
-
-    /**
-     * 生成代码（自定义路径）
-     */
-    @GetMapping("/code/{tableName}")
-    public Map<String, Object> genCode(@PathVariable("tableName") String tableName) {
-        genTableService.generatorCode(tableName);
-        Map<String, Object> result = new HashMap<>();
-        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
-        return result;
-    }
-
-    /**
-     * 同步数据库
-     */
-    @GetMapping("/sync/{tableName}")
-    public Map<String, Object> synchDb(@PathVariable("tableName") String tableName) {
-        genTableService.synchDb(tableName);
-        Map<String, Object> result = new HashMap<>();
-        result.put(PublicConstants.CODE, ResultEnum.SUCCESS.getCode());
-        return result;
-    }
-
-    /**
-     * 批量生成代码
-     */
-    @GetMapping("/batch")
-    public void batchGenCode(HttpServletResponse response, String tables) {
-        String[] tableNames = ConvertString.toStrArray(tables);
-        byte[] data = genTableService.downloadCode(tableNames);
-        genCode(response, data);
-    }
-
-    /**
-     * 生成zip文件
-     */
-    private void genCode(HttpServletResponse response, byte[] data) {
-        try {
-            response.reset();
-            response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
-            response.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
-            response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Generator.zip\"");
-            response.setContentLength(data.length);
-            response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-            IOUtils.write(data, response.getOutputStream());
-        } catch (IOException e) {
-            logger.error("batchGenCode error: ", e);
-        }
-    }
+  }
 }
