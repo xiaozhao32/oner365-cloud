@@ -49,7 +49,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
   private static final Logger LOGGER = LoggerFactory.getLogger(SysMenuServiceImpl.class);
 
   private static final String CACHE_NAME = "SysMenu";
-  private static final String CACHE_ROLE_NAME = "Auth:SysRole";
+  private static final String CACHE_ROLE_NAME = "SysRole";
 
   @Autowired
   private ISysMenuDao menuDao;
@@ -130,6 +130,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
   }
 
   @Override
+  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysMenuDto> selectMenuByRoles(List<String> roles, String menuTypeId, String parentId) {
     try {
       return convert(menuMapper.selectMenuByRoles(roles, menuTypeId, parentId), SysMenuDto.class);
@@ -150,6 +151,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
   }
 
   @Override
+  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<TreeSelect> buildTreeSelect(List<SysMenuDto> menus) {
     List<SysMenuDto> menuTrees = buildTree(menus);
     return menuTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
@@ -208,6 +210,7 @@ public class SysMenuServiceImpl implements ISysMenuService {
   }
 
   @Override
+  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysMenuDto> selectList(SysMenuVo vo) {
     List<SysMenu> list = menuMapper.selectList(convert(vo, SysMenu.class));
     return convert(list, SysMenuDto.class);

@@ -233,12 +233,14 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   }
 
   @Override
+  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysOrganizationDto> selectList(SysOrganizationVo vo) {
     List<SysOrganization> list = organizationMapper.selectList(convert(vo, SysOrganization.class));
     return convert(list, SysOrganizationDto.class);
   }
 
   @Override
+  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<String> selectListByUserId(String userId) {
     return organizationMapper.selectListByUserId(userId);
   }

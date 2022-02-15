@@ -142,6 +142,7 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
   }
 
   @Override
+  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysDictItemTypeDto> findListByCodes(List<String> codeList) {
     try {
       Criteria<SysDictItemType> criteria = new Criteria<>();

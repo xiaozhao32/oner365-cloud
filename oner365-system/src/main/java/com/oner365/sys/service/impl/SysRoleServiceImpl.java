@@ -58,7 +58,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SysRoleServiceImpl.class);
 
-  private static final String CACHE_NAME = "Auth:SysRole";
+  private static final String CACHE_NAME = "SysRole";
   private static final String CACHE_MENU_NAME = "SysMenu";
 
   @Autowired
@@ -237,6 +237,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
   }
 
   @Override
+  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
   public List<SysMenuOperDto> findMenuOperByRoles(List<String> roles, String menuId) {
     List<Map<String, String>> list = roleMenuOperDao.findMenuOperByRoles(roles, menuId);
     List<SysMenuOperDto> result = new ArrayList<>();
