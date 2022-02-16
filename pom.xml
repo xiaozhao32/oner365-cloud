@@ -32,6 +32,10 @@
 			<name>zhaoyong</name>
 			<email>xiaozhao32@hotmail.com</email>
 		</developer>
+		<developer>
+			<name>liutao</name>
+			<email>liutao@nationsky.com</email>
+		</developer>
 	</developers>
 
 	<properties>
@@ -697,6 +701,11 @@
 				<version>${org.elasticsearch.version}</version>
 			</dependency>
 			<dependency>
+			    <groupId>org.elasticsearch</groupId>
+			    <artifactId>elasticsearch-x-content</artifactId>
+			    <version>${org.elasticsearch.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.elasticsearch.client</groupId>
 				<artifactId>transport</artifactId>
 				<version>${org.elasticsearch.version}</version>
@@ -715,6 +724,11 @@
 				<groupId>org.elasticsearch.plugin</groupId>
 				<artifactId>transport-netty4-client</artifactId>
 				<version>${org.elasticsearch.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-elasticsearch</artifactId>
+				<version>${org.springframework.boot.version}</version>
 			</dependency>
 
 			<!-- kafka -->
