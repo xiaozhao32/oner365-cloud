@@ -1,6 +1,6 @@
 package com.oner365.swagger.client.monitor;
 
-import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.common.ResponseData;
 import com.oner365.swagger.constants.PathConstants;
+import com.oner365.swagger.dto.CacheInfoDto;
+import com.oner365.swagger.dto.CacheJedisInfoDto;
 
 /**
  * 监控服务 - 缓存
@@ -21,18 +23,18 @@ public interface IMonitorCacheClient {
   /**
    * 缓存信息
    * 
-   * @return ResponseData<Serializable>
+   * @return ResponseData<CacheInfoDto>
    */
   @GetMapping(PathConstants.REQUEST_MONITOR_CACHE_INDEX)
-  ResponseData<Serializable> index();
+  ResponseData<CacheInfoDto> index();
 
   /**
    * 缓存列表
    * 
-   * @return ResponseData<Serializable>
+   * @return ResponseData<List<CacheJedisInfoDto>>
    */
   @GetMapping(PathConstants.REQUEST_MONITOR_CACHE_LIST)
-  ResponseData<Serializable> list();
+  ResponseData<List<CacheJedisInfoDto>> list();
 
   /**
    * 清除缓存

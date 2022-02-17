@@ -1,6 +1,6 @@
 package com.oner365.swagger.controller.monitor.cache;
 
-import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +11,8 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
 import com.oner365.controller.BaseController;
 import com.oner365.swagger.client.monitor.IMonitorCacheClient;
+import com.oner365.swagger.dto.CacheInfoDto;
+import com.oner365.swagger.dto.CacheJedisInfoDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,24 +33,24 @@ public class MonitorCacheController extends BaseController {
   /**
    * 缓存信息
    * 
-   * @return ResponseData
+   * @return ResponseData<CacheInfoDto>
    */
   @ApiOperation("1.首页")
   @ApiOperationSupport(order = 1)
   @GetMapping("/index")
-  public ResponseData<Serializable> index() {
+  public ResponseData<CacheInfoDto> index() {
     return client.index();
   }
 
   /**
    * 缓存列表
    * 
-   * @return ResponseData
+   * @return ResponseData<List<CacheJedisInfoDto>>
    */
   @ApiOperation("2.缓存列表")
   @ApiOperationSupport(order = 2)
   @GetMapping("/list")
-  public ResponseData<Serializable> cacheList() {
+  public ResponseData<List<CacheJedisInfoDto>> cacheList() {
     return client.list();
   }
 

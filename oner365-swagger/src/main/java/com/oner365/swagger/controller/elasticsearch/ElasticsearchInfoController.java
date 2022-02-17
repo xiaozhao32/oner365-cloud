@@ -1,7 +1,5 @@
 package com.oner365.swagger.controller.elasticsearch;
 
-import java.io.Serializable;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +9,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
 import com.oner365.controller.BaseController;
 import com.oner365.swagger.client.elasticsearch.IElasticsearchInfoClient;
+import com.oner365.swagger.dto.TransportClientDto;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -36,7 +35,7 @@ public class ElasticsearchInfoController extends BaseController {
   @ApiOperation("1.首页")
   @ApiOperationSupport(order = 1)
   @GetMapping("/index")
-  public ResponseData<Serializable> index() {
+  public ResponseData<TransportClientDto> index() {
     return client.index();
   }
 }

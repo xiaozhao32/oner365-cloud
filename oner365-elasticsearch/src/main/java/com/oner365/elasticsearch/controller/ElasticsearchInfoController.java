@@ -3,9 +3,7 @@ package com.oner365.elasticsearch.controller;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
@@ -20,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.controller.BaseController;
 import com.oner365.elasticsearch.config.properties.ElasticsearchProperties;
+import com.oner365.elasticsearch.dto.ClusterDto;
+import com.oner365.elasticsearch.dto.TransportClientDto;
 
 /**
  * Elasticsearch 信息
@@ -38,41 +38,42 @@ public class ElasticsearchInfoController extends BaseController {
     /**
      * Elasticsearch 信息
      *
-     * @return Map<String, Object>
+     * @return TransportClientDto
      */
     @GetMapping("/index")
-    public Map<String, Object> index() {
-        String hostname = StringUtils.substringBefore(elasticsearchProperties.getUris(), ":");
-        int port = 9300;
-        // 指定集群
-        Settings settings = Settings.builder().build();
-        // 创建客户端
-        Map<String, Object> result = new HashMap<>();
-        try (final TransportClient client = new PreBuiltTransportClient(settings)
-                .addTransportAddress(new TransportAddress(InetAddress.getByName(hostname), port))) {
-            ClusterHealthResponse response = client.admin().cluster().prepareHealth().get();
+    public TransportClientDto index() {
+      String hostname = StringUtils.substringBefore(elasticsearchProperties.getUris(), ":");
+      int port = 9300;
+      // 指定集群
+      Settings settings = Settings.builder().build();
+      // 创建客户端
+      try (final TransportClient client = new PreBuiltTransportClient(settings)
+          .addTransportAddress(new TransportAddress(InetAddress.getByName(hostname), port))) {
+        ClusterHealthResponse response = client.admin().cluster().prepareHealth().get();
 
-            result.put("hostname", hostname);
-            result.put("port", port);
-            result.put("clusterName", response.getClusterName());
-            result.put("numberOfDataNodes", response.getNumberOfDataNodes());
-            result.put("activeShards", response.getActiveShards());
-            result.put("status", response.getStatus().name());
-            result.put("taskMaxWaitingTime", response.getTaskMaxWaitingTime());
-            // 索引信息
-            List<Map<String, Object>> clusterList = new ArrayList<>();
-            response.getIndices().values().forEach(health -> {
-                Map<String, Object> map = new HashMap<>();
-                map.put("index", health.getIndex());
-                map.put("numberOfShards", health.getNumberOfShards());
-                map.put("numberOfReplicas", health.getNumberOfReplicas());
-                map.put("status", health.getStatus().toString());
-                clusterList.add(map);
-            });
-            result.put("clusterList", clusterList);
-        } catch (UnknownHostException e) {
-            logger.error("index error:", e);
-        }
+        TransportClientDto result = new TransportClientDto();
+        result.setHostname(hostname);
+        result.setPort(port);
+        result.setClusterName(response.getClusterName());
+        result.setNumberOfDataNodes(response.getNumberOfDataNodes());
+        result.setActiveShards(response.getActiveShards());
+        result.setStatus(response.getStatus().name());
+        result.setTaskMaxWaitingTime(response.getTaskMaxWaitingTime().getMillis());
+        // 索引信息
+        List<ClusterDto> clusterList = new ArrayList<>();
+        response.getIndices().values().forEach(health -> {
+          ClusterDto clusterDto = new ClusterDto();
+          clusterDto.setIndex(health.getIndex());
+          clusterDto.setNumberOfShards(health.getNumberOfShards());
+          clusterDto.setNumberOfReplicas(health.getNumberOfReplicas());
+          clusterDto.setStatus(health.getStatus().toString());
+          clusterList.add(clusterDto);
+        });
+        result.setClusterList(clusterList);
         return result;
+      } catch (UnknownHostException e) {
+        logger.error("index error:", e);
+      }
+      return null;
     }
 }
