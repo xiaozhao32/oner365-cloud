@@ -58,7 +58,7 @@ public class AuthController extends BaseController {
    * 系统登录
    *
    * @param loginUserVo 登录对象
-   * @return ResponseData
+   * @return ResponseData<LoginUserDto>
    */
   @PostMapping("/login")
   public ResponseData<LoginUserDto> login(@RequestBody LoginUserVo loginUserVo) {
@@ -128,7 +128,7 @@ public class AuthController extends BaseController {
    * 获取左侧菜单
    *
    * @param menuType 菜单类型
-   * @return JSONArray
+   * @return List<SysMenuTreeDto>
    */
   @GetMapping("/menu/{menuType}")
   public List<SysMenuTreeDto> findMenuByRoles(@CurrentUser AuthUser user, @PathVariable String menuType) {
