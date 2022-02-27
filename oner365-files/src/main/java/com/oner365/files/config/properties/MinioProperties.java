@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConfigurationProperties(prefix = "minio")
-public class FileMinioProperties {
+public class MinioProperties {
 
   /**
    * 账号
@@ -35,7 +35,7 @@ public class FileMinioProperties {
   /**
    * 构造方法
    */
-  public FileMinioProperties() {
+  public MinioProperties() {
     super();
   }
 

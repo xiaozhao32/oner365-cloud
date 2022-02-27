@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 
-import com.oner365.files.config.properties.FileMinioProperties;
+import com.oner365.files.config.properties.MinioProperties;
 import com.oner365.files.storage.condition.MinioStorageCondition;
 
 import io.minio.BucketExistsArgs;
@@ -21,13 +21,13 @@ import io.minio.MinioClient;
  */
 @Configuration
 @Conditional(MinioStorageCondition.class)
-@EnableConfigurationProperties({ FileMinioProperties.class })
+@EnableConfigurationProperties({ MinioProperties.class })
 public class FileMinioConfig {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(FileMinioConfig.class);
 
   @Bean
-  public MinioClient minioClient(FileMinioProperties minioProperties) {
+  public MinioClient minioClient(MinioProperties minioProperties) {
     try {
       MinioClient minioClient = MinioClient.builder().endpoint(minioProperties.getUrl())
           .credentials(minioProperties.getUsername(), minioProperties.getPassword()).build();

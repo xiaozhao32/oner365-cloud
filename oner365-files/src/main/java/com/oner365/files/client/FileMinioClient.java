@@ -17,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.oner365.common.config.properties.DefaultFileProperties;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StorageEnum;
-import com.oner365.files.config.properties.FileMinioProperties;
+import com.oner365.files.config.properties.MinioProperties;
 import com.oner365.files.service.IFileStorageService;
 import com.oner365.files.storage.IFileStorageClient;
 import com.oner365.files.storage.condition.MinioStorageCondition;
@@ -46,7 +46,7 @@ public class FileMinioClient implements IFileStorageClient {
   private DefaultFileProperties fileProperties;
 
   @Autowired
-  private FileMinioProperties minioProperties;
+  private MinioProperties minioProperties;
 
   @Autowired
   private MinioClient minioClient;
