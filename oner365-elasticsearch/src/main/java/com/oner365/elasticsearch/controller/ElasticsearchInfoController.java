@@ -1,17 +1,24 @@
 package com.oner365.elasticsearch.controller;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
 import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.settings.Settings;
-import org.elasticsearch.common.transport.TransportAddress;
-import org.elasticsearch.transport.client.PreBuiltTransportClient;
+import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
+import org.elasticsearch.action.search.SearchRequest;
+import org.elasticsearch.action.search.SearchResponse;
+import org.elasticsearch.client.GetAliasesResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.cluster.metadata.AliasMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.client.ClientConfiguration;
+import org.springframework.data.elasticsearch.client.RestClients;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,51 +36,53 @@ import com.oner365.elasticsearch.dto.TransportClientDto;
  */
 @RestController
 @RequestMapping("/info")
-@SuppressWarnings({ "deprecation", "resource" })
 public class ElasticsearchInfoController extends BaseController {
 
-    @Autowired
-    private ElasticsearchProperties elasticsearchProperties;
+  @Autowired
+  private ElasticsearchProperties elasticsearchProperties;
 
-    /**
-     * Elasticsearch 信息
-     *
-     * @return TransportClientDto
-     */
-    @GetMapping("/index")
-    public TransportClientDto index() {
-      String hostname = StringUtils.substringBefore(elasticsearchProperties.getUris(), ":");
-      int port = 9300;
-      // 指定集群
-      Settings settings = Settings.builder().build();
-      // 创建客户端
-      try (final TransportClient client = new PreBuiltTransportClient(settings)
-          .addTransportAddress(new TransportAddress(InetAddress.getByName(hostname), port))) {
-        ClusterHealthResponse response = client.admin().cluster().prepareHealth().get();
+  /**
+   * Elasticsearch 信息
+   *
+   * @return TransportClientDto
+   */
+  @GetMapping("/index")
+  public TransportClientDto index() {
+    // 创建客户端
+    String uri = StringUtils.substringAfter(elasticsearchProperties.getUris(), "http://");
+    ClientConfiguration configuration = ClientConfiguration.builder().connectedTo(uri).build();
+    try (RestHighLevelClient client = RestClients.create(configuration).rest()) {
+      ClusterHealthResponse healthResponse = client.cluster().health(new ClusterHealthRequest(),
+          RequestOptions.DEFAULT);
 
-        TransportClientDto result = new TransportClientDto();
-        result.setHostname(hostname);
-        result.setPort(port);
-        result.setClusterName(response.getClusterName());
-        result.setNumberOfDataNodes(response.getNumberOfDataNodes());
-        result.setActiveShards(response.getActiveShards());
-        result.setStatus(response.getStatus().name());
-        result.setTaskMaxWaitingTime(response.getTaskMaxWaitingTime().getMillis());
-        // 索引信息
-        List<ClusterDto> clusterList = new ArrayList<>();
-        response.getIndices().values().forEach(health -> {
-          ClusterDto clusterDto = new ClusterDto();
-          clusterDto.setIndex(health.getIndex());
-          clusterDto.setNumberOfShards(health.getNumberOfShards());
-          clusterDto.setNumberOfReplicas(health.getNumberOfReplicas());
-          clusterDto.setStatus(health.getStatus().toString());
-          clusterList.add(clusterDto);
-        });
-        result.setClusterList(clusterList);
-        return result;
-      } catch (UnknownHostException e) {
-        logger.error("index error:", e);
+      TransportClientDto result = new TransportClientDto();
+      result.setHostname(StringUtils.substringBefore(uri, ":"));
+      result.setPort(Integer.parseInt(StringUtils.substringAfter(uri, ":")));
+      result.setClusterName(healthResponse.getClusterName());
+      result.setNumberOfDataNodes(healthResponse.getNumberOfDataNodes());
+      result.setActiveShards(healthResponse.getActiveShards());
+      result.setStatus(healthResponse.getStatus().name());
+      result.setTaskMaxWaitingTime(healthResponse.getTaskMaxWaitingTime().getMillis());
+
+      // 索引信息
+      List<ClusterDto> clusterList = new ArrayList<>();
+      GetAliasesResponse aliasResponse = client.indices().getAlias(new GetAliasesRequest(), RequestOptions.DEFAULT);
+      Map<String, Set<AliasMetadata>> aliasMap = aliasResponse.getAliases();
+      for (Entry<String, Set<AliasMetadata>> entry : aliasMap.entrySet()) {
+        SearchResponse search = client.search(new SearchRequest(entry.getKey()), RequestOptions.DEFAULT);
+
+        ClusterDto clusterDto = new ClusterDto();
+        clusterDto.setIndex(entry.getKey());
+        clusterDto.setNumberOfShards(search.getTotalShards());
+        clusterDto.setNumberOfReplicas(search.getNumReducePhases());
+        clusterDto.setStatus(search.status().name());
+        clusterList.add(clusterDto);
       }
-      return null;
+      result.setClusterList(clusterList);
+      return result;
+    } catch (Exception e) {
+      logger.error("index error:", e);
     }
+    return null;
+  }
 }
