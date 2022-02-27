@@ -151,12 +151,12 @@ public class FileMinioClient implements IFileStorageClient {
   private void saveFileStorage(String url, String fileName, long fileSize) {
     // save
     SysFileStorageVo entity = new SysFileStorageVo();
-    entity.setFastdfsUrl(minioProperties.getUrl());
+    entity.setFastdfsUrl(minioProperties.getUrl() + PublicConstants.DELIMITER + minioProperties.getBucket());
     entity.setId(StringUtils.replace(url, entity.getFastdfsUrl() + PublicConstants.DELIMITER, ""));
     entity.setCreateTime(DateUtil.getDate());
     entity.setDirectory(false);
     entity.setFileStorage(getName().getCode());
-    entity.setFilePath(url);
+    entity.setFilePath(entity.getFastdfsUrl() + PublicConstants.DELIMITER + url);
     entity.setFileName(StringUtils.substringAfterLast(url, PublicConstants.DELIMITER));
     entity.setDisplayName(fileName);
     entity.setFileSuffix(DataUtils.getExtension(fileName));
