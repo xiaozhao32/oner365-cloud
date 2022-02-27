@@ -78,7 +78,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
         }
 
         // 返回错误信息
-        return setUnauthorizedResponse(exchange.getResponse());
+        return setUnauthorizedResponse(request, exchange.getResponse());
     }
 
     /**
@@ -113,10 +113,13 @@ public class TokenFilter implements GlobalFilter, Ordered {
     /**
      * 返回错误信息
      *
+     * @param response ServerHttpRequest
      * @param response ServerHttpResponse
      * @return Mono<Void>
      */
-    private Mono<Void> setUnauthorizedResponse(ServerHttpResponse response) {
+    private Mono<Void> setUnauthorizedResponse(ServerHttpRequest request, ServerHttpResponse response) {
+        // 返回错误消息
+        LOGGER.error("[{}] Client Unauthorized error. Request uri: {}", HttpStatus.UNAUTHORIZED.value(), request.getURI());
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         response.setStatusCode(HttpStatus.UNAUTHORIZED);
         return response.writeWith(Mono.fromSupplier(() -> {
