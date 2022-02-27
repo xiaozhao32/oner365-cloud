@@ -2,11 +2,10 @@ package com.oner365.files.client;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.common.config.properties.DefaultFileProperties;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StorageEnum;
 import com.oner365.files.config.properties.MinioProperties;
@@ -25,7 +23,8 @@ import com.oner365.files.vo.SysFileStorageVo;
 import com.oner365.util.DataUtils;
 import com.oner365.util.DateUtil;
 
-import io.minio.DownloadObjectArgs;
+import io.minio.GetObjectArgs;
+import io.minio.GetObjectResponse;
 import io.minio.MinioClient;
 import io.minio.ObjectWriteResponse;
 import io.minio.PutObjectArgs;
@@ -41,9 +40,6 @@ import io.minio.RemoveObjectArgs;
 public class FileMinioClient implements IFileStorageClient {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(FileMinioClient.class);
-
-  @Autowired
-  private DefaultFileProperties fileProperties;
 
   @Autowired
   private MinioProperties minioProperties;
@@ -95,23 +91,45 @@ public class FileMinioClient implements IFileStorageClient {
 
   @Override
   public byte[] download(String path) {
-    try {
-      String fullpath = fileProperties.getDownload() + PublicConstants.DELIMITER + path;
-      // 判断文件夹是否存在则创建
-      File file = DataUtils.getFile(fullpath);
-      FileUtils.forceMkdirParent(file);
-      // 下载
-      minioClient.downloadObject(
-          DownloadObjectArgs.builder().bucket(minioProperties.getBucket()).object(path).filename(fullpath).build());
-
-      if (file.exists()) {
-        return FileUtil.readAsByteArray(file);
-      }
+    try (GetObjectResponse objectResponse = minioClient
+        .getObject(GetObjectArgs.builder().bucket(minioProperties.getBucket()).object(path).build())) {
+      return readAsByteArray(objectResponse);
     } catch (Exception e) {
       LOGGER.error("download File Error:", e);
     }
+    return new byte[0];
+  }
+  
+  /**
+   * apache common-io 
+   * 
+   * @param objectResponse GetObjectResponse
+   * @return byte[]
+   * @throws IOException
+   */
+  public static byte[] readAsByteArray(GetObjectResponse objectResponse) throws IOException {
+    int size = 1024;
+    byte[] ba = new byte[size];
+    int readSoFar = 0;
 
-    return null;
+    while (true) {
+      int nRead = objectResponse.read(ba, readSoFar, size - readSoFar);
+      if (nRead == -1) {
+        break;
+      }
+      readSoFar += nRead;
+      if (readSoFar == size) {
+        int newSize = size * 2;
+        byte[] newBa = new byte[newSize];
+        System.arraycopy(ba, 0, newBa, 0, size);
+        ba = newBa;
+        size = newSize;
+      }
+    }
+
+    byte[] newBa = new byte[readSoFar];
+    System.arraycopy(ba, 0, newBa, 0, readSoFar);
+    return newBa;
   }
 
   @Override

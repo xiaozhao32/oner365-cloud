@@ -1,8 +1,10 @@
 package com.oner365.files.util;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Timestamp;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.aspectj.util.FileUtil;
 import org.slf4j.Logger;
@@ -63,7 +65,7 @@ public class FileLocalUploadUtils {
       return randomName + "." + extension;
   }
 
-  private static File getAbsoluteFile(String filePath, String uploadDir, String fileName) {
+  private static File getAbsoluteFile(String filePath, String uploadDir, String fileName) throws IOException {
       String upath = StringUtils.EMPTY;
       if (!DataUtils.isEmpty(uploadDir)) {
           upath = uploadDir + PublicConstants.DELIMITER;
@@ -71,12 +73,11 @@ public class FileLocalUploadUtils {
       
       String absoluteFile = filePath + File.separator + upath + fileName;
       LOGGER.info("Local upload File path: {}", absoluteFile);
-      File desc = DataUtils.getFile(absoluteFile);
-
-      if (!desc.exists() && !desc.getParentFile().exists()) {
-          desc.getParentFile().mkdirs();
+      File file = new File(absoluteFile);
+      if (!file.exists()) {
+        FileUtils.forceMkdir(new File(file.getParent()));
       }
-      return desc;
+      return file;
   }
 
   private static SysFileStorageVo getPathFileName(MultipartFile file, StorageEnum storageEnum, 
