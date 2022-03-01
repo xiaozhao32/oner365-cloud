@@ -1,0 +1,88 @@
+压测场景说明
+	-- 业务需求场景
+		-- 500万用户
+		-- 有短时间范围内大量访问需求（在某个时间段并发及访问量会激增）
+		-- 很多第三方系统集成
+		-- 部署情况
+			-- 8台应用服务器
+				-- 4核8G
+			-- 两台nginx代理服务器
+				-- 4核8G
+			-- 阿里RDS
+			-- 阿里SLB
+	-- 发布接口代码逻辑
+		-- 大量redis的CRUD
+		-- 小量mysql数据库操作
+		-- 大量第三方系统接口访问
+			-- 大量集成数据计算重组
+1、服务器调优
+	-- 服务器句柄配置及内核配置
+		--  /etc/security/limits.conf 增加如下配置，修改后重启一下ecs
+			root soft nofile 655350
+			root hard nofile 655350
+			root soft nproc 655350
+			root hard nproc 655350
+			* soft nofile 655350
+			* hard nofile 655350
+			* soft nproc 655350
+			* hard nproc 655350
+
+			/etc/sysctl.conf 内核参数调整如下：
+			net.ipv4.tcp_max_tw_buckets = 20000
+			net.ipv4.tcp_max_syn_backlog =  4096
+			net.core.somaxconn =   4096
+			net.ipv4.ip_local_port_range = 15000  65000
+			-- 调整完成后sysctl -p生效
+		-- 重启
+			-- reboot 重启机器
+2、JVM调优
+	-- 内容
+		java  -Xms4g -Xmx4g -Xmn2g -XX:MetaspaceSize=256m -XX:MaxMetaspaceSize=512m -XX:MaxDirectMemorySize=1g -XX:+PrintGCDetails  -XX:SurvivorRatio=8 -XX:MaxTenuringThreshold=15 -Xloggc:../logs/gc.log -jar -XX:+PrintGCDetails -XX:+PrintGCDateStamps -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=../logs/dump.hprof -Dspring.profiles.active=$ACTIVE ./$RESOURCE_NAME > ../logs/$RESOURCE_NAME.log 2>&1 &
+	-- shell文件
+		-- 压测/start.sh
+
+3、redis调优
+	min-idle: 10
+	max-idle: 200
+	max-active: 300
+	max-wait: -1ms
+
+4、tomcat调优
+	-- #最大连接数（最大30000）默认值200
+    	-- max-connections: 15000
+    -- #当tomcat连接数已达最大，接受排队的请求个数默认值100
+    	-- accept-count: 1500
+    -- #线程数
+    	--  threads:
+      			max: 800
+5、压测结果
+	-- 全业务压测（线性压测，单线程完成所有业务接口调用）
+		-- 500并发，20ip(公网ip，北京，上海，青岛，成都)，10分钟
+			-- TPS
+				-- 6115
+			-- RT
+				-- 74
+			-- Error
+				-- 0
+			-- 总请求数
+				-- 365万
+			-- cpu
+				-- 85%左右
+		-- 800并发，20ip(公网ip，北京，上海，青岛，成都)，10分钟
+			-- TPS
+				-- 6753
+			-- RT
+				-- 109
+			-- Error
+				-- 0
+			-- 总请求数
+				-- 405.8万
+			-- cpu
+				-- 90%左右
+	-- 压测结果图
+		-- 压测/*.png
+
+
+
+
+
