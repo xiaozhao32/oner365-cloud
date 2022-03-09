@@ -11,7 +11,6 @@ import java.util.Date;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonSerializer;
@@ -34,6 +33,7 @@ import com.oner365.util.DateUtil;
  *
  */
 public class JavaTimeModule extends SimpleModule {
+
   private static final long serialVersionUID = 1L;
 
   public JavaTimeModule() {
@@ -50,8 +50,8 @@ public class JavaTimeModule extends SimpleModule {
     addDeserializer(Instant.class, new InstantCustomDeserializer());
   }
 
-  class InstantCustomSerializer extends JsonSerializer<Instant> {
-    private DateTimeFormatter format;
+  static class InstantCustomSerializer extends JsonSerializer<Instant> {
+    private final DateTimeFormatter format;
 
     private InstantCustomSerializer(DateTimeFormatter formatter) {
       this.format = formatter;
@@ -67,10 +67,10 @@ public class JavaTimeModule extends SimpleModule {
     }
   }
 
-  class InstantCustomDeserializer extends JsonDeserializer<Instant> {
+  static class InstantCustomDeserializer extends JsonDeserializer<Instant> {
 
     @Override
-    public Instant deserialize(JsonParser parser, DeserializationContext context) throws IOException, JsonProcessingException {
+    public Instant deserialize(JsonParser parser, DeserializationContext context) throws IOException {
       String dateString = parser.getText().trim();
       if (DataUtils.isEmpty(dateString)) {
         Date pareDate = DateUtil.stringToDate(dateString, DateUtil.FULL_TIME_FORMAT);

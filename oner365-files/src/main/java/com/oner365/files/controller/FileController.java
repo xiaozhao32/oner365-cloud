@@ -5,6 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
@@ -43,7 +44,7 @@ import com.oner365.util.DateUtil;
 @RequestMapping("/storage")
 public class FileController extends BaseController {
   
-  @Autowired
+  @Resource
   private IFileStorageClient fileStorageClient;
 
   @Autowired

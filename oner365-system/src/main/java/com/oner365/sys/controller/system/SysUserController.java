@@ -3,6 +3,8 @@ package com.oner365.sys.controller.system;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -60,7 +62,7 @@ public class SysUserController extends BaseController {
   @Autowired
   private ISysJobService sysJobService;
 
-  @Autowired
+  @Resource
   private IFileServiceClient fileServiceClient;
 
   /**

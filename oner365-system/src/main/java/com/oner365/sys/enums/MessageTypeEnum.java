@@ -12,6 +12,6 @@ public enum MessageTypeEnum implements Serializable {
   /** 默认 */
   DEFAULT,
   /** 测试 */
-  TEST;
+  TEST
 
 }
