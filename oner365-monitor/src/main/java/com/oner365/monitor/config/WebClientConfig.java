@@ -29,13 +29,13 @@ public class WebClientConfig {
     /**
      * 是否ssl验证开关
      */
-    @Value("${webclient.ssl.vaild:false}")
-    private boolean sslVaild;
+    @Value("${webclient.ssl.enable:false}")
+    private boolean enable;
 
     @Bean
     public WebClient webClient() {
       ClientHttpConnector httpConnector = new ReactorClientHttpConnector();
-      if (!sslVaild) {
+      if (!enable) {
         httpConnector = new ReactorClientHttpConnector(HttpClient.create().secure(sslSpec -> {
           try {
             sslSpec

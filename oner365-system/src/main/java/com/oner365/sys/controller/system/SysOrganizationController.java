@@ -125,7 +125,7 @@ public class SysOrganizationController extends BaseController {
    * @return List<TreeSelect>
    */
   @PostMapping("/tree")
-  public List<TreeSelect> treeselect(@RequestBody SysOrganizationVo sysOrganizationVo, @CurrentUser AuthUser authUser) {
+  public List<TreeSelect> treeSelect(@RequestBody SysOrganizationVo sysOrganizationVo, @CurrentUser AuthUser authUser) {
     List<SysOrganizationDto> list = sysOrgService.selectList(sysOrganizationVo);
     return sysOrgService.buildTreeSelect(list);
   }
@@ -139,7 +139,7 @@ public class SysOrganizationController extends BaseController {
    * @return SysMenuTreeSelectDto
    */
   @PostMapping("/user/{userId}")
-  public SysMenuTreeSelectDto userTreeselect(@RequestBody SysOrganizationVo sysOrganizationVo,
+  public SysMenuTreeSelectDto userTreeSelect(@RequestBody SysOrganizationVo sysOrganizationVo,
       @PathVariable("userId") String userId, @CurrentUser AuthUser authUser) {
     List<SysOrganizationDto> list = sysOrgService.selectList(sysOrganizationVo);
     SysMenuTreeSelectDto result = new SysMenuTreeSelectDto();

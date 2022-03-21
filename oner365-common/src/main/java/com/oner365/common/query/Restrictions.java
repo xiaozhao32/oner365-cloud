@@ -143,10 +143,7 @@ public class Restrictions {
      * @return LogicalExpression
      */
     public static LogicalExpression in(String fieldName, Collection<?> value, boolean ignoreNull) {
-        if (ignoreNull) {
-            return null;
-        }
-        if (value == null || value.isEmpty()) {
+        if (ignoreNull || value == null || value.isEmpty()) {
             return null;
         }
         SimpleExpression[] ses = new SimpleExpression[value.size()];

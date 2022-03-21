@@ -92,7 +92,7 @@ public class SysMenuController extends BaseController {
    * @return List<TreeSelect>
    */
   @PostMapping("/tree")
-  public List<TreeSelect> treeselect(@RequestBody SysMenuVo sysMenuVo, @CurrentUser AuthUser authUser) {
+  public List<TreeSelect> treeSelect(@RequestBody SysMenuVo sysMenuVo, @CurrentUser AuthUser authUser) {
     List<SysMenuDto> menus;
     if (SysConstants.DEFAULT_ROLE.equals(authUser.getIsAdmin())) {
       menus = menuService.selectList(sysMenuVo);
@@ -112,7 +112,7 @@ public class SysMenuController extends BaseController {
    * @return SysMenuTreeSelectDto
    */
   @PostMapping("/role/{roleId}")
-  public SysMenuTreeSelectDto roleMenuTreeselect(@RequestBody SysMenuVo sysMenuVo, @PathVariable("roleId") String roleId,
+  public SysMenuTreeSelectDto roleMenuTreeSelect(@RequestBody SysMenuVo sysMenuVo, @PathVariable("roleId") String roleId,
       @CurrentUser AuthUser authUser) {
     List<SysMenuDto> menus;
     if (SysConstants.DEFAULT_ROLE.equals(authUser.getIsAdmin())) {
