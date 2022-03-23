@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 import de.codecentric.boot.admin.server.config.EnableAdminServer;
 
@@ -18,7 +17,6 @@ import de.codecentric.boot.admin.server.config.EnableAdminServer;
 @EnableAdminServer
 @EnableDiscoveryClient
 @EnableFeignClients
-@EnableScheduling
 @MapperScan({ "com.oner365.monitor.mapper" })
 @ComponentScan({ "com.oner365.common", "com.oner365.monitor", "com.oner365.api" })
 public class SpringMonitorApplication {
