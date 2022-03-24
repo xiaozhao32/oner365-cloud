@@ -17,12 +17,12 @@ import org.springframework.lang.NonNull;
  */
 public class LocalStorageCondition implements Condition {
 
-	@Override
-	public boolean matches(ConditionContext conditionContext, @NonNull AnnotatedTypeMetadata metadata) {
-		Environment environment = conditionContext.getEnvironment();
-		String type = environment.getProperty(PublicConstants.FILE_STORAGE);
-		// 本地上传
-		return type == null || type.equals(StorageEnum.LOCAL.getCode());
-	}
+  @Override
+  public boolean matches(ConditionContext conditionContext, @NonNull AnnotatedTypeMetadata metadata) {
+    Environment environment = conditionContext.getEnvironment();
+    String type = environment.getProperty(PublicConstants.FILE_STORAGE);
+    // 本地上传
+    return type == null || type.equals(StorageEnum.LOCAL.getCode());
+  }
 
 }

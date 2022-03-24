@@ -7,16 +7,16 @@ package com.oner365.common.sequence.range;
  */
 public interface SeqRangeMgr {
 
-	/**
-	 * next range
-	 * 
-	 * @param paramString 参数
-	 * @return SeqRange
-	 */
-	SeqRange nextRange(String paramString);
+  /**
+   * next range
+   * 
+   * @param paramString 参数
+   * @return SeqRange
+   */
+  SeqRange nextRange(String paramString);
 
-	/**
-	 * init
-	 */
-	void init();
+  /**
+   * init
+   */
+  void init();
 }
