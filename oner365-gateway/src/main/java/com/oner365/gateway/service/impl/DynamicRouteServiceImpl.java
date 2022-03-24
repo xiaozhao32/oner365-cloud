@@ -2,6 +2,7 @@ package com.oner365.gateway.service.impl;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,24 +90,20 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
   public String save(GatewayRouteVo gatewayRoute) {
 
     // Filter
-    List<GatewayFilter> filters = new ArrayList<>();
     GatewayFilter gatewayFilter = new GatewayFilter();
     gatewayFilter.setName("StripPrefix");
     Map<String, String> argsFilter = new HashMap<>();
     argsFilter.put("parts", "1");
     gatewayFilter.setArgs(argsFilter);
-    filters.add(gatewayFilter);
-    gatewayRoute.setFilters(filters);
+    gatewayRoute.setFilters(Collections.singletonList(gatewayFilter));
 
     // Predicates
-    List<GatewayPredicate> predicates = new ArrayList<>();
     GatewayPredicate gatewayPredicate = new GatewayPredicate();
     gatewayPredicate.setName("Path");
     Map<String, String> args = new HashMap<>();
     args.put("pattern", gatewayRoute.getPattern());
     gatewayPredicate.setArgs(args);
-    predicates.add(gatewayPredicate);
-    gatewayRoute.setPredicates(predicates);
+    gatewayRoute.setPredicates(Collections.singletonList(gatewayPredicate));
 
     // 页面保存信息
     gatewayRouteDao.save(convert(gatewayRoute, GatewayRoute.class));
