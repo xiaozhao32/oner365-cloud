@@ -28,6 +28,7 @@ public interface IElasticsearchSampleGeneClient {
   /**
    * 列表
    * 
+   * @param data 查询条件
    * @return ResponseData<PageInfo<SampleGeneDto>>
    */
   @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_LIST)

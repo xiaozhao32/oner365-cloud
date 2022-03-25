@@ -121,7 +121,7 @@ public class SysDictItemController extends BaseController {
    */
   @PostMapping("/item/type/ids")
   public Map<String, Object> findItemByTypeIds(@RequestBody String... typeIds) {
-    Map<String, Object> result = new HashMap<>();
+    Map<String, Object> result = new HashMap<>(10);
     Arrays.stream(typeIds).forEach(typeId -> {
       QueryCriteriaBean data = new QueryCriteriaBean();
       List<AttributeBean> whereList = new ArrayList<>();

@@ -4,6 +4,12 @@ import java.io.Serializable;
 
 import com.oner365.common.enums.ResultEnum;
 
+/**
+ * 服务响应对象
+ * 
+ * @author zhaoyong
+ *
+ */
 public class ResponseResult<T extends Serializable> implements Serializable {
 
   private static final long serialVersionUID = 1L;

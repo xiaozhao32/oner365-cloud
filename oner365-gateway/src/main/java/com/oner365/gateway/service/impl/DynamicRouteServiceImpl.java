@@ -92,7 +92,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
     // Filter
     GatewayFilter gatewayFilter = new GatewayFilter();
     gatewayFilter.setName("StripPrefix");
-    Map<String, String> argsFilter = new HashMap<>();
+    Map<String, String> argsFilter = new HashMap<>(5);
     argsFilter.put("parts", "1");
     gatewayFilter.setArgs(argsFilter);
     gatewayRoute.setFilters(Collections.singletonList(gatewayFilter));
@@ -100,7 +100,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
     // Predicates
     GatewayPredicate gatewayPredicate = new GatewayPredicate();
     gatewayPredicate.setName("Path");
-    Map<String, String> args = new HashMap<>();
+    Map<String, String> args = new HashMap<>(5);
     args.put("pattern", gatewayRoute.getPattern());
     gatewayPredicate.setArgs(args);
     gatewayRoute.setPredicates(Collections.singletonList(gatewayPredicate));

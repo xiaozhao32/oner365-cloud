@@ -56,7 +56,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
 
     @Autowired
     private IgnoreWhiteProperties ignoreWhiteProperties;
-    
+
     @Autowired
     private AccessTokenProperties accessTokenProperties;
 
@@ -119,13 +119,14 @@ public class TokenFilter implements GlobalFilter, Ordered {
      */
     private Mono<Void> setUnauthorizedResponse(ServerHttpRequest request, ServerHttpResponse response) {
         // 返回错误消息
-        LOGGER.error("[{}] Client Unauthorized error. Request uri: {}", HttpStatus.UNAUTHORIZED.value(), request.getURI());
+        LOGGER.error("[{}] Client Unauthorized error. Request uri: {}", HttpStatus.UNAUTHORIZED.value(),
+                request.getURI());
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         response.setStatusCode(HttpStatus.UNAUTHORIZED);
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory bufferFactory = response.bufferFactory();
-            return bufferFactory.wrap(JSON.toJSONBytes(
-                    ResponseData.error(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name())));
+            return bufferFactory.wrap(JSON
+                    .toJSONBytes(ResponseData.error(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name())));
         }));
     }
 
@@ -144,7 +145,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
         if (method == null) {
             return;
         }
-        
+
         String methodName = method.name();
         // 除get请求一律保存日志
         if (!HttpMethod.GET.matches(methodName)) {
@@ -181,8 +182,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
         if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeaders().getFirst("HTTP_X_FORWARDED_FOR");
         }
-        if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip) 
-                && request.getRemoteAddress() != null) {
+        if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip)) {
             InetSocketAddress address = request.getRemoteAddress();
             if (address != null && address.getAddress() != null) {
                 ip = address.getAddress().getHostAddress();

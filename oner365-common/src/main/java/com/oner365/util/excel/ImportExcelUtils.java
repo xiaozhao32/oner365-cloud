@@ -31,6 +31,8 @@ public class ImportExcelUtils {
 
   private static final String POINT = ".";
   private static final String NAN = "NaN";
+  private static final String XLSX = "xlsx";
+  private static final String PARAM_DATE = "date";
 
   private ImportExcelUtils() {
   }
@@ -46,7 +48,7 @@ public class ImportExcelUtils {
   public static Workbook getWorkbook(InputStream is, String extension) throws IOException {
     // 创建工作表
     Workbook workbook;
-    if (extension.contains("xlsx")) {
+    if (extension.contains(XLSX)) {
       workbook = new XSSFWorkbook(is);
     } else {
       workbook = new HSSFWorkbook(is);
@@ -162,7 +164,7 @@ public class ImportExcelUtils {
     case FORMULA:
       // 读公式计算值
       value = cell.getCellFormula();
-      if (!DataUtils.isEmpty(value) && value.toString().toUpperCase().contains("DATE")) {
+      if (!DataUtils.isEmpty(value) && value.toString().toLowerCase().contains(PARAM_DATE)) {
         Date date = cell.getDateCellValue();
         value = com.oner365.util.DateUtil.dateToString(date, com.oner365.util.DateUtil.FULL_TIME_FORMAT);
       } else {

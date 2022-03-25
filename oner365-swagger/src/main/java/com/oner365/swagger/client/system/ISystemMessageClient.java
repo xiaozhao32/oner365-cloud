@@ -70,7 +70,7 @@ public interface ISystemMessageClient {
   /**
    * 保存
    * 
-   * @param sysMenuTypeVo 保存对象
+   * @param sysMessageVo 保存对象
    * @return ResponseData<ResponseResult<SysMessageDto>>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_SAVE)

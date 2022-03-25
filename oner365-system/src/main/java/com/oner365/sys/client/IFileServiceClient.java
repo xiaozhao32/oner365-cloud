@@ -22,14 +22,15 @@ import com.oner365.sys.client.fallback.FileServiceClientFallback;
 @FeignClient(value = "oner365-files", fallback = FileServiceClientFallback.class)
 public interface IFileServiceClient {
 
-  /**
-   * 上传文件 类型: Content-Type: multipart/form-data 方式: Post 参数: @RequestPart("name")
-   *
-   * 服务端接收方式: @RequestBody
-   * 
-   * @param file MultipartFile
-   * @return ResponseData
-   */
+    /**
+     * 上传文件 类型: Content-Type: multipart/form-data 方式: Post 参数: @RequestPart("name")
+     *
+     * 服务端接收方式: @RequestBody
+     * 
+     * @param file    MultipartFile
+     * @param dictory 目录
+     * @return ResponseData
+     */
   @PostMapping(value = "/storage/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   ResponseData<ResponseResult<String>> uploadFile(@RequestPart("file") MultipartFile file,
       @RequestParam("dictory") String dictory);

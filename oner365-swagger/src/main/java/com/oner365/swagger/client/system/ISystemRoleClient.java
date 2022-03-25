@@ -68,7 +68,7 @@ public interface ISystemRoleClient {
   /**
    * 保存
    * 
-   * @param sysROLEVo 保存对象
+   * @param sysRoleVo 保存对象
    * @return ResponseData<ResponseResult<SysRoleDto>>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_ROLE_SAVE)

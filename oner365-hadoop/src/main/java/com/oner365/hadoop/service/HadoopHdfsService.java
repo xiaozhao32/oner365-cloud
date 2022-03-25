@@ -114,7 +114,8 @@ public interface HadoopHdfsService {
   /**
    * 打开HDFS上的文件并返回java对象
    *
-   * @param path 文件
+   * @param path  文件
+   * @param clazz 类
    * @return Class<T>
    */
   <T> T openFileToObject(String path, Class<T> clazz);

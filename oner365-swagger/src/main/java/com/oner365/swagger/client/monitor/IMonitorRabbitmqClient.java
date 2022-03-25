@@ -32,6 +32,10 @@ public interface IMonitorRabbitmqClient {
   /**
    * 获取队列列表
    * 
+   * @param type      类型
+   * @param pageIndex 分页页面
+   * @param pageSize  分页长度
+   * @param name      查询名称
    * @return ResponseData<Serializable>
    */
   @GetMapping(PathConstants.REQUEST_MONITOR_RABBITMQ_LIST)
@@ -41,6 +45,8 @@ public interface IMonitorRabbitmqClient {
   /**
    * 删除
    * 
+   * @param type 类型
+   * @param name 查询名称
    * @return ResponseData<Serializable>
    */
   @DeleteMapping(PathConstants.REQUEST_MONITOR_RABBITMQ_DELETE)

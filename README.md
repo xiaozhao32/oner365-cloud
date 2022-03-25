@@ -12,7 +12,7 @@
 1. 数据库：MySQL
 2. 缓存：Redis
 3. 队列：RabbitMQ && RocketMQ && Kafka && Pulsar
-4. 文件处理：Fastdfs && Hadoop
+4. 文件处理：Fastdfs && Hadoop && Minio && Local
 5. 搜索引擎：Elasticserach
 6. 配置管理：Alibaba Nacos
 7. 分布式事务：Alibaba Seata

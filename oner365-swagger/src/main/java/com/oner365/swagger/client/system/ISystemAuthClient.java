@@ -27,7 +27,7 @@ public interface ISystemAuthClient {
   /**
    * 登录
    * 
-   * @param json 登录参数
+   * @param loginUserVo 登录参数
    * @return ResponseData<LoginUserDto>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_AUTH_LOGIN)

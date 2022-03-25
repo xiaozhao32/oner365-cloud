@@ -13,6 +13,12 @@ import org.springframework.context.annotation.Configuration;
 
 import com.oner365.hadoop.config.properties.HdfsProperties;
 
+/**
+ * Hadoop Config
+ * 
+ * @author zhaoyong
+ *
+ */
 @Configuration
 public class HadoopHdfsConfig {
   

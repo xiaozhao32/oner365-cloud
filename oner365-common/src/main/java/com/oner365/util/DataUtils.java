@@ -72,6 +72,7 @@ public class DataUtils {
   private static final int IP_PART = 4;
   private static final String IP_LOCALHOST = "0:0:0:0:0:0:0:1";
 
+  public static final String PARENT_FILE = "..";
   public static final String EMPTY_JSON = "{}";
   public static final char C_BACKSLASH = '\\';
   public static final char C_DELIMITER_START = '{';
@@ -270,7 +271,7 @@ public class DataUtils {
    */
   public static File getFile(String filePath) {
     // 禁止目录上跳级别
-    if (StringUtils.contains(filePath, "..")) {
+    if (StringUtils.contains(filePath, PARENT_FILE)) {
       return null;
     }
     File file = new File(filePath);
@@ -301,7 +302,7 @@ public class DataUtils {
    */
   public static FileOutputStream getFileOutputStream(String filePath) throws FileNotFoundException {
     // 禁止目录上跳级别
-    if (StringUtils.contains(filePath, "..")) {
+    if (StringUtils.contains(filePath, PARENT_FILE)) {
       return null;
     }
     return new FileOutputStream(filePath);
