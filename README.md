@@ -11,7 +11,7 @@
 
 1. 数据库：MySQL
 2. 缓存：Redis
-3. 队列：RabbitMQ && RocketMQ && Kafka
+3. 队列：RabbitMQ && RocketMQ && Kafka && Pulsar
 4. 文件处理：Fastdfs && Hadoop
 5. 搜索引擎：Elasticserach
 6. 配置管理：Alibaba Nacos
@@ -44,6 +44,7 @@
 6. Hadoop - 8712 oner365-hadoop
 7. Rocketmq 	- 8713 oner365-rocketmq
 8. Swagger - 8714 oner365-swagger 
+9. Pulsar - 8715 oner365-pulsar
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos

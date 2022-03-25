@@ -937,6 +937,8 @@
 		<module>oner365-kafka</module>
 		<!-- Rocketmq -->
 		<module>oner365-rocketmq</module>
+		<!-- Pulsar -->
+		<module>oner365-pulsar</module>
 		<!-- Dubbo -->
 		<module>oner365-dubbo</module>
 		<!-- hadoop -->
