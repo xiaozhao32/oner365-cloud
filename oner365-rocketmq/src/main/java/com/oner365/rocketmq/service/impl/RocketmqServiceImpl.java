@@ -1,4 +1,4 @@
-package com.oner365.rocketmq.service;
+package com.oner365.rocketmq.service.impl;
 
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.rocketmq.config.properties.RocketmqProperties;
+import com.oner365.rocketmq.service.RocketmqService;
 
 @Service
 public class RocketmqServiceImpl implements RocketmqService {
