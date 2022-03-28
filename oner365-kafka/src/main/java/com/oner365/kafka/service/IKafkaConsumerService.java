@@ -1,7 +1,6 @@
 package com.oner365.kafka.service;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
-import org.springframework.kafka.annotation.KafkaListener;
+import com.oner365.common.enums.ResultEnum;
 
 /**
  * Kafka消费者接口
@@ -11,10 +10,10 @@ import org.springframework.kafka.annotation.KafkaListener;
 public interface IKafkaConsumerService {
   
   /**
-   * 监听服务
-   *
-   * @param record 参数
+   * 发送消息
+   * 
+   * @param message 消息
+   * @return 发送结果
    */
-  @KafkaListener(id = "${spring.kafka.consumer.group-id}", topics = { "${spring.kafka.template.default-topic}" })
-  void listen(ConsumerRecord<String, ?> record);
+  ResultEnum convertAndSend(Object message);
 }

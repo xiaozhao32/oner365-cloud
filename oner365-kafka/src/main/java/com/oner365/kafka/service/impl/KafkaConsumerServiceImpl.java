@@ -1,12 +1,14 @@
 package com.oner365.kafka.service.impl;
 
-import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+import com.oner365.common.enums.ResultEnum;
+import com.oner365.kafka.config.properties.KafkaProperties;
 import com.oner365.kafka.service.IKafkaConsumerService;
-import com.google.common.base.Optional;
 
 /**
  * IKafkaConsumerService实现类
@@ -15,17 +17,24 @@ import com.google.common.base.Optional;
  */
 @Service
 public class KafkaConsumerServiceImpl implements IKafkaConsumerService {
-    
-    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerServiceImpl.class);
 
-    @Override
-    public void listen(ConsumerRecord<String, ?> record) {
-        Optional<?> kafkaMessage = Optional.of(record.value());
+  private final Logger logger = LoggerFactory.getLogger(IKafkaConsumerService.class);
 
-        if (kafkaMessage.isPresent()) {
-            Object message = kafkaMessage.get();
-            LOGGER.info("Receive message:{}", message);
-        }
+  @Autowired
+  private KafkaProperties kafkaProperties;
+
+  @Autowired
+  private KafkaTemplate<String, Object> kafkaTemplate;
+
+  @Override
+  public ResultEnum convertAndSend(Object message) {
+    try {
+      kafkaTemplate.send(kafkaProperties.getTopic(), message);
+      return ResultEnum.SUCCESS;
+    } catch (Exception e) {
+      logger.error("convertAndSend error:", e);
     }
+    return ResultEnum.ERROR;
+  }
 
 }
