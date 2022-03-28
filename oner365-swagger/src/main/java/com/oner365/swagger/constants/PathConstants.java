@@ -250,6 +250,13 @@ public class PathConstants {
   /** rocketmq消息 */
   public static final String REQUEST_ROCKETMQ_CONSUMER_MESSAGE_SEND = "/message/send";
   
+  /** pulsar */
+  public static final String FEIGN_CLIENT_PULSAR = "oner365-pulsar";
+  /** pulsar context */
+  public static final String CONTEXT_PULSAR_CONSUMER_ID = "IPulsarConsumerClient";
+  /** pulsar消息 */
+  public static final String REQUEST_PULSAR_CONSUMER_MESSAGE_SEND = "/message/send";
+  
   /** dubbo */
   public static final String FEIGN_CLIENT_DUBBO_CONSUMER = "oner365-dubbo-consumer";
   /** dubbo context */

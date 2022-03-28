@@ -34,7 +34,7 @@ public class PulsarListener {
   public void listener() {
     MessageListener<byte[]> messageListener = (consumer, msg) -> {
       try {
-        logger.info("Message received: {}", new String(msg.getData()));
+        logger.info("Pulsar Message received: {}", new String(msg.getData()));
         consumer.acknowledge(msg);
       } catch (PulsarClientException e) {
         consumer.negativeAcknowledge(msg);

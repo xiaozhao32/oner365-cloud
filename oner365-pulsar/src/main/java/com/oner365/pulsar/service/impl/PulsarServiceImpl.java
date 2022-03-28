@@ -31,16 +31,16 @@ public class PulsarServiceImpl implements PulsarService {
   private PulsarProperties pulsarProperties;
 
   @Override
-  public String convertAndSend(Object message) {
+  public ResultEnum convertAndSend(Object message) {
     try {
       Producer<byte[]> producer = pulsarConfig.getPulsarFactory().newProducer().topic(pulsarProperties.getTopic())
           .create();
       producer.send(JSON.toJSONString(message).getBytes());
-      return ResultEnum.SUCCESS.getName();
+      return ResultEnum.SUCCESS;
     } catch (PulsarClientException e) {
       logger.error("convertAndSend error:", e);
     }
-    return ResultEnum.ERROR.getName();
+    return ResultEnum.ERROR;
   }
 
 }

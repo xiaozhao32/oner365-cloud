@@ -20,7 +20,7 @@ public class RocketmqConsumerListener implements RocketMQListener<String> {
     @Override
     public void onMessage(String message) {
         // 处理返回数据
-        LOGGER.info("Receive message:{}", message);
+        LOGGER.info("Rocketmq Message received: {}", message);
     }
 
 }

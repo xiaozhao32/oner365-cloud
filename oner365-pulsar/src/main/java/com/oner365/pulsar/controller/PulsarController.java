@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.ResponseData;
+import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.pulsar.service.PulsarService;
 
@@ -16,7 +17,7 @@ import com.oner365.pulsar.service.PulsarService;
  *
  */
 @RestController
-@RequestMapping("/pulsar")
+@RequestMapping("/message")
 public class PulsarController extends BaseController {
 
   @Autowired
@@ -26,13 +27,15 @@ public class PulsarController extends BaseController {
    * 测试发送
    * 
    * @param data 参数
-   * @return JSONObject
+   * @return ResponseData<String>
    */
   @GetMapping("/send")
-  public JSONObject send(String data) {
-    JSONObject json = new JSONObject();
-    json.put("data", data);
-    pulsarService.convertAndSend(data);
-    return json;
+  public ResponseData<String> send(String message) {
+    logger.info("Pulsar send message:{}", message);
+    ResultEnum result = pulsarService.convertAndSend(message);
+    if (ResultEnum.SUCCESS.equals(result)) {
+      return ResponseData.success(message);
+    }
+    return ResponseData.error(result.getName());
   }
 }

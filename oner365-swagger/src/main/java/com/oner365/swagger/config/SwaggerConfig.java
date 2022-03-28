@@ -86,6 +86,11 @@ public class SwaggerConfig implements WebMvcConfigurer {
   public Docket rocketmqApi() {
     return buildApi("Rocketmq(消息队列)", "com.oner365.swagger.controller.rocketmq");
   }
+  
+  @Bean
+  public Docket pulsarApi() {
+    return buildApi("Pulsar(消息队列)", "com.oner365.swagger.controller.pulsar");
+  }
 
   @Bean
   public Docket dubboApi() {

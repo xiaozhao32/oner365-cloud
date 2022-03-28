@@ -1,14 +1,14 @@
-package com.oner365.pulsar.service;
+package com.oner365.rocketmq.service;
 
 import com.oner365.common.enums.ResultEnum;
 
 /**
- * pulsar service
+ * Rocketmq Service
  * 
  * @author zhaoyong
  *
  */
-public interface PulsarService {
+public interface RocketmqService {
 
   /**
    * 发送消息
@@ -17,5 +17,5 @@ public interface PulsarService {
    * @return 发送结果
    */
   ResultEnum convertAndSend(Object message);
-  
+
 }
