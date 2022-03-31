@@ -130,6 +130,13 @@
 				<artifactId>druid</artifactId>
 				<version>1.2.8</version>
 			</dependency>
+			
+			<!-- feign -->
+			 <dependency>
+		      <groupId>io.github.openfeign.form</groupId>
+		      <artifactId>feign-form</artifactId>
+		      <version>3.8.0</version>
+		    </dependency>
 
 			<!-- fastjson -->
 			<dependency>

@@ -13,6 +13,12 @@
 	<name>oner365-common</name>
 
 	<dependencies>
+	
+		<!-- feign -->
+		 <dependency>
+	      <groupId>io.github.openfeign.form</groupId>
+	      <artifactId>feign-form</artifactId>
+	    </dependency>
 		
 		<!-- jedis -->
 		<dependency>
