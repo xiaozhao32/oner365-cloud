@@ -41,8 +41,8 @@ public interface IFileServiceClient {
    * @param fileUrl
    * @return ResponseData<byte[]>
    */
-  @GetMapping("/storage/download")
-  ResponseData<byte[]> download(@RequestParam("fileUrl") String fileUrl);
+  @GetMapping("/storage/byte/download")
+  byte[] download(@RequestParam("fileUrl") String fileUrl);
 
   /**
    * 删除文件

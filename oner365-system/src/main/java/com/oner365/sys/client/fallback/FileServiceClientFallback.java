@@ -23,8 +23,8 @@ public class FileServiceClientFallback implements IFileServiceClient {
   }
   
   @Override
-  public ResponseData<byte[]> download(String fileUrl) {
-    return new ResponseData<>(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
+  public byte[] download(String fileUrl) {
+    return null;
   }
 
   @Override

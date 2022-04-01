@@ -46,7 +46,7 @@ public class FileController extends BaseController {
    */
   @GetMapping("/download")
   public ResponseData<byte[]> download(String fileName) {
-    return fileServiceClient.download(fileName);
+    return ResponseData.success(fileServiceClient.download(fileName));
   }
 
 }
