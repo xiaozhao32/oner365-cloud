@@ -69,23 +69,16 @@
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-web</artifactId>
-		    <exclusions>
-		       <exclusion>
-		          <groupId>org.springframework.boot</groupId>
-		          <artifactId>spring-boot-starter-tomcat</artifactId>
-		       </exclusion>
-		    </exclusions>
-		</dependency>
-		
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-undertow</artifactId>
 		</dependency>
 		
 		<!-- spring-boot-admin -->
 		<dependency>
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
         
         <!-- sentinel monitor -->
