@@ -7,7 +7,6 @@ echo 'start...'
 selfpath=$(cd "$(dirname "$0")"; pwd) 
 cd $selfpath
 mkdir logs
-VERSION=1.0.0-SNAPSHOT.jar
 
 function execute() {
     ./$1/start.sh
