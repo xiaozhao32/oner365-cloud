@@ -44,27 +44,57 @@
 
 		<org.springframework.security.version>5.6.2</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.1</org.springframework.cloud.version>
-
 		<org.springframework.boot.version>2.6.6</org.springframework.boot.version>
 		<org.springframework.version>5.3.18</org.springframework.version>
 
-		<org.apache.rocketmq.version>4.9.2</org.apache.rocketmq.version>
+		<org.apache.logging.log4j.version>2.17.1</org.apache.logging.log4j.version>
+		<org.apache.zookeeper.version>3.8.0</org.apache.zookeeper.version>
+		<org.apache.rocketmq.version>4.9.3</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.60</org.apache.tomcat.version>
-		<org.apache.hadoop.version>3.3.1</org.apache.hadoop.version>
-		<org.apache.dubbo.version>3.0.3</org.apache.dubbo.version>
-		<org.apache.pulsar.version>2.9.1</org.apache.pulsar.version>
+		<org.apache.hadoop.version>3.3.2</org.apache.hadoop.version>
+		<org.apache.pulsar.version>2.9.2</org.apache.pulsar.version>
+		<org.apache.dubbo.version>3.0.7</org.apache.dubbo.version>
 		<org.apache.kafka.version>2.8.1</org.apache.kafka.version>
 		<org.apache.poi.version>5.2.2</org.apache.poi.version>
 
+		<org.hibernate.validator.version>6.2.3.Final</org.hibernate.validator.version>
+		<org.hibernate.version>5.6.7.Final</org.hibernate.version>
+		
+		<org.mybatis.spring.boot.version>2.2.2</org.mybatis.spring.boot.version>
 		<org.elasticsearch.version>7.15.2</org.elasticsearch.version>
 		<org.eclipse.jetty.version>11.0.6</org.eclipse.jetty.version>
-		<org.hibernate.version>5.6.7.Final</org.hibernate.version>
+		<org.projectlombok.version>1.18.22</org.projectlombok.version>
+		<org.junit.platform.version>1.7.2</org.junit.platform.version>
+		<org.javassist.version>3.28.0-GA</org.javassist.version>
+		<org.yaml.version>1.30</org.yaml.version>
 
+		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
+		<com.alibaba.nacos.version>2.0.4</com.alibaba.nacos.version>
+		<com.alibaba.druid.version>1.2.8</com.alibaba.druid.version>
+		<com.alibaba.fastjson.version>1.2.79</com.alibaba.fastjson.version>
+		
+		<com.thoughtworks.paranamer.version>2.8</com.thoughtworks.paranamer.version>
 		<com.fasterxml.jackson.version>2.13.2</com.fasterxml.jackson.version>
-
+		<com.google.code.gson.version>2.9.0</com.google.code.gson.version>
+		<com.google.guava.version>31.1-jre</com.google.guava.version>
+		<com.github.xiaoymin.version>3.0.3</com.github.xiaoymin.version>
+		<com.github.tobato.version>1.27.2</com.github.tobato.version>
+		<com.vladmihalcea.version>2.12.1</com.vladmihalcea.version>
+		<com.rabbitmq.version>5.14.2</com.rabbitmq.version>
+		
+		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
 		<io.projectreactor.netty.version>1.0.17</io.projectreactor.netty.version>
+		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
 		<io.undertow.version>2.2.16.Final</io.undertow.version>
+		<io.springfox.version>3.0.0</io.springfox.version>
 		<io.netty.version>4.1.75.Final</io.netty.version>
+		<io.minio.version>8.3.4</io.minio.version>
+		
+		<net.logstash.logback.version>7.0.1</net.logstash.logback.version>
+		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
+		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
+		<de.codecentric.version>2.6.3</de.codecentric.version>
+		<redis.clients.version>4.2.0</redis.clients.version>
 		
  		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 	</properties>
@@ -94,19 +124,19 @@
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-starter-client</artifactId>
-				<version>2.6.3</version>
+				<version>${de.codecentric.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>de.codecentric</groupId>
 				<artifactId>spring-boot-admin-starter-server</artifactId>
-				<version>2.6.3</version>
+				<version>${de.codecentric.version}</version>
 			</dependency>
 
 			<!-- alibaba -->
 			<dependency>
 				<groupId>com.alibaba.cloud</groupId>
 				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
-				<version>2021.1</version>
+				<version>${com.alibaba.cloud.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
@@ -115,34 +145,34 @@
 			<dependency>
 				<groupId>com.alibaba.nacos</groupId>
 				<artifactId>nacos-client</artifactId>
-				<version>2.0.4</version>
+				<version>${com.alibaba.nacos.version}</version>
 			</dependency>
 
 			<!-- druid -->
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid-spring-boot-starter</artifactId>
-				<version>1.2.8</version>
+				<version>${com.alibaba.druid.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>druid</artifactId>
-				<version>1.2.8</version>
+				<version>${com.alibaba.druid.version}</version>
 			</dependency>
 			
 			<!-- feign -->
 			 <dependency>
 		      <groupId>io.github.openfeign.form</groupId>
 		      <artifactId>feign-form</artifactId>
-		      <version>3.8.0</version>
+		      <version>${io.github.openfeign.form.version}</version>
 		    </dependency>
 
 			<!-- fastjson -->
 			<dependency>
 				<groupId>com.alibaba</groupId>
 				<artifactId>fastjson</artifactId>
-				<version>1.2.79</version>
+				<version>${com.alibaba.fastjson.version}</version>
 			</dependency>
 
 			<!-- dubbo -->
@@ -241,12 +271,12 @@
 			<dependency>
 			    <groupId>org.apache.logging.log4j</groupId>
 			    <artifactId>log4j-api</artifactId>
-			    <version>2.17.1</version>
+			    <version>${org.apache.logging.log4j.version}</version>
 			</dependency>
 			<dependency>
 			    <groupId>org.apache.logging.log4j</groupId>
 			    <artifactId>log4j-to-slf4j</artifactId>
-			    <version>2.17.1</version>
+			    <version>${org.apache.logging.log4j.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
@@ -256,7 +286,7 @@
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpcore-nio</artifactId>
-				<version>4.4.14</version>
+				<version>4.4.15</version>
 			</dependency>
 
 			<!-- poi -->
@@ -287,14 +317,14 @@
 			<dependency>
 				<groupId>org.apache.zookeeper</groupId>
 				<artifactId>zookeeper</artifactId>
-				<version>3.7.0</version>
+				<version>${org.apache.zookeeper.version}</version>
 			</dependency>
 
 			<!-- lombok -->
 			<dependency>
 				<groupId>org.projectlombok</groupId>
 				<artifactId>lombok</artifactId>
-				<version>1.18.20</version>
+				<version>${org.projectlombok.version}</version>
 				<scope>provided</scope>
 			</dependency>
 
@@ -302,7 +332,7 @@
 			<dependency>
 				<groupId>org.yaml</groupId>
 				<artifactId>snakeyaml</artifactId>
-				<version>1.30</version>
+				<version>${org.yaml.version}</version>
 			</dependency>
 
 			<!-- HdrHistogram -->
@@ -323,20 +353,27 @@
 			<dependency>
 				<groupId>io.jsonwebtoken</groupId>
 				<artifactId>jjwt</artifactId>
-				<version>0.9.1</version>
+				<version>${io.jsonwebtoken.version}</version>
+			</dependency>
+			
+			<!-- minio -->
+			<dependency>
+			    <groupId>io.minio</groupId>
+			    <artifactId>minio</artifactId>
+			    <version>${io.minio.version}</version>
 			</dependency>
 
 			<!-- google -->
 			<dependency>
 				<groupId>com.google.guava</groupId>
 				<artifactId>guava</artifactId>
-				<version>30.1-jre</version>
+				<version>${com.google.guava.version}</version>
 			</dependency>
 
 			<dependency>
 				<groupId>com.google.code.gson</groupId>
 				<artifactId>gson</artifactId>
-				<version>2.8.9</version>
+				<version>${com.google.code.gson.version}</version>
 			</dependency>
 
 			<dependency>
@@ -359,35 +396,61 @@
 				<version>5.8.6</version>
 			</dependency>
 			
+			<!-- fastdfs -->
+			<dependency>
+				<groupId>com.github.tobato</groupId>
+				<artifactId>fastdfs-client</artifactId>
+				<version>${com.github.tobato.version}</version>
+				<exclusions>
+					<exclusion>
+						<groupId>ch.qos.logback</groupId>
+						<artifactId>logback-classic</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+			
 			<!-- Swagger -->
 			<dependency>
 			    <groupId>com.github.xiaoymin</groupId>
 			    <artifactId>knife4j-spring-boot-starter</artifactId>
-			    <version>3.0.3</version>
+			    <version>${com.github.xiaoymin.version}</version>
+			    <exclusions>
+			    	<exclusion>
+			    		<groupId>javax.validation</groupId>
+			    		<artifactId>validation-api</artifactId>
+			    	</exclusion>
+			    </exclusions>
 			</dependency>
 			<dependency>
 			    <groupId>io.springfox</groupId>
 			    <artifactId>springfox-spring-web</artifactId>
-			    <version>3.0.0</version>
+			    <version>${io.springfox.version}</version>
 			</dependency>
 
 			<!-- thoughtworks -->
 			<dependency>
 				<groupId>com.thoughtworks.paranamer</groupId>
 				<artifactId>paranamer</artifactId>
-				<version>2.8</version>
+				<version>${com.thoughtworks.paranamer.version}</version>
 			</dependency>
 			
 			<!-- logback -->
 			<dependency>
 			    <groupId>ch.qos.logback</groupId>
 			    <artifactId>logback-core</artifactId>
-			    <version>1.2.11</version>
+			    <version>${ch.qos.logback.version}</version>
 			</dependency>
 			<dependency>
 			    <groupId>ch.qos.logback</groupId>
 			    <artifactId>logback-classic</artifactId>
-			    <version>1.2.11</version>
+			    <version>${ch.qos.logback.version}</version>
+			</dependency>
+			
+			<!-- logback logstash -->
+			<dependency>
+			    <groupId>net.logstash.logback</groupId>
+			    <artifactId>logstash-logback-encoder</artifactId>
+			    <version>${net.logstash.logback.version}</version>
 			</dependency>
 
 			<!-- ssh2 -->
@@ -401,21 +464,21 @@
 			<dependency>
 				<groupId>net.sf.jopt-simple</groupId>
 				<artifactId>jopt-simple</artifactId>
-				<version>5.0.4</version>
+				<version>${net.sf.jopt.version}</version>
 			</dependency>
 
 			<!-- redis -->
 			<dependency>
 				<groupId>redis.clients</groupId>
 				<artifactId>jedis</artifactId>
-				<version>4.2.0</version>
+				<version>${redis.clients.version}</version>
 			</dependency>
 
 			<!-- rabbitmq -->
 			<dependency>
 				<groupId>com.rabbitmq</groupId>
 				<artifactId>amqp-client</artifactId>
-				<version>5.14.2</version>
+				<version>${com.rabbitmq.version}</version>
 			</dependency>
 
 			<!-- MYSQL -->
@@ -443,7 +506,7 @@
 			<dependency>
 				<groupId>org.junit.platform</groupId>
 				<artifactId>junit-platform-runner</artifactId>
-				<version>1.7.2</version>
+				<version>${org.junit.platform.version}</version>
 				<scope>test</scope>
 			</dependency>
 
@@ -451,7 +514,7 @@
 			<dependency>
 				<groupId>org.mybatis.spring.boot</groupId>
 				<artifactId>mybatis-spring-boot-starter</artifactId>
-				<version>2.2.2</version>
+				<version>${org.mybatis.spring.boot.version}</version>
 			</dependency>
 
 			<!-- jackson -->
@@ -547,22 +610,22 @@
 			<dependency>
 				<groupId>org.hibernate.validator</groupId>
 				<artifactId>hibernate-validator</artifactId>
-				<version>6.2.0.Final</version>
+				<version>${org.hibernate.validator.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.javassist</groupId>
 				<artifactId>javassist</artifactId>
-				<version>3.28.0-GA</version>
+				<version>${org.javassist.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
-				<version>2.10.12</version>
+				<version>2.10.14</version>
 			</dependency>
 			<dependency>
 				<groupId>com.vladmihalcea</groupId>
 				<artifactId>hibernate-types-52</artifactId>
-				<version>2.12.1</version>
+				<version>${com.vladmihalcea.version}</version>
 			</dependency>
 			
 			<!-- okhttp -->
