@@ -14,18 +14,6 @@
 
 	<dependencies>
 	
-		<!-- feign -->
-		 <dependency>
-	      <groupId>io.github.openfeign.form</groupId>
-	      <artifactId>feign-form</artifactId>
-	    </dependency>
-		
-		<!-- jedis -->
-		<dependency>
-		    <groupId>redis.clients</groupId>
-		    <artifactId>jedis</artifactId>
-		</dependency>
-		
 		<!-- apache -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
@@ -70,6 +58,12 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         
+        <!-- jedis -->
+		<dependency>
+		    <groupId>redis.clients</groupId>
+		    <artifactId>jedis</artifactId>
+		</dependency>
+        
         <!-- druid -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
@@ -104,6 +98,12 @@
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt</artifactId>
 		</dependency>
+		
+		<!-- feign -->
+		 <dependency>
+	      <groupId>io.github.openfeign.form</groupId>
+	      <artifactId>feign-form</artifactId>
+	    </dependency>
 		
 		<!-- spring -->
 		<dependency>

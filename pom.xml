@@ -45,8 +45,8 @@
 		<org.springframework.security.version>5.6.2</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.1</org.springframework.cloud.version>
 
-		<org.springframework.boot.version>2.6.5</org.springframework.boot.version>
-		<org.springframework.version>5.3.17</org.springframework.version>
+		<org.springframework.boot.version>2.6.6</org.springframework.boot.version>
+		<org.springframework.version>5.3.18</org.springframework.version>
 
 		<org.apache.rocketmq.version>4.9.2</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.60</org.apache.tomcat.version>
