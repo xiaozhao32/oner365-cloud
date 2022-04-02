@@ -38,8 +38,8 @@ public interface IFileServiceClient {
   /**
    * 下载文件
    * 
-   * @param fileUrl
-   * @return ResponseData<byte[]>
+   * @param fileUrl 下载的文件地址
+   * @return byte[] 字节流
    */
   @GetMapping("/storage/byte/download")
   byte[] download(@RequestParam("fileUrl") String fileUrl);

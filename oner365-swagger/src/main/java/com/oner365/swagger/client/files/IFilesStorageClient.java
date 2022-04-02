@@ -38,6 +38,6 @@ public interface IFilesStorageClient {
    * @param fileUrl 文件路径
    * @return ResponseData<byte[]>
    */
-  @GetMapping(PathConstants.REQUEST_FILES_STORAGE_DOWNLOAD)
+  @GetMapping(PathConstants.REQUEST_FILES_STORAGE_DOWNLOAD_BYTE)
   byte[] download(@RequestParam("fileUrl") String fileUrl);
 }
