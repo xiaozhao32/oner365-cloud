@@ -1,4 +1,4 @@
-package com.oner365.datasource.util;
+package com.oner365.common.datasource.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -27,7 +27,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.datasource.constants.DataSourceConstants;
+import com.oner365.common.datasource.constants.DataSourceConstants;
 import com.oner365.util.ClassesUtil;
 import com.oner365.util.DataUtils;
 

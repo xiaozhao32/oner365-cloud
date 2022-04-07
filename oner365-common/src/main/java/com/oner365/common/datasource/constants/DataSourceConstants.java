@@ -1,4 +1,4 @@
-package com.oner365.datasource.constants;
+package com.oner365.common.datasource.constants;
 
 /**
  * 动态数据源 参数名称

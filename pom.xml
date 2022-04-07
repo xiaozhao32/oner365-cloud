@@ -1021,6 +1021,8 @@
 		<module>oner365-dubbo</module>
 		<!-- hadoop -->
 		<module>oner365-hadoop</module>
+		<!-- 多数据源 -->
+		<module>oner365-datasource</module>
 		<!-- 项目部署 -->
 		<module>oner365-deploy</module>
 		<!-- swagger文档 -->

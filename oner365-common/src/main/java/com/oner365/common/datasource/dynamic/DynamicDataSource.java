@@ -1,8 +1,8 @@
-package com.oner365.datasource.dynamic;
+package com.oner365.common.datasource.dynamic;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
-import com.oner365.datasource.config.DataSourceConfig;
+import com.oner365.common.datasource.config.DataSourceConfig;
 
 /**
  * 多数据源支持
