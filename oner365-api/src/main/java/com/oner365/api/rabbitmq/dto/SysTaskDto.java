@@ -36,7 +36,7 @@ public class SysTaskDto implements Serializable {
   /**
    * 调用目标参数
    */
-  private InvokeParamDto invokeParamDto;
+  private InvokeParamDto invokeParam;
 
   /**
    * cron执行表达式
@@ -183,12 +183,12 @@ public class SysTaskDto implements Serializable {
     this.updateTime = updateTime;
   }
 
-  public InvokeParamDto getInvokeParamDto() {
-    return invokeParamDto;
+  public InvokeParamDto getInvokeParam() {
+    return invokeParam;
   }
 
-  public void setInvokeParamDto(InvokeParamDto invokeParamDto) {
-    this.invokeParamDto = invokeParamDto;
+  public void setInvokeParam(InvokeParamDto invokeParam) {
+    this.invokeParam = invokeParam;
   }
 
   public String getExecuteStatus() {

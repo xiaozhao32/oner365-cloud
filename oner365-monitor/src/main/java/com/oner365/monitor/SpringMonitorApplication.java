@@ -7,14 +7,12 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
-import de.codecentric.boot.admin.server.config.EnableAdminServer;
-
 /**
  * 监控服务
  * @author zhaoyong
  */
 @SpringBootApplication
-@EnableAdminServer
+//@EnableAdminServer
 @EnableDiscoveryClient
 @EnableFeignClients
 @MapperScan({ "com.oner365.monitor.mapper" })

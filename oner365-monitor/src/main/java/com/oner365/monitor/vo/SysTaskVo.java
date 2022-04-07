@@ -39,7 +39,7 @@ public class SysTaskVo implements Serializable {
   /**
    * 调用目标参数
    */
-  private InvokeParamVo invokeParamVo;
+  private InvokeParamVo invokeParam;
 
   /**
    * cron执行表达式
@@ -194,12 +194,12 @@ public class SysTaskVo implements Serializable {
     this.updateTime = updateTime;
   }
 
-  public InvokeParamVo getInvokeParamVo() {
-    return invokeParamVo;
+  public InvokeParamVo getInvokeParam() {
+    return invokeParam;
   }
 
-  public void setInvokeParamVo(InvokeParamVo invokeParamVo) {
-    this.invokeParamVo = invokeParamVo;
+  public void setInvokeParam(InvokeParamVo invokeParam) {
+    this.invokeParam = invokeParam;
   }
 
   public String getExecuteStatus() {

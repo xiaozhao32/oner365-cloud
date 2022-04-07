@@ -29,7 +29,7 @@ public abstract class AbstractQuartzJob implements Job {
   @Override
   public void execute(JobExecutionContext context) {
     Object object = context.getMergedJobDataMap().get(ScheduleConstants.TASK_PROPERTIES);
-    SysTaskDto sysTask = JSON.toJavaObject(JSON.parseObject(object.toString()), SysTaskDto.class);
+    SysTaskDto sysTask = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(object)), SysTaskDto.class);
     try {
       before(context, sysTask);
       doExecute(context, sysTask);

@@ -10,6 +10,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.alibaba.fastjson.JSON;
 import com.oner365.api.rabbitmq.dto.InvokeParamDto;
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
 import com.oner365.monitor.entity.InvokeParam;
@@ -38,7 +39,7 @@ public class JobInvokeUtil {
         String beanName = getBeanName(invokeTarget);
         String methodName = getMethodName(invokeTarget);
 //        List<Object[]> methodParams = getMethodParams(invokeTarget);
-        InvokeParamDto param = sysTask.getInvokeParamDto();
+        InvokeParamDto param = sysTask.getInvokeParam();
         param.setConcurrent(sysTask.getConcurrent());
         param.setTaskId(sysTask.getId());
 
@@ -66,7 +67,7 @@ public class JobInvokeUtil {
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (param != null) {
             Method method = bean.getClass().getDeclaredMethod(methodName, InvokeParam.class);
-            method.invoke(bean, param);
+            method.invoke(bean, JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(param)), InvokeParam.class));
         } else {
             Method method = bean.getClass().getDeclaredMethod(methodName);
             method.invoke(bean);
