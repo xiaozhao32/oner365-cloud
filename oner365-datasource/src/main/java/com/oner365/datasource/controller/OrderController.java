@@ -20,6 +20,12 @@ import com.oner365.datasource.dto.OrderDto;
 import com.oner365.datasource.service.IOrderService;
 import com.oner365.datasource.vo.OrderVo;
 
+/**
+ * 测试 jpa 方式的分库分表
+ * 
+ * @author zhaoyong
+ *
+ */
 @RestController
 @RequestMapping("/order")
 public class OrderController extends BaseController {

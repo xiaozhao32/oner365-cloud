@@ -1,8 +1,6 @@
-package com.oner365.common.datasource.dynamic;
+package com.oner365.datasource.dynamic;
 
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
-
-import com.oner365.common.datasource.config.DataSourceConfig;
 
 /**
  * 多数据源支持
@@ -15,7 +13,7 @@ public class DynamicDataSource extends AbstractRoutingDataSource {
      */
     @Override
     protected Object determineCurrentLookupKey() {
-        return DataSourceConfig.getDataSource();
+        return DataSourceHolder.getDataSource();
     }
     
 }
