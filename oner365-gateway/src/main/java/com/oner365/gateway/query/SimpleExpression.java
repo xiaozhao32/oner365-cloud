@@ -57,9 +57,8 @@ public class SimpleExpression implements Criterion {
   }
 
   @Override
-  @SuppressWarnings({ "rawtypes" })
   public Predicate toPredicate(Root<?> root, CriteriaQuery<?> query, CriteriaBuilder builder) {
-    Path expression;
+    Path<Object> expression;
     if (fieldName.contains(POINT)) {
       String[] names = StringUtils.split(fieldName, POINT);
       if (names[0].contains(COLLECTION)) {

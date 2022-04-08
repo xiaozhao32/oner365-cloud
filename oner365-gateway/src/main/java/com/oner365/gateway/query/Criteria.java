@@ -27,7 +27,6 @@ public class Criteria<T> implements Specification<T>{
             for(Criterion c : criterionList){
                 predicates.add(c.toPredicate(root, query,builder));
             }
-            query.distinct(true);
             // 将所有条件用 and 联合起来
             if (!predicates.isEmpty()) {
                 return builder.and(predicates.toArray(new Predicate[predicates.size()]));
