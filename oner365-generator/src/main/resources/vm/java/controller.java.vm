@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
@@ -40,7 +41,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @Api(tags = "系统管理 - ${functionName}")
-@RequestMapping("/${businessName}")
+@RequestMapping("/${moduleName}/${businessName}")
 public class ${ClassName}Controller extends BaseController {
 
     @Autowired
@@ -92,7 +93,7 @@ public class ${ClassName}Controller extends BaseController {
      * @param ${className}Vo 对象
      * @return ResponseResult<${ClassName}>
      */
-    @ApiOperation("保存")
+    @ApiOperation("4.保存")
     @ApiOperationSupport(order = 4)
     @PutMapping("/save")
     public ResponseResult<${ClassName}Dto> save(@RequestBody ${ClassName}Vo ${className}Vo) {
@@ -109,7 +110,7 @@ public class ${ClassName}Controller extends BaseController {
      * @param ids 编号
      * @return List<Integer>
      */
-    @ApiOperation("删除")
+    @ApiOperation("5.删除")
     @ApiOperationSupport(order = 5)
     @DeleteMapping("/delete")
     public List<Integer> delete(@RequestBody $AttrName... ids) {
@@ -122,7 +123,7 @@ public class ${ClassName}Controller extends BaseController {
      * @param data 参数
      * @return ResponseEntity<byte[]>
      */
-    @ApiOperation("导出")
+    @ApiOperation("6.导出")
     @ApiOperationSupport(order = 6)
     @PostMapping("/export")
     public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
