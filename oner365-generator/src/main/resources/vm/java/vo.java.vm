@@ -1,7 +1,6 @@
 package ${packageName}.vo;
 
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import io.swagger.annotations.ApiModel;

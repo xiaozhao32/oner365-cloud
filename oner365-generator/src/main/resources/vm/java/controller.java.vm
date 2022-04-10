@@ -73,13 +73,27 @@ public class ${ClassName}Controller extends BaseController {
     }
     
     /**
+     * 修改${functionName}状态
+     *
+     * @param id     主键
+     * @param status 状态
+     * @return Integer
+     */
+    @ApiOperation("3.修改状态")
+    @ApiOperationSupport(order = 3)
+    @PostMapping("/status/{id}")
+    public Integer editStatus(@PathVariable String id, @RequestParam("status") String status) {
+      return ${className}Service.editStatus(id, status);
+    }
+    
+    /**
      * ${functionName}保存
      *
      * @param ${className}Vo 对象
      * @return ResponseResult<${ClassName}>
      */
     @ApiOperation("保存")
-    @ApiOperationSupport(order = 3)
+    @ApiOperationSupport(order = 4)
     @PutMapping("/save")
     public ResponseResult<${ClassName}Dto> save(@RequestBody ${ClassName}Vo ${className}Vo) {
         if (${className}Vo != null) {
@@ -96,7 +110,7 @@ public class ${ClassName}Controller extends BaseController {
      * @return List<Integer>
      */
     @ApiOperation("删除")
-    @ApiOperationSupport(order = 4)
+    @ApiOperationSupport(order = 5)
     @DeleteMapping("/delete")
     public List<Integer> delete(@RequestBody $AttrName... ids) {
         return Arrays.stream(ids).map(id -> ${className}Service.deleteById(id)).collect(Collectors.toList());
@@ -109,7 +123,7 @@ public class ${ClassName}Controller extends BaseController {
      * @return ResponseEntity<byte[]>
      */
     @ApiOperation("导出")
-    @ApiOperationSupport(order = 5)
+    @ApiOperationSupport(order = 6)
     @PostMapping("/export")
     public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
         List<${ClassName}Dto> list = ${className}Service.findList(data);
@@ -117,7 +131,7 @@ public class ${ClassName}Controller extends BaseController {
         String[] titleKeys = new String[]{#foreach ($column in $columns) "$column.columnComment", #end};
         String[] columnNames = {#foreach ($column in $columns) "$column.javaField", #end};
 
-        String fileName = ${ClassName}Dto.class.getSimpleName() + System.currentTimeMillis();
+        String fileName = "${functionName}_" + System.currentTimeMillis();
         return exportExcel(fileName, titleKeys, columnNames, list);
     }
 

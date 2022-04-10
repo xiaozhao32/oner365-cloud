@@ -37,20 +37,20 @@ import com.oner365.util.DataUtils;
 
 /**
  * ${functionName} Service 实现类
- * 
+ *
  * @author ${author}
  *
  */
 @Service
 public class ${ClassName}ServiceImpl implements I${ClassName}Service {
-    
+
     private static final Logger LOGGER = LoggerFactory.getLogger(${ClassName}ServiceImpl.class);
 
     private static final String CACHE_NAME = "${ClassName}";
-    
+
     @Autowired
     private I${ClassName}Dao dao;
-    
+
     @Override
     @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
     public PageInfo<${ClassName}Dto> pageList(QueryCriteriaBean data) {
@@ -68,22 +68,22 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     public List<${ClassName}Dto> findList(QueryCriteriaBean data) {
         try {
             if (data.getOrder() == null) {
-                return convertDto(dao.findAll(QueryUtils.buildCriteria(data)));
+                return convert(dao.findAll(QueryUtils.buildCriteria(data)), ${ClassName}Dto.class);
             }
-            return convertDto(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder())));
+            return convert(dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder())), ${ClassName}Dto.class);
         } catch (Exception e) {
             LOGGER.error("Error findList: ", e);
         }
         return Collections.emptyList();
     }
-    
+
     @Override
     @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
     public ${ClassName}Dto getById($AttrName id) {
         try {
             Optional<${ClassName}> optional = dao.findById(id);
             if (optional.isPresent()) {
-                return convertDto(optional.orElse(null));
+                return convert(optional.get(), ${ClassName}Dto.class);
             }
         } catch (Exception e) {
             LOGGER.error("Error getById: ", e);
@@ -104,7 +104,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
         ${ClassName} entity = dao.save(convert(vo, ${ClassName}.class));
     	return convert(entity, ${ClassName}Dto.class);
     }
-    
+
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
@@ -113,4 +113,18 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
         return ResultEnum.SUCCESS.getCode();
     }
     
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Integer editStatus(String id, String status) {
+      Optional<${ClassName}> optional = dao.findById(id);
+      if (optional.isPresent()) {
+        optional.get().setStatus(status);
+        optional.get().setUpdateTime(LocalDateTime.now());
+        dao.save(optional.get());
+        return ResultEnum.SUCCESS.getCode();
+      }
+      return ResultEnum.ERROR.getCode();
+    }
+
 }

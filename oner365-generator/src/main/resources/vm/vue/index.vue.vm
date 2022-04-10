@@ -91,7 +91,6 @@
           @click="handleExport"
         >导出</el-button>
       </el-col>
-      <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
     <el-table v-loading="loading" :data="${businessName}List" @selection-change="handleSelectionChange">
@@ -125,14 +124,12 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['${moduleName}:${businessName}:edit']"
           >修改</el-button>
           <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
-            v-hasPermi="['${moduleName}:${businessName}:remove']"
           >删除</el-button>
         </template>
       </el-table-column>
@@ -251,7 +248,7 @@
 </template>
 
 <script>
-import { list${BusinessName}, get${BusinessName}, del${BusinessName}, save${BusinessName} } from "@/api/${moduleName}/${businessName}";
+import { list${BusinessName}, get${BusinessName}, del${BusinessName}, save${BusinessName}, changeStatus } from "@/api/${moduleName}/${businessName}";
 import { exportFile } from "@/utils/zipdownload";
 
 #foreach($column in $columns)
@@ -268,7 +265,7 @@ import Editor from '@/components/Editor';
 #end
 
 export default {
-  name: "${BusinessName}",
+  name: "${moduleName}${BusinessName}",
   components: {
 #foreach($column in $columns)
 #if($column.insert && !$column.superColumn && !$column.pk && $column.htmlType == "uploadImage")
@@ -303,6 +300,8 @@ export default {
       title: "",
       // 是否显示弹出层
       open: false,
+      // 状态数据字典
+      statusOptions: [],
 #foreach ($column in $columns)
 #set($parentheseIndex=$column.columnComment.indexOf("（"))
 #if($parentheseIndex != -1)
@@ -353,6 +352,9 @@ export default {
   },
   created() {
     this.getList();
+    this.getDicts("sys_normal_disable").then(response => {
+      this.statusOptions = response;
+    });
 #foreach ($column in $columns)
 #if(${column.dictType} != '')
     this.getDicts("${column.dictType}").then(response => {
@@ -424,6 +426,22 @@ export default {
       this.single = selection.length!==1
       this.multiple = !selection.length
     },
+    // 状态修改
+    handleStatusChange(row) {
+      let text = row.status === "1" ? "启用" : "停用";
+      this.$confirm('确认要"' + text + '""' + row.jobName + '"吗?', "警告", {
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function() {
+          return changeStatus(row.id, row.status);
+        }).then(() => {
+          this.msgSuccess(text + "成功");
+          this.getList();
+        }).catch(function() {
+          row.status = row.status === "0" ? "1" : "0";
+        });
+    },
     /** 新增按钮操作 */
     handleAdd() {
       this.reset();
@@ -486,6 +504,7 @@ export default {
       var data = {
         pageIndex: queryParams.pageIndex,
         pageSize: queryParams.pageSize,
+        order: { key: 'updateTime', val: 'desc' },
         whereList: [
         ]
       }
