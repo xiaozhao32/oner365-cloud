@@ -37,14 +37,14 @@ public class SysUserRole implements Serializable {
     /**
      * 角色 role_id
      */
-    @ManyToOne(cascade=CascadeType.MERGE)
+    @ManyToOne(cascade=CascadeType.REFRESH)
     @JoinColumn(name = "role_id")
     private SysRole sysRole;
 
     /**
      * 用户 user_id
      */
-    @ManyToOne(cascade=CascadeType.MERGE)
+    @ManyToOne(cascade=CascadeType.REFRESH)
     @JoinColumn(name = "user_id")
     private SysUser sysUser;
 

@@ -40,14 +40,14 @@ public class SysUserOrg implements Serializable {
     /**
      * 部门 org_id
      */
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "org_id")
     private SysOrganization sysOrganization;
 
     /**
      * 用户 user_id
      */
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id")
     private SysUser sysUser;
 
@@ -72,7 +72,7 @@ public class SysUserOrg implements Serializable {
     /**
      * 更新时间 update_time
      */
-    @Column(name = "update_time", insertable = false)
+    @Column(name = "update_time", updatable = true)
     private LocalDateTime updateTime;
 
     /**

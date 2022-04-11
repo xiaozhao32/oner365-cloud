@@ -38,7 +38,7 @@ public class SysMenuOper implements Serializable {
   @Column(name = "menu_id", nullable = false, length = 32)
   private String menuId;
 
-  @ManyToOne(cascade = CascadeType.MERGE)
+  @ManyToOne(cascade = CascadeType.REFRESH)
   @JoinColumn(name = "operation_id")
   private SysMenuOperation sysMenuOperation;
 

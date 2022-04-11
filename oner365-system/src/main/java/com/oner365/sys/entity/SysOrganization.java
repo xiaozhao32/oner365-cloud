@@ -152,7 +152,7 @@ public class SysOrganization implements Serializable {
    */
   @OneToOne
   @NotFound(action = NotFoundAction.IGNORE)
-  @Cascade(value = { CascadeType.MERGE, CascadeType.SAVE_UPDATE })
+  @Cascade(value = { CascadeType.REFRESH })
   @JoinColumn(name = "config_id")
   private DataSourceConfig dataSourceConfig;
 

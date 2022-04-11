@@ -93,7 +93,7 @@
 		<net.logstash.logback.version>7.0.1</net.logstash.logback.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
 		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
-		<de.codecentric.version>2.6.3</de.codecentric.version>
+		<de.codecentric.version>2.6.5</de.codecentric.version>
 		<redis.clients.version>4.2.0</redis.clients.version>
 		
  		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
