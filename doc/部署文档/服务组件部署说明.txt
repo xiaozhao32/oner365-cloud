@@ -199,6 +199,50 @@
 				-- sudo keytool -list -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts -v |grep 别名
 				-- sudo keytool -list -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts -v -alias 别名
 
+6、minio
+	-- 单机
+		-- 安装
+			-- cd /安装目录
+			-- wget https://dl.minio.io/server/minio/release/linux-amd64/minio
+		-- 启动停止shell
+			-- minio/单机/start.sh
+			-- minio/单机/stop.sh
+			-- 修改shell中minio安装目录
+	-- 集群
+		-- 特点
+			-- 数据保护
+				-- 分布式Minio采用纠删码来防范多个节点宕机和位衰减 bit rot
+				-- 分布式Minio至少需要4个硬盘，使用分布式Minio自动引入了纠删码功能
+			-- 高可用
+				-- 分布式Minio,只要有N/2硬盘在线，数据就是安全的
+			-- 一致性
+				-- Minio在分布式和单机模式下，所有读写操作都严格遵守read-after-write一致性模型
+		-- 分布式部署主要以修改启动配置来实现
+		-- 安装
+			-- 4台服务器（可磁盘分布式），可节点分布式（多节点，多磁盘））（至少4个磁盘点，服务器节点可对应扩展）
+				-- 1节点4磁盘（四个不同磁盘服务器，可是用同服务器不同磁盘地址）
+					-- shell 启动文件修改
+						-- minio server --address 0.0.0.0:9001 --console-address 0.0.0.0:9003  --config-dir /home/minio \ http://192.168.33.41:9001/home/minio/data \ http://192.168.33.42:9001/home/minio/data \ http://192.168.33.43:9001/home/minio/data \ http://192.168.33.44:9001/home/minio/data > minio.log 2>&1 &
+				-- 4节点16磁盘
+					-- 每台服务器安装minio
+						-- 同单机
+					-- shell 启动文件修改
+						-- minio/集群/start.sh
+						-- minio/集群/stop.sh
+						-- 修改shell中minio安装目录
+					-- 启动
+						-- 启动minio时日志回报错，只要ps进程在就ok，报错是在等其他节点
+					-- 验证
+						-- 四个节点都起来后,可访问任意节点ip的9003管理后台
+						-- 在节点上创建桶和上传文件
+						-- 在其他节点也可看到创建的桶和文件，可操作
+				-- nginx负载
+					-- 安装一台负载用nginx
+					-- 配置conf
+						-- minio/集群/nginx_minio.conf
+							-- 此conf使用了其中一台节点的服务器，所以端口修改为9002，9004.
+					-- 通过nginx配置端口访问minio管理后台，可创建可上传即可
+
 
 
 
