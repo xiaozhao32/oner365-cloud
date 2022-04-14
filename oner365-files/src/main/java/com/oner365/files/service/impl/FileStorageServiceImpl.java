@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.oner365.common.cache.annotation.RedisCacheAble;
-import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
@@ -84,7 +83,6 @@ public class FileStorageServiceImpl implements IFileStorageService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public SysFileStorageDto save(SysFileStorageVo vo) {
     vo.setCreateTime(new Timestamp(System.currentTimeMillis()));

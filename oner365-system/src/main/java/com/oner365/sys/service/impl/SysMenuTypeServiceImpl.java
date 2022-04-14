@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.oner365.common.cache.annotation.RedisCacheAble;
-import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ExistsEnum;
 import com.oner365.common.enums.ResultEnum;
@@ -89,7 +88,6 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })

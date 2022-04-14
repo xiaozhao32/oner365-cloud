@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.oner365.common.cache.annotation.RedisCacheAble;
-import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.datasource.constants.DataSourceConstants;
 import com.oner365.common.datasource.util.DataSourceUtil;
@@ -125,7 +124,6 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public SysOrganizationDto save(SysOrganizationVo vo) {
     if (DataUtils.isEmpty(vo.getId())) {

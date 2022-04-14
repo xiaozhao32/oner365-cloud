@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.oner365.common.cache.annotation.RedisCacheAble;
-import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.datasource.constants.DataSourceConstants;
 import com.oner365.common.enums.ResultEnum;
@@ -85,7 +84,6 @@ public class DataSourceConfigServiceImpl implements IDataSourceConfigService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public DataSourceConfigDto save(DataSourceConfigVo vo) {
     if (DataUtils.isEmpty(vo.getId())) {

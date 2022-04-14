@@ -23,7 +23,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.oner365.common.cache.RedisCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
-import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.cache.constants.CacheConstants;
 import com.oner365.common.config.properties.AccessTokenProperties;
 import com.oner365.common.constants.PublicConstants;
@@ -336,7 +335,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public SysUserDto updateAvatar(String id, String avatar) {
     SysUser entity = userDao.getById(id);
@@ -350,7 +348,6 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public SysUserDto updateUserProfile(SysUserVo sysUserVo) {
     SysUser entity = userDao.getById(sysUserVo.getId());

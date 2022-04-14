@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.oner365.common.cache.annotation.RedisCacheAble;
-import com.oner365.common.cache.annotation.RedisCachePut;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
@@ -89,7 +88,6 @@ public class OrderServiceImpl implements IOrderService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @RedisCachePut(value = CACHE_NAME, key = PublicConstants.KEY_ID)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public OrderDto save(OrderVo vo) {
     if (DataUtils.isEmpty(vo.getId())) {
