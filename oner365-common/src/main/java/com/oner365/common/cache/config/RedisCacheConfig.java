@@ -69,7 +69,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     @Override
     public KeyGenerator keyGenerator() {
         return (target, method, params) -> {
-            char sp = ':';
+            String sp = "::";
             StringBuilder strBuilder = new StringBuilder(30);
             // 类名
             strBuilder.append(target.getClass().getSimpleName());
