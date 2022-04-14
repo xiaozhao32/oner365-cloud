@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class NumberUtils {
 
-  private static final DecimalFormat FORMAT = new DecimalFormat("#.##");
+  private static final ThreadLocal<DecimalFormat> LOCAL = new ThreadLocal<>();
 
   /***
    * 下取整
@@ -38,6 +38,25 @@ public class NumberUtils {
   private NumberUtils() {
 
   }
+  
+  /**
+   * get method
+   *
+   * @return DecimalFormat
+   */
+  public static DecimalFormat getDecimalFormat() {
+    if (LOCAL.get() == null) {
+      LOCAL.set(new DecimalFormat("#.##"));
+    }
+    return LOCAL.get();
+  }
+
+  /**
+   * remove method
+   */
+  public static void remove() {
+    LOCAL.remove();
+  } 
 
   /***
    * 把数据转换成两位小数精度
@@ -46,7 +65,7 @@ public class NumberUtils {
    * @return String
    */
   public static String df2(double source) {
-    return FORMAT.format(source);
+    return getDecimalFormat().format(source);
   }
 
   /***
