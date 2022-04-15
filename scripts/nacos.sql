@@ -40,7 +40,7 @@ CREATE TABLE `config_info` (
   `c_schema` text CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT 'schema',
   PRIMARY KEY (`id`),
   UNIQUE KEY `uk_configinfo_datagrouptenant` (`data_id`,`group_id`,`tenant_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='config_info';
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COMMENT='config_info';
 
 -- ----------------------------
 -- Records of config_info
@@ -65,6 +65,7 @@ INSERT INTO `config_info` VALUES (16, 'com.oner365.dubbo.api.service.IEchoServic
 INSERT INTO `config_info` VALUES (17, 'oner365-pulsar-dev.yml', 'DEFAULT_GROUP', 'spring:\n\n  autoconfigure:\n    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure\n\npulsar:\n  url: localhost:6650\n  topic: test-topic\n  subscription: test-listener\n            \nlogging:\n  config: classpath:logback-spring.xml', 'b624d74d774b31f725e19ceaf981dd0f', '2022-03-25 09:56:35', '2022-03-25 10:22:53', 'nacos', '0:0:0:0:0:0:0:1', 'oner365-cloud', 'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info` VALUES (18, 'oner365-datasource-dev.yml', 'DEFAULT_GROUP', 'spring:\n  # shardingSphere 分库分表\n  shardingsphere:\n    datasource:\n      names: ds0,ds1\n\n      ds0:\n        type: com.alibaba.druid.pool.DruidDataSource\n        driver-class-name: com.mysql.cj.jdbc.Driver\n        url: jdbc:mysql://localhost:3306/oner365_ds0?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8\n        username: root\n        password: 1234\n\n      ds1:\n        type: com.alibaba.druid.pool.DruidDataSource\n        driver-class-name: com.mysql.cj.jdbc.Driver\n        url: jdbc:mysql://localhost:3306/oner365_ds1?useUnicode=true&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT%2B8\n        username: root\n        password: 1234\n\n    sharding:\n      default-data-source-name: ds0\n\n      # 分库策略\n      default-database-strategy:\n        inline:\n          sharding-column: user_id\n          algorithm-expression: ds$->{user_id % 2}\n\n      # 分表策略\n      tables:\n        t_order:\n          actual-data-nodes: ds$->{0..1}.t_order_$->{0..1}\n\n          table-strategy:\n            inline:\n              sharding-column: order_id\n              algorithm-expression: t_order_$->{order_id % 2}\n\n          # 分表算法\n          key-generator:\n            type: SNOWFLAKE\n            column: order_id\n    \n  jackson:\n    date-format: yyyy-MM-dd HH:mm:ss\n    time-zone: GMT+8\n\nlogging:\n  config: classpath:logback-spring.xml\n  ', 'c2d8006e08e63df96eaac25d36a79e9c', '2022-04-07 13:05:28', '2022-04-07 13:17:53', 'nacos', '0:0:0:0:0:0:0:1', 'oner365-cloud', 'dev', '', '', '', 'yaml', '');
 INSERT INTO `config_info` VALUES (19, 'oner365-influx-dev.yml', 'DEFAULT_GROUP', 'spring:\n\n  autoconfigure:\n    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure\n\n  influx:\n    url: http://localhost:8086\n    user: root\n    password: 12345678\n    token: KQQQL_LpMrdpoopKu5_QvYPNVlL-KOoc1zY3dBTfu4xZGnicgAPhbSsryghUH1A21fXzHxPZ-W5hrNVG6tgIbQ==\n    bucket: oner365\n    org: oner365\n            \nlogging:\n  config: classpath:logback-spring.xml', '7457b1534b5d75d9810e35df322dbbf1', '2022-04-15 09:08:04', '2022-04-15 09:35:52', 'nacos', '0:0:0:0:0:0:0:1', 'oner365-cloud', 'dev', '', '', '', 'yaml', '');
+INSERT INTO `config_info` VALUES (20, 'oner365-neo4j-dev.yml', 'DEFAULT_GROUP', 'spring:\n\n  autoconfigure:\n    exclude: com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceAutoConfigure\n\n  neo4j:\n    uri: neo4j://127.0.0.1:7687\n    authentication:\n      username: neo4j\n      password: 1234\n            \nlogging:\n  config: classpath:logback-spring.xml', '8f1fbae418ae80a8a1ee340655fc73a8', '2022-04-15 15:21:02', '2022-04-15 15:26:01', 'nacos', '0:0:0:0:0:0:0:1', 'oner365-cloud', 'dev', '', '', '', 'yaml', '');
 COMMIT;
 
 -- ----------------------------
@@ -184,7 +185,7 @@ CREATE TABLE `his_config_info` (
   KEY `idx_gmt_create` (`gmt_create`),
   KEY `idx_gmt_modified` (`gmt_modified`),
   KEY `idx_did` (`data_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COMMENT='多租户改造';
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT='多租户改造';
 
 -- ----------------------------
 -- Records of his_config_info

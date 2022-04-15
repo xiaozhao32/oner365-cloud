@@ -47,6 +47,7 @@
 9. Pulsar - 8715 oner365-pulsar
 10. 分库分表 - 8716 oner365-datasource
 11. 时序库测试 - 8717 oner365-influx
+12. 图数据库测试 - 8719 oner365-neo4j
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos
