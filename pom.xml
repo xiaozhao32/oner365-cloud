@@ -501,6 +501,13 @@
 				<artifactId>ojdbc6</artifactId>
 				<version>11.2.0.3</version>
 			</dependency>
+			
+			<!-- influxdb -->
+			<dependency>
+			  	<groupId>com.influxdb</groupId>
+			  	<artifactId>influxdb-client-java</artifactId>
+			  	<version>3.1.0</version>
+			</dependency>
 
 			<!-- junit-platform -->
 			<dependency>
@@ -1023,6 +1030,8 @@
 		<module>oner365-hadoop</module>
 		<!-- 多数据源 -->
 		<module>oner365-datasource</module>
+		<!-- influxdb -->
+		<module>oner365-influx</module>
 		<!-- 项目部署 -->
 		<module>oner365-deploy</module>
 		<!-- swagger文档 -->

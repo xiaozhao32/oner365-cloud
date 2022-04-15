@@ -45,7 +45,8 @@
 7. Rocketmq 	- 8713 oner365-rocketmq
 8. Swagger - 8714 oner365-swagger 
 9. Pulsar - 8715 oner365-pulsar
-10.分库分表 - 8716 oner365-datasource
+10. 分库分表 - 8716 oner365-datasource
+11. 时序库测试 - 8717 oner365-influx
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos
