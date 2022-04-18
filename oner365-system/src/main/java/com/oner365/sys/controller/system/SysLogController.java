@@ -45,7 +45,7 @@ public class SysLogController extends BaseController {
    * @return PageInfo<SysLog>
    */
   @PostMapping("/list")
-  public PageInfo<SysLogDto> list(@RequestBody QueryCriteriaBean data) {
+  public PageInfo<SysLogDto> pageList(@RequestBody QueryCriteriaBean data) {
     return logService.pageList(data);
   }
 

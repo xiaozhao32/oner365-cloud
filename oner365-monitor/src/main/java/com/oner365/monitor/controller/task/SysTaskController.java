@@ -44,7 +44,7 @@ public class SysTaskController extends BaseController {
    * @return PageInfo<SysTaskDto>
    */
   @PostMapping("/list")
-  public PageInfo<SysTaskDto> list(@RequestBody QueryCriteriaBean data) {
+  public PageInfo<SysTaskDto> pageList(@RequestBody QueryCriteriaBean data) {
     return taskService.pageList(data);
   }
 

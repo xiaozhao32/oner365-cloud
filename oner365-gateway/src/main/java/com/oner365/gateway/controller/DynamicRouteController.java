@@ -41,7 +41,7 @@ public class DynamicRouteController {
    * @return ResponseData
    */
   @PostMapping("/list")
-  public ResponseData<PageInfo<GatewayRouteDto>> list(@RequestBody QueryCriteriaBean data) {
+  public ResponseData<PageInfo<GatewayRouteDto>> pageList(@RequestBody QueryCriteriaBean data) {
     PageInfo<GatewayRouteDto> page = dynamicRouteService.pageList(data);
     return ResponseData.success(page);
   }

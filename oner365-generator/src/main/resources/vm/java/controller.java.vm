@@ -51,12 +51,12 @@ public class ${ClassName}Controller extends BaseController {
      * ${functionName}获取列表
      *
      * @param data 查询参数
-     * @return PageInfo<${ClassName}>
+     * @return PageInfo<${ClassName}Dto>
      */
     @ApiOperation("1.获取列表")
     @ApiOperationSupport(order = 1)
     @PostMapping("/list")
-    public PageInfo<${ClassName}Dto> list(@RequestBody QueryCriteriaBean data) {
+    public PageInfo<${ClassName}Dto> pageList(@RequestBody QueryCriteriaBean data) {
         return ${className}Service.pageList(data);
     }
     
@@ -64,7 +64,7 @@ public class ${ClassName}Controller extends BaseController {
      * 获取${functionName}
      *
      * @param id 编号
-     * @return ${ClassName}
+     * @return ${ClassName}Dto
      */
     @ApiOperation("2.按id查询")
     @ApiOperationSupport(order = 2)
@@ -91,7 +91,7 @@ public class ${ClassName}Controller extends BaseController {
      * ${functionName}保存
      *
      * @param ${className}Vo 对象
-     * @return ResponseResult<${ClassName}>
+     * @return ResponseResult<${ClassName}Dto>
      */
     @ApiOperation("4.保存")
     @ApiOperationSupport(order = 4)

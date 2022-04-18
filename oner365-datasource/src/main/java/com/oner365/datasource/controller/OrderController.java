@@ -40,7 +40,7 @@ public class OrderController extends BaseController {
    * @return PageInfo<OrderDto>
    */
   @PostMapping("/list")
-  public PageInfo<OrderDto> list(@RequestBody QueryCriteriaBean data) {
+  public PageInfo<OrderDto> pageList(@RequestBody QueryCriteriaBean data) {
     return service.pageList(data);
   }
 

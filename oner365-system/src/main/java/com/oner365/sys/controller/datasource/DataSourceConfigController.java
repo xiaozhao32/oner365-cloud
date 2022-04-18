@@ -41,7 +41,7 @@ public class DataSourceConfigController extends BaseController {
    * @return PageInfo<DataSourceConfigDto>
    */
   @PostMapping("/list")
-  public PageInfo<DataSourceConfigDto> list(@RequestBody QueryCriteriaBean data) {
+  public PageInfo<DataSourceConfigDto> pageList(@RequestBody QueryCriteriaBean data) {
     return service.pageList(data);
   }
 

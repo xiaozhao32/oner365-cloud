@@ -48,7 +48,7 @@ public class SysMenuTypeController extends BaseController {
    * @return PageInfo<SysMenuTypeDto>
    */
   @PostMapping("/list")
-  public PageInfo<SysMenuTypeDto> list(@RequestBody QueryCriteriaBean data) {
+  public PageInfo<SysMenuTypeDto> pageList(@RequestBody QueryCriteriaBean data) {
     return menuTypeService.pageList(data);
   }
 

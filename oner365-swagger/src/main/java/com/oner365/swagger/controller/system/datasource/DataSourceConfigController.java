@@ -46,10 +46,10 @@ public class DataSourceConfigController extends BaseController {
    * @param data 查询参数
    * @return Page<DataSourceConfigDto>
    */
-  @ApiOperation("1.列表")
+  @ApiOperation("1.获取列表")
   @ApiOperationSupport(order = 1)
   @PostMapping("/list")
-  public ResponseData<PageInfo<DataSourceConfigDto>> findList(@RequestBody QueryCriteriaBean data) {
+  public ResponseData<PageInfo<DataSourceConfigDto>> pageList(@RequestBody QueryCriteriaBean data) {
     return client.pageList(data);
   }
 
@@ -57,7 +57,7 @@ public class DataSourceConfigController extends BaseController {
    * 按id获取信息
    * 
    * @param id 编号
-   * @return DataSourceConfig
+   * @return ResponseData<DataSourceConfigDto>
    */
   @ApiOperation("2.按id查询")
   @ApiOperationSupport(order = 2)
@@ -70,7 +70,7 @@ public class DataSourceConfigController extends BaseController {
    * 按 connectName 获取信息
    * 
    * @param connectName 连接名称
-   * @return DataSourceConfig
+   * @return ResponseData<DataSourceConfigDto>
    */
   @ApiOperation("3.按连接名称查询")
   @ApiOperationSupport(order = 3)
@@ -83,7 +83,7 @@ public class DataSourceConfigController extends BaseController {
    * 保存
    * 
    * @param dataSourceConfigVo 数据源对象
-   * @return ResponseResult<DataSourceConfigDto>
+   * @return ResponseData<ResponseResult<DataSourceConfigDto>>
    */
   @ApiOperation("4.保存")
   @ApiOperationSupport(order = 4)
