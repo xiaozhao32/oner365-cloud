@@ -21,7 +21,7 @@ import com.oner365.controller.BaseController;
 import com.oner365.monitor.dto.CacheCommandStatsDto;
 import com.oner365.monitor.dto.CacheInfoDto;
 import com.oner365.monitor.dto.CacheJedisInfoDto;
-import com.oner365.util.DataUtils;
+import com.oner365.util.JedisUtils;
 
 import redis.clients.jedis.Jedis;
 
@@ -80,7 +80,7 @@ public class CacheController extends BaseController {
   @GetMapping("/list")
   public List<CacheJedisInfoDto> cacheList() {
     List<CacheJedisInfoDto> result = new ArrayList<>();
-    try (Jedis jedis = getJedis()) {
+    try (Jedis jedis = JedisUtils.getJedis(redisProperties)) {
       if (jedis.isConnected()) {
         IntStream.range(0, DB_LENGTH).forEach(i -> {
           jedis.select(i);
@@ -106,7 +106,7 @@ public class CacheController extends BaseController {
    */
   @GetMapping("/clean")
   public ResponseData<String> clean(int index) {
-    try (Jedis jedis = getJedis()) {
+    try (Jedis jedis = JedisUtils.getJedis(redisProperties)){
       if (jedis.isConnected()) {
         jedis.select(index);
         jedis.flushDB();
@@ -115,17 +115,6 @@ public class CacheController extends BaseController {
     return ResponseData.success(ResultEnum.SUCCESS.getName());
   }
   
-  private Jedis getJedis() {
-    Jedis jedis = new Jedis(redisProperties.getHost(), redisProperties.getPort());
-
-    String auth = "ok";
-    if (!DataUtils.isEmpty(redisProperties.getPassword())) {
-      auth = jedis.auth(redisProperties.getPassword());
-    } else {
-      jedis.connect();
-    }
-    logger.debug("info: {}", auth);
-    return jedis;
-  }
+ 
 
 }
