@@ -343,6 +343,7 @@ INSERT INTO `nt_sys_menu` VALUES ('2015', '1', '缓存监控', '201', 'monitor/c
 INSERT INTO `nt_sys_menu` VALUES ('2016', '1', 'ES监控', '201', 'monitor/elasticsearch/index', '/elasticsearch', 26, 'ES监控', 'drag', '1', '2020-12-25 14:47:37', '2020-12-25 14:50:14', NULL);
 INSERT INTO `nt_sys_menu` VALUES ('2017', '1', '队列监控', '201', 'monitor/rabbitmq/index', '/rabbitmq', 27, '队列监控', 'example', '1', '2020-12-25 14:48:35', '2020-12-25 14:50:19', NULL);
 INSERT INTO `nt_sys_menu` VALUES ('2018', '1', '文档监控', '201', 'monitor/fastdfs/index', '/fastdfs', 28, '文档监控', 'documentation', '1', '2020-12-25 14:49:33', '2020-12-25 14:50:24', NULL);
+INSERT INTO `nt_sys_menu` VALUES ('2019', '1', '数据源监控', '201', 'monitor/druid/index', '/druid', 29, NULL, 'druid', '1', '2022-04-18 14:01:13', '2022-04-19 10:53:09', NULL);
 INSERT INTO `nt_sys_menu` VALUES ('301', '1', '日志管理', '-1', 'Layout', '/log', 3, '日志管理', 'log', '1', '2020-11-16 15:36:00', '2020-11-16 15:36:00', NULL);
 INSERT INTO `nt_sys_menu` VALUES ('3011', '1', '服务日志', '301', 'system/log/index', '/syslog', 31, '服务日志', 'druid', '1', '2020-11-16 15:36:00', '2021-09-12 10:59:39', NULL);
 INSERT INTO `nt_sys_menu` VALUES ('401', '1', '生成管理', '-1', 'Layout', '/generator', 4, '生成管理', 'money', '1', '2021-10-26 11:09:27', '2021-10-26 11:10:35', NULL);
@@ -537,6 +538,7 @@ INSERT INTO `nt_sys_role_menu` VALUES ('112015', '2015', '1', '1');
 INSERT INTO `nt_sys_role_menu` VALUES ('112016', '2016', '1', '1');
 INSERT INTO `nt_sys_role_menu` VALUES ('112017', '2017', '1', '1');
 INSERT INTO `nt_sys_role_menu` VALUES ('112018', '2018', '1', '1');
+INSERT INTO `nt_sys_role_menu` VALUES ('112019', '2019', '1', '1');
 INSERT INTO `nt_sys_role_menu` VALUES ('11301', '301', '1', '1');
 INSERT INTO `nt_sys_role_menu` VALUES ('113011', '3011', '1', '1');
 INSERT INTO `nt_sys_role_menu` VALUES ('11401', '401', '1', '1');
