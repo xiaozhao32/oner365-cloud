@@ -242,6 +242,312 @@
 						-- minio/集群/nginx_minio.conf
 							-- 此conf使用了其中一台节点的服务器，所以端口修改为9002，9004.
 					-- 通过nginx配置端口访问minio管理后台，可创建可上传即可
+7、安装redis
+	-- cd /opt
+	-- tar -zxvf redis-6.0.5.tar.gz
+	-- cd redis-6.0.5/
+	-- make && make install
+	-- make install PREFIX=/usr/local/redis
+	-- 修改redis.conf
+		-- vi /opt/redis-6.0.5/redis.conf
+			-- daemonize yes
+			-- bind 0.0.0.0
+			-- requirepass 1qazXSW@
+			-- 主从配置
+				-- masterauth 1qazXSW@
+				-- slave-read-only yes
+				-- slaveof 10.5.48.14 6379
+
+	-- 启动
+		-- cd /usr/local/redis/bin
+		-- ./redis-server /opt/redis-5.0.3/redis.conf
+	-- redis 哨兵
+		-- 修改配置文件
+			-- redis.conf （主，master）
+				-- appendonly yes
+				-- protected-mode no
+				-- requirepass "1qazXSW@"
+				-- masterauth "1qazXSW@"
+				-- daemonize yes
+			-- redis.conf (从机 slave)
+				-- slaveof 106.133.226.36 6380
+				-- appendonly yes
+				-- protected-mode no
+				-- requirepass "1qazXSW@"
+				-- masterauth "1qazXSW"
+			-- sentinel.conf(主 master，从 slave)
+				-- protected-mode no
+				-- daemonize yes
+				-- sentinel monitor mymaster 192.168.33.43 6379 2
+					-- 监听主机 名称mymaster 端口6379 投票2（两个监听投票即认为主机故障，有运维人员建议设置为哨兵数/2-1，就是3台哨兵就设置为1）
+				-- sentinel auth-pass mymaster 1qazXSW@
+					-- mymaster认证密码（同redis密码）
+				-- sentinel down-after-milliseconds 10000
+					-- 主机宕机后多少秒进行主从切换 默认30秒
+			-- 依次启动
+				-- 启动主redis
+					--  ./redis-server /opt/redis-6.0.5/redis.conf
+				-- 启动从redis（两台）
+					-- ./redis-server /opt/redis-6.0.5/redis.conf
+				-- 启动主sentinel监听
+					-- ./redis-sentinel /opt/redis-6.0.5/sentinel.conf
+				-- 启动从sentinel监听（两台）
+					-- ./redis-sentinel /opt/redis-6.0.5/sentinel.conf
+			-- 实例
+				-- 192.168.33.43（master）
+				-- 192.168.33.44（slave）
+				-- 192.168.33.41（slave）
+				-- shutdown master
+				-- 进入slave机器cli
+					-- ./redis-cli
+						-- auth 1qazXSW@
+						-- info replication 查看主从状态
+8、mysql安装
+	-- yum install libncurses*
+	-- xz -d mysql-8.0.17-linux-glibc2.12-x86_64.tar.xz 
+	-- cd /usr/local/
+	-- tar -xvf /opt/mysql-8.0.17-linux-glibc2.12-x86_64.tar 
+	-- mkdir -p /var/run/mysqld
+	-- groupadd mysql
+	-- useradd -r -g mysql mysql
+	-- ln -s mysql-8.0.17-linux-glibc2.12-x86_64 mysql
+	-- chmod 777 -R /var/run/mysqld/*
+	-- chmod 777 -R /var/run/mysqld
+	-- chown -R mysql /usr/local/mysql
+	-- chown -R mysql /usr/local/mysql/*
+	-- cd mysql
+	-- chgrp -R mysql .
+	-- mkdir /home/data
+	-- mkdir /home/tmp
+	-- chmod -R 777 /home/data /home/tmp
+	-- chmod 777 -R /var/run/mysqld
+	-- chmod 777 -R /var/log
+	-- 修改my.conf
+		-- vi /etc/my.cnf
+			--      [mysqld]
+				basedir=/usr/local/mysql
+				datadir=/home/data
+				socket=/home/tmp/mysql.sock
+				symbolic-links=0
+
+				log-error=/var/log/mysqld.log
+				pid-file=/usr/local/mysql/mysqld.pid
+
+				[client] 
+				default-character-set=utf8 
+				socket=/home/tmp/mysql.sock
+
+				[mysql] 
+				default-character-set=utf8 
+				socket=/home/tmp/mysql.sock
+	-- cd /usr/local/mysql
+	-- chown -R mysql:mysql ./
+	-- ./bin/mysqld --initialize --user=mysql --basedir=/usr/local/mysql --datadir=/home/data 
+		-- 如报错
+			-- ./bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory
+			-- 执行
+				-- yum install libaio
+	-- cp support-files/mysql.server /etc/init.d/mysql
+	-- chmod +x /etc/init.d/mysql
+	-- chkconfig --add mysql
+	-- 修改环境变量
+		-- vi /etc/profile
+			-- /usr/local/mysql/bin:PATH
+		-- source /etc/profile
+	-- 查看初始密码
+		-- grep "password" /var/log/mysqld.log
+	-- 启动
+		-- service mysql start
+	-- 连接数据库
+		-- mysql -u root -p --default-character-set=utf8
+		-- 密码是上面查出来的
+		-- 修改密码授权，远程连接
+			-- alter user 'root'@'localhost' identified by '1qazXSW@';
+			-- flush privileges; 
+			-- use mysql;
+			-- update user set host = '%' where user ='root';
+			-- flush privileges; 
+			-- exit;
+	-- 主从配置
+		-- 新装数据库时直接配置即可，使用中数据库，提前手工同步下数据
+		-- 修改my.cnf（主机）server-id主从机器不能一样
+			-- vi /etc/my.cnf
+				-- [mysqld]下
+					-- log-bin=mysql-bin
+					   server-id=1
+		-- 修改my.cnf（从机）server-id主从机器不能一样
+			-- vi /etc/my.cnf
+				-- [mysqld]下
+					-- server-id=2
+		-- 创建同步用户（主机）
+			-- create user 'repl'@'%' identified by 'repl123456';
+			-- grant replication slave on *.* to 'repl'@'%';
+			-- flush privileges;
+		-- 查看主机binglog状态
+			-- SHOW MASTER STATUS;
+		-- 从机配置同步节点
+			-- CHANGE MASTER TO
+			   MASTER_HOST='10.5.48.14',
+			   MASTER_USER='repl',
+			   MASTER_PASSWORD='repl123456',
+			   MASTER_LOG_FILE='binlog.000001',
+			   MASTER_LOG_POS=60731;
+			-- MASTER_LOG_FILE 主机 SHOW MASTER STATUS;命令中binlog日志文件名
+			-- MASTER_LOG_POS 主机 SHOW MASTER STATUS;命令中MASTER_LOG_POS字段值
+		-- 启动/停止同步
+			-- START SLAVE;
+			-- STOP SLAVE;
+		-- 查看同步状态
+			-- show slave status\G;
+			-- show slave status; 第三方工具用这个上面那个不行（navicat）
+			-- 同步成功/失败查看
+				-- Slave_IO_Running: Yes
+				-- Slave_SQL_Running: Yes 
+				-- 两个值都是YES时成功，如失败查看
+					-- Last_IO_Error字段提示
+		-- 常见错误
+			-- Last_IO_Error: Got fatal error 1236 from master when reading data from binary log: 'Could not find first log file name in binary log index file'
+				-- 此错误为MASTER_LOG_FILE文件名称未对应主机master
+				-- 修改
+					-- SHOW MASTER STATUS; 查看主机状态获取MASTER_LOG_FILE
+					-- change master to master_log_file='主机MASTER_LOG_FILE',master_log_pos=主机MASTER_LOG_POS;
+			-- Last_IO_Error: Fatal error: The slave I/O thread stops because master and slave have equal MySQL server ids; these ids must be different for replication to work (or the --replicate-same-server-id option must be used on slave but this does not always make sense; please check the manual before using it).
+				-- 此错误为server-id使用相同
+				-- 排查
+					-- show variables like 'server_id';
+						-- 得出结果如果与主机相同请确认my.cnf修改生效（与主机不同），重启从机mysql，stop，start不要restart，mysql的restart有时不生效
+			-- Last_IO_Error: error connecting to master 'repl@10.5.48.14:3306' - retry-time: 60 retries: 4 message: Authentication plugin 'caching_sha2_password' reported error: Authentication requires secure connection.
+				-- 此错误为主机创建用户认证不通过，mysql8认证方式不同
+				-- 检查主机用户创建配置
+				-- 检查主机用户连接
+					-- select user,host from user;
+				-- 是否刷新权限
+					-- flush privileges;
+9、fdfs安装
+	-- cd /opt
+	-- mkdir /home/fastdfs /home/fastdfs-storage
+	-- cd /opt/fastdfs6.06/fastdfs-file
+	-- unzip libfastcommon-1.44.zip
+	-- cd libfastcommon-master/
+	-- ./make.sh
+	-- ./make.sh install
+	-- ln -s /usr/lib64/libfastcommon.so /usr/local/lib/libfastcommon.so
+	-- ln -s /usr/lib64/libfastcommon.so /usr/lib/libfastcommon.so 
+	-- cd /opt/fastdfs6.06/fastdfs-file
+	-- unzip fastdfs-6.06.zip 
+	-- mv fastdfs-master fastdfs
+	-- mv -f fastdfs /usr/local
+	-- cd /usr/local/fastdfs
+	-- ./make.sh 
+	-- ./make.sh install
+	-- cd /etc/fdfs/
+	-- mv tracker.conf.sample tracker.conf
+	-- vi tracker.conf
+		-- base_path=/home/fastdfs
+	-- ln -s /usr/bin/fdfs_trackerd /usr/local/bin
+	-- ln -s /usr/bin/stop.sh /usr/local/bin
+	-- ln -s /usr/bin/restart.sh /usr/local/bin
+	-- service fdfs_trackerd start
+	-- cd /etc/fdfs/
+	-- mv storage.conf.sample storage.conf
+	-- vi storage.conf
+		-- base_path=/home/fastdfs-storage   
+		-- store_path0=/home/fastdfs-storage  
+		-- tracker_server=10.5.48.14:22122   
+	-- ln -s /usr/bin/fdfs_storaged /usr/local/bin
+	-- service fdfs_storaged start
+	-- /usr/bin/fdfs_monitor /etc/fdfs/storage.conf
+	-- fastdfs nginx模块安装
+		-- cd /opt/fastdfs6.06/fastdfs-file/
+		-- unzip fastdfs-nginx-module-1.22.zip
+		-- cd fastdfs-nginx-module-master/src/
+		-- vi config 
+		-- ln -s /usr/lib64/libfdfsclient.so /usr/local/lib/libfdfsclient.so
+		-- ln -s /usr/lib64/libfdfsclient.so /usr/lib/libfdfsclient.so
+		-- cp /opt/fastdfs-conf/fastdfs-conf/fdfs/mod_fastdfs.conf /etc/fdfs
+		-- cp /usr/local/fastdfs/conf/mime.types /etc/fdfs
+		-- cp /usr/local/fastdfs/conf/http.conf /etc/fdfs
+		-- cp /usr/local/fastdfs/conf/anti-steal.jpg /etc/fdfs
+		-- vi /etc/fdfs/mod_fastdfs.conf 
+			-- tracker_server=192.168.100.190:22122
+			-- store_path0=/home/fastdfs
+		-- cd /opt/fastdfs6.06/fastdfs-file/
+		-- tar -xvf pcre-8.42.tar
+		-- 此版本对centOS7.8编译有错，没解决可用
+			-- nginx-1.19.1.tar.gz
+			-- 其他步骤相同
+		-- tar -zxvf nginx-1.19.1.tar.gz
+		-- yum -y install gcc-c++
+		-- cd nginx-1.19.1/
+		-- ./configure --prefix=/usr/share/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=/opt/fastdfs6.06/fastdfs-file/pcre-8.42 --add-module=/opt/fastdfs6.06/fastdfs-file/fastdfs-nginx-module-master/src
+		-- make
+		-- make install
+		-- cd /usr/share/
+		-- cp -rf nginx nginx9999
+		-- cp /opt/fastdfs-conf/fastdfs-conf/nginx9999/conf/nginx.conf /usr/share/nginx9999/conf/
+		-- vi /usr/share/nginx9999/conf/nginx.conf
+			-- 修改root的storage地址
+		-- cp /opt/fastdfs-conf/fastdfs-conf/fdfs/mod_fastdfs.conf /etc/fdfs/
+		-- vi /etc/fdfs/mod_fastdfs.conf
+			-- 修改
+				-- base_path=/home/fastdfs-storage
+				-- tracker_server=10.5.48.14:22122
+				-- store_path0=/home/fastdfs-storage
+				-- group
+					-- 三个group的store_path0到指定目录
+		-- cp /opt/fastdfs-conf/fastdfs-conf/fdfs/http.conf /etc/fdfs/
+		-- vi /etc/fdfs/http.conf
+			-- http.anti_steal.token_check_fail = /home/fastdfs/conf/anti-steal.jpg
+		-- ln -s /home/fastdfs-storage/data /home/fastdfs-storage/data/M00
+		-- cd /usr/share/nginx9999/sbin
+		-- /usr/share/nginx9999/sbin/nginx -c /usr/share/nginx9999/conf/nginx.conf
+		-- 此版本对centOS7.8编译有错，没解决可用
+			-- nginx-1.19.1.tar.gz
+			-- 其他步骤相同
+		-- cd /opt/fastdfs6.06/fastdfs-file/nginx-1.19.1
+		-- ./configure --prefix=/usr/share/nginx2 --with-http_stub_status_module --with-http_ssl_module --with-pcre=/opt/fastdfs6.06/fastdfs-file/pcre-8.42 --add-module=/opt/fastdfs6.06/fastdfs-file/fastdfs-nginx-module-master/src
+		-- make
+		-- make install
+		-- cd /usr/share/nginx2/
+		-- cp /opt/fastdfs-conf/fastdfs-conf/nginx2/conf/nginx.conf /usr/share/nginx2/conf/
+		-- vi /usr/share/nginx2/conf/nginx.conf
+			-- upstream fdfs_group1 ip地址
+		-- ./sbin/nginx
+		-- cp /opt/fastdfs-conf/fastdfs-conf/fdfs/client.conf /etc/fdfs/
+		-- vi /etc/fdfs/client.conf
+			-- base_path=/home/fastdfs-storage
+			-- tracker_server=10.5.48.14:22122
+		-- 图片上传测试
+		-- /usr/bin/fdfs_upload_file /etc/fdfs/client.conf /root/1.png 
+		-- 集群配置
+			-- vi /etc/fdfs/mod_fastdfs.conf
+				-- tracker_server=10.5.48.14:22122 对应两台的tracker_server，有几个tracker写几个tracker_server
+			-- vi /etc/fdfs/storage.conf 
+				-- 增加
+					-- tracker_server=10.5.48.13:22122 对应两台的tracker_server，有几个tracker写几个tracker_server
+			-- service fdfs_storaged stop
+			-- service fdfs_storaged start
+			-- vi /etc/fdfs/client.conf
+				-- 增加
+					-- tracker_server=10.5.48.13:22122 对应两台的tracker_server，有几个tracker写几个tracker_server
+10、jdk安装
+	-- cd /opt
+	-- rpm -ivh jdk-8u202-linux-x64.rpm
+	-- vi /etc/profile
+		-- export JAVA_HOME=/usr/java/default
+		   export PATH=$JAVA_HOME/bin:$PATH
+		   export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+	-- source /etc/profile
+11、安装nginx
+	-- cd /opt
+	-- tar -xvf pcre-8.42.tar
+	-- tar -zxvf nginx-1.19.1.tar.gz
+	-- yum -y install gcc-c++
+	-- cd nginx-1.19.1/
+	-- ./configure --prefix=/usr/share/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=/opt/pcre-8.42 
+	-- make
+	-- make install
+	-- 配置启动
 
 
 
