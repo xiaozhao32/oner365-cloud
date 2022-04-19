@@ -1,5 +1,7 @@
 package com.oner365.neo4j.service.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,8 @@ import com.oner365.neo4j.service.ParentService;
  */
 @Service
 public class ParentServiceImpl implements ParentService {
+  
+  private final Logger logger = LoggerFactory.getLogger(ParentService.class);
 
   @Autowired
   private ParentRepository repository;
@@ -30,7 +34,7 @@ public class ParentServiceImpl implements ParentService {
       repository.deleteById(id);
       return true;
     } catch (Exception e) {
-      e.printStackTrace();
+      logger.error("parent delete error:", e);
     }
     return false;
   }

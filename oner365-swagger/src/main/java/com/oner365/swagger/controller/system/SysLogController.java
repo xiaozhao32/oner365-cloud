@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @RestController
 @RequestMapping("/system/log")
-@Api(tags = "系统观察 - 日志")
+@Api(tags = "系统管理 - 日志")
 public class SysLogController extends BaseController {
   
   @Autowired

@@ -18,20 +18,34 @@ public class RelationNode implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * 主键
+   */
   @Id
   @GeneratedValue
   private Long id;
 
-  // 关系名
+  /**
+   * 关系名称
+   */
   private String name;
 
+  /**
+   * 子对象
+   */
   @TargetNode
   private SonNode sonNode;
 
+  /**
+   * 构造方法
+   */
   public RelationNode() {
     super();
   }
   
+  /**
+   * 构造方法
+   */
   public RelationNode(String name, SonNode sonNode) {
     this.name = name;
     this.sonNode = sonNode;

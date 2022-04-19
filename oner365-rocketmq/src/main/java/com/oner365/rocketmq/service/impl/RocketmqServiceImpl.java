@@ -11,6 +11,12 @@ import com.oner365.common.enums.ResultEnum;
 import com.oner365.rocketmq.config.properties.RocketmqProperties;
 import com.oner365.rocketmq.service.RocketmqService;
 
+/**
+ * Rocketmq 实现类
+ * 
+ * @author zhaoyong
+ *
+ */
 @Service
 public class RocketmqServiceImpl implements RocketmqService {
 

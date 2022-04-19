@@ -22,6 +22,7 @@ public interface SonService {
    * 删除
    * 
    * @param id 节点id
+   * @return boolean
    */
   boolean delete(Long id);
 }

@@ -21,20 +21,35 @@ public class ParentNode implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * 主键
+   */
   @Id
   @GeneratedValue
   private Long id;
 
+  /**
+   * 姓名
+   */
   @Property(name = "name")
   private String name;
 
+  /**
+   * 关系
+   */
   @Relationship(type = "RelationEdge", direction = Relationship.Direction.OUTGOING)
   private Set<RelationNode> relation = new HashSet<>();
   
+  /**
+   * 构造方法
+   */
   public ParentNode() {
     super();
   }
 
+  /**
+   * 构造方法
+   */
   public ParentNode(String name) {
     this.name = name;
   }

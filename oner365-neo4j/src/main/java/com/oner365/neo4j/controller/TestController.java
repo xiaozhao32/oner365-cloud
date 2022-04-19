@@ -16,6 +16,12 @@ import com.oner365.neo4j.entity.SonNode;
 import com.oner365.neo4j.service.ParentService;
 import com.oner365.neo4j.service.SonService;
 
+/**
+ * neo4j test
+ * 
+ * @author zhaoyong
+ *
+ */
 @RestController
 @RequestMapping("/neo4j/test")
 public class TestController extends BaseController {

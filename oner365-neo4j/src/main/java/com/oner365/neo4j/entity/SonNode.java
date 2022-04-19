@@ -18,17 +18,29 @@ public class SonNode implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * 主键
+   */
   @Id
   @GeneratedValue
   private Long id;
 
+  /**
+   * 姓名
+   */
   @Property(name = "name")
   private String name;
   
+  /**
+   * 构造方法
+   */
   public SonNode() {
     super();
   }
 
+  /**
+   * 构造方法
+   */
   public SonNode(String name) {
     this.name = name;
   }

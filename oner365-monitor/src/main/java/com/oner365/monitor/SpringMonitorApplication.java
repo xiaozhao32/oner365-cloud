@@ -12,7 +12,6 @@ import org.springframework.context.annotation.ComponentScan;
  * @author zhaoyong
  */
 @SpringBootApplication
-//@EnableAdminServer
 @EnableDiscoveryClient
 @EnableFeignClients
 @MapperScan({ "com.oner365.monitor.mapper" })
