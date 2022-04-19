@@ -1,3 +1,23 @@
+=========================================================================================================================================================
+														部署安装程序及第三方软件安装配置
+=========================================================================================================================================================
+
+=========================================================================================================================================================
+目录
+	1、nacos
+	2、skywalking
+	3、服务组件（应用程序）
+	4、前端vue部署
+	5、安装minio对象存储及集群配置
+	6、JDK安装
+	7、JDK证书支持
+	8、安装redis及主从配置、哨兵配置
+	9、安装mysql及主从配置
+	10、安装fdfs及集群配置
+	11、nginx安装
+
+=========================================================================================================================================================
+
 1、nacos
 	-- nacos-server-2.0.2.zip
 		-- 修改配置文件
@@ -189,17 +209,7 @@
 		-- 访问地址
 			--  http://192.168.33.44
 
-5、jdk证书支持
-	-- CFCA证书jdk暂时不支持
-		-- 执行命令导入相关需要访问的CFCA颁发的证书的网站
-			-- sudo keytool -import -v -trustcacerts -alias 别名 -keystore "${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts" -file /证书路径/server.cer -storepass 
-			-- 删除导入证书
-				-- sudo keytool -delete -alias 别名 -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts
-			-- 查看导入证书（jdk 默认密码 changeit）
-				-- sudo keytool -list -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts -v |grep 别名
-				-- sudo keytool -list -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts -v -alias 别名
-
-6、minio
+5、minio
 	-- 单机
 		-- 安装
 			-- cd /安装目录
@@ -242,7 +252,28 @@
 						-- minio/集群/nginx_minio.conf
 							-- 此conf使用了其中一台节点的服务器，所以端口修改为9002，9004.
 					-- 通过nginx配置端口访问minio管理后台，可创建可上传即可
-7、安装redis
+
+6、jdk安装
+	-- cd /opt
+	-- rpm -ivh jdk-8u202-linux-x64.rpm
+	-- vi /etc/profile
+		-- export JAVA_HOME=/usr/java/default
+		   export PATH=$JAVA_HOME/bin:$PATH
+		   export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
+	-- source /etc/profile
+
+7、jdk证书支持
+	-- CFCA证书jdk暂时不支持
+		-- 执行命令导入相关需要访问的CFCA颁发的证书的网站
+			-- sudo keytool -import -v -trustcacerts -alias 别名 -keystore "${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts" -file /证书路径/server.cer -storepass 
+			-- 删除导入证书
+				-- sudo keytool -delete -alias 别名 -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts
+			-- 查看导入证书（jdk 默认密码 changeit）
+				-- sudo keytool -list -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts -v |grep 别名
+				-- sudo keytool -list -keystore ${JAVA_HOME}(jdk11没有jre目录)/jre/lib/security/cacerts -v -alias 别名
+
+
+8、安装redis
 	-- cd /opt
 	-- tar -zxvf redis-6.0.5.tar.gz
 	-- cd redis-6.0.5/
@@ -302,7 +333,7 @@
 					-- ./redis-cli
 						-- auth 1qazXSW@
 						-- info replication 查看主从状态
-8、mysql安装
+9、mysql安装
 	-- yum install libncurses*
 	-- xz -d mysql-8.0.17-linux-glibc2.12-x86_64.tar.xz 
 	-- cd /usr/local/
@@ -423,7 +454,7 @@
 					-- select user,host from user;
 				-- 是否刷新权限
 					-- flush privileges;
-9、fdfs安装
+10、fdfs安装
 	-- cd /opt
 	-- mkdir /home/fastdfs /home/fastdfs-storage
 	-- cd /opt/fastdfs6.06/fastdfs-file
@@ -530,14 +561,7 @@
 			-- vi /etc/fdfs/client.conf
 				-- 增加
 					-- tracker_server=10.5.48.13:22122 对应两台的tracker_server，有几个tracker写几个tracker_server
-10、jdk安装
-	-- cd /opt
-	-- rpm -ivh jdk-8u202-linux-x64.rpm
-	-- vi /etc/profile
-		-- export JAVA_HOME=/usr/java/default
-		   export PATH=$JAVA_HOME/bin:$PATH
-		   export CLASSPATH=.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar
-	-- source /etc/profile
+
 11、安装nginx
 	-- cd /opt
 	-- tar -xvf pcre-8.42.tar
