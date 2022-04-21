@@ -71,7 +71,7 @@ public class OrderController extends BaseController {
    * 用户订单保存
    *
    * @param vo 订单对象
-   * @return ResponseResult<SysJobDto>
+   * @return ResponseResult<OrderDto>
    */
   @PutMapping("/save")
   public ResponseResult<OrderDto> save(@RequestBody OrderVo vo) {

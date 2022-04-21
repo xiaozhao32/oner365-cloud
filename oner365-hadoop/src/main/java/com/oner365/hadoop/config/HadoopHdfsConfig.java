@@ -31,9 +31,6 @@ public class HadoopHdfsConfig {
    * 获取HDFS文件系统对象
    *
    * @return FileSystem
-   * @throws IOException          异常
-   * @throws InterruptedException 异常
-   * @throws URISyntaxException   异常
    */
   @Bean
   public FileSystem getFileSystem() {

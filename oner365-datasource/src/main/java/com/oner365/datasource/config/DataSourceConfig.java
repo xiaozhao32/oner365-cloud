@@ -29,6 +29,8 @@ public class DataSourceConfig {
   
   private final Logger logger = LoggerFactory.getLogger(DataSourceConfig.class);
   
+  private final static String DS_TYPE = "ds_type";
+  
   /**
    * 当前sharding主数据源
    */
@@ -55,7 +57,7 @@ public class DataSourceConfig {
       String sql = "select `connect_name`, `db_name`, `ip_address`, `url`, `user_name`, `password`, `port`, `driver_name`, `ds_type` from nt_data_source_config";
       List<Map<String, String>> list = DataSourceUtil.execute(ds.getConnection(), sql);
       list.forEach(map -> {
-        if (DataSourceConstants.DS_TYPE_DB.equals(map.get("ds_type"))) {
+        if (DataSourceConstants.DS_TYPE_DB.equals(map.get(DS_TYPE))) {
           // 动态数据源
           DruidDataSource druidDatasource = builder(map);
           DataSourceHolder.setDataSourceMap(druidDatasource.getName(), druidDatasource);

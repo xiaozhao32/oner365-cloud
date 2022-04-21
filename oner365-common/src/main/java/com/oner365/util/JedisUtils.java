@@ -10,6 +10,12 @@ import org.springframework.boot.autoconfigure.data.redis.RedisProperties.Sentine
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisSentinelPool;
 
+/**
+ * Jedis 工具类
+ * 
+ * @author zhaoyong
+ *
+ */
 public class JedisUtils {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(JedisUtils.class);
