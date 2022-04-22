@@ -190,7 +190,7 @@ public class SysUserServiceImpl implements ISysUserService {
     Criteria<SysUser> criteria = new Criteria<>();
     criteria.add(Restrictions.eq(SysConstants.USER_NAME, userName));
     criteria.add(Restrictions.eq(SysConstants.PASS, password));
-    criteria.add(Restrictions.eq(SysConstants.STATUS, StatusEnum.YES.getCode()));
+    criteria.add(Restrictions.eq(SysConstants.STATUS, StatusEnum.YES));
     Optional<SysUser> optional = userDao.findOne(criteria);
     if (optional.isPresent()) {
       SysUser sysUser = optional.get();
@@ -250,7 +250,7 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUserJob.setSysJob(sysJob);
         sysUserJob.setSysUser(entity);
         sysUserJob.setPositionOrder(1);
-        sysUserJob.setStatus(StatusEnum.YES.getCode());
+        sysUserJob.setStatus(StatusEnum.YES);
         sysUserJob.setCreateTime(time);
         sysUserJob.setUpdateTime(time);
         userJobDao.save(sysUserJob);
@@ -264,7 +264,7 @@ public class SysUserServiceImpl implements ISysUserService {
         sysUserOrg.setSysOrganization(sysOrg);
         sysUserOrg.setSysUser(entity);
         sysUserOrg.setPositionOrder(1);
-        sysUserOrg.setStatus(StatusEnum.YES.getCode());
+        sysUserOrg.setStatus(StatusEnum.YES);
         sysUserOrg.setCreateTime(time);
         sysUserOrg.setUpdateTime(time);
         userOrgDao.save(sysUserOrg);
@@ -323,7 +323,7 @@ public class SysUserServiceImpl implements ISysUserService {
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Integer editStatus(String id, String status) {
+  public Integer editStatus(String id, StatusEnum status) {
     Optional<SysUser> optional = userDao.findById(id);
     if (optional.isPresent()) {
       optional.get().setStatus(status);

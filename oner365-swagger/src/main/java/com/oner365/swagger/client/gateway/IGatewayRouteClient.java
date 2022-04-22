@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -79,7 +80,7 @@ public interface IGatewayRouteClient {
    */
   @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_STATUS)
   ResponseData<ResponseResult<String>> updateRouteStatus(@PathVariable(value = "id") String id,
-      @PathVariable(value = "status") String status);
+      @PathVariable(value = "status") StatusEnum status);
   
   /**
    * 删除路由

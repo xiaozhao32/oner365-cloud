@@ -2,6 +2,8 @@ package com.oner365.swagger.vo;
 
 import java.io.Serializable;
 
+import com.oner365.common.enums.StatusEnum;
+
 /**
  * 字典类型 SysDictItemType
  * 
@@ -42,7 +44,7 @@ public class SysDictItemTypeVo implements Serializable {
   /**
    * 状态 status
    */
-  private String status;
+  private StatusEnum status;
 
   /**
    * Constructor
@@ -83,11 +85,11 @@ public class SysDictItemTypeVo implements Serializable {
     this.typeOrder = typeOrder;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

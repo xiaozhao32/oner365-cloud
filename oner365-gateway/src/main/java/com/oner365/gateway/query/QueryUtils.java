@@ -3,8 +3,12 @@ package com.oner365.gateway.query;
 
 import java.util.Arrays;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 
+import com.oner365.gateway.constants.GatewayConstants;
+import com.oner365.gateway.enums.StatusEnum;
 import com.oner365.gateway.query.Criterion.Operator;
 import com.oner365.gateway.util.DataUtils;
 
@@ -14,6 +18,8 @@ import com.oner365.gateway.util.DataUtils;
  * @author zhaoyong
  */
 public class QueryUtils {
+  
+  private static final Logger LOGGER = LoggerFactory.getLogger(QueryUtils.class);
 
   private QueryUtils() {
 
@@ -91,10 +97,31 @@ public class QueryUtils {
         criteria.add(Restrictions.between(key, value));
       }
       break;
+    case ENUM:
+      criteria.add(Restrictions.eq(key, getEnum(key, String.valueOf(value))));
+      break;
     default:
       criteria.add(Restrictions.eq(key, value));
       break;
     }
+  }
+  
+  /**
+   * 枚举类型
+   * 
+   * @param key   键
+   * @param value 值
+   * @return 枚举
+   */
+  private static Object getEnum(String key, String value) {
+    // 状态枚举
+    if (GatewayConstants.STATUS.equals(key)) {
+      return StatusEnum.valueOf(value);
+    } else {
+      // 当前枚举不支持
+      LOGGER.error("Enum not support. key:{} value:{}", key, value);
+    }
+    return null;
   }
 
 }

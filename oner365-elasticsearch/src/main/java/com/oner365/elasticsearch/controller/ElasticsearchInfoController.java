@@ -61,7 +61,7 @@ public class ElasticsearchInfoController extends BaseController {
       result.setClusterName(healthResponse.getClusterName());
       result.setNumberOfDataNodes(healthResponse.getNumberOfDataNodes());
       result.setActiveShards(healthResponse.getActiveShards());
-      result.setStatus(healthResponse.getStatus().name());
+      result.setStatus(healthResponse.getStatus());
       result.setTaskMaxWaitingTime(healthResponse.getTaskMaxWaitingTime().getMillis());
 
       // 索引信息
@@ -75,7 +75,7 @@ public class ElasticsearchInfoController extends BaseController {
         clusterDto.setIndex(entry.getKey());
         clusterDto.setNumberOfShards(search.getTotalShards());
         clusterDto.setNumberOfReplicas(search.getNumReducePhases());
-        clusterDto.setStatus(search.status().name());
+        clusterDto.setStatus(search.status());
         clusterList.add(clusterDto);
       }
       result.setClusterList(clusterList);

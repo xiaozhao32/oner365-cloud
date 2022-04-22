@@ -116,7 +116,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
   public SysRoleDto save(SysRoleVo vo) {
     if (DataUtils.isEmpty(vo.getId())) {
-      vo.setStatus(StatusEnum.YES.getCode());
+      vo.setStatus(StatusEnum.YES);
       vo.setCreateTime(LocalDateTime.now());
     }
     if (DataUtils.isEmpty(vo.getRoleCode())) {
@@ -254,7 +254,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
-  public Integer editStatus(String id, String status) {
+  public Integer editStatus(String id, StatusEnum status) {
     Optional<SysRole> optional = roleDao.findById(id);
     if (optional.isPresent()) {
       SysRole entity = optional.get();

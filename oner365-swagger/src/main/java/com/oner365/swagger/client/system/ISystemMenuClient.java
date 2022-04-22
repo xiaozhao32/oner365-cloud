@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.swagger.constants.PathConstants;
 import com.oner365.swagger.dto.SysMenuDto;
 import com.oner365.swagger.dto.SysMenuInfoDto;
@@ -55,7 +56,7 @@ public interface ISystemMenuClient {
    * @return ResponseData<Integer>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_STATUS)
-  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") String status);
+  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
   
   /**
    * 获取菜单下拉树列表

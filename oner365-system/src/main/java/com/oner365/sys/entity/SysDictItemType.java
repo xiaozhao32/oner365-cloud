@@ -4,10 +4,12 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.common.enums.StatusEnum;
 
 /**
  * 字典类型对象
@@ -39,8 +41,9 @@ public class SysDictItemType implements Serializable {
   @Column(name = "dict_item_type_order", length = 10)
   private Integer typeOrder;
 
-  @Column(name = "status", nullable = false, length = 8)
-  private String status;
+  @Enumerated
+  @Column(name = "status", nullable = false)
+  private StatusEnum status;
 
   /**
    * Constructor
@@ -81,11 +84,11 @@ public class SysDictItemType implements Serializable {
     this.typeOrder = typeOrder;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

@@ -18,6 +18,7 @@ import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ExistsEnum;
 import com.oner365.common.enums.ResultEnum;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.Criteria;
@@ -128,7 +129,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
   @Caching(evict = {
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_TYPE_NAME, allEntries = true) })
-  public Integer editStatus(String id, String status) {
+  public Integer editStatus(String id, StatusEnum status) {
     Optional<SysDictItem> optional = dao.findById(id);
     if (optional.isPresent()) {
       SysDictItem entity = optional.get();

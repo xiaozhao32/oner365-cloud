@@ -2,6 +2,7 @@ package com.oner365.datasource.service;
 
 import java.util.List;
 
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
@@ -63,5 +64,5 @@ public interface IOrderService extends BaseService {
    * @param status 状态
    * @return Integer
    */
-  Integer editStatus(String id, String status);
+  Integer editStatus(String id, StatusEnum status);
 }

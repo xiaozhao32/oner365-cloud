@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.google.common.base.MoreObjects;
+import com.oner365.common.enums.StatusEnum;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -63,7 +64,7 @@ public class SysJobDto implements Serializable {
      * 状态 status
      */
     @ApiModelProperty(value = "状态")
-    private String status;
+    private StatusEnum status;
 
     /**
      * 创建时间 create_time
@@ -146,11 +147,11 @@ public class SysJobDto implements Serializable {
         this.jobOrder = jobOrder;
     }
 
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 

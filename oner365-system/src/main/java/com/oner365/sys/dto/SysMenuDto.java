@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.MoreObjects;
+import com.oner365.common.enums.StatusEnum;
 
 /**
  * 菜单对象
@@ -67,7 +68,7 @@ public class SysMenuDto implements Serializable {
   /**
    * 状态 status
    */
-  private String status;
+  private StatusEnum status;
 
   /**
    * 创建时间 create_time
@@ -210,14 +211,14 @@ public class SysMenuDto implements Serializable {
   /**
    * @return the status
    */
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
   /**
    * @param status the status to set
    */
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

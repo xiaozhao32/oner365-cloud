@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.common.base.MoreObjects;
+import com.oner365.common.enums.StatusEnum;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -69,7 +70,7 @@ public class SysUserDto implements Serializable {
      * 状态
      */
     @ApiModelProperty(value = "状态")
-    private String status;
+    private StatusEnum status;
 
     /**
      * 最后登录时间
@@ -227,14 +228,14 @@ public class SysUserDto implements Serializable {
     /**
      * @return the status
      */
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
     /**
      * @param status the status to set
      */
-    public void setStatus(String status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 

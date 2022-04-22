@@ -194,6 +194,8 @@ INSERT INTO `nt_sys_dict_item` VALUES ('1101', 'sys_normal_disable', '1', '有�
 INSERT INTO `nt_sys_dict_item` VALUES ('1102', 'sys_normal_disable', '0', '无效', 2, NULL, '1');
 INSERT INTO `nt_sys_dict_item` VALUES ('1103', 'sys_user_sex', '0', '男', 1, NULL, '1');
 INSERT INTO `nt_sys_dict_item` VALUES ('1104', 'sys_user_sex', '1', '女', 2, NULL, '1');
+INSERT INTO `nt_sys_dict_item` VALUES ('1105', 'sys_status', '1', '有效', 1, NULL, '1');
+INSERT INTO `nt_sys_dict_item` VALUES ('1106', 'sys_status', '0', '无效', 2, NULL, '1');
 INSERT INTO `nt_sys_dict_item` VALUES ('4028b88174aa011e0174aa0a28c30004', 'sys_task_group', 'DEFAULT', '默认', 1, NULL, '1');
 INSERT INTO `nt_sys_dict_item` VALUES ('4028b88174aa011e0174aa0a51bc0005', 'sys_task_group', 'SYSTEM', '系统', 2, NULL, '1');
 INSERT INTO `nt_sys_dict_item` VALUES ('4028b88174aa011e0174aa0b35eb0006', 'sys_task_status', '1', '正常', 1, NULL, '1');
@@ -226,6 +228,7 @@ INSERT INTO `nt_sys_dict_item_type` VALUES ('sys_normal_hidden', '是否隐藏',
 INSERT INTO `nt_sys_dict_item_type` VALUES ('sys_task_group', '任务分组', 'sys_task_group', '任务分组', NULL, '1');
 INSERT INTO `nt_sys_dict_item_type` VALUES ('sys_task_status', '任务状态', 'sys_task_status', '11', NULL, '1');
 INSERT INTO `nt_sys_dict_item_type` VALUES ('sys_user_sex', '性别', 'sys_user_sex', '111', NULL, '1');
+INSERT INTO `nt_sys_dict_item_type` VALUES ('sys_status', '状态', 'sys_status', NULL, NULL, '1');
 COMMIT;
 
 -- ----------------------------

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -133,7 +134,7 @@ public class SysDictItemController extends BaseController {
   @ApiOperation("7.修改类别状态")
   @ApiOperationSupport(order = 7)
   @PostMapping("/type/status/{id}")
-  public ResponseData<Integer> editTypeStatus(@PathVariable String id, @RequestParam("status") String status) {
+  public ResponseData<Integer> editTypeStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return client.editTypeStatus(id, status);
   }
   
@@ -225,7 +226,7 @@ public class SysDictItemController extends BaseController {
   @ApiOperation("14.修改字典状态")
   @ApiOperationSupport(order = 14)
   @PostMapping("/item/status/{id}")
-  public ResponseData<Integer> editItemStatus(@PathVariable String id, @RequestParam("status") String status) {
+  public ResponseData<Integer> editItemStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return client.editItemStatus(id, status);
   }
   

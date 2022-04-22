@@ -2,6 +2,8 @@ package com.oner365.sys.service;
 
 import java.util.List;
 
+import com.oner365.common.enums.StatusEnum;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
 import com.oner365.sys.dto.SysOrganizationDto;
 import com.oner365.sys.dto.TreeSelect;
@@ -102,12 +104,21 @@ public interface ISysOrganizationService extends BaseService {
   List<SysOrganizationDto> buildTree(List<SysOrganizationDto> orgList);
 
   /**
-   * 根据用户查询系统单位列表
+   * 查询单位列表
    *
-   * @param sysOrg 单位信息
+   * @param data 查询参数
    * @return 单位列表
    */
-  List<SysOrganizationDto> selectList(SysOrganizationVo sysOrg);
+  List<SysOrganizationDto> findList(QueryCriteriaBean data);
+  
+  /**
+   * 查询单位列表
+   *
+   * @param sysOrganizationVo 查询对象
+   * @return 单位列表
+   */
+  List<SysOrganizationDto> selectList(SysOrganizationVo sysOrganizationVo);
+
 
   /**
    * 根据用户查询系统单位列表
@@ -124,6 +135,6 @@ public interface ISysOrganizationService extends BaseService {
    * @param status 状态
    * @return int
    */
-  Integer changeStatus(String id, String status);
+  Integer editStatus(String id, StatusEnum status);
 
 }

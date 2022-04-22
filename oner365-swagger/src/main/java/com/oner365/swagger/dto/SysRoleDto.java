@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.MoreObjects;
+import com.oner365.common.enums.StatusEnum;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -47,7 +48,7 @@ public class SysRoleDto implements Serializable {
      * 状态 status
      */
     @ApiModelProperty(value = "状态")
-    private String status;
+    private StatusEnum status;
 
     /**
      * 创建时间 create_time
@@ -118,11 +119,11 @@ public class SysRoleDto implements Serializable {
         this.roleDes = roleDes;
     }
 
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 

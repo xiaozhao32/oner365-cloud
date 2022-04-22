@@ -4,63 +4,6 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oner365.sys.mapper.SysOrganizationMapper">
 
-	<resultMap type="SysOrganization" id="SysOrganizationResult">
-		<id     property="id"         	  column="id"             	/>
-		<result property="orgName"        column="org_name"      	/>
-		<result property="orgCode"        column="org_code"      	/>
-		<result property="orgCreditCode"  column="org_credit_code"  />
-		<result property="orgAreaCode"    column="org_area_code"    />
-		<result property="orgType"        column="org_type"      	/>
-		<result property="orgLogo"        column="org_logo"         />
-		<result property="orgLogoUrl"     column="org_logo_url"     />
-		<result property="orgOrder"       column="org_order"        />
-		<result property="parentId"       column="parent_id"        />
-		<result property="status"         column="status"           />
-		<result property="updateTime"     column="update_time"      />
-		<result property="createTime"     column="create_time"      />
-		<result property="businessName"   column="business_name"    />
-		<result property="businessPhone"  column="business_phone"   />
-		<result property="technicalName"  column="technical_name"   />
-		<result property="technicalPhone" column="technical_phone"  />
-		<result property="createUser" 	  column="create_user"   	/>
-		
-		<association property="dataSourceConfig" javaType="com.oner365.sys.entity.DataSourceConfig">
-			<id property="id" column="id" />
-			<result property="connectName" column="connect_name" />
-			<result property="dbType" column="db_type" />
-			<result property="dsType" column="ds_type" />
-			<result property="ip" column="ip" />
-			<result property="driverName" column="driver_name" />
-			<result property="url" column="url" />
-			<result property="dbName" column="db_name" />
-			<result property="port" column="port" />
-			<result property="userName" column="user_name" />
-			<result property="password" column="password" />
-			<result property="createTime" column="create_time" />
-			<result property="updateTime" column="update_time" />
-		</association>
-	</resultMap>
-
-	<sql id="selectOrganizationVo">
-        select id, org_name, org_code, org_credit_code, org_area_code, org_type, org_logo, org_logo_url, org_order,
-        parent_id, status, update_time, create_time, business_name, business_phone, technical_name, technical_phone, create_user
-		from nt_sys_organization
-    </sql>
-    
-    <select id="selectList" parameterType="SysOrganization" resultMap="SysOrganizationResult">
-		<include refid="selectOrganizationVo"/>
-		<where>
-			<if test="parentId != null and parentId != 0">
-				AND parent_id = #{parentId}
-			</if>
-			<if test="status != null and status != ''">
-				AND status = #{status}
-			</if>
-		</where>
-		order by parent_id, org_order
-	</select>
-	
-	
 	<select id="selectListByUserId" parameterType="String" resultType="String">
 		select d.id
 		from nt_sys_organization d

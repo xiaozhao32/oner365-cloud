@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.alibaba.fastjson.JSONArray;
+import com.oner365.common.enums.StatusEnum;
 
 /**
  * 基础权限--角色表nt_sys_role
@@ -37,7 +38,7 @@ public class SysRoleVo implements Serializable {
   /**
    * 状态 status
    */
-  private String status;
+  private StatusEnum status;
 
   /**
    * 创建时间 create_time
@@ -104,11 +105,11 @@ public class SysRoleVo implements Serializable {
     this.roleDes = roleDes;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

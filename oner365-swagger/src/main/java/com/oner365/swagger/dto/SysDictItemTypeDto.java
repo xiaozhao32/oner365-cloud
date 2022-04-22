@@ -3,6 +3,7 @@ package com.oner365.swagger.dto;
 import java.io.Serializable;
 
 import com.google.common.base.MoreObjects;
+import com.oner365.common.enums.StatusEnum;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -54,7 +55,7 @@ public class SysDictItemTypeDto implements Serializable {
      * 状态 status
      */
     @ApiModelProperty(value = "状态")
-    private String status;
+    private StatusEnum status;
 
     /**
      * Constructor
@@ -95,11 +96,11 @@ public class SysDictItemTypeDto implements Serializable {
         this.typeOrder = typeOrder;
     }
 
-    public String getStatus() {
+    public StatusEnum getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusEnum status) {
         this.status = status;
     }
 

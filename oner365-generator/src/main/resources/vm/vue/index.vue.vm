@@ -428,19 +428,19 @@ export default {
     },
     // 状态修改
     handleStatusChange(row) {
-      let text = row.status === "1" ? "启用" : "停用";
-      this.$confirm('确认要"' + text + '""' + row.jobName + '"吗?', "警告", {
-          confirmButtonText: "确定",
-          cancelButtonText: "取消",
-          type: "warning"
-        }).then(function() {
-          return changeStatus(row.id, row.status);
-        }).then(() => {
-          this.msgSuccess(text + "成功");
-          this.getList();
-        }).catch(function() {
-          row.status = row.status === "0" ? "1" : "0";
-        });
+      let text = row.status === "YES" ? "启用" : "停用";
+      this.$confirm('确认要"' + text + '"吗?', "警告", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(function() {
+        return changeStatus(row.id, row.status);
+      }).then(() => {
+        this.msgSuccess(text + "成功");
+        this.getList();
+      }).catch(function() {
+		row.status = row.status === "NO" ? "YES" : "NO";
+      });
     },
     /** 新增按钮操作 */
     handleAdd() {

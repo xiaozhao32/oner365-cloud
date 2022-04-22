@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.swagger.client.system.ISystemMenuClient;
 import com.oner365.swagger.dto.SysMenuDto;
@@ -76,7 +77,7 @@ public class SysMenuController extends BaseController {
   @ApiOperation("3.修改状态")
   @ApiOperationSupport(order = 3)
   @PostMapping("/status/{id}")
-  public ResponseData<Integer> editStatus(@PathVariable String id, @RequestParam("status") String status) {
+  public ResponseData<Integer> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return client.editStatus(id, status);
   }
   

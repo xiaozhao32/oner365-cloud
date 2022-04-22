@@ -91,7 +91,7 @@ public class SysUserController extends BaseController {
 
     QueryCriteriaBean data = new QueryCriteriaBean();
     List<AttributeBean> whereList = new ArrayList<>();
-    AttributeBean attribute = new AttributeBean(SysConstants.STATUS, StatusEnum.YES.getCode());
+    AttributeBean attribute = new AttributeBean(SysConstants.STATUS, StatusEnum.YES);
     whereList.add(attribute);
     data.setWhereList(whereList);
     result.setRoleList(sysRoleService.findList(data));
@@ -208,7 +208,7 @@ public class SysUserController extends BaseController {
    * @return Integer
    */
   @PostMapping("/status/{id}")
-  public Integer editStatus(@PathVariable String id, @RequestParam("status") String status) {
+  public Integer editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return sysUserService.editStatus(id, status);
   }
 

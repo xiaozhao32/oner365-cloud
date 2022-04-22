@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -95,7 +96,7 @@ public interface ISystemDictClient {
    * @return ResponseData<Integer>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_TYPE_STATUS)
-  ResponseData<Integer> editTypeStatus(@PathVariable("id") String id, @RequestParam("status") String status);
+  ResponseData<Integer> editTypeStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
   
   /**
    * 字典类别保存
@@ -159,7 +160,7 @@ public interface ISystemDictClient {
    * @return ResponseData<Integer>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_ITEM_STATUS)
-  ResponseData<Integer> editItemStatus(@PathVariable("id") String id, @RequestParam("status") String status);
+  ResponseData<Integer> editItemStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
   
   /**
    * 保存字典信息

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -19,6 +20,7 @@ import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.common.enums.StatusEnum;
 
 /**
  * 机构表 - nt_sys_organization
@@ -102,8 +104,9 @@ public class SysOrganization implements Serializable {
   /**
    * 状态 status
    */
-  @Column(name = "status", nullable = false, length = 8)
-  private String status;
+  @Enumerated
+  @Column(name = "status", nullable = false)
+  private StatusEnum status;
 
   /**
    * 更新时间update_time
@@ -310,14 +313,14 @@ public class SysOrganization implements Serializable {
   /**
    * @return the status
    */
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
   /**
    * @param status the status to set
    */
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

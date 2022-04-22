@@ -3,6 +3,8 @@ package com.oner365.elasticsearch.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import org.elasticsearch.cluster.health.ClusterHealthStatus;
+
 /**
  * Elasticsearch transport client
  *
@@ -28,7 +30,7 @@ public class TransportClientDto implements Serializable {
     private Integer activeShards;
 
     /** status */
-    private String status;
+    private ClusterHealthStatus status;
 
     /** max wait time */
     private Long taskMaxWaitingTime;
@@ -83,11 +85,11 @@ public class TransportClientDto implements Serializable {
         this.activeShards = activeShards;
     }
 
-    public String getStatus() {
+    public ClusterHealthStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(ClusterHealthStatus status) {
         this.status = status;
     }
 

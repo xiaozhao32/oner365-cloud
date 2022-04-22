@@ -4,11 +4,15 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 
 import com.google.common.base.Joiner;
+import com.oner365.common.constants.PublicConstants;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.query.Criterion.Operator;
 import com.oner365.util.DataUtils;
 
@@ -18,6 +22,8 @@ import com.oner365.util.DataUtils;
  * @author zhaoyong
  */
 public class QueryUtils {
+  
+  private static final Logger LOGGER = LoggerFactory.getLogger(QueryUtils.class);
 
   /** 升序 */
   public static final String PARAM_ORDER_ASC = "ASC";
@@ -86,10 +92,31 @@ public class QueryUtils {
         criteria.add(Restrictions.between(key, value));
       }
       break;
+    case ENUM:
+      criteria.add(Restrictions.eq(key, getEnum(key, String.valueOf(value))));
+      break;
     default:
       criteria.add(Restrictions.eq(key, value));
       break;
     }
+  }
+  
+  /**
+   * 枚举类型
+   * 
+   * @param key   键
+   * @param value 值
+   * @return 枚举
+   */
+  private static Object getEnum(String key, String value) {
+    // 状态枚举
+    if (PublicConstants.PARAM_STATUS.equals(key)) {
+      return StatusEnum.valueOf(value);
+    } else {
+      // 当前枚举不支持
+      LOGGER.error("Enum not support. key:{} value:{}", key, value);
+    }
+    return null;
   }
 
   /**

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import com.google.common.base.MoreObjects;
+import com.oner365.common.enums.StatusEnum;
 
 /**
  * 职位信息 SysJob
@@ -51,7 +52,7 @@ public class SysJobDto implements Serializable {
   /**
    * 状态 status
    */
-  private String status;
+  private StatusEnum status;
 
   /**
    * 创建时间 create_time
@@ -132,11 +133,11 @@ public class SysJobDto implements Serializable {
     this.jobOrder = jobOrder;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

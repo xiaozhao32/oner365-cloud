@@ -2,6 +2,8 @@ package com.oner365.elasticsearch.dto;
 
 import java.io.Serializable;
 
+import org.elasticsearch.rest.RestStatus;
+
 /**
  * Elasticsearch cluster
  *
@@ -21,7 +23,7 @@ public class ClusterDto implements Serializable {
     private Integer numberOfReplicas;
 
     /** Status */
-    private String status;
+    private RestStatus status;
 
     /**
      * 构造方法
@@ -54,11 +56,11 @@ public class ClusterDto implements Serializable {
         this.numberOfReplicas = numberOfReplicas;
     }
 
-    public String getStatus() {
+    public RestStatus getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(RestStatus status) {
         this.status = status;
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.ApplicationEventPublisherAware;
 
 import com.oner365.gateway.dto.GatewayRouteDto;
+import com.oner365.gateway.enums.StatusEnum;
 import com.oner365.gateway.page.PageInfo;
 import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.vo.GatewayRouteVo;
@@ -85,6 +86,6 @@ public interface DynamicRouteService extends BaseService, ApplicationEventPublis
    * @param status 状态
    * @return String
    */
-  String updateRouteStatus(String id, String status);
+  String updateRouteStatus(String id, StatusEnum status);
 
 }

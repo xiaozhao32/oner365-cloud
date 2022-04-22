@@ -3,6 +3,7 @@ package com.oner365.sys.dto;
 import java.io.Serializable;
 
 import com.google.common.base.MoreObjects;
+import com.oner365.common.enums.StatusEnum;
 
 /**
  * 字典类型 SysDictItemType
@@ -44,7 +45,7 @@ public class SysDictItemTypeDto implements Serializable {
   /**
    * 状态 status
    */
-  private String status;
+  private StatusEnum status;
 
   /**
    * Constructor
@@ -85,11 +86,11 @@ public class SysDictItemTypeDto implements Serializable {
     this.typeOrder = typeOrder;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

@@ -91,7 +91,7 @@ public class OrderServiceImpl implements IOrderService {
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public OrderDto save(OrderVo vo) {
     if (DataUtils.isEmpty(vo.getId())) {
-      vo.setStatus(StatusEnum.YES.getCode());
+      vo.setStatus(StatusEnum.YES);
       vo.setCreateTime(LocalDateTime.now());
     }
     Order entity = dao.save(convert(vo, Order.class));
@@ -109,7 +109,7 @@ public class OrderServiceImpl implements IOrderService {
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Integer editStatus(String id, String status) {
+  public Integer editStatus(String id, StatusEnum status) {
     Optional<Order> optional = dao.findById(id);
     if (optional.isPresent()) {
       optional.get().setStatus(status);

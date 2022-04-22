@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -112,7 +113,7 @@ public interface ISystemUserClient {
    * @return ResponseData<Integer>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_USER_STATUS)
-  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") String status);
+  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
 
   /**
    * 保存

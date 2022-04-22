@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ErrorInfoEnum;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -63,7 +64,7 @@ public class OrderController extends BaseController {
    * @return Integer
    */
   @PostMapping("/status/{id}")
-  public Integer editStatus(@PathVariable String id, @RequestParam("status") String status) {
+  public Integer editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return service.editStatus(id, status);
   }
 

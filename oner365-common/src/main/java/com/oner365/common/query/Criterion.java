@@ -38,7 +38,9 @@ public interface Criterion  extends Serializable {
         /* 包含 */
         IN,
         /* Between */
-        BE
+        BE,
+        /* 枚举 */
+        ENUM
     }
 
     /**

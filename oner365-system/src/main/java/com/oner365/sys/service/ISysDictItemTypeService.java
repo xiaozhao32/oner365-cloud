@@ -2,6 +2,7 @@ package com.oner365.sys.service;
 
 import java.util.List;
 
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
@@ -79,6 +80,6 @@ public interface ISysDictItemTypeService extends BaseService {
    * @param status 状态
    * @return int
    */
-  Integer editStatus(String id, String status);
+  Integer editStatus(String id, StatusEnum status);
 
 }

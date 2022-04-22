@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.common.enums.StatusEnum;
 
 /**
  * 菜单类型对象
@@ -39,8 +41,9 @@ public class SysMenuType implements Serializable {
   @Column(name = "type_code", nullable = false, length = 32)
   private String typeCode;
 
-  @Column(name = "status", nullable = false, length = 8)
-  private String status;
+  @Enumerated
+  @Column(name = "status", nullable = false)
+  private StatusEnum status;
 
   /**
    * 创建时间 create_time
@@ -85,11 +88,11 @@ public class SysMenuType implements Serializable {
     this.typeCode = typeCode;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

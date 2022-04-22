@@ -2,6 +2,8 @@ package com.oner365.sys.service;
 
 import java.util.List;
 
+import com.oner365.common.enums.StatusEnum;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
 import com.oner365.sys.dto.SysMenuDto;
 import com.oner365.sys.dto.TreeSelect;
@@ -45,7 +47,7 @@ public interface ISysMenuService extends BaseService {
    * @param status 状态
    * @return int
    */
-  int editStatusById(String id, String status);
+  int editStatus(String id, StatusEnum status);
 
   /**
    * 按菜单类型查询
@@ -89,14 +91,22 @@ public interface ISysMenuService extends BaseService {
    * @return List<SysMenuDto>
    */
   List<SysMenuDto> buildTree(List<SysMenuDto> menus);
-
+  
   /**
-   * 根据用户查询系统菜单列表
+   * 查询系统菜单列表
    *
-   * @param menu 菜单
+   * @param data 查询参数
    * @return 菜单列表
    */
-  List<SysMenuDto> selectList(SysMenuVo menu);
+  List<SysMenuDto> findList(QueryCriteriaBean data);
+
+  /**
+   * 查询系统菜单列表
+   *
+   * @param sysMenuVo 查询对象
+   * @return 菜单列表
+   */
+  List<SysMenuDto> selectList(SysMenuVo sysMenuVo);
 
   /**
    * 根据用户查询系统菜单列表

@@ -3,6 +3,8 @@ package com.oner365.datasource.vo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.oner365.common.enums.StatusEnum;
+
 /**
  * 订单对象
  * 
@@ -34,7 +36,7 @@ public class OrderVo implements Serializable {
   /**
    * 状态
    */
-  private String status;
+  private StatusEnum status;
 
   /**
    * 创建时间
@@ -90,14 +92,14 @@ public class OrderVo implements Serializable {
   /**
    * @return the status
    */
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
   /**
    * @param status the status to set
    */
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

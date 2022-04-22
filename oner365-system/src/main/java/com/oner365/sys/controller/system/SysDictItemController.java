@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.common.enums.ResultEnum;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.AttributeBean;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -142,7 +143,7 @@ public class SysDictItemController extends BaseController {
    * @return Integer
    */
   @PostMapping("/type/status/{id}")
-  public Integer editTypeStatus(@PathVariable String id, @RequestParam("status") String status) {
+  public Integer editTypeStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return sysDictItemTypeService.editStatus(id, status);
   }
   
@@ -238,7 +239,7 @@ public class SysDictItemController extends BaseController {
    * @return Integer
    */
   @PostMapping("/item/status/{id}")
-  public Integer editItemStatus(@PathVariable String id, @RequestParam("status") String status) {
+  public Integer editItemStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return sysDictItemService.editStatus(id, status);
   }
 

@@ -93,7 +93,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
   public SysMenuTypeDto save(SysMenuTypeVo vo) {
     if (DataUtils.isEmpty(vo.getId())) {
-      vo.setStatus(StatusEnum.YES.getCode());
+      vo.setStatus(StatusEnum.YES);
       vo.setCreateTime(LocalDateTime.now());
     } else {
       vo.setUpdateTime(LocalDateTime.now());
@@ -107,7 +107,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
-  public int editStatusById(String id, String status) {
+  public int editStatus(String id, StatusEnum status) {
     Optional<SysMenuType> optional = dao.findById(id);
     if (optional.isPresent()) {
       SysMenuType entity = optional.get();

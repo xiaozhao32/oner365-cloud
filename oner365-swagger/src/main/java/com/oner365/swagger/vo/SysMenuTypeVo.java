@@ -3,6 +3,8 @@ package com.oner365.swagger.vo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import com.oner365.common.enums.StatusEnum;
+
 /**
  * 菜单类型对象
  * 
@@ -33,7 +35,7 @@ public class SysMenuTypeVo implements Serializable {
   /**
    * 状态
    */
-  private String status;
+  private StatusEnum status;
 
   /**
    * 创建时间 create_time
@@ -76,11 +78,11 @@ public class SysMenuTypeVo implements Serializable {
     this.typeCode = typeCode;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

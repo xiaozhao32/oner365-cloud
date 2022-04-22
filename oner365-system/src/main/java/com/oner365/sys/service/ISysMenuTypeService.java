@@ -2,6 +2,7 @@ package com.oner365.sys.service;
 
 import java.util.List;
 
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
@@ -54,7 +55,7 @@ public interface ISysMenuTypeService extends BaseService {
    * @param status 状态
    * @return int
    */
-  int editStatusById(String id, String status);
+  int editStatus(String id, StatusEnum status);
 
   /**
    * 检测code

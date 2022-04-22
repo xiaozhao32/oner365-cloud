@@ -16,6 +16,7 @@ import com.oner365.gateway.constants.ResponseData;
 import com.oner365.gateway.constants.ResponseResult;
 import com.oner365.gateway.dto.GatewayRouteDto;
 import com.oner365.gateway.enums.ResultEnum;
+import com.oner365.gateway.enums.StatusEnum;
 import com.oner365.gateway.page.PageInfo;
 import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.service.DynamicRouteService;
@@ -107,7 +108,7 @@ public class DynamicRouteController {
    * @return ResponseData
    */
   @GetMapping("/status/{id}/{status}")
-  public ResponseData<ResponseResult<String>> updateRouteStatus(@PathVariable String id, @PathVariable String status) {
+  public ResponseData<ResponseResult<String>> updateRouteStatus(@PathVariable String id, @PathVariable StatusEnum status) {
     String msg = dynamicRouteService.updateRouteStatus(id, status);
     if (msg != null) {
       return ResponseData.success(ResponseResult.success(msg));

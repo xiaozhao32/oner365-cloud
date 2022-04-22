@@ -2,6 +2,8 @@ package com.oner365.elasticsearch.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Enumerated;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -10,6 +12,7 @@ import org.springframework.data.elasticsearch.annotations.Setting;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.oner365.elasticsearch.enums.GeneTypeEnum;
 
 /**
  * SampleGene
@@ -32,8 +35,9 @@ public class SampleGene implements Serializable {
   /**
    * 基因类型 (格式: 1:X 2:Y)
    */
+  @Enumerated
   @Field(type = FieldType.Keyword)
-  private String geneType;
+  private GeneTypeEnum geneType;
 
   /**
    * 人员编号
@@ -81,14 +85,14 @@ public class SampleGene implements Serializable {
   /**
    * @return the geneType
    */
-  public String getGeneType() {
+  public GeneTypeEnum getGeneType() {
     return geneType;
   }
 
   /**
    * @param geneType the geneType to set
    */
-  public void setGeneType(String geneType) {
+  public void setGeneType(GeneTypeEnum geneType) {
     this.geneType = geneType;
   }
 

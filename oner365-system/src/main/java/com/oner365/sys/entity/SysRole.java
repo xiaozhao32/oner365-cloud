@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -12,6 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.common.enums.StatusEnum;
 
 /**
  * 基础权限--角色表nt_sys_role
@@ -54,8 +56,9 @@ public class SysRole implements Serializable {
   /**
    * 状态 status
    */
-  @Column(name = "status", nullable = false, length = 32)
-  private String status;
+  @Enumerated
+  @Column(name = "status", nullable = false)
+  private StatusEnum status;
 
   /**
    * 创建时间 create_time
@@ -114,11 +117,11 @@ public class SysRole implements Serializable {
     this.roleDes = roleDes;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

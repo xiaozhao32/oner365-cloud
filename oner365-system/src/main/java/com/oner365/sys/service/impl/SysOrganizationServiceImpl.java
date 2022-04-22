@@ -2,6 +2,7 @@ package com.oner365.sys.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -12,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -25,6 +28,8 @@ import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
+import com.oner365.common.query.QueryCriteriaBean;
+import com.oner365.common.query.QueryUtils;
 import com.oner365.common.query.Restrictions;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysOrganizationDao;
@@ -128,7 +133,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   public SysOrganizationDto save(SysOrganizationVo vo) {
     if (DataUtils.isEmpty(vo.getId())) {
       vo.setId(vo.getOrgCode());
-      vo.setStatus(StatusEnum.YES.getCode());
+      vo.setStatus(StatusEnum.YES);
       vo.setCreateTime(LocalDateTime.now());
     }
 
@@ -232,9 +237,30 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
 
   @Override
   @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
-  public List<SysOrganizationDto> selectList(SysOrganizationVo vo) {
-    List<SysOrganization> list = organizationMapper.selectList(convert(vo, SysOrganization.class));
-    return convert(list, SysOrganizationDto.class);
+  public List<SysOrganizationDto> findList(QueryCriteriaBean data) {
+    try {
+      if (data.getOrder() == null) {
+        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysOrganizationDto.class);
+      }
+      List<SysOrganization> list = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+      return convert(list, SysOrganizationDto.class);
+    } catch (Exception e) {
+      LOGGER.error("Error findList: ", e);
+    }
+    return Collections.emptyList();
+  }
+  
+  @Override
+  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  public List<SysOrganizationDto> selectList(SysOrganizationVo sysOrganizationVo) {
+    Criteria<SysOrganization> criteria = new Criteria<>();
+    if (!DataUtils.isEmpty(sysOrganizationVo.getOrgName())) {
+      criteria.add(Restrictions.like("orgName", sysOrganizationVo.getOrgName()));
+    }
+    if (!DataUtils.isEmpty(sysOrganizationVo.getStatus())) {
+      criteria.add(Restrictions.eq(SysConstants.STATUS, sysOrganizationVo.getStatus()));
+    }
+    return convert(dao.findAll(criteria, Sort.by(Direction.DESC, "parentId", "orgOrder")), SysOrganizationDto.class);
   }
 
   @Override
@@ -246,7 +272,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Integer changeStatus(String id, String status) {
+  public Integer editStatus(String id, StatusEnum status) {
     Optional<SysOrganization> optional = dao.findById(id);
     if (optional.isPresent()) {
       SysOrganization entity = optional.get();

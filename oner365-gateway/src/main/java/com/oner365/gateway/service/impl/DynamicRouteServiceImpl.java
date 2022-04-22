@@ -28,6 +28,7 @@ import com.oner365.gateway.dto.GatewayRouteDto;
 import com.oner365.gateway.entity.GatewayFilter;
 import com.oner365.gateway.entity.GatewayPredicate;
 import com.oner365.gateway.entity.GatewayRoute;
+import com.oner365.gateway.enums.StatusEnum;
 import com.oner365.gateway.page.PageInfo;
 import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.query.QueryUtils;
@@ -143,7 +144,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
   }
 
   @Override
-  public String updateRouteStatus(String id, String status) {
+  public String updateRouteStatus(String id, StatusEnum status) {
     GatewayRoute gatewayRoute = findById(id);
     if (gatewayRoute != null) {
       gatewayRoute.setStatus(status);
@@ -175,7 +176,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
           String pattern = StringUtils.substring(predicates.getArgs().get(GatewayConstants.PREDICATE_ARGS_PATTERN), 0,
               predicates.getArgs().get(GatewayConstants.PREDICATE_ARGS_PATTERN).length() - 2);
           predicateMap.put(pattern,
-              DataUtils.isEmpty(route.getStatus()) ? GatewayConstants.ROUT_STATUS_DISABLE : route.getStatus());
+              DataUtils.isEmpty(route.getStatus().getCode()) ? GatewayConstants.ROUT_STATUS_DISABLE : route.getStatus().getCode());
         });
     return predicateMap;
   }

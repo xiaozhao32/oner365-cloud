@@ -6,6 +6,7 @@ import java.util.List;
 import com.google.common.base.MoreObjects;
 import com.oner365.gateway.entity.GatewayFilter;
 import com.oner365.gateway.entity.GatewayPredicate;
+import com.oner365.gateway.enums.StatusEnum;
 
 /**
  * Gateway的路由定义模型
@@ -45,9 +46,9 @@ public class GatewayRouteDto implements Serializable {
   private Integer routeOrder = 0;
 
   /**
-   * 路由状态 0：可用 1：不可用
+   * 路由状态 1：可用 0：不可用
    */
-  private String status;
+  private StatusEnum status;
 
   /**
    * 界面使用的谓词
@@ -98,11 +99,11 @@ public class GatewayRouteDto implements Serializable {
     this.routeOrder = routeOrder;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

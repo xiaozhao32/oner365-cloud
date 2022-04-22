@@ -1,6 +1,5 @@
 package com.oner365.sys.controller.system;
 
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,8 @@ import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.enums.ErrorInfoEnum;
+import com.oner365.common.enums.StatusEnum;
+import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dto.SysMenuDto;
@@ -44,17 +45,14 @@ public class SysMenuController extends BaseController {
   public ISysMenuOperationService operationService;
 
   /**
-   * 菜单列表
+   * 获取列表
    *
-   * @param sysMenuVo 菜单对象
+   * @param data 查询对象
    * @return List<SysMenuDto>
    */
   @PostMapping("/list")
-  public List<SysMenuDto> list(@RequestBody SysMenuVo sysMenuVo) {
-    if (sysMenuVo != null) {
-      return menuService.selectList(sysMenuVo);
-    }
-    return Collections.emptyList();
+  public List<SysMenuDto> list(@RequestBody QueryCriteriaBean data) {
+    return menuService.findList(data);
   }
 
   /**
@@ -80,8 +78,8 @@ public class SysMenuController extends BaseController {
    * @return Integer
    */
   @PostMapping("/status/{id}")
-  public Integer editStatusById(@PathVariable String id, @RequestParam("status") String status) {
-    return menuService.editStatusById(id, status);
+  public Integer editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+    return menuService.editStatus(id, status);
   }
 
   /**

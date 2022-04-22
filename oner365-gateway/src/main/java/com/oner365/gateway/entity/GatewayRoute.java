@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -13,6 +14,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.gateway.enums.StatusEnum;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 /**
@@ -64,10 +66,11 @@ public class GatewayRoute implements Serializable {
   private Integer routeOrder = 0;
 
   /**
-   * 路由状态 0：可用 1：不可用
+   * 路由状态 1：可用 0：不可用
    */
-  @Column(name = "status", nullable = false, length = 8)
-  private String status;
+  @Enumerated
+  @Column(name = "status", nullable = false)
+  private StatusEnum status;
 
   /**
    * 界面使用的谓词
@@ -119,11 +122,11 @@ public class GatewayRoute implements Serializable {
     this.routeOrder = routeOrder;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

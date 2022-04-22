@@ -92,7 +92,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public SysMenuOperationDto save(SysMenuOperationVo vo) {
     if (DataUtils.isEmpty(vo.getId())) {
-      vo.setStatus(StatusEnum.YES.getCode());
+      vo.setStatus(StatusEnum.YES);
       vo.setCreateTime(LocalDateTime.now());
     }
     vo.setUpdateTime(LocalDateTime.now());

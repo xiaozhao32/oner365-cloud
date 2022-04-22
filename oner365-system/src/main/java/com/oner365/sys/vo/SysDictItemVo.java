@@ -2,6 +2,8 @@ package com.oner365.sys.vo;
 
 import java.io.Serializable;
 
+import com.oner365.common.enums.StatusEnum;
+
 /**
  * 字典 SysDictItem
  * 
@@ -42,7 +44,7 @@ public class SysDictItemVo implements Serializable {
   /**
    * 状态 status
    */
-  private String status;
+  private StatusEnum status;
 
   /**
    * 上级id parent_id
@@ -88,11 +90,11 @@ public class SysDictItemVo implements Serializable {
     this.itemOrder = itemOrder;
   }
 
-  public String getStatus() {
+  public StatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(StatusEnum status) {
     this.status = status;
   }
 

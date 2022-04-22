@@ -12,7 +12,7 @@ import javax.persistence.criteria.Root;
 public interface Criterion {
     enum Operator {
         /** 条件表达式 */
-        EQ, NE, LIKE, GT, LT, GTE, LTE, AND, OR, IN, BE
+        EQ, NE, LIKE, GT, LT, GTE, LTE, AND, OR, IN, BE, ENUM
     }
 
     /**

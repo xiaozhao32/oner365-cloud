@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.swagger.constants.PathConstants;
 import com.oner365.swagger.dto.SysMenuTreeSelectDto;
 import com.oner365.swagger.dto.SysOrganizationDto;
@@ -102,7 +103,7 @@ public interface ISystemOrgClient {
    * @return ResponseData<Integer>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_STATUS)
-  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") String status);
+  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
 
   /**
    * 保存

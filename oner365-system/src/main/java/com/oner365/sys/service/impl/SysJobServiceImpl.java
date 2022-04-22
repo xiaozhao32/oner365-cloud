@@ -90,7 +90,7 @@ public class SysJobServiceImpl implements ISysJobService {
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public SysJobDto save(SysJobVo vo) {
     if (DataUtils.isEmpty(vo.getId())) {
-      vo.setStatus(StatusEnum.YES.getCode());
+      vo.setStatus(StatusEnum.YES);
       vo.setCreateTime(LocalDateTime.now());
     }
     vo.setUpdateTime(LocalDateTime.now());
@@ -109,7 +109,7 @@ public class SysJobServiceImpl implements ISysJobService {
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Integer editStatus(String id, String status) {
+  public Integer editStatus(String id, StatusEnum status) {
     Optional<SysJob> optional = dao.findById(id);
     if (optional.isPresent()) {
       optional.get().setStatus(status);
