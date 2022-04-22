@@ -26,9 +26,9 @@
         <el-select v-model="queryParams.${column.javaField}" placeholder="请选择${comment}" clearable size="small">
           <el-option
             v-for="dict in ${column.javaField}Options"
-            :key="dict.dictValue"
-            :label="dict.dictLabel"
-            :value="dict.dictValue"
+            :key="dict.itemCode"
+            :label="dict.itemName"
+            :value="dict.itemCode"
           />
         </el-select>
       </el-form-item>
@@ -174,9 +174,9 @@
           <el-select v-model="form.${field}" placeholder="请选择${comment}">
             <el-option
               v-for="dict in ${field}Options"
-              :key="dict.dictValue"
-              :label="dict.dictLabel"
-              #if($column.javaType == "Integer" || $column.javaType == "Long"):value="parseInt(dict.dictValue)"#else:value="dict.dictValue"#end
+              :key="dict.itemCode"
+              :label="dict.itemName"
+              #if($column.javaType == "Integer" || $column.javaType == "Long"):value="parseInt(dict.itemCode)"#else:value="dict.itemCode"#end
 
             ></el-option>
           </el-select>
@@ -192,9 +192,9 @@
           <el-checkbox-group v-model="form.${field}">
             <el-checkbox
               v-for="dict in ${field}Options"
-              :key="dict.dictValue"
-              :label="dict.dictValue">
-              {{dict.dictLabel}}
+              :key="dict.itemCode"
+              :label="dict.itemCode">
+              {{dict.itemName}}
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
@@ -209,10 +209,10 @@
           <el-radio-group v-model="form.${field}">
             <el-radio
               v-for="dict in ${field}Options"
-              :key="dict.dictValue"
-              #if($column.javaType == "Integer" || $column.javaType == "Long"):label="parseInt(dict.dictValue)"#else:label="dict.dictValue"#end
+              :key="dict.itemCode"
+              #if($column.javaType == "Integer" || $column.javaType == "Long"):label="parseInt(dict.itemCode)"#else:label="dict.itemCode"#end
 
-            >{{dict.dictLabel}}</el-radio>
+            >{{dict.itemName}}</el-radio>
           </el-radio-group>
         </el-form-item>
 #elseif($column.htmlType == "radio" && $dictType)
@@ -430,17 +430,17 @@ export default {
     handleStatusChange(row) {
       let text = row.status === "YES" ? "启用" : "停用";
       this.$confirm('确认要"' + text + '"吗?', "警告", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning"
-      }).then(function() {
-        return changeStatus(row.id, row.status);
-      }).then(() => {
-        this.msgSuccess(text + "成功");
-        this.getList();
-      }).catch(function() {
-		row.status = row.status === "NO" ? "YES" : "NO";
-      });
+          confirmButtonText: "确定",
+          cancelButtonText: "取消",
+          type: "warning"
+        }).then(function() {
+          return changeStatus(row.id, row.status);
+        }).then(() => {
+          this.msgSuccess(text + "成功");
+          this.getList();
+        }).catch(function() {
+          row.status = row.status === "NO" ? "YES" : "NO";
+        });
     },
     /** 新增按钮操作 */
     handleAdd() {
@@ -487,7 +487,7 @@ export default {
       let ids = [row.id];
       if (row.id == undefined)
         ids = this.ids;
-      this.$confirm('是否确认删除 "' + ids + '" ?', "警告", {
+      this.$confirm('是否确认删除?', "警告", {
           confirmButtonText: "确定",
           cancelButtonText: "取消",
           type: "warning"
@@ -506,6 +506,8 @@ export default {
         pageSize: queryParams.pageSize,
         order: { key: 'updateTime', val: 'desc' },
         whereList: [
+          // 查询参数 
+          { key: 'status', opt: 'enum', val: queryParams.status }
         ]
       }
       const url = '/${moduleName}/${businessName}/export';

@@ -78,6 +78,9 @@ public class GenConstants {
     
     /** 时间类型 */
     public static final String TYPE_DATE_TIME = "LocalDateTime";
+    
+    /** 枚举状态类型 */
+    public static final String TYPE_ENUM_STATUS = "StatusEnum";
 
     /** 模糊查询 */
     public static final String QUERY_LIKE = "LIKE";

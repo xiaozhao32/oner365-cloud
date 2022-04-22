@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
+import javax.persistence.Entity
+#if($column.javaType != 'StatusEnum')
+import javax.persistence.Enumerated;
+#end
 import javax.persistence.GeneratedValue;
 #foreach ($column in $columns)
 #if($column.columnName == 'id' && $column.javaType != 'String')
@@ -20,6 +23,9 @@ import org.hibernate.annotations.GenericGenerator;
 #end
 #end
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+#if($column.javaType != 'StatusEnum')
+import com.oner365.common.enums.StatusEnum;
+#end
 
 /**
  * ${functionName} 对象 ${tableName}
@@ -44,6 +50,8 @@ public class ${ClassName} implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 #end
+#elseif($column.javaType == 'StatusEnum')
+    @Enumerated
 #else
     @Column(#if($column.isRequired == '1') name = "$column.columnName", nullable = false#else name = "$column.columnName"#end)
 #end

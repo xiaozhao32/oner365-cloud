@@ -38,7 +38,7 @@ public class GenUtils {
 
     /** 页面不需要显示的列表字段 */
     protected static final String[] COLUMNNAME_NOT_LIST = { "id", GenConstants.PARAM_CREATE_USER,
-            GenConstants.PARAM_CREATE_TIME, "update_user", "update_time" };
+            GenConstants.PARAM_CREATE_TIME, "update_user" };
 
     /** 页面不需要查询字段 */
     protected static final String[] COLUMNNAME_NOT_QUERY = { "id", GenConstants.PARAM_CREATE_USER,
@@ -140,6 +140,7 @@ public class GenUtils {
         // 状态字段设置单选框
         if (StringUtils.endsWithIgnoreCase(columnName, PARAM_STATUS)) {
             column.setHtmlType(GenConstants.HTML_RADIO);
+            column.setJavaType(GenConstants.TYPE_ENUM_STATUS);
         }
         // 类型&性别字段设置下拉框
         else if (StringUtils.endsWithIgnoreCase(columnName, PARAM_TYPE)

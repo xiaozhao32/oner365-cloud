@@ -5,6 +5,9 @@ import java.time.LocalDateTime;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+#if($column.javaType != 'StatusEnum')
+import com.oner365.common.enums.StatusEnum;
+#end
 
 /**
  * ${functionName} 对象 ${tableName}
