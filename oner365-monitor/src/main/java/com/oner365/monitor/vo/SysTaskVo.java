@@ -4,7 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.oner365.monitor.constants.ScheduleConstants;
+import com.oner365.api.enums.MisfirePolicyEnum;
+import com.oner365.api.enums.TaskStatusEnum;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.monitor.util.CronUtils;
 import com.oner365.util.DataUtils;
 
@@ -49,7 +51,7 @@ public class SysTaskVo implements Serializable {
   /**
    * cron计划策略
    */
-  private String misfirePolicy = ScheduleConstants.MISFIRE_DEFAULT;
+  private MisfirePolicyEnum misfirePolicy = MisfirePolicyEnum.DEFAULT;
 
   /**
    * 是否并发执行（0允许 1禁止）
@@ -57,14 +59,14 @@ public class SysTaskVo implements Serializable {
   private String concurrent;
 
   /**
-   * 任务状态（0正常 1暂停）
+   * 任务状态（1正常 0暂停）
    */
-  private String status;
+  private TaskStatusEnum status;
 
   /**
-   * 执行任务状态（0正在执行 1执行完成）
+   * 执行任务状态
    */
-  private String executeStatus;
+  private StatusEnum executeStatus;
 
   /**
    * 备注
@@ -138,11 +140,11 @@ public class SysTaskVo implements Serializable {
     return null;
   }
 
-  public String getMisfirePolicy() {
+  public MisfirePolicyEnum getMisfirePolicy() {
     return misfirePolicy;
   }
 
-  public void setMisfirePolicy(String misfirePolicy) {
+  public void setMisfirePolicy(MisfirePolicyEnum misfirePolicy) {
     this.misfirePolicy = misfirePolicy;
   }
 
@@ -154,11 +156,11 @@ public class SysTaskVo implements Serializable {
     this.concurrent = concurrent;
   }
 
-  public String getStatus() {
+  public TaskStatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(TaskStatusEnum status) {
     this.status = status;
   }
 
@@ -202,11 +204,11 @@ public class SysTaskVo implements Serializable {
     this.invokeParam = invokeParam;
   }
 
-  public String getExecuteStatus() {
+  public StatusEnum getExecuteStatus() {
     return executeStatus;
   }
 
-  public void setExecuteStatus(String executeStatus) {
+  public void setExecuteStatus(StatusEnum executeStatus) {
     this.executeStatus = executeStatus;
   }
 

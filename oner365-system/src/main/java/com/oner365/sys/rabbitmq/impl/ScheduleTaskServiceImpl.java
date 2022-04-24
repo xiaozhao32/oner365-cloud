@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.oner365.api.enums.TaskStatusEnum;
 import com.oner365.api.rabbitmq.IScheduleExecuteService;
 import com.oner365.api.rabbitmq.IScheduleTaskService;
 import com.oner365.api.rabbitmq.dto.InvokeParamDto;
@@ -66,17 +67,17 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
     long time = System.currentTimeMillis();
     UpdateTaskExecuteSatusDto updateTask = new UpdateTaskExecuteSatusDto();
     updateTask.setTaskId(taskId);
-    updateTask.setExecuteStatus(StatusEnum.NO.getCode());
+    updateTask.setExecuteStatus(StatusEnum.NO);
     scheduleExecuteService.updateTaskExecuteStatus(updateTask);
     LOGGER.info("taskExecute  update sysTask  executeStatus = 1");
-    updateTask.setExecuteStatus(StatusEnum.YES.getCode());
+    updateTask.setExecuteStatus(StatusEnum.YES);
     scheduleExecuteService.updateTaskExecuteStatus(updateTask);
     LOGGER.info("taskExecute  saveTaskLog ");
     SysTaskLogDto log = new SysTaskLogDto();
     log.setTaskId(taskId);
     log.setExecuteIp(DataUtils.getLocalhost());
     log.setExecuteServerName(SysConstants.SCHEDULE_SERVER_NAME);
-    log.setStatus(StatusEnum.YES.getCode());
+    log.setStatus(TaskStatusEnum.NORMAL);
     log.setTaskMessage("执行时间：" + (System.currentTimeMillis() - time) + "毫秒");
     scheduleExecuteService.saveExecuteTaskLog(log);
   }

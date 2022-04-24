@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -17,7 +18,9 @@ import org.hibernate.annotations.TypeDef;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.monitor.constants.ScheduleConstants;
+import com.oner365.api.enums.MisfirePolicyEnum;
+import com.oner365.api.enums.TaskStatusEnum;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.monitor.util.CronUtils;
 import com.oner365.util.DataUtils;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
@@ -62,20 +65,23 @@ public class SysTask implements Serializable {
   private String cronExpression;
 
   /** cron计划策略 */
+  @Enumerated
   @Column(name = "misfire_policy", length = 20)
-  private String misfirePolicy = ScheduleConstants.MISFIRE_DEFAULT;
+  private MisfirePolicyEnum misfirePolicy = MisfirePolicyEnum.DEFAULT;
 
   /** 是否并发执行（0允许 1禁止） */
   @Column(name = "concurrent", length = 1)
   private String concurrent;
 
   /** 任务状态（0正常 1暂停） */
+  @Enumerated
   @Column(name = "status", length = 1)
-  private String status;
+  private TaskStatusEnum status;
 
   /** 执行任务状态（0正在执行 1执行完成） */
+  @Enumerated
   @Column(name = "execute_status", length = 1)
-  private String executeStatus;
+  private StatusEnum executeStatus;
 
   /** 备注 */
   @Column(name = "remark", length = 500)
@@ -151,11 +157,11 @@ public class SysTask implements Serializable {
     return null;
   }
 
-  public String getMisfirePolicy() {
+  public MisfirePolicyEnum getMisfirePolicy() {
     return misfirePolicy;
   }
 
-  public void setMisfirePolicy(String misfirePolicy) {
+  public void setMisfirePolicy(MisfirePolicyEnum misfirePolicy) {
     this.misfirePolicy = misfirePolicy;
   }
 
@@ -167,11 +173,11 @@ public class SysTask implements Serializable {
     this.concurrent = concurrent;
   }
 
-  public String getStatus() {
+  public TaskStatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(TaskStatusEnum status) {
     this.status = status;
   }
 
@@ -215,11 +221,11 @@ public class SysTask implements Serializable {
     this.invokeParam = invokeParam;
   }
 
-  public String getExecuteStatus() {
+  public StatusEnum getExecuteStatus() {
     return executeStatus;
   }
 
-  public void setExecuteStatus(String executeStatus) {
+  public void setExecuteStatus(StatusEnum executeStatus) {
     this.executeStatus = executeStatus;
   }
 

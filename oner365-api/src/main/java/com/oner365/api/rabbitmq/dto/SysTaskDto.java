@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.Date;
 
 import com.google.common.base.MoreObjects;
+import com.oner365.api.enums.MisfirePolicyEnum;
+import com.oner365.api.enums.TaskStatusEnum;
+import com.oner365.common.enums.StatusEnum;
 
 /**
  * 定时任务调度表 nt_sys_task
@@ -46,7 +49,7 @@ public class SysTaskDto implements Serializable {
   /**
    * cron计划策略
    */
-  private String misfirePolicy = "0";
+  private MisfirePolicyEnum misfirePolicy = MisfirePolicyEnum.DEFAULT;
 
   /**
    * 是否并发执行（0允许 1禁止）
@@ -54,14 +57,14 @@ public class SysTaskDto implements Serializable {
   private String concurrent;
 
   /**
-   * 任务状态（0正常 1暂停）
+   * 任务状态（1正常 0暂停）
    */
-  private String status;
+  private TaskStatusEnum status;
 
   /**
    * 执行任务状态（0正在执行 1执行完成）
    */
-  private String executeStatus;
+  private StatusEnum executeStatus;
 
   /**
    * 备注
@@ -127,11 +130,11 @@ public class SysTaskDto implements Serializable {
     this.cronExpression = cronExpression;
   }
 
-  public String getMisfirePolicy() {
+  public MisfirePolicyEnum getMisfirePolicy() {
     return misfirePolicy;
   }
 
-  public void setMisfirePolicy(String misfirePolicy) {
+  public void setMisfirePolicy(MisfirePolicyEnum misfirePolicy) {
     this.misfirePolicy = misfirePolicy;
   }
 
@@ -143,11 +146,11 @@ public class SysTaskDto implements Serializable {
     this.concurrent = concurrent;
   }
 
-  public String getStatus() {
+  public TaskStatusEnum getStatus() {
     return status;
   }
 
-  public void setStatus(String status) {
+  public void setStatus(TaskStatusEnum status) {
     this.status = status;
   }
 
@@ -191,11 +194,11 @@ public class SysTaskDto implements Serializable {
     this.invokeParam = invokeParam;
   }
 
-  public String getExecuteStatus() {
+  public StatusEnum getExecuteStatus() {
     return executeStatus;
   }
 
-  public void setExecuteStatus(String executeStatus) {
+  public void setExecuteStatus(StatusEnum executeStatus) {
     this.executeStatus = executeStatus;
   }
 

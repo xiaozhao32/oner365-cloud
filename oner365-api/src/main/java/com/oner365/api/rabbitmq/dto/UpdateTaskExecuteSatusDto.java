@@ -3,6 +3,7 @@ package com.oner365.api.rabbitmq.dto;
 import java.io.Serializable;
 
 import com.alibaba.fastjson.JSON;
+import com.oner365.common.enums.StatusEnum;
 
 /**
  * 更新定时任务执行状态dto
@@ -21,7 +22,7 @@ public class UpdateTaskExecuteSatusDto implements Serializable {
     /** 
      *    执行任务状态
      */
-    private String executeStatus;
+    private StatusEnum executeStatus;
 
     public String getTaskId() {
         return taskId;
@@ -31,11 +32,11 @@ public class UpdateTaskExecuteSatusDto implements Serializable {
         this.taskId = taskId;
     }
 
-    public String getExecuteStatus() {
+    public StatusEnum getExecuteStatus() {
         return executeStatus;
     }
 
-    public void setExecuteStatus(String executeStatus) {
+    public void setExecuteStatus(StatusEnum executeStatus) {
         this.executeStatus = executeStatus;
     }
     
