@@ -2,10 +2,13 @@ package com.oner365.util.excel;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -18,6 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oner365.util.ClassesUtil;
 import com.oner365.util.DataUtils;
 
 /**
@@ -31,15 +35,15 @@ public class ImportExcelUtils {
 
   private static final String POINT = ".";
   private static final String NAN = "NaN";
-  private static final String XLSX = "xlsx";
-  private static final String PARAM_DATE = "date";
+  private static final String PREFIX_XLSX = "xlsx";
+  private static final String STRING_DATE = "DATE";
 
   private ImportExcelUtils() {
   }
 
   /**
    * 获取Excel
-   * 
+   *
    * @param is        输入流
    * @param extension 扩展名
    * @return Workbook
@@ -48,7 +52,7 @@ public class ImportExcelUtils {
   public static Workbook getWorkbook(InputStream is, String extension) throws IOException {
     // 创建工作表
     Workbook workbook;
-    if (extension.contains(XLSX)) {
+    if (extension.contains(PREFIX_XLSX)) {
       workbook = new XSSFWorkbook(is);
     } else {
       workbook = new HSSFWorkbook(is);
@@ -65,17 +69,18 @@ public class ImportExcelUtils {
    * @param extension excel后缀
    * @return ExcelData
    */
-  public static ExcelData readExcel(InputStream is, Integer sheetAt, Integer titleRow, String extension) {
+  public static <T> ExcelData<T> readExcel(InputStream is, Integer sheetAt, Integer titleRow, String extension,
+      Class<T> clazz) {
     try (Workbook workbook = getWorkbook(is, extension)) {
-      return readExcel(workbook, sheetAt, titleRow);
+      return readExcel(workbook, sheetAt, titleRow, clazz);
     } catch (IOException e) {
       LOGGER.error("Error readXlsExcelData: ", e);
     }
     return null;
   }
 
-  private static ExcelData readExcel(Workbook wb, Integer sheetAt, Integer titleRow) {
-    ExcelData excelData = new ExcelData();
+  private static <T> ExcelData<T> readExcel(Workbook wb, Integer sheetAt, Integer titleRow, Class<T> clazz) {
+    ExcelData<T> excelData = new ExcelData<>();
     // 读取Sheet, 默认0
     Sheet sheet = wb.getSheetAt(sheetAt == null ? 0 : sheetAt);
     /*
@@ -103,31 +108,39 @@ public class ImportExcelUtils {
     int rowNum = sheet.getLastRowNum();
     // 由于第0行和第一行已经合并了 在这里索引从2开始
     // 正文内容应该从第二行开始,第一行为表头的标题
-    List<List<Object>> dataList = new ArrayList<>();
-    for (int i = titleRow + 1; i <= rowNum; i++) {
-      getCellDataList(dataList, sheet, colNum, i);
-    }
+    List<T> dataList = new ArrayList<>();
+    List<Method> methods = ClassesUtil.getSetters(clazz);
+    IntStream.rangeClosed(titleRow + 1, rowNum)
+        .forEach(i -> getCellDataList(dataList, sheet, methods, clazz, colNum, i, title));
     excelData.setDataList(dataList);
     return excelData;
   }
 
-  private static void getCellDataList(List<List<Object>> dataList, Sheet sheet, int colNum, int i) {
-    List<Object> objs = new ArrayList<>(colNum);
-    Row row = sheet.getRow(i);
-    int nullCells = checkNullCells(row);
-    if (nullCells >= colNum) {
-      // continue
-    } else {
-      for (int j = 0; j < colNum; j++) {
-        Cell cell = row.getCell((short) j);
-        Object val = null;
-        if (cell != null) {
-          val = getCellValue(cell);
+  private static <T> void getCellDataList(List<T> dataList, Sheet sheet, List<Method> methods, Class<T> clazz,
+      int colNum, int i, String... title) {
+    try {
+      T c = clazz.getDeclaredConstructor().newInstance();
+      Row row = sheet.getRow(i);
+      int nullCells = checkNullCells(row);
+      if (nullCells < colNum) {
+        for (int j = 0; j < colNum; j++) {
+          Cell cell = row.getCell((short) j);
+          Object val = null;
+          if (cell != null) {
+            val = getCellValue(cell);
+          }
+          Object o = val != null ? val.toString().trim() : val;
+          String firstLetter = title[j].substring(0, 1).toUpperCase();
+          String setter = "set" + firstLetter + title[j].substring(1, title[j].length());
+          Optional<Method> setMethod = methods.stream().filter(method -> method.getName().equals(setter)).findFirst();
+          if (setMethod.isPresent()) {
+            ClassesUtil.invokeMethod(c, setter, o);
+          }
         }
-        Object o = val != null ? val.toString().trim() : "";
-        objs.add(o);
+        dataList.add(c);
       }
-      dataList.add(objs);
+    } catch (Exception e) {
+      LOGGER.error("Error readXlsExcelData: ", e);
     }
   }
 
@@ -164,7 +177,7 @@ public class ImportExcelUtils {
     case FORMULA:
       // 读公式计算值
       value = cell.getCellFormula();
-      if (!DataUtils.isEmpty(value) && value.toString().toLowerCase().contains(PARAM_DATE)) {
+      if (!DataUtils.isEmpty(value) && value.toString().toUpperCase().contains(STRING_DATE)) {
         Date date = cell.getDateCellValue();
         value = com.oner365.util.DateUtil.dateToString(date, com.oner365.util.DateUtil.FULL_TIME_FORMAT);
       } else {
