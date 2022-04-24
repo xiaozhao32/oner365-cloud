@@ -3,6 +3,8 @@ package com.oner365.files.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import com.oner365.common.enums.StorageEnum;
+
 /**
  * 文件对象
  * @author zhaoyong
@@ -30,7 +32,7 @@ public class SysFileStorageVo implements Serializable {
     /**
      * 存储方式
      */
-    private String fileStorage;
+    private StorageEnum fileStorage;
 
     /**
      * 文件路径 file_path
@@ -198,14 +200,14 @@ public class SysFileStorageVo implements Serializable {
     /**
      * @return the fileStorage
      */
-    public String getFileStorage() {
+    public StorageEnum getFileStorage() {
         return fileStorage;
     }
 
     /**
      * @param fileStorage the fileStorage to set
      */
-    public void setFileStorage(String fileStorage) {
+    public void setFileStorage(StorageEnum fileStorage) {
         this.fileStorage = fileStorage;
     }
 }

@@ -97,11 +97,13 @@ public class SysRoleController extends BaseController {
     if (sysRoleVo != null) {
       // 保存角色
       SysRoleDto entity = roleService.save(sysRoleVo);
-      if (entity != null) {
+      int code = StatusEnum.NO.ordinal();
+      if (entity != null && sysRoleVo.getMenuType() != null) {
         // 保存权限
-        int code = roleService.saveAuthority(sysRoleVo.getMenuType(), sysRoleVo.getMenuIds(), entity.getId());
-        return ResponseResult.success(code);
+        code = roleService.saveAuthority(sysRoleVo.getMenuType(), sysRoleVo.getMenuIds(), entity.getId());
       }
+      return ResponseResult.success(code);
+
     }
     return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
   }

@@ -192,8 +192,8 @@ CREATE TABLE `nt_sys_dict_item` (
 BEGIN;
 INSERT INTO `nt_sys_dict_item` VALUES ('1101', 'sys_normal_disable', '1', '有效', 1, NULL, '1');
 INSERT INTO `nt_sys_dict_item` VALUES ('1102', 'sys_normal_disable', '0', '无效', 2, NULL, '1');
-INSERT INTO `nt_sys_dict_item` VALUES ('1103', 'sys_user_sex', '0', '男', 1, NULL, '1');
-INSERT INTO `nt_sys_dict_item` VALUES ('1104', 'sys_user_sex', '1', '女', 2, NULL, '1');
+INSERT INTO `nt_sys_dict_item` VALUES ('1103', 'sys_user_sex', 'MALE', '男', 1, NULL, '1');
+INSERT INTO `nt_sys_dict_item` VALUES ('1104', 'sys_user_sex', 'FEMALE', '女', 2, NULL, '1');
 INSERT INTO `nt_sys_dict_item` VALUES ('1105', 'sys_status', '1', '有效', 1, NULL, '1');
 INSERT INTO `nt_sys_dict_item` VALUES ('1106', 'sys_status', '0', '无效', 2, NULL, '1');
 INSERT INTO `nt_sys_dict_item` VALUES ('4028b88174aa011e0174aa0a28c30004', 'sys_task_group', 'DEFAULT', '默认', 1, NULL, '1');
@@ -253,9 +253,9 @@ CREATE TABLE `nt_sys_fastdfs_file` (
 -- Records of nt_sys_fastdfs_file
 -- ----------------------------
 BEGIN;
-INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', 'wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', '123.txt', 'fdfs', 'http://192.168.101.130/group1/M00/00/00/wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', 'txt', '1.1 KB', 'http://192.168.101.130', '0', '2021-02-22 16:52:55');
-INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', 'wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', '3242.jpg', 'fdfs', 'http://192.168.101.130/group1/M00/00/00/wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', 'jpg', '481 KB', 'http://192.168.101.130', '0', '2021-02-22 16:53:56');
-INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', 'wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', '456.pdf', 'fdfs', 'http://192.168.101.130/group1/M00/00/00/wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', 'pdf', '499 KB', 'http://192.168.101.130', '0', '2021-02-22 16:50:24');
+INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', 'wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', '123.txt', 'FDFS', 'http://192.168.101.130/group1/M00/00/00/wKhlgl711DCAVEQWAAAEQwL8sw0614.txt', 'txt', '1.1 KB', 'http://192.168.101.130', '0', '2021-02-22 16:52:55');
+INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', 'wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', '3242.jpg', 'FDFS', 'http://192.168.101.130/group1/M00/00/00/wKhlgl71yDKAHZxUAAeFJC8wk5A780.jpg', 'jpg', '481 KB', 'http://192.168.101.130', '0', '2021-02-22 16:53:56');
+INSERT INTO `nt_sys_fastdfs_file` VALUES ('group1/M00/00/00/wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', 'wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', '456.pdf', 'FDFS', 'http://192.168.101.130/group1/M00/00/00/wKhlgl72iyaAT0A6AAfMRhRFRow323.pdf', 'pdf', '499 KB', 'http://192.168.101.130', '0', '2021-02-22 16:50:24');
 COMMIT;
 
 -- ----------------------------

@@ -98,7 +98,7 @@ public class FileLocalUploadUtils {
     fileEntity.setId(id);
     fileEntity.setFileName(fileName);
     fileEntity.setFastdfsUrl(FILE_HTTP + fastUrl);
-    fileEntity.setFileStorage(storageEnum.getCode());
+    fileEntity.setFileStorage(storageEnum);
     fileEntity.setFilePath(fileUrl);
     fileEntity.setDisplayName(file.getOriginalFilename());
     fileEntity.setFileSuffix(DataUtils.getExtension(file.getOriginalFilename()));

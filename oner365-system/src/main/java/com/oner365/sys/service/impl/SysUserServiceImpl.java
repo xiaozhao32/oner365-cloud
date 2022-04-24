@@ -222,7 +222,7 @@ public class SysUserServiceImpl implements ISysUserService {
   public SysUserDto saveUser(SysUserVo vo) {
     try {
       LocalDateTime time = LocalDateTime.now();
-      vo.setActiveStatus(StatusEnum.YES.getCode());
+      vo.setActiveStatus(StatusEnum.YES);
       vo.setCreateTime(time);
       vo.setLastTime(time);
 

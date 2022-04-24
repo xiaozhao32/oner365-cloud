@@ -5,10 +5,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.common.enums.StorageEnum;
 
 /**
  * 文件对象
@@ -44,8 +46,9 @@ public class SysFileStorage implements Serializable {
   /**
    * 存储方式
    */
+  @Enumerated
   @Column(name = "file_storage", nullable = false)
-  private String fileStorage;
+  private StorageEnum fileStorage;
 
   /**
    * 文件路径 file_path
@@ -216,14 +219,14 @@ public class SysFileStorage implements Serializable {
   /**
    * @return the fileStorage
    */
-  public String getFileStorage() {
+  public StorageEnum getFileStorage() {
     return fileStorage;
   }
 
   /**
    * @param fileStorage the fileStorage to set
    */
-  public void setFileStorage(String fileStorage) {
+  public void setFileStorage(StorageEnum fileStorage) {
     this.fileStorage = fileStorage;
   }
 
