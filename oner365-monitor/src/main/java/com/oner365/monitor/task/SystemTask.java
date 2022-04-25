@@ -22,6 +22,14 @@ public class SystemTask {
 
     @Autowired
     private IScheduleSendTaskService service;
+    
+    public void taskParams(String params) {
+      LOGGER.info("执行有参方法：{}", params);
+    }
+
+    public void taskNoParams() {
+      LOGGER.info("执行无参方法");
+    }
 
     public void taskRun(InvokeParam param) {
         LOGGER.info("执行【{}】定时任务: {}", param.getTaskServerName(), param);
