@@ -1,12 +1,12 @@
 package springfox.documentation.spring.web;
 
-import static springfox.documentation.spring.web.paths.Paths.maybeChompLeadingSlash;
-import static springfox.documentation.spring.web.paths.Paths.maybeChompTrailingSlash;
-
 import java.util.Set;
 import java.util.stream.Collectors;
+
 import org.springframework.web.servlet.mvc.condition.PathPatternsRequestCondition;
 import org.springframework.web.servlet.mvc.condition.PatternsRequestCondition;
+
+import springfox.documentation.spring.web.paths.Paths;
 
 /**
  * swagger3.0兼容springBoot2.6.0处理
@@ -38,7 +38,7 @@ public class WebMvcPatternsRequestConditionWrapper
   @Override
   public Set<String> getPatterns() {
     return this.condition.getPatternValues().stream()
-        .map(p -> String.format("%s/%s", maybeChompTrailingSlash(contextPath), maybeChompLeadingSlash(p)))
+        .map(p -> String.format("%s/%s", Paths.maybeChompTrailingSlash(contextPath), Paths.maybeChompLeadingSlash(p)))
         .collect(Collectors.toSet());
   }
 

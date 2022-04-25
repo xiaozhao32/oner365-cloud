@@ -104,8 +104,8 @@ public class SwaggerConfig implements WebMvcConfigurer {
   }
 
   private ApiInfo apiInfo() {
-    return new ApiInfoBuilder().title(properties.getName()).licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.txt")
-        .description(properties.getDescription())
+    return new ApiInfoBuilder().title(properties.getName()).termsOfServiceUrl(properties.getUrl())
+        .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.txt").description(properties.getDescription())
         .contact(new Contact(properties.getName(), properties.getUrl(), properties.getEmail()))
         .version(properties.getVersion()).build();
   }
