@@ -19,7 +19,7 @@
 	</resultMap>
 
 	<select id="selectListByUserId" parameterType="SysMenu" resultMap="SysMenuResult">
-		select distinct m.id, m.parent_id, m.menu_name, m.path, m.component, m.status, 
+		select distinct m.id, m.parent_id, m.menu_name, m.path, m.component, 
 		m.menu_type_id, m.icon, m.menu_order, m.create_time
 		from nt_sys_menu m
 		left join nt_sys_role_menu rm on m.id = rm.menu_id
