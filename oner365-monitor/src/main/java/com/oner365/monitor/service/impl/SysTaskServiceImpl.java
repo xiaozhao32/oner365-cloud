@@ -99,12 +99,12 @@ public class SysTaskServiceImpl implements ISysTaskService {
   /**
    * 暂停任务
    *
-   * @param task 调度信息
-   * @throws TaskException 异常
+   * @param vo 调度信息
+   * @throws SchedulerException 异常
    */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int pauseTask(SysTaskVo vo) throws SchedulerException, TaskException {
+  public int pauseTask(SysTaskVo vo) throws SchedulerException {
     Optional<SysTask> optional = dao.findById(vo.getId());
     if (optional.isPresent()) {
       SysTask sysTask = optional.get();
@@ -118,11 +118,12 @@ public class SysTaskServiceImpl implements ISysTaskService {
   /**
    * 恢复任务
    *
-   * @param task 调度信息
+   * @param vo 调度信息
+   * @throws SchedulerException 异常
    */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int resumeTask(SysTaskVo vo) throws SchedulerException, TaskException {
+  public int resumeTask(SysTaskVo vo) throws SchedulerException {
     Optional<SysTask> optional = dao.findById(vo.getId());
     if (optional.isPresent()) {
       SysTask sysTask = optional.get();
@@ -171,11 +172,10 @@ public class SysTaskServiceImpl implements ISysTaskService {
    * @param task 调度信息
    * @return int
    * @throws SchedulerException 异常
-   * @throws TaskException      异常
    */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int changeStatus(SysTaskVo task) throws SchedulerException, TaskException {
+  public int changeStatus(SysTaskVo task) throws SchedulerException {
     int rows = 0;
     if (TaskStatusEnum.NORMAL.equals(task.getStatus())) {
       rows = resumeTask(task);

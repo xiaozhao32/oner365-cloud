@@ -36,6 +36,8 @@ public class PublicConstants {
   public static final String PARAM_LIST = "list";
   /** 查询状态 status */
   public static final String PARAM_STATUS = "status";
+  /** 文件类型 fileStorage */
+  public static final String PARAM_FILE_STORAGE = "fileStorage";
   /** 分页对象 */
   public static final String PARAM_PAGE = "pageInfo";
 
@@ -69,6 +71,7 @@ public class PublicConstants {
   /** 队列键值 */
   public static final String MQ_KEY = "key";
   public static final String MQ_FANOUT = "fanout";
+  public static final String MQ_DIRECT = "direct";
   
   /** 文件存储 */
   public static final String FILE_STORAGE = "file.storage";

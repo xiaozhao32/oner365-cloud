@@ -1,3 +1,4 @@
+
 package com.oner365.monitor.service;
 
 import org.quartz.SchedulerException;
@@ -37,9 +38,8 @@ public interface ISysTaskService extends BaseService {
    * @param task 调度信息
    * @return 结果
    * @throws SchedulerException SchedulerException
-   * @throws TaskException      TaskException
    */
-  int pauseTask(SysTaskVo task) throws SchedulerException, TaskException;
+  int pauseTask(SysTaskVo task) throws SchedulerException;
 
   /**
    * 恢复任务
@@ -47,9 +47,8 @@ public interface ISysTaskService extends BaseService {
    * @param task 调度信息
    * @return 结果
    * @throws SchedulerException SchedulerException
-   * @throws TaskException      TaskException
    */
-  int resumeTask(SysTaskVo task) throws SchedulerException, TaskException;
+  int resumeTask(SysTaskVo task) throws SchedulerException;
 
   /**
    * 删除任务后，所对应的trigger也将被删除
@@ -74,9 +73,8 @@ public interface ISysTaskService extends BaseService {
    * @param task 调度信息
    * @return 结果
    * @throws SchedulerException SchedulerException
-   * @throws TaskException      TaskException
    */
-  int changeStatus(SysTaskVo task) throws SchedulerException, TaskException;
+  int changeStatus(SysTaskVo task) throws SchedulerException;
 
   /**
    * 立即运行任务

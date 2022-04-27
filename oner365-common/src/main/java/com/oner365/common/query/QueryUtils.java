@@ -13,6 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 import com.google.common.base.Joiner;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StatusEnum;
+import com.oner365.common.enums.StorageEnum;
 import com.oner365.common.query.Criterion.Operator;
 import com.oner365.util.DataUtils;
 
@@ -25,10 +26,6 @@ public class QueryUtils {
   
   private static final Logger LOGGER = LoggerFactory.getLogger(QueryUtils.class);
 
-  /** 升序 */
-  public static final String PARAM_ORDER_ASC = "ASC";
-  /** 降序 */
-  public static final String PARAM_ORDER_DESC = "DESC";
   /** 和 */
   public static final String PARAM_QUERY_AND = " and ";
 
@@ -109,9 +106,12 @@ public class QueryUtils {
    * @return 枚举
    */
   private static Object getEnum(String key, String value) {
-    // 状态枚举
     if (PublicConstants.PARAM_STATUS.equals(key)) {
+      // 状态枚举
       return StatusEnum.valueOf(value);
+    } else if (PublicConstants.PARAM_FILE_STORAGE.equals(key)) {
+      // 文件类型枚举
+      return StorageEnum.valueOf(value);
     } else {
       // 当前枚举不支持
       LOGGER.error("Enum not support. key:{} value:{}", key, value);
@@ -149,7 +149,7 @@ public class QueryUtils {
   public static Sort buildSortRequest(AttributeBean order) {
     Sort sort = null;
     if (!DataUtils.isEmpty(order) && !DataUtils.isEmpty(order.getKey())) {
-      if (PARAM_ORDER_DESC.equalsIgnoreCase(order.getVal().toString())) {
+      if (Direction.DESC.name().equalsIgnoreCase(order.getVal().toString())) {
         sort = Sort.by(Direction.DESC, order.getKey().split(","));
       } else {
         sort = Sort.by(Direction.ASC, order.getKey().split(","));
