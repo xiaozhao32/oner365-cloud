@@ -1,8 +1,5 @@
 package com.oner365.gateway.config;
 
-import java.net.InetAddress;
-import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -30,6 +27,7 @@ import com.oner365.gateway.config.properties.IgnoreWhiteProperties;
 import com.oner365.gateway.constants.ResponseData;
 import com.oner365.gateway.jwt.JwtUtils;
 import com.oner365.gateway.log.event.SysLogEvent;
+import com.oner365.gateway.util.DataUtils;
 import com.oner365.gateway.vo.SysLogVo;
 
 import reactor.core.publisher.Mono;
@@ -43,13 +41,6 @@ import reactor.core.publisher.Mono;
 public class TokenFilter implements GlobalFilter, Ordered {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TokenFilter.class);
-
-    private static final String HEADER_UNKNOWN = "unknown";
-
-    private static final String POINT = ".";
-
-    private static final int IP_LENGTH = 15;
-    private static final String IP_LOCALHOST = "0:0:0:0:0:0:0:1";
 
     @Autowired
     private ApplicationEventPublisher publisher;
@@ -137,7 +128,7 @@ public class TokenFilter implements GlobalFilter, Ordered {
      */
     private void requestLog(ServerHttpRequest request) {
         // 请求ip
-        String ip = getIpAddress(request);
+        String ip = DataUtils.getIpAddress(request);
         // 请求地址
         String uri = request.getURI().getRawPath();
         // 请求方法
@@ -157,59 +148,6 @@ public class TokenFilter implements GlobalFilter, Ordered {
             sysLog.setOperationName(StringUtils.substringBefore(uri.substring(1), "/"));
             this.publisher.publishEvent(new SysLogEvent(sysLog));
         }
-    }
-
-    /**
-     * 获取ip
-     *
-     * @param request ServerHttpRequest
-     * @return String
-     */
-    private String getIpAddress(ServerHttpRequest request) {
-        String ip = request.getHeaders().getFirst("X-Real-IP");
-        if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeaders().getFirst("X-Forwarded-For");
-        }
-        if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeaders().getFirst("Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeaders().getFirst("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeaders().getFirst("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip)) {
-            ip = request.getHeaders().getFirst("HTTP_X_FORWARDED_FOR");
-        }
-        if (ip == null || ip.length() == 0 || HEADER_UNKNOWN.equalsIgnoreCase(ip)) {
-            InetSocketAddress address = request.getRemoteAddress();
-            if (address != null && address.getAddress() != null) {
-                ip = address.getAddress().getHostAddress();
-            }
-        }
-        if (IP_LOCALHOST.equals(ip)) {
-            ip = getLocalhost();
-        }
-        if (ip != null && ip.length() > IP_LENGTH && ip.contains(POINT)) {
-            ip = StringUtils.substringAfterLast(ip, ",");
-        }
-        return ip;
-    }
-
-    /**
-     * 获取本机ip
-     *
-     * @return String
-     */
-    private static String getLocalhost() {
-        try {
-            InetAddress inet = InetAddress.getLocalHost();
-            return inet.getHostAddress();
-        } catch (UnknownHostException e) {
-            LOGGER.error("Error getLocalhost:", e);
-        }
-        return null;
     }
 
     @Override
