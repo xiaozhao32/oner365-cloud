@@ -6,7 +6,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -136,7 +135,7 @@ public class FileFdfsClient implements IFileStorageClient {
    * @return String
    */
   public String uploadFile(String content, String fileExtension) {
-    byte[] buff = content.getBytes(Charset.forName(StandardCharsets.UTF_8.name()));
+    byte[] buff = content.getBytes(Charset.defaultCharset());
     try (ByteArrayInputStream stream = new ByteArrayInputStream(buff)) {
       StorePath storePath = fastFileStorageClient.uploadFile(stream, buff.length, fileExtension, null);
       return getResAccessUrl(storePath);

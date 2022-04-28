@@ -1,6 +1,6 @@
 package com.oner365.util;
 
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.security.Key;
 import java.security.SecureRandom;
 import java.util.Base64;
@@ -108,7 +108,7 @@ public class AesUtils {
             byte[] iv = new byte[LENGTH_12];
             SecureRandom secureRandom = new SecureRandom();
             secureRandom.nextBytes(iv);
-            byte[] contentBytes = str.getBytes(StandardCharsets.UTF_8);
+            byte[] contentBytes = str.getBytes(Charset.defaultCharset());
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             GCMParameterSpec params = new GCMParameterSpec(128, iv);
             cipher.init(Cipher.ENCRYPT_MODE, getSecretKey(key), params);
@@ -141,7 +141,7 @@ public class AesUtils {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, getSecretKey(key), params);
             byte[] decryptData = cipher.doFinal(content, LENGTH_12, content.length - LENGTH_12);
-            return new String(decryptData, StandardCharsets.UTF_8);
+            return new String(decryptData, Charset.defaultCharset());
         } catch (Exception e) {
             LOGGER.error("getDecryptString error:", e);
         }

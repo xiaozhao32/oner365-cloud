@@ -24,7 +24,6 @@ import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -696,7 +695,7 @@ public class DataUtils {
       HttpHeaders headers = new HttpHeaders();
       headers.setContentLength(file.length());
       headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-      headers.setContentDispositionFormData("attachment", URLEncoder.encode(fileName, StandardCharsets.UTF_8.name()));
+      headers.setContentDispositionFormData("attachment", URLEncoder.encode(fileName, Charset.defaultCharset()));
       return new ResponseEntity<>(FileUtils.readFileToByteArray(file), headers, HttpStatus.OK);
     } catch (IOException e) {
       LOGGER.error("Error download", e);

@@ -1,6 +1,6 @@
 package com.oner365.util;
 
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -56,7 +56,7 @@ public class Base64Utils {
      */
     public static String decodeBase64String(String base64String) {
         byte[] result = Base64.decodeBase64(base64String);
-        return new String(result, StandardCharsets.UTF_8);
+        return new String(result, Charset.defaultCharset());
     }
 
     /**

@@ -1,9 +1,8 @@
 package com.oner365.swagger.controller.files;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -81,13 +80,9 @@ public class FileController extends BaseController {
       filename = StringUtils.substringAfterLast(fileUrl, PublicConstants.DELIMITER);
     }
     byte[] data = client.download(fileUrl);
-    try {
-      response.setCharacterEncoding(StandardCharsets.UTF_8.name());
-      response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
-          "attachment;filename=" + URLEncoder.encode(filename, StandardCharsets.UTF_8.name()));
-    } catch (UnsupportedEncodingException e) {
-      logger.error("download UnsupportedEncodingException:", e);
-    }
+    response.setCharacterEncoding(Charset.defaultCharset().name());
+    response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
+        "attachment;filename=" + URLEncoder.encode(filename, Charset.defaultCharset()));
 
     // 写出
     try (ServletOutputStream outputStream = response.getOutputStream()) {
