@@ -13,6 +13,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
+import com.oner365.common.cache.constants.CacheConstants;
 import com.oner365.util.DataUtils;
 
 /**
@@ -23,8 +24,6 @@ import com.oner365.util.DataUtils;
 @Component
 @SuppressWarnings(value = { "unchecked", "rawtypes" })
 public class RedisCache {
-
-    private static final String LOCK_KEY = "Lock:";
 
     @Autowired
     public RedisTemplate redisTemplate;
@@ -230,7 +229,7 @@ public class RedisCache {
      * @return boolean
      */
     public boolean lock(String key, long expireTime) {
-        String lock = LOCK_KEY + key;
+        String lock = CacheConstants.CACHE_LOCK_NAME + key;
 
         return (Boolean) redisTemplate.execute((RedisCallback) connection -> {
             long expireAt = System.currentTimeMillis() + expireTime + 1;
