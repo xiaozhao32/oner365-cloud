@@ -2,14 +2,12 @@ package com.oner365.files.config.properties;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * File Fdfs properties
  * 
  * @author zhaoyong
  */
-@Configuration
 @ConfigurationProperties(prefix = "fdfs")
 public class FileFdfsProperties {
 

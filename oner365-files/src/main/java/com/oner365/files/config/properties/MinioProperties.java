@@ -1,14 +1,12 @@
 package com.oner365.files.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * File Minio properties
  * 
  * @author zhaoyong
  */
-@Configuration
 @ConfigurationProperties(prefix = "minio")
 public class MinioProperties {
 
