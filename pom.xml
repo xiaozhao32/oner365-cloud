@@ -69,7 +69,7 @@
 		<org.yaml.version>1.30</org.yaml.version>
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
-		<com.alibaba.nacos.version>2.0.4</com.alibaba.nacos.version>
+		<com.alibaba.nacos.version>2.1.0</com.alibaba.nacos.version>
 		<com.alibaba.druid.version>1.2.9</com.alibaba.druid.version>
 		<com.alibaba.fastjson.version>1.2.79</com.alibaba.fastjson.version>
 		

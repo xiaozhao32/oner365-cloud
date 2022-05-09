@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,6 +71,7 @@ public class SysUserServiceImpl implements ISysUserService {
   private static final Logger LOGGER = LoggerFactory.getLogger(SysUserServiceImpl.class);
 
   private static final String CACHE_NAME = "SysUser";
+  private static final String CACHE_ORG_NAME = "SysOrganization";
 
   @Autowired
   private RedisCache redisCache;
@@ -218,7 +220,9 @@ public class SysUserServiceImpl implements ISysUserService {
   }
 
   @Override
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
+  @Caching(evict = { 
+      @CacheEvict(value = CACHE_NAME, allEntries = true),
+      @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public SysUserDto saveUser(SysUserVo vo) {
     try {
       LocalDateTime time = LocalDateTime.now();
@@ -283,7 +287,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
+  @Caching(evict = { 
+      @CacheEvict(value = CACHE_NAME, allEntries = true),
+      @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public Integer deleteById(String id) {
     userJobDao.deleteUserJobByUserId(id);
     userOrgDao.deleteUserOrgByUserId(id);
@@ -309,7 +315,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
+  @Caching(evict = { 
+      @CacheEvict(value = CACHE_NAME, allEntries = true),
+      @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public Integer editPassword(String id, String p) {
     Optional<SysUser> optional = userDao.findById(id);
     if (optional.isPresent()) {
@@ -322,7 +330,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
+  @Caching(evict = { 
+      @CacheEvict(value = CACHE_NAME, allEntries = true),
+      @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public Integer editStatus(String id, StatusEnum status) {
     Optional<SysUser> optional = userDao.findById(id);
     if (optional.isPresent()) {
@@ -335,7 +345,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
+  @Caching(evict = { 
+      @CacheEvict(value = CACHE_NAME, allEntries = true),
+      @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public SysUserDto updateAvatar(String id, String avatar) {
     SysUser entity = userDao.getById(id);
     entity.setAvatar(avatar);
@@ -348,7 +360,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
+  @Caching(evict = { 
+      @CacheEvict(value = CACHE_NAME, allEntries = true),
+      @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public SysUserDto updateUserProfile(SysUserVo sysUserVo) {
     SysUser entity = userDao.getById(sysUserVo.getId());
     entity.setEmail(sysUserVo.getEmail());

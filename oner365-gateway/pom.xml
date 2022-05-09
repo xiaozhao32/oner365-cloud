@@ -75,9 +75,16 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
         
+        <!-- fastjson -->
         <dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
+		</dependency>
+		
+		<!-- google -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
 		</dependency>
 	</dependencies>
 
