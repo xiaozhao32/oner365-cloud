@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -46,7 +47,7 @@ public class SysFileStorage implements Serializable {
   /**
    * 存储方式
    */
-  @Enumerated
+  @Enumerated(EnumType.STRING)
   @Column(name = "file_storage", nullable = false)
   private StorageEnum fileStorage;
 
