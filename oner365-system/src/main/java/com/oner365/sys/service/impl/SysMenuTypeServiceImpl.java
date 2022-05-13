@@ -9,13 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ExistsEnum;
@@ -52,7 +52,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
   private ISysMenuTypeDao dao;
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public PageInfo<SysMenuTypeDto> pageList(QueryCriteriaBean data) {
     try {
       Page<SysMenuType> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
@@ -64,7 +64,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<SysMenuTypeDto> findList(QueryCriteriaBean data) {
     try {
       return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysMenuTypeDto.class);
@@ -134,7 +134,7 @@ public class SysMenuTypeServiceImpl implements ISysMenuTypeService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public SysMenuTypeDto getMenuTypeByTypeCode(String typeCode) {
     Assert.notNull(typeCode, "typeCode is not empty.");
     Criteria<SysMenuType> criteria = new Criteria<>();

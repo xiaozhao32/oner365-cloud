@@ -12,13 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.datasource.constants.DataSourceConstants;
@@ -166,7 +166,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<SysOrganizationDto> findListByParentId(String parentId) {
     Criteria<SysOrganization> criteria = new Criteria<>();
     criteria.add(Restrictions.eq("parentId", parentId));
@@ -174,7 +174,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public SysOrganizationDto getByCode(String orgCode) {
     Assert.notNull(orgCode, "orgCode is not empty.");
     Criteria<SysOrganization> criteria = new Criteria<>();
@@ -183,7 +183,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<TreeSelect> buildTreeSelect(List<SysOrganizationDto> orgList) {
     List<SysOrganizationDto> menuTrees = buildTree(orgList);
     return menuTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
@@ -236,7 +236,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<SysOrganizationDto> findList(QueryCriteriaBean data) {
     try {
       if (data.getOrder() == null) {
@@ -251,7 +251,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   }
   
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<SysOrganizationDto> selectList(SysOrganizationVo sysOrganizationVo) {
     Criteria<SysOrganization> criteria = new Criteria<>();
     if (!DataUtils.isEmpty(sysOrganizationVo.getOrgName())) {
@@ -264,7 +264,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<String> selectListByUserId(String userId) {
     return organizationMapper.selectListByUserId(userId);
   }

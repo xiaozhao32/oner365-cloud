@@ -12,13 +12,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSONArray;
+import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ExistsEnum;
@@ -76,7 +76,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
   private ISysMenuService sysMenuService;
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public PageInfo<SysRoleDto> pageList(QueryCriteriaBean data) {
     try {
       Page<SysRole> page = roleDao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
@@ -88,7 +88,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<SysRoleDto> findList(QueryCriteriaBean data) {
     try {
       return convert(roleDao.findAll(QueryUtils.buildCriteria(data)), SysRoleDto.class);
@@ -177,13 +177,13 @@ public class SysRoleServiceImpl implements ISysRoleService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<String> findMenuByRoleId(String menuTypeId, String roleId) {
     return roleMenuDao.findMenuListByRoleId(roleId, menuTypeId);
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<SysMenuTreeDto> findMenuByRoles(List<String> roles, String menuType) {
     List<SysMenuTreeDto> result = new ArrayList<>();
     List<SysMenuDto> list = sysMenuService.selectMenuByRoles(roles, menuType, SysConstants.DEFAULT_PARENT_ID);
@@ -235,7 +235,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<SysMenuOperDto> findMenuOperByRoles(List<String> roles, String menuId) {
     List<Map<String, String>> list = roleMenuOperDao.findMenuOperByRoles(roles, menuId);
     List<SysMenuOperDto> result = new ArrayList<>();

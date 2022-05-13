@@ -8,12 +8,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ExistsEnum;
@@ -72,7 +72,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public PageInfo<SysDictItemDto> pageList(QueryCriteriaBean data) {
     try {
       Page<SysDictItem> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
@@ -84,7 +84,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<SysDictItemDto> findList(QueryCriteriaBean data) {
     try {
       if (data.getOrder() == null) {

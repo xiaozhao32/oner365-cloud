@@ -9,11 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ExistsEnum;
@@ -53,7 +53,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
   private ISysMenuOperDao menuOperDao;
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public PageInfo<SysMenuOperationDto> pageList(QueryCriteriaBean data) {
     try {
       Page<SysMenuOperation> page = menuOperationDao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
@@ -65,7 +65,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<SysMenuOperationDto> findList() {
     try {
       return convert(menuOperationDao.findAll(), SysMenuOperationDto.class);
@@ -113,7 +113,7 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
   }
 
   @Override
-  @Cacheable(value = CACHE_NAME, keyGenerator = PublicConstants.KEY_GENERATOR)
+  @GeneratorCache(CACHE_NAME)
   public List<String> selectByMenuId(String menuId) {
     return menuOperDao.selectByMenuId(menuId);
   }
