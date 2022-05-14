@@ -74,13 +74,13 @@ public class FileController extends BaseController {
     if (isFilename) {
       filename = StringUtils.substringAfterLast(fileUrl, PublicConstants.DELIMITER);
     }
-    byte[] data = fileServiceClient.download(fileUrl);
-    response.setCharacterEncoding(Charset.defaultCharset().name());
-    response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
-        "attachment;filename=" + URLEncoder.encode(filename, Charset.defaultCharset()));
 
     // 写出
     try (ServletOutputStream outputStream = response.getOutputStream()) {
+      byte[] data = fileServiceClient.download(fileUrl);
+      response.setCharacterEncoding(Charset.defaultCharset().name());
+      response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
+          "attachment;filename=" + URLEncoder.encode(filename, Charset.defaultCharset().name()));
       IOUtils.write(data, outputStream);
     } catch (IOException e) {
       logger.error("download IOException:", e);
