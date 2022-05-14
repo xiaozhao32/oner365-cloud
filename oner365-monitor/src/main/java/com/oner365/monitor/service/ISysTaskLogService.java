@@ -1,6 +1,7 @@
 package com.oner365.monitor.service;
 
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
@@ -62,5 +63,5 @@ public interface ISysTaskLogService extends BaseService {
    * @param time 时间
    * @return 结果
    */
-  String deleteTaskLogByCreateTime(String time);
+  StatusEnum deleteTaskLogByCreateTime(String time);
 }

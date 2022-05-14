@@ -31,7 +31,7 @@ public class GatewayConstants  {
     
     public static final String PREDICATE_ARGS_PATTERN = "pattern";
     
-    public static final String ROUT_STATUS_DISABLE = "0";
+    public static final int ROUT_STATUS_DISABLE = 0;
     
     public static final String CODE = "code";
     public static final String STATUS = "status";

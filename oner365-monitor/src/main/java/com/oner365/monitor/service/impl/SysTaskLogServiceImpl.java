@@ -89,13 +89,13 @@ public class SysTaskLogServiceImpl implements ISysTaskLogService {
   }
 
   @Override
-  public String deleteTaskLogByCreateTime(String time) {
+  public StatusEnum deleteTaskLogByCreateTime(String time) {
     try {
       dao.deleteTaskLogByCreateTime(time);
-      return StatusEnum.YES.getCode();
+      return StatusEnum.YES;
     } catch (Exception e) {
       LOGGER.error("Error deleteTaskLogByCreateTime: ", e);
     }
-    return StatusEnum.NO.getCode();
+    return StatusEnum.NO;
   }
 }

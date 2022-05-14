@@ -62,7 +62,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 
   private ApplicationEventPublisher publisher;
 
-  protected static Map<String, String> predicateMap = new HashMap<>();
+  protected static Map<String, Integer> predicateMap = new HashMap<>();
 
   @Override
   public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
@@ -170,13 +170,13 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
     return convert(findById(id), GatewayRouteDto.class);
   }
 
-  private Map<String, String> mapRoute(GatewayRouteDto route) {
+  private Map<String, Integer> mapRoute(GatewayRouteDto route) {
     route.getPredicates().stream().filter(predicate -> predicate.getName().equals(GatewayConstants.PREDICATE_NAME))
         .forEach(predicates -> {
           String pattern = StringUtils.substring(predicates.getArgs().get(GatewayConstants.PREDICATE_ARGS_PATTERN), 0,
               predicates.getArgs().get(GatewayConstants.PREDICATE_ARGS_PATTERN).length() - 2);
           predicateMap.put(pattern,
-              DataUtils.isEmpty(route.getStatus().getCode()) ? GatewayConstants.ROUT_STATUS_DISABLE : route.getStatus().getCode());
+              DataUtils.isEmpty(route.getStatus()) ? GatewayConstants.ROUT_STATUS_DISABLE : route.getStatus().ordinal());
         });
     return predicateMap;
   }
