@@ -3,6 +3,7 @@ package com.oner365.files.service.impl;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -61,7 +62,8 @@ public class FileStorageServiceImpl implements IFileStorageService {
       if (data.getOrder() == null) {
         return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysFileStorageDto.class);
       }
-      List<SysFileStorage> list = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+      List<SysFileStorage> list = dao.findAll(QueryUtils.buildCriteria(data), 
+          Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
       return convert(list, SysFileStorageDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);

@@ -3,6 +3,7 @@ package com.oner365.datasource.service.impl;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -64,7 +65,8 @@ public class OrderServiceImpl implements IOrderService {
       if (data.getOrder() == null) {
         return convert(dao.findAll(QueryUtils.buildCriteria(data)), OrderDto.class);
       }
-      List<Order> list = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+      List<Order> list = dao.findAll(QueryUtils.buildCriteria(data), 
+          Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
       return convert(list, OrderDto.class);
     } catch (Exception e) {
       logger.error("Error findList: ", e);

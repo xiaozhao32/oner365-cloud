@@ -19,7 +19,7 @@ import com.oner365.common.constants.PublicConstants;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 @Documented
-@Cacheable
+@Cacheable(PublicConstants.NAME)
 public @interface GeneratorCache {
 
   @AliasFor("cacheNames")

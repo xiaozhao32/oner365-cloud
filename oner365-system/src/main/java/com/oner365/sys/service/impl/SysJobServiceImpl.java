@@ -3,6 +3,7 @@ package com.oner365.sys.service.impl;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import org.slf4j.Logger;
@@ -63,7 +64,8 @@ public class SysJobServiceImpl implements ISysJobService {
       if (data.getOrder() == null) {
         return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysJobDto.class);
       }
-      List<SysJob> list = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+      List<SysJob> list = dao.findAll(QueryUtils.buildCriteria(data), 
+          Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
       return convert(list, SysJobDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);

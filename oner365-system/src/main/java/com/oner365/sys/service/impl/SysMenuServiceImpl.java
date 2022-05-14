@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -218,7 +219,8 @@ public class SysMenuServiceImpl implements ISysMenuService {
       if (data.getOrder() == null) {
         return convert(menuDao.findAll(QueryUtils.buildCriteria(data)), SysMenuDto.class);
       }
-      List<SysMenu> list = menuDao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildSortRequest(data.getOrder()));
+      List<SysMenu> list = menuDao.findAll(QueryUtils.buildCriteria(data), 
+          Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
       return convert(list, SysMenuDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
