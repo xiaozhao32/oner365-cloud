@@ -4,7 +4,7 @@
 
 =========================================================================================================================================================
 目录
-	1、nacos
+	1、nacos及集群配置
 	2、skywalking
 	3、服务组件（应用程序）
 	4、前端vue部署
@@ -55,6 +55,27 @@
 					-- #nohup "$JAVA" "$JAVA_OPT_EXT_FIX" ${JAVA_OPT} nacos.nacos >> ${BASE_DIR}/logs/start.out 2>&1 &
 				-- 修改成
 					-- nohup "$JAVA" ${JAVA_OPT} nacos.nacos >> ${BASE_DIR}/logs/start.out 2>&1 &
+		-- 集群配置
+			-- 修改cluster.conf
+				-- 增加集群配置
+					--  192.168.33.41:8848
+						192.168.33.42:8848
+						192.168.33.43:8848
+			-- 将配置好的nacos复制到不同服务器
+				-- scp命令即可
+			-- 将集群服务器的nacos启动
+				-- ./nacos/bin/startup.sh
+			-- 查看是否配置成功
+				-- 进入任意一台nacos，查看“集群管理”
+			-- 服务注册
+				-- 两种模式
+					-- slb负载代理
+						-- 可试用nginx或F5等负载工具代理负载对应nacos地址
+						-- bootstrap注册地址只写slb地址及端口号即可
+					-- bootstrap注册地址写多个
+						-- cloud:
+						     nacos:
+						       server-addr: 192.168.33.41:8848,192.168.33.42:8848,192.168.33.43:8848
 
 2、skywalking
 	-- apache-skywalking-apm-es7-8.6.0.tar.gz
