@@ -12,6 +12,9 @@ spring:
   cloud:
     nacos:
       server-addr: ${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
+      discovery:
+        namespace: ${spring.profiles.active}
+        group: DEFAULT_GROUP
       config:
         namespace: ${spring.profiles.active}
         group: DEFAULT_GROUP
