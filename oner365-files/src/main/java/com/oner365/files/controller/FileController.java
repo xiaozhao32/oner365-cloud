@@ -134,12 +134,11 @@ public class FileController extends BaseController {
   /**
    * 获取文件存储方式
    * 
-   * @return String
+   * @return StorageEnum
    */
   @GetMapping("/name")
-  public String getStorageName() {
-    StorageEnum result = fileStorageClient.getName();
-    return result.getCode();
+  public StorageEnum getStorageName() {
+    return fileStorageClient.getName();
   }
 
 }

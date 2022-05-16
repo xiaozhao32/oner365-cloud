@@ -56,7 +56,7 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
       ResponseData<SysTaskDto> data = monitorServiceClient.getInfo(taskId);
       if (data.getCode() == ResultEnum.SUCCESS.getCode()) {
         JSONObject json = JSON.parseObject(data.getResult().toString());
-        if (!StatusEnum.NO.getCode().equals(json.getString(EXECUTE_STATUS))) {
+        if (!StatusEnum.NO.name().equals(json.getString(EXECUTE_STATUS))) {
           execute(taskId);
         }
       }

@@ -1,8 +1,6 @@
 package com.oner365.common.enums;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.Optional;
 
 /**
  * 枚举 - 状态
@@ -12,14 +10,9 @@ import java.util.Optional;
 public enum StatusEnum implements Serializable {
 
     /** 无效 */
-    NO("0", "无效"),
+    NO("无效"),
     /** 有效 */
-    YES("1", "有效");
-
-    /**
-     * 编码
-     */
-    private final String code;
+    YES("有效");
 
     /**
      * 名称
@@ -29,21 +22,10 @@ public enum StatusEnum implements Serializable {
     /**
      * 构造方法
      *
-     * @param code  编码
      * @param name 名称
      */
-    StatusEnum(String code, String name) {
-        this.code = code;
+    StatusEnum(String name) {
         this.name = name;
-    }
-
-    /**
-     * get code
-     *
-     * @return code
-     */
-    public String getCode() {
-        return code;
     }
 
     /**
@@ -53,19 +35,6 @@ public enum StatusEnum implements Serializable {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * 获取枚举
-     *
-     * @param code 编码
-     * @return StatusEnum
-     */
-    public static StatusEnum getCode(String code) {
-        Optional<StatusEnum> result = Arrays.stream(StatusEnum.values())
-                .filter(e -> e.getCode().equals(code))
-                .findFirst();
-        return result.orElse(null);
     }
 
 }

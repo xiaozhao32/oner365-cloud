@@ -40,7 +40,7 @@ public class ShardingDatasourceController extends BaseController {
   @GetMapping("/test")
   public List<Map<String, String>> testDataSource(Integer orderId, Integer userId) {
     String sql = "insert into t_order(id, order_id, user_id, status, create_time) " + "values('"
-        + new SnowFlakeUtils(1L, 1L).nextId() + "'," + orderId + "," + userId + ",'"+StatusEnum.YES.getCode()+"','" + DateUtil.getCurrentTime()
+        + new SnowFlakeUtils(1L, 1L).nextId() + "'," + orderId + "," + userId + ",'"+StatusEnum.YES.ordinal()+"','" + DateUtil.getCurrentTime()
         + "')";
     try (Connection con = shardingDataSource.getConnection()) {
       return DataSourceUtil.execute(con, sql);
