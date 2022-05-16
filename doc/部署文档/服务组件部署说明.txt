@@ -55,7 +55,7 @@
 					-- #nohup "$JAVA" "$JAVA_OPT_EXT_FIX" ${JAVA_OPT} nacos.nacos >> ${BASE_DIR}/logs/start.out 2>&1 &
 				-- 修改成
 					-- nohup "$JAVA" ${JAVA_OPT} nacos.nacos >> ${BASE_DIR}/logs/start.out 2>&1 &
-		-- 集群配置
+		-- 集群配置（建议3台或3台以上集群）
 			-- 修改cluster.conf
 				-- 增加集群配置
 					--  192.168.33.41:8848
