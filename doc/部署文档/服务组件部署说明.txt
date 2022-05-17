@@ -70,6 +70,9 @@
 			-- 服务注册
 				-- 两种模式
 					-- slb负载代理
+						-- 是用nginx及haproxy代理集群nacos
+							-- 详见
+								-- nacos集群代理安装配置文档
 						-- 可试用nginx或F5等负载工具代理负载对应nacos地址
 						-- bootstrap注册地址只写slb地址及端口号即可
 					-- bootstrap注册地址写多个

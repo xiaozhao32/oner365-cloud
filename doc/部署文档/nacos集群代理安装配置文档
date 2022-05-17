@@ -1,0 +1,51 @@
+nacos集群代理安装配置文档
+1、安装nginx
+	-- cd /opt
+	-- tar -xvf pcre-8.42.tar
+	-- tar -zxvf nginx-1.19.1.tar.gz
+	-- yum -y install gcc-c++
+	-- cd nginx-1.19.1/
+	-- ./configure --prefix=/usr/share/nginx --with-http_stub_status_module --with-http_ssl_module --with-pcre=/opt/pcre-8.42 
+	-- make
+	-- make install
+	-- 配置启动
+		-- 配置文件查看
+			-- nginx_nacos.conf
+		-- 启动nginx
+			-- /usr/share/nginx/sbin/nginx -c /usr/share/nginx/conf/nginx_nacos.conf
+2、安装haproxy
+	-- 下载
+		-- https://www.haproxy.org
+	-- tar -zxvf /opt/haproxy-2.4.15.tar.gz -C /usr/local/src/
+	-- cd /usr/local/src/haproxy-2.4.15
+	-- make TARGET=custom ARCH=x86_64 PREFIX=/usr/local/haproxy
+	-- make install PREFIX=/usr/local/haproxy
+	-- 创建配置文件
+		-- vi /usr/local/haproxy/haproxy.cfg
+		-- 文件内容（修改代理地址直接上传到对应目录）
+			-- haproxy.cfg
+	-- useradd haproxy
+	-- 打开防火墙
+		-- firewall-cmd --zone=public --add-port=9999/tcp --permanent
+		-- firewall-cmd --zone=public --add-port=9848/tcp --permanent
+		-- filewall-cmd reload
+	-- 配置日志
+		-- vi /etc/rsyslog.conf
+			-- $ModLoad imudp #取消注释
+			-- $UDPServerRun 514 #取消注释
+			-- 添加日志地址
+				-- local7.* /var/log/boot.log
+				-- local3.* /var/log/haproxy.log
+				-- local0.* /var/log/haproxy.log
+			-- systemctl restart rsyslog
+	-- 启动haproxy
+		-- /usr/local/haproxy -f /usr/local/haproxy/haproxy.cfg
+	-- 关闭haproxy
+		-- kill -9 pid
+	-- 查看haproxy运行(账户密码在cfg文件中配置的，端口也是)
+		-- http://192.168.33.44:9999/admin
+			-- admin
+			-- admin
+3、程序连接nacos注册
+	-- 原程序不需要修改，只需要修改nacos注册地址到代理服务器ip即可端口8488不变
+	-- 或继续使用hosts配置代理地址名称
