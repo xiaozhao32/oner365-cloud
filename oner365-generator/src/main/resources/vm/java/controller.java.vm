@@ -84,7 +84,7 @@ public class ${ClassName}Controller extends BaseController {
     @ApiOperation("3.修改状态")
     @ApiOperationSupport(order = 3)
     @PostMapping("/status/{id}")
-    public Integer editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+    public Integer editStatus(@PathVariable $AttrName id, @RequestParam("status") StatusEnum status) {
       return ${className}Service.editStatus(id, status);
     }
     

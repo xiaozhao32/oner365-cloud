@@ -117,7 +117,7 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
-    public Integer editStatus(String id, StatusEnum status) {
+    public Integer editStatus($AttrName id, StatusEnum status) {
       Optional<${ClassName}> optional = dao.findById(id);
       if (optional.isPresent()) {
         optional.get().setStatus(status);

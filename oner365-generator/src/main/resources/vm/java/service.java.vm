@@ -69,5 +69,5 @@ public interface I${ClassName}Service extends BaseService {
    * @param status 状态
    * @return Integer
    */
-  Integer editStatus(String id, StatusEnum status);
+  Integer editStatus($AttrName id, StatusEnum status);
 }

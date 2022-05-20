@@ -1,10 +1,18 @@
 package ${packageName}.entity;
 
 import java.io.Serializable;
+#if($column.javaType != 'BigDecimal')
+import java.math.BigDecimal;
+#end
+#if($column.javaType != 'LocalDate')
+import java.time.LocalDate;
+#end
+#if($column.javaType != 'LocalDateTime')
 import java.time.LocalDateTime;
+#end
 
 import javax.persistence.Column;
-import javax.persistence.Entity
+import javax.persistence.Entity;
 #if($column.javaType != 'StatusEnum')
 import javax.persistence.Enumerated;
 #end
@@ -22,9 +30,17 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 #end
 #end
+#if($column.javaType != 'json')
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+#end
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 #if($column.javaType != 'StatusEnum')
 import com.oner365.common.enums.StatusEnum;
+#end
+#if($column.javaType != 'json')
+import com.vladmihalcea.hibernate.type.json.JsonStringType;
 #end
 
 /**
@@ -34,6 +50,9 @@ import com.oner365.common.enums.StatusEnum;
  */
 @Entity
 @Table(name = "${tableName}")
+#if($column.javaType != 'json')
+@TypeDef(name = "json", typeClass = JsonStringType.class)
+#end
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class ${ClassName} implements Serializable {
 
@@ -52,11 +71,18 @@ public class ${ClassName} implements Serializable {
 #end
 #elseif($column.javaType == 'StatusEnum')
     @Enumerated
+    @Column(#if($column.isRequired == '1')name = "$column.columnName", nullable = false#else name = "$column.columnName"#end)
+#elseif($column.javaType == 'json')
+    @Type(type = "json")
+    @Column(#if($column.isRequired == '1')name = "$column.columnName", nullable = false#else name = "$column.columnName"#end)
 #else
-    @Column(#if($column.isRequired == '1') name = "$column.columnName", nullable = false#else name = "$column.columnName"#end)
+    @Column(#if($column.isRequired == '1')name = "$column.columnName", nullable = false#else name = "$column.columnName"#end)
 #end
+#if($column.javaType == 'json')
+    private String $column.javaField;
+#else
     private $column.javaType $column.javaField;
-    
+#end    
 #end
 #foreach ($column in $columns)
 #if($column.javaField.length() > 2 && $column.javaField.substring(1,2).matches("[A-Z]"))
@@ -64,6 +90,15 @@ public class ${ClassName} implements Serializable {
 #else
 #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
 #end
+#if($column.javaType == 'json')
+    public void set${AttrName}(String $column.javaField) {
+        this.$column.javaField = $column.javaField;
+    }
+
+    public String get${AttrName}() {
+        return $column.javaField;
+    }
+#else
     public void set${AttrName}($column.javaType $column.javaField) {
         this.$column.javaField = $column.javaField;
     }
@@ -71,6 +106,7 @@ public class ${ClassName} implements Serializable {
     public $column.javaType get${AttrName}() {
         return $column.javaField;
     }
+#end
 #end
 
 }

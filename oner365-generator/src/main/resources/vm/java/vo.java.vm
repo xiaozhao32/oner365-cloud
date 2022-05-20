@@ -1,7 +1,15 @@
 package ${packageName}.vo;
 
 import java.io.Serializable;
+#if($column.javaType != 'BigDecimal')
+import java.math.BigDecimal;
+#end
+#if($column.javaType != 'LocalDate')
+import java.time.LocalDate;
+#end
+#if($column.javaType != 'LocalDateTime')
 import java.time.LocalDateTime;
+#end
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,7 +34,11 @@ public class ${ClassName}Vo implements Serializable {
 #else
     @ApiModelProperty(value = "$column.columnComment", required =#if($column.isRequired == '1') true#else false#end)
 #end
+#if($column.javaType == 'json')
+    private String $column.javaField;
+#else
     private $column.javaType $column.javaField;
+#end  
     
 #end
 #foreach ($column in $columns)
@@ -35,6 +47,15 @@ public class ${ClassName}Vo implements Serializable {
 #else
 #set($AttrName=$column.javaField.substring(0,1).toUpperCase() + ${column.javaField.substring(1)})
 #end
+#if($column.javaType == 'json')
+	public void set${AttrName}(String $column.javaField) {
+        this.$column.javaField = $column.javaField;
+    }
+
+    public String get${AttrName}() {
+        return $column.javaField;
+    }
+#else
     public void set${AttrName}($column.javaType $column.javaField) {
         this.$column.javaField = $column.javaField;
     }
@@ -42,6 +63,7 @@ public class ${ClassName}Vo implements Serializable {
     public $column.javaType get${AttrName}() {
         return $column.javaField;
     }
+#end
 #end
 
 }

@@ -28,8 +28,12 @@ public class GenConstants {
     /** 上级菜单名称字段 */
     public static final String PARENT_MENU_NAME = "parentMenuName";
 
+    public static final String PARAM_ID = "id";
     public static final String PARAM_CREATE_USER = "create_user";
     public static final String PARAM_CREATE_TIME = "create_time";
+    public static final String PARAM_UPDATE_USER = "update_user";
+    public static final String PARAM_UPDATE_TIME = "update_time";
+    public static final String PARAM_REMARK = "remark";
 
     /** 文本框 */
     public static final String HTML_INPUT = "input";
@@ -81,6 +85,9 @@ public class GenConstants {
     
     /** 枚举状态类型 */
     public static final String TYPE_ENUM_STATUS = "StatusEnum";
+    
+    /** json类型 */
+    public static final String TYPE_JSON = "json";
 
     /** 模糊查询 */
     public static final String QUERY_LIKE = "LIKE";
