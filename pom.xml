@@ -71,7 +71,7 @@
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
 		<com.alibaba.nacos.version>2.1.0</com.alibaba.nacos.version>
 		<com.alibaba.druid.version>1.2.9</com.alibaba.druid.version>
-		<com.alibaba.fastjson.version>1.2.79</com.alibaba.fastjson.version>
+		<com.alibaba.fastjson.version>1.2.83</com.alibaba.fastjson.version>
 		
 		<com.thoughtworks.paranamer.version>2.8</com.thoughtworks.paranamer.version>
 		<com.fasterxml.jackson.version>2.13.2</com.fasterxml.jackson.version>
