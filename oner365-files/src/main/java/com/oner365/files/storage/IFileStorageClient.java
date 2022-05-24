@@ -43,8 +43,9 @@ public interface IFileStorageClient {
      * 删除文件
      *
      * @param fileUrl 文件访问地址
+     * @return Boolean
      */
-    void deleteFile(String fileUrl);
+    Boolean deleteFile(String fileUrl);
 
     /**
      * 获取文件存储方式

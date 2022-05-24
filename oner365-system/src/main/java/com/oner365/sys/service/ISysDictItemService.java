@@ -54,25 +54,25 @@ public interface ISysDictItemService extends BaseService {
    * @param id     主键
    * @param typeId 字典类别id
    * @param code   编号
-   * @return long
+   * @return Boolean
    */
-  long checkCode(String id, String typeId, String code);
+  Boolean checkCode(String id, String typeId, String code);
 
   /**
    * 删除
    * 
    * @param id 主键
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
   /**
    * 修改状态
    * 
    * @param id     主键
    * @param status 状态
-   * @return int
+   * @return Boolean
    */
-  Integer editStatus(String id, StatusEnum status);
+  Boolean editStatus(String id, StatusEnum status);
 
 }

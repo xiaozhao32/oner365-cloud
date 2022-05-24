@@ -36,9 +36,9 @@ public interface ISysOrganizationService extends BaseService {
    * 删除
    *
    * @param id 编号
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
   /**
    * 检测代码
@@ -46,9 +46,9 @@ public interface ISysOrganizationService extends BaseService {
    * @param orgId 单位编号
    * @param code  代码
    * @param type  类型
-   * @return long
+   * @return Boolean
    */
-  long checkCode(String orgId, String code, String type);
+  Boolean checkCode(String orgId, String code, String type);
 
   /**
    * 直接测试数据源是否连接
@@ -59,17 +59,17 @@ public interface ISysOrganizationService extends BaseService {
    * @param dbname   数据源名称
    * @param username 账号
    * @param password 密码
-   * @return boolean
+   * @return Boolean
    */
-  boolean isConnection(String ds, String ip, int port, String dbname, String username, String password);
+  Boolean isConnection(String ds, String ip, int port, String dbname, String username, String password);
 
   /**
    * 判断保存后数据源是否连接
    *
    * @param id 编号
-   * @return Map
+   * @return Boolean
    */
-  boolean checkConnection(String id);
+  Boolean checkConnection(String id);
 
   /**
    * 按父级id查询
@@ -133,8 +133,8 @@ public interface ISysOrganizationService extends BaseService {
    *
    * @param id     编号
    * @param status 状态
-   * @return int
+   * @return Boolean
    */
-  Integer editStatus(String id, StatusEnum status);
+  Boolean editStatus(String id, StatusEnum status);
 
 }

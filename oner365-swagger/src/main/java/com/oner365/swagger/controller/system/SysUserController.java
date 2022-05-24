@@ -113,12 +113,12 @@ public class SysUserController extends BaseController {
    * 判断用户是否存在
    *
    * @param checkUserNameVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("6.判断存在")
   @ApiOperationSupport(order = 6)
   @PostMapping("/check")
-  public ResponseData<Long> checkUserName(@RequestBody CheckUserNameVo checkUserNameVo) {
+  public ResponseData<Boolean> checkUserName(@RequestBody CheckUserNameVo checkUserNameVo) {
     return client.checkUserName(checkUserNameVo);
   }
   
@@ -126,12 +126,12 @@ public class SysUserController extends BaseController {
    * 重置密码
    *
    * @param resetPasswordVo 查询参数
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("7.重置密码")
   @ApiOperationSupport(order = 7)
   @PostMapping("/reset")
-  public ResponseData<Integer> resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
+  public ResponseData<Boolean> resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
     return client.resetPassword(resetPasswordVo);
   }
   
@@ -139,12 +139,12 @@ public class SysUserController extends BaseController {
    * 修改密码
    *
    * @param modifyPasswordVo 请求参数
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("8.修改密码")
   @ApiOperationSupport(order = 8)
   @PostMapping("/update/password")
-  public ResponseData<Integer> editPassword(@RequestBody ModifyPasswordVo modifyPasswordVo) {
+  public ResponseData<Boolean> editPassword(@RequestBody ModifyPasswordVo modifyPasswordVo) {
     return client.editPassword(modifyPasswordVo);
   }
   
@@ -153,12 +153,12 @@ public class SysUserController extends BaseController {
    *
    * @param id     主键
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("9.修改状态")
   @ApiOperationSupport(order = 9)
   @PostMapping("/status/{id}")
-  public ResponseData<Integer> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return client.editStatus(id, status);
   }
   
@@ -179,12 +179,12 @@ public class SysUserController extends BaseController {
    * 删除用户
    *
    * @param ids 编号
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("11.删除")
   @ApiOperationSupport(order = 11)
   @DeleteMapping("/delete")
-  public ResponseData<List<Integer>> delete(@RequestBody String... ids) {
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
     return client.delete(ids);
   }
   

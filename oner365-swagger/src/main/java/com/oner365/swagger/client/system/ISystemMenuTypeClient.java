@@ -61,19 +61,19 @@ public interface ISystemMenuTypeClient {
    * 
    * @param id     编号
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_STATUS)
-  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
   
   /**
    * 判断是否存在
    *
    * @param checkCodeVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_CHECK)
-  ResponseData<Long> checkCode(@RequestBody CheckCodeVo checkCodeVo);
+  ResponseData<Boolean> checkCode(@RequestBody CheckCodeVo checkCodeVo);
 
   /**
    * 保存
@@ -88,9 +88,9 @@ public interface ISystemMenuTypeClient {
    * 删除
    * 
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_DELETE)
-  ResponseData<List<Integer>> delete(@RequestBody String... ids);
+  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
 
 }

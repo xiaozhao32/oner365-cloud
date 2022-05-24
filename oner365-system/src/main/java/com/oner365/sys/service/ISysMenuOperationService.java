@@ -58,17 +58,17 @@ public interface ISysMenuOperationService extends BaseService {
    * 删除
    * 
    * @param id 主键
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
   /**
    * 检测是否存在
    * 
    * @param id   主键
    * @param code 类型
-   * @return long
+   * @return Boolean
    */
-  long checkCode(String id, String code);
+  Boolean checkCode(String id, String code);
 
 }

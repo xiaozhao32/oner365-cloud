@@ -82,38 +82,38 @@ public interface ISystemUserClient {
    * 判断用户是否存在
    *
    * @param checkUserNameVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_USER_CHECK)
-  ResponseData<Long> checkUserName(@RequestBody CheckUserNameVo checkUserNameVo);
+  ResponseData<Boolean> checkUserName(@RequestBody CheckUserNameVo checkUserNameVo);
   
   /**
    * 重置密码
    * 
    * @param resetPasswordVo 重置对象
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_USER_RESET)
-  ResponseData<Integer> resetPassword(@RequestBody ResetPasswordVo resetPasswordVo);
+  ResponseData<Boolean> resetPassword(@RequestBody ResetPasswordVo resetPasswordVo);
   
   /**
    * 修改密码
    * 
    * @param modifyPasswordVo 修改对象
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_USER_PASSWORD_UPDATE)
-  ResponseData<Integer> editPassword(@RequestBody ModifyPasswordVo modifyPasswordVo);
+  ResponseData<Boolean> editPassword(@RequestBody ModifyPasswordVo modifyPasswordVo);
   
   /**
    * 修改状态
    * 
    * @param id     编号
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_USER_STATUS)
-  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
 
   /**
    * 保存
@@ -128,10 +128,10 @@ public interface ISystemUserClient {
    * 删除
    * 
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_USER_DELETE)
-  ResponseData<List<Integer>> delete(@RequestBody String... ids);
+  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
 
   /**
    * 导出

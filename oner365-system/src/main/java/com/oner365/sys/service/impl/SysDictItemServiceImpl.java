@@ -17,8 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.ExistsEnum;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.page.PageInfo;
@@ -101,7 +99,7 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
   }
 
   @Override
-  public long checkCode(String id, String typeId, String code) {
+  public Boolean checkCode(String id, String typeId, String code) {
     try {
       Criteria<SysDictItem> criteria = new Criteria<>();
       criteria.add(Restrictions.eq(SysConstants.ITEM_CODE, DataUtils.trimToNull(code)));
@@ -109,11 +107,13 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
       if (!DataUtils.isEmpty(id)) {
         criteria.add(Restrictions.ne(SysConstants.ID, id));
       }
-      return dao.count(criteria);
+      if (dao.count(criteria) > 0) {
+        return Boolean.TRUE;
+      }
     } catch (Exception e) {
       LOGGER.error("Error checkCode:", e);
     }
-    return ExistsEnum.NO.getCode();
+    return Boolean.FALSE;
   }
 
   @Override
@@ -121,9 +121,9 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_TYPE_NAME, allEntries = true) })
-  public int deleteById(String id) {
+  public Boolean deleteById(String id) {
     dao.deleteById(id);
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.TRUE;
   }
 
   @Override
@@ -131,15 +131,15 @@ public class SysDictItemServiceImpl implements ISysDictItemService {
   @Caching(evict = {
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_TYPE_NAME, allEntries = true) })
-  public Integer editStatus(String id, StatusEnum status) {
+  public Boolean editStatus(String id, StatusEnum status) {
     Optional<SysDictItem> optional = dao.findById(id);
     if (optional.isPresent()) {
       SysDictItem entity = optional.get();
       entity.setStatus(status);
       dao.save(entity);
-      return ResultEnum.SUCCESS.getCode();
+      return Boolean.TRUE;
     }
-    return ResultEnum.ERROR.getCode();
+    return Boolean.FALSE;
   }
 
 }

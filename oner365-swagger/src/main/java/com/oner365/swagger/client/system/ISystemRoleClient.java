@@ -1,5 +1,7 @@
 package com.oner365.swagger.client.system;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -52,19 +54,19 @@ public interface ISystemRoleClient {
    * 
    * @param id     编号
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_ROLE_STATUS)
-  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
   
   /**
    * 判断类别id 类别是否存在
    *
    * @param checkRoleNameVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_ROLE_CHECK)
-  ResponseData<Long> check(@RequestBody CheckRoleNameVo checkRoleNameVo);
+  ResponseData<Boolean> check(@RequestBody CheckRoleNameVo checkRoleNameVo);
 
   /**
    * 保存
@@ -79,10 +81,10 @@ public interface ISystemRoleClient {
    * 删除
    * 
    * @param ids 编号
-   * @return ResponseData<Integer>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_ROLE_DELETE)
-  ResponseData<Integer> delete(@RequestBody String... ids);
+  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
 
   /**
    * 导出

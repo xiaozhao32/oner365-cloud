@@ -51,16 +51,16 @@ public interface ISysLogService extends BaseService {
    * 删除
    * 
    * @param id 编号
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
   /**
    * 按日期删除
    * 
    * @param dateTime 日期
-   * @return int
+   * @return Boolean
    */
-  int deleteLog(LocalDateTime dateTime);
+  Boolean deleteLog(LocalDateTime dateTime);
 
 }

@@ -174,17 +174,18 @@ public class FileFdfsClient implements IFileStorageClient {
    * @param fileUrl 文件访问地址
    */
   @Override
-  public void deleteFile(String fileUrl) {
+  public Boolean deleteFile(String fileUrl) {
     if (DataUtils.isEmpty(fileUrl)) {
-      return;
+      return Boolean.FALSE;
     }
     try {
       StorePath storePath = StorePath.parseFromUrl(fileUrl);
       fastFileStorageClient.deleteFile(storePath.getGroup(), storePath.getPath());
-      fileStorageService.deleteById(fileUrl);
+      return fileStorageService.deleteById(fileUrl);
     } catch (FdfsUnsupportStorePathException e) {
       logger.error("delete File FdfsUnSupportStorePathException:", e);
     }
+    return Boolean.FALSE;
   }
 
   /**

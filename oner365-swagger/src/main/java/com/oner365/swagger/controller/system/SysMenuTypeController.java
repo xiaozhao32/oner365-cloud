@@ -85,12 +85,12 @@ public class SysMenuTypeController extends BaseController {
    *
    * @param id     主键
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("4.修改状态")
   @ApiOperationSupport(order = 4)
   @PostMapping("/status/{id}")
-  public ResponseData<Integer> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return client.editStatus(id, status);
   }
   
@@ -98,12 +98,12 @@ public class SysMenuTypeController extends BaseController {
    * 判断是否存在
    *
    * @param checkCodeVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("5.判断是否存在")
   @ApiOperationSupport(order = 5)
   @PostMapping("/check")
-  public ResponseData<Long> checkCode(@RequestBody CheckCodeVo checkCodeVo) {
+  public ResponseData<Boolean> checkCode(@RequestBody CheckCodeVo checkCodeVo) {
     return client.checkCode(checkCodeVo);
   }
   
@@ -124,12 +124,12 @@ public class SysMenuTypeController extends BaseController {
    * 删除
    *
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @ApiOperation("7.删除")
   @ApiOperationSupport(order = 7)
   @DeleteMapping("/delete")
-  public ResponseData<List<Integer>> delete(@RequestBody String... ids) {
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
     return client.delete(ids);
   }
 

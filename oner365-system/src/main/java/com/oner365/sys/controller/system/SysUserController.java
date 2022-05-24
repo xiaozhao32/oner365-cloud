@@ -1,7 +1,9 @@
 package com.oner365.sys.controller.system;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -24,7 +26,6 @@ import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.AttributeBean;
@@ -153,14 +154,14 @@ public class SysUserController extends BaseController {
    * 判断用户是否存在
    *
    * @param checkUserNameVo 查询参数
-   * @return Long
+   * @return Boolean
    */
   @PostMapping("/check")
-  public Long checkUserName(@RequestBody CheckUserNameVo checkUserNameVo) {
+  public Boolean checkUserName(@RequestBody CheckUserNameVo checkUserNameVo) {
     if (checkUserNameVo != null) {
       return sysUserService.checkUserName(checkUserNameVo.getId(), checkUserNameVo.getUserName());
     }
-    return Long.valueOf(ResultEnum.ERROR.getCode());
+    return Boolean.FALSE;
   }
 
   /**
@@ -170,11 +171,11 @@ public class SysUserController extends BaseController {
    * @return Integer
    */
   @PostMapping("/reset")
-  public Integer resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
+  public Boolean resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
     if (resetPasswordVo != null) {
       return sysUserService.editPassword(resetPasswordVo.getUserId(), resetPasswordVo.getPassword());
     }
-    return ResultEnum.ERROR.getCode();
+    return Boolean.FALSE;
   }
 
   /**
@@ -182,10 +183,10 @@ public class SysUserController extends BaseController {
    *
    * @param authUser         登录对象
    * @param modifyPasswordVo 请求参数
-   * @return Integer
+   * @return Boolean
    */
   @PostMapping("/update/password")
-  public ResponseResult<Integer> editPassword(@CurrentUser AuthUser authUser,
+  public ResponseResult<Boolean> editPassword(@CurrentUser AuthUser authUser,
       @RequestBody ModifyPasswordVo modifyPasswordVo) {
     if (modifyPasswordVo != null) {
       String oldPassword = DigestUtils.md5Hex(modifyPasswordVo.getOldPassword()).toUpperCase();
@@ -194,7 +195,7 @@ public class SysUserController extends BaseController {
       if (!oldPassword.equals(sysUser.getPassword())) {
         return ResponseResult.error(ErrorInfoEnum.PASSWORD_ERROR.getName());
       }
-      int result = sysUserService.editPassword(authUser.getId(), modifyPasswordVo.getPassword());
+      Boolean result = sysUserService.editPassword(authUser.getId(), modifyPasswordVo.getPassword());
       return ResponseResult.success(result);
     }
     return ResponseResult.error(ErrorInfoEnum.PARAM.getName());
@@ -205,10 +206,10 @@ public class SysUserController extends BaseController {
    *
    * @param id     主键
    * @param status 状态
-   * @return Integer
+   * @return Boolean
    */
   @PostMapping("/status/{id}")
-  public Integer editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public Boolean editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return sysUserService.editStatus(id, status);
   }
 
@@ -232,15 +233,11 @@ public class SysUserController extends BaseController {
    * 删除用户
    *
    * @param ids 编号
-   * @return Integer
+   * @return List<Boolean>
    */
   @DeleteMapping("/delete")
-  public Integer delete(@RequestBody String... ids) {
-    int code = 0;
-    for (String id : ids) {
-      code = sysUserService.deleteById(id);
-    }
-    return code;
+  public List<Boolean> delete(@RequestBody String... ids) {
+    return Arrays.stream(ids).map(id -> sysUserService.deleteById(id)).collect(Collectors.toList());
   }
 
   /**

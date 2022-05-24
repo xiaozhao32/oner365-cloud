@@ -1,6 +1,7 @@
 package com.oner365.swagger.client.gateway;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.oner365.common.ResponseData;
-import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -52,7 +52,7 @@ public interface IGatewayRouteClient {
    * @return ResponseData
    */
   @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_ADD)
-  ResponseData<ResponseResult<String>> add(@RequestBody GatewayRouteVo gatewayRouteVo);
+  ResponseData<GatewayRouteDto> add(@RequestBody GatewayRouteVo gatewayRouteVo);
 
   /**
    * 刷新路由配置
@@ -69,7 +69,7 @@ public interface IGatewayRouteClient {
    * @return ResponseData
    */
   @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_UPDATE)
-  public ResponseData<ResponseResult<String>> update(@RequestBody GatewayRouteVo gatewayRouteVo);
+  public ResponseData<GatewayRouteDto> update(@RequestBody GatewayRouteVo gatewayRouteVo);
 
   /**
    * 更新路由状态
@@ -79,7 +79,7 @@ public interface IGatewayRouteClient {
    * @return ResponseData
    */
   @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_STATUS)
-  ResponseData<ResponseResult<String>> updateRouteStatus(@PathVariable(value = "id") String id,
+  ResponseData<Boolean> updateRouteStatus(@PathVariable(value = "id") String id,
       @PathVariable(value = "status") StatusEnum status);
   
   /**
@@ -89,5 +89,5 @@ public interface IGatewayRouteClient {
    * @return ResponseData
    */
   @DeleteMapping(PathConstants.REQUEST_GATEWAY_ROUTE_DELETE)
-  public ResponseData<ResponseResult<String>> delete(@RequestBody String... ids);
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids);
 }

@@ -1,5 +1,7 @@
 package com.oner365.swagger.controller.system;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -71,12 +73,12 @@ public class SysRoleController extends BaseController {
    *
    * @param id     主键
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("3.修改状态")
   @ApiOperationSupport(order = 3)
   @PostMapping("/status/{id}")
-  public ResponseData<Integer> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return client.editStatus(id, status);
   }
   
@@ -84,12 +86,12 @@ public class SysRoleController extends BaseController {
    * 判断是否存在
    *
    * @param checkRoleNameVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("4.判断角色名称存在")
   @ApiOperationSupport(order = 4)
   @PostMapping("/check")
-  public ResponseData<Long> checkRoleName(@RequestBody CheckRoleNameVo checkRoleNameVo) {
+  public ResponseData<Boolean> checkRoleName(@RequestBody CheckRoleNameVo checkRoleNameVo) {
     return client.check(checkRoleNameVo);
   }
   
@@ -110,12 +112,12 @@ public class SysRoleController extends BaseController {
    * 删除
    *
    * @param ids 编号
-   * @return ResponseData<Integer>
+   * @return ResponseData<List<Boolean>>
    */
   @ApiOperation("6.删除")
   @ApiOperationSupport(order = 6)
   @DeleteMapping("/delete")
-  public ResponseData<Integer> delete(@RequestBody String... ids) {
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
     return client.delete(ids);
   }
   

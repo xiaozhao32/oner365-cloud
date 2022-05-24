@@ -65,10 +65,10 @@ public interface ISystemDictClient {
    * 判断类别id 类别是否存在
    *
    * @param checkCodeVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_TYPE_CHECK)
-  ResponseData<Long> checkTypeCode(@RequestBody CheckCodeVo checkCodeVo);
+  ResponseData<Boolean> checkTypeCode(@RequestBody CheckCodeVo checkCodeVo);
   
   /**
    * 获取类别中字典列表
@@ -93,10 +93,10 @@ public interface ISystemDictClient {
    *
    * @param id     主键
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_TYPE_STATUS)
-  ResponseData<Integer> editTypeStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editTypeStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
   
   /**
    * 字典类别保存
@@ -111,10 +111,10 @@ public interface ISystemDictClient {
    * 删除字典类别
    *
    * @param ids 字典编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_DICT_TYPE_DELETE)
-  ResponseData<List<Integer>> deleteItemType(@RequestBody String... ids);
+  ResponseData<List<Boolean>> deleteItemType(@RequestBody String... ids);
   
   /**
    * 导出字典类型Excel
@@ -147,20 +147,20 @@ public interface ISystemDictClient {
    * 判断类别id 字典是否存在
    *
    * @param checkTypeCodeVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_ITEM_CHECK)
-  ResponseData<Long> checkCode(@RequestBody CheckTypeCodeVo checkTypeCodeVo);
+  ResponseData<Boolean> checkCode(@RequestBody CheckTypeCodeVo checkTypeCodeVo);
   
   /**
    * 修改状态
    *
    * @param id     主键
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_ITEM_STATUS)
-  ResponseData<Integer> editItemStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editItemStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
   
   /**
    * 保存字典信息
@@ -175,10 +175,10 @@ public interface ISystemDictClient {
    * 删除字典信息
    *
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_DICT_ITEM_DELETE)
-  ResponseData<List<Integer>> deleteItem(@RequestBody String... ids);
+  ResponseData<List<Boolean>> deleteItem(@RequestBody String... ids);
   
   /**
    * 导出字典Excel

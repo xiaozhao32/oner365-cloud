@@ -53,16 +53,16 @@ public interface ISysMessageService extends BaseService {
    *
    * @param id     编号
    * @param status 状态
-   * @return int
+   * @return Boolean
    */
-  Integer editStatus(String id, MessageStatusEnum status);
+  Boolean editStatus(String id, MessageStatusEnum status);
 
   /**
    * 删除
    *
    * @param id 主键
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
 }

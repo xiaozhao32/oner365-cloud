@@ -37,17 +37,17 @@ public interface DynamicRouteService extends BaseService, ApplicationEventPublis
    * 添加路由
    *
    * @param gatewayRoute 路由对象
-   * @return String
+   * @return Boolean
    */
-  String save(GatewayRouteVo gatewayRoute);
+  GatewayRouteDto save(GatewayRouteVo gatewayRoute);
 
   /**
    * 更新路由
    *
    * @param gatewayRoute 路由对象
-   * @return String
+   * @return Boolean
    */
-  String update(GatewayRouteVo gatewayRoute);
+  GatewayRouteDto update(GatewayRouteVo gatewayRoute);
 
   /**
    * 根据id查询路由
@@ -61,8 +61,9 @@ public interface DynamicRouteService extends BaseService, ApplicationEventPublis
    * 删除路由
    *
    * @param id 编号
+   * @return Boolean
    */
-  void delete(String id);
+  Boolean delete(String id);
 
   /**
    * 路由
@@ -84,8 +85,8 @@ public interface DynamicRouteService extends BaseService, ApplicationEventPublis
    *
    * @param id     编号
    * @param status 状态
-   * @return String
+   * @return Boolean
    */
-  String updateRouteStatus(String id, StatusEnum status);
+  Boolean editStatus(String id, StatusEnum status);
 
 }

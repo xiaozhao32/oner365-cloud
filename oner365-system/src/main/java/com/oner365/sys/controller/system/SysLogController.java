@@ -1,7 +1,9 @@
 package com.oner365.sys.controller.system;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,9 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.common.ResponseResult;
-import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -64,40 +63,36 @@ public class SysLogController extends BaseController {
    * 保存
    *
    * @param sysLogVo 菜单类型对象
-   * @return ResponseResult<String>
+   * @return Boolean
    */
   @PutMapping("/save")
-  public ResponseResult<String> save(@RequestBody SysLogVo sysLogVo) {
+  public Boolean save(@RequestBody SysLogVo sysLogVo) {
     if (sysLogVo != null) {
       logService.save(sysLogVo);
-      return ResponseResult.success(ResultEnum.SUCCESS.getName());
+      return Boolean.TRUE;
     }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+    return Boolean.FALSE;
   }
 
   /**
    * 删除
    *
    * @param ids 编号
-   * @return Integer
+   * @return List<Boolean>
    */
   @DeleteMapping("/delete")
-  public Integer delete(@RequestBody String... ids) {
-    int code = 0;
-    for (String id : ids) {
-      code = logService.deleteById(id);
-    }
-    return code;
+  public List<Boolean> delete(@RequestBody String... ids) {
+    return Arrays.stream(ids).map(id -> logService.deleteById(id)).collect(Collectors.toList());
   }
 
   /**
    * 按日期删除日志
    *
    * @param days 天数
-   * @return Integer
+   * @return Boolean
    */
   @DeleteMapping("/days/delete")
-  public Integer deleteLog(@RequestParam("days") Integer days) {
+  public Boolean deleteLog(@RequestParam("days") Integer days) {
     Date date = DateUtil.getDateAgo(days);
     return logService.deleteLog(DateUtil.dateToLocalDateTime(date));
   }

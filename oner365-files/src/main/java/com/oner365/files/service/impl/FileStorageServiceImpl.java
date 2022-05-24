@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -95,14 +94,14 @@ public class FileStorageServiceImpl implements IFileStorageService {
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public int deleteById(String id) {
+  public Boolean deleteById(String id) {
     try {
       dao.deleteById(id);
-      return ResultEnum.SUCCESS.getCode();
+      return Boolean.TRUE;
     } catch (Exception e) {
       LOGGER.error("Error deleteById: ", e);
     }
-    return ResultEnum.ERROR.getCode();
+    return Boolean.FALSE;
   }
 
 }

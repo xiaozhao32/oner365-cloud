@@ -27,8 +27,6 @@ import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.cache.constants.CacheConstants;
 import com.oner365.common.config.properties.AccessTokenProperties;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.ExistsEnum;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.page.PageInfo;
@@ -290,27 +288,29 @@ public class SysUserServiceImpl implements ISysUserService {
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
-  public Integer deleteById(String id) {
+  public Boolean deleteById(String id) {
     userJobDao.deleteUserJobByUserId(id);
     userOrgDao.deleteUserOrgByUserId(id);
     userRoleDao.deleteUserRoleByUserId(id);
     userDao.deleteById(id);
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.TRUE;
   }
 
   @Override
-  public long checkUserName(String userId, String userName) {
+  public Boolean checkUserName(String userId, String userName) {
     try {
       Criteria<SysUser> criteria = new Criteria<>();
       criteria.add(Restrictions.eq(SysConstants.USER_NAME, DataUtils.trimToNull(userName)));
       if (!DataUtils.isEmpty(userId)) {
         criteria.add(Restrictions.ne(SysConstants.ID, userId));
       }
-      return userDao.count(criteria);
+      if (userDao.count(criteria) > 0) {
+        return Boolean.TRUE;
+      }
     } catch (Exception e) {
       LOGGER.error("Error checkUserName:", e);
     }
-    return ExistsEnum.NO.getCode();
+    return Boolean.FALSE;
   }
 
   @Override
@@ -318,14 +318,14 @@ public class SysUserServiceImpl implements ISysUserService {
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
-  public Integer editPassword(String id, String p) {
+  public Boolean editPassword(String id, String p) {
     Optional<SysUser> optional = userDao.findById(id);
     if (optional.isPresent()) {
       optional.get().setPassword(DigestUtils.md5Hex(p).toUpperCase());
       userDao.save(optional.get());
-      return ResultEnum.SUCCESS.getCode();
+      return Boolean.TRUE;
     }
-    return ResultEnum.ERROR.getCode();
+    return Boolean.FALSE;
   }
 
   @Override
@@ -333,14 +333,14 @@ public class SysUserServiceImpl implements ISysUserService {
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
-  public Integer editStatus(String id, StatusEnum status) {
+  public Boolean editStatus(String id, StatusEnum status) {
     Optional<SysUser> optional = userDao.findById(id);
     if (optional.isPresent()) {
       optional.get().setStatus(status);
       userDao.save(optional.get());
-      return ResultEnum.SUCCESS.getCode();
+      return Boolean.TRUE;
     }
-    return ResultEnum.ERROR.getCode();
+    return Boolean.FALSE;
   }
 
   @Override

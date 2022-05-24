@@ -36,18 +36,18 @@ public interface ISysMenuService extends BaseService {
    * 删除
    *
    * @param id 主键
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
   /**
    * 修改状态
    *
    * @param id     主键
    * @param status 状态
-   * @return int
+   * @return Boolean
    */
-  int editStatus(String id, StatusEnum status);
+  Boolean editStatus(String id, StatusEnum status);
 
   /**
    * 按菜单类型查询

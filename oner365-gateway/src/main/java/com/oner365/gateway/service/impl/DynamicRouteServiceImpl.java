@@ -88,7 +88,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
   }
 
   @Override
-  public String save(GatewayRouteVo gatewayRoute) {
+  public GatewayRouteDto save(GatewayRouteVo gatewayRoute) {
 
     // Filter
     GatewayFilter gatewayFilter = new GatewayFilter();
@@ -107,14 +107,14 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
     gatewayRoute.setPredicates(Collections.singletonList(gatewayPredicate));
 
     // 页面保存信息
-    gatewayRouteDao.save(convert(gatewayRoute, GatewayRoute.class));
+    GatewayRoute result = gatewayRouteDao.save(convert(gatewayRoute, GatewayRoute.class));
     publishEvent(assembleRouteDefinition(convert(gatewayRoute, GatewayRouteDto.class)));
     syncRouteMqService.syncRoute();
-    return "success";
+    return convert(result, GatewayRouteDto.class);
   }
   
   @Override
-  public String update(GatewayRouteVo gatewayRoute) {
+  public GatewayRouteDto update(GatewayRouteVo gatewayRoute) {
     try {
       delete(gatewayRoute.getId());
       return save(gatewayRoute);
@@ -125,15 +125,17 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
   }
 
   @Override
-  public void delete(String id) {
+  public Boolean delete(String id) {
     try {
       routeDefinitionWriter.delete(Mono.just(id)).subscribe();
       this.publisher.publishEvent(new RefreshRoutesEvent(this));
       gatewayRouteDao.deleteById(id);
       syncRouteMqService.syncRoute();
+      return Boolean.TRUE;
     } catch (Exception e) {
       LOGGER.error("delete error:", e);
     }
+    return Boolean.FALSE;
   }
 
   @Override
@@ -144,13 +146,14 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
   }
 
   @Override
-  public String updateRouteStatus(String id, StatusEnum status) {
+  public Boolean editStatus(String id, StatusEnum status) {
     GatewayRoute gatewayRoute = findById(id);
     if (gatewayRoute != null) {
       gatewayRoute.setStatus(status);
-      return update(convert(gatewayRoute, GatewayRouteVo.class));
+      update(convert(gatewayRoute, GatewayRouteVo.class));
+      return Boolean.TRUE;
     }
-    return null;
+    return Boolean.FALSE;
   }
 
   private GatewayRoute findById(String id) {

@@ -64,19 +64,19 @@ public class SysTaskController extends BaseController {
    *
    * @param paramJson 参数
    * @param authUser  登录对象
-   * @return ResponseResult<Integer>
+   * @return ResponseResult<Boolean>
    * @throws SchedulerException, TaskException 异常
    */
   @PostMapping
-  public ResponseResult<Integer> add(@RequestBody SysTaskVo sysTaskVo, @CurrentUser AuthUser authUser)
+  public ResponseResult<Boolean> add(@RequestBody SysTaskVo sysTaskVo, @CurrentUser AuthUser authUser)
       throws SchedulerException, TaskException {
     if (sysTaskVo == null || !CronUtils.isValid(sysTaskVo.getCronExpression())) {
       return ResponseResult.error("cron表达式不正确");
     }
     sysTaskVo.setCreateUser(authUser.getUserName());
 
-    int code = taskService.save(sysTaskVo);
-    return ResponseResult.success(code);
+    Boolean result = taskService.save(sysTaskVo);
+    return ResponseResult.success(result);
   }
 
   /**
@@ -84,32 +84,32 @@ public class SysTaskController extends BaseController {
    *
    * @param sysTaskVo 参数
    * @param authUser  登录对象
-   * @return ResponseResult<Integer>
+   * @return ResponseResult<Boolean>
    * @throws SchedulerException, TaskException 异常
    */
   @PutMapping
-  public ResponseResult<Integer> edit(@RequestBody SysTaskVo sysTaskVo, @CurrentUser AuthUser authUser)
+  public ResponseResult<Boolean> edit(@RequestBody SysTaskVo sysTaskVo, @CurrentUser AuthUser authUser)
       throws SchedulerException, TaskException {
     if (sysTaskVo == null || !CronUtils.isValid(sysTaskVo.getCronExpression())) {
       return ResponseResult.error("cron表达式不正确");
     }
-    int code = taskService.updateTask(sysTaskVo);
-    return ResponseResult.success(code);
+    Boolean result = taskService.updateTask(sysTaskVo);
+    return ResponseResult.success(result);
   }
 
   /**
    * 定时任务状态修改
    *
    * @param sysTaskVo 参数
-   * @return ResponseResult<Integer>
+   * @return ResponseResult<Boolean>
    * @throws SchedulerException, TaskException 异常
    */
   @PutMapping("/status")
-  public ResponseResult<Integer> changeStatus(@RequestBody SysTaskVo sysTaskVo)
+  public ResponseResult<Boolean> changeStatus(@RequestBody SysTaskVo sysTaskVo)
       throws SchedulerException, TaskException {
     if (sysTaskVo != null) {
-      int code = taskService.changeStatus(sysTaskVo);
-      return ResponseResult.success(code);
+      Boolean result = taskService.changeStatus(sysTaskVo);
+      return ResponseResult.success(result);
     }
     return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
   }
@@ -118,14 +118,14 @@ public class SysTaskController extends BaseController {
    * 定时任务立即执行一次
    *
    * @param sysTaskVo 参数
-   * @return ResponseResult<String>
+   * @return ResponseResult<Boolean>
    * @throws SchedulerException 异常
    */
   @PutMapping("/run")
-  public ResponseResult<String> run(@RequestBody SysTaskVo sysTaskVo) throws SchedulerException {
+  public ResponseResult<Boolean> run(@RequestBody SysTaskVo sysTaskVo) throws SchedulerException {
     if (sysTaskVo != null) {
-      taskService.run(sysTaskVo);
-      return ResponseResult.success(ResultEnum.SUCCESS.getName());
+      Boolean result = taskService.run(sysTaskVo);
+      return ResponseResult.success(result);
     }
     return ResponseResult.error("执行失败");
   }
@@ -134,13 +134,13 @@ public class SysTaskController extends BaseController {
    * 删除定时任务
    *
    * @param ids 主键
-   * @return ResponseResult<String>
+   * @return ResponseResult<Boolean>
    * @throws SchedulerException 异常
    */
   @DeleteMapping("/{ids}")
-  public ResponseResult<String> remove(@PathVariable String[] ids) throws SchedulerException {
-    taskService.deleteTaskByIds(ids);
-    return ResponseResult.success(ResultEnum.SUCCESS.getName());
+  public ResponseResult<Boolean> remove(@PathVariable String[] ids) throws SchedulerException {
+    Boolean result = taskService.deleteTaskByIds(ids);
+    return ResponseResult.success(result);
   }
 
   /**

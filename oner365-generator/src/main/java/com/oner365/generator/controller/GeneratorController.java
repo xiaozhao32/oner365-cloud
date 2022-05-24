@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.controller.BaseController;
 import com.oner365.generator.dto.GenTableInfoDto;
@@ -89,10 +88,10 @@ public class GeneratorController extends BaseController {
    * 修改保存代码生成业务
    */
   @PutMapping
-  public Integer updateGenTable(@Validated @RequestBody GenTable genTable) {
+  public Boolean updateGenTable(@Validated @RequestBody GenTable genTable) {
     genTableService.validateEdit(genTable);
     genTableService.updateGenTable(genTable);
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.TRUE;
   }
   
   /**
@@ -116,18 +115,16 @@ public class GeneratorController extends BaseController {
    * 生成代码（自定义路径）
    */
   @GetMapping("/code/{tableName}")
-  public Integer genCode(@PathVariable("tableName") String tableName) {
-    genTableService.generatorCode(tableName);
-    return ResultEnum.SUCCESS.getCode();
+  public Boolean genCode(@PathVariable("tableName") String tableName) {
+    return genTableService.generatorCode(tableName);
   }
 
   /**
    * 同步数据库
    */
   @GetMapping("/sync/{tableName}")
-  public Integer synchDb(@PathVariable("tableName") String tableName) {
-    genTableService.synchDb(tableName);
-    return ResultEnum.SUCCESS.getCode();
+  public Boolean synchDb(@PathVariable("tableName") String tableName) {
+    return genTableService.synchDb(tableName);
   }
   
   /**
@@ -144,22 +141,20 @@ public class GeneratorController extends BaseController {
    * 删除代码生成
    */
   @DeleteMapping("/{tableIds}")
-  public Integer remove(@PathVariable Long[] tableIds) {
-    genTableService.deleteGenTableByIds(tableIds);
-    return ResultEnum.SUCCESS.getCode();
+  public Boolean remove(@PathVariable Long[] tableIds) {
+    return genTableService.deleteGenTableByIds(tableIds);
   }
 
   /**
    * 导入表结构（保存）
    */
   @PostMapping("/import")
-  public Integer importTableSave(@CurrentUser AuthUser authUser, String tables) {
+  public Boolean importTableSave(@CurrentUser AuthUser authUser, String tables) {
     String operName = authUser == null ? null : authUser.getUserName();
     String[] tableNames = ConvertString.toStrArray(tables);
     // 查询表信息
     List<GenTable> tableList = genTableService.selectDbTableListByNames(tableNames);
-    genTableService.importGenTable(tableList, operName);
-    return ResultEnum.SUCCESS.getCode();
+    return genTableService.importGenTable(tableList, operName);
   }
 
   /**

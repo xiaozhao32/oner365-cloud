@@ -55,27 +55,27 @@ public interface ISysRoleService extends BaseService {
    * 删除
    * 
    * @param id 编号
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
   /**
    * 检测roleName
    * 
    * @param id       编号
    * @param roleName 角色名称
-   * @return long
+   * @return Boolean
    */
-  long checkRoleName(String id, String roleName);
+  Boolean checkRoleName(String id, String roleName);
 
   /**
    * 修改状态
    * 
    * @param id     编号
    * @param status 状态
-   * @return Integer
+   * @return Boolean
    */
-  Integer editStatus(String id, StatusEnum status);
+  Boolean editStatus(String id, StatusEnum status);
 
   /**
    * 根据用户角色获取菜单
@@ -101,9 +101,9 @@ public interface ISysRoleService extends BaseService {
    * @param menuType 菜单类型
    * @param menuIds  菜单编号
    * @param roleId   角色id
-   * @return int
+   * @return Boolean
    */
-  int saveAuthority(String menuType, JSONArray menuIds, String roleId);
+  Boolean saveAuthority(String menuType, JSONArray menuIds, String roleId);
 
   /**
    * 角色菜单权限

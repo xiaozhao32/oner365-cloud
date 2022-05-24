@@ -89,12 +89,12 @@ public class SysDictItemController extends BaseController {
    * 判断类别id 类别是否存在
    *
    * @param checkCodeVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("4.判断字典类别是否存在")
   @ApiOperationSupport(order = 4)
   @PostMapping("/type/check")
-  public ResponseData<Long> checkTypeCode(@RequestBody CheckCodeVo checkCodeVo) {
+  public ResponseData<Boolean> checkTypeCode(@RequestBody CheckCodeVo checkCodeVo) {
     return client.checkTypeCode(checkCodeVo);
   }
   
@@ -129,12 +129,12 @@ public class SysDictItemController extends BaseController {
    *
    * @param id     主键
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("7.修改类别状态")
   @ApiOperationSupport(order = 7)
   @PostMapping("/type/status/{id}")
-  public ResponseData<Integer> editTypeStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editTypeStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return client.editTypeStatus(id, status);
   }
   
@@ -155,12 +155,12 @@ public class SysDictItemController extends BaseController {
    * 删除字典类别
    *
    * @param ids 字典编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @ApiOperation("9.删除字典类别")
   @ApiOperationSupport(order = 9)
   @DeleteMapping("/type/delete")
-  public ResponseData<List<Integer>> deleteItemType(@RequestBody String... ids) {
+  public ResponseData<List<Boolean>> deleteItemType(@RequestBody String... ids) {
     return client.deleteItemType(ids);
   }
   
@@ -207,12 +207,12 @@ public class SysDictItemController extends BaseController {
    * 判断类别id 字典是否存在
    *
    * @param checkTypeCodeVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("13.判断字典是否存在")
   @ApiOperationSupport(order = 13)
   @PostMapping("/item/check")
-  public ResponseData<Long> checkCode(@RequestBody CheckTypeCodeVo checkTypeCodeVo) {
+  public ResponseData<Boolean> checkCode(@RequestBody CheckTypeCodeVo checkTypeCodeVo) {
     return client.checkCode(checkTypeCodeVo);
   }
   
@@ -221,12 +221,12 @@ public class SysDictItemController extends BaseController {
    *
    * @param id     主键
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("14.修改字典状态")
   @ApiOperationSupport(order = 14)
   @PostMapping("/item/status/{id}")
-  public ResponseData<Integer> editItemStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editItemStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return client.editItemStatus(id, status);
   }
   
@@ -247,12 +247,12 @@ public class SysDictItemController extends BaseController {
    * 删除字典信息
    *
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @ApiOperation("16.删除字典")
   @ApiOperationSupport(order = 16)
   @DeleteMapping("/item/delete")
-  public ResponseData<List<Integer>> deleteItem(@RequestBody String... ids) {
+  public ResponseData<List<Boolean>> deleteItem(@RequestBody String... ids) {
     return client.deleteItem(ids);
   }
   

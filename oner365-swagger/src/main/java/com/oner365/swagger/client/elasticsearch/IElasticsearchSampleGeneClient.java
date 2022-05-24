@@ -1,5 +1,7 @@
 package com.oner365.swagger.client.elasticsearch;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,8 +58,8 @@ public interface IElasticsearchSampleGeneClient {
    * 删除
    * 
    * @param ids 主键
-   * @return ResponseData<Integer>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_DELETE)
-  ResponseData<Integer> delete(@RequestBody String... ids);
+  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
 }

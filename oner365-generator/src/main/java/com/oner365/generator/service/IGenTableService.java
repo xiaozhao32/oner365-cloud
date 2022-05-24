@@ -47,23 +47,26 @@ public interface IGenTableService {
      * 修改业务
      *
      * @param genTable 业务信息
+     * @return 结果
      */
-    void updateGenTable(GenTable genTable);
+    Boolean updateGenTable(GenTable genTable);
 
     /**
      * 删除业务信息
      *
      * @param tableIds 需要删除的表数据ID
+     * @return 结果
      */
-    void deleteGenTableByIds(Long[] tableIds);
+    Boolean deleteGenTableByIds(Long[] tableIds);
 
     /**
      * 导入表结构
      *
      * @param tableList 导入表列表
      * @param operName 操作名称
+     * @return 结果
      */
-    void importGenTable(List<GenTable> tableList, String operName);
+    Boolean importGenTable(List<GenTable> tableList, String operName);
 
     /**
      * 预览代码
@@ -85,15 +88,17 @@ public interface IGenTableService {
      * 生成代码（自定义路径）
      *
      * @param tableName 表名称
+     * @return 结果
      */
-    void generatorCode(String tableName);
+    Boolean generatorCode(String tableName);
 
     /**
      * 同步数据库
      *
      * @param tableName 表名称
+     * @return 结果
      */
-    void synchDb(String tableName);
+    Boolean synchDb(String tableName);
 
     /**
      * 批量生成代码（下载方式）
@@ -107,6 +112,7 @@ public interface IGenTableService {
      * 修改保存参数校验
      *
      * @param genTable 业务信息
+     * @return 结果
      */
-    void validateEdit(GenTable genTable);
+    Boolean validateEdit(GenTable genTable);
 }

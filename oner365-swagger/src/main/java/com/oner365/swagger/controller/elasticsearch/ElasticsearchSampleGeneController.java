@@ -1,5 +1,7 @@
 package com.oner365.swagger.controller.elasticsearch;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -87,7 +89,7 @@ public class ElasticsearchSampleGeneController extends BaseController {
   @ApiOperation("4.删除")
   @ApiOperationSupport(order = 4)
   @DeleteMapping("/delete")
-  public ResponseData<Integer> delete(@RequestBody String... ids) {
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
     return client.delete(ids);
   }
 }

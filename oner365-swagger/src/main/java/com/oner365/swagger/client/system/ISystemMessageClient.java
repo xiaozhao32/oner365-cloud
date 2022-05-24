@@ -63,10 +63,10 @@ public interface ISystemMessageClient {
    * 
    * @param id     编号
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_STATUS)
-  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
   
   /**
    * 保存
@@ -81,10 +81,10 @@ public interface ISystemMessageClient {
    * 删除
    * 
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_DELETE)
-  ResponseData<List<Integer>> delete(@RequestBody String... ids);
+  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
   
   /**
    * 导出

@@ -49,8 +49,8 @@ public interface IDataSourceConfigService extends BaseService {
    * 删除
    *
    * @param id 编号
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
 }

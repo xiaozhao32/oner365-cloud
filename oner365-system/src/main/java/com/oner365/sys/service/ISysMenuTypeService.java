@@ -53,18 +53,18 @@ public interface ISysMenuTypeService extends BaseService {
    *
    * @param id     编号
    * @param status 状态
-   * @return int
+   * @return Boolean
    */
-  int editStatus(String id, StatusEnum status);
+  Boolean editStatus(String id, StatusEnum status);
 
   /**
    * 检测code
    *
    * @param id   编号
    * @param code 编号
-   * @return long
+   * @return Boolean
    */
-  long checkCode(String id, String code);
+  Boolean checkCode(String id, String code);
 
   /**
    * 按菜单类型查询
@@ -78,8 +78,8 @@ public interface ISysMenuTypeService extends BaseService {
    * 删除
    *
    * @param id 编号
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
 }

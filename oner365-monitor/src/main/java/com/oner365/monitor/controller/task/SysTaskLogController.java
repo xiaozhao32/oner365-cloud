@@ -53,22 +53,21 @@ public class SysTaskLogController extends BaseController {
   /**
    * 清空定时任务调度日志
    * 
-   * @return String
+   * @return Boolean
    */
   @DeleteMapping("/clean")
-  public String clean() {
-    taskLogService.cleanTaskLog();
-    return ResultEnum.SUCCESS.getName();
+  public Boolean clean() {
+    return taskLogService.cleanTaskLog();
   }
   
   /**
    * 删除定时任务调度日志
    * 
    * @param ids 主键
-   * @return Integer
+   * @return Boolean
    */
   @DeleteMapping("/{ids}")
-  public Integer remove(@PathVariable String[] ids) {
+  public Boolean remove(@PathVariable String[] ids) {
     return taskLogService.deleteTaskLogByIds(ids);
   }
 

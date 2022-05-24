@@ -73,8 +73,8 @@ public class FileLocalClient implements IFileStorageClient {
   }
 
   @Override
-  public void deleteFile(String id) {
-    fileStorageService.deleteById(id);
+  public Boolean deleteFile(String id) {
+    return fileStorageService.deleteById(id);
   }
 
   @Override

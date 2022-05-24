@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.page.PageInfo;
@@ -109,23 +108,23 @@ public class ${ClassName}ServiceImpl implements I${ClassName}Service {
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
-    public int deleteById($AttrName id) {
+    public Boolean deleteById($AttrName id) {
         dao.deleteById(id);
-        return ResultEnum.SUCCESS.getCode();
+        return Boolean.TRUE;
     }
     
     @Override
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @CacheEvict(value = CACHE_NAME, allEntries = true)
-    public Integer editStatus($AttrName id, StatusEnum status) {
+    public Boolean editStatus($AttrName id, StatusEnum status) {
       Optional<${ClassName}> optional = dao.findById(id);
       if (optional.isPresent()) {
         optional.get().setStatus(status);
         optional.get().setUpdateTime(LocalDateTime.now());
         dao.save(optional.get());
-        return ResultEnum.SUCCESS.getCode();
+        return Boolean.TRUE;
       }
-      return ResultEnum.ERROR.getCode();
+      return Boolean.FALSE;
     }
 
 }

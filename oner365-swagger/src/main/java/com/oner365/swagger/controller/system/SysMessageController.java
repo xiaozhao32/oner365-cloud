@@ -88,12 +88,12 @@ public class SysMessageController extends BaseController {
    *
    * @param id     主键
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("4.修改状态")
   @ApiOperationSupport(order = 4)
   @PostMapping("/status/{id}")
-  public ResponseData<Integer> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return client.editStatus(id, status);
   }
   
@@ -114,12 +114,12 @@ public class SysMessageController extends BaseController {
    * 删除
    *
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @ApiOperation("6.删除")
   @ApiOperationSupport(order = 6)
   @DeleteMapping("/delete")
-  public ResponseData<List<Integer>> delete(@RequestBody String... ids) {
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
     return client.delete(ids);
   }
   

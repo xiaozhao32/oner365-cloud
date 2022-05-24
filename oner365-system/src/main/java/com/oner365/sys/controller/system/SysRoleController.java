@@ -1,6 +1,8 @@
 package com.oner365.sys.controller.system;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -65,10 +66,10 @@ public class SysRoleController extends BaseController {
    *
    * @param id     主键
    * @param status 状态
-   * @return Integer
+   * @return Boolean
    */
   @PostMapping("/status/{id}")
-  public Integer editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public Boolean editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return roleService.editStatus(id, status);
   }
 
@@ -76,28 +77,28 @@ public class SysRoleController extends BaseController {
    * 判断是否存在
    * 
    * @param checkRoleNameVo 查询参数
-   * @return Long
+   * @return Boolean
    */
   @PostMapping("/check")
-  public Long checkRoleName(@RequestBody CheckRoleNameVo checkRoleNameVo) {
+  public Boolean checkRoleName(@RequestBody CheckRoleNameVo checkRoleNameVo) {
     if (checkRoleNameVo != null) {
       return roleService.checkRoleName(checkRoleNameVo.getId(), checkRoleNameVo.getRoleName());
     }
-    return Long.valueOf(ResultEnum.ERROR.getCode());
+    return Boolean.FALSE;
   }
 
   /**
    * 角色权限保存
    * 
    * @param sysRoleVo 参数
-   * @return ResponseResult<Integer>
+   * @return ResponseResult<Boolean>
    */
   @PutMapping("/save")
-  public ResponseResult<Integer> save(@RequestBody SysRoleVo sysRoleVo) {
+  public ResponseResult<Boolean> save(@RequestBody SysRoleVo sysRoleVo) {
     if (sysRoleVo != null) {
       // 保存角色
       SysRoleDto entity = roleService.save(sysRoleVo);
-      int code = StatusEnum.NO.ordinal();
+      Boolean code = Boolean.FALSE;
       if (entity != null && sysRoleVo.getMenuType() != null) {
         // 保存权限
         code = roleService.saveAuthority(sysRoleVo.getMenuType(), sysRoleVo.getMenuIds(), entity.getId());
@@ -112,15 +113,11 @@ public class SysRoleController extends BaseController {
    * 删除
    * 
    * @param ids 编号
-   * @return Integer
+   * @return List<Boolean>
    */
   @DeleteMapping("/delete")
-  public Integer delete(@RequestBody String... ids) {
-    int code = 0;
-    for (String id : ids) {
-      code = roleService.deleteById(id);
-    }
-    return code;
+  public List<Boolean> delete(@RequestBody String... ids) {
+    return Arrays.stream(ids).map(id -> roleService.deleteById(id)).collect(Collectors.toList());
   }
 
   /**

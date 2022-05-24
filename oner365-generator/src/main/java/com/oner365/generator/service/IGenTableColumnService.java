@@ -24,7 +24,7 @@ public interface IGenTableColumnService {
      * @param genTableColumn 业务字段信息
      * @return 结果
      */
-    int insertGenTableColumn(GenTableColumn genTableColumn);
+    Boolean insertGenTableColumn(GenTableColumn genTableColumn);
 
     /**
      * 修改业务字段
@@ -32,7 +32,7 @@ public interface IGenTableColumnService {
      * @param genTableColumn 业务字段信息
      * @return 结果
      */
-    int updateGenTableColumn(GenTableColumn genTableColumn);
+    Boolean updateGenTableColumn(GenTableColumn genTableColumn);
 
     /**
      * 删除业务字段信息
@@ -40,5 +40,5 @@ public interface IGenTableColumnService {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteGenTableColumnByIds(String ids);
+    Boolean deleteGenTableColumnByIds(String ids);
 }

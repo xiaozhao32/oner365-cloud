@@ -1,7 +1,6 @@
 package com.oner365.monitor.service;
 
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
-import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
@@ -33,8 +32,9 @@ public interface ISysTaskLogService extends BaseService {
    * 新增任务日志
    *
    * @param taskLog 调度日志信息
+   * @return Boolean
    */
-  void addTaskLog(SysTaskLogVo taskLog);
+  Boolean addTaskLog(SysTaskLogVo taskLog);
 
   /**
    * 批量删除调度日志信息
@@ -42,7 +42,7 @@ public interface ISysTaskLogService extends BaseService {
    * @param ids 需要删除的日志ID
    * @return 结果
    */
-  int deleteTaskLogByIds(String[] ids);
+  Boolean deleteTaskLogByIds(String[] ids);
 
   /**
    * 删除任务日志
@@ -50,12 +50,12 @@ public interface ISysTaskLogService extends BaseService {
    * @param id 调度日志ID
    * @return 结果
    */
-  int deleteTaskLogById(String id);
+  Boolean deleteTaskLogById(String id);
 
   /**
    * 清空任务日志
    */
-  void cleanTaskLog();
+  Boolean cleanTaskLog();
 
   /**
    * 根据时间删除此时间之前的任务日志
@@ -63,5 +63,5 @@ public interface ISysTaskLogService extends BaseService {
    * @param time 时间
    * @return 结果
    */
-  StatusEnum deleteTaskLogByCreateTime(String time);
+  Boolean deleteTaskLogByCreateTime(String time);
 }

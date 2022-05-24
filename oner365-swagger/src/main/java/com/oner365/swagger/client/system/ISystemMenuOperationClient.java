@@ -53,7 +53,7 @@ public interface ISystemMenuOperationClient {
    * @return ResponseData<Long>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_OPERATION_CHECK)
-  ResponseData<Long> checkCode(@RequestBody CheckCodeVo checkCodeVo);
+  ResponseData<Boolean> checkCode(@RequestBody CheckCodeVo checkCodeVo);
 
   /**
    * 保存
@@ -68,8 +68,8 @@ public interface ISystemMenuOperationClient {
    * 删除
    * 
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_MENU_OPERATION_DELETE)
-  ResponseData<List<Integer>> delete(@RequestBody String... ids);
+  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
 }

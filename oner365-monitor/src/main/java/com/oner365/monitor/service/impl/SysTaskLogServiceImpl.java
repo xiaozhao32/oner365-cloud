@@ -9,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
-import com.oner365.common.enums.ResultEnum;
-import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.query.QueryUtils;
@@ -56,16 +54,17 @@ public class SysTaskLogServiceImpl implements ISysTaskLogService {
   }
 
   @Override
-  public void addTaskLog(SysTaskLogVo vo) {
+  public Boolean addTaskLog(SysTaskLogVo vo) {
     if (DataUtils.isEmpty(vo.getId())) {
       vo.setCreateTime(DateUtil.getDate());
     }
     dao.save(convert(vo, SysTaskLog.class));
+    return Boolean.TRUE;
   }
 
   @Override
-  public int deleteTaskLogByIds(String[] ids) {
-    int result = ResultEnum.ERROR.getCode();
+  public Boolean deleteTaskLogByIds(String[] ids) {
+    Boolean result = Boolean.FALSE;
     for (String id : ids) {
       result = deleteTaskLogById(id);
     }
@@ -73,29 +72,30 @@ public class SysTaskLogServiceImpl implements ISysTaskLogService {
   }
 
   @Override
-  public int deleteTaskLogById(String id) {
+  public Boolean deleteTaskLogById(String id) {
     try {
       dao.deleteById(id);
-      return ResultEnum.SUCCESS.getCode();
+      return Boolean.TRUE;
     } catch (Exception e) {
       LOGGER.error("Error deleteTaskLogById:", e);
     }
-    return ResultEnum.ERROR.getCode();
+    return Boolean.FALSE;
   }
 
   @Override
-  public void cleanTaskLog() {
+  public Boolean cleanTaskLog() {
     taskLogMapper.cleanTaskLog();
+    return Boolean.TRUE;
   }
 
   @Override
-  public StatusEnum deleteTaskLogByCreateTime(String time) {
+  public Boolean deleteTaskLogByCreateTime(String time) {
     try {
       dao.deleteTaskLogByCreateTime(time);
-      return StatusEnum.YES;
+      return Boolean.TRUE;
     } catch (Exception e) {
       LOGGER.error("Error deleteTaskLogByCreateTime: ", e);
     }
-    return StatusEnum.NO;
+    return Boolean.FALSE;
   }
 }

@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.alibaba.fastjson.JSON;
 import com.oner365.api.enums.TaskStatusEnum;
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -67,12 +66,6 @@ public class SysTaskServiceImpl implements ISysTaskService {
     });
   }
 
-  /**
-   * 获取quartz调度器的计划任务列表
-   *
-   * @param data 查询参数
-   * @return Page<SysTaskDto>
-   */
   @Override
   public PageInfo<SysTaskDto> pageList(QueryCriteriaBean data) {
     try {
@@ -84,99 +77,67 @@ public class SysTaskServiceImpl implements ISysTaskService {
     return null;
   }
 
-  /**
-   * 通过调度任务ID查询调度信息
-   *
-   * @param id 调度任务ID
-   * @return 调度任务对象信息
-   */
   @Override
   public SysTaskDto selectTaskById(String id) {
     Optional<SysTask> optional = dao.findById(id);
     return convert(optional.orElse(null), SysTaskDto.class);
   }
 
-  /**
-   * 暂停任务
-   *
-   * @param vo 调度信息
-   * @throws SchedulerException 异常
-   */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int pauseTask(SysTaskVo vo) throws SchedulerException {
+  public Boolean pauseTask(SysTaskVo vo) throws SchedulerException {
     Optional<SysTask> optional = dao.findById(vo.getId());
     if (optional.isPresent()) {
       SysTask sysTask = optional.get();
       sysTask.setStatus(TaskStatusEnum.PAUSE);
       dao.save(sysTask);
       scheduler.pauseJob(ScheduleUtils.getJobKey(sysTask.getId(), sysTask.getTaskGroup()));
+      return Boolean.TRUE;
     }
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.FALSE;
   }
 
-  /**
-   * 恢复任务
-   *
-   * @param vo 调度信息
-   * @throws SchedulerException 异常
-   */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int resumeTask(SysTaskVo vo) throws SchedulerException {
+  public Boolean resumeTask(SysTaskVo vo) throws SchedulerException {
     Optional<SysTask> optional = dao.findById(vo.getId());
     if (optional.isPresent()) {
       SysTask sysTask = optional.get();
       sysTask.setStatus(TaskStatusEnum.NORMAL);
       dao.save(sysTask);
       scheduler.resumeJob(ScheduleUtils.getJobKey(sysTask.getId(), sysTask.getTaskGroup()));
+      return Boolean.TRUE;
     }
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.FALSE;
   }
 
-  /**
-   * 删除任务后，所对应的trigger也将被删除
-   *
-   * @param task 调度信息
-   */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int deleteTask(String id) throws SchedulerException {
+  public Boolean deleteTask(String id) throws SchedulerException {
     Optional<SysTask> optional = dao.findById(id);
     if (optional.isPresent()) {
       SysTask task = optional.get();
       String taskGroup = task.getTaskGroup();
       dao.deleteById(id);
       scheduler.deleteJob(ScheduleUtils.getJobKey(id, taskGroup));
-      return ResultEnum.SUCCESS.getCode();
+      return Boolean.TRUE;
     }
-    return ResultEnum.ERROR.getCode();
+    return Boolean.FALSE;
   }
 
-  /**
-   * 批量删除调度信息
-   *
-   * @param ids 需要删除的任务ID
-   */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public void deleteTaskByIds(String[] ids) throws SchedulerException {
+  public Boolean deleteTaskByIds(String[] ids) throws SchedulerException {
     for (String id : ids) {
       deleteTask(id);
     }
+    return Boolean.TRUE;
   }
 
-  /**
-   * 任务调度状态修改
-   *
-   * @param task 调度信息
-   * @return int
-   * @throws SchedulerException 异常
-   */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int changeStatus(SysTaskVo task) throws SchedulerException {
-    int rows = 0;
+  public Boolean changeStatus(SysTaskVo task) throws SchedulerException {
+    Boolean rows = Boolean.FALSE;
     if (TaskStatusEnum.NORMAL.equals(task.getStatus())) {
       rows = resumeTask(task);
     } else if (TaskStatusEnum.PAUSE.equals(task.getStatus())) {
@@ -185,14 +146,9 @@ public class SysTaskServiceImpl implements ISysTaskService {
     return rows;
   }
 
-  /**
-   * 立即运行任务
-   *
-   * @param task 调度信息
-   */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public void run(SysTaskVo task) throws SchedulerException {
+  public Boolean run(SysTaskVo task) throws SchedulerException {
     String taskGroup = task.getTaskGroup();
     Optional<SysTask> optional = dao.findById(task.getId());
     if (optional.isPresent()) {
@@ -201,17 +157,14 @@ public class SysTaskServiceImpl implements ISysTaskService {
       JobDataMap dataMap = new JobDataMap();
       dataMap.put(ScheduleConstants.TASK_PROPERTIES, JSON.toJSONString(convert(sysTask, SysTaskDto.class)));
       scheduler.triggerJob(ScheduleUtils.getJobKey(task.getId(), taskGroup), dataMap);
+      return Boolean.TRUE;
     }
+    return Boolean.FALSE;
   }
 
-  /**
-   * 保存任务
-   *
-   * @param task 调度信息 调度信息
-   */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int save(SysTaskVo task) throws SchedulerException, TaskException {
+  public Boolean save(SysTaskVo task) throws SchedulerException, TaskException {
     boolean isAdd = DataUtils.isEmpty(task.getId());
     if (isAdd && DataUtils.isEmpty(task.getStatus())) {
       task.setStatus(TaskStatusEnum.PAUSE);
@@ -221,24 +174,20 @@ public class SysTaskServiceImpl implements ISysTaskService {
     if (isAdd) {
       ScheduleUtils.createScheduleJob(scheduler, convert(entity, SysTaskDto.class));
     }
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.TRUE;
   }
 
-  /**
-   * 更新任务的时间表达式
-   *
-   * @param task 调度信息
-   */
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int updateTask(SysTaskVo task) throws SchedulerException, TaskException {
+  public Boolean updateTask(SysTaskVo task) throws SchedulerException, TaskException {
     Optional<SysTask> optional = dao.findById(task.getId());
     if (optional.isPresent()) {
       SysTask sysTask = optional.get();
       save(task);
       updateSchedulerTask(task, sysTask.getTaskGroup());
+      return Boolean.TRUE;
     }
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.FALSE;
   }
 
   /**
@@ -258,14 +207,8 @@ public class SysTaskServiceImpl implements ISysTaskService {
     ScheduleUtils.createScheduleJob(scheduler, convert(task, SysTaskDto.class));
   }
 
-  /**
-   * 校验cron表达式是否有效
-   *
-   * @param cronExpression 表达式
-   * @return 结果
-   */
   @Override
-  public boolean checkCronExpressionIsValid(String cronExpression) {
+  public Boolean checkCronExpressionIsValid(String cronExpression) {
     return CronUtils.isValid(cronExpression);
   }
 }

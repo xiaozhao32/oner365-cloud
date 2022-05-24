@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.common.ResponseData;
-import com.oner365.common.ResponseResult;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -51,28 +50,28 @@ public interface ISystemLogClient {
    * 保存
    * 
    * @param sysLogVo 保存对象
-   * @return ResponseData<ResponseResult<String>>
+   * @return ResponseData<ResponseResult<Boolean>>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_LOG_SAVE)
-  ResponseData<ResponseResult<String>> save(@RequestBody SysLogVo sysLogVo);
+  ResponseData<Boolean> save(@RequestBody SysLogVo sysLogVo);
 
   /**
    * 删除
    * 
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_LOG_DELETE)
-  ResponseData<List<Integer>> delete(@RequestBody String... ids);
+  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
   
   /**
    * 按日期删除
    * 
    * @param days 编号
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_LOG_DAYS_DELETE)
-  ResponseData<Integer> deleteDays(@RequestParam("days") Integer days);
+  ResponseData<Boolean> deleteDays(@RequestParam("days") Integer days);
   
   /**
    * 导出

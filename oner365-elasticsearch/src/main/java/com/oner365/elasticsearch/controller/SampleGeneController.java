@@ -1,5 +1,9 @@
 package com.oner365.elasticsearch.controller;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
 import com.oner365.common.ResponseResult;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -90,15 +93,11 @@ public class SampleGeneController extends BaseController {
    * 删除
    *
    * @param ids 编号
-   * @return Integer
+   * @return List<Boolean>
    */
   @DeleteMapping("/delete")
-  public Integer delete(@RequestBody String... ids) {
-    Integer result = ResultEnum.SUCCESS.getCode();
-    for (String id : ids) {
-      service.deleteById(id);
-    }
-    return result;
+  public List<Boolean> delete(@RequestBody String... ids) {
+    return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
   }
 
 }

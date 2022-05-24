@@ -1,5 +1,7 @@
 package com.oner365.swagger.controller.system.datasource;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +17,6 @@ import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -99,17 +100,12 @@ public class DataSourceConfigController extends BaseController {
    * 删除
    * 
    * @param ids 编号
-   * @return Integer
+   * @return List<Boolean>
    */
   @ApiOperation("5.删除")
   @ApiOperationSupport(order = 5)
   @DeleteMapping("/delete")
-  public Integer delete(@RequestBody String... ids) {
-    int code = ResultEnum.ERROR.getCode();
-    for (String id : ids) {
-      ResponseData<Integer> result = client.deleteById(id);
-      code = result.getResult();
-    }
-    return code;
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
+    return client.deleteById(ids);
   }
 }

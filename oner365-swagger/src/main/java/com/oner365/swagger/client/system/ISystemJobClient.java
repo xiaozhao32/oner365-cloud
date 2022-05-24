@@ -1,5 +1,7 @@
 package com.oner365.swagger.client.system;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -51,10 +53,10 @@ public interface ISystemJobClient {
    * 
    * @param id     编号
    * @param status 状态
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_JOB_STATUS)
-  ResponseData<Integer> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
 
   /**
    * 保存
@@ -69,10 +71,10 @@ public interface ISystemJobClient {
    * 删除
    * 
    * @param ids 编号
-   * @return ResponseData<Integer>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_JOB_DELETE)
-  ResponseData<Integer> deleteById(@RequestBody String... ids);
+  ResponseData<List<Boolean>> deleteById(@RequestBody String... ids);
 
   /**
    * 导出

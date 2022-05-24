@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.Criteria;
@@ -81,19 +80,19 @@ public class SysLogServiceImpl implements ISysLogService {
   
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int deleteById(String id) {
+  public Boolean deleteById(String id) {
     dao.deleteById(id);
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.TRUE;
   }
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public int deleteLog(LocalDateTime dateTime) {
+  public Boolean deleteLog(LocalDateTime dateTime) {
     Criteria<SysLog> criteria = new Criteria<>();
     criteria.add(Restrictions.lte(SysConstants.CREATE_TIME, dateTime));
     List<SysLog> list = dao.findAll(criteria);
     dao.deleteAll(list);
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.TRUE;
   }
 
 }

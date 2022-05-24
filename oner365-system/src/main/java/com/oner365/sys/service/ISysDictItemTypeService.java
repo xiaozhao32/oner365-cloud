@@ -53,17 +53,17 @@ public interface ISysDictItemTypeService extends BaseService {
    * 
    * @param id   主键
    * @param code 编号
-   * @return long
+   * @return Boolean
    */
-  long checkCode(String id, String code);
+  Boolean checkCode(String id, String code);
 
   /**
    * 删除
    * 
    * @param id 主键
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
   /**
    * 查询列表
@@ -78,8 +78,8 @@ public interface ISysDictItemTypeService extends BaseService {
    * 
    * @param id     主键
    * @param status 状态
-   * @return int
+   * @return Boolean
    */
-  Integer editStatus(String id, StatusEnum status);
+  Boolean editStatus(String id, StatusEnum status);
 
 }

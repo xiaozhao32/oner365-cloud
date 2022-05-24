@@ -21,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.query.Criteria;
@@ -110,15 +109,15 @@ public class SysMenuServiceImpl implements ISysMenuService {
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ROLE_NAME, allEntries = true) })
-  public int editStatus(String id, StatusEnum status) {
+  public Boolean editStatus(String id, StatusEnum status) {
     Optional<SysMenu> optional = menuDao.findById(id);
     if (optional.isPresent()) {
       SysMenu entity = optional.get();
       entity.setStatus(status);
       menuDao.save(entity);
-      return ResultEnum.SUCCESS.getCode();
+      return Boolean.TRUE;
     }
-    return ResultEnum.ERROR.getCode();
+    return Boolean.FALSE;
   }
 
   @Override
@@ -262,10 +261,10 @@ public class SysMenuServiceImpl implements ISysMenuService {
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ROLE_NAME, allEntries = true) })
-  public int deleteById(String id) {
+  public Boolean deleteById(String id) {
     roleMenuDao.deleteByMenuId(id);
     menuDao.deleteById(id);
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.TRUE;
   }
 
 }

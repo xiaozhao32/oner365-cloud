@@ -1,6 +1,7 @@
 package com.oner365.swagger.controller.gateway;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
-import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -74,7 +74,7 @@ public class DynamicRouteController extends BaseController {
   @ApiOperation("3.添加路由")
   @ApiOperationSupport(order = 3)
   @PostMapping("/add")
-  public ResponseData<ResponseResult<String>> add(@RequestBody GatewayRouteVo gatewayRouteVo) {
+  public ResponseData<GatewayRouteDto> add(@RequestBody GatewayRouteVo gatewayRouteVo) {
     return client.add(gatewayRouteVo);
   }
 
@@ -99,7 +99,7 @@ public class DynamicRouteController extends BaseController {
   @ApiOperation("5.更新路由")
   @ApiOperationSupport(order = 5)
   @PostMapping("/update")
-  public ResponseData<ResponseResult<String>> update(@RequestBody GatewayRouteVo gatewayRouteVo) {
+  public ResponseData<GatewayRouteDto> update(@RequestBody GatewayRouteVo gatewayRouteVo) {
     return client.update(gatewayRouteVo);
   }
 
@@ -113,7 +113,7 @@ public class DynamicRouteController extends BaseController {
   @ApiOperation("6.更新路由状态")
   @ApiOperationSupport(order = 6)
   @GetMapping("/status/{id}/{status}")
-  public ResponseData<ResponseResult<String>> updateRouteStatus(@PathVariable String id, @PathVariable StatusEnum status) {
+  public ResponseData<Boolean> updateRouteStatus(@PathVariable String id, @PathVariable StatusEnum status) {
     return client.updateRouteStatus(id, status);
   }
 
@@ -126,7 +126,7 @@ public class DynamicRouteController extends BaseController {
   @ApiOperation("7.删除路由")
   @ApiOperationSupport(order = 7)
   @DeleteMapping("/delete")
-  public ResponseData<ResponseResult<String>> delete(@RequestBody String... ids) {
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
     return client.delete(ids);
   }
 

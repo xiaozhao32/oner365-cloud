@@ -63,36 +63,36 @@ public interface ISysUserService extends BaseService {
    * 删除
    *
    * @param id 编号
-   * @return Integer
+   * @return Boolean
    */
-  Integer deleteById(String id);
+  Boolean deleteById(String id);
 
   /**
    * 检测用户名
    *
    * @param userId   账号id
    * @param userName 账号
-   * @return long
+   * @return Boolean
    */
-  long checkUserName(String userId, String userName);
+  Boolean checkUserName(String userId, String userName);
 
   /**
    * 修改密码
    *
    * @param id       编号
    * @param password 密码
-   * @return Integer
+   * @return Boolean
    */
-  Integer editPassword(String id, String password);
+  Boolean editPassword(String id, String password);
 
   /**
    * 修改状态
    *
    * @param id     编号
    * @param status 状态
-   * @return Integer
+   * @return Boolean
    */
-  Integer editStatus(String id, StatusEnum status);
+  Boolean editStatus(String id, StatusEnum status);
 
   /**
    * 更新头像信息

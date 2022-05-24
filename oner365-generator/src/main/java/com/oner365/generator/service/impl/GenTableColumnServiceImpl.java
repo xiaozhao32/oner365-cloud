@@ -38,8 +38,12 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      * @return 结果
      */
     @Override
-    public int insertGenTableColumn(GenTableColumn genTableColumn) {
-        return genTableColumnMapper.insertGenTableColumn(genTableColumn);
+    public Boolean insertGenTableColumn(GenTableColumn genTableColumn) {
+        int result = genTableColumnMapper.insertGenTableColumn(genTableColumn);
+        if (result > 0) {
+          return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
     /**
@@ -49,8 +53,12 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      * @return 结果
      */
     @Override
-    public int updateGenTableColumn(GenTableColumn genTableColumn) {
-        return genTableColumnMapper.updateGenTableColumn(genTableColumn);
+    public Boolean updateGenTableColumn(GenTableColumn genTableColumn) {
+        int result = genTableColumnMapper.updateGenTableColumn(genTableColumn);
+        if (result > 0) {
+          return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
     /**
@@ -60,7 +68,11 @@ public class GenTableColumnServiceImpl implements IGenTableColumnService {
      * @return 结果
      */
     @Override
-    public int deleteGenTableColumnByIds(String ids) {
-        return genTableColumnMapper.deleteGenTableColumnByIds(ConvertString.toLongArray(ids));
+    public Boolean deleteGenTableColumnByIds(String ids) {
+        int result = genTableColumnMapper.deleteGenTableColumnByIds(ConvertString.toLongArray(ids));
+        if (result > 0) {
+          return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 }

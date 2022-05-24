@@ -16,8 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.ExistsEnum;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.page.PageInfo;
@@ -103,13 +101,13 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public int deleteById(String id) {
+  public Boolean deleteById(String id) {
     // 删除菜单与操作关联
     menuOperDao.deleteByOperationId(id);
     // 删除操作与角色关联
     // 删除操作
     menuOperationDao.deleteById(id);
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.TRUE;
   }
 
   @Override
@@ -119,18 +117,20 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
   }
 
   @Override
-  public long checkCode(String id, String code) {
+  public Boolean checkCode(String id, String code) {
     try {
       Criteria<SysMenuOperation> criteria = new Criteria<>();
       criteria.add(Restrictions.eq(SysConstants.OPERATION_TYPE, DataUtils.trimToNull(code)));
       if (!DataUtils.isEmpty(id)) {
         criteria.add(Restrictions.ne(SysConstants.ID, id));
       }
-      return menuOperationDao.count(criteria);
+      if (menuOperationDao.count(criteria) > 0) {
+        return Boolean.TRUE;
+      }
     } catch (Exception e) {
       LOGGER.error("Error checkCode:", e);
     }
-    return ExistsEnum.NO.getCode();
+    return Boolean.FALSE;
   }
 
 }

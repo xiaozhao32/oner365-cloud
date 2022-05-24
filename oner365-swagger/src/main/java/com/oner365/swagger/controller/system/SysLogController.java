@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.common.ResponseData;
-import com.oner365.common.ResponseResult;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -70,12 +69,12 @@ public class SysLogController extends BaseController {
    * 保存
    *
    * @param sysLogVo 菜单类型对象
-   * @return ResponseData<ResponseResult<String>>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("3.保存")
   @ApiOperationSupport(order = 3)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<String>> save(@RequestBody SysLogVo sysLogVo) {
+  public ResponseData<Boolean> save(@RequestBody SysLogVo sysLogVo) {
     return client.save(sysLogVo);
   }
   
@@ -83,12 +82,12 @@ public class SysLogController extends BaseController {
    * 删除
    *
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @ApiOperation("4.删除")
   @ApiOperationSupport(order = 4)
   @DeleteMapping("/delete")
-  public ResponseData<List<Integer>> delete(@RequestBody String... ids) {
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
     return client.delete(ids);
   }
   
@@ -96,12 +95,12 @@ public class SysLogController extends BaseController {
    * 按日期删除日志
    *
    * @param days 天数
-   * @return ResponseData<Integer>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("5.删除日志")
   @ApiOperationSupport(order = 5)
   @DeleteMapping("/days/delete")
-  public ResponseData<Integer> deleteLog(@RequestParam("days") Integer days) {
+  public ResponseData<Boolean> deleteLog(@RequestParam("days") Integer days) {
     return client.deleteDays(days);
   }
   

@@ -53,16 +53,16 @@ public interface IOrderService extends BaseService {
    * 删除职位
    *
    * @param id 编号
-   * @return int
+   * @return Boolean
    */
-  int deleteById(String id);
+  Boolean deleteById(String id);
 
   /**
    * 更新状态
    *
    * @param id     编号
    * @param status 状态
-   * @return Integer
+   * @return Boolean
    */
-  Integer editStatus(String id, StatusEnum status);
+  Boolean editStatus(String id, StatusEnum status);
 }

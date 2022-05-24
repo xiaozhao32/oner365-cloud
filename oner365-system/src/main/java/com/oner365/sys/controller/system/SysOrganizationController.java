@@ -1,6 +1,8 @@
 package com.oner365.sys.controller.system;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,7 +19,6 @@ import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -105,14 +106,14 @@ public class SysOrganizationController extends BaseController {
    * 判断机构编号是否存在
    *
    * @param checkOrgCodeVo 查询参数
-   * @return Long
+   * @return Boolean
    */
   @PostMapping("/check")
-  public Long checkCode(@RequestBody CheckOrgCodeVo checkOrgCodeVo) {
+  public Boolean checkCode(@RequestBody CheckOrgCodeVo checkOrgCodeVo) {
     if (checkOrgCodeVo != null) {
       return sysOrgService.checkCode(checkOrgCodeVo.getId(), checkOrgCodeVo.getCode(), checkOrgCodeVo.getType());
     }
-    return Long.valueOf(ResultEnum.ERROR.getCode());
+    return Boolean.FALSE;
   }
 
   /**
@@ -152,10 +153,10 @@ public class SysOrganizationController extends BaseController {
    *
    * @param id     主键
    * @param status 状态
-   * @return Integer
+   * @return Boolean
    */
   @PostMapping("/status/{id}")
-  public Integer editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public Boolean editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
     return sysOrgService.editStatus(id, status);
   }
 
@@ -181,15 +182,11 @@ public class SysOrganizationController extends BaseController {
    * 删除
    *
    * @param ids 编号
-   * @return Integer
+   * @return List<Boolean>
    */
   @DeleteMapping("/delete")
-  public Integer delete(@RequestBody String... ids) {
-    int code = 0;
-    for (String id : ids) {
-      code = sysOrgService.deleteById(id);
-    }
-    return code;
+  public List<Boolean> delete(@RequestBody String... ids) {
+    return Arrays.stream(ids).map(id -> sysOrgService.deleteById(id)).collect(Collectors.toList());
   }
 
 }

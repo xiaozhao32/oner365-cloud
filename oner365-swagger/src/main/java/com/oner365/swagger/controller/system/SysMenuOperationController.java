@@ -70,12 +70,12 @@ public class SysMenuOperationController extends BaseController {
    * 判断是否存在
    *
    * @param checkCodeVo 查询参数
-   * @return ResponseData<Long>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("3.判断是否存在")
   @ApiOperationSupport(order = 3)
   @PostMapping("/check")
-  public ResponseData<Long> checkCode(@RequestBody CheckCodeVo checkCodeVo) {
+  public ResponseData<Boolean> checkCode(@RequestBody CheckCodeVo checkCodeVo) {
     return client.checkCode(checkCodeVo);
   }
   
@@ -96,12 +96,12 @@ public class SysMenuOperationController extends BaseController {
    * 删除
    *
    * @param ids 编号
-   * @return ResponseData<List<Integer>>
+   * @return ResponseData<List<Boolean>>
    */
   @ApiOperation("5.删除")
   @ApiOperationSupport(order = 5)
   @DeleteMapping("/delete")
-  public ResponseData<List<Integer>> delete(@RequestBody String... ids) {
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
     return client.delete(ids);
   }
 }

@@ -1,5 +1,7 @@
 package com.oner365.swagger.client.system;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -66,8 +68,8 @@ public interface ISystemDataSourceConfigClient {
    * 删除
    * 
    * @param ids 编号
-   * @return ResponseData<Integer>
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_DATASOURCE_DELETE)
-  ResponseData<Integer> deleteById(@RequestBody String... ids);
+  ResponseData<List<Boolean>> deleteById(@RequestBody String... ids);
 }

@@ -2,6 +2,7 @@ package com.oner365.gateway.controller;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.gateway.constants.ResponseData;
-import com.oner365.gateway.constants.ResponseResult;
 import com.oner365.gateway.dto.GatewayRouteDto;
 import com.oner365.gateway.enums.ResultEnum;
 import com.oner365.gateway.enums.StatusEnum;
@@ -62,13 +62,13 @@ public class DynamicRouteController {
    * 增加路由
    *
    * @param gatewayRouteVo 路由对象
-   * @return ResponseData
+   * @return ResponseData<GatewayRouteDto>
    */
   @PostMapping("/add")
-  public ResponseData<ResponseResult<String>> add(@RequestBody GatewayRouteVo gatewayRouteVo) {
-    String msg = dynamicRouteService.save(gatewayRouteVo);
-    if (msg != null) {
-      return ResponseData.success(ResponseResult.success(msg));
+  public ResponseData<GatewayRouteDto> add(@RequestBody GatewayRouteVo gatewayRouteVo) {
+    if (gatewayRouteVo != null) {
+      GatewayRouteDto result = dynamicRouteService.save(gatewayRouteVo);
+      return ResponseData.success(result);
     }
     return ResponseData.error(ResultEnum.ERROR.getName());
   }
@@ -88,16 +88,15 @@ public class DynamicRouteController {
    * 更新路由
    *
    * @param gatewayRouteVo 路由对象
-   * @return ResponseData
+   * @return ResponseData<GatewayRouteDto>
    */
   @PostMapping("/update")
-  public ResponseData<ResponseResult<String>> update(@RequestBody GatewayRouteVo gatewayRouteVo) {
-    String msg = dynamicRouteService.update(gatewayRouteVo);
-    if (msg != null) {
-      return ResponseData.success(ResponseResult.success(msg));
+  public ResponseData<GatewayRouteDto> update(@RequestBody GatewayRouteVo gatewayRouteVo) {
+    if (gatewayRouteVo != null) {
+      GatewayRouteDto result = dynamicRouteService.update(gatewayRouteVo);
+      return ResponseData.success(result);
     }
     return ResponseData.error(ResultEnum.ERROR.getName());
-
   }
 
   /**
@@ -105,27 +104,24 @@ public class DynamicRouteController {
    *
    * @param id     编号
    * @param status 状态
-   * @return ResponseData
+   * @return ResponseData<Boolean>
    */
   @GetMapping("/status/{id}/{status}")
-  public ResponseData<ResponseResult<String>> updateRouteStatus(@PathVariable String id, @PathVariable StatusEnum status) {
-    String msg = dynamicRouteService.updateRouteStatus(id, status);
-    if (msg != null) {
-      return ResponseData.success(ResponseResult.success(msg));
-    }
-    return ResponseData.error(ResultEnum.ERROR.getName());
+  public ResponseData<Boolean> updateRouteStatus(@PathVariable String id, @PathVariable StatusEnum status) {
+    Boolean result = dynamicRouteService.editStatus(id, status);
+    return ResponseData.success(result);
   }
 
   /**
    * 删除路由
    *
    * @param ids 编号
-   * @return ResponseData
+   * @return ResponseData<List<Boolean>>
    */
   @DeleteMapping("/delete")
-  public ResponseData<ResponseResult<String>> delete(@RequestBody String... ids) {
-    Arrays.stream(ids).forEach(id -> dynamicRouteService.delete(id));
-    return ResponseData.success(ResponseResult.success(ResultEnum.SUCCESS.getName()));
+  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
+    List<Boolean> result = Arrays.stream(ids).map(id -> dynamicRouteService.delete(id)).collect(Collectors.toList());
+    return ResponseData.success(result);
   }
 
 }

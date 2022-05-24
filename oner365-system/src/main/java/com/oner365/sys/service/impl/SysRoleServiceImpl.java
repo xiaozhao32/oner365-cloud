@@ -21,8 +21,6 @@ import com.alibaba.fastjson.JSONArray;
 import com.oner365.common.cache.annotation.GeneratorCache;
 import com.oner365.common.cache.annotation.RedisCacheAble;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.ExistsEnum;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.common.page.PageInfo;
@@ -132,7 +130,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
-  public int deleteById(String id) {
+  public Boolean deleteById(String id) {
     // 删除用户与角色关联
     userRoleDao.deleteUserRoleByRoleId(id);
     // 删除角色与菜单操作关联
@@ -141,29 +139,31 @@ public class SysRoleServiceImpl implements ISysRoleService {
     roleMenuDao.deleteRoleMenuByRoleId(id);
     // 删除角色
     roleDao.deleteById(id);
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.TRUE;
   }
 
   @Override
-  public long checkRoleName(String id, String roleName) {
+  public Boolean checkRoleName(String id, String roleName) {
     try {
       Criteria<SysRole> criteria = new Criteria<>();
       criteria.add(Restrictions.eq(SysConstants.ROLE_NAME, DataUtils.trimToNull(roleName)));
       if (!DataUtils.isEmpty(id)) {
         criteria.add(Restrictions.ne(SysConstants.ID, id));
       }
-      return roleDao.count(criteria);
+      if (roleDao.count(criteria) > 0) {
+        return Boolean.TRUE;
+      }
     } catch (Exception e) {
       LOGGER.error("Error checkRoleName:", e);
     }
-    return ExistsEnum.NO.getCode();
+    return Boolean.FALSE;
   }
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
-  public int saveAuthority(String menuType, JSONArray menuIds, String roleId) {
+  public Boolean saveAuthority(String menuType, JSONArray menuIds, String roleId) {
     roleMenuDao.deleteRoleMenuByRoleId(roleId);
     menuIds.forEach(menuId -> {
       SysRoleMenu roleMenu = new SysRoleMenu();
@@ -173,7 +173,7 @@ public class SysRoleServiceImpl implements ISysRoleService {
       roleMenu.setId(roleId + menuType + menuId.toString());
       roleMenuDao.save(roleMenu);
     });
-    return ResultEnum.SUCCESS.getCode();
+    return Boolean.TRUE;
   }
 
   @Override
@@ -254,15 +254,15 @@ public class SysRoleServiceImpl implements ISysRoleService {
   @Caching(evict = { 
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
-  public Integer editStatus(String id, StatusEnum status) {
+  public Boolean editStatus(String id, StatusEnum status) {
     Optional<SysRole> optional = roleDao.findById(id);
     if (optional.isPresent()) {
       SysRole entity = optional.get();
       entity.setStatus(status);
       roleDao.save(entity);
-      return ResultEnum.SUCCESS.getCode();
+      return Boolean.TRUE;
     }
-    return ResultEnum.ERROR.getCode();
+    return Boolean.FALSE;
   }
 
 }
