@@ -21,7 +21,7 @@ import com.oner365.deploy.utils.DeployMethod;
  *
  */
 @SpringBootTest
-@ActiveProfiles("zy")
+@ActiveProfiles("lt")
 public class DeployTest {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(DeployTest.class);

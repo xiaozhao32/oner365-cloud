@@ -15,6 +15,8 @@
 	9、安装mysql及主从配置
 	10、安装fdfs及集群配置
 	11、nginx安装
+	12、logstash安装配置
+	13、kibana安装配置
 
 =========================================================================================================================================================
 
@@ -596,6 +598,44 @@
 	-- make
 	-- make install
 	-- 配置启动
+12、安装logstash（8.x.x需要jdk11）
+	-- cd /opt
+	-- tar -zxvf logstash-8.1.0-darwin-x86_64.tar.gz
+	-- vi logstash-8.1.0/config/logstash.yml
+		--  node.name: logstash_uem
+			pipeline.id: main
+			pipeline.ordered: auto
+			config.reload.automatic: true
+			api.http.host: 127.0.0.1
+			api.http.port: 9201
+			queue.type: persisted
+	-- 增加logstash.conf配置数据业务流程
+		-- 查看
+			-- logstash/logstash-sample.conf
+				-- 此实例多端口监听
+				-- 入库es多索引
+				-- 时间格式转化
+	-- 增加启动停止shell（logstash/start.sh,stop.sh）
+		-- logstash-8.1.0/bin/
+13、安装kibana(需要与es对应版本）
+	-- cd /opt
+	-- tar -zxvf kibana-7.6.2-linux-x86_64.tar.gz
+	-- cd /opt/kibana-7.6.2-linux-x86_64
+	-- vi config/kibana.yml
+		--  server.port: 5601
+			server.host: "0.0.0.0"
+			elasticsearch.hosts: ["http://192.168.33.42:9200"]
+			i18n.locale: "zh-CN"
+	-- 增加启动停止shell（kibana/start.sh,stop.sh）
+		-- kibana-7.6.2-linux-x86_64/bin/ 
+	-- 访问地址
+		-- http://192.168.33.44:5601
+	-- 配置索引查看方式
+		-- management --> kibana --> 索引模式 --> 创建索引模式 --> 选择要创建的索引，下一步，完成
+	-- 查看索引模式（索引数据查询）
+		-- Discover
+			-- 可选择时间，key
+		
 
 
 

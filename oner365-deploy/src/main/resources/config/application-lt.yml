@@ -2,7 +2,7 @@
 deploy:
   local:
     location: /Users/taoliu/gitee
-    name: /Users/taoliu/gitee/deploy/springboot
+    name: /Users/taoliu/gitee/deploy/nacos
     version: 2.0.1
     suffix: jar
     active: lt
