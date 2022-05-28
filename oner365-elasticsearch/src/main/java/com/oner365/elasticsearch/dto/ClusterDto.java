@@ -1,6 +1,7 @@
 package com.oner365.elasticsearch.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.elasticsearch.rest.RestStatus;
 
@@ -24,6 +25,9 @@ public class ClusterDto implements Serializable {
 
     /** Status */
     private RestStatus status;
+    
+    /** properties */
+    private List<ClusterMappingDto> mappingList;
 
     /**
      * 构造方法
@@ -62,5 +66,19 @@ public class ClusterDto implements Serializable {
 
     public void setStatus(RestStatus status) {
         this.status = status;
+    }
+
+    /**
+     * @return the mappingList
+     */
+    public List<ClusterMappingDto> getMappingList() {
+      return mappingList;
+    }
+
+    /**
+     * @param mappingList the mappingList to set
+     */
+    public void setMappingList(List<ClusterMappingDto> mappingList) {
+      this.mappingList = mappingList;
     }
 }

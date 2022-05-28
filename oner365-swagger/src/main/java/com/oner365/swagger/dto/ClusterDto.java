@@ -1,6 +1,7 @@
 package com.oner365.swagger.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Elasticsearch cluster
@@ -22,6 +23,9 @@ public class ClusterDto implements Serializable {
 
     /** Status */
     private String status;
+    
+    /** properties */
+    private List<ClusterMappingDto> mappingList;
 
     /**
      * 构造方法
@@ -60,5 +64,19 @@ public class ClusterDto implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    /**
+     * @return the mappingList
+     */
+    public List<ClusterMappingDto> getMappingList() {
+      return mappingList;
+    }
+
+    /**
+     * @param mappingList the mappingList to set
+     */
+    public void setMappingList(List<ClusterMappingDto> mappingList) {
+      this.mappingList = mappingList;
     }
 }

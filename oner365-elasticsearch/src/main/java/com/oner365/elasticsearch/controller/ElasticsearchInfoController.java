@@ -15,7 +15,10 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.GetAliasesResponse;
 import org.elasticsearch.client.RequestOptions;
 import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.client.indices.GetMappingsRequest;
+import org.elasticsearch.client.indices.GetMappingsResponse;
 import org.elasticsearch.cluster.metadata.AliasMetadata;
+import org.elasticsearch.cluster.metadata.MappingMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.client.ClientConfiguration;
 import org.springframework.data.elasticsearch.client.RestClients;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oner365.controller.BaseController;
 import com.oner365.elasticsearch.config.properties.ElasticsearchProperties;
 import com.oner365.elasticsearch.dto.ClusterDto;
+import com.oner365.elasticsearch.dto.ClusterMappingDto;
 import com.oner365.elasticsearch.dto.TransportClientDto;
 
 /**
@@ -46,14 +50,14 @@ public class ElasticsearchInfoController extends BaseController {
    *
    * @return TransportClientDto
    */
+  @SuppressWarnings("unchecked")
   @GetMapping("/index")
   public TransportClientDto index() {
     // 创建客户端
     String uri = StringUtils.substringAfter(elasticsearchProperties.getUris(), "http://");
     ClientConfiguration configuration = ClientConfiguration.builder().connectedTo(uri).build();
     try (RestHighLevelClient client = RestClients.create(configuration).rest()) {
-      ClusterHealthResponse healthResponse = client.cluster().health(new ClusterHealthRequest(),
-          RequestOptions.DEFAULT);
+      ClusterHealthResponse healthResponse = client.cluster().health(new ClusterHealthRequest(), RequestOptions.DEFAULT);
 
       TransportClientDto result = new TransportClientDto();
       result.setHostname(StringUtils.substringBefore(uri, ":"));
@@ -63,7 +67,7 @@ public class ElasticsearchInfoController extends BaseController {
       result.setActiveShards(healthResponse.getActiveShards());
       result.setStatus(healthResponse.getStatus());
       result.setTaskMaxWaitingTime(healthResponse.getTaskMaxWaitingTime().getMillis());
-
+      
       // 索引信息
       List<ClusterDto> clusterList = new ArrayList<>();
       GetAliasesResponse aliasResponse = client.indices().getAlias(new GetAliasesRequest(), RequestOptions.DEFAULT);
@@ -79,6 +83,23 @@ public class ElasticsearchInfoController extends BaseController {
         clusterList.add(clusterDto);
       }
       result.setClusterList(clusterList);
+      
+      // mapping信息
+      GetMappingsResponse mappingResponse = client.indices().getMapping(new GetMappingsRequest(), RequestOptions.DEFAULT);
+      Map<String, MappingMetadata> mappings = mappingResponse.mappings();
+      clusterList.forEach(cluster -> {
+        Map<String, Object> map = mappings.get(cluster.getIndex()).sourceAsMap();
+        Map<String, Object> properties = (Map<String, Object>) map.get("properties");
+        List<ClusterMappingDto> mappingList = new ArrayList<>();
+        for (Entry<String, Object> entry : properties.entrySet()) {
+          ClusterMappingDto mapping = new ClusterMappingDto();
+          mapping.setName(entry.getKey());
+          Map<String, Object> valueMap = (Map<String, Object>) entry.getValue();
+          mapping.setType(valueMap.get("type") == null ? "Object" : valueMap.get("type").toString());
+          mappingList.add(mapping);
+        }
+        cluster.setMappingList(mappingList);
+      });
       return result;
     } catch (Exception e) {
       logger.error("index error:", e);
