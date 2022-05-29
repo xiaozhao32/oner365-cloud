@@ -38,6 +38,7 @@ import com.oner365.elasticsearch.dto.TransportClientDto;
  * @author zhaoyong
  *
  */
+@SuppressWarnings("deprecation")
 @RestController
 @RequestMapping("/info")
 public class ElasticsearchInfoController extends BaseController {

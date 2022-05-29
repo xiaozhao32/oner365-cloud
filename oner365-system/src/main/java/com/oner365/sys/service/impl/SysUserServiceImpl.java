@@ -205,16 +205,16 @@ public class SysUserServiceImpl implements ISysUserService {
     List<String> roleList = userRoleDao.findUserRoleByUserId(entity.getId());
     entity.setRoles(roleList);
     entity
-        .setRoleNameList(roleList.stream().map(s -> sysRoleDao.getById(s).getRoleName()).collect(Collectors.toList()));
+        .setRoleNameList(roleList.stream().map(s -> sysRoleDao.getReferenceById(s).getRoleName()).collect(Collectors.toList()));
 
     List<String> jobList = userJobDao.findUserJobByUserId(entity.getId());
     entity.setJobs(jobList);
-    entity.setJobNameList(jobList.stream().map(s -> sysJobDao.getById(s).getJobName()).collect(Collectors.toList()));
+    entity.setJobNameList(jobList.stream().map(s -> sysJobDao.getReferenceById(s).getJobName()).collect(Collectors.toList()));
 
     List<String> orgList = userOrgDao.findUserOrgByUserId(entity.getId());
     entity.setOrgs(orgList);
     entity.setOrgNameList(
-        orgList.stream().map(s -> sysOrganizationDao.getById(s).getOrgName()).collect(Collectors.toList()));
+        orgList.stream().map(s -> sysOrganizationDao.getReferenceById(s).getOrgName()).collect(Collectors.toList()));
   }
 
   @Override
@@ -237,7 +237,7 @@ public class SysUserServiceImpl implements ISysUserService {
       // 删除用户角色关联
       userRoleDao.deleteUserRoleByUserId(entity.getId());
       roles.forEach(id -> {
-        SysRole sysRole = sysRoleDao.getById(id);
+        SysRole sysRole = sysRoleDao.getReferenceById(id);
         SysUserRole sysUserRole = new SysUserRole();
         sysUserRole.setSysRole(sysRole);
         sysUserRole.setSysUser(entity);
@@ -247,7 +247,7 @@ public class SysUserServiceImpl implements ISysUserService {
       // 删除用户职位关联
       userJobDao.deleteUserJobByUserId(entity.getId());
       jobs.forEach(id -> {
-        SysJob sysJob = sysJobDao.getById(id);
+        SysJob sysJob = sysJobDao.getReferenceById(id);
         SysUserJob sysUserJob = new SysUserJob();
         sysUserJob.setSysJob(sysJob);
         sysUserJob.setSysUser(entity);
@@ -261,7 +261,7 @@ public class SysUserServiceImpl implements ISysUserService {
       // 删除用户单位关联
       userOrgDao.deleteUserOrgByUserId(entity.getId());
       orgs.forEach(id -> {
-        SysOrganization sysOrg = sysOrganizationDao.getById(id);
+        SysOrganization sysOrg = sysOrganizationDao.getReferenceById(id);
         SysUserOrg sysUserOrg = new SysUserOrg();
         sysUserOrg.setSysOrganization(sysOrg);
         sysUserOrg.setSysUser(entity);
@@ -349,7 +349,7 @@ public class SysUserServiceImpl implements ISysUserService {
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public SysUserDto updateAvatar(String id, String avatar) {
-    SysUser entity = userDao.getById(id);
+    SysUser entity = userDao.getReferenceById(id);
     entity.setAvatar(avatar);
     userDao.save(entity);
     
@@ -364,7 +364,7 @@ public class SysUserServiceImpl implements ISysUserService {
       @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public SysUserDto updateUserProfile(SysUserVo sysUserVo) {
-    SysUser entity = userDao.getById(sysUserVo.getId());
+    SysUser entity = userDao.getReferenceById(sysUserVo.getId());
     entity.setEmail(sysUserVo.getEmail());
     entity.setRealName(sysUserVo.getRealName());
     entity.setPhone(sysUserVo.getPhone());
