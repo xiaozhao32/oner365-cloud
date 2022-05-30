@@ -204,12 +204,13 @@ public class SysUserServiceImpl implements ISysUserService {
   private void setName(SysUser entity) {
     List<String> roleList = userRoleDao.findUserRoleByUserId(entity.getId());
     entity.setRoles(roleList);
-    entity
-        .setRoleNameList(roleList.stream().map(s -> sysRoleDao.getReferenceById(s).getRoleName()).collect(Collectors.toList()));
+    entity.setRoleNameList(
+        roleList.stream().map(s -> sysRoleDao.getReferenceById(s).getRoleName()).collect(Collectors.toList()));
 
     List<String> jobList = userJobDao.findUserJobByUserId(entity.getId());
     entity.setJobs(jobList);
-    entity.setJobNameList(jobList.stream().map(s -> sysJobDao.getReferenceById(s).getJobName()).collect(Collectors.toList()));
+    entity.setJobNameList(
+        jobList.stream().map(s -> sysJobDao.getReferenceById(s).getJobName()).collect(Collectors.toList()));
 
     List<String> orgList = userOrgDao.findUserOrgByUserId(entity.getId());
     entity.setOrgs(orgList);
@@ -218,8 +219,7 @@ public class SysUserServiceImpl implements ISysUserService {
   }
 
   @Override
-  @Caching(evict = { 
-      @CacheEvict(value = CACHE_NAME, allEntries = true),
+  @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public SysUserDto saveUser(SysUserVo vo) {
     try {
@@ -231,7 +231,7 @@ public class SysUserServiceImpl implements ISysUserService {
       List<String> roles = vo.getRoles();
       List<String> jobs = vo.getJobs();
       List<String> orgs = vo.getOrgs();
-      
+
       SysUser entity = userDao.save(convert(vo, SysUser.class));
 
       // 删除用户角色关联
@@ -285,8 +285,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @Caching(evict = { 
-      @CacheEvict(value = CACHE_NAME, allEntries = true),
+  @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public Boolean deleteById(String id) {
     userJobDao.deleteUserJobByUserId(id);
@@ -315,8 +314,7 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @Caching(evict = { 
-      @CacheEvict(value = CACHE_NAME, allEntries = true),
+  @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public Boolean editPassword(String id, String p) {
     Optional<SysUser> optional = userDao.findById(id);
@@ -330,14 +328,14 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @Caching(evict = { 
-      @CacheEvict(value = CACHE_NAME, allEntries = true),
+  @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public Boolean editStatus(String id, StatusEnum status) {
     Optional<SysUser> optional = userDao.findById(id);
     if (optional.isPresent()) {
-      optional.get().setStatus(status);
-      userDao.save(optional.get());
+      SysUser entity = optional.get();
+      entity.setStatus(status);
+      userDao.save(entity);
       return Boolean.TRUE;
     }
     return Boolean.FALSE;
@@ -345,36 +343,41 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @Caching(evict = { 
-      @CacheEvict(value = CACHE_NAME, allEntries = true),
+  @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public SysUserDto updateAvatar(String id, String avatar) {
-    SysUser entity = userDao.getReferenceById(id);
-    entity.setAvatar(avatar);
-    userDao.save(entity);
-    
-    String key = CacheConstants.CACHE_LOGIN_NAME + entity.getUserName();
-    redisCache.deleteObject(key);
-    return convert(entity, SysUserDto.class);
+    Optional<SysUser> optional = userDao.findById(id);
+    if (optional.isPresent()) {
+      SysUser entity = optional.get();
+      entity.setAvatar(avatar);
+      userDao.save(entity);
+      String key = CacheConstants.CACHE_LOGIN_NAME + entity.getUserName();
+      redisCache.deleteObject(key);
+      return convert(entity, SysUserDto.class);
+    }
+    return null;
   }
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @Caching(evict = { 
-      @CacheEvict(value = CACHE_NAME, allEntries = true),
+  @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_ORG_NAME, allEntries = true) })
   public SysUserDto updateUserProfile(SysUserVo sysUserVo) {
-    SysUser entity = userDao.getReferenceById(sysUserVo.getId());
-    entity.setEmail(sysUserVo.getEmail());
-    entity.setRealName(sysUserVo.getRealName());
-    entity.setPhone(sysUserVo.getPhone());
-    entity.setSex(sysUserVo.getSex());
-    entity.setLastTime(LocalDateTime.now());
-    userDao.save(entity);
-    
-    String key = CacheConstants.CACHE_LOGIN_NAME + entity.getUserName();
-    redisCache.deleteObject(key);
-    return convert(entity, SysUserDto.class);
+    Optional<SysUser> optional = userDao.findById(sysUserVo.getId());
+    if (optional.isPresent()) {
+      SysUser entity = optional.get();
+      entity.setEmail(sysUserVo.getEmail());
+      entity.setRealName(sysUserVo.getRealName());
+      entity.setPhone(sysUserVo.getPhone());
+      entity.setSex(sysUserVo.getSex());
+      entity.setLastTime(LocalDateTime.now());
+      userDao.save(entity);
+      String key = CacheConstants.CACHE_LOGIN_NAME + entity.getUserName();
+      redisCache.deleteObject(key);
+      return convert(entity, SysUserDto.class);
+    }
+    return null;
+
   }
 
 }
