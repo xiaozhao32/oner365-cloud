@@ -15,64 +15,63 @@ import redis.clients.jedis.Jedis;
  */
 public class RedisSeqRangeMgr implements SeqRangeMgr {
 
-    private static final String KEY_PREFIX = "sequence_";
+  private static final String KEY_PREFIX = "sequence_";
 
-    private Jedis jedis;
+  private int step = 1000;
 
-    private int step = 1000;
+  private long stepStart = 0L;
 
-    private long stepStart = 0L;
+  private volatile boolean keyAlreadyExist;
 
-    private volatile boolean keyAlreadyExist;
-    
-    private RedisProperties properties;
+  private RedisProperties properties;
 
-    @Override
-    public SeqRange nextRange(String name) {
-        if (!this.keyAlreadyExist) {
-            Boolean isExists = this.jedis.exists(getRealKey(name));
-            if (Boolean.FALSE.equals(isExists)) {
-                this.jedis.setnx(getRealKey(name), String.valueOf(this.stepStart));
-            }
-            this.keyAlreadyExist = true;
+  @Override
+  public SeqRange nextRange(String name) {
+    try (Jedis jedis = JedisUtils.getJedis(this.properties)) {
+      if (!this.keyAlreadyExist) {
+        Boolean isExists = jedis.exists(getRealKey(name));
+        if (Boolean.FALSE.equals(isExists)) {
+          jedis.setnx(getRealKey(name), String.valueOf(this.stepStart));
         }
-        long max = this.jedis.incrBy(getRealKey(name), this.step);
-        long min = max - this.step + 1L;
-        return new SeqRange(min, max);
+        this.keyAlreadyExist = true;
+      }
+      long max = jedis.incrBy(getRealKey(name), this.step);
+      long min = max - this.step + 1L;
+      return new SeqRange(min, max);
     }
+  }
 
-    @Override
-    public void init() {
-      this.jedis = JedisUtils.getJedis(properties);
-    }
+  @Override
+  public void init() {
+    // init config
+  }
 
+  private String getRealKey(String name) {
+    return KEY_PREFIX + name;
+  }
 
-    private String getRealKey(String name) {
-        return KEY_PREFIX + name;
-    }
+  public int getStep() {
+    return this.step;
+  }
 
-    public int getStep() {
-        return this.step;
-    }
+  public void setStep(int step) {
+    this.step = step;
+  }
 
-    public void setStep(int step) {
-        this.step = step;
-    }
+  public long getStepStart() {
+    return this.stepStart;
+  }
 
-    public long getStepStart() {
-        return this.stepStart;
-    }
+  public void setStepStart(long stepStart) {
+    this.stepStart = stepStart;
+  }
 
-    public void setStepStart(long stepStart) {
-        this.stepStart = stepStart;
-    }
+  public RedisProperties getProperties() {
+    return properties;
+  }
 
-    public RedisProperties getProperties() {
-      return properties;
-    }
+  public void setProperties(RedisProperties properties) {
+    this.properties = properties;
+  }
 
-    public void setProperties(RedisProperties properties) {
-      this.properties = properties;
-    }
-    
 }
