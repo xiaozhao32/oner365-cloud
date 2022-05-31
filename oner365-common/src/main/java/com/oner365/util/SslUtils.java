@@ -5,7 +5,6 @@ import java.security.PublicKey;
 import java.security.cert.Certificate;
 import java.security.cert.X509Certificate;
 import java.util.Arrays;
-import java.util.Base64;
 import java.util.Optional;
 
 import javax.net.ssl.HttpsURLConnection;
