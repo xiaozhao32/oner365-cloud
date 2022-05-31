@@ -17,6 +17,7 @@
 	11、nginx安装
 	12、logstash安装配置
 	13、kibana安装配置
+	14、websocket-demo页面发布
 
 =========================================================================================================================================================
 
@@ -635,6 +636,17 @@
 	-- 查看索引模式（索引数据查询）
 		-- Discover
 			-- 可选择时间，key
+14、websocket-demo页面发布
+	-- demo页面文件目录
+		-- websocket-demo/im-html 
+	-- 将目录放到服务器任意有权限位置
+	-- 修改nginx配置
+		-- 部署文档/nginx_websocket.conf
+			-- 指定文件存放地址
+	-- 启动此文件
+		-- /usr/share/nginx/sbin/nginx -c /usr/share/nginx/conf/nginx_websocket.conf
+	-- 默认访问地址
+		-- http://xxx.xxx.xxx.xxx:8799
 		
 
 
