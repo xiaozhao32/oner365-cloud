@@ -1062,6 +1062,8 @@
 		<module>oner365-deploy</module>
 		<!-- swagger文档 -->
 		<module>oner365-swagger</module>
+		<!-- websocket -->
+		<module>oner365-websocket</module>
 		<!-- 生成框架 -->
 		<module>oner365-generator</module>
 

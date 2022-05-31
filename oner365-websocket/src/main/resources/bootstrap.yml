@@ -1,0 +1,31 @@
+
+server: 
+  port: 8703
+
+spring: 
+  application:
+    name: uem-websocket
+    
+  profiles:
+    active: dev
+    
+#  boot:
+#    admin:
+#      client: 
+#        url: http://localhost:8706 
+#        api-path: 
+        
+  cloud:
+    nacos:
+      server-addr: ${NACOS-HOST:192.168.33.44}:${NACOS-PORT:8848}
+      discovery:
+        namespace: ${spring.profiles.active}
+        group: DEFAULT_GROUP
+      config:
+        namespace: ${spring.profiles.active}
+        group: DEFAULT_GROUP
+        file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+     
+
