@@ -36,7 +36,6 @@ public class SslUtils {
       Certificate certificate = Arrays.asList(connection.getServerCertificates()).stream().findFirst().get();
       X509Certificate x509Certificate = (X509Certificate) certificate;
       PublicKey publicKey = x509Certificate.getPublicKey();
-      connection.disconnect();
       return new String(Base64.getEncoder().encode(publicKey.getEncoded()));
     } catch (Exception e) {
       LOGGER.error("getSSLPublicKey error:{}",e);
