@@ -104,6 +104,12 @@
 	      <groupId>io.github.openfeign.form</groupId>
 	      <artifactId>feign-form</artifactId>
 	    </dependency>
+	    
+	    <!-- logback logstash -->
+		<dependency>
+		    <groupId>net.logstash.logback</groupId>
+		    <artifactId>logstash-logback-encoder</artifactId>
+		</dependency>
 		
 		<!-- spring -->
 		<dependency>

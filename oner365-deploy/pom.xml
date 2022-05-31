@@ -52,6 +52,12 @@
 			<groupId>ch.ethz.ganymed</groupId>
 			<artifactId>ganymed-ssh2</artifactId>
 		</dependency>
+		
+		<!-- logback logstash -->
+		<dependency>
+		    <groupId>net.logstash.logback</groupId>
+		    <artifactId>logstash-logback-encoder</artifactId>
+		</dependency>
 
 	</dependencies>
 

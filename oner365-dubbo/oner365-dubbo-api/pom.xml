@@ -14,6 +14,12 @@
 	<name>oner365-dubbo-api</name>
 
 	<dependencies>
+	
+		<!-- logback logstash -->
+		<dependency>
+		    <groupId>net.logstash.logback</groupId>
+		    <artifactId>logstash-logback-encoder</artifactId>
+		</dependency>
 
 	</dependencies>
 
