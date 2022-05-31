@@ -1,0 +1,141 @@
+<html>
+   <head>
+   
+   <meta charset="utf-8">
+   <title></title>
+    <script type="text/javascript" src="script/jquery.js"></script>
+      <script type="text/javascript">
+        $(document).ready(function(){});
+		 var ws ;
+		 var user;
+		 var token = 10000;
+		 function joinSocket(){
+			if ("WebSocket" in window){
+
+			   //get 方式发送创建不要用中文。或两次encodeURI
+			   user = $("#userName").val();
+			   token = $("#token").val();
+               ws = new WebSocket("ws://192.168.33.44:8704/ws/websocket?user="+user+"&token="+token);
+			   prepareChat();
+			}else{
+				 alert("您的浏览器不支持 WebSocket!");
+			}
+		 }
+
+		 function sendMsg(){
+			var msg = $("#contentMsg").val();
+            ws.send(msg);
+			ws.onmessage = function (evt) { 
+                var received_msg = evt.data.split("&&");
+				//$("#showMsg").append("<div style='width:400px; height:20px; position:relative; //text-align:right;word-break:break-all'>"+received_msg[1]+":"+received_msg[0]+"</div>");
+
+				if(received_msg[1] == 'jion'){
+					$("#showMsg").append("<div style='width:400px; height:20px; position:relative; text-align:center;'>欢迎："+received_msg[0]+"进入聊天</div>");
+					$("#showMsg").scrollTop($('#showMsg')[0].scrollHeight);
+				}else{
+					if(received_msg[0] == user){
+						$("#showMsg").append("<div style='width:400px; height:20px; position:relative; text-align:right;word-break:break-all;margin-top:20px'>"+received_msg[1]+":"+received_msg[0]+"</div>");
+						$("#showMsg").scrollTop($('#showMsg')[0].scrollHeight);
+					}else{
+						$("#showMsg").append("<div style='width:400px; height:20px;word-break:break-all;margin-top:20px'>"+received_msg[0]+":"+received_msg[1]+"</div>");
+						$("#showMsg").scrollTop($('#showMsg')[0].scrollHeight);
+					}
+				}				
+            };
+			//$("#showMsg").scrollTop($('#showMsg')[0].scrollHeight);
+			$("#contentMsg").val("");
+			
+		 }
+
+		 //$(document).ready(function(){
+			// prepareChat();
+		 // });
+
+		 function prepareChat(){
+			//连接建立后调用的函数
+			ws.onopen=function(){
+			}
+			//接收服务器传入的数据时候的处理
+			ws.onmessage=function(evt){
+				//向聊天室当框中追加信息
+				var received_msg = evt.data.split("&&");
+				if(received_msg[1] == 'jion'){
+					$("#showMsg").append("<div style='width:400px; height:20px; position:relative; text-align:center;'>欢迎："+received_msg[0]+"进入聊天</div>");
+				}else{
+					if(received_msg[0] == user){
+						$("#showMsg").append("<div style='width:400px; height:20px; position:relative; text-align:right;word-break:break-all'>"+received_msg[1]+":"+received_msg[0]+"</div>");
+						return ; 
+					}else{
+						$("#showMsg").append("<div style='width:400px; height:20px;word-break:break-all'>"+received_msg[0]+":"+received_msg[1]+"</div>");
+					}
+				}
+				$("#showMsg").scrollTop($('#showMsg')[0].scrollHeight);				
+			}
+		}
+      </script>
+	  <style>
+		body{
+				background-color:#d0e4fe;
+			}
+		#jion-im{
+			border:1px solid;
+			width:400px;
+		}
+
+		input[type='text']
+        {
+            border: solid 1px silver;
+            background-color:#e6f0f9;
+            width:290px;
+        }
+		#showMsg{
+			height:400px;
+			width:400px;
+			border:1px solid;
+			margin-top:20px;
+			font-size: 15px;
+			overflow-x:hidden;
+			overflow-y:auto;
+		}
+		#showMsg::-webkit-scrollbar {
+			display: none;/*隐藏滚动条*/
+		}
+		#im-content{
+		}
+
+	  </style>
+        
+   </head>
+   <body>
+	    <div>
+		  <div id="jion-im">
+			<div>
+				 <span>
+					用&nbsp;户&nbsp;名&nbsp;：
+				 </span>
+				 <span>
+					<input type="text" id='userName'/>
+				</span>
+			</div>
+			<div>
+				 <span>
+					聊天通道：
+				 </span>
+				 <span>
+					<input type="text" id='token' value="10000"/>
+				</span>
+			</div>
+			 <a href="javascript:joinSocket();">进入聊天</a>
+		  </div>
+		  <div id="im-content">
+			<div id='showMsg'>
+				
+			 </div>
+			 <input type="text" id='contentMsg'/>
+			 <a href="javascript:sendMsg()">发送</a>
+			 <br/>
+			 
+		  </div>
+		</div>
+   </body>
+</html>

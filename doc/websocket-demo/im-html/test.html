@@ -1,0 +1,24 @@
+﻿<html>
+	<head>
+		<script type="text/javascript" src="script/jquery.js"></script>
+		<script type = "text/javascript">
+		var settings = {
+		 
+		  "url": "https://testmh.bsam.com.cn:8303/cas/label",
+		  "method": "GET",
+		  
+		  "headers": {
+		    "appnest_version": "1.0",
+		    "appnest_method": "appnest.client.label.list",
+		    "appnest_token": "basm",
+		    "cache-control": "no-cache",
+		    "postman-token": "13f05f3f-49cc-6081-8952-e253ca75808b"
+		  }
+		}
+
+		$.ajax(settings).done(function (response) {
+		  console.log(response);
+		});
+		</script>
+	</head>
+</html>
