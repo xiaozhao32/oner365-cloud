@@ -2,6 +2,8 @@ package com.oner365.websocket.vo;
 
 import java.io.Serializable;
 
+import com.oner365.websocket.enums.MessageTypeEnum;
+
 /**
  * websocket 消息传输类
  * 
@@ -28,16 +30,25 @@ public class WebSocketMessageVo implements Serializable {
    * 消息
    */
   private String message;
+  
+  /**
+   * 通道类型
+   */
+  private MessageTypeEnum messageType;
+  
+  
+  
 
 
   public WebSocketMessageVo() {
     super();
   }
   
-  public WebSocketMessageVo(String user,String token,String message) {
+  public WebSocketMessageVo(String token,String user,String message,MessageTypeEnum messageType) {
     this.message = message;
-    this.token = token;
     this.user = user;
+    this.token = token;
+    this.messageType = messageType;
   }
 
 
@@ -70,5 +81,12 @@ public class WebSocketMessageVo implements Serializable {
     this.message = message;
   }
 
+  public MessageTypeEnum getMessageType() {
+    return messageType;
+  }
+
+  public void setMessageType(MessageTypeEnum messageType) {
+    this.messageType = messageType;
+  }
 
 }
