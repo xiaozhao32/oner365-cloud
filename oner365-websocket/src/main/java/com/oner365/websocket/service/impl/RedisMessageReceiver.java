@@ -38,14 +38,14 @@ public class RedisMessageReceiver implements MessageListener{
    * 
    * @throws IOException
    */
-  public void sendMessage(String token, String userName, String message) {
+  public void sendMessage(String token, String user, String message) {
     Map<String, String> users = WebSocketHandler.userMap.get(token);
     if (users != null) {
-      LOGGER.info("发送人:{},发送信息:{},发送通道:{}", userName, message, token);
+      LOGGER.info("发送人:{},发送信息:{},发送通道:{}", user, message, token);
       users.keySet().stream().forEach(key -> {
         WebSocketSession session = WebSocketHandler.sessionMap.get(users.get(key));
         try {
-          session.sendMessage(new TextMessage(userName + "&&" + message));
+          session.sendMessage(new TextMessage(user + "&&" + message));
         } catch (Exception e) {
           LOGGER.error("sendMessage error:",e);
         }

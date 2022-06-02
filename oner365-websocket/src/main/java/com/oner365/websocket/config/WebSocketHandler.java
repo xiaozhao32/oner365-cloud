@@ -60,9 +60,8 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
     userMap.put(token, users);
     sessionMap.put(session.getId(), session);
     String jionMessage = "jion";
-    redisSendMessageService
-        .sendMessage(new WebSocketMessageVo(session.getAttributes().get(WebSocketInterceptor.USER).toString(),
-            session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(), jionMessage));
+    sendMessage(session.getAttributes().get(WebSocketInterceptor.USER).toString(),
+            session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(), jionMessage);
   }
 
   /**
@@ -71,9 +70,8 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
   @Override
   public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
     if (message instanceof TextMessage) {
-      redisSendMessageService
-          .sendMessage(new WebSocketMessageVo(session.getAttributes().get(WebSocketInterceptor.USER).toString(),
-              session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(), message.getPayload().toString()));
+      sendMessage(session.getAttributes().get(WebSocketInterceptor.USER).toString(),
+              session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(), message.getPayload().toString());
     } else if (message instanceof BinaryMessage) {
 
     } else if (message instanceof PongMessage) {
@@ -109,18 +107,10 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
    * 
    * @throws IOException
    */
-  public void sendMessage(String token, String userName, String message) {
+  public void sendMessage(String token, String user, String message) {
     Map<String, String> users = userMap.get(token);
     if (users != null) {
-      LOGGER.info("发送人:{},发送信息:{},发送通道:{}", userName, message, token);
-      users.keySet().stream().forEach(key -> {
-        WebSocketSession session = sessionMap.get(users.get(key));
-        try {
-          session.sendMessage(new TextMessage(userName + "&&" + message));
-        } catch (Exception e) {
-          LOGGER.error(e.getMessage());
-        }
-      });
+      redisSendMessageService.sendMessage(new WebSocketMessageVo(user,token, message));
     }
   }
 }
