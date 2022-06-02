@@ -15,8 +15,8 @@
 			   //get 方式发送创建不要用中文。或两次encodeURI
 			   user = $("#userName").val();
 			   token = $("#token").val();
-               ws = new WebSocket("ws://192.168.33.44:8704/ws/websocket?user="+user+"&token="+token);
-               // ws = new WebSocket("ws://localhost:8703/websocket?user="+user);
+               //ws = new WebSocket("ws://192.168.33.44:8704/ws/websocket?user="+user+"&token="+token);
+                ws = new WebSocket("ws://localhost:8703/websocket?user="+user);
 			   prepareChat();
 			}else{
 				 alert("您的浏览器不支持 WebSocket!");
@@ -123,14 +123,14 @@
 					<input type="text" id='userName'/>
 				</span>
 			</div>
-			<div>
+			<!-- <div>
 				 <span>
 					聊天通道：
 				 </span>
 				 <span>
 					<input type="text" id='token' value="10000"/>
 				</span>
-			</div>
+			</div> -->
 			 <a href="javascript:joinSocket();">进入聊天</a>
 		  </div>
 		  <div id="im-content">
