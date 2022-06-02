@@ -8,11 +8,11 @@
 		-- vi /opt/redis-6.0.5/redis.conf
 			-- daemonize yes
 			-- bind 0.0.0.0
-			-- requirepass 1qazXSW@
+			-- requirepass 1234
 			-- 主从配置
-				-- masterauth 1qazXSW@
+				-- masterauth 1234
 				-- slave-read-only yes
-				-- slaveof 10.5.48.14 6379
+				-- slaveof 192.168.33.42 6379
 
 	-- 启动
 		-- cd /usr/local/redis/bin
@@ -22,21 +22,21 @@
 			-- redis.conf （主，master）
 				-- appendonly yes
 				-- protected-mode no
-				-- requirepass "1qazXSW@"
-				-- masterauth "1qazXSW@"
+				-- requirepass "1234"
+				-- masterauth "1234"
 				-- daemonize yes
 			-- redis.conf (从机 slave)
-				-- slaveof 106.133.226.36 6380
+				-- slaveof 192.168.33.42 6380
 				-- appendonly yes
 				-- protected-mode no
-				-- requirepass "1qazXSW@"
-				-- masterauth "1qazXSW"
+				-- requirepass "1234"
+				-- masterauth "1234"
 			-- sentinel.conf(主 master，从 slave)
 				-- protected-mode no
 				-- daemonize yes
 				-- sentinel monitor mymaster 192.168.33.43 6379 2
 					-- 监听主机 名称mymaster 端口6379 投票2（两个监听投票即认为主机故障，有运维人员建议设置为哨兵数/2-1，就是3台哨兵就设置为1）
-				-- sentinel auth-pass mymaster 1qazXSW@
+				-- sentinel auth-pass mymaster 1234
 					-- mymaster认证密码（同redis密码）
 				-- sentinel down-after-milliseconds 10000
 					-- 主机宕机后多少秒进行主从切换 默认30秒
@@ -56,5 +56,5 @@
 				-- shutdown master
 				-- 进入slave机器cli
 					-- ./redis-cli
-						-- auth 1qazXSW@
+						-- auth 1234
 						-- info replication 查看主从状态
