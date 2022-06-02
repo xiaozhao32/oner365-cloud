@@ -6,6 +6,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
@@ -16,9 +17,12 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import com.google.common.collect.Maps;
+import com.oner365.websocket.service.IRedisSendMessageService;
+import com.oner365.websocket.vo.WebSocketMessageVo;
 
 /**
  * websocket 控制器
+ * 
  * @author liutao
  *
  */
@@ -30,10 +34,13 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
    * 需要注意的是，webSocketSession没有提供无参构造，不能进行序列化，也就不能通过redis存储
    * 在分布式系统中，要想别的办法实现webSocketSession共享
    */
-  private static Map<String, WebSocketSession> sessionMap = new ConcurrentHashMap<>();
-  private static Map<String, Map<String, String>> userMap = new ConcurrentHashMap<>();
+  public static Map<String, WebSocketSession> sessionMap = new ConcurrentHashMap<>();
+  public static Map<String, Map<String, String>> userMap = new ConcurrentHashMap<>();
 
   private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketHandler.class);
+
+  @Autowired
+  private IRedisSendMessageService redisSendMessageService;
 
   /**
    * webSocket连接创建后调用
@@ -53,7 +60,9 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
     userMap.put(token, users);
     sessionMap.put(session.getId(), session);
     String jionMessage = "jion";
-    sendMessage(token, user, jionMessage);
+    redisSendMessageService
+        .sendMessage(new WebSocketMessageVo(session.getAttributes().get(WebSocketInterceptor.USER).toString(),
+            session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(), jionMessage));
   }
 
   /**
@@ -62,8 +71,9 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
   @Override
   public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
     if (message instanceof TextMessage) {
-      sendMessage(session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(),
-          session.getAttributes().get(WebSocketInterceptor.USER).toString(), message.getPayload().toString());
+      redisSendMessageService
+          .sendMessage(new WebSocketMessageVo(session.getAttributes().get(WebSocketInterceptor.USER).toString(),
+              session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(), message.getPayload().toString()));
     } else if (message instanceof BinaryMessage) {
 
     } else if (message instanceof PongMessage) {
@@ -102,7 +112,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
   public void sendMessage(String token, String userName, String message) {
     Map<String, String> users = userMap.get(token);
     if (users != null) {
-      LOGGER.info("发送人:{},发送信息:{},发送通道:{}",userName,message,token);
+      LOGGER.info("发送人:{},发送信息:{},发送通道:{}", userName, message, token);
       users.keySet().stream().forEach(key -> {
         WebSocketSession session = sessionMap.get(users.get(key));
         try {

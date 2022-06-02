@@ -1,6 +1,5 @@
 package com.oner365.websocket.config;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -11,8 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.HttpUtil;
+import com.oner365.util.DataUtils;
+import com.oner365.websocket.vo.WebSocketLinkVo;
 
 /**
  * websocket 拦截器
@@ -35,15 +34,13 @@ public class WebSocketInterceptor implements HandshakeInterceptor {
   public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler,
       Map<String, Object> attributes) {
     LOGGER.info("握手开始");
-    // 获得请求参数
-    HashMap<String, String> paramMap = HttpUtil.decodeParamMap(request.getURI().getQuery(), "utf-8");
-    String token = paramMap.get(TOKEN);
-    String user = paramMap.get(USER);
-    if (StrUtil.isNotBlank(user)) {
+ // 获得请求参数
+    WebSocketLinkVo websocketLinkVo = DataUtils.getUrlParam(request.getURI().getQuery(), WebSocketLinkVo.class);
+    if (!DataUtils.isEmpty(websocketLinkVo.getUser())) {
       // 放入属性域
-      attributes.put(TOKEN, token);
-      attributes.put(USER, user);
-      LOGGER.info("用户:{} 握手成功！通道:{} " ,user,token);
+      attributes.put(TOKEN, websocketLinkVo.getToken());
+      attributes.put(USER, websocketLinkVo.getUser());
+      LOGGER.info("用户:{} 握手成功！通道:{} " ,websocketLinkVo.getUser(),websocketLinkVo.getToken());
       return true;
     }
     LOGGER.info("用户登录已失效");

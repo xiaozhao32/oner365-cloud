@@ -53,14 +53,6 @@
 			
 		</dependency>
 
-
-		 <dependency>
-		   <groupId>cn.hutool</groupId>
-		   <artifactId>hutool-all</artifactId>
-		   <version>4.1.0</version>
-		</dependency>
-		
-
 		<!-- ssh2 -->
 		<dependency>
 			<groupId>ch.ethz.ganymed</groupId>

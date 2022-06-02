@@ -25,11 +25,13 @@ import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.JoinColumn;
@@ -51,6 +53,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.oner365.common.constants.PublicConstants;
 
 /**
@@ -80,6 +84,8 @@ public class DataUtils {
   public static final String KB = "KB";
   public static final String MB = "MB";
   public static final String GB = "GB";
+  public static final String URI_PARAM_SPLIT = "&";
+  public static final String URI_PARAM = "=";
 
   private DataUtils() {
 
@@ -786,5 +792,22 @@ public class DataUtils {
       LOGGER.error("Error convertMultipartFile:", e);
     }
     return new CommonsMultipartFile(item);
+  }
+  
+  /**
+   * url参数整理vo
+   *
+   * @param urlParam url参数字符串
+   * @param clazz vo类型
+   * @return T
+   */
+  public static <T>T getUrlParam(String urlParam,Class<T> clazz) {
+    List<String> list = Arrays.stream(urlParam.split(URI_PARAM_SPLIT)).collect(Collectors.toList());
+    final JSONObject json = new JSONObject();
+    list.stream().forEach(s -> {
+      String[] param = s.split(URI_PARAM);
+      json.put(param[0], param[1]);
+    });
+    return JSON.toJavaObject(json, clazz);
   }
 }
