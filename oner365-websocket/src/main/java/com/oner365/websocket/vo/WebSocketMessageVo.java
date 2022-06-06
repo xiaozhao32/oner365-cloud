@@ -1,7 +1,9 @@
 package com.oner365.websocket.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
+import com.oner365.websocket.entity.WebSocketData;
 import com.oner365.websocket.enums.MessageTypeEnum;
 
 /**
@@ -20,11 +22,22 @@ public class WebSocketMessageVo implements Serializable {
    * 用户名
    */
   private String user;
-
+  
   /**
-   * 通道标识
+   * group token
    */
   private String token;
+  
+
+  /**
+   * 发送人信息
+   */
+  private WebSocketData data;
+  
+  /**
+   * 接收消息人
+   */
+  private List<String> list;
   
   /**
    * 消息
@@ -44,11 +57,16 @@ public class WebSocketMessageVo implements Serializable {
     super();
   }
   
-  public WebSocketMessageVo(String token,String user,String message,MessageTypeEnum messageType) {
+  public WebSocketMessageVo(String userName,List<String> list,String message) {
     this.message = message;
-    this.user = user;
+    this.user = userName;
+    this.list = list;
+  }
+  
+  public WebSocketMessageVo(String userName,String token,String message) {
+    this.message = message;
+    this.user = userName;
     this.token = token;
-    this.messageType = messageType;
   }
 
 
@@ -62,15 +80,23 @@ public class WebSocketMessageVo implements Serializable {
   }
 
 
-  public String getToken() {
-    return token;
+
+
+  public WebSocketData getData() {
+    return data;
   }
 
-
-  public void setToken(String token) {
-    this.token = token;
+  public void setData(WebSocketData data) {
+    this.data = data;
   }
 
+  public List<String> getList() {
+    return list;
+  }
+
+  public void setList(List<String> list) {
+    this.list = list;
+  }
 
   public String getMessage() {
     return message;
@@ -88,5 +114,15 @@ public class WebSocketMessageVo implements Serializable {
   public void setMessageType(MessageTypeEnum messageType) {
     this.messageType = messageType;
   }
+
+  public String getToken() {
+    return token;
+  }
+
+  public void setToken(String token) {
+    this.token = token;
+  }
+  
+  
 
 }

@@ -16,9 +16,9 @@ import com.oner365.util.DataUtils;
 import com.oner365.websocket.vo.WebSocketLinkVo;
 
 /**
- * websocket 拦截器
- * @author liutao
+ * websocket连接拦截类
  *
+ * @author liutao
  */
 @Component
 public class WebSocketInterceptor implements HandshakeInterceptor {
@@ -28,6 +28,8 @@ public class WebSocketInterceptor implements HandshakeInterceptor {
   public static final String TOKEN = "token";
 
   public static final String USER = "user";
+  
+  public static final String USER_ID = "userId";
   
   @Autowired
   private SnowflakeSequence snowflakeSequence;
@@ -47,7 +49,8 @@ public class WebSocketInterceptor implements HandshakeInterceptor {
       // 放入属性域
       attributes.put(TOKEN, websocketLinkVo.getToken() != null ? websocketLinkVo.getToken():snowflakeSequence.nextNo());
       attributes.put(USER, websocketLinkVo.getUser());
-      LOGGER.info("用户:{} 握手成功！通道:{} ", websocketLinkVo.getUser(), websocketLinkVo.getToken());
+      attributes.put(USER_ID, websocketLinkVo.getUserId());
+      LOGGER.info("用户:{} 握手成功！通道:{},userId:{} ", websocketLinkVo.getUser(), websocketLinkVo.getToken(),websocketLinkVo.getUserId());
       return true;
     }
     LOGGER.info("用户登录已失效");

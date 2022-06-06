@@ -35,6 +35,11 @@ public class ClientSendVo implements Serializable {
    * 用户名
    */
   private String user;
+  
+  /**
+   * 用户名
+   */
+  private String userId;
 
   
   /**
@@ -47,10 +52,11 @@ public class ClientSendVo implements Serializable {
     super();
   }
   
-  public ClientSendVo(String user,String token,String sessionId) {
+  public ClientSendVo(String user,String token,String userId ,String sessionId) {
     this.user = user;
     this.token = token;
     this.sessionId = sessionId;
+    this.userId = userId;
   }
 
 
@@ -99,6 +105,14 @@ public class ClientSendVo implements Serializable {
 
   public void setSessionId(String sessionId) {
     this.sessionId = sessionId;
+  }
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
 

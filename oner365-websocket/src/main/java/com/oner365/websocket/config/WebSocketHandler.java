@@ -1,8 +1,6 @@
 package com.oner365.websocket.config;
 
-import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.slf4j.Logger;
@@ -18,9 +16,11 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import com.alibaba.fastjson.JSON;
-import com.google.common.collect.Maps;
+import com.google.common.collect.Lists;
 import com.oner365.common.cache.RedisCache;
-import com.oner365.websocket.enums.MessageTypeEnum;
+import com.oner365.util.DataUtils;
+import com.oner365.websocket.constants.WebSocketConstants;
+import com.oner365.websocket.entity.WebSocketData;
 import com.oner365.websocket.service.IRedisSendMessageService;
 import com.oner365.websocket.vo.ClientSendVo;
 import com.oner365.websocket.vo.WebSocketMessageVo;
@@ -33,32 +33,13 @@ import com.oner365.websocket.vo.WebSocketMessageVo;
 @Component
 public class WebSocketHandler extends AbstractWebSocketHandler {
 
-  /**
-   * 存储sessionId和webSocketSession
-   * 需要注意的是，webSocketSession没有提供无参构造，不能进行序列化，也就不能通过redis存储
-   * 在分布式系统中，要想别的办法实现webSocketSession共享
-   */
-  public static Map<String, WebSocketSession> sessionMap = new ConcurrentHashMap<>();
-  public static Map<String, Map<String, String>> userMap = new ConcurrentHashMap<>();
-  public static Map<String, Map<String, String>> showMessageMap = new ConcurrentHashMap<>();
-
   private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketHandler.class);
-
-  public static final String PUBLIC_TOKEN = "10000";
-
-  public static final String HEART_BEAT_KEY = "heartBeat::";
-
-  public static int HEART_BEAT_TIME = 120;
 
   @Autowired
   private IRedisSendMessageService redisSendMessageService;
 
   @Autowired
   private RedisCache redisCache;
-
-//  @Autowired
-//  private RedisCache redisCache;
-
   /**
    * webSocket连接创建后调用
    * 
@@ -69,7 +50,8 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
     // 获取参数
     String user = String.valueOf(session.getAttributes().get(WebSocketInterceptor.USER));
     String token = String.valueOf(session.getAttributes().get(WebSocketInterceptor.TOKEN));
-    defaultLink(token, user, session);
+    String userId = String.valueOf(session.getAttributes().get(WebSocketInterceptor.USER_ID));
+    defaultLink(token, user,userId, session);
   }
 
   /**
@@ -81,17 +63,23 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
       
       ClientSendVo clientSendVo = JSON.toJavaObject(JSON.parseObject(message.getPayload().toString()),
           ClientSendVo.class);
+     
       switch (clientSendVo.getMessageType()) {
       case DEFAULT:
-        sendMessage(PUBLIC_TOKEN, session.getAttributes().get(WebSocketInterceptor.USER).toString(),
-            clientSendVo.getMessage(), clientSendVo.getMessageType());
+        redisSendMessageService.sendMessage(new WebSocketMessageVo(session.getAttributes().get(WebSocketInterceptor.USER).toString(),session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(), clientSendVo.getMessage()));
+        break;
+      case INTERFACE:
+        WebSocketData data = WebSocketConstants.userMap.get(session.getAttributes().get(WebSocketInterceptor.TOKEN).toString());
+        List<String> tokenList = Lists.newArrayList();
+        WebSocketConstants.userMap.values().stream().forEach(d -> tokenList.add(d.getToken()));
+        redisSendMessageService.sendMessage(new WebSocketMessageVo(data.getUser(),tokenList, clientSendVo.getMessage()));
         break;
       case HEARTBEAT:
         LOGGER.error("message:{}", JSON.toJSON(clientSendVo));
-        redisCache.setCacheObject(HEART_BEAT_KEY + session.getId(),
+        redisCache.setCacheObject(WebSocketConstants.HEART_BEAT_KEY + session.getAttributes().get(WebSocketInterceptor.USER_ID).toString(),
             new ClientSendVo(session.getAttributes().get(WebSocketInterceptor.USER).toString(),
-                session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(), session.getId()),
-            HEART_BEAT_TIME, TimeUnit.SECONDS);
+                session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(),session.getAttributes().get(WebSocketInterceptor.USER_ID).toString(), session.getId()),
+            WebSocketConstants.HEART_BEAT_TIME, TimeUnit.SECONDS);
         break;
       default:
         break;
@@ -111,7 +99,16 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
    */
   @Override
   public void handleTransportError(WebSocketSession session, Throwable exception) {
-    sessionMap.remove(session.getId());
+    WebSocketConstants.userMap.values().stream().forEach(value -> {
+      if(value.getSession().getId().equals(session.getId())) {
+        WebSocketConstants.userMap.remove(value.getToken());
+      }
+    });
+    WebSocketConstants.showMessageMap.get(WebSocketConstants.PUBLIC_TOKEN).stream().forEach(data ->{
+      if(data.getSession().getId().equals(session.getId())) {
+        WebSocketConstants.showMessageMap.get(WebSocketConstants.PUBLIC_TOKEN).remove(data);
+      }
+    });
   }
 
   /**
@@ -119,7 +116,16 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
    */
   @Override
   public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
-    sessionMap.remove(session.getId());
+    WebSocketConstants.userMap.values().stream().forEach(value -> {
+      if(value.getSession().getId().equals(session.getId())) {
+        WebSocketConstants.userMap.remove(value.getToken());
+      }
+    });
+    WebSocketConstants.showMessageMap.get(WebSocketConstants.PUBLIC_TOKEN).stream().forEach(data ->{
+      if(data.getSession().getId().equals(session.getId())) {
+        WebSocketConstants.showMessageMap.get(WebSocketConstants.PUBLIC_TOKEN).remove(data);
+      }
+    });
   }
 
   @Override
@@ -131,40 +137,19 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
    * 默认链接
    * 
    */
-  public void defaultLink(String token, String user, WebSocketSession session) {
-    Map<String, String> users = userMap.get(token);
-    if (users == null) {
-      users = Maps.newConcurrentMap();
+  public void defaultLink(String token, String user,String userId, WebSocketSession session) {
+    WebSocketData data = WebSocketConstants.userMap.get(token);
+    if (DataUtils.isEmpty(data)) {
+      data = new WebSocketData(user,token,userId,session);
     }
-    users.put(user, session.getId());
-    showMessageMap.put(PUBLIC_TOKEN, users);
-    userMap.put(token, users);
-    sessionMap.put(session.getId(), session);
+    WebSocketConstants.userMap.put(token, data);
+    List<String> userList = Lists.newArrayList();
+    WebSocketConstants.userMap.values().stream().forEach(d -> userList.add(d.getUserId()));
     String jionMessage = "jion&&" + token;
-    sendMessage(PUBLIC_TOKEN, user, jionMessage, MessageTypeEnum.DEFAULT);
-    redisCache.setCacheObject(HEART_BEAT_KEY + session.getId(), new ClientSendVo(user, token, session.getId()),
-        HEART_BEAT_TIME, TimeUnit.SECONDS);
+    redisSendMessageService.sendMessage(new WebSocketMessageVo(data.getUser(),WebSocketConstants.PUBLIC_TOKEN, jionMessage));
+    redisCache.setCacheObject(WebSocketConstants.HEART_BEAT_KEY +userId, new ClientSendVo(user, token,userId, session.getId()),
+        WebSocketConstants.HEART_BEAT_TIME, TimeUnit.SECONDS);
   }
 
-  /**
-   * 后端发送消息
-   * 
-   * @throws IOException
-   */
-  public void sendMessage(String token, String user, String message, MessageTypeEnum messageType) {
-    Map<String, String> users = null;
-    switch (messageType) {
-    case DEFAULT:
-      users = showMessageMap.get(token);
-      break;
-    case HEARTBEAT:
-      users = userMap.get(token);
-      break;
-    default:
-      break;
-    }
-    if (users != null) {
-      redisSendMessageService.sendMessage(new WebSocketMessageVo(token,user, message,messageType));
-    }
-  }
+  
 }

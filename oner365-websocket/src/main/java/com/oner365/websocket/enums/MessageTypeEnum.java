@@ -11,7 +11,10 @@ public enum MessageTypeEnum implements Serializable {
 
   /** 默认 全员通道*/
   DEFAULT,
+  /** 接口*/
+  INTERFACE,
   /** 服务器与客户端心跳 */
   HEARTBEAT
+  
 
 }

@@ -7,7 +7,7 @@ import com.oner365.websocket.vo.WebSocketMessageVo;
  * @author liutao
  *
  */
-public interface IRedisSendMessageService {
+public interface IWebSocketMessageService {
 
     /**
      * 发送消息到websocket
@@ -15,5 +15,4 @@ public interface IRedisSendMessageService {
      * @param WebSocketMessageVo 对象
      */
     void sendMessage(WebSocketMessageVo webSocketMessageVo);
-    
 }

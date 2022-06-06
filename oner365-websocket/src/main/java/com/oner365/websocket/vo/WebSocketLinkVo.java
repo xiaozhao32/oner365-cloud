@@ -18,11 +18,18 @@ public class WebSocketLinkVo implements Serializable {
    * 用户名
    */
   private String user;
+  
+  /**
+   * 用户id
+   */
+  private String userId;
 
   /**
    * 通道标识
    */
   private String token;
+  
+
 
 
   public WebSocketLinkVo() {
@@ -49,5 +56,16 @@ public class WebSocketLinkVo implements Serializable {
     this.token = token;
   }
 
+
+  public String getUserId() {
+    return userId;
+  }
+
+
+  public void setUserId(String userId) {
+    this.userId = userId;
+  }
+  
+  
 
 }
