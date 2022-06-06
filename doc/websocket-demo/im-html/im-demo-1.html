@@ -9,6 +9,7 @@
 		 var ws ;
 		 var user;
 		 var token = 10000;
+		 var userId = Math.round(Math.random()*10000+1);
 		 function joinSocket(){
 			if ("WebSocket" in window){
 
@@ -16,7 +17,7 @@
 			   user = $("#userName").val();
 			   token = $("#token").val();
                //ws = new WebSocket("ws://192.168.33.44:8704/ws/websocket?user="+user+"&token="+token);
-                ws = new WebSocket("ws://localhost:8703/websocket?user="+user);
+                ws = new WebSocket("ws://localhost:8703/websocket?user="+user+"&userId="+userId);
 			   prepareChat();
 			}else{
 				 alert("您的浏览器不支持 WebSocket!");
@@ -28,7 +29,7 @@
 		 },30000);
 		 function sendMsg(){
 			var msg = $("#contentMsg").val();
-			var msgBody = "{'messageType':'DEFAULT','message':'"+msg+"','token':'"+token+"'}";
+			var msgBody = "{'messageType':'DEFAULT','message':'"+msg+"','token':'10000','userId':'"+userId+"'}";
             ws.send(msgBody);
 			ws.onmessage = function (evt) { 
                 var received_msg = evt.data.split("&&");
