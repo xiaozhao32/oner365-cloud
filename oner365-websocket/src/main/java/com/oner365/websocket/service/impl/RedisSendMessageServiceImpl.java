@@ -1,5 +1,7 @@
 package com.oner365.websocket.service.impl;
 
+import java.io.Serializable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -14,12 +16,11 @@ import com.oner365.websocket.vo.WebSocketMessageVo;
  *
  */
 @Service
-@SuppressWarnings(value = { "rawtypes" })
 public class RedisSendMessageServiceImpl implements IRedisSendMessageService {
 
 
   @Autowired
-  public RedisTemplate redisTemplate;
+  public RedisTemplate<String,Serializable> redisTemplate;
 
   @Override
   public void sendMessage(WebSocketMessageVo webSocketMessageVo) {

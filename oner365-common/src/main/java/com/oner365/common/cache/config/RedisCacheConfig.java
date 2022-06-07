@@ -1,5 +1,6 @@
 package com.oner365.common.cache.config;
 
+import java.io.Serializable;
 import java.time.Duration;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +51,8 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
     }
     
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
-        RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+    public RedisTemplate<String,Serializable> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+        RedisTemplate<String, Serializable> redisTemplate = new RedisTemplate<>();
         redisTemplate.setConnectionFactory(redisConnectionFactory);
         
         FastJsonRedisSerializer<Object> serializer = new FastJsonRedisSerializer<>(Object.class);
