@@ -87,9 +87,11 @@ public class PathConstants {
   /** 菜单操作 */
   public static final String REQUEST_SYSTEM_MENU_OPERATION_LIST = "/menu/operation/list";
   public static final String REQUEST_SYSTEM_MENU_OPERATION_GET_ID = "/menu/operation/get/{id}";
+  public static final String REQUEST_SYSTEM_MENU_OPERATION_STATUS = "/menus/operation/status/{id}";
   public static final String REQUEST_SYSTEM_MENU_OPERATION_CHECK = "/menu/operation/check";
   public static final String REQUEST_SYSTEM_MENU_OPERATION_SAVE = "/menu/operation/save";
   public static final String REQUEST_SYSTEM_MENU_OPERATION_DELETE = "/menu/operation/delete";
+  public static final String REQUEST_SYSTEM_MENU_OPERATION_EXPORT = "/menu/operation/export";
   
   /** 菜单类型 */
   public static final String REQUEST_SYSTEM_MENU_TYPE_LIST = "/menu/type/list";

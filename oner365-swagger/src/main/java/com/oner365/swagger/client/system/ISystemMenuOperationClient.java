@@ -3,15 +3,18 @@ package com.oner365.swagger.client.system;
 import java.util.List;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -45,6 +48,16 @@ public interface ISystemMenuOperationClient {
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_MENU_OPERATION_GET_ID)
   ResponseData<SysMenuOperationDto> getById(@PathVariable(value = "id") String id);
+  
+  /**
+   * 修改状态
+   * 
+   * @param id     编号
+   * @param status 状态
+   * @return ResponseData<Boolean>
+   */
+  @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_OPERATION_STATUS)
+  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
 
   /**
    * 判断是否存在
@@ -72,4 +85,12 @@ public interface ISystemMenuOperationClient {
    */
   @DeleteMapping(PathConstants.REQUEST_SYSTEM_MENU_OPERATION_DELETE)
   ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+  
+  /**
+   * 导出
+   * @param data 查询对象
+   * @return ResponseEntity<byte[]>
+   */
+  @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_OPERATION_EXPORT)
+  ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data);
 }
