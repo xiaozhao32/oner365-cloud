@@ -68,7 +68,7 @@ public class SysMenuController extends BaseController {
     SysMenuInfoDto result = new SysMenuInfoDto();
     result.setSysMenu(menuService.getById(id));
     result.setMenuOperList(operationService.selectByMenuId(id));
-    result.setOperationList(operationService.findList());
+    result.setOperationList(operationService.findList(new QueryCriteriaBean()));
     return result;
   }
 

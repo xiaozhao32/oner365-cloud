@@ -2,6 +2,7 @@ package com.oner365.sys.service;
 
 import java.util.List;
 
+import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.common.service.BaseService;
@@ -26,9 +27,10 @@ public interface ISysMenuOperationService extends BaseService {
   /**
    * 查询列表
    * 
+   * @param data 查询参数
    * @return List
    */
-  List<SysMenuOperationDto> findList();
+  List<SysMenuOperationDto> findList(QueryCriteriaBean data);
 
   /**
    * 查询菜单
@@ -45,6 +47,15 @@ public interface ISysMenuOperationService extends BaseService {
    * @return SysMenuOperationDto
    */
   SysMenuOperationDto getById(String id);
+  
+  /**
+   * 修改状态
+   *
+   * @param id     编号
+   * @param status 状态
+   * @return Boolean
+   */
+  Boolean editStatus(String id, StatusEnum status);
 
   /**
    * 保存

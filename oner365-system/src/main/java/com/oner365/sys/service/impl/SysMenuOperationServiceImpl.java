@@ -64,9 +64,10 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
 
   @Override
   @GeneratorCache(CACHE_NAME)
-  public List<SysMenuOperationDto> findList() {
+  public List<SysMenuOperationDto> findList(QueryCriteriaBean data) {
     try {
-      return convert(menuOperationDao.findAll(), SysMenuOperationDto.class);
+      List<SysMenuOperation> list = menuOperationDao.findAll(QueryUtils.buildCriteria(data));
+      return convert(list, SysMenuOperationDto.class);
     } catch (Exception e) {
       LOGGER.error("Error findList: ", e);
     }
@@ -129,6 +130,20 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
       }
     } catch (Exception e) {
       LOGGER.error("Error checkCode:", e);
+    }
+    return Boolean.FALSE;
+  }
+  
+  @Override
+  @Transactional(rollbackFor = ProjectRuntimeException.class)
+  @CacheEvict(value = CACHE_NAME, allEntries = true)
+  public Boolean editStatus(String id, StatusEnum status) {
+    Optional<SysMenuOperation> optional = menuOperationDao.findById(id);
+    if (optional.isPresent()) {
+      optional.get().setStatus(status);
+      optional.get().setUpdateTime(LocalDateTime.now());
+      menuOperationDao.save(optional.get());
+      return Boolean.TRUE;
     }
     return Boolean.FALSE;
   }
