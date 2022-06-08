@@ -173,7 +173,9 @@ public class DataUtils {
   public static void createFolder(String folderPath) {
     try {
       File myFilePath = new File(folderPath);
-      FileUtils.forceMkdir(myFilePath);
+      if(!myFilePath.exists()) {
+        FileUtils.forceMkdir(myFilePath);
+      }
     } catch (Exception e) {
       LOGGER.error("Error createFolder:", e);
     }
@@ -295,6 +297,7 @@ public class DataUtils {
    * @throws FileNotFoundException 
    */
   public static FileOutputStream getFileOutputStream(String filePath, String fileName) throws FileNotFoundException {
+    createFolder(filePath);
     return getFileOutputStream(filePath + File.separator + fileName);
   }
   
