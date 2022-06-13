@@ -15,48 +15,52 @@
 	<name>oner365-gateway</name>
 
 	<dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-gateway</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba.cloud</groupId>
-            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-        <dependency>
-		    <groupId>org.springframework.cloud</groupId>
-		    <artifactId>spring-cloud-loadbalancer</artifactId>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-gateway</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba.cloud</groupId>
+			<artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-loadbalancer</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework.data</groupId>
-		    <artifactId>spring-data-commons</artifactId>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-commons</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-amqp</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-amqp</artifactId>
 		</dependency>
 		<dependency>
-        	<groupId>org.springframework.boot</groupId>
-        	<artifactId>spring-boot-configuration-processor</artifactId>
-        	<optional>true</optional>
-        </dependency>
-		
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-redis</artifactId>
+		</dependency>
+		<!-- jedis -->
+		<dependency>
+			<groupId>redis.clients</groupId>
+			<artifactId>jedis</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
@@ -66,31 +70,31 @@
 			<artifactId>hibernate-types-52</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>io.jsonwebtoken</groupId>
-		    <artifactId>jjwt</artifactId>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt</artifactId>
 		</dependency>
 		<!-- MYSQL -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        
-        <!-- fastjson -->
-        <dependency>
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+
+		<!-- fastjson -->
+		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
 		</dependency>
-		
+
 		<!-- google -->
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
 		</dependency>
-		
+
 		<!-- logback logstash -->
 		<dependency>
-		    <groupId>net.logstash.logback</groupId>
-		    <artifactId>logstash-logback-encoder</artifactId>
+			<groupId>net.logstash.logback</groupId>
+			<artifactId>logstash-logback-encoder</artifactId>
 		</dependency>
 	</dependencies>
 
@@ -119,26 +123,26 @@
 					<outputDirectory>${project.build.directory}</outputDirectory>
 				</configuration>
 			</plugin>
-			
+
 			<plugin>
-               <groupId>org.apache.maven.plugins</groupId>
-               <artifactId>maven-dependency-plugin</artifactId>
-               <executions>
-                   <execution>
-                       <id>copy-dependencies</id>
-                       <phase>package</phase>
-                       <goals>
-                           <goal>copy-dependencies</goal>
-                       </goals>
-                       <configuration>
-                           <outputDirectory>
-                               ${project.build.directory}/lib/
-                           </outputDirectory>
-                       </configuration>
-                   </execution>
-               </executions>
-           </plugin>
-		
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>copy-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>copy-dependencies</goal>
+						</goals>
+						<configuration>
+							<outputDirectory>
+								${project.build.directory}/lib/
+							</outputDirectory>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

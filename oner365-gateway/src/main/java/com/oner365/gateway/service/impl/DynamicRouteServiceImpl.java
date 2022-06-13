@@ -32,8 +32,8 @@ import com.oner365.gateway.enums.StatusEnum;
 import com.oner365.gateway.page.PageInfo;
 import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.query.QueryUtils;
-import com.oner365.gateway.rabbitmq.ISyncRouteMqService;
 import com.oner365.gateway.service.DynamicRouteService;
+import com.oner365.gateway.service.IRedisSendMessageService;
 import com.oner365.gateway.util.DataUtils;
 import com.oner365.gateway.vo.GatewayRouteVo;
 
@@ -57,8 +57,9 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
   @Autowired
   private RouteDefinitionWriter routeDefinitionWriter;
 
+  
   @Autowired
-  private ISyncRouteMqService syncRouteMqService;
+  private IRedisSendMessageService redisSendMessageService;
 
   private ApplicationEventPublisher publisher;
 
@@ -109,7 +110,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
     // 页面保存信息
     GatewayRoute result = gatewayRouteDao.save(convert(gatewayRoute, GatewayRoute.class));
     publishEvent(assembleRouteDefinition(convert(gatewayRoute, GatewayRouteDto.class)));
-    syncRouteMqService.syncRoute();
+    redisSendMessageService.sendRefreshRoute();
     return convert(result, GatewayRouteDto.class);
   }
   
@@ -130,7 +131,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
       routeDefinitionWriter.delete(Mono.just(id)).subscribe();
       this.publisher.publishEvent(new RefreshRoutesEvent(this));
       gatewayRouteDao.deleteById(id);
-      syncRouteMqService.syncRoute();
+      redisSendMessageService.sendRefreshRoute();
       return Boolean.TRUE;
     } catch (Exception e) {
       LOGGER.error("delete error:", e);
@@ -142,6 +143,7 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
   public List<GatewayRouteDto> refreshRoute() {
     List<GatewayRouteDto> list = findList();
     list.forEach(this::mapRoute);
+    redisSendMessageService.sendRefreshRoute();
     return list;
   }
 
