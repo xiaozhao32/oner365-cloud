@@ -64,14 +64,13 @@ public class AuthController extends BaseController {
   /**
    * 获取左侧菜单
    *
-   * @param menuType 菜单类型
    * @return ArrayList<SysMenuTreeDto>
    */
   @ApiOperation("3.获取菜单权限")
   @ApiOperationSupport(order = 3)
-  @GetMapping("/menu/{menuType}")
-  public ResponseData<ArrayList<SysMenuTreeDto>> findMenuByRoles(@PathVariable String menuType) {
-    return client.findMenuByRoles(menuType);
+  @GetMapping("/menu")
+  public ResponseData<ArrayList<SysMenuTreeDto>> findMenuByRoles() {
+    return client.findMenuByRoles();
   }
 
   /**

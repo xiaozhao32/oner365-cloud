@@ -44,11 +44,10 @@ public interface ISystemAuthClient {
   /**
    * 获取左侧菜单
    *
-   * @param menuType 菜单类型
    * @return ResponseData<ArrayList<SysMenuTreeDto>>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_MENU)
-  ResponseData<ArrayList<SysMenuTreeDto>> findMenuByRoles(@PathVariable(value = "menuType") String menuType);
+  ResponseData<ArrayList<SysMenuTreeDto>> findMenuByRoles();
 
   /**
    * 获取菜单对应权限

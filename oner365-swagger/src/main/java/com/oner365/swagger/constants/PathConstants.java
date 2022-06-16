@@ -28,7 +28,7 @@ public class PathConstants {
   /** 用户认证 */
   public static final String REQUEST_SYSTEM_AUTH_LOGIN = "/auth/login";
   public static final String REQUEST_SYSTEM_AUTH_CAPTCHA_IMAGE = "/auth/captcha";
-  public static final String REQUEST_SYSTEM_AUTH_MENU = "/auth/menu/{menuType}";
+  public static final String REQUEST_SYSTEM_AUTH_MENU = "/auth/menu";
   public static final String REQUEST_SYSTEM_AUTH_MENU_OPERATION = "/auth/menu/operation/{menuId}";
   public static final String REQUEST_SYSTEM_AUTH_LOGOUT = "/auth/logout";
   
