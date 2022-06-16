@@ -41,6 +41,7 @@ public class AuthUser implements Serializable{
     private final List<String> orgList;
 
     private final String userType;
+    private final String menuType;
 
     @SuppressWarnings("unchecked")
     public AuthUser(JSONObject json) {
@@ -50,6 +51,7 @@ public class AuthUser implements Serializable{
         this.tokenType = json.getString("tokenType");
         this.isAdmin = json.getString("isAdmin");
         this.userType = json.getString("userType");
+        this.menuType = json.getString("menuType");
         this.roleList = json.getObject("roles", List.class);
         this.jobList = json.getObject("jobs", List.class);
         this.orgList = json.getObject("orgs", List.class);
@@ -77,6 +79,10 @@ public class AuthUser implements Serializable{
 
     public String getUserType() {
         return userType;
+    }
+    
+    public String getMenuType() {
+      return menuType;
     }
 
     public List<String> getRoleList() {

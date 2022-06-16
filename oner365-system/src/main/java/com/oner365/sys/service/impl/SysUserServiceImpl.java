@@ -38,6 +38,7 @@ import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysJobDao;
 import com.oner365.sys.dao.ISysOrganizationDao;
 import com.oner365.sys.dao.ISysRoleDao;
+import com.oner365.sys.dao.ISysRoleMenuDao;
 import com.oner365.sys.dao.ISysUserDao;
 import com.oner365.sys.dao.ISysUserJobDao;
 import com.oner365.sys.dao.ISysUserOrgDao;
@@ -47,6 +48,7 @@ import com.oner365.sys.dto.SysUserDto;
 import com.oner365.sys.entity.SysJob;
 import com.oner365.sys.entity.SysOrganization;
 import com.oner365.sys.entity.SysRole;
+import com.oner365.sys.entity.SysRoleMenu;
 import com.oner365.sys.entity.SysUser;
 import com.oner365.sys.entity.SysUserJob;
 import com.oner365.sys.entity.SysUserOrg;
@@ -85,6 +87,9 @@ public class SysUserServiceImpl implements ISysUserService {
 
   @Autowired
   private ISysJobDao sysJobDao;
+  
+  @Autowired
+  private ISysRoleMenuDao roleMenuDao;
 
   @Autowired
   private ISysUserRoleDao userRoleDao;
@@ -126,6 +131,11 @@ public class SysUserServiceImpl implements ISysUserService {
       tokenJson.put(SysConstants.ROLES, roles);
       tokenJson.put(SysConstants.JOBS, jobs);
       tokenJson.put(SysConstants.ORGS, orgs);
+      
+      if (!roles.isEmpty()) {
+        tokenJson.put(SysConstants.MENU_TYPE, getMenuType(roles.get(0)));
+      }
+      
       String accessToken = JwtUtils.generateToken(tokenJson.toJSONString(), time, tokenProperties.getSecret());
 
       LoginUserDto result = new LoginUserDto();
@@ -182,6 +192,16 @@ public class SysUserServiceImpl implements ISysUserService {
       }
     } catch (Exception e) {
       LOGGER.error("Error getById:", e);
+    }
+    return null;
+  }
+  
+  private String getMenuType(String roleId) {
+    Criteria<SysRoleMenu> criteria = new Criteria<>();
+    criteria.add(Restrictions.eq(SysConstants.ROLE_ID, roleId));
+    List<SysRoleMenu> list = roleMenuDao.findAll(criteria);
+    if (!list.isEmpty()) {
+      return list.stream().findFirst().get().getMenuTypeId();
     }
     return null;
   }
