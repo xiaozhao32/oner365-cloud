@@ -3,7 +3,7 @@ deploy:
   local:
     location: /Users/zhaoyong/Documents/git/oner365-cloud
     name: /Users/zhaoyong/Documents/deploy/nacos
-    version: 2.0.1
+    version: 2.0.2
     suffix: jar
     active: zy
     projects: 
