@@ -2,6 +2,8 @@ package com.oner365.sys.vo;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 修改密码对象
  * 
@@ -18,11 +20,13 @@ public class ModifyPasswordVo implements Serializable {
     /**
      * 旧密码 oldPassword
      */
+    @NotBlank(message = "旧密码不能为空")
     private String oldPassword;
     
     /**
      * 新密码 password
      */
+    @NotBlank(message = "新密码不能为空")
     private String password;
     
     /**

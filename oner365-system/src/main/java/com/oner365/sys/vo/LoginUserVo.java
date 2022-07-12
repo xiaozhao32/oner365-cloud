@@ -2,6 +2,8 @@ package com.oner365.sys.vo;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 登录对象
  * 
@@ -18,11 +20,13 @@ public class LoginUserVo implements Serializable {
     /**
      * 账号 userName
      */
+    @NotBlank(message = "登录账号不能为空")
     private String userName;
     
     /**
      * 密码 password
      */
+    @NotBlank(message = "登录密码不能为空")
     private String password;
     
     /**

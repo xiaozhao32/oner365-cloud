@@ -2,6 +2,8 @@ package com.oner365.sys.vo;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 重置密码对象
  * 
@@ -18,11 +20,13 @@ public class ResetPasswordVo implements Serializable {
     /**
      * 账号 userId
      */
+    @NotBlank(message = "账号id不能为空")
     private String userId;
     
     /**
      * 密码 password
      */
+    @NotBlank(message = "重置密码不能为空")
     private String password;
     
     /**

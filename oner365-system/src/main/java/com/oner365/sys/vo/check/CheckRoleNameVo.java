@@ -2,6 +2,8 @@ package com.oner365.sys.vo.check;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 检测编码
  * 
@@ -23,6 +25,7 @@ public class CheckRoleNameVo implements Serializable {
     /**
      * 角色名称
      */
+    @NotBlank(message = "角色名称不能为空")
     private String roleName;
     
     /**

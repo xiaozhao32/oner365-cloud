@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -109,7 +110,7 @@ public class SysOrganizationController extends BaseController {
    * @return Boolean
    */
   @PostMapping("/check")
-  public Boolean checkCode(@RequestBody CheckOrgCodeVo checkOrgCodeVo) {
+  public Boolean checkCode(@Validated @RequestBody CheckOrgCodeVo checkOrgCodeVo) {
     if (checkOrgCodeVo != null) {
       return sysOrgService.checkCode(checkOrgCodeVo.getId(), checkOrgCodeVo.getCode(), checkOrgCodeVo.getType());
     }
@@ -168,7 +169,7 @@ public class SysOrganizationController extends BaseController {
    * @return ResponseResult<SysOrganizationDto>
    */
   @PutMapping("/save")
-  public ResponseResult<SysOrganizationDto> save(@RequestBody SysOrganizationVo sysOrganizationVo,
+  public ResponseResult<SysOrganizationDto> save(@Validated @RequestBody SysOrganizationVo sysOrganizationVo,
       @CurrentUser AuthUser authUser) {
     if (sysOrganizationVo != null) {
       sysOrganizationVo.setCreateUser(authUser.getId());

@@ -2,6 +2,8 @@ package com.oner365.sys.vo.check;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 检测编码
  * 
@@ -23,6 +25,7 @@ public class CheckOrgCodeVo implements Serializable {
     /**
      * 编码
      */
+    @NotBlank(message = "机构编码不能为空")
     private String code;
     
     /**

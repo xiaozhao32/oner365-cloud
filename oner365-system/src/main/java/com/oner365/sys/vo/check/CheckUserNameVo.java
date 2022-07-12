@@ -2,6 +2,8 @@ package com.oner365.sys.vo.check;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 检测编码
  * 
@@ -23,6 +25,7 @@ public class CheckUserNameVo implements Serializable {
     /**
      * 用户名称
      */
+    @NotBlank(message = "用户名称不能为空")
     private String userName;
     
     /**

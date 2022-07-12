@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.sys.enums.SysUserSexEnum;
 import com.oner365.sys.enums.SysUserTypeEnum;
@@ -34,11 +36,13 @@ public class SysUserVo implements Serializable {
   /**
    * 账号
    */
+  @NotBlank(message = "账号不能为空")
   private String userName;
 
   /**
    * 密码
    */
+  @NotBlank(message = "账号密码不能为空")
   private String password;
 
   /**
