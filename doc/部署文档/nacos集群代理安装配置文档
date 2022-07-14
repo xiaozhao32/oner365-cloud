@@ -40,12 +40,15 @@ nacos集群代理安装配置文档
 			-- systemctl restart rsyslog
 	-- 启动haproxy
 		-- /usr/local/haproxy -f /usr/local/haproxy/haproxy.cfg
+			-- 启动如果报alert cannot chroot（/var/lib/haproxy）
+				-- mkdir /var/lib/haproxy
 	-- 关闭haproxy
 		-- kill -9 pid
 	-- 查看haproxy运行(账户密码在cfg文件中配置的，端口也是)
 		-- http://192.168.33.44:9999/admin
 			-- admin
 			-- admin
+
 3、程序连接nacos注册
 	-- 原程序不需要修改，只需要修改nacos注册地址到代理服务器ip即可端口8848不变
 	-- 或继续使用hosts配置代理地址名称
