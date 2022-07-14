@@ -3,6 +3,8 @@ package com.oner365.monitor.vo;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.validation.constraints.NotBlank;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.oner365.api.enums.MisfirePolicyEnum;
 import com.oner365.api.enums.TaskStatusEnum;
@@ -26,16 +28,19 @@ public class SysTaskVo implements Serializable {
   /**
    * 任务名称
    */
+  @NotBlank(message = "任务名称不能为空")
   private String taskName;
 
   /**
    * 任务组名
    */
+  @NotBlank(message = "任务组不能为空")
   private String taskGroup;
 
   /**
    * 调用目标字符串
    */
+  @NotBlank(message = "调用目标不能为空")
   private String invokeTarget;
 
   /**

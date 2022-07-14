@@ -3,6 +3,8 @@ package com.oner365.sys.vo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotBlank;
+
 import com.oner365.common.enums.StatusEnum;
 
 /**
@@ -25,16 +27,19 @@ public class SysMenuTypeVo implements Serializable {
   /**
    * 类型名称
    */
+  @NotBlank(message = "菜单类型名称不能为空")
   private String typeName;
 
   /**
    * 类型编码
    */
+  @NotBlank(message = "菜单编码不能为空")
   private String typeCode;
 
   /**
    * 状态
    */
+  @NotBlank(message = "菜单状态不能为空")
   private StatusEnum status;
 
   /**

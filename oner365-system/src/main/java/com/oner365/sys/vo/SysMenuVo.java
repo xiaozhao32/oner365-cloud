@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import com.oner365.common.enums.StatusEnum;
 
 /**
@@ -27,11 +29,13 @@ public class SysMenuVo implements Serializable {
   /**
    * 菜单类别 menu_type_id
    */
+  @NotBlank(message = "菜单类别不能为空")
   private String menuTypeId;
 
   /**
    * 菜单名称 menu_name
    */
+  @NotBlank(message = "菜单名称不能为空")
   private String menuName;
 
   /**

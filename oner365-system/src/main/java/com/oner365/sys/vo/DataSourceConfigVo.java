@@ -3,6 +3,8 @@ package com.oner365.sys.vo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotBlank;
+
 /**
  * 数据源配置 DataSourceConfig
  * 
@@ -23,6 +25,7 @@ public class DataSourceConfigVo implements Serializable {
   /**
    * 连接名
    */
+  @NotBlank(message = "数据源连接名称不能为空")
   private String connectName;
 
   /**

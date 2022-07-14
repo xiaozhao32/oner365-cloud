@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,7 +83,7 @@ public class SysMenuOperationController extends BaseController {
    * @return Boolean
    */
   @PostMapping("/check")
-  public Boolean checkCode(@RequestBody CheckCodeVo checkCodeVo) {
+  public Boolean checkCode(@Validated @RequestBody CheckCodeVo checkCodeVo) {
     if (checkCodeVo != null) {
       return menuOperationService.checkCode(checkCodeVo.getId(), checkCodeVo.getCode());
     }
@@ -96,7 +97,7 @@ public class SysMenuOperationController extends BaseController {
    * @return ResponseResult<SysMenuOperationDto>
    */
   @PutMapping("/save")
-  public ResponseResult<SysMenuOperationDto> save(@RequestBody SysMenuOperationVo sysMenuOperationVo) {
+  public ResponseResult<SysMenuOperationDto> save(@Validated @RequestBody SysMenuOperationVo sysMenuOperationVo) {
     if (sysMenuOperationVo != null) {
       SysMenuOperationDto entity = menuOperationService.save(sysMenuOperationVo);
       return ResponseResult.success(entity);

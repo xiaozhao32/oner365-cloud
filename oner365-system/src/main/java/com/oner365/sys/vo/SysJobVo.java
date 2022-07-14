@@ -3,6 +3,8 @@ package com.oner365.sys.vo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import javax.validation.constraints.NotBlank;
+
 import com.oner365.common.enums.StatusEnum;
 
 /**
@@ -21,6 +23,7 @@ public class SysJobVo implements Serializable {
   /**
    * 职位名称 job_name
    */
+  @NotBlank(message = "职位名称不能为空")
   private String jobName;
 
   /**

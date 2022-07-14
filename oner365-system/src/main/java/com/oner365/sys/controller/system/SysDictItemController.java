@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -91,7 +92,7 @@ public class SysDictItemController extends BaseController {
    * @return Boolean
    */
   @PostMapping("/type/check")
-  public Boolean checkTypeCode(@RequestBody CheckCodeVo checkCodeVo) {
+  public Boolean checkTypeCode(@Validated @RequestBody CheckCodeVo checkCodeVo) {
     if (checkCodeVo != null) {
       return sysDictItemTypeService.checkCode(checkCodeVo.getId(), checkCodeVo.getCode());
     }
@@ -154,7 +155,7 @@ public class SysDictItemController extends BaseController {
    * @return ResponseResult<SysDictItemTypeDto>
    */
   @PutMapping("/type/save")
-  public ResponseResult<SysDictItemTypeDto> saveDictItemType(@RequestBody SysDictItemTypeVo sysDictItemTypeVo) {
+  public ResponseResult<SysDictItemTypeDto> saveDictItemType(@Validated @RequestBody SysDictItemTypeVo sysDictItemTypeVo) {
     if (sysDictItemTypeVo != null) {
       SysDictItemTypeDto entity = sysDictItemTypeService.save(sysDictItemTypeVo);
       return ResponseResult.success(entity);
@@ -219,7 +220,7 @@ public class SysDictItemController extends BaseController {
    * @return Boolean
    */
   @PostMapping("/item/check")
-  public Boolean checkCode(@RequestBody CheckTypeCodeVo checkTypeCodeVo) {
+  public Boolean checkCode(@Validated @RequestBody CheckTypeCodeVo checkTypeCodeVo) {
     if (checkTypeCodeVo != null) {
       return sysDictItemService.checkCode(checkTypeCodeVo.getId(), checkTypeCodeVo.getTypeId(),
           checkTypeCodeVo.getCode());
@@ -246,7 +247,7 @@ public class SysDictItemController extends BaseController {
    * @return ResponseResult<SysDictItemDto>
    */
   @PutMapping("/item/save")
-  public ResponseResult<SysDictItemDto> saveDictItem(@RequestBody SysDictItemVo sysDictItemVo) {
+  public ResponseResult<SysDictItemDto> saveDictItem(@Validated @RequestBody SysDictItemVo sysDictItemVo) {
     if (sysDictItemVo != null) {
       SysDictItemDto entity = sysDictItemService.save(sysDictItemVo);
       return ResponseResult.success(entity);

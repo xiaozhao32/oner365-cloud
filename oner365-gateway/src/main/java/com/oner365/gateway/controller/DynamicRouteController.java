@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -65,7 +66,7 @@ public class DynamicRouteController {
    * @return ResponseData<GatewayRouteDto>
    */
   @PostMapping("/add")
-  public ResponseData<GatewayRouteDto> add(@RequestBody GatewayRouteVo gatewayRouteVo) {
+  public ResponseData<GatewayRouteDto> add(@Validated @RequestBody GatewayRouteVo gatewayRouteVo) {
     if (gatewayRouteVo != null) {
       GatewayRouteDto result = dynamicRouteService.save(gatewayRouteVo);
       return ResponseData.success(result);
@@ -91,7 +92,7 @@ public class DynamicRouteController {
    * @return ResponseData<GatewayRouteDto>
    */
   @PostMapping("/update")
-  public ResponseData<GatewayRouteDto> update(@RequestBody GatewayRouteVo gatewayRouteVo) {
+  public ResponseData<GatewayRouteDto> update(@Validated @RequestBody GatewayRouteVo gatewayRouteVo) {
     if (gatewayRouteVo != null) {
       GatewayRouteDto result = dynamicRouteService.update(gatewayRouteVo);
       return ResponseData.success(result);

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,7 +80,7 @@ public class SysJobController extends BaseController {
    * @return ResponseResult<SysJobDto>
    */
   @PutMapping("/save")
-  public ResponseResult<SysJobDto> save(@RequestBody SysJobVo sysJobVo) {
+  public ResponseResult<SysJobDto> save(@Validated @RequestBody SysJobVo sysJobVo) {
     if (sysJobVo != null) {
       SysJobDto entity = sysJobService.save(sysJobVo);
       return ResponseResult.success(entity);

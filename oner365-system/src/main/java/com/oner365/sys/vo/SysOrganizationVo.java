@@ -5,6 +5,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotBlank;
+
 import com.oner365.common.enums.StatusEnum;
 
 /**
@@ -25,6 +27,7 @@ public class SysOrganizationVo implements Serializable {
   /**
    * 机构名称 org_name
    */
+  @NotBlank(message = "机构名称不能为空")
   private String orgName;
 
   /**
@@ -35,6 +38,7 @@ public class SysOrganizationVo implements Serializable {
   /**
    * 机构代码 org_code
    */
+  @NotBlank(message = "机构代码不能为空")
   private String orgCode;
 
   /**
