@@ -1,15 +1,16 @@
 package com.oner365.api.enums;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
+
+import com.oner365.common.enums.BaseEnum;
 
 /**
  * 枚举 - 计划策略类型
  *
  * @author zhaoyong
  */
-public enum MisfirePolicyEnum implements Serializable {
+public enum MisfirePolicyEnum implements BaseEnum {
 
   /** 默认 */
   DEFAULT("0", "默认"),
@@ -58,6 +59,7 @@ public enum MisfirePolicyEnum implements Serializable {
    *
    * @return name
    */
+  @Override
   public String getName() {
     return name;
   }

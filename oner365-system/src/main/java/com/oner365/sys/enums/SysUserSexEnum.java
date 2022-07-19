@@ -1,15 +1,16 @@
 package com.oner365.sys.enums;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
+
+import com.oner365.common.enums.BaseEnum;
 
 /**
  * 枚举 - 性别状态
  *
  * @author zhaoyong
  */
-public enum SysUserSexEnum implements Serializable {
+public enum SysUserSexEnum implements BaseEnum {
 
     /** 男 */
     MALE("0", "男"),
@@ -51,6 +52,7 @@ public enum SysUserSexEnum implements Serializable {
      *
      * @return name
      */
+    @Override
     public String getName() {
         return name;
     }

@@ -1,6 +1,5 @@
 package com.oner365.common.enums;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -9,7 +8,7 @@ import java.util.Optional;
  *
  * @author zhaoyong
  */
-public enum ExistsEnum implements Serializable {
+public enum ExistsEnum implements BaseEnum {
 
     /** 失败 */
     NO(0, "no"),
@@ -51,6 +50,7 @@ public enum ExistsEnum implements Serializable {
      *
      * @return name
      */
+    @Override
     public String getName() {
         return name;
     }

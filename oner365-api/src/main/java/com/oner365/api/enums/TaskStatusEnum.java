@@ -1,15 +1,16 @@
 package com.oner365.api.enums;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
+
+import com.oner365.common.enums.BaseEnum;
 
 /**
  * 枚举 - 任务状态
  *
  * @author zhaoyong
  */
-public enum TaskStatusEnum implements Serializable {
+public enum TaskStatusEnum implements BaseEnum {
 
   /** 暂停 */
   PAUSE("0", "暂停"),
@@ -51,6 +52,7 @@ public enum TaskStatusEnum implements Serializable {
    *
    * @return name
    */
+  @Override
   public String getName() {
     return name;
   }

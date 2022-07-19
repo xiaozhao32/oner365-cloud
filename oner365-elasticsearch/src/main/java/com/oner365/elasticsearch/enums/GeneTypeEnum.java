@@ -1,15 +1,16 @@
 package com.oner365.elasticsearch.enums;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
+
+import com.oner365.common.enums.BaseEnum;
 
 /**
  * 枚举 - 基因类型
  *
  * @author zhaoyong
  */
-public enum GeneTypeEnum implements Serializable {
+public enum GeneTypeEnum implements BaseEnum {
 
   /** X */
   X("0", "X"),
@@ -53,6 +54,7 @@ public enum GeneTypeEnum implements Serializable {
    *
    * @return name
    */
+  @Override
   public String getName() {
     return name;
   }

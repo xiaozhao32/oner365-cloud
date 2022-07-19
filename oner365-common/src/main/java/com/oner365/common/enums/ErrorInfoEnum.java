@@ -1,6 +1,5 @@
 package com.oner365.common.enums;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -9,7 +8,7 @@ import java.util.Optional;
  *
  * @author zhaoyong
  */
-public enum ErrorInfoEnum implements Serializable {
+public enum ErrorInfoEnum implements BaseEnum {
 
     /** 参数错误 */
     PARAM(2001, "参数错误"),
@@ -71,6 +70,7 @@ public enum ErrorInfoEnum implements Serializable {
      *
      * @return name
      */
+    @Override
     public String getName() {
         return name;
     }

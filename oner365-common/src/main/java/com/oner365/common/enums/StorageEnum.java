@@ -1,13 +1,11 @@
 package com.oner365.common.enums;
 
-import java.io.Serializable;
-
 /**
  * 枚举 - 文件存储方式
  *
  * @author zhaoyong
  */
-public enum StorageEnum implements Serializable {
+public enum StorageEnum implements BaseEnum {
 
     /** 本地上传 */
     LOCAL("本地上传"),
@@ -35,6 +33,7 @@ public enum StorageEnum implements Serializable {
      *
      * @return name
      */
+    @Override
     public String getName() {
         return name;
     }

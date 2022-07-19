@@ -1,15 +1,16 @@
 package com.oner365.sys.enums;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
+
+import com.oner365.common.enums.BaseEnum;
 
 /**
  * 枚举 - 消息状态
  *
  * @author zhaoyong
  */
-public enum MessageStatusEnum implements Serializable {
+public enum MessageStatusEnum implements BaseEnum {
 
     /** 未读 */
     READ_NONE("0", "未读"),
@@ -51,6 +52,7 @@ public enum MessageStatusEnum implements Serializable {
      *
      * @return name
      */
+    @Override
     public String getName() {
         return name;
     }

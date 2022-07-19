@@ -32,6 +32,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oner365.common.enums.BaseEnum;
 import com.oner365.util.ClassesUtil;
 import com.oner365.util.DataUtils;
 import com.oner365.util.DateUtil;
@@ -297,6 +298,12 @@ public class ExportExcelUtils {
                 Cell cell = row.createCell(n);
                 cell.setCellValue(value);
                 cell.setCellStyle(contextStyle);
+              } else if (ClassesUtil.isEnum(type.getTypeName())) {
+                Method m = object.getClass().getMethod(NAME + name);
+                Cell cell = row.createCell(n);
+                BaseEnum baseEnum = (BaseEnum) m.invoke(object);
+                cell.setCellValue(baseEnum.getName());
+                cell.setCellStyle(contextStyle);
               } else {
                 if (!ClassesUtil.isAtomic(type.getClass())) {
                   String value = String.valueOf(invoke(object, titleKey[n]));
@@ -304,8 +311,9 @@ public class ExportExcelUtils {
                   cell.setCellValue(value);
                   cell.setCellStyle(contextStyle);
                 } else {
+                  Method m = object.getClass().getMethod(NAME + name);
                   Cell cell = row.createCell(n);
-                  cell.setCellValue("--");
+                  cell.setCellValue(m.invoke(object).toString());
                   cell.setCellStyle(contextStyle);
                 }
               }

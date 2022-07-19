@@ -1,15 +1,16 @@
 package com.oner365.monitor.enums;
 
-import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Optional;
+
+import com.oner365.common.enums.BaseEnum;
 
 /**
  * 枚举 - Rabbitmq类型
  *
  * @author zhaoyong
  */
-public enum RabbitmqTypeEnum implements Serializable {
+public enum RabbitmqTypeEnum implements BaseEnum {
 
     /** channels */
     CHANNELS("channels", "使用通道"),
@@ -55,6 +56,7 @@ public enum RabbitmqTypeEnum implements Serializable {
      *
      * @return name
      */
+    @Override
     public String getName() {
         return name;
     }
