@@ -159,6 +159,21 @@ public class ClassesUtil {
     }
     return result;
   }
+  
+  /**
+   * 判断是否为枚举类型
+   * 
+   * @param clazz 类
+   * @return boolean
+   */
+  public static <T> boolean isEnum(String className) {
+    try {
+      return Class.forName(className).isEnum();
+    } catch (ClassNotFoundException e) {
+      LOGGER.error("isEnum error ",e);
+    }
+    return false;
+  }
 
   /**
    * 判断是否为基本类型
