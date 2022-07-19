@@ -1,6 +1,8 @@
 
 package com.oner365.monitor.service;
 
+import java.util.List;
+
 import org.quartz.SchedulerException;
 
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
@@ -55,17 +57,15 @@ public interface ISysTaskService extends BaseService {
    *
    * @param id 主键
    * @return 结果
-   * @throws SchedulerException SchedulerException
    */
-  Boolean deleteTask(String id) throws SchedulerException;
+  Boolean deleteTask(String id);
 
   /**
    * 批量删除调度信息
    *
    * @param ids 需要删除的任务ID
-   * @throws SchedulerException SchedulerException
    */
-  Boolean deleteTaskByIds(String[] ids) throws SchedulerException;
+  List<Boolean> deleteTaskByIds(String[] ids);
 
   /**
    * 任务调度状态修改

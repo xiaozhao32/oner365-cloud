@@ -1,7 +1,9 @@
 package com.oner365.monitor.service.impl;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 
@@ -113,25 +115,26 @@ public class SysTaskServiceImpl implements ISysTaskService {
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public Boolean deleteTask(String id) throws SchedulerException {
-    Optional<SysTask> optional = dao.findById(id);
-    if (optional.isPresent()) {
-      SysTask task = optional.get();
-      String taskGroup = task.getTaskGroup();
-      dao.deleteById(id);
-      scheduler.deleteJob(ScheduleUtils.getJobKey(id, taskGroup));
-      return Boolean.TRUE;
+  public Boolean deleteTask(String id) {
+    try {
+      Optional<SysTask> optional = dao.findById(id);
+      if (optional.isPresent()) {
+        SysTask task = optional.get();
+        String taskGroup = task.getTaskGroup();
+        dao.deleteById(id);
+        scheduler.deleteJob(ScheduleUtils.getJobKey(id, taskGroup));
+        return Boolean.TRUE;
+      }
+    } catch (SchedulerException e) {
+      LOGGER.error("deleteTask error", e);
     }
     return Boolean.FALSE;
   }
 
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public Boolean deleteTaskByIds(String[] ids) throws SchedulerException {
-    for (String id : ids) {
-      deleteTask(id);
-    }
-    return Boolean.TRUE;
+  public List<Boolean> deleteTaskByIds(String[] ids) {
+    return Arrays.stream(ids).map(id -> deleteTask(id)).collect(Collectors.toList());
   }
 
   @Override

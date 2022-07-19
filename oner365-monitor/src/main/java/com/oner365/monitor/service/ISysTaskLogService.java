@@ -1,5 +1,7 @@
 package com.oner365.monitor.service;
 
+import java.util.List;
+
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -42,7 +44,7 @@ public interface ISysTaskLogService extends BaseService {
    * @param ids 需要删除的日志ID
    * @return 结果
    */
-  Boolean deleteTaskLogByIds(String[] ids);
+  List<Boolean> deleteTaskLogByIds(String[] ids);
 
   /**
    * 删除任务日志
