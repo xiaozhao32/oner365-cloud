@@ -18,7 +18,7 @@ import com.oner365.websocket.vo.WebSocketMessageVo;
  * @author liutao
  *
  */
-@Service("RedisMessageReceiver")
+@Service
 public class RedisMessageReceiver implements MessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketHandler.class);

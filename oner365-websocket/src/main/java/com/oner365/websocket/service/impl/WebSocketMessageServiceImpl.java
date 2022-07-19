@@ -41,7 +41,7 @@ public class WebSocketMessageServiceImpl implements IWebSocketMessageService {
 
       });
     } else {
-      // TODO 暂时是有个默认的10000组，是全员的聊天，以后组信息可以存入数据库，根据组成员发送消息，暂时就是接到有token信息的请求就发全员
+      // 暂时是有个默认的10000组，是全员的聊天，以后组信息可以存入数据库，根据组成员发送消息，暂时就是接到有token信息的请求就发全员
       WebSocketConstants.userMap.values().stream().forEach(data -> {
         try {
           data.getSession()

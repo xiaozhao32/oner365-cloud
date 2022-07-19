@@ -2,6 +2,8 @@ package com.oner365.websocket.service.impl;
 
 import java.io.Serializable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -17,7 +19,8 @@ import com.oner365.websocket.vo.WebSocketMessageVo;
  */
 @Service
 public class RedisSendMessageServiceImpl implements IRedisSendMessageService {
-
+  
+  private final Logger logger = LoggerFactory.getLogger(IRedisSendMessageService.class);
 
   @Autowired
   public RedisTemplate<String,Serializable> redisTemplate;
@@ -27,7 +30,7 @@ public class RedisSendMessageServiceImpl implements IRedisSendMessageService {
     try {
       redisTemplate.convertAndSend(WebSocketConstants.WEBSOCKET_MESSAGE_QUEUE_NAME, webSocketMessageVo);
     }catch(Exception e) {
-      e.printStackTrace();
+      logger.error("sendMessage error", e);
     }
   }
 

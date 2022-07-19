@@ -15,7 +15,7 @@ import com.oner365.gateway.service.DynamicRouteService;
  * @author liutao
  *
  */
-@Service("RedisMessageReceiver")
+@Service
 public class RedisMessageReceiver implements MessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RedisMessageReceiver.class);
