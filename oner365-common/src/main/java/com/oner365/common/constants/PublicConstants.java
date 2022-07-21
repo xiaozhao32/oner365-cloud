@@ -1,5 +1,8 @@
 package com.oner365.common.constants;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * 公共常量
  *
@@ -78,6 +81,11 @@ public class PublicConstants {
 
   /** 分隔符 */
   public static final String DELIMITER = "/";
+  
+  /**
+   * 枚举集合
+   */
+  public static Map<String, String> initEnumMap = new HashMap<>();
   
   /**
    * Constructor

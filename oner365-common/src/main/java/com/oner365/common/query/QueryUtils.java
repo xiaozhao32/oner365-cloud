@@ -1,5 +1,6 @@
 package com.oner365.common.query;
 
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 
@@ -12,8 +13,7 @@ import org.springframework.data.domain.Sort.Direction;
 
 import com.google.common.base.Joiner;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.common.enums.StorageEnum;
+import com.oner365.common.enums.BaseEnum;
 import com.oner365.common.query.Criterion.Operator;
 import com.oner365.util.DataUtils;
 
@@ -106,13 +106,15 @@ public class QueryUtils {
    * @return 枚举
    */
   private static Object getEnum(String key, String value) {
-    if (PublicConstants.PARAM_STATUS.equals(key)) {
-      // 状态枚举
-      return StatusEnum.valueOf(value);
-    } else if (PublicConstants.PARAM_FILE_STORAGE.equals(key)) {
-      // 文件类型枚举
-      return StorageEnum.valueOf(value);
-    } else {
+    try {
+      Class<?> clazz = Class.forName(PublicConstants.initEnumMap.get(key));
+      if (clazz.isEnum()) {
+        Field f = clazz.getDeclaredField(value);
+        f.setAccessible(true);
+        BaseEnum result = (BaseEnum) f.get(value);
+        return result;
+      }
+    } catch (Exception e) {
       // 当前枚举不支持
       LOGGER.error("Enum not support. key:{} value:{}", key, value);
     }
