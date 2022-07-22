@@ -1,7 +1,6 @@
 package com.oner365.gateway.config;
 
-import javax.annotation.Resource;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.MessageListener;
@@ -20,7 +19,7 @@ import com.oner365.gateway.constants.GatewayConstants;
 @Configuration
 public class RedisListenerConfig {
 
-  @Resource(name = "RedisMessageReceiver")
+  @Autowired
   private MessageListener redisMessageReceiver;
 
   // 初始化监听器

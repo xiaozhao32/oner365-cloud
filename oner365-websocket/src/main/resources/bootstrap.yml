@@ -4,7 +4,7 @@ server:
 
 spring: 
   application:
-    name: uem-websocket
+    name: oner365-websocket
     
   profiles:
     active: dev
@@ -17,7 +17,7 @@ spring:
         
   cloud:
     nacos:
-      server-addr: ${NACOS-HOST:192.168.33.44}:${NACOS-PORT:8848}
+      server-addr: ${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
       discovery:
         namespace: ${spring.profiles.active}
         group: DEFAULT_GROUP
