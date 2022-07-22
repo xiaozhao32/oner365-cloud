@@ -179,6 +179,8 @@ public class PathConstants {
   /** elasticsearch context */
   public static final String CONTEXT_ELASTICSEARCH_INFO_ID = "IElasticsearchInfoClient";
   public static final String CONTEXT_ELASTICSEARCH_SAMPLE_GENE_ID = "IElasticsearchSampleGeneClient";
+  public static final String CONTEXT_ELASTICSEARCH_SAMPLE_LOCATION_ID = "IElasticsearchSampleLocationClient";
+  public static final String CONTEXT_ELASTICSEARCH_APPLICATION_LOG_ID = "IElasticsearchApplicationLogClient";
   
   /** Elasticsearch信息 */
   public static final String REQUEST_ELASTICSEARCH_INFO_INDEX = "/info/index";
@@ -187,6 +189,15 @@ public class PathConstants {
   public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_GET_ID = "/sample/gene/get/{id}";
   public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_SAVE = "/sample/gene/save";
   public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_DELETE = "/sample/gene/delete";
+  /** 坐标信息 */
+  public static final String REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_LIST = "/sample/location/list";
+  public static final String REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_GET_ID = "/sample/location/get/{id}";
+  public static final String REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_SAVE = "/sample/location/save";
+  public static final String REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_DELETE = "/sample/location/delete";
+  /** 应用日志 */
+  public static final String REQUEST_ELASTICSEARCH_APPLICATION_LOG_LIST = "/application/log/list";
+  public static final String REQUEST_ELASTICSEARCH_APPLICATION_LOG_GET_ID = "/application/log/get/{id}";
+  public static final String REQUEST_ELASTICSEARCH_APPLICATION_LOG_DELETE = "/application/log/delete";
   
   /** monitor */
   public static final String FEIGN_CLIENT_MONITOR = "oner365-monitor";

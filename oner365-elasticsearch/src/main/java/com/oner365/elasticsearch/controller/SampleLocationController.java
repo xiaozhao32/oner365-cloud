@@ -29,7 +29,7 @@ import com.oner365.elasticsearch.vo.SampleLocationVo;
  *
  */
 @RestController
-@RequestMapping("/elasticsearch/sample/location")
+@RequestMapping("/sample/location")
 public class SampleLocationController extends BaseController {
 
   @Autowired

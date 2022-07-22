@@ -18,36 +18,36 @@ import com.oner365.common.ResponseResult;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
-import com.oner365.swagger.client.elasticsearch.IElasticsearchSampleGeneClient;
-import com.oner365.swagger.dto.SampleGeneDto;
-import com.oner365.swagger.vo.SampleGeneVo;
+import com.oner365.swagger.client.elasticsearch.IElasticsearchSampleLocationClient;
+import com.oner365.swagger.dto.SampleLocationDto;
+import com.oner365.swagger.vo.SampleLocationVo;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
- * Elasticsearch - 信息
+ * Elasticsearch - 坐标信息
  * 
  * @author zhaoyong
  */
 @RestController
-@Api(tags = "Elasticsearch 基因型信息")
-@RequestMapping("/elasticsearch/sample/gene")
-public class ElasticsearchSampleGeneController extends BaseController {
+@Api(tags = "Elasticsearch 坐标信息")
+@RequestMapping("/elasticsearch/sample/location")
+public class ElasticsearchSampleLocationController extends BaseController {
 
   @Autowired
-  private IElasticsearchSampleGeneClient client;
+  private IElasticsearchSampleLocationClient client;
 
   /**
    * 获取列表
    * 
    * @param data 查询参数
-   * @return ResponseData<PageInfo<SampleGeneDto>>
+   * @return ResponseData<PageInfo<SampleLocationDto>>
    */
   @ApiOperation("1.获取列表")
   @ApiOperationSupport(order = 1)
   @PostMapping("/list")
-  public ResponseData<PageInfo<SampleGeneDto>> list(@RequestBody QueryCriteriaBean data) {
+  public ResponseData<PageInfo<SampleLocationDto>> list(@RequestBody QueryCriteriaBean data) {
     return client.list(data);
   }
 
@@ -55,29 +55,29 @@ public class ElasticsearchSampleGeneController extends BaseController {
    * id查询
    *
    * @param id 编号
-   * @return ResponseData<SampleGeneDto>
+   * @return ResponseData<SampleLocationDto>
    */
   @ApiOperation("2.按id查询")
   @ApiOperationSupport(order = 2)
   @GetMapping("/get/{id}")
-  public ResponseData<SampleGeneDto> get(@PathVariable("id") String id) {
+  public ResponseData<SampleLocationDto> get(@PathVariable("id") String id) {
     return client.get(id);
   }
 
   /**
    * 保存
    *
-   * @param sampleGeneVo 基因对象
-   * @return ResponseData<ResponseResult<SampleGeneDto>>
+   * @param sampleLocationVo 坐标对象
+   * @return ResponseData<ResponseResult<SampleLocationDto>>
    */
   @ApiOperation("3.保存")
   @ApiOperationSupport(order = 3)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<SampleGeneDto>> save(@RequestBody SampleGeneVo sampleGeneVo) {
-    if (sampleGeneVo == null) {
-      return ResponseData.error("基因对象为空!");
+  public ResponseData<ResponseResult<SampleLocationDto>> save(@RequestBody SampleLocationVo sampleLocationVo) {
+    if (sampleLocationVo == null) {
+      return ResponseData.error("坐标对象为空!");
     }
-    return client.save(sampleGeneVo);
+    return client.save(sampleLocationVo);
   }
 
   /**
