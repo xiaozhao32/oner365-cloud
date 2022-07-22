@@ -22,7 +22,7 @@ public interface ISampleGeneElasticsearchService extends BaseService {
    * @param data 查询条件参数
    * @return PageInfo<SampleGeneDto>
    */
-  PageInfo<SampleGeneDto> findList(QueryCriteriaBean data);
+  PageInfo<SampleGeneDto> pageList(QueryCriteriaBean data);
 
   /**
    * 保存集合

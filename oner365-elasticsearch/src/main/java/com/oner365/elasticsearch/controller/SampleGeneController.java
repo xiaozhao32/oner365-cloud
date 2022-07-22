@@ -47,8 +47,8 @@ public class SampleGeneController extends BaseController {
    * @return Page<SampleGeneDto>
    */
   @PostMapping("/list")
-  public PageInfo<SampleGeneDto> list(@RequestBody QueryCriteriaBean data) {
-    return service.findList(data);
+  public PageInfo<SampleGeneDto> pageList(@RequestBody QueryCriteriaBean data) {
+    return service.pageList(data);
   }
 
   /**
