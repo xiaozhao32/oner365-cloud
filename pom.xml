@@ -42,15 +42,21 @@
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+		<org.springframework.integration.version>5.5.14</org.springframework.integration.version>
 		<org.springframework.security.version>5.7.2</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.3</org.springframework.cloud.version>
 		<org.springframework.boot.version>2.7.1</org.springframework.boot.version>
-		<org.springframework.version>5.3.21</org.springframework.version>
+		<org.springframework.version>5.3.22</org.springframework.version>
 
+		<org.apache.rocketmq.boot.starter.version>2.2.1</org.apache.rocketmq.boot.starter.version>
+		<org.apache.shardingsphere.version>4.0.0-RC1</org.apache.shardingsphere.version>
 		<org.apache.logging.log4j.version>2.17.2</org.apache.logging.log4j.version>
+		<org.apache.httpcore-nio.version>4.4.15</org.apache.httpcore-nio.version>
+		<org.apache.httpclient.version>4.5.13</org.apache.httpclient.version>
 		<org.apache.zookeeper.version>3.8.0</org.apache.zookeeper.version>
 		<org.apache.rocketmq.version>4.9.3</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.64</org.apache.tomcat.version>
+		<org.apache.pdfbox.version>2.0.25</org.apache.pdfbox.version>
 		<org.apache.hadoop.version>3.3.2</org.apache.hadoop.version>
 		<org.apache.pulsar.version>2.9.2</org.apache.pulsar.version>
 		<org.apache.dubbo.version>3.0.9</org.apache.dubbo.version>
@@ -58,15 +64,28 @@
 		<org.apache.poi.version>5.2.2</org.apache.poi.version>
 
 		<org.hibernate.validator.version>6.2.3.Final</org.hibernate.validator.version>
-		<org.hibernate.version>5.6.9.Final</org.hibernate.version>
+		<org.hibernate.version>5.6.10.Final</org.hibernate.version>
 		
 		<org.mybatis.spring.boot.version>2.2.2</org.mybatis.spring.boot.version>
-		<org.elasticsearch.version>7.17.3</org.elasticsearch.version>
+		<org.elasticsearch.version>7.17.4</org.elasticsearch.version>
 		<org.eclipse.jetty.version>11.0.6</org.eclipse.jetty.version>
 		<org.projectlombok.version>1.18.22</org.projectlombok.version>
 		<org.junit.platform.version>1.7.2</org.junit.platform.version>
+		<org.xerial.snappy.version>1.1.8.1</org.xerial.snappy.version>
+		<org.mortbay.jetty.version>6.1.26</org.mortbay.jetty.version>
+		<org.hdrhistogram.version>2.1.12</org.hdrhistogram.version>
+		<org.bouncycastle.version>1.70</org.bouncycastle.version>
 		<org.javassist.version>3.29.0-GA</org.javassist.version>
+		<org.quartz.version>2.3.2</org.quartz.version>
+		<org.slf4j.version>1.7.36</org.slf4j.version>
 		<org.yaml.version>1.30</org.yaml.version>
+		<org.lz4.version>1.8.0</org.lz4.version>
+		
+		<org.postgresql.version>42.3.6</org.postgresql.version>
+		<org.neo4j.version>3.2.32</org.neo4j.version>
+		<com.influxdb.version>3.1.0</com.influxdb.version>
+		<com.oracle.version>11.2.0.3</com.oracle.version>
+		<com.mysql.version>8.0.29</com.mysql.version>
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
 		<com.alibaba.nacos.version>2.1.0</com.alibaba.nacos.version>
@@ -77,24 +96,31 @@
 		<com.fasterxml.jackson.version>2.13.3</com.fasterxml.jackson.version>
 		<com.google.code.gson.version>2.9.0</com.google.code.gson.version>
 		<com.google.guava.version>31.1-jre</com.google.guava.version>
+		<com.google.protobuf.version>3.19.4</com.google.protobuf.version>
 		<com.github.xiaoymin.version>3.0.3</com.github.xiaoymin.version>
 		<com.github.tobato.version>1.27.2</com.github.tobato.version>
-		<com.vladmihalcea.version>2.16.2</com.vladmihalcea.version>
+		<com.github.oshi.version>6.1.6</com.github.oshi.version>
+		<com.squareup.okhttp3.version>4.9.3</com.squareup.okhttp3.version>
+		<com.squareup.okio.version>2.10.0</com.squareup.okio.version>
+		<com.vladmihalcea.version>2.16.3</com.vladmihalcea.version>
 		<com.rabbitmq.version>5.14.2</com.rabbitmq.version>
+		<com.belerweb.version>2.5.1</com.belerweb.version>
 		
 		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
-		<io.projectreactor.netty.version>1.0.18</io.projectreactor.netty.version>
+		<io.projectreactor.netty.version>1.0.21</io.projectreactor.netty.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
 		<io.undertow.version>2.2.16.Final</io.undertow.version>
 		<io.springfox.version>3.0.0</io.springfox.version>
-		<io.netty.version>4.1.78.Final</io.netty.version>
-		<io.minio.version>8.4.1</io.minio.version>
+		<io.netty.version>4.1.79.Final</io.netty.version>
+		<io.minio.version>8.4.3</io.minio.version>
 		
 		<net.logstash.logback.version>7.2</net.logstash.logback.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
 		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
 		<de.codecentric.version>2.6.7</de.codecentric.version>
 		<redis.clients.version>4.2.3</redis.clients.version>
+		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>
+		<joda.time.version>2.10.14</joda.time.version>
 		
  		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
 	</properties>
@@ -279,14 +305,19 @@
 			    <version>${org.apache.logging.log4j.version}</version>
 			</dependency>
 			<dependency>
+			    <groupId>org.slf4j</groupId>
+			    <artifactId>slf4j-api</artifactId>
+			    <version>${org.slf4j.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpclient</artifactId>
-				<version>4.5.13</version>
+				<version>${org.apache.httpclient.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpcore-nio</artifactId>
-				<version>4.4.15</version>
+				<version>${org.apache.httpcore-nio.version}</version>
 			</dependency>
 
 			<!-- poi -->
@@ -310,7 +341,7 @@
 			<dependency>
 				<groupId>org.apache.pdfbox</groupId>
 				<artifactId>pdfbox</artifactId>
-				<version>2.0.25</version>
+				<version>${org.apache.pdfbox.version}</version>
 			</dependency>
 
 			<!-- zookeeper -->
@@ -318,6 +349,13 @@
 				<groupId>org.apache.zookeeper</groupId>
 				<artifactId>zookeeper</artifactId>
 				<version>${org.apache.zookeeper.version}</version>
+			</dependency>
+			
+			<!-- shardingsphere -->
+			<dependency>
+				<groupId>org.apache.shardingsphere</groupId>
+				<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
+				<version>${org.apache.shardingsphere.version}</version>
 			</dependency>
 
 			<!-- lombok -->
@@ -339,33 +377,45 @@
 			<dependency>
 				<groupId>org.hdrhistogram</groupId>
 				<artifactId>HdrHistogram</artifactId>
-				<version>2.1.12</version>
+				<version>${org.hdrhistogram.version}</version>
 			</dependency>
 
 			<!-- snappy-java -->
 			<dependency>
 				<groupId>org.xerial.snappy</groupId>
 				<artifactId>snappy-java</artifactId>
-				<version>1.1.8.1</version>
+				<version>${org.xerial.snappy.version}</version>
 			</dependency>
 			
 			<!-- lz4 -->
 			<dependency>
 			    <groupId>org.lz4</groupId>
 			    <artifactId>lz4-java</artifactId>
-			    <version>1.8.0</version>
+			    <version>${org.lz4.version}</version>
 			</dependency>
 			
 			<!-- bouncycastle -->
 			<dependency>
 			    <groupId>org.bouncycastle</groupId>
 			    <artifactId>bcpkix-jdk15on</artifactId>
-			    <version>1.69</version>
+			    <version>${org.bouncycastle.version}</version>
 			</dependency>
 			<dependency>
 			    <groupId>org.bouncycastle</groupId>
 			    <artifactId>bcprov-jdk15on</artifactId>
-			    <version>1.69</version>
+			    <version>${org.bouncycastle.version}</version>
+			</dependency>
+			
+			<!-- mortbay jetty -->
+			<dependency>
+			    <groupId>org.mortbay.jetty</groupId>
+			    <artifactId>jetty-util</artifactId>
+			    <version>${org.mortbay.jetty.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>javax.servlet.jsp</groupId>
+			    <artifactId>javax.servlet.jsp-api</artifactId>
+			    <version>${javax.servlet.jsp.version}</version>
 			</dependency>
 
 			<!-- jsonwebtoken -->
@@ -398,21 +448,21 @@
 			<dependency>
 				<groupId>com.google.protobuf</groupId>
 				<artifactId>protobuf-java</artifactId>
-				<version>3.19.4</version>
+				<version>${com.google.protobuf.version}</version>
 			</dependency>
 
 			<!-- pinyin -->
 			<dependency>
 				<groupId>com.belerweb</groupId>
 				<artifactId>pinyin4j</artifactId>
-				<version>2.5.1</version>
+				<version>${com.belerweb.version}</version>
 			</dependency>
 
 			<!-- 获取系统信息 -->
 			<dependency>
 				<groupId>com.github.oshi</groupId>
 				<artifactId>oshi-core</artifactId>
-				<version>6.1.6</version>
+				<version>${com.github.oshi.version}</version>
 			</dependency>
 			
 			<!-- fastdfs -->
@@ -504,28 +554,35 @@
 			<dependency>
 				<groupId>mysql</groupId>
 				<artifactId>mysql-connector-java</artifactId>
-				<version>8.0.29</version>
+				<version>${com.mysql.version}</version>
 			</dependency>
 
 			<!-- PostgreSQL -->
 			<dependency>
 				<groupId>org.postgresql</groupId>
 				<artifactId>postgresql</artifactId>
-				<version>42.3.6</version>
+				<version>${org.postgresql.version}</version>
+			</dependency>
+			
+			<!-- neo4j -->
+			<dependency>
+			    <groupId>org.neo4j</groupId>
+			    <artifactId>neo4j-ogm-http-driver</artifactId>
+			    <version>${org.neo4j.version}</version>
 			</dependency>
 
 			<!-- Oracle -->
 			<dependency>
 				<groupId>com.oracle</groupId>
 				<artifactId>ojdbc6</artifactId>
-				<version>11.2.0.3</version>
+				<version>${com.oracle.version}</version>
 			</dependency>
 			
 			<!-- influxdb -->
 			<dependency>
 			  	<groupId>com.influxdb</groupId>
 			  	<artifactId>influxdb-client-java</artifactId>
-			  	<version>3.1.0</version>
+			  	<version>${com.influxdb.version}</version>
 			</dependency>
 
 			<!-- junit-platform -->
@@ -646,7 +703,7 @@
 			<dependency>
 				<groupId>joda-time</groupId>
 				<artifactId>joda-time</artifactId>
-				<version>2.10.14</version>
+				<version>${joda.time.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.vladmihalcea</groupId>
@@ -658,12 +715,12 @@
 			<dependency>
 				<groupId>com.squareup.okhttp3</groupId>
     			<artifactId>okhttp</artifactId>
-    			<version>4.9.3</version>
+    			<version>${com.squareup.okhttp3.version}</version>
     		</dependency>
 			<dependency>
 			    <groupId>com.squareup.okio</groupId>
 			    <artifactId>okio</artifactId>
-			    <version>2.10.0</version>
+			    <version>${com.squareup.okio.version}</version>
 			</dependency>
 
 			<!-- netty -->
@@ -861,7 +918,7 @@
 			<dependency>
 				<groupId>org.apache.rocketmq</groupId>
 				<artifactId>rocketmq-spring-boot-starter</artifactId>
-				<version>2.2.1</version>
+				<version>${org.apache.rocketmq.boot.starter.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.rocketmq</groupId>
