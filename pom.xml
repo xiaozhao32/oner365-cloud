@@ -115,6 +115,7 @@
 		<io.minio.version>8.4.3</io.minio.version>
 		
 		<net.logstash.logback.version>7.2</net.logstash.logback.version>
+		<net.java.dev.jna.version>5.11.0</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
 		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
 		<de.codecentric.version>2.6.7</de.codecentric.version>
@@ -402,7 +403,17 @@
 			</dependency>
 			<dependency>
 			    <groupId>org.bouncycastle</groupId>
+			    <artifactId>bcutil-jdk15on</artifactId>
+			    <version>${org.bouncycastle.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.bouncycastle</groupId>
 			    <artifactId>bcprov-jdk15on</artifactId>
+			    <version>${org.bouncycastle.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.bouncycastle</groupId>
+			    <artifactId>bcprov-ext-jdk15on</artifactId>
 			    <version>${org.bouncycastle.version}</version>
 			</dependency>
 			
@@ -534,6 +545,11 @@
 				<groupId>net.sf.jopt-simple</groupId>
 				<artifactId>jopt-simple</artifactId>
 				<version>${net.sf.jopt.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>net.java.dev.jna</groupId>
+			    <artifactId>jna</artifactId>
+			    <version>${net.java.dev.jna.version}</version>
 			</dependency>
 
 			<!-- redis -->

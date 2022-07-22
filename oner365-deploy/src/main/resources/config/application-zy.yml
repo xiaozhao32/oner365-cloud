@@ -21,6 +21,7 @@ deploy:
       - oner365-rocketmq
       - oner365-swagger
       - oner365-system
+      - oner365-websocket
     libs: 
       - oner365-common
       - oner365-api

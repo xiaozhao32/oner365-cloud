@@ -7,16 +7,21 @@ deploy:
     suffix: jar
     active: lt
     projects: 
+      - oner365-datasource
       - oner365-elasticsearch
       - oner365-files
       - oner365-gateway
       - oner365-generator
       - oner365-hadoop
+      - oner365-influx
       - oner365-kafka
       - oner365-monitor
+      - oner365-neo4j
+      - oner365-pulsar
       - oner365-rocketmq
       - oner365-swagger
       - oner365-system
+      - oner365-websocket
     libs: 
       - oner365-common
       - oner365-api
