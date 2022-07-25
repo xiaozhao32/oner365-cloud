@@ -45,8 +45,9 @@
 		<org.springframework.integration.version>5.5.14</org.springframework.integration.version>
 		<org.springframework.security.version>5.7.2</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.3</org.springframework.cloud.version>
-		<org.springframework.boot.version>2.7.1</org.springframework.boot.version>
+		<org.springframework.boot.version>2.7.2</org.springframework.boot.version>
 		<org.springframework.version>5.3.22</org.springframework.version>
+		<org.springframework.kafka.version>2.8.8</org.springframework.kafka.version>
 
 		<org.apache.rocketmq.boot.starter.version>2.2.1</org.apache.rocketmq.boot.starter.version>
 		<org.apache.shardingsphere.version>4.0.0-RC1</org.apache.shardingsphere.version>
@@ -55,12 +56,12 @@
 		<org.apache.httpclient.version>4.5.13</org.apache.httpclient.version>
 		<org.apache.zookeeper.version>3.8.0</org.apache.zookeeper.version>
 		<org.apache.rocketmq.version>4.9.3</org.apache.rocketmq.version>
-		<org.apache.tomcat.version>9.0.64</org.apache.tomcat.version>
+		<org.apache.tomcat.version>9.0.65</org.apache.tomcat.version>
 		<org.apache.pdfbox.version>2.0.25</org.apache.pdfbox.version>
 		<org.apache.hadoop.version>3.3.2</org.apache.hadoop.version>
 		<org.apache.pulsar.version>2.9.2</org.apache.pulsar.version>
 		<org.apache.dubbo.version>3.0.9</org.apache.dubbo.version>
-		<org.apache.kafka.version>2.8.1</org.apache.kafka.version>
+		<org.apache.kafka.version>3.2.0</org.apache.kafka.version>
 		<org.apache.poi.version>5.2.2</org.apache.poi.version>
 
 		<org.hibernate.validator.version>6.2.3.Final</org.hibernate.validator.version>
@@ -103,13 +104,13 @@
 		<com.squareup.okhttp3.version>4.9.3</com.squareup.okhttp3.version>
 		<com.squareup.okio.version>2.10.0</com.squareup.okio.version>
 		<com.vladmihalcea.version>2.16.3</com.vladmihalcea.version>
-		<com.rabbitmq.version>5.14.2</com.rabbitmq.version>
+		<com.rabbitmq.version>5.15.0</com.rabbitmq.version>
 		<com.belerweb.version>2.5.1</com.belerweb.version>
 		
 		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
 		<io.projectreactor.netty.version>1.0.21</io.projectreactor.netty.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
-		<io.undertow.version>2.2.16.Final</io.undertow.version>
+		<io.undertow.version>2.2.18.Final</io.undertow.version>
 		<io.springfox.version>3.0.0</io.springfox.version>
 		<io.netty.version>4.1.79.Final</io.netty.version>
 		<io.minio.version>8.4.3</io.minio.version>
@@ -910,7 +911,7 @@
 			<dependency>
 				<groupId>org.springframework.kafka</groupId>
 				<artifactId>spring-kafka</artifactId>
-				<version>${org.apache.kafka.version}</version>
+				<version>${org.springframework.kafka.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.kafka</groupId>
