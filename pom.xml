@@ -83,8 +83,8 @@
 		<org.lz4.version>1.8.0</org.lz4.version>
 		
 		<org.postgresql.version>42.3.6</org.postgresql.version>
-		<org.neo4j.version>3.2.32</org.neo4j.version>
-		<com.influxdb.version>3.1.0</com.influxdb.version>
+		<org.neo4j.version>3.2.36</org.neo4j.version>
+		<com.influxdb.version>6.3.0</com.influxdb.version>
 		<com.oracle.version>11.2.0.3</com.oracle.version>
 		<com.mysql.version>8.0.29</com.mysql.version>
 
