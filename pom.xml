@@ -68,11 +68,11 @@
 		<org.hibernate.version>5.6.10.Final</org.hibernate.version>
 		
 		<org.mybatis.spring.boot.version>2.2.2</org.mybatis.spring.boot.version>
-		<org.elasticsearch.version>7.17.4</org.elasticsearch.version>
-		<org.eclipse.jetty.version>11.0.6</org.eclipse.jetty.version>
-		<org.projectlombok.version>1.18.22</org.projectlombok.version>
+		<org.elasticsearch.version>7.17.5</org.elasticsearch.version>
+		<org.eclipse.jetty.version>11.0.11</org.eclipse.jetty.version>
+		<org.projectlombok.version>1.18.24</org.projectlombok.version>
 		<org.junit.platform.version>1.7.2</org.junit.platform.version>
-		<org.xerial.snappy.version>1.1.8.1</org.xerial.snappy.version>
+		<org.xerial.snappy.version>1.1.8.4</org.xerial.snappy.version>
 		<org.mortbay.jetty.version>6.1.26</org.mortbay.jetty.version>
 		<org.hdrhistogram.version>2.1.12</org.hdrhistogram.version>
 		<org.bouncycastle.version>1.70</org.bouncycastle.version>
@@ -119,12 +119,12 @@
 		<net.java.dev.jna.version>5.11.0</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
 		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
-		<de.codecentric.version>2.6.7</de.codecentric.version>
+		<de.codecentric.version>2.7.3</de.codecentric.version>
 		<redis.clients.version>4.2.3</redis.clients.version>
 		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>
 		<joda.time.version>2.10.14</joda.time.version>
 		
- 		<maven-jar-plugin.version>3.1.1</maven-jar-plugin.version>
+ 		<maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
 	</properties>
 
 	<dependencyManagement>
