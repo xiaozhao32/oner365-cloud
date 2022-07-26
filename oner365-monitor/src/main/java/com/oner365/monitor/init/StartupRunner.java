@@ -4,10 +4,13 @@ import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import com.oner365.api.constants.ScheduleTaskConstants;
 import com.oner365.api.enums.MisfirePolicyEnum;
 import com.oner365.api.enums.TaskStatusEnum;
 import com.oner365.common.constants.PublicConstants;
@@ -28,6 +31,9 @@ import com.oner365.monitor.enums.RabbitmqTypeEnum;
 public class StartupRunner implements ApplicationRunner {
   
   private final Logger logger = LoggerFactory.getLogger(StartupRunner.class);
+  
+  @Autowired
+  private RabbitAdmin rabbitAdmin;
 
   @Override
   public void run(ApplicationArguments args) {
@@ -57,6 +63,16 @@ public class StartupRunner implements ApplicationRunner {
   public void destroy() {
     PublicConstants.initEnumMap.clear();
     logger.info("Destroy Oner365 config.");
+    
+    rabbitAdmin.deleteQueue(ScheduleTaskConstants.SAVE_TASK_LOG_QUEUE_NAME);
+    rabbitAdmin.deleteQueue(ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_NAME);
+    rabbitAdmin.deleteQueue(ScheduleTaskConstants.TASK_UPDATE_STATUS_QUEUE_NAME);
+    logger.info("Destroy Rabbitmq queue.");
+
+    rabbitAdmin.deleteExchange(ScheduleTaskConstants.SAVE_TASK_LOG_QUEUE_TYPE);
+    rabbitAdmin.deleteExchange(ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_TYPE);
+    rabbitAdmin.deleteExchange(ScheduleTaskConstants.TASK_UPDATE_STATUS_QUEUE_TYPE);
+    logger.info("Destroy Rabbitmq exchange.");
   }
 
 }

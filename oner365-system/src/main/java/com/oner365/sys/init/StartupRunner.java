@@ -4,6 +4,8 @@ import javax.annotation.PreDestroy;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.core.RabbitAdmin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -14,6 +16,7 @@ import com.oner365.common.enums.ExistsEnum;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.common.enums.StorageEnum;
+import com.oner365.sys.constants.SysMessageConstants;
 import com.oner365.sys.enums.MessageStatusEnum;
 import com.oner365.sys.enums.MessageTypeEnum;
 import com.oner365.sys.enums.SysUserSexEnum;
@@ -29,6 +32,9 @@ import com.oner365.sys.enums.SysUserTypeEnum;
 public class StartupRunner implements ApplicationRunner {
   
   private final Logger logger = LoggerFactory.getLogger(StartupRunner.class);
+  
+  @Autowired
+  private RabbitAdmin rabbitAdmin; 
 
   @Override
   public void run(ApplicationArguments args) {
@@ -59,6 +65,12 @@ public class StartupRunner implements ApplicationRunner {
   public void destroy() {
     PublicConstants.initEnumMap.clear();
     logger.info("Destroy Oner365 config.");
+    
+    rabbitAdmin.deleteQueue(SysMessageConstants.QUEUE_NAME);
+    logger.info("Destroy Rabbitmq queue.");
+
+    rabbitAdmin.deleteExchange(SysMessageConstants.QUEUE_TYPE);
+    logger.info("Destroy Rabbitmq exchange.");
   }
 
 }
