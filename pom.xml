@@ -60,7 +60,7 @@
 		<org.apache.pdfbox.version>2.0.25</org.apache.pdfbox.version>
 		<org.apache.hadoop.version>3.3.2</org.apache.hadoop.version>
 		<org.apache.pulsar.version>2.9.2</org.apache.pulsar.version>
-		<org.apache.dubbo.version>3.0.9</org.apache.dubbo.version>
+		<org.apache.dubbo.version>3.0.10</org.apache.dubbo.version>
 		<org.apache.kafka.version>3.2.0</org.apache.kafka.version>
 		<org.apache.poi.version>5.2.2</org.apache.poi.version>
 
