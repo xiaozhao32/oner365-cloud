@@ -20,7 +20,7 @@ import com.oner365.swagger.vo.GatewayRouteVo;
 
 /**
  * 网关服务 - 路由管理
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -29,7 +29,7 @@ public interface IGatewayRouteClient {
 
   /**
    * 路由列表
-   * 
+   *
    * @param data 查询参数
    * @return ResponseData<String>
    */
@@ -69,7 +69,7 @@ public interface IGatewayRouteClient {
    * @return ResponseData
    */
   @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_UPDATE)
-  public ResponseData<GatewayRouteDto> update(@RequestBody GatewayRouteVo gatewayRouteVo);
+  ResponseData<GatewayRouteDto> update(@RequestBody GatewayRouteVo gatewayRouteVo);
 
   /**
    * 更新路由状态
@@ -81,7 +81,7 @@ public interface IGatewayRouteClient {
   @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_STATUS)
   ResponseData<Boolean> updateRouteStatus(@PathVariable(value = "id") String id,
       @PathVariable(value = "status") StatusEnum status);
-  
+
   /**
    * 删除路由
    *
@@ -89,5 +89,5 @@ public interface IGatewayRouteClient {
    * @return ResponseData
    */
   @DeleteMapping(PathConstants.REQUEST_GATEWAY_ROUTE_DELETE)
-  public ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
 }

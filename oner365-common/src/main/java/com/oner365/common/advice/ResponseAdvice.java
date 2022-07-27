@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -19,9 +18,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.oner365.common.ResponseData;
 
+import javax.annotation.Resource;
+
 /**
  * Controller Advice
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -30,11 +31,11 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ResponseAdvice.class);
 
-  @Autowired
+  @Resource
   private ObjectMapper objectMapper;
 
   @Override
-  public boolean supports(MethodParameter returnType, @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
+  public boolean supports(@NonNull MethodParameter returnType, @NonNull Class<? extends HttpMessageConverter<?>> converterType) {
     return true;
   }
 

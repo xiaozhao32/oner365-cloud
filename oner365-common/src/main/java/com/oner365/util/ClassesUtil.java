@@ -159,11 +159,11 @@ public class ClassesUtil {
     }
     return result;
   }
-  
+
   /**
    * 判断是否为枚举类型
-   * 
-   * @param clazz 类
+   *
+   * @param className 类
    * @return boolean
    */
   public static <T> boolean isEnum(String className) {

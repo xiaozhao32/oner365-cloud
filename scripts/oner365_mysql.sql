@@ -675,8 +675,8 @@ CREATE TABLE `nt_sys_task` (
 -- ----------------------------
 BEGIN;
 INSERT INTO `nt_sys_task` VALUES ('8a818b3774bef2910174bef387ec0000', 'DEFAULT', 'test', '1', NULL, '0/10 * * * * ?', 'systemTask.taskNoParams()', 2, '', 1, 0, NULL, 'liutao', NULL);
-INSERT INTO `nt_sys_task` VALUES ('ff80808175cfe8900175d012ecc00002', 'DEFAULT', '删除3天日志', '1', '{\"taskId\": \"ff80808175cfe8900175d012ecc00002\", \"taskParam\": {}, \"concurrent\": null, \"taskServerName\": null}', '0 0 1 * * ?', 'systemTask.taskDeleteLog(3)', 3, NULL, NULL, 0, NULL, 'admin', NULL);
-INSERT INTO `nt_sys_task` VALUES ('ff80808175d015c90175d05958e50001', 'DEFAULT', '111', '1', '{\"taskId\": \"ff80808175d015c90175d05958e50001\", \"taskParam\": {}, \"concurrent\": \"1\", \"taskServerName\": \"oner365-monitor\"}', '0/30 * * * * ?', 'systemTask.taskParam(\'6666\')', 3, '321', 0, 0, NULL, 'admin', NULL);
+INSERT INTO `nt_sys_task` VALUES ('ff80808175cfe8900175d012ecc00002', 'DEFAULT', '删除3天日志', '1', '{"taskId": "ff80808175cfe8900175d012ecc00002", "taskParam": {}, "concurrent": null, "taskServerName": null}', '0 0 1 * * ?', 'systemTask.taskDeleteLog(3)', 3, NULL, NULL, 0, NULL, 'admin', NULL);
+INSERT INTO `nt_sys_task` VALUES ('ff80808175d015c90175d05958e50001', 'DEFAULT', '111', '1', '{"taskId": "ff80808175d015c90175d05958e50001", "taskParam": {}, "concurrent": "1", "taskServerName": "oner365-monitor"}', '0/30 * * * * ?', 'systemTask.taskParam(\'6666\')', 3, '321', 0, 0, NULL, 'admin', NULL);
 COMMIT;
 
 -- ----------------------------

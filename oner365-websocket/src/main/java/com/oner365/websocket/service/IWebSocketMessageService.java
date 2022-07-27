@@ -12,7 +12,7 @@ public interface IWebSocketMessageService {
     /**
      * 发送消息到websocket
      *
-     * @param WebSocketMessageVo 对象
+     * @param webSocketMessageVo 对象
      */
     void sendMessage(WebSocketMessageVo webSocketMessageVo);
 }

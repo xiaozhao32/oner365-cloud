@@ -12,7 +12,7 @@ import com.oner365.pulsar.service.PulsarService;
 
 /**
  * pulsar controller
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -25,8 +25,8 @@ public class PulsarController extends BaseController {
 
   /**
    * 测试发送
-   * 
-   * @param data 参数
+   *
+   * @param message 参数
    * @return ResponseData<String>
    */
   @GetMapping("/send")

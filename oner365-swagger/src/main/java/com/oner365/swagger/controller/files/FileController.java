@@ -34,7 +34,7 @@ import io.swagger.annotations.ApiParam;
 
 /**
  * 文件中心 - 文件管理
- * 
+ *
  * @author zhaoyong
  */
 @RestController
@@ -47,7 +47,7 @@ public class FileController extends BaseController {
 
   /**
    * 文件上传
-   * 
+   *
    * @param file    MultipartFile
    * @param dictory 目录
    * @return ResponseResult<String>
@@ -64,11 +64,12 @@ public class FileController extends BaseController {
     }
     return client.upload(file, targetDictory);
   }
-  
+
   /**
    * 文件下载
-   * @param fileUrl
-   * @return
+   *
+   * @param fileUrl 地址
+   * @param response response
    */
   @ApiOperation("2.文件下载")
   @ApiOperationSupport(order = 2)
@@ -79,7 +80,7 @@ public class FileController extends BaseController {
     if (isFilename) {
       filename = StringUtils.substringAfterLast(fileUrl, PublicConstants.DELIMITER);
     }
-    
+
     // 写出
     try (ServletOutputStream outputStream = response.getOutputStream()) {
       byte[] data = client.download(fileUrl);

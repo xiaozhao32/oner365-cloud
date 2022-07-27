@@ -1,11 +1,12 @@
 package com.oner365.sys.rabbitmq.impl;
 
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oner365.sys.constants.SysMessageConstants;
 import com.oner365.sys.rabbitmq.ISendService;
+
+import javax.annotation.Resource;
 
 /**
  * 消息发送服务实现类
@@ -13,10 +14,10 @@ import com.oner365.sys.rabbitmq.ISendService;
  */
 @Service
 public class SendServiceImpl implements ISendService {
-    
-    @Autowired
+
+    @Resource
     private AmqpTemplate rabbitTemplate;
-    
+
     /**
      * 对应消息监听 @Exchange（ value = "" key = "")
      */
@@ -24,5 +25,5 @@ public class SendServiceImpl implements ISendService {
     public void send(String message) {
         rabbitTemplate.convertAndSend(SysMessageConstants.QUEUE_TYPE, SysMessageConstants.QUEUE_KEY, message);
     }
-    
+
 }

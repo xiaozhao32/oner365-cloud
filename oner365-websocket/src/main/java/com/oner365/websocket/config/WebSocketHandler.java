@@ -40,10 +40,11 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
 
   @Autowired
   private RedisCache redisCache;
+
   /**
    * webSocket连接创建后调用
-   * 
-   * @throws Exception
+   *
+   * @throws Exception 异常
    */
   @Override
   public void afterConnectionEstablished(WebSocketSession session) throws Exception {
@@ -56,14 +57,15 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
 
   /**
    * 接收到消息会调用
+   *
    */
   @Override
   public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
     if (message instanceof TextMessage) {
-      
+
       ClientSendVo clientSendVo = JSON.toJavaObject(JSON.parseObject(message.getPayload().toString()),
           ClientSendVo.class);
-     
+
       switch (clientSendVo.getMessageType()) {
       case DEFAULT:
         redisSendMessageService.sendMessage(new WebSocketMessageVo(session.getAttributes().get(WebSocketInterceptor.USER).toString(),session.getAttributes().get(WebSocketInterceptor.TOKEN).toString(), clientSendVo.getMessage()));
@@ -135,7 +137,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
 
   /**
    * 默认链接
-   * 
+   *
    */
   public void defaultLink(String token, String user,String userId, WebSocketSession session) {
     WebSocketData data = WebSocketConstants.userMap.get(token);
@@ -151,5 +153,5 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
         WebSocketConstants.HEART_BEAT_TIME, TimeUnit.SECONDS);
   }
 
-  
+
 }

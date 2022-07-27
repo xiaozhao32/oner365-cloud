@@ -131,7 +131,7 @@ public class ImportExcelUtils {
           }
           Object o = val != null ? val.toString().trim() : val;
           String firstLetter = title[j].substring(0, 1).toUpperCase();
-          String setter = "set" + firstLetter + title[j].substring(1, title[j].length());
+          String setter = "set" + firstLetter + title[j].substring(1);
           Optional<Method> setMethod = methods.stream().filter(method -> method.getName().equals(setter)).findFirst();
           if (setMethod.isPresent()) {
             ClassesUtil.invokeMethod(c, setter, o);

@@ -15,7 +15,7 @@ import com.oner365.swagger.dto.FileInfoDto;
 
 /**
  * Hadoop服务 - Hdfs
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -30,7 +30,7 @@ public interface IHadoopHdfsClient {
    */
   @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_MKDIR)
   ResponseData<Boolean> mkdir(@RequestParam("path") String path);
-  
+
   /**
    * 上传文件
    *
@@ -40,7 +40,7 @@ public interface IHadoopHdfsClient {
    */
   @PostMapping(PathConstants.REQUEST_HADOOP_HDFS_CREATE)
   ResponseData<Boolean> createFile(@RequestParam("path") String path, @RequestParam("file") MultipartFile file);
-  
+
   /**
    * 获取文件
    *
@@ -49,7 +49,7 @@ public interface IHadoopHdfsClient {
    */
   @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_BYTES)
   ResponseData<byte[]> openFileToBytes(@RequestParam("path") String path);
-  
+
   /**
    * 读取文件列表
    *
@@ -57,8 +57,8 @@ public interface IHadoopHdfsClient {
    * @return ResponseData
    */
   @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_LIST)
-  public ResponseData<List<FileInfoDto>> listFile(@RequestParam("path") String path);
-  
+  ResponseData<List<FileInfoDto>> listFile(@RequestParam("path") String path);
+
   /**
    * 删除文件
    *
@@ -66,5 +66,5 @@ public interface IHadoopHdfsClient {
    * @return ResponseData
    */
   @DeleteMapping(PathConstants.REQUEST_HADOOP_HDFS_DELETE)
-  public ResponseData<Boolean> deleteFile(@RequestParam("path") String path);
+  ResponseData<Boolean> deleteFile(@RequestParam("path") String path);
 }

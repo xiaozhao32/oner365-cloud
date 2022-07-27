@@ -22,13 +22,18 @@ public class RedisListenerConfig {
   @Autowired
   private MessageListener redisMessageReceiver;
 
-  // 初始化监听器
+  /**
+   * 初始化监听器
+   *
+   * @param connectionFactory connectionFactory
+   * @return RedisMessageListenerContainer
+   */
   @Bean
   RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
     RedisMessageListenerContainer container = new RedisMessageListenerContainer();
     container.setConnectionFactory(connectionFactory);
     container.addMessageListener(new MessageListenerAdapter(redisMessageReceiver),
-        new PatternTopic(WebSocketConstants.WEBSOCKET_MESSAGE_QUEUE_NAME));
+            new PatternTopic(WebSocketConstants.WEBSOCKET_MESSAGE_QUEUE_NAME));
     return container;
   }
 

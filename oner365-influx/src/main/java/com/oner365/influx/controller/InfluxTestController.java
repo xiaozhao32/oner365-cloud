@@ -13,7 +13,7 @@ import com.oner365.influx.service.InfluxService;
 
 /**
  * 测试 Influx
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -26,7 +26,8 @@ public class InfluxTestController extends BaseController {
 
   /**
    * 查询列表
-   * @param query
+   *
+   * @param data 查询对象
    * @return List<Mem>
    */
   @GetMapping("/list")

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +20,6 @@ import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.enums.ResultEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
 import com.oner365.controller.BaseController;
@@ -65,7 +65,7 @@ public class SysTaskController extends BaseController {
   /**
    * 新增定时任务
    *
-   * @param paramJson 参数
+   * @param sysTaskVo 参数
    * @param authUser  登录对象
    * @return ResponseResult<Boolean>
    * @throws SchedulerException, TaskException 异常
@@ -86,12 +86,11 @@ public class SysTaskController extends BaseController {
    * 修改定时任务
    *
    * @param sysTaskVo 参数
-   * @param authUser  登录对象
    * @return ResponseResult<Boolean>
    * @throws SchedulerException, TaskException 异常
    */
   @PutMapping
-  public ResponseResult<Boolean> edit(@RequestBody SysTaskVo sysTaskVo, @CurrentUser AuthUser authUser)
+  public ResponseResult<Boolean> edit(@RequestBody SysTaskVo sysTaskVo)
       throws SchedulerException, TaskException {
     if (sysTaskVo == null || !CronUtils.isValid(sysTaskVo.getCronExpression())) {
       return ResponseResult.error("cron表达式不正确");
@@ -109,7 +108,7 @@ public class SysTaskController extends BaseController {
    */
   @PutMapping("/status")
   public ResponseResult<Boolean> changeStatus(@RequestBody SysTaskVo sysTaskVo)
-      throws SchedulerException, TaskException {
+      throws SchedulerException {
     if (sysTaskVo != null) {
       Boolean result = taskService.changeStatus(sysTaskVo);
       return ResponseResult.success(result);
@@ -140,7 +139,7 @@ public class SysTaskController extends BaseController {
    * @return List<Boolean>
    */
   @DeleteMapping("/delete")
-  public List<Boolean> remove(@PathVariable String[] ids) {
+  public List<Boolean> remove(@RequestBody String[] ids) {
     return taskService.deleteTaskByIds(ids);
   }
 
@@ -150,8 +149,16 @@ public class SysTaskController extends BaseController {
    * @param data 查询参数
    * @return String
    */
-  @GetMapping("/export")
-  public String export(@RequestBody QueryCriteriaBean data) {
-    return ResultEnum.SUCCESS.getName();
+  @PostMapping("/export")
+  public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
+    List<SysTaskDto> list = taskService.findList(data);
+
+    String[] titleKeys = new String[] { "编号", "任务名称", "任务组", "调用目标", "目标参数", "执行表达式", "计划策略",
+            "是否并发", "状态", "执行状态", "备注", "创建人", "创建时间", "更新时间" };
+    String[] columnNames = { "id", "taskName", "taskGroup", "invokeTarget", "invokeParamDto", "cronExpression", "misfirePolicy",
+            "concurrent", "status", "executeStatus", "remark", "createUser", "createTime", "updateTime" };
+
+    String fileName = SysTaskDto.class.getSimpleName() + System.currentTimeMillis();
+    return exportExcel(fileName, titleKeys, columnNames, list);
   }
 }

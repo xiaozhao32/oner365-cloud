@@ -12,7 +12,7 @@ import com.oner365.sys.vo.SysUserVo;
 
 /**
  * 用户接口
- * 
+ *
  * @author zhaoyong
  */
 public interface ISysUserService extends BaseService {
@@ -37,7 +37,7 @@ public interface ISysUserService extends BaseService {
 
   /**
    * 查询列表
-   * 
+   *
    * @param data 查询参数
    * @return List<SysUserDto>
    */
@@ -105,8 +105,8 @@ public interface ISysUserService extends BaseService {
 
   /**
    * 更新个人信息
-   * 
-   * @param sysUserVo
+   *
+   * @param sysUserVo 用户对象
    * @return SysUserDto
    */
   SysUserDto updateUserProfile(SysUserVo sysUserVo);

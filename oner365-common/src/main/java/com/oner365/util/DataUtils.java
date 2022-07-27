@@ -258,10 +258,10 @@ public class DataUtils {
       LOGGER.error("Error deleteFile:", e);
     }
   }
-  
+
   /**
    * 获取文件对象
-   * 
+   *
    * @param filePath 文件地址
    * @param fileName 文件名称
    * @return File 文件
@@ -269,10 +269,10 @@ public class DataUtils {
   public static File getFile(String filePath, String fileName) {
     return getFile(filePath + File.separator + fileName);
   }
-  
+
   /**
    * 获取文件对象
-   * 
+   *
    * @param filePath 文件地址
    * @return File 文件
    */
@@ -287,26 +287,26 @@ public class DataUtils {
     }
     return null;
   }
-  
+
   /**
    * 获取文件对象
-   * 
+   *
    * @param filePath 文件地址
    * @param fileName 文件名称
    * @return FileOutputStream 文件
-   * @throws FileNotFoundException 
+   * @throws FileNotFoundException 异常
    */
   public static FileOutputStream getFileOutputStream(String filePath, String fileName) throws FileNotFoundException {
     createFolder(filePath);
     return getFileOutputStream(filePath + File.separator + fileName);
   }
-  
+
   /**
    * 获取文件对象
-   * 
+   *
    * @param filePath 文件地址
    * @return FileOutputStream 文件
-   * @throws FileNotFoundException 
+   * @throws FileNotFoundException 异常
    */
   public static FileOutputStream getFileOutputStream(String filePath) throws FileNotFoundException {
     // 禁止目录上跳级别
@@ -796,7 +796,7 @@ public class DataUtils {
     }
     return new CommonsMultipartFile(item);
   }
-  
+
   /**
    * url参数整理vo
    *

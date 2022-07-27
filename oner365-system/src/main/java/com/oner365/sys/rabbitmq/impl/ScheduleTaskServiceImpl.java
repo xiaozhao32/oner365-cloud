@@ -2,7 +2,6 @@ package com.oner365.sys.rabbitmq.impl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -22,9 +21,11 @@ import com.oner365.sys.client.IMonitorServiceClient;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.util.DataUtils;
 
+import javax.annotation.Resource;
+
 /**
  * IScheduleTaskService实现类
- * 
+ *
  * @author zhaoyong
  */
 @Service
@@ -34,10 +35,10 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
 
   private static final String EXECUTE_STATUS = "executeStatus";
 
-  @Autowired
+  @Resource
   private IScheduleExecuteService scheduleExecuteService;
 
-  @Autowired
+  @Resource
   private IMonitorServiceClient monitorServiceClient;
 
   @Override

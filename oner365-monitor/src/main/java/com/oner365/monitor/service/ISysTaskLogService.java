@@ -23,6 +23,14 @@ public interface ISysTaskLogService extends BaseService {
   PageInfo<SysTaskLogDto> pageList(QueryCriteriaBean data);
 
   /**
+   * 查询列表
+   *
+   * @param data 查询参数
+   * @return List<SysTaskLogDto>
+   */
+  List<SysTaskLogDto> findList(QueryCriteriaBean data);
+
+  /**
    * 通过调度任务日志ID查询调度信息
    *
    * @param id 调度任务日志ID
@@ -56,6 +64,8 @@ public interface ISysTaskLogService extends BaseService {
 
   /**
    * 清空任务日志
+   *
+   * @return 是否成功
    */
   Boolean cleanTaskLog();
 

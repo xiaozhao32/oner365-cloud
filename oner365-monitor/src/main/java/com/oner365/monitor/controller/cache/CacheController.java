@@ -6,7 +6,6 @@ import java.util.Properties;
 import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
@@ -25,6 +24,8 @@ import com.oner365.util.JedisUtils;
 
 import redis.clients.jedis.Jedis;
 
+import javax.annotation.Resource;
+
 /**
  * 缓存监控
  *
@@ -36,15 +37,15 @@ public class CacheController extends BaseController {
 
   private static final int DB_LENGTH = 15;
 
-  @Autowired
+  @Resource
   private RedisTemplate<String, String> redisTemplate;
-  
-  @Autowired
+
+  @Resource
   private RedisProperties redisProperties;
 
   /**
    * 缓存信息
-   * 
+   *
    * @return CacheInfoDto
    */
   @GetMapping("/index")
@@ -74,7 +75,7 @@ public class CacheController extends BaseController {
 
   /**
    * 缓存列表
-   * 
+   *
    * @return List<CacheJedisInfoDto>
    */
   @GetMapping("/list")
@@ -84,7 +85,7 @@ public class CacheController extends BaseController {
       if (jedis.isConnected()) {
         IntStream.range(0, DB_LENGTH).forEach(i -> {
           jedis.select(i);
-          Long size = jedis.dbSize();
+          long size = jedis.dbSize();
           if (size != 0L) {
             CacheJedisInfoDto dto = new CacheJedisInfoDto();
             dto.setName("DB" + i);
@@ -100,7 +101,7 @@ public class CacheController extends BaseController {
 
   /**
    * 清理缓存
-   * 
+   *
    * @param index db
    * @return String
    */
@@ -114,7 +115,7 @@ public class CacheController extends BaseController {
     }
     return ResponseData.success(ResultEnum.SUCCESS.getName());
   }
-  
- 
+
+
 
 }

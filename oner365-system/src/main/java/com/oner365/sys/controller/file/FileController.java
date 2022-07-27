@@ -4,12 +4,12 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +28,7 @@ import com.oner365.sys.client.IFileServiceClient;
 
 /**
  * 文件处理
- * 
+ *
  * @author zhaoyong
  */
 @RefreshScope
@@ -36,12 +36,12 @@ import com.oner365.sys.client.IFileServiceClient;
 @RequestMapping("/file")
 public class FileController extends BaseController {
 
-  @Autowired
+  @Resource
   private IFileServiceClient fileServiceClient;
 
   /**
    * 上传文件 需要指定 类型: Content-Type: multipart/form-data 方式: Post 参数: @RequestPart
-   * 
+   *
    * @param multipartFile 文件
    * @return ResponseData
    */
@@ -52,7 +52,7 @@ public class FileController extends BaseController {
 
   /**
    * 下载
-   * 
+   *
    * @param fileUrl 文件地址
    * @return byte[] 字节流
    */
@@ -63,9 +63,9 @@ public class FileController extends BaseController {
 
   /**
    * 文件下载
-   * 
-   * @param fileUrl
-   * @return
+   *
+   * @param fileUrl 地址
+   * @param response response
    */
   @GetMapping("/download")
   public void download(@RequestParam("fileUrl") String fileUrl, HttpServletResponse response) {

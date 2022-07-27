@@ -15,7 +15,7 @@ public enum MessageTypeEnum implements BaseEnum {
   INTERFACE("接口"),
   /** 服务器与客户端心跳 */
   HEARTBEAT("心跳");
-  
+
   /**
    * 名称
    */
@@ -35,6 +35,7 @@ public enum MessageTypeEnum implements BaseEnum {
    *
    * @return name
    */
+  @Override
   public String getName() {
     return name;
   }

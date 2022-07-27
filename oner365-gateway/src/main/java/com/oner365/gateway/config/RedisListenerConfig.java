@@ -22,7 +22,12 @@ public class RedisListenerConfig {
   @Autowired
   private MessageListener redisMessageReceiver;
 
-  // 初始化监听器
+  /**
+   * 初始化监听器
+   *
+   * @param connectionFactory connectionFactory
+   * @return RedisMessageListenerContainer
+   */
   @Bean
   RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
     RedisMessageListenerContainer container = new RedisMessageListenerContainer();

@@ -1,11 +1,10 @@
 package com.oner365.monitor.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 
 import org.quartz.JobDataMap;
 import org.quartz.JobKey;
@@ -13,7 +12,6 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,10 +44,10 @@ public class SysTaskServiceImpl implements ISysTaskService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SysTaskServiceImpl.class);
 
-  @Autowired
+  @Resource
   private Scheduler scheduler;
 
-  @Autowired
+  @Resource
   private ISysTaskDao dao;
 
   /**
@@ -77,6 +75,21 @@ public class SysTaskServiceImpl implements ISysTaskService {
       LOGGER.error("Error pageList: ", e);
     }
     return null;
+  }
+
+  @Override
+  public List<SysTaskDto> findList(QueryCriteriaBean data) {
+    try {
+      if (data.getOrder() == null) {
+        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysTaskDto.class);
+      }
+      List<SysTask> list = dao.findAll(QueryUtils.buildCriteria(data),
+              Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
+      return convert(list, SysTaskDto.class);
+    } catch (Exception e) {
+      LOGGER.error("Error findList: ", e);
+    }
+    return Collections.emptyList();
   }
 
   @Override
@@ -134,7 +147,7 @@ public class SysTaskServiceImpl implements ISysTaskService {
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   public List<Boolean> deleteTaskByIds(String[] ids) {
-    return Arrays.stream(ids).map(id -> deleteTask(id)).collect(Collectors.toList());
+    return Arrays.stream(ids).map(this::deleteTask).collect(Collectors.toList());
   }
 
   @Override

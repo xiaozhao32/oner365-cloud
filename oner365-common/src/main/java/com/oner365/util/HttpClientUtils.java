@@ -138,7 +138,7 @@ public class HttpClientUtils {
         BufferedInputStream bis = new BufferedInputStream(inputStream);
         InputStream connectionStream = connection.getInputStream();
         BufferedReader bufferReader = new BufferedReader(
-            new InputStreamReader(connectionStream, Charset.defaultCharset()));) {
+            new InputStreamReader(connectionStream, Charset.defaultCharset()))) {
       byte[] bufferRead = new byte[1024 * 100];
       int perLength;
       while ((perLength = bis.read(bufferRead)) != -1) {

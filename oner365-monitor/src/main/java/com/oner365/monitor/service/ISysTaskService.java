@@ -27,6 +27,14 @@ public interface ISysTaskService extends BaseService {
   PageInfo<SysTaskDto> pageList(QueryCriteriaBean data);
 
   /**
+   * 获取列表
+   *
+   * @param data 查询参数
+   * @return List<SysTaskDto>
+   */
+  List<SysTaskDto> findList(QueryCriteriaBean data);
+
+  /**
    * 通过调度任务ID查询调度信息
    *
    * @param id 调度任务ID
@@ -64,6 +72,7 @@ public interface ISysTaskService extends BaseService {
    * 批量删除调度信息
    *
    * @param ids 需要删除的任务ID
+   * @return 是否成功
    */
   List<Boolean> deleteTaskByIds(String[] ids);
 
@@ -80,6 +89,7 @@ public interface ISysTaskService extends BaseService {
    * 立即运行任务
    *
    * @param task 调度信息
+   * @return 是否成功
    * @throws SchedulerException SchedulerException
    */
   Boolean run(SysTaskVo task) throws SchedulerException;

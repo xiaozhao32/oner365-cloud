@@ -1,6 +1,5 @@
 package com.oner365.websocket.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +12,8 @@ import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
 import com.oner365.websocket.client.IFileServiceClient;
 
+import javax.annotation.Resource;
+
 /**
  * 文件处理
  * @author liutao
@@ -21,22 +22,21 @@ import com.oner365.websocket.client.IFileServiceClient;
 @RestController
 @RequestMapping("/file")
 public class FileController {
-	
-	@Autowired
+
+	@Resource
 	private IFileServiceClient client;
 
 	/**
 	 * 上传文件
-	 * 需要指定  
+	 * 需要指定
 	 * 		类型: Content-Type: multipart/form-data
 	 * 		方式: Post
 	 * 		参数: @RequestPart
-	 * @param multipartFile
-	 * @return
+	 * @param multipartFile 文件
+	 * @return ResponseData
 	 */
 	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	public ResponseData<ResponseResult<String>> uploadFile(@RequestPart("multipartFile") MultipartFile multipartFile) {
-		ResponseData<ResponseResult<String>> result = client.upload(multipartFile);
-		return result;
+		return client.upload(multipartFile);
 	}
 }

@@ -23,10 +23,10 @@ public interface IFileServiceClient {
 	 * 		类型: Content-Type: multipart/form-data
 	 * 		方式: Post
 	 * 		参数: @RequestPart("name")
-	 * 
+	 *
 	 * 		服务端接收方式: @RequestBody
-	 * @param file
-	 * @return
+	 * @param file 文件
+	 * @return ResponseData
 	 */
 	@PostMapping(value="/storage/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
 	ResponseData<ResponseResult<String>> upload(@RequestPart("file") MultipartFile file);

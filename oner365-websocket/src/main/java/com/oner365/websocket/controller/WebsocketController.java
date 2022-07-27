@@ -15,12 +15,12 @@ import com.oner365.common.ResponseData;
 @RestController
 @RequestMapping("/websocket2")
 public class WebsocketController {
-	
+
 
 	/**
 	 * 测试接收ws数据
-	 * @param token
-	 * @return
+	 * @param token token
+	 * @return ResponseData
 	 */
 	@GetMapping
 	public ResponseData<String> test(String token) {

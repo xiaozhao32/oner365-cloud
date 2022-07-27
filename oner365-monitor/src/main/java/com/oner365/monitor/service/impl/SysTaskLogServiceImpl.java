@@ -1,8 +1,6 @@
 package com.oner365.monitor.service.impl;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -51,6 +49,21 @@ public class SysTaskLogServiceImpl implements ISysTaskLogService {
   }
 
   @Override
+  public List<SysTaskLogDto> findList(QueryCriteriaBean data) {
+    try {
+      if (data.getOrder() == null) {
+        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysTaskLogDto.class);
+      }
+      List<SysTaskLog> list = dao.findAll(QueryUtils.buildCriteria(data),
+              Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
+      return convert(list, SysTaskLogDto.class);
+    } catch (Exception e) {
+      LOGGER.error("Error findList: ", e);
+    }
+    return Collections.emptyList();
+  }
+
+  @Override
   public SysTaskLogDto selectTaskLogById(String id) {
     Optional<SysTaskLog> optional = dao.findById(id);
     return convert(optional.orElse(null), SysTaskLogDto.class);
@@ -67,7 +80,7 @@ public class SysTaskLogServiceImpl implements ISysTaskLogService {
 
   @Override
   public List<Boolean> deleteTaskLogByIds(String[] ids) {
-    return Arrays.stream(ids).map(id -> deleteTaskLogById(id)).collect(Collectors.toList());
+    return Arrays.stream(ids).map(this::deleteTaskLogById).collect(Collectors.toList());
   }
 
   @Override
