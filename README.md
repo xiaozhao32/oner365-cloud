@@ -1,13 +1,40 @@
-# oner365-cloud
+
+<h3 align="center">Oner365 Cloud</h3>
+
+---
+
+<p align="center">
+    <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://shields.io/badge/Spring%20Boot-2.7.2-blue" alt="Spring Boot 2.7.2"></a>
+    <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://shields.io/badge/Spring%20Cloud-2021.0.3-blue" alt="Spring Cloud 2021.0.3"></a>
+    <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://shields.io/badge/Spring%20Cloud%20Alibaba-2021.1-blue" alt="Spring Cloud Alibaba 2021.1"></a>
+    <a href="https://nacos.io/zh-cn/index.html" target="_blank"><img src="https://shields.io/badge/Nacos-2.1.0-brightgreen" alt="Nacos 2.1.0"></a>
+	<a href="./LICENSE"><img src="https://shields.io/badge/License-Apache--2.0-blue" alt="License Apache 2.0"></a>
+    <a href="https://www.oracle.com/java/technologies/javase-downloads.html" target="_blank"><img src="https://img.shields.io/badge/JDK-8%2C11%2C17-green" alt="Java 8,11,17"></a>
+</p>
+<p align="center">
+    <a href="https://blog.csdn.net/Pointer_v" target="_blank"><img src="https://shields.io/badge/Author-Zy&Lt-orange" alt="Zy&Lt"></a>
+    <a href="#" target="_blank"><img src="https://shields.io/badge/Version-2.0.2-red" alt="Version 2.0.2"></a>
+    <a href="https://gitee.com/xiaozhao32/oner365-cloud"><img src="https://img.shields.io/github/stars/xiaozhao32/oner365-cloud?style=flat&logo=github" alt="Github star"></a>
+    <a href="https://gitee.com/xiaozhao32/oner365-cloud"><img src="https://img.shields.io/github/forks/xiaozhao32/oner365-cloud?style=flat&logo=github" alt="Github fork"></a>
+    <a href="https://gitee.com/xiaozhao32/oner365-cloud"><img src="https://gitee.com/xiaozhao32/oner365-cloud/badge/star.svg?theme=dark" alt="Gitee star"></a>
+    <a href="https://gitee.com/xiaozhao32/oner365-cloud"><img src="https://gitee.com/xiaozhao32/oner365-cloud/badge/fork.svg?theme=dark" alt="Gitee fork"></a>
+</p>
+<p align="center">
+    <a href="https://github.com/xiaozhao32/oner365-cloud">Github 仓库</a> &nbsp; | &nbsp;
+    <a href="https://gitee.com/xiaozhao32/oner365-cloud">Gitee 仓库</a>
+</p>
+
+---
+
 
 #### 介绍
-个人练习 Springcloud Nacos
+1. 个人练习 Springcloud Nacos
 
 #### 软件架构
 软件架构说明
 
 
-#### 安装教程
+#### 技术框架
 
 1. 数据库：MySQL
 2. 缓存：Redis
@@ -25,9 +52,13 @@
 #### 使用说明
 
 ##### 前端架构
-1. 前端地址 - 8701 oner365-vue
+1. 前端地址 - 8701 
+<p>
+	<a href="https://github.com/xiaozhao32/oner365-vue">Github 前端仓库</a> &nbsp; | &nbsp; <a href="https://gitee.com/xiaozhao32/oner365-vue">Gitee 前端仓库</a>
+</p>
 
 ##### 后端架构
+##### 基础服务组件
 1. 工具包 oner365-common
 2. 打包工具 oner365-deploy
 3. 网关前置 - 8704 oner365-gateway
@@ -35,7 +66,7 @@
 5. 监控中心 - 8706 oner365-monitor
 6. 认证中心 - 8707 oner365-system
 
-### 服务组件
+##### 扩展服务组件
 1. Dubbo提供者 - 8708 oner365-dubbo-provider 
 2. Dubbo消费者 - 8718 oner365-dubbo-consumer 
 3. Elasticsearch - 8709 oner365-elasticsearch 
@@ -68,19 +99,3 @@
 
 ---
 
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
