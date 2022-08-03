@@ -166,7 +166,7 @@ public class ClassesUtil {
    * @param className 类
    * @return boolean
    */
-  public static <T> boolean isEnum(String className) {
+  public static boolean isEnum(String className) {
     try {
       return Class.forName(className).isEnum();
     } catch (ClassNotFoundException e) {

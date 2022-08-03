@@ -40,8 +40,11 @@ public class AbstractElasticsearchService {
     NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(queryBuilder)
         .withPageable(QueryUtils.buildPageRequest(data)).build();
     SearchHits<T> searchHits = execute(search -> search.search(searchQuery, clazz));
-    SearchPage<T> page = SearchHitSupport.searchPageFor(searchHits, searchQuery.getPageable());
-    return (Page<T>) SearchHitSupport.unwrapSearchHits(page);
+    if (searchQuery != null && searchHits != null) {
+      SearchPage<T> page = SearchHitSupport.searchPageFor(searchHits, searchQuery.getPageable());
+      return (Page<T>) SearchHitSupport.unwrapSearchHits(page);
+    }
+    return null;
   }
   
   private <R> R execute(OperationsCallback<R> callback) {
