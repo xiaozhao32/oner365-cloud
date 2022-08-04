@@ -18,6 +18,8 @@
 	12、logstash安装配置
 	13、kibana安装配置
 	14、websocket-demo页面发布
+	15、安装screen
+	16、安装nc
 
 =========================================================================================================================================================
 
@@ -647,6 +649,21 @@
 		-- /usr/share/nginx/sbin/nginx -c /usr/share/nginx/conf/nginx_websocket.conf
 	-- 默认访问地址
 		-- http://xxx.xxx.xxx.xxx:8799
+15、安装screen
+	-- yum install screen
+	-- 主要命令
+		-- 新开session
+			-- screen -S session name
+		-- 挂起
+			-- ctrl+A D
+		-- 退出
+			-- exit
+		-- session列表
+			-- screen -ls
+16、安装nc
+	-- yum install nc
+	-- 主要命令（查看执行机器公网出口ip）
+		-- nc ns1.dnspod.net 6666
 		
 
 
