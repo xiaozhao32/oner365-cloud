@@ -113,7 +113,7 @@ public class Server implements Serializable {
 
     setJvmInfo();
 
-    setSysFiles(si.getOperatingSystem());
+    setOperatingSystem(si.getOperatingSystem());
   }
 
   /**
@@ -177,7 +177,7 @@ public class Server implements Serializable {
   /**
    * 设置磁盘信息
    */
-  private void setSysFiles(OperatingSystem os) {
+  private void setOperatingSystem(OperatingSystem os) {
     FileSystem fileSystem = os.getFileSystem();
     List<OSFileStore> list = fileSystem.getFileStores();
     list.forEach(fs -> {
