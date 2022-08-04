@@ -74,10 +74,8 @@
 				<artifactId>maven-jar-plugin</artifactId>
 				<version>${maven-jar-plugin.version}</version>
 				<configuration>
-					<excludes>
-						<exclude>*.**</exclude>
-					</excludes>
 					<archive>
+						<addMavenDescriptor>true</addMavenDescriptor>
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>../lib/</classpathPrefix>
@@ -89,6 +87,9 @@
 						</manifestEntries>
 					</archive>
 					<outputDirectory>${project.build.directory}</outputDirectory>
+					<includes>
+						<include>**/*.class</include>
+					</includes>
 				</configuration>
 			</plugin>
 			
