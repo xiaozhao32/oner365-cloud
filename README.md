@@ -12,10 +12,10 @@
     <a href="https://www.oracle.com/java/technologies/javase-downloads.html" target="_blank"><img src="https://img.shields.io/badge/JDK-8%2C11%2C17-green" alt="Java 8,11,17"></a>
 </p>
 <p align="center">
-    <a href="https://blog.csdn.net/Pointer_v" target="_blank"><img src="https://shields.io/badge/Author-Zy&Lt-orange" alt="Zy&Lt"></a>
-    <a href="#" target="_blank"><img src="https://shields.io/badge/Version-2.0.2-red" alt="Version 2.0.2"></a>
-    <a href="https://gitee.com/xiaozhao32/oner365-cloud"><img src="https://img.shields.io/github/stars/xiaozhao32/oner365-cloud?style=flat&logo=github" alt="Github star"></a>
-    <a href="https://gitee.com/xiaozhao32/oner365-cloud"><img src="https://img.shields.io/github/forks/xiaozhao32/oner365-cloud?style=flat&logo=github" alt="Github fork"></a>
+    <a href="#"><img src="https://shields.io/badge/Author-Zy&Lt-orange" alt="Zy&Lt"></a>
+    <a href="#"><img src="https://shields.io/badge/Version-2.0.2-red" alt="Version 2.0.2"></a>
+    <a href="https://github.com/xiaozhao32/oner365-cloud"><img src="https://img.shields.io/github/stars/xiaozhao32/oner365-cloud?style=flat&logo=github" alt="Github star"></a>
+    <a href="https://github.com/xiaozhao32/oner365-cloud"><img src="https://img.shields.io/github/forks/xiaozhao32/oner365-cloud?style=flat&logo=github" alt="Github fork"></a>
     <a href="https://gitee.com/xiaozhao32/oner365-cloud"><img src="https://gitee.com/xiaozhao32/oner365-cloud/badge/star.svg?theme=dark" alt="Gitee star"></a>
     <a href="https://gitee.com/xiaozhao32/oner365-cloud"><img src="https://gitee.com/xiaozhao32/oner365-cloud/badge/fork.svg?theme=dark" alt="Gitee fork"></a>
 </p>
