@@ -20,6 +20,8 @@
 	14、websocket-demo页面发布
 	15、安装screen
 	16、安装nc
+	17、安装erlang
+	18、安装rabbitMQ
 
 =========================================================================================================================================================
 
@@ -664,7 +666,29 @@
 	-- yum install nc
 	-- 主要命令（查看执行机器公网出口ip）
 		-- nc ns1.dnspod.net 6666
-		
+17、安装erlang
+	-- tar /opt/tar -zxvf otp_src_22.0.tar.gz 
+	-- yum install libtool libtool-ltdl-devel libevent-devel lua  ncurses-devel openssl-devel flex
+	-- cd otp_src_22.0
+	-- ./configure --prefix=/usr/local/erlang
+	-- make && make install
+	-- vi /etc/profile
+		-- export ERLANG_HOME=/usr/local/erlang
+		   export PATH=$ERLANG_HOME/bin:$PATH
+	-- source /etc/profile
+	-- 执行试试能不能进
+		-- erl 
+		-- 退出
+			-- halt().
+		-- erl -version
+18、安装rabbitMQ	
+	-- tar -xvf /opt/rabbitmq-server-generic-unix-3.7.25.tar 	
+	-- mv -f rabbitmq_server-3.7.25 /usr/local/rabbitmq-server
+	-- cd /usr/local/rabbitmq-server/sbin/
+	-- ./rabbitmq-plugins enable rabbitmq_management
+	-- ./rabbitmq-server -detached
+	-- ./rabbitmqctl add_user admin admin123
+	-- ./rabbitmqctl set_user_tags admin administrator
 
 
 
