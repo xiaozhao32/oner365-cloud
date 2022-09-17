@@ -12,7 +12,7 @@ function exec() {
     rm -f $1/tpid
     if [ ${tpid} ]; then
         echo "Kill '${tpid}' $1 Process!"
-        kill -9 $tpid
+        kill -15 $tpid
     else
         echo "$1 Stop Success!"
     fi
