@@ -118,7 +118,7 @@
 		<net.logstash.logback.version>7.2</net.logstash.logback.version>
 		<net.java.dev.jna.version>5.12.1</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
-		<ch.qos.logback.version>1.4.1</ch.qos.logback.version>
+		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
 		<de.codecentric.version>2.7.5</de.codecentric.version>
 		<redis.clients.version>4.2.3</redis.clients.version>
 		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>

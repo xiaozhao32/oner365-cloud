@@ -1,5 +1,7 @@
 package com.oner365.elasticsearch.service.impl;
 
+import java.util.Objects;
+
 import javax.annotation.Resource;
 
 import org.elasticsearch.index.query.BoolQueryBuilder;
@@ -39,14 +41,11 @@ public class AbstractElasticsearchService {
     NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
         .withQuery(queryBuilder)
         .withPageable(QueryUtils.buildPageRequest(data))
-        .withSort(QueryUtils.buildSortRequest(data.getOrder()))
+        .withSort(Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())))
         .build();
     SearchHits<T> searchHits = elasticsearchRestTemplate.search(searchQuery, clazz);
-    if (searchQuery != null && searchHits != null) {
-      SearchPage<T> page = SearchHitSupport.searchPageFor(searchHits, searchQuery.getPageable());
-      return (Page<T>) SearchHitSupport.unwrapSearchHits(page);
-    }
-    return null;
+    SearchPage<T> page = SearchHitSupport.searchPageFor(searchHits, searchQuery.getPageable());
+    return (Page<T>) SearchHitSupport.unwrapSearchHits(page);
   }
   
 }

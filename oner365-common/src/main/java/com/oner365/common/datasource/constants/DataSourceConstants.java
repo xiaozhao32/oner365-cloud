@@ -26,6 +26,9 @@ public final class DataSourceConstants {
     /** 数据库类型 */
     public static final String DB_TYPE_MYSQL = "mysql";
     public static final String DB_TYPE_ORACLE = "oracle";
+    public static final String DB_TYPE_POSTGRES = "postgres";
+    public static final String DB_TYPE_DB2 = "db2";
+    public static final String DB_TYPE_DM = "dm";
     
     /** 驱动类型 */
     public static final String DRIVER_NAME_MYSQL = "com.mysql.cj.jdbc.Driver";
@@ -33,6 +36,7 @@ public final class DataSourceConstants {
     public static final String DRIVER_NAME_POSTGRESQL = "org.postgresql.Driver";
     public static final String DRIVER_NAME_DB2 = "com.ibm.db2.jcc.DB2Driver";
     public static final String DRIVER_NAME_SQLSERVER = "com.microsoft.jdbc.sqlserver.SQLServerDriver";
+    public static final String DRIVER_NAME_DM = "dm.jdbc.driver.DmDriver";
     
     /**
      * Generate constructor
