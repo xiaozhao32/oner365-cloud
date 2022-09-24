@@ -47,21 +47,21 @@
 		<org.springframework.cloud.version>2021.0.4</org.springframework.cloud.version>
 		<org.springframework.boot.version>2.7.4</org.springframework.boot.version>
 		<org.springframework.version>5.3.23</org.springframework.version>
-		<org.springframework.kafka.version>2.8.9</org.springframework.kafka.version>
+		<org.springframework.kafka.version>2.9.1</org.springframework.kafka.version>
 
-		<org.apache.rocketmq.boot.starter.version>2.2.1</org.apache.rocketmq.boot.starter.version>
+		<org.apache.rocketmq.boot.starter.version>2.2.2</org.apache.rocketmq.boot.starter.version>
 		<org.apache.shardingsphere.version>4.0.0-RC1</org.apache.shardingsphere.version>
 		<org.apache.logging.log4j.version>2.17.2</org.apache.logging.log4j.version>
 		<org.apache.httpcore-nio.version>4.4.15</org.apache.httpcore-nio.version>
 		<org.apache.httpclient.version>4.5.13</org.apache.httpclient.version>
 		<org.apache.zookeeper.version>3.8.0</org.apache.zookeeper.version>
-		<org.apache.rocketmq.version>4.9.3</org.apache.rocketmq.version>
+		<org.apache.rocketmq.version>4.9.4</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.65</org.apache.tomcat.version>
-		<org.apache.pdfbox.version>2.0.25</org.apache.pdfbox.version>
-		<org.apache.hadoop.version>3.3.2</org.apache.hadoop.version>
-		<org.apache.pulsar.version>2.9.2</org.apache.pulsar.version>
-		<org.apache.dubbo.version>3.0.10</org.apache.dubbo.version>
-		<org.apache.kafka.version>3.2.0</org.apache.kafka.version>
+		<org.apache.pdfbox.version>2.0.26</org.apache.pdfbox.version>
+		<org.apache.hadoop.version>3.3.4</org.apache.hadoop.version>
+		<org.apache.pulsar.version>2.10.1</org.apache.pulsar.version>
+		<org.apache.dubbo.version>3.1.0</org.apache.dubbo.version>
+		<org.apache.kafka.version>3.2.3</org.apache.kafka.version>
 		<org.apache.poi.version>5.2.2</org.apache.poi.version>
 
 		<org.hibernate.validator.version>6.2.5.Final</org.hibernate.validator.version>
@@ -69,7 +69,7 @@
 		
 		<org.mybatis.spring.boot.version>2.2.2</org.mybatis.spring.boot.version>
 		<org.elasticsearch.version>7.17.6</org.elasticsearch.version>
-		<org.eclipse.jetty.version>11.0.11</org.eclipse.jetty.version>
+		<org.eclipse.jetty.version>11.0.12</org.eclipse.jetty.version>
 		<org.projectlombok.version>1.18.24</org.projectlombok.version>
 		<org.junit.platform.version>1.7.2</org.junit.platform.version>
 		<org.xerial.snappy.version>1.1.8.4</org.xerial.snappy.version>
@@ -79,17 +79,17 @@
 		<org.javassist.version>3.29.2-GA</org.javassist.version>
 		<org.quartz.version>2.3.2</org.quartz.version>
 		<org.slf4j.version>1.7.36</org.slf4j.version>
-		<org.yaml.version>1.30</org.yaml.version>
+		<org.yaml.version>1.31</org.yaml.version>
 		<org.lz4.version>1.8.0</org.lz4.version>
 		
 		<org.postgresql.version>42.5.0</org.postgresql.version>
-		<org.neo4j.version>3.2.36</org.neo4j.version>
-		<com.influxdb.version>6.3.0</com.influxdb.version>
+		<org.neo4j.version>3.2.37</org.neo4j.version>
+		<com.influxdb.version>6.5.0</com.influxdb.version>
 		<com.oracle.version>11.2.0.3</com.oracle.version>
 		<com.mysql.version>8.0.29</com.mysql.version>
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
-		<com.alibaba.nacos.version>2.1.0</com.alibaba.nacos.version>
+		<com.alibaba.nacos.version>2.1.1</com.alibaba.nacos.version>
 		<com.alibaba.druid.version>1.2.12</com.alibaba.druid.version>
 		<com.alibaba.fastjson.version>1.2.83</com.alibaba.fastjson.version>
 		
@@ -97,32 +97,32 @@
 		<com.fasterxml.jackson.version>2.13.4</com.fasterxml.jackson.version>
 		<com.google.code.gson.version>2.9.1</com.google.code.gson.version>
 		<com.google.guava.version>31.1-jre</com.google.guava.version>
-		<com.google.protobuf.version>3.19.4</com.google.protobuf.version>
+		<com.google.protobuf.version>3.21.6</com.google.protobuf.version>
 		<com.github.xiaoymin.version>3.0.3</com.github.xiaoymin.version>
 		<com.github.tobato.version>1.27.2</com.github.tobato.version>
-		<com.github.oshi.version>6.1.6</com.github.oshi.version>
-		<com.squareup.okhttp3.version>4.9.3</com.squareup.okhttp3.version>
-		<com.squareup.okio.version>2.10.0</com.squareup.okio.version>
-		<com.vladmihalcea.version>2.16.3</com.vladmihalcea.version>
-		<com.rabbitmq.version>5.15.0</com.rabbitmq.version>
+		<com.github.oshi.version>6.2.2</com.github.oshi.version>
+		<com.squareup.okhttp3.version>4.10.0</com.squareup.okhttp3.version>
+		<com.squareup.okio.version>3.2.0</com.squareup.okio.version>
+		<com.vladmihalcea.version>2.19.2</com.vladmihalcea.version>
+		<com.rabbitmq.version>5.16.0</com.rabbitmq.version>
 		<com.belerweb.version>2.5.1</com.belerweb.version>
 		
 		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
 		<io.projectreactor.netty.version>1.0.23</io.projectreactor.netty.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
-		<io.undertow.version>2.2.18.Final</io.undertow.version>
+		<io.undertow.version>2.2.19.Final</io.undertow.version>
 		<io.springfox.version>3.0.0</io.springfox.version>
 		<io.netty.version>4.1.82.Final</io.netty.version>
 		<io.minio.version>8.4.3</io.minio.version>
 		
 		<net.logstash.logback.version>7.2</net.logstash.logback.version>
-		<net.java.dev.jna.version>5.11.0</net.java.dev.jna.version>
+		<net.java.dev.jna.version>5.12.1</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
-		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
-		<de.codecentric.version>2.7.3</de.codecentric.version>
+		<ch.qos.logback.version>1.4.1</ch.qos.logback.version>
+		<de.codecentric.version>2.7.5</de.codecentric.version>
 		<redis.clients.version>4.2.3</redis.clients.version>
 		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>
-		<joda.time.version>2.10.14</joda.time.version>
+		<joda.time.version>2.11.1</joda.time.version>
 		
  		<maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
 	</properties>
