@@ -42,12 +42,12 @@
 		<java.version>11</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<org.springframework.integration.version>5.5.14</org.springframework.integration.version>
+		<org.springframework.integration.version>5.5.15</org.springframework.integration.version>
 		<org.springframework.security.version>5.7.3</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.4</org.springframework.cloud.version>
-		<org.springframework.boot.version>2.7.3</org.springframework.boot.version>
+		<org.springframework.boot.version>2.7.4</org.springframework.boot.version>
 		<org.springframework.version>5.3.23</org.springframework.version>
-		<org.springframework.kafka.version>2.8.8</org.springframework.kafka.version>
+		<org.springframework.kafka.version>2.8.9</org.springframework.kafka.version>
 
 		<org.apache.rocketmq.boot.starter.version>2.2.1</org.apache.rocketmq.boot.starter.version>
 		<org.apache.shardingsphere.version>4.0.0-RC1</org.apache.shardingsphere.version>
@@ -68,7 +68,7 @@
 		<org.hibernate.version>5.6.11.Final</org.hibernate.version>
 		
 		<org.mybatis.spring.boot.version>2.2.2</org.mybatis.spring.boot.version>
-		<org.elasticsearch.version>7.17.5</org.elasticsearch.version>
+		<org.elasticsearch.version>7.17.6</org.elasticsearch.version>
 		<org.eclipse.jetty.version>11.0.11</org.eclipse.jetty.version>
 		<org.projectlombok.version>1.18.24</org.projectlombok.version>
 		<org.junit.platform.version>1.7.2</org.junit.platform.version>
