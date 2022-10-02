@@ -46,7 +46,9 @@ public class FileLocalClient implements IFileStorageClient {
       SysFileStorageVo entity = FileLocalUploadUtils.upload(file, getName(), snowflakeSequence.nextNo(),
           fileLocalProperties.getWeb(), fileLocalProperties.getUpload(), directory, file.getSize() + 1);
       SysFileStorageDto result = fileStorageService.save(entity);
-      return result.getFilePath();
+      if (result != null) {
+          return result.getId();
+      }
     } catch (Exception e) {
       logger.error("upload MultipartFile IOException:", e);
     }
@@ -60,7 +62,9 @@ public class FileLocalClient implements IFileStorageClient {
       SysFileStorageVo entity = FileLocalUploadUtils.upload(multipartFile, getName(), snowflakeSequence.nextNo(),
           fileLocalProperties.getWeb(), fileLocalProperties.getUpload(), directory, file.length() + 1);
       SysFileStorageDto result = fileStorageService.save(entity);
-      return result.getFilePath();
+      if (result != null) {
+          return result.getId();
+      }
     } catch (Exception e) {
       logger.error("upload MultipartFile IOException:", e);
     }

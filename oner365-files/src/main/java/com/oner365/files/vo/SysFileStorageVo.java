@@ -35,6 +35,7 @@ public class SysFileStorageVo implements Serializable {
     /**
      * 存储方式
      */
+    @NotBlank(message = "存储方式不能为空")
     private StorageEnum fileStorage;
 
     /**

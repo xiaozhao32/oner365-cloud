@@ -1509,6 +1509,9 @@ ALTER TABLE "public"."nt_sys_task_log" ADD CONSTRAINT "nt_sys_task_log_pkey" PRI
 CREATE INDEX "idx_user_user_name" ON "public"."nt_sys_user" USING btree (
   "user_name" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
 );
+CREATE INDEX "idx_ssf_file_storage" ON "public"."nt_sys_fastdfs_file" USING btree (
+  "file_storage" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+);
 
 -- ----------------------------
 -- Primary Key structure for table nt_sys_user

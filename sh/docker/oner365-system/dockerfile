@@ -1,0 +1,13 @@
+FROM jdk:11
+
+VOLUME /root/oner365-cloud/oner365-system
+RUN mkdir -p /root/oner365-cloud/oner365-system
+WORKDIR /root/oner365-cloud/oner365-system
+EXPOSE 8707
+
+ENV TZ=Asia/Shanghai
+ENV PATH $PATH
+
+COPY ./ /root/oner365-cloud/oner365-system/
+ENTRYPOINT ["./start.sh"] 
+
