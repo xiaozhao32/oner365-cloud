@@ -39,7 +39,7 @@
 	</developers>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<org.springframework.integration.version>5.5.15</org.springframework.integration.version>
@@ -99,6 +99,7 @@
 		<com.google.guava.version>31.1-jre</com.google.guava.version>
 		<com.google.protobuf.version>3.21.6</com.google.protobuf.version>
 		<com.github.xiaoymin.version>3.0.3</com.github.xiaoymin.version>
+		<com.github.penggle.version>2.3.2</com.github.penggle.version>
 		<com.github.tobato.version>1.27.2</com.github.tobato.version>
 		<com.github.oshi.version>6.2.2</com.github.oshi.version>
 		<com.squareup.okhttp3.version>4.10.0</com.squareup.okhttp3.version>
@@ -467,6 +468,13 @@
 				<artifactId>protobuf-java</artifactId>
 				<version>${com.google.protobuf.version}</version>
 			</dependency>
+			
+			<!-- 验证码 -->
+	        <dependency>
+	            <groupId>com.github.penggle</groupId>
+	            <artifactId>kaptcha</artifactId>
+	            <version>${com.github.penggle.version}</version>
+	        </dependency>
 
 			<!-- pinyin -->
 			<dependency>

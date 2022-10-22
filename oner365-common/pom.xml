@@ -87,6 +87,12 @@
 			<artifactId>gson</artifactId>
 		</dependency>
 		
+		<!-- 验证码 -->
+        <dependency>
+            <groupId>com.github.penggle</groupId>
+            <artifactId>kaptcha</artifactId>
+        </dependency>
+		
 		<!-- pinyin4j -->
 		<dependency>
 			<groupId>com.belerweb</groupId>
