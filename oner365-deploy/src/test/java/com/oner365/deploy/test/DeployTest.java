@@ -35,9 +35,10 @@ public class DeployTest {
   @Test
   public void deployNativeTest() {
     DeployEntity entity = deployService.getDeployEntity();
+    ServerEntity server = deployService.getServerEntity();
     LOGGER.info("Deploy project: {}", entity);
     // 部署目录
-    DeployMethod.deployNative(entity);
+    DeployMethod.deployNative(entity, server);
   }
 
   /**

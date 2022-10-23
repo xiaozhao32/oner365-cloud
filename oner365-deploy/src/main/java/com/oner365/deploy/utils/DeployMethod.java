@@ -1,11 +1,15 @@
 package com.oner365.deploy.utils;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,6 +33,7 @@ public class DeployMethod {
   private static final String FILE_RESOURCES = "resources";
   /** 分隔符 */
   private static final String DELIMITER = "/";
+  private static final String DOCKER_COMPOSE_YML = "docker-compose.yml";
 
   private DeployMethod() {
   }
@@ -105,7 +110,10 @@ public class DeployMethod {
    *
    * @param deployEntity 部署对象
    */
-  public static void deployNative(DeployEntity deployEntity) {
+  public static void deployNative(DeployEntity deployEntity, ServerEntity serverEntity) {
+    List<String> composeLines = new ArrayList<>();
+    composeLines.add("version: " + deployEntity.getVersion());
+    composeLines.add("services:");
     for (String projectName : deployEntity.getProjects()) {
       // jar包全路径
       String path = deployEntity.getLocation() + File.separator + projectName + File.separator + FILE_TARGET
@@ -138,8 +146,41 @@ public class DeployMethod {
       items = new HashMap<>(1);
       items.put("RESOURCE_NAME", projectName + "-" + deployEntity.getVersion() + "." + deployEntity.getSuffix());
       DeployUtils.replaceContextFileCreate(readFile, writeFile, items);
+      
+      // 制作 dockerfile 脚本
+      readFile = DeployMethod.class.getResource("/docker/dockerfile").getPath();
+      writeFile = targetPath + File.separator + "dockerfile";
+      items = new HashMap<>(1);
+      items.put("SERVICE_NAME", projectName);
+      items.put("#EXPOSE", "EXPOSE " + deployEntity.getProejctPorts().get(projectName));
+      DeployUtils.replaceContextFileCreate(readFile, writeFile, items);
+      
+      // docker-compose
+      if (!serverEntity.getServerList().isEmpty()) {
+          composeLines.add("  # " + projectName);
+          composeLines.add("  " + projectName + ":");
+          composeLines.add("    container_name: " + projectName);
+          composeLines.add("    build: ");
+          composeLines.add("      context: ./" + projectName);
+          composeLines.add("      dockerfile: dockerfile");
+          composeLines.add("    ports: ");
+          composeLines.add("      - \"" + deployEntity.getProejctPorts().get(projectName) + ":"
+                  + deployEntity.getProejctPorts().get(projectName) + "\"");
+          composeLines.add("    volumes: ");
+          composeLines.add("      - ./lib:" + serverEntity.getServerName() + "/lib");
+          composeLines.add("    extra_hosts: ");
+          composeLines.add("      - \"oner365-nacos:" + serverEntity.getServerList().get(0).getIp() + "\"");
+          composeLines.add("    privileged: true");
+          composeLines.add("    restart: always");
+      }
     }
-
+    // 制作 docker-compose 脚本
+    String composeFile = deployEntity.getName() + File.separator + DOCKER_COMPOSE_YML;
+    try (FileOutputStream output = new FileOutputStream(composeFile)) {
+        IOUtils.writeLines(composeLines, null, output, Charset.defaultCharset());
+    } catch (IOException e) {
+        LOGGER.error("docker-compose error:", e);
+    }
   }
 
   /**
@@ -180,6 +221,14 @@ public class DeployMethod {
    * @return List<String> 返回执行脚本列表
    */
   public static List<String> deploy(Connection con, DeployServer server, DeployEntity deployEntity, String targetRoot) {
+    if (DeployUtils.isMac()) {
+      DeployMethod.deploy(server, deployEntity.getName() + File.separator + DOCKER_COMPOSE_YML, targetRoot);  
+      DeployMethod.deploy(server, deployEntity.getName() + File.separator + FILE_LIB, targetRoot);  
+    } else {
+        DeployUtils.uploadFileMap(con, new String[] { deployEntity.getName() + File.separator + DOCKER_COMPOSE_YML,
+                deployEntity.getName() + File.separator + FILE_LIB }, targetRoot);  
+    }
+      
     List<String> commands = new ArrayList<>(deployEntity.getProjects().size());
     for (String projectName : deployEntity.getProjects()) {
       // 上传的文件

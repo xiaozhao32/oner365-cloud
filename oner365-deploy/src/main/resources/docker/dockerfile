@@ -1,0 +1,15 @@
+FROM jdk:1.8
+
+LABEL com.oner365.image.authors="xiaozhao32@hotmail.com"
+
+VOLUME /root/oner365-cloud/SERVICE_NAME
+RUN mkdir -p /root/oner365-cloud/SERVICE_NAME
+WORKDIR /root/oner365-cloud/SERVICE_NAME
+#EXPOSE
+
+ENV TZ=Asia/Shanghai
+ENV PATH $PATH
+
+COPY ./ /root/oner365-cloud/SERVICE_NAME/
+ENTRYPOINT ["./start.sh"] 
+

@@ -29,7 +29,7 @@ public class LocalDeployProperties {
   /** 部署环境 */
   private String active;
   /** 项目名称 */
-  private List<String> projects = new ArrayList<>();
+  private List<String> projects;
   /** jar包 */
   private List<String> libs = new ArrayList<>();
 

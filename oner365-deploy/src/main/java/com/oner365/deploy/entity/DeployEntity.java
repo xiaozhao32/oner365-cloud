@@ -3,6 +3,7 @@ package com.oner365.deploy.entity;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.alibaba.fastjson.JSON;
 
@@ -28,6 +29,8 @@ public class DeployEntity implements Serializable {
     private String active;
     /** 项目名称 */
     private List<String> projects = new ArrayList<>();
+    /** 项目端口 */
+    private Map<String, Integer> proejctPorts;
     /** jar包 */
     private List<String> libs = new ArrayList<>();
 
@@ -97,6 +100,20 @@ public class DeployEntity implements Serializable {
     @Override
     public String toString() {
         return JSON.toJSONString(this);
+    }
+
+    /**
+     * @return the proejctPorts
+     */
+    public Map<String, Integer> getProejctPorts() {
+        return proejctPorts;
+    }
+
+    /**
+     * @param proejctPorts the proejctPorts to set
+     */
+    public void setProejctPorts(Map<String, Integer> proejctPorts) {
+        this.proejctPorts = proejctPorts;
     }
 
 }

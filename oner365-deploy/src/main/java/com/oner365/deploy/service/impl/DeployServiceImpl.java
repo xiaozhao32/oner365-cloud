@@ -1,7 +1,9 @@
 package com.oner365.deploy.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +37,20 @@ public class DeployServiceImpl implements DeployService {
     result.setName(localDeployProperties.getName());
     result.setSuffix(localDeployProperties.getSuffix());
     result.setVersion(localDeployProperties.getVersion());
-    result.setProjects(localDeployProperties.getProjects());
+    
+    List<String> projects = new ArrayList<>();
+    Map<String, Integer> proejctPorts = new HashMap<>();
+    localDeployProperties.getProjects().forEach(project -> {
+        String name = StringUtils.substringBefore(project, ":");
+        String portString = StringUtils.substringAfter(project, ":");
+        Integer port = StringUtils.isEmpty(portString) == true ? 0 : Integer.parseInt(portString);
+        
+        projects.add(name);
+        proejctPorts.put(name, port);
+    });
+    result.setProjects(projects);
+    result.setProejctPorts(proejctPorts);
+    
     result.setActive(localDeployProperties.getActive());
     result.setLibs(localDeployProperties.getLibs());
     return result;

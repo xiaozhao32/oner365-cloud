@@ -30,9 +30,15 @@ else
 fi
  
 rm -f tpid
+
+# sh start
 #nohup java -jar ./$RESOURCE_NAME  > ../logs/$RESOURCE_NAME.log 2>&1 &
-# skywalking
-nohup java -jar -javaagent:../agent/skywalking-agent.jar -Dskywalking.agent.service_name=$SERVICE_NAME -Dskywalking.collector.backend_service=localhost:11800 ./$RESOURCE_NAME  > ../logs/$RESOURCE_NAME.log 2>&1 &
+
+# sh skywalking start
+#nohup java -jar -javaagent:../agent/skywalking-agent.jar -Dskywalking.agent.service_name=$SERVICE_NAME -Dskywalking.collector.backend_service=localhost:11800 ./$RESOURCE_NAME  > ../logs/$RESOURCE_NAME.log 2>&1 &
+
+#docker start
+java -jar ./$RESOURCE_NAME
 
 echo $! > tpid
 

@@ -1,0 +1,96 @@
+# 先安装docker和docker-compose 参看docker.sh
+# 简化安装k8s kubesphere
+# 3台执行
+yum -y update
+yum makecache fast
+
+systemctl stop firewalld
+systemctl disable firewalld
+
+vim /etc/hosts
+192.168.213.132 k8s-master
+192.168.213.133 k8s-node1
+192.168.213.134 k8s-node2
+
+ssh-keygen -t rsa
+ssh-copy-id k8s-master
+ssh-copy-id k8s-node1
+ssh-copy-id k8s-node2
+
+yum install -y socat conntrack ebtables ipset
+
+--------------------------
+
+# master执行
+mkdir kubesphere
+cd kubesphere
+
+export KKZONE=cn
+curl -sfL https://get-kk.kubesphere.io | VERSION=v2.2.2 sh -
+chmod +x kk
+./kk create config
+vim config-sample.yaml
+
+--------------------------
+spec:
+  hosts:
+  - {name: centos-master, address: 192.168.213.132, internalAddress: 192.168.213.132, user: root, password: "1234"}
+  - {name: centos-node1, address: 192.168.213.133, internalAddress: 192.168.213.133, user: root, password: "1234"}
+  - {name: centos-node2, address: 192.168.213.134, internalAddress: 192.168.213.134, user: root, password: "1234"}
+  roleGroups:
+    etcd:
+    - centos-master
+    control-plane:
+    - centos-master
+    worker:
+    - centos-node1
+    - centos-node2
+-------------------------- 
+
+
+./kk create cluster --with-kubernetes v1.23.7 --with-kubesphere v3.3.0 -f config-sample.yaml -y
+
+kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l app=ks-installer -o jsonpath='{.items[0].metadata.name}') -f
+kubectl get nodes
+
+http://192.168.213.132:30880
+Account: admin
+Password: P@88w0rd
+
+# minio 单独安装
+helm install minio \
+  --namespace nqsky-project \
+  --set accessKey=root,secretKey=xx \
+  --set mode=standalone \
+  --set service.type=NodePort \
+  --set persistence.enabled=true \
+  --set persistence.size=10Gi \
+  --set persistence.storageClass=local \
+  minio/minio
+
+# minio 集群安装
+helm install minio \
+  --namespace nqsky-project \
+  --set accessKey=root,secretKey=xx \
+  --set mode=distributed \
+  --set replicas=4 \
+  --set service.type=NodePort \
+  --set persistence.size=10Gi \
+  --set persistence.storageClass=local \
+  minio/minio
+
+kubectl -n nqsky-project get sts
+kubectl -n nqsky-project get pods -o wide
+kubectl -n nqsky-project get pvc
+kubectl -n nqsky-project get svc
+
+# 删除 minio
+helm -n minio uninstall minio
+kubectl -n minio delete pvc --all
+
+
+
+
+
+
+

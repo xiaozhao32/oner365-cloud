@@ -7,21 +7,21 @@ deploy:
     suffix: jar
     active: lt
     projects: 
-      - oner365-datasource
-      - oner365-elasticsearch
-      - oner365-files
-      - oner365-gateway
-      - oner365-generator
-      - oner365-hadoop
-      - oner365-influx
-      - oner365-kafka
-      - oner365-monitor
-      - oner365-neo4j
-      - oner365-pulsar
-      - oner365-rocketmq
-      - oner365-swagger
-      - oner365-system
-      - oner365-websocket
+      - oner365-websocket:8703
+      - oner365-gateway:8704
+      - oner365-files:8705
+      - oner365-monitor:8706
+      - oner365-system:8707
+      - oner365-elasticsearch:8709
+      - oner365-kafka:8710
+      - oner365-generator:8711
+      - oner365-hadoop:8712
+      - oner365-rocketmq:8713
+      - oner365-swagger:8714
+      - oner365-pulsar:8715
+      - oner365-datasource:8716
+      - oner365-influx:8717
+      - oner365-neo4j:8719
     libs: 
       - oner365-common
       - oner365-api
