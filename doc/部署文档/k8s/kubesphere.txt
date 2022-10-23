@@ -59,7 +59,7 @@ Password: P@88w0rd
 
 # minio 单独安装
 helm install minio \
-  --namespace nqsky-project \
+  --namespace oner365-project \
   --set accessKey=root,secretKey=xx \
   --set mode=standalone \
   --set service.type=NodePort \
@@ -70,7 +70,7 @@ helm install minio \
 
 # minio 集群安装
 helm install minio \
-  --namespace nqsky-project \
+  --namespace oner365-project \
   --set accessKey=root,secretKey=xx \
   --set mode=distributed \
   --set replicas=4 \
@@ -79,10 +79,10 @@ helm install minio \
   --set persistence.storageClass=local \
   minio/minio
 
-kubectl -n nqsky-project get sts
-kubectl -n nqsky-project get pods -o wide
-kubectl -n nqsky-project get pvc
-kubectl -n nqsky-project get svc
+kubectl -n oner365-project get sts
+kubectl -n oner365-project get pods -o wide
+kubectl -n oner365-project get pvc
+kubectl -n oner365-project get svc
 
 # 删除 minio
 helm -n minio uninstall minio
