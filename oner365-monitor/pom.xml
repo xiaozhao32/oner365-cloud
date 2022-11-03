@@ -115,7 +115,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-jar-plugin</artifactId>
-				<version>${maven-jar-plugin.version}</version>
+				<version>${org.apache.maven.plugins.version}</version>
 				<configuration>
 					<archive>
 						<addMavenDescriptor>true</addMavenDescriptor>
@@ -139,6 +139,7 @@
 			<plugin>
                <groupId>org.apache.maven.plugins</groupId>
                <artifactId>maven-dependency-plugin</artifactId>
+               <version>${org.apache.maven.plugins.version}</version>
                <executions>
                    <execution>
                        <id>copy-dependencies</id>

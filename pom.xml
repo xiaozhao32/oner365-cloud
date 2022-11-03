@@ -60,12 +60,12 @@
 		<org.apache.pdfbox.version>2.0.26</org.apache.pdfbox.version>
 		<org.apache.hadoop.version>3.3.4</org.apache.hadoop.version>
 		<org.apache.pulsar.version>2.10.1</org.apache.pulsar.version>
-		<org.apache.dubbo.version>3.1.0</org.apache.dubbo.version>
+		<org.apache.dubbo.version>3.1.1</org.apache.dubbo.version>
 		<org.apache.kafka.version>3.2.3</org.apache.kafka.version>
 		<org.apache.poi.version>5.2.2</org.apache.poi.version>
 
 		<org.hibernate.validator.version>6.2.5.Final</org.hibernate.validator.version>
-		<org.hibernate.version>5.6.11.Final</org.hibernate.version>
+		<org.hibernate.version>5.6.12.Final</org.hibernate.version>
 		
 		<org.mybatis.spring.boot.version>2.2.2</org.mybatis.spring.boot.version>
 		<org.elasticsearch.version>7.17.6</org.elasticsearch.version>
@@ -89,7 +89,7 @@
 		<com.mysql.version>8.0.29</com.mysql.version>
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
-		<com.alibaba.nacos.version>2.1.1</com.alibaba.nacos.version>
+		<com.alibaba.nacos.version>2.1.2</com.alibaba.nacos.version>
 		<com.alibaba.druid.version>1.2.12</com.alibaba.druid.version>
 		<com.alibaba.fastjson.version>1.2.83</com.alibaba.fastjson.version>
 		
@@ -125,7 +125,7 @@
 		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>
 		<joda.time.version>2.11.1</joda.time.version>
 		
- 		<maven-jar-plugin.version>3.2.2</maven-jar-plugin.version>
+ 		<org.apache.maven.plugins.version>3.3.0</org.apache.maven.plugins.version>
 	</properties>
 
 	<dependencyManagement>
