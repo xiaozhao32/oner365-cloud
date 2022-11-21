@@ -32,6 +32,11 @@ public class RabbitmqProperties {
    */
   private String password;
   
+  /**
+   * virtual host
+   */
+  private String virtualHost;
+  
   public RabbitmqProperties() {
     super();
   }
@@ -67,5 +72,19 @@ public class RabbitmqProperties {
   public void setListener(int listener) {
     this.listener = listener;
   }
+
+/**
+ * @return the virtualHost
+ */
+public String getVirtualHost() {
+    return virtualHost;
+}
+
+/**
+ * @param virtualHost the virtualHost to set
+ */
+public void setVirtualHost(String virtualHost) {
+    this.virtualHost = virtualHost;
+}
 
 }
