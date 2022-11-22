@@ -5,6 +5,7 @@ import java.time.Duration;
 
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -16,11 +17,15 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
+import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.jedis.JedisConnection;
+import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
+import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.util.ObjectUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
@@ -28,6 +33,9 @@ import com.oner365.common.constants.PublicConstants;
 import com.oner365.util.ClassesUtil;
 import com.oner365.util.DataUtils;
 
+import io.lettuce.core.ReadFrom;
+import io.lettuce.core.cluster.ClusterClientOptions;
+import io.lettuce.core.cluster.ClusterTopologyRefreshOptions;
 import redis.clients.jedis.Jedis;
 
 /**
@@ -64,6 +72,24 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         redisTemplate.afterPropertiesSet();
         return redisTemplate;
     }    
+    
+    @Bean
+    @ConditionalOnProperty(value = { "spring.redis.cluster.enable" }, havingValue = "true")
+    public LettuceConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
+      RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(
+          redisProperties.getCluster().getNodes());
+      if (!ObjectUtils.isEmpty(redisProperties.getPassword())) {
+          redisClusterConfiguration.setPassword(redisProperties.getPassword());
+      }
+      
+      ClusterTopologyRefreshOptions clusterTopologyRefreshOptions = ClusterTopologyRefreshOptions.builder()
+          .enablePeriodicRefresh().enableAllAdaptiveRefreshTriggers().refreshPeriod(Duration.ofSeconds(5L)).build();
+      ClusterClientOptions clusterClientOptions = ClusterClientOptions.builder()
+          .topologyRefreshOptions(clusterTopologyRefreshOptions).build();
+      LettuceClientConfiguration lettuceClientConfiguration = LettuceClientConfiguration.builder()
+          .readFrom(ReadFrom.REPLICA_PREFERRED).clientOptions(clusterClientOptions).build();
+      return new LettuceConnectionFactory(redisClusterConfiguration, lettuceClientConfiguration);
+    }
     
     @Bean
     @Override
