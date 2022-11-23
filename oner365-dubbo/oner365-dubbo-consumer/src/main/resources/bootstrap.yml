@@ -24,10 +24,13 @@ spring:
 dubbo:
   application:
     name: oner365-dubbo
+  config-center:
+    group: ${spring.profiles.active}
   registry:
     address: nacos://${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
   protocol:
     name: dubbo
-    port: -1
+    port: 20881
   consumer:
-    version: 1.0
+    group: ${spring.profiles.active}
+    version: 1.0

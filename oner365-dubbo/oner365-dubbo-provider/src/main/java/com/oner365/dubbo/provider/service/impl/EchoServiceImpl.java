@@ -9,7 +9,7 @@ import com.oner365.dubbo.api.service.IEchoService;
  * dubbo 接收者
  * @author zhaoyong
  */
-@DubboService(version = "${dubbo.provider.version}")
+@DubboService(group = "${dubbo.provider.group}", version = "${dubbo.provider.version}")
 public class EchoServiceImpl implements IEchoService {
 
     @Override

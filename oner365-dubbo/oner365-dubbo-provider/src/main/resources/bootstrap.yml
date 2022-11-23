@@ -7,14 +7,30 @@ spring:
     name: oner365-dubbo-provider
   profiles:
     active: dev
+    
+  cloud:
+    nacos:
+      server-addr: ${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
+      discovery:
+        namespace: ${spring.profiles.active}
+        group: DEFAULT_GROUP
+      config:
+        namespace: ${spring.profiles.active}
+        group: DEFAULT_GROUP
+        file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
 
 dubbo:
   application:
     name: oner365-dubbo
+  config-center:
+    group: ${spring.profiles.active}
   registry:
     address: nacos://${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
   protocol:
     name: dubbo
-    port: -1
+    port: 20881 
   provider:
+    group: ${spring.profiles.active}
     version: 1.0
