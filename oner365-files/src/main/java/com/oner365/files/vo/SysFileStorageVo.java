@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import com.oner365.common.enums.StorageEnum;
 
@@ -35,7 +36,7 @@ public class SysFileStorageVo implements Serializable {
     /**
      * 存储方式
      */
-    @NotBlank(message = "存储方式不能为空")
+    @NotNull(message = "存储方式不能为空")
     private StorageEnum fileStorage;
 
     /**

@@ -3,6 +3,7 @@ package com.oner365.sys.dao;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.stereotype.Repository;
 
 import com.oner365.sys.entity.SysMenuOperation;
 
@@ -10,6 +11,7 @@ import com.oner365.sys.entity.SysMenuOperation;
  * 菜单操作权限接口
  * @author zhaoyong
  */
+@Repository
 public interface ISysMenuOperationDao extends JpaRepository<SysMenuOperation, String>,JpaSpecificationExecutor<SysMenuOperation>{
 
     /**

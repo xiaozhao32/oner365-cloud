@@ -51,9 +51,10 @@
 
 		<org.apache.rocketmq.boot.starter.version>2.2.2</org.apache.rocketmq.boot.starter.version>
 		<org.apache.shardingsphere.version>4.0.0-RC1</org.apache.shardingsphere.version>
-		<org.apache.logging.log4j.version>2.17.2</org.apache.logging.log4j.version>
-		<org.apache.httpcore-nio.version>4.4.15</org.apache.httpcore-nio.version>
+		<org.apache.logging.log4j.version>2.19.0</org.apache.logging.log4j.version>
 		<org.apache.httpclient.version>4.5.13</org.apache.httpclient.version>
+		<org.apache.httpcore.version>4.4.15</org.apache.httpcore.version>
+
 		<org.apache.zookeeper.version>3.8.0</org.apache.zookeeper.version>
 		<org.apache.rocketmq.version>4.9.4</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.68</org.apache.tomcat.version>
@@ -66,9 +67,15 @@
 
 		<org.hibernate.validator.version>6.2.5.Final</org.hibernate.validator.version>
 		<org.hibernate.version>5.6.14.Final</org.hibernate.version>
+		<com.vladmihalcea.version>2.19.2</com.vladmihalcea.version>
 		
 		<org.mybatis.spring.boot.version>2.2.2</org.mybatis.spring.boot.version>
+		<org.mybatis.version>3.5.11</org.mybatis.version>
+
 		<org.elasticsearch.version>7.17.7</org.elasticsearch.version>
+		<org.slf4j.version>1.7.36</org.slf4j.version>
+		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
+		
 		<org.eclipse.jetty.version>11.0.12</org.eclipse.jetty.version>
 		<org.projectlombok.version>1.18.24</org.projectlombok.version>
 		<org.junit.platform.version>1.7.2</org.junit.platform.version>
@@ -78,7 +85,6 @@
 		<org.bouncycastle.version>1.70</org.bouncycastle.version>
 		<org.javassist.version>3.29.2-GA</org.javassist.version>
 		<org.quartz.version>2.3.2</org.quartz.version>
-		<org.slf4j.version>1.7.36</org.slf4j.version>
 		<org.yaml.version>1.32</org.yaml.version>
 		<org.lz4.version>1.8.0</org.lz4.version>
 		
@@ -90,11 +96,11 @@
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
 		<com.alibaba.nacos.version>2.1.2</com.alibaba.nacos.version>
-		<com.alibaba.druid.version>1.2.12</com.alibaba.druid.version>
+		<com.alibaba.druid.version>1.2.15</com.alibaba.druid.version>
 		<com.alibaba.fastjson.version>1.2.83</com.alibaba.fastjson.version>
 		
 		<com.thoughtworks.paranamer.version>2.8</com.thoughtworks.paranamer.version>
-		<com.fasterxml.jackson.version>2.13.4</com.fasterxml.jackson.version>
+		<com.fasterxml.jackson.version>2.14.1</com.fasterxml.jackson.version>
 		<com.google.code.gson.version>2.9.1</com.google.code.gson.version>
 		<com.google.guava.version>31.1-jre</com.google.guava.version>
 		<com.google.protobuf.version>3.21.6</com.google.protobuf.version>
@@ -104,11 +110,11 @@
 		<com.github.oshi.version>6.2.2</com.github.oshi.version>
 		<com.squareup.okhttp3.version>4.10.0</com.squareup.okhttp3.version>
 		<com.squareup.okio.version>3.2.0</com.squareup.okio.version>
-		<com.vladmihalcea.version>2.19.2</com.vladmihalcea.version>
 		<com.rabbitmq.version>5.16.0</com.rabbitmq.version>
 		<com.belerweb.version>2.5.1</com.belerweb.version>
 		
 		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
+		<io.projectreactor.core.version>3.5.0</io.projectreactor.core.version>
 		<io.projectreactor.netty.version>1.0.23</io.projectreactor.netty.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
 		<io.undertow.version>2.3.0.Final</io.undertow.version>
@@ -119,7 +125,6 @@
 		<net.logstash.logback.version>7.2</net.logstash.logback.version>
 		<net.java.dev.jna.version>5.12.1</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
-		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
 		<de.codecentric.version>2.7.5</de.codecentric.version>
 		<redis.clients.version>4.2.3</redis.clients.version>
 		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>
@@ -324,8 +329,13 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
+				<artifactId>httpcore</artifactId>
+				<version>${org.apache.httpcore.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpcore-nio</artifactId>
-				<version>${org.apache.httpcore-nio.version}</version>
+				<version>${org.apache.httpcore.version}</version>
 			</dependency>
 
 			<!-- poi -->
@@ -629,6 +639,11 @@
 				<artifactId>mybatis-spring-boot-starter</artifactId>
 				<version>${org.mybatis.spring.boot.version}</version>
 			</dependency>
+			<dependency>
+			    <groupId>org.mybatis</groupId>
+			    <artifactId>mybatis</artifactId>
+			    <version>${org.mybatis.version}</version>
+			</dependency>
 
 			<!-- jackson -->
 			<dependency>
@@ -737,7 +752,7 @@
 			</dependency>
 			<dependency>
 				<groupId>com.vladmihalcea</groupId>
-				<artifactId>hibernate-types-52</artifactId>
+				<artifactId>hibernate-types-55</artifactId>
 				<version>${com.vladmihalcea.version}</version>
 			</dependency>
 			
@@ -833,6 +848,11 @@
 			</dependency>
 
 			<!-- reactor-netty -->
+			<dependency>
+				<groupId>io.projectreactor</groupId>
+				<artifactId>reactor-core</artifactId>
+				<version>${io.projectreactor.core.version}</version>
+			</dependency>		
 			<dependency>
 				<groupId>io.projectreactor.netty</groupId>
 				<artifactId>reactor-netty-http</artifactId>
