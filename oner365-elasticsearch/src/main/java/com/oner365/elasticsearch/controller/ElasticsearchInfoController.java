@@ -89,17 +89,19 @@ public class ElasticsearchInfoController extends BaseController {
       GetMappingsResponse mappingResponse = client.indices().getMapping(new GetMappingsRequest(), RequestOptions.DEFAULT);
       Map<String, MappingMetadata> mappings = mappingResponse.mappings();
       clusterList.forEach(cluster -> {
-        Map<String, Object> map = mappings.get(cluster.getIndex()).sourceAsMap();
-        Map<String, Object> properties = (Map<String, Object>) map.get("properties");
-        List<ClusterMappingDto> mappingList = new ArrayList<>();
-        for (Entry<String, Object> entry : properties.entrySet()) {
-          ClusterMappingDto mapping = new ClusterMappingDto();
-          mapping.setName(entry.getKey());
-          Map<String, Object> valueMap = (Map<String, Object>) entry.getValue();
-          mapping.setType(valueMap.get("type") == null ? "Object" : valueMap.get("type").toString());
-          mappingList.add(mapping);
+        if (mappings.get(cluster.getIndex()) != null) {
+          Map<String, Object> map = mappings.get(cluster.getIndex()).sourceAsMap();
+          Map<String, Object> properties = (Map<String, Object>) map.get("properties");
+          List<ClusterMappingDto> mappingList = new ArrayList<>();
+          for (Entry<String, Object> entry : properties.entrySet()) {
+            ClusterMappingDto mapping = new ClusterMappingDto();
+            mapping.setName(entry.getKey());
+            Map<String, Object> valueMap = (Map<String, Object>) entry.getValue();
+            mapping.setType(valueMap.get("type") == null ? "Object" : valueMap.get("type").toString());
+            mappingList.add(mapping);
+          }
+          cluster.setMappingList(mappingList);
         }
-        cluster.setMappingList(mappingList);
       });
       return result;
     } catch (Exception e) {
