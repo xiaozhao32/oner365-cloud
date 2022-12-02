@@ -17,7 +17,7 @@ import com.oner365.util.DateUtil;
  *
  * @author zhaoyong
  */
-@Document(indexName = "oner365-log")
+@Document(indexName = "applicationlog")
 @Setting(refreshInterval = "-1")
 public class ApplicationLog implements Serializable {
 

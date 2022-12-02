@@ -84,6 +84,7 @@
 		<org.hdrhistogram.version>2.1.12</org.hdrhistogram.version>
 		<org.bouncycastle.version>1.70</org.bouncycastle.version>
 		<org.javassist.version>3.29.2-GA</org.javassist.version>
+		<org.codehaus.version>3.1.9</org.codehaus.version>
 		<org.quartz.version>2.3.2</org.quartz.version>
 		<org.yaml.version>1.32</org.yaml.version>
 		<org.lz4.version>1.8.0</org.lz4.version>
@@ -556,6 +557,12 @@
 			    <groupId>net.logstash.logback</groupId>
 			    <artifactId>logstash-logback-encoder</artifactId>
 			    <version>${net.logstash.logback.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.codehaus.janino</groupId>
+			    <artifactId>janino</artifactId>
+			    <version>${org.codehaus.version}</version>
 			</dependency>
 			
 			<!-- byte-buddy -->
