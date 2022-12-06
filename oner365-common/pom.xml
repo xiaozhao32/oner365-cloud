@@ -99,6 +99,12 @@
 			<artifactId>pinyin4j</artifactId>
 		</dependency>
 		
+		<!-- jakarta -->
+		<dependency>
+			<groupId>jakarta.validation</groupId>
+			<artifactId>jakarta.validation-api</artifactId>
+		</dependency>
+		
 		<!-- jwt -->
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
@@ -115,6 +121,10 @@
 		<dependency>
 		    <groupId>net.logstash.logback</groupId>
 		    <artifactId>logstash-logback-encoder</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.codehaus.janino</groupId>
+		    <artifactId>janino</artifactId>
 		</dependency>
 		
 		<!-- spring -->

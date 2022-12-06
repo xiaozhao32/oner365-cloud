@@ -149,15 +149,14 @@ public class QueryUtils {
    * @return Sort
    */
   public static Sort buildSortRequest(AttributeBean order) {
-    Sort sort = null;
     if (!DataUtils.isEmpty(order) && !DataUtils.isEmpty(order.getKey())) {
       if (Direction.DESC.name().equalsIgnoreCase(order.getVal().toString())) {
-        sort = Sort.by(Direction.DESC, order.getKey().split(","));
+        return Sort.by(Direction.DESC, order.getKey().split(","));
       } else {
-        sort = Sort.by(Direction.ASC, order.getKey().split(","));
+        return Sort.by(Direction.ASC, order.getKey().split(","));
       }
     }
-    return sort;
+    return Sort.unsorted();
   }
 
   /**

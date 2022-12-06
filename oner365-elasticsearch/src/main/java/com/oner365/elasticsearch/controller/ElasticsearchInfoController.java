@@ -65,7 +65,7 @@ public class ElasticsearchInfoController extends BaseController {
                 .singleton(new BasicHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())))
             .addInterceptorLast((HttpResponseInterceptor) (response, context) -> response.addHeader("X-Elastic-Product",
                 "Elasticsearch"));
-    
+
     try (RestClient restClient = RestClient
         .builder(
             new HttpHost(StringUtils.substringBefore(uri, ":"), Integer.parseInt(StringUtils.substringAfter(uri, ":"))))
@@ -92,16 +92,12 @@ public class ElasticsearchInfoController extends BaseController {
 
       List<List<NodeShard>> shards = client.searchShards().shards();
 
-      Map<String, ShardRoutingState> stateMap = new HashMap<>();
-      Map<String, Integer> shardsMap = new HashMap<>();
+      Map<String, ShardRoutingState> stateMap = new HashMap<>(10);
+      Map<String, Integer> shardsMap = new HashMap<>(10);
       shards.forEach(list -> {
         for (NodeShard shard : list) {
           stateMap.put(shard.index(), shard.state());
-          if (shardsMap.get(shard.index()) != null) {
-            shardsMap.put(shard.index(), shardsMap.get(shard.index()) + 1);
-          } else {
-            shardsMap.put(shard.index(), 1);
-          }
+          shardsMap.merge(shard.index(), 1, Integer::sum);
         }
       });
 
