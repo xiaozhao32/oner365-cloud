@@ -3,7 +3,7 @@ package com.oner365.elasticsearch.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import org.elasticsearch.rest.RestStatus;
+import co.elastic.clients.elasticsearch.indices.stats.ShardRoutingState;
 
 /**
  * Elasticsearch cluster
@@ -24,7 +24,7 @@ public class ClusterDto implements Serializable {
     private Integer numberOfReplicas;
 
     /** Status */
-    private RestStatus status;
+    private ShardRoutingState status;
     
     /** properties */
     private List<ClusterMappingDto> mappingList;
@@ -60,11 +60,11 @@ public class ClusterDto implements Serializable {
         this.numberOfReplicas = numberOfReplicas;
     }
 
-    public RestStatus getStatus() {
+    public ShardRoutingState getStatus() {
         return status;
     }
 
-    public void setStatus(RestStatus status) {
+    public void setStatus(ShardRoutingState status) {
         this.status = status;
     }
 

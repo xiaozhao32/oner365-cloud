@@ -1,27 +1,20 @@
 package com.oner365.elasticsearch.controller;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthRequest;
-import org.elasticsearch.action.admin.cluster.health.ClusterHealthResponse;
-import org.elasticsearch.action.admin.indices.alias.get.GetAliasesRequest;
-import org.elasticsearch.action.search.SearchRequest;
-import org.elasticsearch.action.search.SearchResponse;
-import org.elasticsearch.client.GetAliasesResponse;
-import org.elasticsearch.client.RequestOptions;
-import org.elasticsearch.client.RestHighLevelClient;
-import org.elasticsearch.client.indices.GetMappingsRequest;
-import org.elasticsearch.client.indices.GetMappingsResponse;
-import org.elasticsearch.cluster.metadata.AliasMetadata;
-import org.elasticsearch.cluster.metadata.MappingMetadata;
+import org.apache.http.HttpHost;
+import org.apache.http.HttpResponseInterceptor;
+import org.apache.http.entity.ContentType;
+import org.apache.http.message.BasicHeader;
+import org.elasticsearch.client.RestClient;
+import org.elasticsearch.client.RestClientBuilder.HttpClientConfigCallback;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.elasticsearch.client.ClientConfiguration;
-import org.springframework.data.elasticsearch.client.RestClients;
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,15 +25,26 @@ import com.oner365.elasticsearch.dto.ClusterDto;
 import com.oner365.elasticsearch.dto.ClusterMappingDto;
 import com.oner365.elasticsearch.dto.TransportClientDto;
 
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch._types.NodeShard;
+import co.elastic.clients.elasticsearch.cluster.HealthResponse;
+import co.elastic.clients.elasticsearch.indices.GetAliasResponse;
+import co.elastic.clients.elasticsearch.indices.GetMappingResponse;
+import co.elastic.clients.elasticsearch.indices.get_alias.IndexAliases;
+import co.elastic.clients.elasticsearch.indices.get_mapping.IndexMappingRecord;
+import co.elastic.clients.elasticsearch.indices.stats.ShardRoutingState;
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
+import co.elastic.clients.transport.ElasticsearchTransport;
+import co.elastic.clients.transport.rest_client.RestClientTransport;
+
 /**
  * Elasticsearch 信息
  *
  * @author zhaoyong
  *
  */
-@SuppressWarnings("deprecation")
 @RestController
-@RequestMapping("/info")
+@RequestMapping("/elasticsearch/info")
 public class ElasticsearchInfoController extends BaseController {
 
   @Autowired
@@ -51,57 +55,83 @@ public class ElasticsearchInfoController extends BaseController {
    *
    * @return TransportClientDto
    */
-  @SuppressWarnings("unchecked")
   @GetMapping("/index")
   public TransportClientDto index() {
     // 创建客户端
     String uri = StringUtils.substringAfter(elasticsearchProperties.getUris(), "http://");
-    ClientConfiguration configuration = ClientConfiguration.builder().connectedTo(uri).build();
-    try (RestHighLevelClient client = RestClients.create(configuration).rest()) {
-      ClusterHealthResponse healthResponse = client.cluster().health(new ClusterHealthRequest(), RequestOptions.DEFAULT);
+    HttpClientConfigCallback httpClientConfigCallback = httpClientBuilder ->
+        httpClientBuilder
+            .setDefaultHeaders(Collections
+                .singleton(new BasicHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())))
+            .addInterceptorLast((HttpResponseInterceptor) (response, context) -> response.addHeader("X-Elastic-Product",
+                "Elasticsearch"));
+    
+    try (RestClient restClient = RestClient
+        .builder(
+            new HttpHost(StringUtils.substringBefore(uri, ":"), Integer.parseInt(StringUtils.substringAfter(uri, ":"))))
+        .setHttpClientConfigCallback(httpClientConfigCallback)
+        .build()) {
+
+      ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
+      ElasticsearchClient client = new ElasticsearchClient(transport);
+      HealthResponse healthResponse = client.cluster().health();
 
       TransportClientDto result = new TransportClientDto();
       result.setHostname(StringUtils.substringBefore(uri, ":"));
       result.setPort(Integer.parseInt(StringUtils.substringAfter(uri, ":")));
-      result.setClusterName(healthResponse.getClusterName());
-      result.setNumberOfDataNodes(healthResponse.getNumberOfDataNodes());
-      result.setActiveShards(healthResponse.getActiveShards());
-      result.setStatus(healthResponse.getStatus());
-      result.setTaskMaxWaitingTime(healthResponse.getTaskMaxWaitingTime().getMillis());
-      
+      result.setClusterName(healthResponse.clusterName());
+      result.setNumberOfDataNodes(healthResponse.numberOfDataNodes());
+      result.setActiveShards(healthResponse.activeShards());
+      result.setStatus(healthResponse.status());
+      result.setTaskMaxWaitingTime(healthResponse.taskMaxWaitingInQueueMillis());
+
       // 索引信息
       List<ClusterDto> clusterList = new ArrayList<>();
-      GetAliasesResponse aliasResponse = client.indices().getAlias(new GetAliasesRequest(), RequestOptions.DEFAULT);
-      Map<String, Set<AliasMetadata>> aliasMap = aliasResponse.getAliases();
-      for (Entry<String, Set<AliasMetadata>> entry : aliasMap.entrySet()) {
-        SearchResponse search = client.search(new SearchRequest(entry.getKey()), RequestOptions.DEFAULT);
+      GetAliasResponse aliasResponse = client.indices().getAlias();
+      Map<String, IndexAliases> aliasMap = aliasResponse.result();
+
+      List<List<NodeShard>> shards = client.searchShards().shards();
+
+      Map<String, ShardRoutingState> stateMap = new HashMap<>();
+      Map<String, Integer> shardsMap = new HashMap<>();
+      shards.forEach(list -> {
+        for (NodeShard shard : list) {
+          stateMap.put(shard.index(), shard.state());
+          if (shardsMap.get(shard.index()) != null) {
+            shardsMap.put(shard.index(), shardsMap.get(shard.index()) + 1);
+          } else {
+            shardsMap.put(shard.index(), 1);
+          }
+        }
+      });
+
+      aliasMap.forEach((key, value) -> {
 
         ClusterDto clusterDto = new ClusterDto();
-        clusterDto.setIndex(entry.getKey());
-        clusterDto.setNumberOfShards(search.getTotalShards());
-        clusterDto.setNumberOfReplicas(search.getNumReducePhases());
-        clusterDto.setStatus(search.status());
+        clusterDto.setIndex(key);
+        clusterDto.setNumberOfShards(shardsMap.get(key));
+        clusterDto.setNumberOfReplicas(1);
+        clusterDto.setStatus(stateMap.get(key));
+
         clusterList.add(clusterDto);
-      }
+      });
       result.setClusterList(clusterList);
-      
+
       // mapping信息
-      GetMappingsResponse mappingResponse = client.indices().getMapping(new GetMappingsRequest(), RequestOptions.DEFAULT);
-      Map<String, MappingMetadata> mappings = mappingResponse.mappings();
+      GetMappingResponse mappingResponse = client.indices().getMapping();
+      Map<String, IndexMappingRecord> mappings = mappingResponse.result();
       clusterList.forEach(cluster -> {
-        if (mappings.get(cluster.getIndex()) != null) {
-          Map<String, Object> map = mappings.get(cluster.getIndex()).sourceAsMap();
-          Map<String, Object> properties = (Map<String, Object>) map.get("properties");
-          List<ClusterMappingDto> mappingList = new ArrayList<>();
-          for (Entry<String, Object> entry : properties.entrySet()) {
+        IndexMappingRecord mappingRecord = mappings.get(cluster.getIndex());
+        List<ClusterMappingDto> mappingList = new ArrayList<>();
+        if (mappingRecord != null) {
+          mappingRecord.mappings().properties().forEach((key, value) -> {
             ClusterMappingDto mapping = new ClusterMappingDto();
-            mapping.setName(entry.getKey());
-            Map<String, Object> valueMap = (Map<String, Object>) entry.getValue();
-            mapping.setType(valueMap.get("type") == null ? "Object" : valueMap.get("type").toString());
+            mapping.setName(key);
+            mapping.setType(value._get().getClass().getSimpleName());
             mappingList.add(mapping);
-          }
-          cluster.setMappingList(mappingList);
+          });
         }
+        cluster.setMappingList(mappingList);
       });
       return result;
     } catch (Exception e) {
