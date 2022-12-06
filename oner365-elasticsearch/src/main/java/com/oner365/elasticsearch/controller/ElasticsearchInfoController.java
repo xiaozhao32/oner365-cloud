@@ -44,7 +44,7 @@ import co.elastic.clients.transport.rest_client.RestClientTransport;
  *
  */
 @RestController
-@RequestMapping("/elasticsearch/info")
+@RequestMapping("/info")
 public class ElasticsearchInfoController extends BaseController {
 
   @Autowired
