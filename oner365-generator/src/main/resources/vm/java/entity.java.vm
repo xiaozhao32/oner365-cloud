@@ -36,6 +36,7 @@ import org.hibernate.annotations.TypeDef;
 #end
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.common.constants.PublicConstants;
 #if($column.javaType != 'StatusEnum')
 import com.oner365.common.enums.StatusEnum;
 #end
@@ -64,7 +65,7 @@ public class ${ClassName} implements Serializable {
 #if($column.javaType == 'String')
     @Id
     @GeneratedValue(generator = "generator")
-    @GenericGenerator(name = "generator", strategy = "uuid")
+    @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
 #else
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

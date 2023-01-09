@@ -25,7 +25,6 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.util.ObjectUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
@@ -80,7 +79,7 @@ public class RedisCacheConfig implements CachingConfigurer {
   LettuceConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
     RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(
         redisProperties.getCluster().getNodes());
-    if (!ObjectUtils.isEmpty(redisProperties.getPassword())) {
+    if (!DataUtils.isEmpty(redisProperties.getPassword())) {
       redisClusterConfiguration.setPassword(redisProperties.getPassword());
     }
 

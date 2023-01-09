@@ -148,16 +148,21 @@ public class BlobUtils implements Blob {
         if (pattern.length == 0 || blobLength == 0 || pattern.length > blobLength) {
             return -1;
         }
-        int limit = blobLength - pattern.length;
-        for (int i = (int) start; i <= limit; i++) {
-            int p;
-            for (p = 0; p < pattern.length && blobBytes[i + p] == pattern[p]; p++) {
-                if (p == pattern.length) {
-                    return i + 1L;
-                }
-            }
-        }
-        return -1;
+        
+        return positions(pattern, start);
+    }
+    
+    private long positions(byte[] pattern, long start) {
+      int limit = blobLength - pattern.length;
+      for (int i = (int) start; i <= limit; i++) {
+          int p;
+          for (p = 0; p < pattern.length && blobBytes[i + p] == pattern[p]; p++) {
+              if (p == pattern.length) {
+                  return i + 1L;
+              }
+          }
+      }
+      return -1;
     }
 
     /**

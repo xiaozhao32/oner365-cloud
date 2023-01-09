@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StatusEnum;
 
 /**
@@ -31,7 +32,7 @@ public class SysDictItem implements Serializable {
 
   @Id
   @GeneratedValue(generator = "generator")
-  @GenericGenerator(name = "generator", strategy = "uuid")
+  @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
   private String id;
 
   @Column(name = "dict_item_type_id", nullable = false, length = 32)

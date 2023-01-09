@@ -42,10 +42,10 @@
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<org.springframework.integration.version>5.5.15</org.springframework.integration.version>
-		<org.springframework.security.version>5.7.5</org.springframework.security.version>
+		<org.springframework.integration.version>5.5.16</org.springframework.integration.version>
+		<org.springframework.security.version>5.8.1</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.5</org.springframework.cloud.version>
-		<org.springframework.boot.version>2.7.6</org.springframework.boot.version>
+		<org.springframework.boot.version>2.7.7</org.springframework.boot.version>
 		<org.springframework.version>5.3.24</org.springframework.version>
 		<org.springframework.kafka.version>2.9.1</org.springframework.kafka.version>
 
@@ -57,7 +57,7 @@
 
 		<org.apache.zookeeper.version>3.8.0</org.apache.zookeeper.version>
 		<org.apache.rocketmq.version>4.9.4</org.apache.rocketmq.version>
-		<org.apache.tomcat.version>9.0.69</org.apache.tomcat.version>
+		<org.apache.tomcat.version>9.0.70</org.apache.tomcat.version>
 		<org.apache.pdfbox.version>2.0.26</org.apache.pdfbox.version>
 		<org.apache.hadoop.version>3.3.4</org.apache.hadoop.version>
 		<org.apache.pulsar.version>2.10.1</org.apache.pulsar.version>

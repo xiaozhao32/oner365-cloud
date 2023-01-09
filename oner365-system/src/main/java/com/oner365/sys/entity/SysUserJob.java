@@ -17,6 +17,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StatusEnum;
 
 /**
@@ -36,7 +37,7 @@ public class SysUserJob implements Serializable {
      */
     @Id
     @GeneratedValue(generator = "generator")
-    @GenericGenerator(name = "generator", strategy = "uuid")
+    @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
     private String id;
 
     /**

@@ -23,10 +23,10 @@ import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactor
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.util.ObjectUtils;
 
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.oner365.gateway.constants.GatewayConstants;
+import com.oner365.gateway.util.DataUtils;
 
 import io.lettuce.core.ReadFrom;
 import io.lettuce.core.cluster.ClusterClientOptions;
@@ -75,7 +75,7 @@ public class RedisCacheConfig {
   LettuceConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
     RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(
         redisProperties.getCluster().getNodes());
-    if (!ObjectUtils.isEmpty(redisProperties.getPassword())) {
+    if (!DataUtils.isEmpty(redisProperties.getPassword())) {
       redisClusterConfiguration.setPassword(redisProperties.getPassword());
     }
 

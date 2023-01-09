@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.oner365.api.enums.MisfirePolicyEnum;
 import com.oner365.api.enums.TaskStatusEnum;
+import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StatusEnum;
 import com.oner365.monitor.util.CronUtils;
 import com.oner365.util.DataUtils;
@@ -40,7 +41,7 @@ public class SysTask implements Serializable {
   /** 任务ID */
   @Id
   @GeneratedValue(generator = "generator")
-  @GenericGenerator(name = "generator", strategy = "uuid")
+  @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
   private String id;
 
   /** 任务名称 */

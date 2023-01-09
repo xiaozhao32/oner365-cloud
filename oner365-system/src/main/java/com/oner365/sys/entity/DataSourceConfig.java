@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.oner365.common.constants.PublicConstants;
 
 /**
  * 数据源配置
@@ -30,7 +31,7 @@ public class DataSourceConfig implements Serializable {
 
   @Id
   @GeneratedValue(generator = "generator")
-  @GenericGenerator(name = "generator", strategy = "uuid")
+  @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
   private String id;
 
   /**
