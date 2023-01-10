@@ -3,6 +3,7 @@ package com.oner365.util;
 import java.net.URI;
 
 import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.springframework.http.HttpMethod;
 
 /**
  * HttpDelete
@@ -11,11 +12,9 @@ import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
  */
 public class HttpDelete extends HttpEntityEnclosingRequestBase {
 
-  public static final String METHOD_NAME = "DELETE";
-
   @Override
   public String getMethod() {
-    return METHOD_NAME;
+    return HttpMethod.DELETE.name();
   }
 
   public HttpDelete(final String uri) {

@@ -32,11 +32,6 @@ public class ZipUtil {
   /**
    * Generate constructor
    */
-  private static final int SIZE = 1024;
-
-  /**
-   * Generate constructor
-   */
   private ZipUtil() {
   }
 
@@ -144,8 +139,8 @@ public class ZipUtil {
       zipEntry.setComment(comment);
       out.putNextEntry(zipEntry);
       int length;
-      byte[] b = new byte[SIZE];
-      while ((length = in.read(b, 0, SIZE)) != -1) {
+      byte[] b = new byte[PublicConstants.BYTE_SIZE];
+      while ((length = in.read(b, 0, PublicConstants.BYTE_SIZE)) != -1) {
         out.write(b, 0, length);
       }
     } catch (IOException e) {
@@ -205,8 +200,8 @@ public class ZipUtil {
       try (InputStream is = zipFile.getInputStream(zipEntry);
           FileOutputStream fos = DataUtils.getFileOutputStream(fileName)) {
         int length;
-        byte[] b = new byte[SIZE];
-        while ((length = is.read(b, 0, SIZE)) != -1) {
+        byte[] b = new byte[PublicConstants.BYTE_SIZE];
+        while ((length = is.read(b, 0, PublicConstants.BYTE_SIZE)) != -1) {
           fos.write(b, 0, length);
         }
       }

@@ -36,7 +36,8 @@ public class RsaUtils {
 
   public static final int ALGORITHM_RSA_PRIVATE_KEY_LENGTH = 2048;
 
-  private static final int MODE = 2;
+  private static final int ENCRYPT_MODE = 1;
+  private static final int DECRYPT_MODE = 2;
 
   public static final String PUBLIC_KEY = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAosqXvSzav40EiOMCDOKzmViq6tk45axzW8WF4dvN4wdpSxbP+Ka4tvfPXXfLI6GdaX39fgm75vqkuq9jW1e+Upa4Q+ZcvwBd+DnuP9gvcKgy39mMU524EkdWX0iqXJnozOMjY7fZd4uIkBMTgzL53ZQ4QkuuciJDcqSvxrgbx+GfAh/4Ed8X+ujbdxzCZUXcyMHwtJY27kDA0gx7jYhDWc28G7+tzDWs9VdKO9IepFRFTQmfWSDyEOoW2QnPfPU73Py+0uJ2Z4ZZQ314o8KP6HsU8oRPpQ7ArRFQ1ZeD53B37Ry4U2tfOiXTaM8tdD/q9CUdzXGbjVrR0te4tTrXRQIDAQAB";
 
@@ -87,8 +88,8 @@ public class RsaUtils {
       KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM_RSA);
       Key publicKey = keyFactory.generatePublic(x509KeySpec);
       Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-      cipher.init(1, publicKey);
-      return Base64.getEncoder().encodeToString(rsaSplitCodec(cipher, 1, data.getBytes(Charset.defaultCharset())));
+      cipher.init(ENCRYPT_MODE, publicKey);
+      return Base64.getEncoder().encodeToString(rsaSplitCodec(cipher, ENCRYPT_MODE, data.getBytes(Charset.defaultCharset())));
     } catch (Exception e) {
       LOGGER.error("公钥加密: 字符串 {} 异常", data, e);
     }
@@ -108,8 +109,8 @@ public class RsaUtils {
       KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM_RSA);
       Key publicKey = keyFactory.generatePublic(x509KeySpec);
       Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-      cipher.init(2, publicKey);
-      return new String(rsaSplitCodec(cipher, 2, Base64.getDecoder().decode(data)), Charset.defaultCharset());
+      cipher.init(DECRYPT_MODE, publicKey);
+      return new String(rsaSplitCodec(cipher, DECRYPT_MODE, Base64.getDecoder().decode(data)), Charset.defaultCharset());
     } catch (Exception e) {
       LOGGER.error("公钥解密: 字符串 {} 异常", data, e);
     }
@@ -129,8 +130,8 @@ public class RsaUtils {
       KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM_RSA);
       Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
       Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-      cipher.init(1, privateKey);
-      return Base64.getEncoder().encodeToString(rsaSplitCodec(cipher, 1, data.getBytes(Charset.defaultCharset())));
+      cipher.init(ENCRYPT_MODE, privateKey);
+      return Base64.getEncoder().encodeToString(rsaSplitCodec(cipher, ENCRYPT_MODE, data.getBytes(Charset.defaultCharset())));
     } catch (Exception e) {
       LOGGER.error("私钥解密: 字符串 {} 异常", data, e);
     }
@@ -150,8 +151,8 @@ public class RsaUtils {
       KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM_RSA);
       Key privateKey = keyFactory.generatePrivate(pkcs8KeySpec);
       Cipher cipher = Cipher.getInstance(keyFactory.getAlgorithm());
-      cipher.init(2, privateKey);
-      return new String(rsaSplitCodec(cipher, 2, Base64.getDecoder().decode(data)), Charset.defaultCharset());
+      cipher.init(DECRYPT_MODE, privateKey);
+      return new String(rsaSplitCodec(cipher, DECRYPT_MODE, Base64.getDecoder().decode(data)), Charset.defaultCharset());
     } catch (Exception e) {
       LOGGER.error("私钥解密: 字符串 {} 异常", data, e);
     }
@@ -204,7 +205,7 @@ public class RsaUtils {
 
   private static byte[] rsaSplitCodec(Cipher cipher, int opmode, byte[] data) {
     int maxBlock;
-    if (opmode == MODE) {
+    if (opmode == DECRYPT_MODE) {
       maxBlock = 256;
     } else {
       maxBlock = 245;

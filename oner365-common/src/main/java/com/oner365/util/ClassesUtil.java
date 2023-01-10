@@ -13,6 +13,8 @@ import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 /**
@@ -114,7 +116,8 @@ public class ClassesUtil {
    * @return boolean
    */
   public static boolean isDate(Object value) {
-    return value instanceof Date || value instanceof Calendar;
+    return value instanceof Date || value instanceof Calendar || value instanceof LocalDate
+        || value instanceof LocalDateTime;
   }
 
   /**
@@ -125,7 +128,8 @@ public class ClassesUtil {
    */
   public static boolean isDate(Class<?> clazz) {
     boolean result = false;
-    if (ClassUtils.isAssignable(java.util.Date.class, clazz)) {
+    if (ClassUtils.isAssignable(java.util.Date.class, clazz) || ClassUtils.isAssignable(Calendar.class, clazz)
+        || ClassUtils.isAssignable(LocalDate.class, clazz) || ClassUtils.isAssignable(LocalDateTime.class, clazz)) {
       result = true;
     }
     return result;

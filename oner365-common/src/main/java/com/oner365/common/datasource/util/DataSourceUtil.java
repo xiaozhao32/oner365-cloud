@@ -389,14 +389,14 @@ public class DataSourceUtil {
    */
   private static void getSql(Class<?> retType, Object val, StringBuilder values, String database) {
       if (val == null) {
-          values.append(",");
+          values.append("null,");
       } else {
           if (ClassesUtil.isPrimitive(retType)) {
               // 基本类型
               values.append("'").append(val).append("'").append(",");
           } else if (ClassesUtil.isDate(retType)) {
               // 时间
-              if (DataSourceConstants.DRIVER_NAME_ORACLE.equals(database)) {
+              if (DataSourceConstants.DRIVER_NAME_ORACLE.equals(database) || DataSourceConstants.DRIVER_NAME_DM.equals(database)) {
                   values.append("TO_TIMESTAMP('").append(val).append("', 'YYYY-MM-DD HH24:MI:SS:FF6')").append(",");
               } else {
                   values.append("'").append(val).append("'").append(",");

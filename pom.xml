@@ -86,7 +86,7 @@
 		<org.javassist.version>3.29.2-GA</org.javassist.version>
 		<org.codehaus.version>3.1.9</org.codehaus.version>
 		<org.quartz.version>2.3.2</org.quartz.version>
-		<org.yaml.version>1.32</org.yaml.version>
+		<org.yaml.version>1.33</org.yaml.version>
 		<org.lz4.version>1.8.0</org.lz4.version>
 		
 		<org.postgresql.version>42.5.0</org.postgresql.version>
