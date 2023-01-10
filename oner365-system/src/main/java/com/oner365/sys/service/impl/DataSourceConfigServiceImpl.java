@@ -92,10 +92,10 @@ public class DataSourceConfigServiceImpl implements IDataSourceConfigService {
     String url = null;
     if (DataSourceConstants.DB_TYPE_MYSQL.equals(vo.getDbType())) {
       driverName = DataSourceConstants.DRIVER_NAME_MYSQL;
-      url = "jdbc:mysql://" + vo.getIp() + ":" + vo.getPort() + PublicConstants.DELIMITER + vo.getDbName();
+      url = "jdbc:mysql://" + vo.getIp() + PublicConstants.COLON + vo.getPort() + PublicConstants.DELIMITER + vo.getDbName();
     } else if (DataSourceConstants.DB_TYPE_ORACLE.equals(vo.getDbType())) {
       driverName = DataSourceConstants.DRIVER_NAME_ORACLE;
-      url = "jdbc:oracle:thin:@" + vo.getIp() + ":" + vo.getPort() + ":" + vo.getDbName();
+      url = "jdbc:oracle:thin:@" + vo.getIp() + PublicConstants.COLON + vo.getPort() + PublicConstants.COLON + vo.getDbName();
     }
     vo.setDriverName(driverName);
     vo.setUrl(url);

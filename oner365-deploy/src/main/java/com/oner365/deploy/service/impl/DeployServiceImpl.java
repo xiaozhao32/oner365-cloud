@@ -25,6 +25,9 @@ import com.oner365.deploy.service.DeployService;
 @Service
 public class DeployServiceImpl implements DeployService {
   
+  /** 冒号 */
+  private static final String COLON = ":";
+  
   @Autowired
   private LocalDeployProperties localDeployProperties;
   @Autowired
@@ -41,8 +44,8 @@ public class DeployServiceImpl implements DeployService {
     List<String> projects = new ArrayList<>();
     Map<String, Integer> proejctPorts = new HashMap<>();
     localDeployProperties.getProjects().forEach(project -> {
-        String name = StringUtils.substringBefore(project, ":");
-        String portString = StringUtils.substringAfter(project, ":");
+        String name = StringUtils.substringBefore(project, COLON);
+        String portString = StringUtils.substringAfter(project, COLON);
         Integer port = StringUtils.isEmpty(portString) == true ? 0 : Integer.parseInt(portString);
         
         projects.add(name);
@@ -67,10 +70,10 @@ public class DeployServiceImpl implements DeployService {
       String[] splitServer = StringUtils.split(server, "@");
       if (splitServer.length > 1) {
         DeployServer deployServer = new DeployServer();
-        deployServer.setIp(StringUtils.substringBefore(splitServer[0], ":"));
-        deployServer.setPort(Integer.parseInt(StringUtils.substringAfter(splitServer[0], ":")));
-        deployServer.setUsername(StringUtils.substringBefore(splitServer[1], ":"));
-        deployServer.setPassword(StringUtils.substringAfter(splitServer[1], ":"));
+        deployServer.setIp(StringUtils.substringBefore(splitServer[0], COLON));
+        deployServer.setPort(Integer.parseInt(StringUtils.substringAfter(splitServer[0], COLON)));
+        deployServer.setUsername(StringUtils.substringBefore(splitServer[1], COLON));
+        deployServer.setPassword(StringUtils.substringAfter(splitServer[1], COLON));
         serverList.add(deployServer);
       }
     }

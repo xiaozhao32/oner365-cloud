@@ -68,17 +68,16 @@ public class SysOrganizationController extends BaseController {
    * 直接测试数据源是否连接
    *
    * @param ds       数据源类型
-   * @param ip       ip地址
-   * @param port     端口
-   * @param dbname   数据源名称
-   * @param username 账号
-   * @param password 密码
+   * @param driverName 驱动名称
+   * @param url        ip地址
+   * @param username   账号
+   * @param password   密码
    * @return boolean
    */
   @PostMapping("/connection/{ds}")
-  public boolean isConnection(@PathVariable String ds, @RequestParam String ip, @RequestParam int port,
-      @RequestParam String dbname, @RequestParam String username, @RequestParam String password) {
-    return sysOrgService.isConnection(ds, ip, port, dbname, username, password);
+  public boolean isConnection(@PathVariable String ds, @RequestParam String driverName,
+      @RequestParam String url, @RequestParam String username, @RequestParam String password) {
+    return sysOrgService.isConnection(driverName, url, username, password);
   }
 
   /**

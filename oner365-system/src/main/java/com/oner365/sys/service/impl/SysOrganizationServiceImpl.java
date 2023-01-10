@@ -115,16 +115,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
   }
 
   @Override
-  public Boolean isConnection(String dsType, String ip, int port, String dbName, String userName, String pwd) {
-    String driverName;
-    String url;
-    if (DataSourceConstants.DB_TYPE_MYSQL.equals(dsType)) {
-      driverName = DataSourceConstants.DRIVER_NAME_MYSQL;
-      url = "jdbc:mysql://" + ip + ":" + port + PublicConstants.DELIMITER + dbName;
-    } else {
-      driverName = DataSourceConstants.DRIVER_NAME_ORACLE;
-      url = "jdbc:oracle:thin:@" + ip + ":" + port + ":" + dbName;
-    }
+  public Boolean isConnection(String driverName, String url, String userName, String pwd) {
     return DataSourceUtil.isConnection(driverName, url, userName, pwd);
   }
 
@@ -142,20 +133,7 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
 
     DataSourceConfigVo dataSourceConfigVo = vo.getDataSourceConfigVo();
     if (dataSourceConfigVo != null) {
-      String driverName;
-      String url;
-      if (DataSourceConstants.DB_TYPE_MYSQL.equals(dataSourceConfigVo.getDbType())) {
-        driverName = DataSourceConstants.DRIVER_NAME_MYSQL;
-        url = "jdbc:mysql://" + dataSourceConfigVo.getIp() + ":" + dataSourceConfigVo.getPort() + PublicConstants.DELIMITER
-            + dataSourceConfigVo.getDbName();
-      } else {
-        driverName = DataSourceConstants.DRIVER_NAME_ORACLE;
-        url = "jdbc:oracle:thin:@" + dataSourceConfigVo.getIp() + ":" + dataSourceConfigVo.getPort() + ":"
-            + dataSourceConfigVo.getDbName();
-      }
       dataSourceConfigVo.setDsType(DataSourceConstants.DS_TYPE_DB);
-      dataSourceConfigVo.setDriverName(driverName);
-      dataSourceConfigVo.setUrl(url);
       dataSourceConfigVo.setCreateTime(LocalDateTime.now());
       dataSourceConfigVo.setUpdateTime(LocalDateTime.now());
       vo.setDataSourceConfigVo(dataSourceConfigVo);

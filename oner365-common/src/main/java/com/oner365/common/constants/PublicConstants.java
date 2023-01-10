@@ -81,6 +81,8 @@ public class PublicConstants {
 
   /** 分隔符 */
   public static final String DELIMITER = "/";
+  /** 冒号 */
+  public static final String COLON = ":";
   
   /** uuid */
   public static final String UUID = "org.hibernate.id.UUIDGenerator";

@@ -107,12 +107,12 @@ public class RabbitController extends BaseController {
   }
 
   private String getAuthorization() {
-    String auth = rabbitmqProperties.getUsername() + ":" + rabbitmqProperties.getPassword();
+    String auth = rabbitmqProperties.getUsername() + PublicConstants.COLON + rabbitmqProperties.getPassword();
     return "Basic " + Base64Utils.encodeBase64String(auth.getBytes());
   }
 
   private JSONObject request(String uri) {
-    Mono<JSONObject> mono = client.get().uri(getHost() + "/" + uri)
+    Mono<JSONObject> mono = client.get().uri(getHost() + PublicConstants.DELIMITER + uri)
         .header(HttpHeaders.AUTHORIZATION, getAuthorization()).retrieve().bodyToMono(JSONObject.class);
     return mono.block();
   }

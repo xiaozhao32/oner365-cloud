@@ -26,6 +26,7 @@ import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.cache.RedisCache;
 import com.oner365.common.cache.constants.CacheConstants;
+import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
@@ -71,7 +72,7 @@ public class AuthController extends BaseController {
     public ResponseData<LoginUserDto> login(@Validated @RequestBody LoginUserVo loginUserVo) {
         // 验证码
         if (!DataUtils.isEmpty(loginUserVo.getUuid())) {
-            String verifyKey = SysConstants.CAPTCHA_IMAGE + ":" + loginUserVo.getUuid();
+            String verifyKey = SysConstants.CAPTCHA_IMAGE + PublicConstants.COLON + loginUserVo.getUuid();
             String captcha = redisCache.getCacheObject(verifyKey);
             redisCache.deleteObject(verifyKey);
             if (captcha == null || !captcha.equalsIgnoreCase(loginUserVo.getCode())) {
@@ -112,7 +113,7 @@ public class AuthController extends BaseController {
         String verifyCode = producer.createText();
         // 唯一标识
         String uuid = UUID.randomUUID().toString();
-        String verifyKey = SysConstants.CAPTCHA_IMAGE + ":" + uuid;
+        String verifyKey = SysConstants.CAPTCHA_IMAGE + PublicConstants.COLON + uuid;
         redisCache.setCacheObject(verifyKey, verifyCode, 3, TimeUnit.MINUTES);
 
         CaptchaImageDto result = new CaptchaImageDto();

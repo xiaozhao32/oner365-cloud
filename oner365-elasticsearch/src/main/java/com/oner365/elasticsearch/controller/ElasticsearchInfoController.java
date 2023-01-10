@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oner365.common.constants.PublicConstants;
 import com.oner365.controller.BaseController;
 import com.oner365.elasticsearch.config.properties.ElasticsearchProperties;
 import com.oner365.elasticsearch.dto.ClusterDto;
@@ -67,18 +68,17 @@ public class ElasticsearchInfoController extends BaseController {
                 "Elasticsearch"));
 
     try (RestClient restClient = RestClient
-        .builder(
-            new HttpHost(StringUtils.substringBefore(uri, ":"), Integer.parseInt(StringUtils.substringAfter(uri, ":"))))
-        .setHttpClientConfigCallback(httpClientConfigCallback)
-        .build()) {
+        .builder(new HttpHost(StringUtils.substringBefore(uri, PublicConstants.COLON),
+            Integer.parseInt(StringUtils.substringAfter(uri, PublicConstants.COLON))))
+        .setHttpClientConfigCallback(httpClientConfigCallback).build()) {
 
       ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
       ElasticsearchClient client = new ElasticsearchClient(transport);
       HealthResponse healthResponse = client.cluster().health();
 
       TransportClientDto result = new TransportClientDto();
-      result.setHostname(StringUtils.substringBefore(uri, ":"));
-      result.setPort(Integer.parseInt(StringUtils.substringAfter(uri, ":")));
+      result.setHostname(StringUtils.substringBefore(uri, PublicConstants.COLON));
+      result.setPort(Integer.parseInt(StringUtils.substringAfter(uri, PublicConstants.COLON)));
       result.setClusterName(healthResponse.clusterName());
       result.setNumberOfDataNodes(healthResponse.numberOfDataNodes());
       result.setActiveShards(healthResponse.activeShards());

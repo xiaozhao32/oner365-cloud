@@ -72,7 +72,7 @@ public class DeployMethod {
      */
     public static void deploy(DeployServer server, String localFile, String targetPath) {
         // upload
-        String a1 = "scp -P " + server.getPort() + " " + localFile + " " + server.getUsername() + "@" + server.getIp() + ":" + targetPath;
+        String a1 = "scp -P " + server.getPort() + " " + localFile + " " + server.getUsername() + "@" + server.getIp() + PublicConstants.COLON + targetPath;
         LOGGER.info("> {}", a1);
         DeployUtils.execExecute(a1);
     }
