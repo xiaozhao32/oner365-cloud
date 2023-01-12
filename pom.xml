@@ -76,6 +76,7 @@
 		<org.slf4j.version>1.7.36</org.slf4j.version>
 		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
 		
+		<org.jetbrains.kotlin.version>1.8.0</org.jetbrains.kotlin.version>
 		<org.eclipse.jetty.version>11.0.12</org.eclipse.jetty.version>
 		<org.projectlombok.version>1.18.24</org.projectlombok.version>
 		<org.junit.platform.version>1.7.2</org.junit.platform.version>
@@ -93,6 +94,7 @@
 		<org.neo4j.version>3.2.37</org.neo4j.version>
 		<com.influxdb.version>6.5.0</com.influxdb.version>
 		<com.oracle.version>11.2.0.3</com.oracle.version>
+		<com.dameng.version>8.1.1.49</com.dameng.version>
 		<com.mysql.version>8.0.31</com.mysql.version>
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
@@ -115,13 +117,13 @@
 		<com.belerweb.version>2.5.1</com.belerweb.version>
 		
 		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
-		<io.projectreactor.core.version>3.5.0</io.projectreactor.core.version>
+		<io.projectreactor.core.version>3.5.1</io.projectreactor.core.version>
 		<io.projectreactor.netty.version>1.0.23</io.projectreactor.netty.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
 		<io.undertow.version>2.3.0.Final</io.undertow.version>
 		<io.springfox.version>3.0.0</io.springfox.version>
-		<io.netty.version>4.1.85.Final</io.netty.version>
-		<io.minio.version>8.4.5</io.minio.version>
+		<io.netty.version>4.1.86.Final</io.netty.version>
+		<io.minio.version>8.4.6</io.minio.version>
 		
 		<net.logstash.logback.version>7.2</net.logstash.logback.version>
 		<net.bytebuddy.version>1.12.19</net.bytebuddy.version>
@@ -611,33 +613,58 @@
 				<artifactId>mysql-connector-java</artifactId>
 				<version>${com.mysql.version}</version>
 			</dependency>
-
 			<!-- PostgreSQL -->
 			<dependency>
 				<groupId>org.postgresql</groupId>
 				<artifactId>postgresql</artifactId>
 				<version>${org.postgresql.version}</version>
 			</dependency>
-			
 			<!-- neo4j -->
 			<dependency>
 			    <groupId>org.neo4j</groupId>
 			    <artifactId>neo4j-ogm-http-driver</artifactId>
 			    <version>${org.neo4j.version}</version>
 			</dependency>
-
 			<!-- Oracle -->
 			<dependency>
 				<groupId>com.oracle</groupId>
 				<artifactId>ojdbc6</artifactId>
 				<version>${com.oracle.version}</version>
 			</dependency>
-			
+			<!-- DM -->
+			<dependency>
+			    <groupId>com.dameng</groupId>
+			    <artifactId>Dm8JdbcDriver18</artifactId>
+			    <version>${com.dameng.version}</version>
+			</dependency>
 			<!-- influxdb -->
 			<dependency>
 			  	<groupId>com.influxdb</groupId>
 			  	<artifactId>influxdb-client-java</artifactId>
 			  	<version>${com.influxdb.version}</version>
+			</dependency>
+			
+			<!-- kotlin -->
+			<dependency>
+			    <groupId>org.jetbrains.kotlin</groupId>
+			    <artifactId>kotlin-stdlib</artifactId>
+			    <version>${org.jetbrains.kotlin.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.jetbrains.kotlin</groupId>
+			    <artifactId>kotlin-stdlib-common</artifactId>
+			    <version>${org.jetbrains.kotlin.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.jetbrains.kotlin</groupId>
+			    <artifactId>kotlin-stdlib-jdk7</artifactId>
+			    <version>${org.jetbrains.kotlin.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.jetbrains.kotlin</groupId>
+			    <artifactId>kotlin-stdlib-jdk8</artifactId>
+			    <version>${org.jetbrains.kotlin.version}</version>
 			</dependency>
 
 			<!-- junit-platform -->
