@@ -61,7 +61,7 @@
 		<org.apache.pdfbox.version>2.0.26</org.apache.pdfbox.version>
 		<org.apache.hadoop.version>3.3.4</org.apache.hadoop.version>
 		<org.apache.pulsar.version>2.10.1</org.apache.pulsar.version>
-		<org.apache.dubbo.version>3.1.2</org.apache.dubbo.version>
+		<org.apache.dubbo.version>3.1.4</org.apache.dubbo.version>
 		<org.apache.kafka.version>3.2.3</org.apache.kafka.version>
 		<org.apache.poi.version>5.2.2</org.apache.poi.version>
 
@@ -117,7 +117,7 @@
 		<com.belerweb.version>2.5.1</com.belerweb.version>
 		
 		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
-		<io.projectreactor.core.version>3.5.1</io.projectreactor.core.version>
+		<io.projectreactor.core.version>3.4.26</io.projectreactor.core.version>
 		<io.projectreactor.netty.version>1.0.23</io.projectreactor.netty.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
 		<io.undertow.version>2.3.0.Final</io.undertow.version>
@@ -129,7 +129,7 @@
 		<net.bytebuddy.version>1.12.19</net.bytebuddy.version>
 		<net.java.dev.jna.version>5.12.1</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
-		<de.codecentric.version>2.7.5</de.codecentric.version>
+		<de.codecentric.version>2.7.10</de.codecentric.version>
 		<redis.clients.version>4.2.3</redis.clients.version>
 		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>
 		<joda.time.version>2.11.1</joda.time.version>
