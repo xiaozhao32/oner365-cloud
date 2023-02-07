@@ -11,16 +11,11 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ConfigurationProperties(prefix = "spring.rabbitmq")
 public class RabbitmqProperties {
-  
+
   /**
    * 地址
    */
   private String host;
-  
-  /**
-   * 端口
-   */
-  private int listener = 15672;
 
   /**
    * 账号
@@ -31,12 +26,17 @@ public class RabbitmqProperties {
    * 密码
    */
   private String password;
-  
+
+  /**
+   * web地址
+   */
+  private String uri;
+
   /**
    * virtual host
    */
   private String virtualHost;
-  
+
   public RabbitmqProperties() {
     super();
   }
@@ -65,26 +65,26 @@ public class RabbitmqProperties {
     this.password = password;
   }
 
-  public int getListener() {
-    return listener;
+  public String getUri() {
+    return uri;
   }
 
-  public void setListener(int listener) {
-    this.listener = listener;
+  public void setUri(String uri) {
+    this.uri = uri;
   }
 
-/**
- * @return the virtualHost
- */
-public String getVirtualHost() {
+  /**
+   * @return the virtualHost
+   */
+  public String getVirtualHost() {
     return virtualHost;
-}
+  }
 
-/**
- * @param virtualHost the virtualHost to set
- */
-public void setVirtualHost(String virtualHost) {
+  /**
+   * @param virtualHost the virtualHost to set
+   */
+  public void setVirtualHost(String virtualHost) {
     this.virtualHost = virtualHost;
-}
+  }
 
 }
