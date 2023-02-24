@@ -1226,6 +1226,8 @@
 		<module>oner365-influx</module>
 		<!-- neo4j -->
 		<module>oner365-neo4j</module>
+		<!-- cassandra -->
+		<module>oner365-cassandra</module>
 		<!-- 项目部署 -->
 		<module>oner365-deploy</module>
 		<!-- swagger文档 -->
