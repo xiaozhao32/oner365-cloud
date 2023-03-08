@@ -43,25 +43,25 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<org.springframework.integration.version>5.5.16</org.springframework.integration.version>
-		<org.springframework.security.version>5.8.1</org.springframework.security.version>
+		<org.springframework.security.version>5.8.2</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.5</org.springframework.cloud.version>
 		<org.springframework.boot.version>2.7.8</org.springframework.boot.version>
 		<org.springframework.version>5.3.25</org.springframework.version>
 		<org.springframework.kafka.version>2.9.1</org.springframework.kafka.version>
 
-		<org.apache.rocketmq.boot.starter.version>2.2.2</org.apache.rocketmq.boot.starter.version>
+		<org.apache.rocketmq.boot.starter.version>2.2.3</org.apache.rocketmq.boot.starter.version>
 		<org.apache.shardingsphere.version>4.0.0-RC1</org.apache.shardingsphere.version>
 		<org.apache.logging.log4j.version>2.19.0</org.apache.logging.log4j.version>
 		<org.apache.httpclient.version>4.5.13</org.apache.httpclient.version>
 		<org.apache.httpcore.version>4.4.15</org.apache.httpcore.version>
 
-		<org.apache.zookeeper.version>3.8.0</org.apache.zookeeper.version>
+		<org.apache.zookeeper.version>3.8.1</org.apache.zookeeper.version>
 		<org.apache.rocketmq.version>4.9.4</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.71</org.apache.tomcat.version>
 		<org.apache.pdfbox.version>2.0.26</org.apache.pdfbox.version>
 		<org.apache.hadoop.version>3.3.4</org.apache.hadoop.version>
-		<org.apache.pulsar.version>2.10.1</org.apache.pulsar.version>
-		<org.apache.dubbo.version>3.1.5</org.apache.dubbo.version>
+		<org.apache.pulsar.version>2.11.0</org.apache.pulsar.version>
+		<org.apache.dubbo.version>3.1.7</org.apache.dubbo.version>
 		<org.apache.kafka.version>3.2.3</org.apache.kafka.version>
 		<org.apache.poi.version>5.2.2</org.apache.poi.version>
 
@@ -91,7 +91,7 @@
 		<org.yaml.version>1.33</org.yaml.version>
 		<org.lz4.version>1.8.0</org.lz4.version>
 		
-		<org.postgresql.version>42.5.0</org.postgresql.version>
+		<org.postgresql.version>42.5.4</org.postgresql.version>
 		<org.neo4j.version>3.2.37</org.neo4j.version>
 		<com.influxdb.version>6.5.0</com.influxdb.version>
 		<com.oracle.version>11.2.0.3</com.oracle.version>
@@ -100,14 +100,14 @@
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
 		<com.alibaba.nacos.version>2.1.2</com.alibaba.nacos.version>
-		<com.alibaba.druid.version>1.2.15</com.alibaba.druid.version>
+		<com.alibaba.druid.version>1.2.16</com.alibaba.druid.version>
 		<com.alibaba.fastjson.version>1.2.83</com.alibaba.fastjson.version>
 		
 		<com.thoughtworks.paranamer.version>2.8</com.thoughtworks.paranamer.version>
-		<com.fasterxml.jackson.version>2.14.1</com.fasterxml.jackson.version>
+		<com.fasterxml.jackson.version>2.14.2</com.fasterxml.jackson.version>
 		<com.google.code.gson.version>2.9.1</com.google.code.gson.version>
 		<com.google.guava.version>31.1-jre</com.google.guava.version>
-		<com.google.protobuf.version>3.21.6</com.google.protobuf.version>
+		<com.google.protobuf.version>3.21.12</com.google.protobuf.version>
 		<com.github.xiaoymin.version>3.0.3</com.github.xiaoymin.version>
 		<com.github.penggle.version>2.3.2</com.github.penggle.version>
 		<com.github.tobato.version>1.27.2</com.github.tobato.version>
@@ -121,7 +121,7 @@
 		<io.projectreactor.core.version>3.4.26</io.projectreactor.core.version>
 		<io.projectreactor.netty.version>1.0.23</io.projectreactor.netty.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
-		<io.undertow.version>2.3.0.Final</io.undertow.version>
+		<io.undertow.version>2.3.4.Final</io.undertow.version>
 		<io.springfox.version>3.0.0</io.springfox.version>
 		<io.netty.version>4.1.87.Final</io.netty.version>
 		<io.minio.version>8.4.6</io.minio.version>
