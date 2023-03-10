@@ -1,16 +1,17 @@
 package com.oner365.pulsar.listener;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 
+import org.apache.pulsar.client.api.Consumer;
+import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.MessageListener;
+import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.oner365.pulsar.config.PulsarConfig;
+import com.alibaba.fastjson.JSONObject;
 import com.oner365.pulsar.config.properties.PulsarProperties;
 
 /**
@@ -20,41 +21,26 @@ import com.oner365.pulsar.config.properties.PulsarProperties;
  *
  */
 @Component
-public class PulsarListener {
+public class PulsarListener implements MessageListener<JSONObject> {
+  
+  private static final long serialVersionUID = 1L;
 
   private final Logger logger = LoggerFactory.getLogger(PulsarListener.class);
 
-  @Autowired
-  private PulsarConfig pulsarConfig;
-
-  @Autowired
+  @Resource
   private PulsarProperties pulsarProperties;
 
-  @PostConstruct
-  public void listener() {
-    MessageListener<byte[]> messageListener = (consumer, msg) -> {
-      try {
-        logger.info("Pulsar Message received: {}", new String(msg.getData()));
-        consumer.acknowledge(msg);
-      } catch (PulsarClientException e) {
-        consumer.negativeAcknowledge(msg);
-      }
-    };
+  @Resource
+  private PulsarClient pulsarClient;
+
+  @Override
+  public void received(Consumer<JSONObject> consumer, Message<JSONObject> msg) {
     try {
-      pulsarConfig.getPulsarFactory().newConsumer().topic(pulsarProperties.getTopic())
-          .subscriptionName(pulsarProperties.getSubscription()).messageListener(messageListener).subscribe();
+      logger.info("Pulsar data: {}, topic: {}", new String(msg.getData()), consumer.getTopic());
+      consumer.acknowledge(msg);
     } catch (PulsarClientException e) {
-      logger.error("listener error:", e);
+      consumer.negativeAcknowledge(msg);
     }
   }
   
-  @PreDestroy
-  public void destroy() {
-    try {
-      logger.info("Apache Pulsar close ...");
-      pulsarConfig.getPulsarFactory().close();
-    } catch (PulsarClientException e) {
-      logger.error("listener destroy error:", e);
-    }
-  }
 }
