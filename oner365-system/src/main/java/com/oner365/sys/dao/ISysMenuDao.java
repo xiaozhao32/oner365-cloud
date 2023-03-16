@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
 
 import com.oner365.sys.entity.SysMenu;
 
@@ -13,7 +12,6 @@ import com.oner365.sys.entity.SysMenu;
  * 系统菜单接口
  * @author zhaoyong
  */
-@Repository
 public interface ISysMenuDao extends JpaRepository<SysMenu, String>,JpaSpecificationExecutor<SysMenu>{
 
     /**

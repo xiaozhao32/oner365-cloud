@@ -27,7 +27,7 @@ import com.google.code.kaptcha.util.Config;
 public class CaptchaConfig {
     
     @Bean(name = "captchaProducer")
-    public DefaultKaptcha getKaptchaBean() {
+    DefaultKaptcha getKaptchaBean() {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();
         Properties properties = new Properties();
         // 是否有边框 默认为true 我们可以自己设置yes，no

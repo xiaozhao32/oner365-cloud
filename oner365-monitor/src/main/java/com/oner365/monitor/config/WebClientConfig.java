@@ -33,7 +33,7 @@ public class WebClientConfig {
   private boolean enable;
 
   @Bean
-  public WebClient webClient() {
+  WebClient webClient() {
     ClientHttpConnector httpConnector = new ReactorClientHttpConnector();
     if (!enable) {
       httpConnector = new ReactorClientHttpConnector(HttpClient.create().secure(sslSpec -> {

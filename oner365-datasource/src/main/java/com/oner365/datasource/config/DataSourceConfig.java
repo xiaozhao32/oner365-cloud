@@ -42,13 +42,13 @@ public class DataSourceConfig {
    */
   @Bean(name = "primaryDataSource")
   @ConfigurationProperties(prefix = "spring.datasource.druid")
-  public DataSource primaryDataSource() {
+  DataSource primaryDataSource() {
     return new DruidDataSource();
   }
 
   @Primary
   @Bean(name = "dynamicDataSource")
-  public DataSource dynamicDataSource() {
+  DataSource dynamicDataSource() {
     DataSource ds = primaryDataSource();
     // 当前数据源
     DataSourceHolder.setDataSourceMap(DataSourceConstants.DataSourceType.PRIMARY.name(), ds);

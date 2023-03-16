@@ -11,7 +11,7 @@ import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.Schema;
 import org.apache.pulsar.client.api.SubscriptionType;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.Configuration;
 
 import com.alibaba.fastjson.JSONObject;
 import com.oner365.pulsar.config.properties.PulsarProperties;
@@ -23,7 +23,7 @@ import com.oner365.pulsar.listener.PulsarListener;
  * @author zhaoyong
  *
  */
-@Component
+@Configuration
 public class PulsarConsumer {
   
   @Resource
@@ -36,7 +36,7 @@ public class PulsarConsumer {
   private PulsarListener pulsarListener;
   
   @Bean("getMessageConsumer")
-  public Consumer<JSONObject> getMessageConsumer() {
+  Consumer<JSONObject> getMessageConsumer() {
     return createConsumer(pulsarProperties.getTopic(), pulsarProperties.getSubscription(),
         pulsarListener, Schema.JSON(JSONObject.class));
   }
