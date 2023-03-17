@@ -45,7 +45,7 @@
 		<org.springframework.integration.version>5.5.16</org.springframework.integration.version>
 		<org.springframework.security.version>5.8.2</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.5</org.springframework.cloud.version>
-		<org.springframework.boot.version>2.7.8</org.springframework.boot.version>
+		<org.springframework.boot.version>2.7.9</org.springframework.boot.version>
 		<org.springframework.version>5.3.25</org.springframework.version>
 		<org.springframework.kafka.version>2.9.1</org.springframework.kafka.version>
 
@@ -131,10 +131,10 @@
 		<net.java.dev.jna.version>5.12.1</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
 		<de.codecentric.version>2.7.10</de.codecentric.version>
-		<redis.clients.version>4.2.3</redis.clients.version>
+		<redis.clients.version>4.3.1</redis.clients.version>
 		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>
 		<jakarta.json.version>2.1.1</jakarta.json.version>
-		<joda.time.version>2.11.1</joda.time.version>
+		<joda.time.version>2.12.2</joda.time.version>
 		
  		<org.apache.maven.plugins.version>3.3.0</org.apache.maven.plugins.version>
 	</properties>
@@ -158,6 +158,31 @@
 				<version>${org.springframework.boot.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
+			</dependency>
+			
+			<!-- spring data -->
+			<dependency>
+			    <groupId>org.springframework.data</groupId>
+			    <artifactId>spring-data-commons</artifactId>
+			    <version>${org.springframework.boot.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.springframework.data</groupId>
+			    <artifactId>spring-data-jpa</artifactId>
+			    <version>${org.springframework.boot.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.springframework.data</groupId>
+			    <artifactId>spring-data-redis</artifactId>
+			    <version>${org.springframework.boot.version}</version>
+			</dependency>
+			
+			<dependency>
+			    <groupId>org.springframework.data</groupId>
+			    <artifactId>spring-data-keyvalue</artifactId>
+			    <version>${org.springframework.boot.version}</version>
 			</dependency>
 
 			<!-- spring admin -->
