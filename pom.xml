@@ -43,6 +43,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
 		<org.springframework.integration.version>5.5.17</org.springframework.integration.version>
+		<org.springframework.statemachine.version>2.5.1</org.springframework.statemachine.version>
 		<org.springframework.security.version>5.8.2</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.5</org.springframework.cloud.version>
 		<org.springframework.boot.version>2.7.10</org.springframework.boot.version>
@@ -1282,6 +1283,8 @@
 		<module>oner365-neo4j</module>
 		<!-- cassandra -->
 		<module>oner365-cassandra</module>
+		<!-- statemachine -->
+		<module>oner365-statemachine</module>
 		<!-- vault -->
 		<module>oner365-vault</module>
 		<!-- 项目部署 -->

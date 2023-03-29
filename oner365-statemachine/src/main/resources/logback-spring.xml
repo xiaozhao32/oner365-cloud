@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<springProperty scope="context" name="LOG_NAME" source="spring.application.name" />
+	<springProperty scope="context" name="LOG_FILE" source="logging.file.path" />
+	<!-- logstash -->
+	<springProperty scope="context" name="LOGSTASH_ENABELD" source="logging.logstash.enabled" />
+	<springProperty scope="context" name="LOGSTASH_ADDRESSES" source="logging.logstash.addresses" />
+	
+	<property name="LOG_LEVEL" value="INFO" />
+	<property name="LOG_MAX_SIZE" value="100MB" />
+	
+	<!-- 控制台的日志输出样式 -->
+	<property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){mag enta} %clr(---){faint} %clr([%15.15t]){faint} %m%n${LOG_EXCEPTION_CONVERS ION_WORD:-%wEx}}" />
+
+	<!-- 控制台输出 -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${LOG_LEVEL}</level>
+		</filter>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	
+	<!-- 文件信息配置 -->
+	<appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_FILE}/${LOG_NAME}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_FILE}/archive/${LOG_NAME}_INFO_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>  
+            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+                <maxFileSize>${LOG_MAX_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">  
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>
+        </layout>
+    </appender>
+    
+    <!-- 文件错误日志配置 -->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <File>${LOG_FILE}/${LOG_NAME}_error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_FILE}/archive/${LOG_NAME}_ERROR_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>  
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+                <maxFileSize>${LOG_MAX_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">  
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>  
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>  
+            <onMismatch>DENY</onMismatch>  
+        </filter>
+    </appender>
+
+	<!-- logstash 远程日志配置 -->
+	<if condition='property("LOGSTASH_ENABELD").equals("true")'>
+	<then>
+		<appender name="LOGSTASH" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+			<!-- 多个input索引监听修改对应logstash监听端口即可 -->
+			<destination>${LOGSTASH_ADDRESSES}</destination>
+			<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />
+		</appender>
+	</then>
+	</if>
+
+	<!-- 日志输出级别 -->
+	<root level="${LOG_LEVEL}">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE_INFO" />
+		<appender-ref ref="FILE_ERROR" />
+		<if condition='property("LOGSTASH_ENABELD").equals("true")'>
+		<then>
+			<appender-ref ref="LOGSTASH" />
+		</then>
+		</if>
+	</root>
+</configuration>

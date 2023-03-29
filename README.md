@@ -80,6 +80,8 @@
 11. 时序库测试 - 8717 oner365-influx
 12. 图数据库测试 - 8719 oner365-neo4j
 13. 数据库Cassandra - 8720 oner365-cassandra
+14. 状态机Statemachine - 8721 oner365-statemachine
+15. 密码加密Vault - 8722 oner365-vault
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos

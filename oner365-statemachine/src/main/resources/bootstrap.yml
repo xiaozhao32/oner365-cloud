@@ -1,0 +1,25 @@
+
+server: 
+  port: 8721
+
+spring: 
+  application:
+    name: oner365-statemachine
+    
+  profiles:
+    active: dev
+    
+  cloud:
+  
+    nacos:
+      server-addr: ${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
+      discovery:
+        namespace: ${spring.profiles.active}
+        group: DEFAULT_GROUP
+      config:
+        namespace: ${spring.profiles.active}
+        group: DEFAULT_GROUP
+        file-extension: yml
+        shared-configs:
+          - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+     
