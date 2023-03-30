@@ -4,7 +4,7 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.oner365.sys.mapper.SysMenuMapper">
 
-	<resultMap type="SysMenu" id="SysMenuResult">
+	<resultMap id="SysMenuResult" type="com.oner365.sys.entity.SysMenu">
 		<id     property="id"         	  column="id"             />
 		<result property="menuName"       column="menu_name"      />
 		<result property="parentId"       column="parent_id"      />
@@ -18,7 +18,7 @@
 		<result property="createTime"     column="create_time"    />
 	</resultMap>
 
-	<select id="selectListByUserId" parameterType="SysMenu" resultMap="SysMenuResult">
+	<select id="selectListByUserId" parameterType="com.oner365.sys.entity.SysMenu" resultMap="SysMenuResult">
 		select distinct m.id, m.parent_id, m.menu_name, m.path, m.component, 
 		m.menu_type_id, m.icon, m.menu_order, m.create_time
 		from nt_sys_menu m
