@@ -22,6 +22,9 @@ deploy:
       - oner365-datasource:8716
       - oner365-influx:8717
       - oner365-neo4j:8719
+      - oner365-cassandra:8720
+      - oner365-statemachine:8721
+      - oner365-vault:8722
     libs: 
       - oner365-common
       - oner365-api
