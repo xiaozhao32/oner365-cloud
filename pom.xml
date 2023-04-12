@@ -89,7 +89,7 @@
 		<org.freemarker.version>2.3.32</org.freemarker.version>
 		<org.codehaus.version>3.1.9</org.codehaus.version>
 		<org.quartz.version>2.3.2</org.quartz.version>
-		<org.yaml.version>1.33</org.yaml.version>
+		<org.yaml.version>2.0</org.yaml.version>
 		<org.lz4.version>1.8.0</org.lz4.version>
 		
 		<org.postgresql.version>42.5.4</org.postgresql.version>
@@ -129,6 +129,7 @@
 		
 		<net.logstash.logback.version>7.2</net.logstash.logback.version>
 		<net.bytebuddy.version>1.12.23</net.bytebuddy.version>
+		<net.minidev.version>2.4.10</net.minidev.version>
 		<net.java.dev.jna.version>5.12.1</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
 		<de.codecentric.version>2.7.10</de.codecentric.version>
@@ -300,7 +301,7 @@
 			<dependency>
 				<groupId>commons-fileupload</groupId>
 				<artifactId>commons-fileupload</artifactId>
-				<version>1.4</version>
+				<version>1.5</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-io</groupId>
@@ -643,6 +644,13 @@
 			    <artifactId>jna</artifactId>
 			    <version>${net.java.dev.jna.version}</version>
 			</dependency>
+			
+			<!-- json-smart -->
+			<dependency>
+			    <groupId>net.minidev</groupId>
+			    <artifactId>json-smart</artifactId>
+			    <version>${net.minidev.version}</version>
+			</dependency>
 
 			<!-- ssh2 -->
 			<dependency>
@@ -731,6 +739,11 @@
 				<artifactId>junit-platform-runner</artifactId>
 				<version>${org.junit.platform.version}</version>
 				<scope>test</scope>
+			</dependency>
+			<dependency>
+			    <groupId>junit</groupId>
+			    <artifactId>junit</artifactId>
+			    <version>4.13.2</version>
 			</dependency>
 
 			<!-- mybatis -->
