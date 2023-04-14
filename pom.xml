@@ -53,17 +53,17 @@
 		<org.apache.rocketmq.boot.starter.version>2.2.3</org.apache.rocketmq.boot.starter.version>
 		<org.apache.shardingsphere.version>4.0.0-RC1</org.apache.shardingsphere.version>
 		<org.apache.logging.log4j.version>2.19.0</org.apache.logging.log4j.version>
-		<org.apache.httpclient.version>4.5.13</org.apache.httpclient.version>
-		<org.apache.httpcore.version>4.4.15</org.apache.httpcore.version>
+		<org.apache.httpclient.version>4.5.14</org.apache.httpclient.version>
+		<org.apache.httpcore.version>4.4.16</org.apache.httpcore.version>
 
 		<org.apache.zookeeper.version>3.8.1</org.apache.zookeeper.version>
-		<org.apache.rocketmq.version>4.9.4</org.apache.rocketmq.version>
+		<org.apache.rocketmq.version>4.9.5</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.73</org.apache.tomcat.version>
 		<org.apache.pdfbox.version>2.0.26</org.apache.pdfbox.version>
 		<org.apache.hadoop.version>3.3.4</org.apache.hadoop.version>
 		<org.apache.pulsar.version>2.11.0</org.apache.pulsar.version>
 		<org.apache.dubbo.version>3.1.7</org.apache.dubbo.version>
-		<org.apache.kafka.version>3.2.3</org.apache.kafka.version>
+		<org.apache.kafka.version>3.4.0</org.apache.kafka.version>
 		<org.apache.poi.version>5.2.2</org.apache.poi.version>
 
 		<org.hibernate.validator.version>6.2.5.Final</org.hibernate.validator.version>
@@ -77,7 +77,7 @@
 		<org.slf4j.version>1.7.36</org.slf4j.version>
 		<ch.qos.logback.version>1.2.11</ch.qos.logback.version>
 		
-		<org.jetbrains.kotlin.version>1.8.0</org.jetbrains.kotlin.version>
+		<org.jetbrains.kotlin.version>1.8.20</org.jetbrains.kotlin.version>
 		<org.eclipse.jetty.version>11.0.12</org.eclipse.jetty.version>
 		<org.projectlombok.version>1.18.24</org.projectlombok.version>
 		<org.junit.platform.version>1.7.2</org.junit.platform.version>
@@ -108,7 +108,7 @@
 		<com.fasterxml.jackson.version>2.14.2</com.fasterxml.jackson.version>
 		<com.google.code.gson.version>2.9.1</com.google.code.gson.version>
 		<com.google.guava.version>31.1-jre</com.google.guava.version>
-		<com.google.protobuf.version>3.21.12</com.google.protobuf.version>
+		<com.google.protobuf.version>3.22.3</com.google.protobuf.version>
 		<com.github.xiaoymin.version>3.0.3</com.github.xiaoymin.version>
 		<com.github.penggle.version>2.3.2</com.github.penggle.version>
 		<com.github.tobato.version>1.27.2</com.github.tobato.version>
@@ -119,13 +119,13 @@
 		<com.belerweb.version>2.5.1</com.belerweb.version>
 		
 		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
-		<io.projectreactor.core.version>3.4.28</io.projectreactor.core.version>
-		<io.projectreactor.netty.version>1.0.23</io.projectreactor.netty.version>
+		<io.projectreactor.core.version>3.5.5</io.projectreactor.core.version>
+		<io.projectreactor.netty.version>1.1.6</io.projectreactor.netty.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
-		<io.undertow.version>2.3.4.Final</io.undertow.version>
+		<io.undertow.version>2.3.5.Final</io.undertow.version>
 		<io.springfox.version>3.0.0</io.springfox.version>
 		<io.netty.version>4.1.91.Final</io.netty.version>
-		<io.minio.version>8.4.6</io.minio.version>
+		<io.minio.version>8.5.2</io.minio.version>
 		
 		<net.logstash.logback.version>7.2</net.logstash.logback.version>
 		<net.bytebuddy.version>1.12.23</net.bytebuddy.version>
@@ -133,7 +133,7 @@
 		<net.java.dev.jna.version>5.12.1</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
 		<de.codecentric.version>2.7.10</de.codecentric.version>
-		<redis.clients.version>4.3.1</redis.clients.version>
+		<redis.clients.version>4.3.2</redis.clients.version>
 		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>
 		<jakarta.json.version>2.1.1</jakarta.json.version>
 		<joda.time.version>2.12.2</joda.time.version>
@@ -1192,6 +1192,31 @@
 			<dependency>
 				<groupId>org.apache.kafka</groupId>
 				<artifactId>kafka-clients</artifactId>
+				<version>${org.apache.kafka.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-metadata</artifactId>
+				<version>${org.apache.kafka.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-raft</artifactId>
+				<version>${org.apache.kafka.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-server-common</artifactId>
+				<version>${org.apache.kafka.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-storage</artifactId>
+				<version>${org.apache.kafka.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.kafka</groupId>
+				<artifactId>kafka-storage-api</artifactId>
 				<version>${org.apache.kafka.version}</version>
 			</dependency>
 			
