@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -90,6 +91,10 @@ public class FileController extends BaseController {
   @GetMapping("/download")
   public void download(@RequestParam("fileUrl") String fileUrl, String filename, HttpServletResponse response) {
     byte[] data = fileStorageClient.download(fileUrl);
+    if (data == null) {
+      response.setStatus(HttpStatus.SC_NOT_FOUND);
+      return;
+    }
     if (DataUtils.isEmpty(filename)) {
       filename = StringUtils.substringAfterLast(fileUrl, PublicConstants.DELIMITER);
     }

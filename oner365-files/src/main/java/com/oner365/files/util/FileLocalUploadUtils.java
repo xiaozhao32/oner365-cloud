@@ -27,8 +27,6 @@ public class FileLocalUploadUtils {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(FileLocalUploadUtils.class);
 
-  private static final String FILE_HTTP = "http://";
-
   private FileLocalUploadUtils() {
   }
 
@@ -90,14 +88,14 @@ public class FileLocalUploadUtils {
     }
     String fileUrl = fileWeb + PublicConstants.DELIMITER + uploadPath + fileName;
 
-    String ss = fileUrl.replace(FILE_HTTP, "");
+    String ss = fileUrl.replace(PublicConstants.FILE_HTTP, "");
     String fastUrl = StringUtils.substringBefore(ss, PublicConstants.DELIMITER);
     String id = uploadPath + fileName;
     // save file
     SysFileStorageVo fileEntity = new SysFileStorageVo();
     fileEntity.setId(id);
     fileEntity.setFileName(fileName);
-    fileEntity.setFastdfsUrl(FILE_HTTP + fastUrl);
+    fileEntity.setFastdfsUrl(PublicConstants.FILE_HTTP + fastUrl);
     fileEntity.setFileStorage(storageEnum);
     fileEntity.setFilePath(fileUrl);
     fileEntity.setDisplayName(file.getOriginalFilename());
@@ -119,12 +117,16 @@ public class FileLocalUploadUtils {
     String path = filePath + PublicConstants.DELIMITER + fileUrl;
     LOGGER.info("Local download File path: {}", path);
     File file = DataUtils.getFile(path);
+    if (!file.exists()) {
+      LOGGER.error("download path is not exists: {}", path);
+      return null;
+    }
     try {
       return FileUtil.readAsByteArray(file);
     } catch (Exception e) {
       LOGGER.error("download error:", e);
     }
-    return new byte[0];
+    return null;
   }
 
 }
