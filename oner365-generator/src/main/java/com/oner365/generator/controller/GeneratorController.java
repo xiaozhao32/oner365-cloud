@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
@@ -161,14 +162,15 @@ public class GeneratorController extends BaseController {
    * 生成zip文件
    */
   private void genCode(HttpServletResponse response, byte[] data) {
-    try {
+    try (ServletOutputStream output = response.getOutputStream()) {
       response.reset();
       response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
       response.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
       response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Generator.zip\"");
       response.setContentLength(data.length);
       response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-      IOUtils.write(data, response.getOutputStream());
+      IOUtils.write(data, output);
+      output.flush();
     } catch (IOException e) {
       logger.error("batchGenCode error: ", e);
     }

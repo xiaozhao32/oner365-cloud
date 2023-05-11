@@ -19,6 +19,6 @@ import com.oner365.common.datasource.constants.DataSourceConstants;
 @Documented
 public @interface DataSource {
 
-  DataSourceConstants.DataSourceType value() default DataSourceConstants.DataSourceType.PRIMARY;
+  String value() default DataSourceConstants.PRIMARY;
 
 }

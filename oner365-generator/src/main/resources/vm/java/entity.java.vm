@@ -30,7 +30,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 #end
 #end
-#if($column.javaType != 'json')
+#if($column.javaType == 'json')
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 #end
@@ -40,7 +40,7 @@ import com.oner365.common.constants.PublicConstants;
 #if($column.javaType != 'StatusEnum')
 import com.oner365.common.enums.StatusEnum;
 #end
-#if($column.javaType != 'json')
+#if($column.javaType == 'json')
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 #end
 
@@ -51,7 +51,7 @@ import com.vladmihalcea.hibernate.type.json.JsonStringType;
  */
 @Entity
 @Table(name = "${tableName}")
-#if($column.javaType != 'json')
+#if($column.javaType == 'json')
 @TypeDef(name = "json", typeClass = JsonStringType.class)
 #end
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
