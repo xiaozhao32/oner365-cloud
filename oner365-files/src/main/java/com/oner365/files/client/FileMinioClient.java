@@ -94,14 +94,14 @@ public class FileMinioClient implements IFileStorageClient {
     GetObjectArgs object = GetObjectArgs.builder().bucket(minioProperties.getBucket()).object(path).build();
     if (object.length() == null) {
       LOGGER.error("download path is not exists: {}", path);
-      return null;
+      return new byte[0];
     }
     try (GetObjectResponse objectResponse = minioClient.getObject(object)) {
       return readAsByteArray(objectResponse);
     } catch (Exception e) {
       LOGGER.error("download File Error:", e);
     }
-    return null;
+    return new byte[0];
   }
 
   /**

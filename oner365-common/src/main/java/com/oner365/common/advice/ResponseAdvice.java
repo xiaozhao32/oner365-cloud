@@ -43,6 +43,9 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
   public Object beforeBodyWrite(@Nullable Object body, @NonNull MethodParameter returnType,
       @NonNull MediaType selectedContentType, @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
       @NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response) {
+    if (body == null) {
+      return null;
+    }
     if (body instanceof String) {
       try {
         return objectMapper.writeValueAsString(ResponseData.success(String.valueOf(body)));

@@ -34,7 +34,7 @@ public class DynamicDatasourceController extends BaseController {
    */
   @GetMapping("/test")
   public ResponseData<HashMap<String, Object>> testDataSource() {
-    HashMap<String, Object> result = new HashMap<String, Object>(10);
+    HashMap<String, Object> result = new HashMap<>(10);
 
     // 切换数据源1
     try {

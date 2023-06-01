@@ -10,6 +10,8 @@ import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.apache.pulsar.client.api.Schema;
 import org.apache.pulsar.client.api.SubscriptionType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -25,6 +27,8 @@ import com.oner365.pulsar.listener.PulsarListener;
  */
 @Configuration
 public class PulsarConsumer {
+  
+  private final Logger logger = LoggerFactory.getLogger(PulsarConsumer.class);
   
   @Resource
   private PulsarProperties pulsarProperties;
@@ -48,8 +52,9 @@ public class PulsarConsumer {
           .ackTimeout(10, TimeUnit.SECONDS).subscriptionType(SubscriptionType.Shared).messageListener(messageListener)
           .subscribe();
     } catch (PulsarClientException e) {
-      throw new RuntimeException("createConsumer error");
+      logger.error("createConsumer error", e);
     }
+    return null;
   }
 
 }

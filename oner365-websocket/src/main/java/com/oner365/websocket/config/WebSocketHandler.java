@@ -92,7 +92,7 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
     } else if (message instanceof PongMessage) {
 
     } else {
-      LOGGER.info("Unexpected WebSocket message type: " + message);
+      LOGGER.info("Unexpected WebSocket message type: {}", message);
     }
   }
 

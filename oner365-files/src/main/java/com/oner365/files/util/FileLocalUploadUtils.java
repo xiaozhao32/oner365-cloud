@@ -119,14 +119,14 @@ public class FileLocalUploadUtils {
     File file = DataUtils.getFile(path);
     if (!file.exists()) {
       LOGGER.error("download path is not exists: {}", path);
-      return null;
+      return new byte[0];
     }
     try {
       return FileUtil.readAsByteArray(file);
     } catch (Exception e) {
       LOGGER.error("download error:", e);
     }
-    return null;
+    return new byte[0];
   }
 
 }

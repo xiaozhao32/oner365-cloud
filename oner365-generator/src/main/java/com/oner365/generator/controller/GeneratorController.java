@@ -54,7 +54,7 @@ public class GeneratorController extends BaseController {
   @PostMapping("/list")
   public PageInfo<GenTable> genList(@RequestBody GenTable genTable) {
     List<GenTable> list = genTableService.selectGenTableList(genTable);
-    return new PageInfo<GenTable>(list, 1, PublicConstants.PAGE_SIZE, list.size());
+    return new PageInfo<>(list, 1, PublicConstants.PAGE_SIZE, list.size());
   }
   
   /**
@@ -63,7 +63,7 @@ public class GeneratorController extends BaseController {
   @PostMapping("/db/list")
   public PageInfo<GenTable> dataList(@RequestBody GenTable genTable) {
     List<GenTable> list = genTableService.selectDbTableList(genTable);
-    return new PageInfo<GenTable>(list, 1, PublicConstants.PAGE_SIZE, list.size());
+    return new PageInfo<>(list, 1, PublicConstants.PAGE_SIZE, list.size());
   }
   
   /**
@@ -72,7 +72,7 @@ public class GeneratorController extends BaseController {
   @GetMapping(value = "/column/{tableId}")
   public PageInfo<GenTableColumn> columnList(@PathVariable Long tableId) {
     List<GenTableColumn> list = genTableColumnService.selectGenTableColumnListByTableId(tableId);
-    return new PageInfo<GenTableColumn>(list, 1, PublicConstants.PAGE_SIZE, list.size());
+    return new PageInfo<>(list, 1, PublicConstants.PAGE_SIZE, list.size());
   }
 
   /**

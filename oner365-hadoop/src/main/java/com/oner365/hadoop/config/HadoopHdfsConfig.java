@@ -41,10 +41,10 @@ public class HadoopHdfsConfig {
       org.apache.hadoop.conf.Configuration configuration = new org.apache.hadoop.conf.Configuration();
       configuration.set("fs.defaultFS", hdfsProperties.getPath());
       return FileSystem.get(new URI(hdfsProperties.getPath()), configuration, hdfsProperties.getUsername());
-    } catch (IOException e) {
-      LOGGER.error("FileSystem IOException:", e);
     } catch (InterruptedException e) {
       LOGGER.error("FileSystem InterruptedException:", e);
+    } catch (IOException e) {
+      LOGGER.error("FileSystem IOException:", e);
     } catch (URISyntaxException e) {
       LOGGER.error("FileSystem URISyntaxException:", e);
     }

@@ -18,7 +18,7 @@ import com.oner365.neo4j.service.SonService;
 @Service
 public class SonServiceImpl implements SonService {
   
-  private final Logger logger = LoggerFactory.getLogger(SonService.class);
+  private final Logger logger = LoggerFactory.getLogger(SonServiceImpl.class);
 
   @Autowired
   private SonRepository repository;

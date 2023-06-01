@@ -16,7 +16,7 @@ import com.oner365.dubbo.consumer.SpringDubboConsumerApplication;
  * @author zhaoyong
  */
 @SpringBootTest(classes = SpringDubboConsumerApplication.class)
-public class EchoServiceTest {
+class EchoServiceTest {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EchoServiceTest.class);
 
@@ -24,7 +24,7 @@ public class EchoServiceTest {
     private IEchoService service;
 
     @Test
-    public void test() {
+    void test() {
         String message = "dubbo";
         String result = service.echo(message);
         LOGGER.info("test: {}", result);

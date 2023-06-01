@@ -26,7 +26,7 @@ import com.oner365.pulsar.service.PulsarService;
 @Service
 public class PulsarServiceImpl implements PulsarService {
 
-  private final Logger logger = LoggerFactory.getLogger(PulsarService.class);
+  private final Logger logger = LoggerFactory.getLogger(PulsarServiceImpl.class);
 
   @Resource
   private PulsarProperties pulsarProperties;
@@ -39,8 +39,9 @@ public class PulsarServiceImpl implements PulsarService {
       return pulsarClient.newProducer(schema).topic(topic).batchingMaxPublishDelay(10, TimeUnit.MILLISECONDS)
           .sendTimeout(10, TimeUnit.SECONDS).blockIfQueueFull(true).create();
     } catch (PulsarClientException e) {
-      throw new RuntimeException("初始化Pulsar Producer失败");
+      logger.error("初始化Pulsar Producer失败", e);
     }
+    return null;
   }
 
   @Override

@@ -39,7 +39,7 @@ public class OrderStateMachineEventConfig {
       return;
     }
     order.setOrderState(OrderStateEnum.WAIT_RECEIVE);
-    LOGGER.info("用户支付完成: {}", message.getHeaders().toString());
+    LOGGER.info("用户支付完成: {}", message.getHeaders());
   }
 
   @OnTransitionStart(source = StatemachineConstants.SOURCE_UNPAY, target = StatemachineConstants.SOURCE_WAIT_RECEIVE)
@@ -60,6 +60,6 @@ public class OrderStateMachineEventConfig {
       return;
     }
     order.setOrderState(OrderStateEnum.FINISHED);
-    LOGGER.info("用户已收货: {}", message.getHeaders().toString());
+    LOGGER.info("用户已收货: {}", message.getHeaders());
   }
 }

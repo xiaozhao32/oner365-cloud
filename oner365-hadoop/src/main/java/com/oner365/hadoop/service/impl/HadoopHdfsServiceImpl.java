@@ -37,9 +37,9 @@ import com.oner365.hadoop.service.HadoopHdfsService;
 @Service
 public class HadoopHdfsServiceImpl implements HadoopHdfsService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(HadoopHdfsService.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(HadoopHdfsServiceImpl.class);
 
-  private final int BUFFER_SIZE = 1024 * 1024 * 64;
+  private static final int BUFFER_SIZE = 1024 * 1024 * 64;
 
   @Resource
   private FileSystem fileSystem;

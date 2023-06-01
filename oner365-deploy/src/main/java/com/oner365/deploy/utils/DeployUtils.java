@@ -73,8 +73,8 @@ public class DeployUtils {
       return con;
     } catch (IOException e) {
       LOGGER.error("getConnection error:", e);
-      throw new RuntimeException();
     }
+    return null;
   }
 
   /**
@@ -88,8 +88,8 @@ public class DeployUtils {
       return con.openSession();
     } catch (IOException e) {
       LOGGER.error("getSession error:", e);
-      throw new RuntimeException();
     }
+    return null;
   }
 
   public static SFTPv3Client getClient(Connection con) {
@@ -97,8 +97,8 @@ public class DeployUtils {
       return new SFTPv3Client(con);
     } catch (IOException e) {
       LOGGER.error("getSFTPv3Client error:", e);
-      throw new RuntimeException();
     }
+    return null;
   }
 
   /**

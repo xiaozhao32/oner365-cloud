@@ -13,7 +13,6 @@ import org.springframework.data.domain.Sort.Direction;
 
 import com.google.common.base.Joiner;
 import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.BaseEnum;
 import com.oner365.common.query.Criterion.Operator;
 import com.oner365.util.DataUtils;
 
@@ -111,8 +110,7 @@ public class QueryUtils {
       if (clazz.isEnum()) {
         Field f = clazz.getDeclaredField(value);
         f.setAccessible(true);
-        BaseEnum result = (BaseEnum) f.get(value);
-        return result;
+        return f.get(value);
       }
     } catch (Exception e) {
       // 当前枚举不支持
@@ -135,9 +133,7 @@ public class QueryUtils {
       pageSize = data.getPageSize() == null ? pageSize : data.getPageSize();
 
       Sort sort = buildSortRequest(data.getOrder());
-      if (sort != null) {
-        return PageRequest.of(pageNum - 1, pageSize, sort);
-      }
+      return PageRequest.of(pageNum - 1, pageSize, sort);
     }
     return PageRequest.of(pageNum - 1, pageSize);
   }

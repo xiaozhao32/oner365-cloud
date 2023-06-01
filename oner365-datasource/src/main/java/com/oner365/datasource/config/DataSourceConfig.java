@@ -9,6 +9,7 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -31,7 +32,13 @@ public class DataSourceConfig {
   
   private final Logger logger = LoggerFactory.getLogger(DataSourceConfig.class);
   
-  private final static String DS_TYPE = "ds_type";
+  private static final String DS_TYPE = "ds_type";
+  
+  /**
+   * 数据库加载方式 db cache
+   */
+  @Value("${datasource.type:db}")
+  private String datasourceType;
   
   @Resource
   private RedisCache redisCache;
@@ -53,9 +60,6 @@ public class DataSourceConfig {
     // 当前数据源
     Map<Object, Object> targetDataSources = new HashMap<>();
     targetDataSources.put(DataSourceConstants.PRIMARY, primarySource);
-    
-    // 数据库加载方式 db cache
-    String datasourceType = DataSourceConstants.DS_TYPE_DB;
     
     if (DataSourceConstants.DS_TYPE_DB.equals(datasourceType)) {
       try {

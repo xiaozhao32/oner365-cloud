@@ -36,8 +36,11 @@ public class PulsarListener implements MessageListener<JSONObject> {
   @Override
   public void received(Consumer<JSONObject> consumer, Message<JSONObject> msg) {
     try {
-      logger.info("Pulsar data: {}, topic: {}", new String(msg.getData()), consumer.getTopic());
-      consumer.acknowledge(msg);
+      byte[] bytes = msg.getData();
+      if (bytes != null) {
+        logger.info("Pulsar data: {}, topic: {}", new String(bytes), consumer.getTopic());
+        consumer.acknowledge(msg);
+      }
     } catch (PulsarClientException e) {
       consumer.negativeAcknowledge(msg);
     }
