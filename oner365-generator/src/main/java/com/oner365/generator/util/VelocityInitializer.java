@@ -28,11 +28,10 @@ public class VelocityInitializer {
         Properties p = new Properties();
         try {
             // 加载classpath目录下的vm文件
-            p.setProperty("file.resource.loader.class",
+            p.setProperty("file.resource.file.class",
                     "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader");
             // 定义字符集
             p.setProperty(org.apache.velocity.runtime.RuntimeConstants.ENCODING_DEFAULT, Charset.defaultCharset().name());
-            p.setProperty(org.apache.velocity.runtime.RuntimeConstants.OUTPUT_ENCODING, Charset.defaultCharset().name());
             // 初始化Velocity引擎，指定配置Properties
             Velocity.init(p);
         } catch (Exception e) {
