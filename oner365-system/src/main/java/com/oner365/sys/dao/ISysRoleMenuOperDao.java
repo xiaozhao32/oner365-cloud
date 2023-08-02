@@ -3,22 +3,20 @@ package com.oner365.sys.dao;
 import java.util.List;
 import java.util.Map;
 
-import com.oner365.common.exception.ProjectRuntimeException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.oner365.common.exception.ProjectRuntimeException;
 import com.oner365.sys.entity.SysRoleMenuOper;
 
 /**
  * 菜单操作权限接口
  * @author zhaoyong
  */
-@Repository
 public interface ISysRoleMenuOperDao extends JpaRepository<SysRoleMenuOper, String>,JpaSpecificationExecutor<SysRoleMenuOper>{
 
     /**

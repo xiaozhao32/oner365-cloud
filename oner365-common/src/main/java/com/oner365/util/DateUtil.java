@@ -150,7 +150,7 @@ public class DateUtil {
    * @return 日期型日期
    */
   public static Date stringToDate(String strDate) {
-    String regex = "[0-9]{4}-[0-9]{2}-[0-9]{2}";
+    String regex = "\\d{4}-\\d{2}-\\d{2}";
     Pattern pattern = Pattern.compile(regex);
     Matcher m = pattern.matcher(strDate);
     boolean dateFlag = m.matches();

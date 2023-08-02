@@ -272,7 +272,7 @@ public class BlobUtils implements Blob {
         if (offset < 0 || offset > bytes.length) {
             throw new SQLException("offset < 0 || offset > bytes.length");
         }
-        if (size < 0 || pos + size > (long) Integer.MAX_VALUE || offset + size > bytes.length) {
+        if (size < 0 || pos + size > Integer.MAX_VALUE || offset + size > bytes.length) {
             throw new SQLException();
         }
         // 当copy数据时

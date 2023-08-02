@@ -87,6 +87,9 @@ public class PublicConstants {
   /** uuid */
   public static final String UUID = "org.hibernate.id.UUIDGenerator";
   
+  /** http */
+  public static final String FILE_HTTP = "http://";
+  
   /**
    * 枚举集合
    */

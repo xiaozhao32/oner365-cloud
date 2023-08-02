@@ -1,5 +1,7 @@
 package com.oner365.pulsar.config.properties;
 
+import java.io.Serializable;
+
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,8 +12,10 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 @ConfigurationProperties(prefix = "pulsar")
-public class PulsarProperties {
+public class PulsarProperties implements Serializable {
   
+  private static final long serialVersionUID = 1L;
+
   /**
    * 请求地址
    */

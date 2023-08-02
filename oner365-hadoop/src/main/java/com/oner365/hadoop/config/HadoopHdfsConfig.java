@@ -33,7 +33,7 @@ public class HadoopHdfsConfig {
    * @return FileSystem
    */
   @Bean
-  public FileSystem getFileSystem() {
+  FileSystem getFileSystem() {
     // 客户端去操作hdfs时是有一个用户身份的，默认情况下hdfs客户端api会从jvm中获取一个参数作为自己的用户身份
     // HADOOP_USER_NAME=hadoop
     // 也可以在构造客户端fs对象时，通过参数传递进去
@@ -41,10 +41,10 @@ public class HadoopHdfsConfig {
       org.apache.hadoop.conf.Configuration configuration = new org.apache.hadoop.conf.Configuration();
       configuration.set("fs.defaultFS", hdfsProperties.getPath());
       return FileSystem.get(new URI(hdfsProperties.getPath()), configuration, hdfsProperties.getUsername());
-    } catch (IOException e) {
-      LOGGER.error("FileSystem IOException:", e);
     } catch (InterruptedException e) {
       LOGGER.error("FileSystem InterruptedException:", e);
+    } catch (IOException e) {
+      LOGGER.error("FileSystem IOException:", e);
     } catch (URISyntaxException e) {
       LOGGER.error("FileSystem URISyntaxException:", e);
     }

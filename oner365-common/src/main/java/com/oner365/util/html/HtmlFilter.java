@@ -145,14 +145,30 @@ public final class HtmlFilter {
   @SuppressWarnings("unchecked")
   public HtmlFilter(final Map<String, Object> conf) {
 
-    assert conf.containsKey("vAllowed") : "configuration requires vAllowed";
-    assert conf.containsKey("vSelfClosingTags") : "configuration requires vSelfClosingTags";
-    assert conf.containsKey("vNeedClosingTags") : "configuration requires vNeedClosingTags";
-    assert conf.containsKey("vDisallowed") : "configuration requires vDisallowed";
-    assert conf.containsKey("vAllowedProtocols") : "configuration requires vAllowedProtocols";
-    assert conf.containsKey("vProtocolAtts") : "configuration requires vProtocolAtts";
-    assert conf.containsKey("vRemoveBlanks") : "configuration requires vRemoveBlanks";
-    assert conf.containsKey("vAllowedEntities") : "configuration requires vAllowedEntities";
+    if (conf.containsKey("vAllowed")) {
+      throw new IllegalArgumentException ("configuration requires vAllowed");
+    }
+    if (conf.containsKey("vSelfClosingTags")) {
+      throw new IllegalArgumentException ("configuration requires vSelfClosingTags");
+    }
+    if (conf.containsKey("vNeedClosingTags")) {
+      throw new IllegalArgumentException ("configuration requires vNeedClosingTags");
+    }
+    if (conf.containsKey("vDisallowed")) {
+      throw new IllegalArgumentException ("configuration requires vDisallowed");
+    }
+    if (conf.containsKey("vAllowedProtocols")) {
+      throw new IllegalArgumentException ("configuration requires vAllowedProtocols");
+    }
+    if (conf.containsKey("vProtocolAtts")) {
+      throw new IllegalArgumentException ("configuration requires vProtocolAtts");
+    }
+    if (conf.containsKey("vRemoveBlanks")) {
+      throw new IllegalArgumentException ("configuration requires vRemoveBlanks");
+    }
+    if (conf.containsKey("vAllowedEntities")) {
+      throw new IllegalArgumentException ("configuration requires vAllowedEntities");
+    }
 
     vAllowed = Collections.unmodifiableMap((HashMap<String, List<String>>) conf.get("vAllowed"));
     vSelfClosingTags = (String[]) conf.get("vSelfClosingTags");
@@ -162,9 +178,9 @@ public final class HtmlFilter {
     vProtocolAtts = (String[]) conf.get("vProtocolAtts");
     vRemoveBlanks = (String[]) conf.get("vRemoveBlanks");
     vAllowedEntities = (String[]) conf.get("vAllowedEntities");
-    stripComment = conf.containsKey("stripComment") ? (Boolean) conf.get("stripComment") : true;
-    encodeQuotes = conf.containsKey("encodeQuotes") ? (Boolean) conf.get("encodeQuotes") : true;
-    alwaysMakeTags = conf.containsKey("alwaysMakeTags") ? (Boolean) conf.get("alwaysMakeTags") : true;
+    stripComment = (Boolean) conf.get("stripComment");
+    encodeQuotes = (Boolean) conf.get("encodeQuotes");
+    alwaysMakeTags = (Boolean) conf.get("alwaysMakeTags");
   }
 
   private void reset() {
@@ -209,8 +225,6 @@ public final class HtmlFilter {
     s = checkTags(s);
 
     s = processRemoveBlanks(s);
-
-    // s = validateEntities(s);
 
     return s;
   }
@@ -278,9 +292,9 @@ public final class HtmlFilter {
     // these get tallied in processTag
     // (remember to reset before subsequent calls to filter method)
     final StringBuilder sBuilder = new StringBuilder(buf.toString());
-    for (String key : vTagCounts.keySet()) {
-      for (int ii = 0; ii < vTagCounts.get(key); ii++) {
-        sBuilder.append("</").append(key).append(">");
+    for (Map.Entry<String,Integer> entry : vTagCounts.entrySet()) {
+      for (int ii = 0; ii < entry.getValue(); ii++) {
+        sBuilder.append("</").append(entry.getKey()).append(">");
       }
     }
     s = sBuilder.toString();
@@ -331,8 +345,6 @@ public final class HtmlFilter {
       final String body = m.group(2);
       String ending = m.group(3);
 
-      // debug( "in a starting tag, name='" + name + "'; body='" + body + "';
-      // ending='" + ending + "'" );
       if (allowed(name)) {
         final StringBuilder params = new StringBuilder();
 
@@ -353,7 +365,8 @@ public final class HtmlFilter {
           paramValues.add(m3.group(3));
         }
 
-        String paramName, paramValue;
+        String paramName;
+        String paramValue;
         for (int ii = 0; ii < paramNames.size(); ii++) {
           paramName = paramNames.get(ii).toLowerCase();
           paramValue = paramValues.get(ii);

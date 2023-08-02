@@ -99,7 +99,7 @@ public class FileFdfsClient implements IFileStorageClient {
   private void saveFileStorage(String url, String fileName, long fileSize) {
     // save
     SysFileStorageVo entity = new SysFileStorageVo();
-    entity.setFastdfsUrl("http://" + fileFdfsProperties.getIp());
+    entity.setFastdfsUrl(PublicConstants.FILE_HTTP + fileFdfsProperties.getIp());
     entity.setId(StringUtils.replace(url, entity.getFastdfsUrl() + PublicConstants.DELIMITER, ""));
     entity.setCreateTime(DateUtil.getDate());
     entity.setDirectory(false);

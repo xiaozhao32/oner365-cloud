@@ -8,23 +8,24 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.hadoop.fs.BlockLocation;
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FSDataOutputStream;
 import org.apache.hadoop.fs.FileStatus;
+import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.LocatedFileStatus;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.fs.RemoteIterator;
 import org.apache.hadoop.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSON;
-import com.oner365.hadoop.config.HadoopHdfsConfig;
 import com.oner365.hadoop.dto.FileInfoDto;
 import com.oner365.hadoop.service.HadoopHdfsService;
 
@@ -36,17 +37,17 @@ import com.oner365.hadoop.service.HadoopHdfsService;
 @Service
 public class HadoopHdfsServiceImpl implements HadoopHdfsService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(HadoopHdfsService.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(HadoopHdfsServiceImpl.class);
 
-  private final int BUFFER_SIZE = 1024 * 1024 * 64;
+  private static final int BUFFER_SIZE = 1024 * 1024 * 64;
 
-  @Autowired
-  private HadoopHdfsConfig config;
+  @Resource
+  private FileSystem fileSystem;
 
   @Override
   public boolean mkdir(String path) {
     try {
-      return config.getFileSystem().mkdirs(new Path(path));
+      return fileSystem.mkdirs(new Path(path));
     } catch (IOException e) {
       LOGGER.error("mkdir error:", e);
     }
@@ -59,7 +60,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
       return false;
     }
     try {
-      return config.getFileSystem().exists(new Path(path));
+      return fileSystem.exists(new Path(path));
     } catch (IOException e) {
       LOGGER.error("existFile error:", e);
     }
@@ -70,7 +71,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
   public List<FileInfoDto> readPathInfo(String path) {
     List<FileInfoDto> result = new ArrayList<>();
     try {
-      FileStatus[] statusList = config.getFileSystem().listStatus(new Path(path));
+      FileStatus[] statusList = fileSystem.listStatus(new Path(path));
       for (FileStatus fileStatus : statusList) {
         FileInfoDto fileInfoDto = new FileInfoDto();
         fileInfoDto.setFileName(fileStatus.getPath().getName());
@@ -91,7 +92,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
       return;
     }
     String fileName = file.getOriginalFilename();
-    try (FSDataOutputStream outputStream = config.getFileSystem().create(new Path(path + File.separator + fileName))) {
+    try (FSDataOutputStream outputStream = fileSystem.create(new Path(path + File.separator + fileName))) {
       outputStream.write(file.getBytes());
     } catch (IOException e) {
       LOGGER.error("createFile error:", e);
@@ -100,7 +101,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
 
   @Override
   public String readFile(String path) {
-    try (FSDataInputStream inputStream = config.getFileSystem().open(new Path(path))) {
+    try (FSDataInputStream inputStream = fileSystem.open(new Path(path))) {
       BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()));
       String line;
       StringBuilder sb = new StringBuilder();
@@ -119,7 +120,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
     List<FileInfoDto> result = new ArrayList<>();
 
     try {
-      RemoteIterator<LocatedFileStatus> filesList = config.getFileSystem().listFiles(new Path(path), true);
+      RemoteIterator<LocatedFileStatus> filesList = fileSystem.listFiles(new Path(path), true);
       while (filesList.hasNext()) {
         LocatedFileStatus fileStatus = filesList.next();
         FileInfoDto fileInfoDto = new FileInfoDto();
@@ -142,7 +143,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
       return false;
     }
     try {
-      return config.getFileSystem().rename(new Path(oldName), new Path(newName));
+      return fileSystem.rename(new Path(oldName), new Path(newName));
     } catch (IOException e) {
       LOGGER.error("renameFile error:", e);
     }
@@ -155,7 +156,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
       return false;
     }
     try {
-      return config.getFileSystem().deleteOnExit(new Path(path));
+      return fileSystem.deleteOnExit(new Path(path));
     } catch (IOException e) {
       LOGGER.error("deleteFile error:", e);
     }
@@ -169,7 +170,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
     }
     try {
       // 调用文件系统的文件复制方法，第一个参数是否删除原文件true为删除，默认为false
-      config.getFileSystem().copyFromLocalFile(false, new Path(path), new Path(uploadPath));
+      fileSystem.copyFromLocalFile(false, new Path(path), new Path(uploadPath));
     } catch (IOException e) {
       LOGGER.error("uploadFile error:", e);
     }
@@ -182,7 +183,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
     }
     try {
       // 调用文件系统的文件复制方法，第一个参数是否删除原文件true为删除，默认为false
-      config.getFileSystem().copyToLocalFile(false, new Path(path), new Path(downloadPath));
+      fileSystem.copyToLocalFile(false, new Path(path), new Path(downloadPath));
     } catch (IOException e) {
       LOGGER.error("downloadFile error:", e);
     }
@@ -193,8 +194,8 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
     if (StringUtils.isEmpty(sourcePath) || StringUtils.isEmpty(targetPath)) {
       return;
     }
-    try (FSDataInputStream inputStream = config.getFileSystem().open(new Path(sourcePath));
-        FSDataOutputStream outputStream = config.getFileSystem().create(new Path(targetPath))) {
+    try (FSDataInputStream inputStream = fileSystem.open(new Path(sourcePath));
+        FSDataOutputStream outputStream = fileSystem.create(new Path(targetPath))) {
 
       IOUtils.copyBytes(inputStream, outputStream, BUFFER_SIZE, false);
     } catch (IOException e) {
@@ -204,7 +205,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
 
   @Override
   public byte[] openFileToBytes(String path) {
-    try (FSDataInputStream inputStream = config.getFileSystem().open(new Path(path))) {
+    try (FSDataInputStream inputStream = fileSystem.open(new Path(path))) {
       return IOUtils.readFullyToByteArray(inputStream);
     } catch (IOException e) {
       LOGGER.error("openFileToBytes error:", e);
@@ -221,8 +222,8 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
   @Override
   public BlockLocation[] getFileBlockLocations(String path) {
     try {
-      FileStatus fileStatus = config.getFileSystem().getFileStatus(new Path(path));
-      return config.getFileSystem().getFileBlockLocations(fileStatus, 0, fileStatus.getLen());
+      FileStatus fileStatus = fileSystem.getFileStatus(new Path(path));
+      return fileSystem.getFileBlockLocations(fileStatus, 0, fileStatus.getLen());
     } catch (IOException e) {
       LOGGER.error("getFileBlockLocations error:", e);
     }

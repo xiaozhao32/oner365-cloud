@@ -24,7 +24,7 @@ public class FileServiceClientFallback implements IFileServiceClient {
   
   @Override
   public byte[] download(String fileUrl) {
-    return null;
+    return new byte[0];
   }
 
   @Override

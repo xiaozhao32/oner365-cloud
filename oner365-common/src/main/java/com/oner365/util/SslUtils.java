@@ -21,6 +21,9 @@ public class SslUtils {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SslUtils.class);
   
+  private SslUtils() {
+  }
+  
   /**
    * 通过url获取https域名的证书publicKey
    *
@@ -40,7 +43,6 @@ public class SslUtils {
         PublicKey publicKey = x509Certificate.getPublicKey();
         return Base64Utils.encodeBase64String(publicKey.getEncoded());
       }
-      return null;
     } catch (Exception e) {
       LOGGER.error("getSSLPublicKey error:",e);
     } finally {

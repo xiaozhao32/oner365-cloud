@@ -19,7 +19,7 @@ import com.oner365.gateway.service.IRedisSendMessageService;
 @Service
 public class RedisSendMessageServiceImpl implements IRedisSendMessageService {
   
-  private final Logger logger = LoggerFactory.getLogger(IRedisSendMessageService.class);
+  private final Logger logger = LoggerFactory.getLogger(RedisSendMessageServiceImpl.class);
 
   @Autowired
   public RedisTemplate<String,Serializable> redisTemplate;
@@ -27,7 +27,7 @@ public class RedisSendMessageServiceImpl implements IRedisSendMessageService {
   @Override
   public void sendRefreshRoute() {
     try {
-      redisTemplate.convertAndSend(GatewayConstants.QUEUE_NAME, null);
+      redisTemplate.convertAndSend(GatewayConstants.QUEUE_NAME, GatewayConstants.QUEUE_NAME);
     }catch(Exception e) {
       logger.error("sendRefreshRoute error", e);
     }

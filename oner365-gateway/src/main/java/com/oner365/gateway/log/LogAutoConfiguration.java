@@ -24,7 +24,7 @@ public class LogAutoConfiguration {
     }
 
     @Bean
-    public SysLogListener sysLogListener() {
+    SysLogListener sysLogListener() {
         return new SysLogListener(this.sysLogService);
     }
 

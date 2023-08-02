@@ -48,52 +48,52 @@ public class SwaggerConfig implements WebMvcConfigurer {
   }
 
   @Bean
-  public Docket systemApi() {
+  Docket systemApi() {
     return buildApi("System(系统管理)", "com.oner365.swagger.controller.system");
   }
 
   @Bean
-  public Docket monitorApi() {
+  Docket monitorApi() {
     return buildApi("Monitor(监控中心)", "com.oner365.swagger.controller.monitor");
   }
 
   @Bean
-  public Docket elasticsearchApi() {
+  Docket elasticsearchApi() {
     return buildApi("Elasticsearch(索引查询)", "com.oner365.swagger.controller.elasticsearch");
   }
 
   @Bean
-  public Docket gatewayApi() {
+  Docket gatewayApi() {
     return buildApi("Cloud 专用(网关管理)", "com.oner365.swagger.controller.gateway");
   }
 
   @Bean
-  public Docket filesApi() {
+  Docket filesApi() {
     return buildApi("Files(文件中心)", "com.oner365.swagger.controller.files");
   }
 
   @Bean
-  public Docket rabbitmqApi() {
+  Docket rabbitmqApi() {
     return buildApi("Rabbitmq(消息队列)", "com.oner365.swagger.controller.rabbitmq");
   }
 
   @Bean
-  public Docket kafkaApi() {
+  Docket kafkaApi() {
     return buildApi("Kafka(消息队列)", "com.oner365.swagger.controller.kafka");
   }
 
   @Bean
-  public Docket rocketmqApi() {
+  Docket rocketmqApi() {
     return buildApi("Rocketmq(消息队列)", "com.oner365.swagger.controller.rocketmq");
   }
   
   @Bean
-  public Docket pulsarApi() {
+  Docket pulsarApi() {
     return buildApi("Pulsar(消息队列)", "com.oner365.swagger.controller.pulsar");
   }
 
   @Bean
-  public Docket dubboApi() {
+  Docket dubboApi() {
     return buildApi("Dubbo(Dubbo服务)", "com.oner365.swagger.controller.dubbo");
   }
 

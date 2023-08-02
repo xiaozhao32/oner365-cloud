@@ -38,7 +38,7 @@ import com.oner365.util.DataUtils;
 @Service
 public class OrderServiceImpl implements IOrderService {
 
-  private final Logger logger = LoggerFactory.getLogger(IOrderService.class);
+  private final Logger logger = LoggerFactory.getLogger(OrderServiceImpl.class);
 
   private static final String CACHE_NAME = "Order";
 

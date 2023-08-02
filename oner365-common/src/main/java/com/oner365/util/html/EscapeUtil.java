@@ -11,8 +11,8 @@ public class EscapeUtil {
 
   public static final String RE_HTML_MARK = "(<[^<]*?>)|(<[\\s]*?/[^<]*?>)|(<[^<]*?/[\\s]*?>)";
 
-  public static final int TEXT_SIZE = 64;
-  public static final char[][] TEXT = new char[TEXT_SIZE][];
+  private static final int TEXT_SIZE = 64;
+  private static final char[][] TEXT = new char[TEXT_SIZE][];
 
   static {
     for (int i = 0; i < TEXT_SIZE; i++) {
@@ -30,6 +30,9 @@ public class EscapeUtil {
     TEXT['<'] = "&#60;".toCharArray();
     // 大于号
     TEXT['>'] = "&#62;".toCharArray();
+  }
+  
+  private EscapeUtil() {
   }
 
   /**

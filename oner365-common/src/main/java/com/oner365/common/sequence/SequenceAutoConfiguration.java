@@ -29,13 +29,13 @@ public class SequenceAutoConfiguration {
 
     @Bean
     @ConditionalOnBean({ SequenceSnowflakeProperties.class })
-    public SnowflakeSequence snowflakeSequence(SequenceSnowflakeProperties properties) {
+    SnowflakeSequence snowflakeSequence(SequenceSnowflakeProperties properties) {
         return SnowflakeSeqBuilder.create().datacenterId(properties.getDatacenterId())
                 .workerId(properties.getWorkerId()).build();
     }
 
     @Bean
-    public RangeSequence defaultRangeSequence(RedisProperties properties) {
+    RangeSequence defaultRangeSequence(RedisProperties properties) {
         DefaultRangeSequence defaultRangeSequence = new DefaultRangeSequence();
         RedisSeqRangeMgr redisSeqRangeMgr = new RedisSeqRangeMgr();
         redisSeqRangeMgr.setProperties(properties);

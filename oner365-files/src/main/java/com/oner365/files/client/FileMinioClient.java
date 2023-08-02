@@ -91,8 +91,12 @@ public class FileMinioClient implements IFileStorageClient {
 
   @Override
   public byte[] download(String path) {
-    try (GetObjectResponse objectResponse = minioClient
-        .getObject(GetObjectArgs.builder().bucket(minioProperties.getBucket()).object(path).build())) {
+    GetObjectArgs object = GetObjectArgs.builder().bucket(minioProperties.getBucket()).object(path).build();
+    if (object.length() == null) {
+      LOGGER.error("download path is not exists: {}", path);
+      return new byte[0];
+    }
+    try (GetObjectResponse objectResponse = minioClient.getObject(object)) {
       return readAsByteArray(objectResponse);
     } catch (Exception e) {
       LOGGER.error("download File Error:", e);

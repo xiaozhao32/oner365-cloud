@@ -18,7 +18,7 @@ import com.oner365.neo4j.service.ParentService;
 @Service
 public class ParentServiceImpl implements ParentService {
   
-  private final Logger logger = LoggerFactory.getLogger(ParentService.class);
+  private final Logger logger = LoggerFactory.getLogger(ParentServiceImpl.class);
 
   @Autowired
   private ParentRepository repository;

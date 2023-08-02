@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.ResponseData;
+import com.oner365.controller.BaseController;
 
 /**
  * 测试ws
@@ -14,7 +15,7 @@ import com.oner365.common.ResponseData;
 @RefreshScope
 @RestController
 @RequestMapping("/websocket2")
-public class WebsocketController {
+public class WebsocketController extends BaseController {
 
 
 	/**
@@ -24,7 +25,7 @@ public class WebsocketController {
 	 */
 	@GetMapping
 	public ResponseData<String> test(String token) {
-		System.err.println(token);
-		return ResponseData.success(null);
+		logger.info("token:{}", token);
+		return ResponseData.success(token);
 	}
 }

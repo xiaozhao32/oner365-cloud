@@ -22,7 +22,7 @@ import com.oner365.deploy.utils.DeployMethod;
  */
 @SpringBootTest
 @ActiveProfiles("lt")
-public class DeployTest {
+class DeployTest {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(DeployTest.class);
   
@@ -33,7 +33,7 @@ public class DeployTest {
    * 本地部署
    */
   @Test
-  public void deployNativeTest() {
+  void deployNativeTest() {
     DeployEntity entity = deployService.getDeployEntity();
     ServerEntity server = deployService.getServerEntity();
     LOGGER.info("Deploy project: {}", entity);
@@ -45,7 +45,7 @@ public class DeployTest {
    * 服务器部署
    */
   @Test
-  public void deployServerTest() {
+  void deployServerTest() {
     DeployEntity deploy = deployService.getDeployEntity();
     ServerEntity server = deployService.getServerEntity();
     LOGGER.info("Deploy project: {}", server);

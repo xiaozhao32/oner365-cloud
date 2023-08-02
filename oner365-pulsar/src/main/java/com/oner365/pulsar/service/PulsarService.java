@@ -1,5 +1,6 @@
 package com.oner365.pulsar.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.oner365.common.enums.ResultEnum;
 
 /**
@@ -16,6 +17,6 @@ public interface PulsarService {
    * @param message 消息
    * @return 发送结果
    */
-  ResultEnum convertAndSend(Object message);
+  ResultEnum convertAndSend(JSONObject message);
   
 }
