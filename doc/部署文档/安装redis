@@ -16,7 +16,7 @@
 
 	-- 启动
 		-- cd /usr/local/redis/bin
-		-- ./redis-server /opt/redis-5.0.3/redis.conf
+		-- ./redis-server /opt/redis-6.0.5/redis.conf
 	-- redis 哨兵
 		-- 修改配置文件
 			-- redis.conf （主，master）
