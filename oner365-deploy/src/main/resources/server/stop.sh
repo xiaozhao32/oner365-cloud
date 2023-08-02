@@ -8,15 +8,20 @@ selfpath=$(cd "$(dirname "$0")"; pwd)
 cd $selfpath
 
 function exec() {
-    tpid=`cat $1/tpid`
-    rm -f $1/tpid
-    if [ ${tpid} ]; then
-        echo "Kill '${tpid}' $1 Process!"
-        kill -15 $tpid
-    else
-        echo "$1 Stop Success!"
-    fi
-    sleep 5
+    if [ -f $1/tpid ];then
+	    tpid=`cat $1/tpid`
+	    if kill -0 "$tpid" &> /dev/null; then 
+	        echo $1 "Stop '$tpid' Process!"
+	        kill -15 $tpid
+	        sleep 15
+	    fi
+	    if kill -0 "$tpid" &> /dev/null; then 
+	        echo $1 "Kill '$tpid' Process!"
+	        kill -9 $tpid
+	        sleep 15
+	    fi
+	    rm -f $1/tpid
+	fi
 }
 
 #------------------------------------------------------------------
