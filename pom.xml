@@ -44,10 +44,10 @@
 
 		<org.springframework.integration.version>5.5.18</org.springframework.integration.version>
 		<org.springframework.statemachine.version>2.5.1</org.springframework.statemachine.version>
-		<org.springframework.security.version>5.8.4</org.springframework.security.version>
+		<org.springframework.security.version>5.8.5</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.6</org.springframework.cloud.version>
-		<org.springframework.boot.version>2.7.13</org.springframework.boot.version>
-		<org.springframework.version>5.3.28</org.springframework.version>
+		<org.springframework.boot.version>2.7.14</org.springframework.boot.version>
+		<org.springframework.version>5.3.29</org.springframework.version>
 		<org.springframework.kafka.version>2.9.1</org.springframework.kafka.version>
 
 		<org.apache.rocketmq.boot.starter.version>2.2.3</org.apache.rocketmq.boot.starter.version>
@@ -58,11 +58,11 @@
 
 		<org.apache.zookeeper.version>3.8.1</org.apache.zookeeper.version>
 		<org.apache.rocketmq.version>4.9.5</org.apache.rocketmq.version>
-		<org.apache.tomcat.version>9.0.76</org.apache.tomcat.version>
+		<org.apache.tomcat.version>9.0.78</org.apache.tomcat.version>
 		<org.apache.pdfbox.version>2.0.26</org.apache.pdfbox.version>
 		<org.apache.hadoop.version>3.3.4</org.apache.hadoop.version>
 		<org.apache.pulsar.version>3.0.0</org.apache.pulsar.version>
-		<org.apache.dubbo.version>3.2.2</org.apache.dubbo.version>
+		<org.apache.dubbo.version>3.2.4</org.apache.dubbo.version>
 		<org.apache.kafka.version>3.4.0</org.apache.kafka.version>
 		<org.apache.poi.version>5.2.2</org.apache.poi.version>
 
@@ -115,21 +115,21 @@
 		<com.github.oshi.version>6.2.2</com.github.oshi.version>
 		<com.squareup.okhttp3.version>4.10.0</com.squareup.okhttp3.version>
 		<com.squareup.okio.version>3.3.0</com.squareup.okio.version>
-		<com.rabbitmq.version>5.17.0</com.rabbitmq.version>
+		<com.rabbitmq.version>5.18.0</com.rabbitmq.version>
 		<com.belerweb.version>2.5.1</com.belerweb.version>
 		
 		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
 		<io.projectreactor.core.version>3.5.6</io.projectreactor.core.version>
 		<io.projectreactor.netty.version>1.1.6</io.projectreactor.netty.version>
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
-		<io.undertow.version>2.3.6.Final</io.undertow.version>
+		<io.undertow.version>2.3.7.Final</io.undertow.version>
 		<io.springfox.version>3.0.0</io.springfox.version>
-		<io.netty.version>4.1.94.Final</io.netty.version>
+		<io.netty.version>4.1.96.Final</io.netty.version>
 		<io.minio.version>8.5.4</io.minio.version>
 		
 		<net.logstash.logback.version>7.2</net.logstash.logback.version>
 		<net.bytebuddy.version>1.12.23</net.bytebuddy.version>
-		<net.minidev.version>2.4.10</net.minidev.version>
+		<net.minidev.version>2.4.11</net.minidev.version>
 		<net.java.dev.jna.version>5.12.1</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
 		<de.codecentric.version>2.7.10</de.codecentric.version>
