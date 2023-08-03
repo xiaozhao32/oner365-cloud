@@ -8,6 +8,10 @@
 	<springProperty scope="context" name="LOGSTASH_ENABELD" source="logging.logstash.enabled" />
 	<springProperty scope="context" name="LOGSTASH_ADDRESSES" source="logging.logstash.addresses" />
 	
+	<!-- kafka -->
+	<springProperty scope="context" name="BOOTSTRAP_SERVERS" source="spring.kafka.bootstrap-servers" />
+	<springProperty scope="context" name="KAFKA_TOPIC" source="spring.kafka.template.default-topic" />
+	
 	<property name="LOG_LEVEL" value="INFO" />
 	<property name="LOG_MAX_SIZE" value="100MB" />
 	
@@ -68,6 +72,20 @@
 		</appender>
 	</then>
 	</if>
+	
+	<!-- kafka -->
+	<appender name="kafkaAppender" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+        <encoder>
+            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %logger{36} - %msg%n</pattern>
+        </encoder>
+        <topic>${KAFKA_TOPIC}</topic>
+        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy"/>
+        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
+        <producerConfig>acks=0</producerConfig>
+        <producerConfig>linger.ms=1000</producerConfig>
+        <producerConfig>max.block.ms=0</producerConfig>
+        <producerConfig>bootstrap.servers=${BOOTSTRAP_SERVERS}</producerConfig>
+    </appender>
 
 	<!-- 日志输出级别 -->
 	<root level="${LOG_LEVEL}">

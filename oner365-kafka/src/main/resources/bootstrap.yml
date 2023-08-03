@@ -7,11 +7,11 @@ spring:
     name: oner365-kafka
     
   profiles:
-    active: dev
+    active: prod
     
   cloud:
     nacos:
-      server-addr: ${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
+      server-addr: 172.16.80.211:31293
       discovery:
         namespace: ${spring.profiles.active}
         group: DEFAULT_GROUP
