@@ -2,7 +2,9 @@ package com.oner365.common.cache.config;
 
 import java.io.Serializable;
 import java.time.Duration;
+import java.util.HashSet;
 
+import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,12 +21,15 @@ import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisClusterConfiguration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
+import org.springframework.data.redis.connection.RedisSentinelConfiguration;
 import org.springframework.data.redis.connection.jedis.JedisConnection;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
+import org.springframework.data.redis.connection.lettuce.LettucePoolingClientConfiguration;
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.util.ObjectUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
@@ -76,7 +81,7 @@ public class RedisCacheConfig implements CachingConfigurer {
 
   @Bean
   @ConditionalOnProperty(value = { "spring.redis.cluster.enable" }, havingValue = "true")
-  LettuceConnectionFactory redisConnectionFactory(RedisProperties redisProperties) {
+  LettuceConnectionFactory redisClusterConnectionFactory(RedisProperties redisProperties) {
     RedisClusterConfiguration redisClusterConfiguration = new RedisClusterConfiguration(
         redisProperties.getCluster().getNodes());
     if (!DataUtils.isEmpty(redisProperties.getPassword())) {
@@ -90,6 +95,20 @@ public class RedisCacheConfig implements CachingConfigurer {
     LettuceClientConfiguration lettuceClientConfiguration = LettuceClientConfiguration.builder()
         .readFrom(ReadFrom.REPLICA_PREFERRED).clientOptions(clusterClientOptions).build();
     return new LettuceConnectionFactory(redisClusterConfiguration, lettuceClientConfiguration);
+  }
+  
+  @Bean
+  @ConditionalOnProperty(value = { "spring.redis.sentinel.enable" }, havingValue = "true")
+  LettuceConnectionFactory redisSentinelConnectionFactory(RedisProperties redisProperties) {
+    RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration(
+        redisProperties.getSentinel().getMaster(), new HashSet<String>(redisProperties.getSentinel().getNodes()));
+    if (!ObjectUtils.isEmpty(redisProperties.getPassword())) {
+      redisSentinelConfiguration.setPassword(redisProperties.getPassword());
+    }
+    GenericObjectPoolConfig<Object> poolConfig = new GenericObjectPoolConfig<Object>();
+    LettuceClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder()
+        .poolConfig(poolConfig).build();
+    return new LettuceConnectionFactory(redisSentinelConfiguration, lettuceClientConfiguration);
   }
 
   @Bean
