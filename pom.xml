@@ -64,7 +64,7 @@
 		<org.apache.pulsar.version>3.0.0</org.apache.pulsar.version>
 		<org.apache.dubbo.version>3.2.4</org.apache.dubbo.version>
 		<org.apache.kafka.version>3.5.1</org.apache.kafka.version>
-		<org.apache.poi.version>5.2.2</org.apache.poi.version>
+		<org.apache.poi.version>5.2.3</org.apache.poi.version>
 
 		<org.hibernate.validator.version>6.2.5.Final</org.hibernate.validator.version>
 		<org.hibernate.version>5.6.15.Final</org.hibernate.version>
@@ -396,7 +396,7 @@
 			<dependency>
 				<groupId>commons-codec</groupId>
 				<artifactId>commons-codec</artifactId>
-				<version>1.15</version>
+				<version>1.16.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-collections</groupId>
@@ -416,7 +416,7 @@
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
-				<version>2.11.0</version>
+				<version>2.13.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-lang</groupId>
@@ -1437,6 +1437,8 @@
 		<module>oner365-datasource</module>
 		<!-- influxdb -->
 		<module>oner365-influx</module>
+		<!-- mqtt -->
+		<module>oner365-mqtt</module>
 		<!-- neo4j -->
 		<module>oner365-neo4j</module>
 		<!-- cassandra -->

@@ -39,7 +39,7 @@
 
 1. 数据库：MySQL
 2. 缓存：Redis
-3. 队列：RabbitMQ && RocketMQ && Kafka && Pulsar
+3. 队列：RabbitMQ && RocketMQ && Kafka &&  && Mqtt
 4. 文件处理：Fastdfs && Hadoop && Minio && Local
 5. 搜索引擎：Elasticserach
 6. 配置管理：Alibaba Nacos
@@ -83,6 +83,7 @@
 13. 数据库Cassandra - 8720 oner365-cassandra
 14. 状态机Statemachine - 8721 oner365-statemachine
 15. 密码加密Vault - 8722 oner365-vault
+16. Mqtt - 8723 oner365-mqtt
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos

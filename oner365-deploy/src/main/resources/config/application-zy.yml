@@ -25,6 +25,7 @@ deploy:
       - oner365-cassandra:8720
       - oner365-statemachine:8721
       - oner365-vault:8722
+      - oner365-mqtt:8723
     libs: 
       - oner365-common
       - oner365-api
