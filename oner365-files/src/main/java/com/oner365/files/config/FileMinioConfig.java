@@ -14,6 +14,7 @@ import com.oner365.files.storage.condition.MinioStorageCondition;
 import io.minio.BucketExistsArgs;
 import io.minio.MakeBucketArgs;
 import io.minio.MinioClient;
+import io.minio.SetBucketPolicyArgs;
 
 /**
  * File Minio Config
@@ -31,13 +32,20 @@ public class FileMinioConfig {
   MinioClient minioClient(MinioProperties minioProperties) {
     try {
       MinioClient minioClient = MinioClient.builder().endpoint(minioProperties.getUrl())
-          .credentials(minioProperties.getUsername(), minioProperties.getPassword()).build();
+          .credentials(minioProperties.getUsername(), minioProperties.getPassword()).region("cn-north-1").build();
 
       // 创建根文件夹 bucket
       BucketExistsArgs bucket = BucketExistsArgs.builder().bucket(minioProperties.getBucket())
           .build();
       if (!minioClient.bucketExists(bucket)) {
         minioClient.makeBucket(MakeBucketArgs.builder().bucket(minioProperties.getBucket()).build());
+
+        String sb = "{\"Statement\": [{\"Action\": [\"s3:GetBucketLocation\",\"s3:ListBucket\"], \"Effect\": \"Allow\",\"Principal\": \"*\",\"Resource\": \"arn:aws:s3:::"
+            + minioProperties.getBucket()
+            + "\"}, {\"Action\": \"s3:GetObject\", \"Effect\": \"Allow\", \"Principal\": \"*\", \"Resource\": \"arn:aws:s3:::"
+            + minioProperties.getBucket() + "/*\"}],\"Version\": \"2012-10-17\"}";
+        minioClient
+            .setBucketPolicy(SetBucketPolicyArgs.builder().bucket(minioProperties.getBucket()).config(sb).build());
       }
       return minioClient;
     } catch (Exception e) {
