@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StorageEnum;
 import com.oner365.common.sequence.sequence.SnowflakeSequence;
 import com.oner365.files.config.properties.FileLocalProperties;
@@ -72,8 +73,26 @@ public class FileLocalClient implements IFileStorageClient {
   }
 
   @Override
-  public byte[] download(String fileUrl) {
-    return FileLocalUploadUtils.download(fileLocalProperties.getUpload(), fileUrl);
+  public byte[] download(String path) {
+    return FileLocalUploadUtils.download(fileLocalProperties.getUpload(), path);
+  }
+  
+  @Override
+  public String downloadPath(String path) {
+    String result = fileLocalProperties.getWeb() + PublicConstants.DELIMITER + path;
+    logger.info("file download: {}", result);
+    return result;
+  }
+  
+  @Override
+  public Long getFileSize(String path) {
+    String filePath = fileLocalProperties.getUpload() + PublicConstants.DELIMITER + path;
+    File file = DataUtils.getFile(filePath);
+    if (!file.exists()) {
+      logger.error("file is not exists: {}", filePath);
+      return 0L;
+    }
+    return file.length();
   }
 
   @Override
@@ -84,6 +103,11 @@ public class FileLocalClient implements IFileStorageClient {
   @Override
   public StorageEnum getName() {
     return StorageEnum.LOCAL;
+  }
+  
+  @Override
+  public SysFileStorageDto getFile(String id) {
+    return fileStorageService.getById(id);
   }
 
 }

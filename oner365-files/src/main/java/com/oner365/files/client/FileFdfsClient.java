@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.tobato.fastdfs.domain.conn.FdfsWebServer;
-import com.github.tobato.fastdfs.domain.fdfs.FileInfo;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.domain.proto.storage.DownloadByteArray;
 import com.github.tobato.fastdfs.exception.FdfsUnsupportStorePathException;
@@ -25,6 +24,7 @@ import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StorageEnum;
 import com.oner365.files.config.properties.FileFdfsProperties;
+import com.oner365.files.dto.SysFileStorageDto;
 import com.oner365.files.service.IFileStorageService;
 import com.oner365.files.storage.IFileStorageClient;
 import com.oner365.files.storage.condition.FdfsStorageCondition;
@@ -55,13 +55,6 @@ public class FileFdfsClient implements IFileStorageClient {
   @Autowired
   private IFileStorageService fileStorageService;
 
-  /**
-   * 上传文件
-   *
-   * @param file 文件对象
-   *
-   * @return 文件访问地址
-   */
   @Override
   public String uploadFile(MultipartFile file, String directory) {
     try (InputStream in = file.getInputStream()) {
@@ -76,12 +69,6 @@ public class FileFdfsClient implements IFileStorageClient {
     return null;
   }
 
-  /**
-   * 上传文件
-   *
-   * @param file 文件对象
-   * @return 文件访问地址
-   */
   @Override
   public String uploadFile(File file, String directory) {
     try (FileInputStream inputStream = new FileInputStream(file)) {
@@ -167,6 +154,18 @@ public class FileFdfsClient implements IFileStorageClient {
     String downloadPath = fileUrl.substring(fileUrl.indexOf(PublicConstants.DELIMITER) + 1);
     return fastFileStorageClient.downloadFile(group, downloadPath, new DownloadByteArray());
   }
+  
+  @Override
+  public String downloadPath(String path) {
+    // 负载下载地址路径
+    return null;
+  }
+  
+  @Override
+  public Long getFileSize(String path) {
+    // 文件大小
+    return 0L;
+  }
 
   /**
    * 删除文件
@@ -188,15 +187,9 @@ public class FileFdfsClient implements IFileStorageClient {
     return Boolean.FALSE;
   }
 
-  /**
-   * 获取文件
-   * 
-   * @param groupName 组名称
-   * @param path      地址
-   * @return FileInfo
-   */
-  public FileInfo getFile(String groupName, String path) {
-    return fastFileStorageClient.queryFileInfo(groupName, path);
+  @Override
+  public SysFileStorageDto getFile(String id) {
+    return fileStorageService.getById(id);
   }
 
   @Override

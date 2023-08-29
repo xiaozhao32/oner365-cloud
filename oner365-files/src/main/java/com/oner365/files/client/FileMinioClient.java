@@ -2,9 +2,10 @@ package com.oner365.files.client;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.TimeUnit;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StorageEnum;
 import com.oner365.files.config.properties.MinioProperties;
+import com.oner365.files.dto.SysFileStorageDto;
 import com.oner365.files.service.IFileStorageService;
 import com.oner365.files.storage.IFileStorageClient;
 import com.oner365.files.storage.condition.MinioStorageCondition;
@@ -25,10 +27,14 @@ import com.oner365.util.DateUtil;
 
 import io.minio.GetObjectArgs;
 import io.minio.GetObjectResponse;
+import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
 import io.minio.ObjectWriteResponse;
 import io.minio.PutObjectArgs;
 import io.minio.RemoveObjectArgs;
+import io.minio.StatObjectArgs;
+import io.minio.StatObjectResponse;
+import io.minio.http.Method;
 
 /**
  * minio工具类
@@ -39,7 +45,7 @@ import io.minio.RemoveObjectArgs;
 @Conditional(MinioStorageCondition.class)
 public class FileMinioClient implements IFileStorageClient {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(FileMinioClient.class);
+  private final Logger logger = LoggerFactory.getLogger(FileMinioClient.class);
 
   @Autowired
   private MinioProperties minioProperties;
@@ -61,11 +67,11 @@ public class FileMinioClient implements IFileStorageClient {
           .putObject(PutObjectArgs.builder().bucket(minioProperties.getBucket()).object(path)
               .stream(inputStream, file.getSize(), -1).contentType(file.getContentType()).build());
       String url = writeResponse.object();
-      LOGGER.info("file path: {}", url);
+      logger.info("file path: {}", url);
       saveFileStorage(url, file.getOriginalFilename(), file.getSize());
       return url;
     } catch (Exception e) {
-      LOGGER.error("uploadFile MultipartFile Error:", e);
+      logger.error("uploadFile MultipartFile Error:", e);
     }
     return null;
   }
@@ -80,72 +86,69 @@ public class FileMinioClient implements IFileStorageClient {
       ObjectWriteResponse writeResponse = minioClient.putObject(PutObjectArgs.builder()
           .bucket(minioProperties.getBucket()).object(path).stream(inputStream, file.length(), -1).build());
       String url = writeResponse.object();
-      LOGGER.info("file path: {}", url);
+      logger.info("file path: {}", url);
       saveFileStorage(url, file.getName(), file.length());
       return url;
     } catch (Exception e) {
-      LOGGER.error("uploadFile File Error:", e);
+      logger.error("uploadFile File Error:", e);
     }
     return null;
   }
 
   @Override
   public byte[] download(String path) {
+    logger.info("file download: {}", path);
     GetObjectArgs object = GetObjectArgs.builder().bucket(minioProperties.getBucket()).object(path).build();
-    if (object.length() == null) {
-      LOGGER.error("download path is not exists: {}", path);
-      return new byte[0];
-    }
     try (GetObjectResponse objectResponse = minioClient.getObject(object)) {
-      return readAsByteArray(objectResponse);
+      return IOUtils.toByteArray(objectResponse);
     } catch (Exception e) {
-      LOGGER.error("download File Error:", e);
+      logger.error("download File Error:", e);
     }
     return new byte[0];
   }
 
-  /**
-   * apache common-io
-   *
-   * @param objectResponse GetObjectResponse
-   * @return byte[]
-   * @throws IOException 异常
-   */
-  public static byte[] readAsByteArray(GetObjectResponse objectResponse) throws IOException {
-    int size = 1024;
-    byte[] ba = new byte[size];
-    int readSoFar = 0;
-
-    while (true) {
-      int nRead = objectResponse.read(ba, readSoFar, size - readSoFar);
-      if (nRead == -1) {
-        break;
-      }
-      readSoFar += nRead;
-      if (readSoFar == size) {
-        int newSize = size * 2;
-        byte[] newBa = new byte[newSize];
-        System.arraycopy(ba, 0, newBa, 0, size);
-        ba = newBa;
-        size = newSize;
-      }
+  @Override
+  public Boolean deleteFile(String path) {
+    try {
+      // 删除文件
+      logger.info("file delete: {}", path);
+      minioClient.removeObject(RemoveObjectArgs.builder().bucket(minioProperties.getBucket()).object(path).build());
+      return fileStorageService.deleteById(path);
+    } catch (Exception e) {
+      logger.error("delete File Error:", e);
     }
-
-    byte[] newBa = new byte[readSoFar];
-    System.arraycopy(ba, 0, newBa, 0, readSoFar);
-    return newBa;
+    return Boolean.FALSE;
+  }
+  
+  @Override
+  public Long getFileSize(String path) {
+    // 文件信息
+    try {
+      StatObjectResponse objectResponse = minioClient
+          .statObject(StatObjectArgs.builder().bucket(minioProperties.getBucket()).object(path).build());
+      logger.info("file path: {}", path);
+      logger.info("file contentType: {}", objectResponse.contentType());
+      logger.info("file size: {}", objectResponse.size());
+      return objectResponse.size();
+    } catch (Exception e) {
+      logger.error("statObject error:", e);
+    }
+    return null;
   }
 
   @Override
-  public Boolean deleteFile(String fileUrl) {
+  public String downloadPath(String path) {
+    logger.info("file download: {}", path);
     try {
-      // 删除文件
-      minioClient.removeObject(RemoveObjectArgs.builder().bucket(minioProperties.getBucket()).object(fileUrl).build());
-      return fileStorageService.deleteById(fileUrl);
+      String url = minioClient
+          .getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder().bucket(minioProperties.getBucket()).object(path)
+              .method(Method.GET).expiry(PublicConstants.EXPIRE_TIME, TimeUnit.SECONDS).build());
+      logger.info("file presigned url: {}", url);
+      return url;
     } catch (Exception e) {
-      LOGGER.error("delete File Error:", e);
+      logger.error("presignedObject error:", e);
     }
-    return Boolean.FALSE;
+    return null;
   }
 
   @Override
@@ -167,6 +170,11 @@ public class FileMinioClient implements IFileStorageClient {
     entity.setFileSuffix(DataUtils.getExtension(fileName));
     entity.setSize(DataUtils.convertFileSize(fileSize));
     fileStorageService.save(entity);
+  }
+  
+  @Override
+  public SysFileStorageDto getFile(String id) {
+    return fileStorageService.getById(id);
   }
 
 }

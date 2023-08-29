@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.oner365.common.ResponseData;
 import com.oner365.common.ResponseResult;
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.common.enums.StorageEnum;
@@ -112,14 +114,14 @@ public class FileController extends BaseController {
   }
 
   /**
-   * 文件流下载
-   * 
-   * @param fileUrl url 开头从组名开始
-   * @return byte[]
+   * 文件下载地址
+   *
+   * @param path url 开头从组名开始
+   * @return 文件下载地址
    */
-  @GetMapping("/byte/download")
-  public byte[] downloadFile(@RequestParam("fileUrl") String fileUrl) {
-    return fileStorageClient.download(fileUrl);
+  @GetMapping("/path")
+  public String downloadPath(@RequestParam("path") String path) {
+    return fileStorageClient.downloadPath(path);
   }
 
   /**
@@ -141,6 +143,18 @@ public class FileController extends BaseController {
   @GetMapping("/name")
   public StorageEnum getStorageName() {
     return fileStorageClient.getName();
+  }
+  
+  /**
+   * 获取文件信息
+   *
+   * @param id 主键
+   * @return SysFileStorageDto
+   */
+  @PostMapping("/info/{id}")
+  public ResponseData<SysFileStorageDto> getFileInfo(@PathVariable String id) {
+    SysFileStorageDto entity = fileStorageClient.getFile(id);
+    return ResponseData.success(entity);
   }
 
 }
