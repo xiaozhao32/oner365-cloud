@@ -12,7 +12,7 @@
 	<property name="LOG_MAX_SIZE" value="100MB" />
 	
 	<!-- 控制台的日志输出样式 -->
-	<property name="CONSOLE_LOG_PATTERN" value="%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){mag enta} %clr(---){faint} %clr([%15.15t]){faint} %m%n${LOG_EXCEPTION_CONVERS ION_WORD:-%wEx}}" />
+	<property name="CONSOLE_LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}] [%r] [%thread] [%clr(%5p)] [%clr(%C{1} %M:%L)] - %clr(%m%n)" />
 
 	<!-- 控制台输出 -->
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
