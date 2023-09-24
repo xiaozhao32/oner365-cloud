@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
+import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
@@ -117,7 +118,7 @@ public class HttpClientUtils {
 
   public static String httpsPost(String path, Map<String, String> headers, String body)
       throws IOException, KeyManagementException, NoSuchAlgorithmException {
-    URL url = new URL(path);
+    URL url = URI.create(path).toURL();
     HostnameVerifier ignoreHostnameVerifier = (s, sslSession) -> {
       LOGGER.warn("WARNING: Hostname is not matched for cert.");
       return true;
