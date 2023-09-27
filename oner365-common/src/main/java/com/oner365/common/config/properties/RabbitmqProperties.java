@@ -13,11 +13,6 @@ import org.springframework.context.annotation.Configuration;
 public class RabbitmqProperties {
 
   /**
-   * 地址
-   */
-  private String host;
-
-  /**
    * 账号
    */
   private String username;
@@ -39,14 +34,6 @@ public class RabbitmqProperties {
 
   public RabbitmqProperties() {
     super();
-  }
-
-  public String getHost() {
-    return host;
-  }
-
-  public void setHost(String host) {
-    this.host = host;
   }
 
   public String getUsername() {
