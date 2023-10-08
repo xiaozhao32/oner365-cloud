@@ -5,6 +5,7 @@ import javax.annotation.PreDestroy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 
 import com.influxdb.client.InfluxDBClient;
@@ -18,6 +19,7 @@ import com.oner365.influx.config.properties.InfluxProperties;
  *
  */
 @Configuration
+@EnableConfigurationProperties({ InfluxProperties.class })
 public class InfluxConfig {
   
   private static final Logger LOGGER = LoggerFactory.getLogger(InfluxConfig.class);

@@ -1,14 +1,12 @@
 package com.oner365.influx.config.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * influx 相关配置
  * 
  * @author zhaoyong
  */
-@Configuration
 @ConfigurationProperties(prefix = "spring.influx")
 public class InfluxProperties {
   

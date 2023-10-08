@@ -3,14 +3,12 @@ package com.oner365.pulsar.config.properties;
 import java.io.Serializable;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * pulsar 相关配置
  * 
  * @author zhaoyong
  */
-@Configuration
 @ConfigurationProperties(prefix = "pulsar")
 public class PulsarProperties implements Serializable {
   
