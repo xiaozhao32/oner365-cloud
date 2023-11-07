@@ -1,6 +1,6 @@
 package com.oner365.files.service.impl;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -86,7 +86,7 @@ public class FileStorageServiceImpl implements IFileStorageService {
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @CacheEvict(value = CACHE_NAME, allEntries = true)
   public SysFileStorageDto save(SysFileStorageVo vo) {
-    vo.setCreateTime(new Timestamp(System.currentTimeMillis()));
+    vo.setCreateTime(LocalDateTime.now());
     SysFileStorage entity = dao.save(convert(vo, SysFileStorage.class));
     return convert(entity, SysFileStorageDto.class);
   }

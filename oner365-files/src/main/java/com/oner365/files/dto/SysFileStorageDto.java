@@ -1,7 +1,7 @@
 package com.oner365.files.dto;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import com.oner365.common.enums.StorageEnum;
 
@@ -57,7 +57,7 @@ public class SysFileStorageDto implements Serializable {
     /**
      * 创建时间 create_time
      */
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 是否目录 is_directory
@@ -144,14 +144,14 @@ public class SysFileStorageDto implements Serializable {
     /**
      * @return the createTime
      */
-    public Date getCreateTime() {
+    public LocalDateTime getCreateTime() {
         return createTime;
     }
 
     /**
      * @param createTime the createTime to set
      */
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
 

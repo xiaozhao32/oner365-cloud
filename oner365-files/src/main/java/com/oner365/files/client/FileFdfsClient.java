@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.Charset;
+import java.time.LocalDateTime;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +31,6 @@ import com.oner365.files.storage.IFileStorageClient;
 import com.oner365.files.storage.condition.FdfsStorageCondition;
 import com.oner365.files.vo.SysFileStorageVo;
 import com.oner365.util.DataUtils;
-import com.oner365.util.DateUtil;
 
 /**
  * fastdfs工具类
@@ -88,7 +88,7 @@ public class FileFdfsClient implements IFileStorageClient {
     SysFileStorageVo entity = new SysFileStorageVo();
     entity.setFastdfsUrl(PublicConstants.FILE_HTTP + fileFdfsProperties.getIp());
     entity.setId(StringUtils.replace(url, entity.getFastdfsUrl() + PublicConstants.DELIMITER, ""));
-    entity.setCreateTime(DateUtil.getDate());
+    entity.setCreateTime(LocalDateTime.now());
     entity.setDirectory(false);
     entity.setFileStorage(getName());
     entity.setFilePath(url);
