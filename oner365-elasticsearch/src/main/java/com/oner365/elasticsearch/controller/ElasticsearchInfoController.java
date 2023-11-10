@@ -9,19 +9,24 @@ import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponseInterceptor;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.entity.ContentType;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.message.BasicHeader;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder.HttpClientConfigCallback;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
 import org.springframework.http.HttpHeaders;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.common.constants.PublicConstants;
 import com.oner365.controller.BaseController;
-import com.oner365.elasticsearch.config.properties.ElasticsearchProperties;
 import com.oner365.elasticsearch.dto.ClusterDto;
 import com.oner365.elasticsearch.dto.ClusterMappingDto;
 import com.oner365.elasticsearch.dto.TransportClientDto;
@@ -58,18 +63,27 @@ public class ElasticsearchInfoController extends BaseController {
    */
   @GetMapping("/index")
   public TransportClientDto index() {
+    if (ObjectUtils.isEmpty(elasticsearchProperties.getUris())) {
+      logger.error("elasticsearchProperties is empty: {}", elasticsearchProperties);
+      return null;
+    }
     // 创建客户端
-    String uri = StringUtils.substringAfter(elasticsearchProperties.getUris(), PublicConstants.FILE_HTTP);
-    HttpClientConfigCallback httpClientConfigCallback = httpClientBuilder ->
-        httpClientBuilder
-            .setDefaultHeaders(Collections
-                .singleton(new BasicHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())))
-            .addInterceptorLast((HttpResponseInterceptor) (response, context) -> response.addHeader("X-Elastic-Product",
-                "Elasticsearch"));
+    String uri = StringUtils.substringAfter(elasticsearchProperties.getUris().get(0), PublicConstants.FILE_HTTP);
 
-    try (RestClient restClient = RestClient
-        .builder(new HttpHost(StringUtils.substringBefore(uri, PublicConstants.COLON),
-            Integer.parseInt(StringUtils.substringAfter(uri, PublicConstants.COLON))))
+    CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+    // 设置密码 xpack.security.enabled: true
+    if (elasticsearchProperties.getUsername() != null && elasticsearchProperties.getPassword() != null) {
+      credentialsProvider.setCredentials(AuthScope.ANY, new UsernamePasswordCredentials(
+          elasticsearchProperties.getUsername(), elasticsearchProperties.getPassword()));
+    }
+    
+    HttpClientConfigCallback httpClientConfigCallback = httpClientBuilder -> httpClientBuilder
+        .setDefaultHeaders(
+            Collections.singleton(new BasicHeader(HttpHeaders.CONTENT_TYPE, ContentType.APPLICATION_JSON.toString())))
+        .setDefaultCredentialsProvider(credentialsProvider).addInterceptorLast(
+            (HttpResponseInterceptor) (response, context) -> response.addHeader("X-Elastic-Product", "Elasticsearch"));
+
+    try (RestClient restClient = RestClient.builder(HttpHost.create(elasticsearchProperties.getUris().get(0)))
         .setHttpClientConfigCallback(httpClientConfigCallback).build()) {
 
       ElasticsearchTransport transport = new RestClientTransport(restClient, new JacksonJsonpMapper());
