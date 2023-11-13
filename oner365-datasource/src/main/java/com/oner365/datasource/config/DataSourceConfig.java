@@ -3,10 +3,13 @@ package com.oner365.datasource.config;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import javax.annotation.Resource;
 import javax.sql.DataSource;
 
+import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.mapping.VendorDatabaseIdProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,7 +61,7 @@ public class DataSourceConfig {
   DynamicDataSource dynamicDataSource() {
     DataSource primarySource = primaryDataSource();
     // 当前数据源
-    Map<Object, Object> targetDataSources = new HashMap<>();
+    Map<Object, Object> targetDataSources = new HashMap<>(10);
     targetDataSources.put(DataSourceConstants.PRIMARY, primarySource);
     
     if (DataSourceConstants.DS_TYPE_DB.equals(datasourceType)) {
@@ -101,5 +104,16 @@ public class DataSourceConfig {
       datasource.setName(key);
       return datasource;
     }
+  }
+  
+  @Bean
+  DatabaseIdProvider databaseIdProvider() {
+    VendorDatabaseIdProvider vendorDatabaseIdProvider = new VendorDatabaseIdProvider();
+    Properties properties = new Properties();
+    properties.setProperty("MySQL", DataSourceConstants.DB_TYPE_MYSQL);
+    properties.setProperty("Oracle", DataSourceConstants.DB_TYPE_ORACLE);
+    properties.setProperty("PostgreSQL", DataSourceConstants.DB_TYPE_POSTGRES);
+    vendorDatabaseIdProvider.setProperties(properties);
+    return vendorDatabaseIdProvider;
   }
 }

@@ -32,6 +32,7 @@ public class PasswordEncoderUtils {
    *
    */
   public enum Encoder {
+    /** 加密类型 */
     BCRYPT, LDAP, MD4, MD5, NOOP, PBKDF2, SCRYPT, SHA1, SHA256, SHA, ARGON2
   }
 
@@ -45,7 +46,7 @@ public class PasswordEncoderUtils {
    * @return PasswordEncoder
    */
   public static PasswordEncoder getDelegatingPasswordEncoder(PasswordEncoderUtils.Encoder encoding) {
-    Map<String, PasswordEncoder> encoders = new HashMap<>();
+    Map<String, PasswordEncoder> encoders = new HashMap<>(12);
     encoders.put(Encoder.BCRYPT.name(), new BCryptPasswordEncoder());
     encoders.put(Encoder.LDAP.name(), new LdapShaPasswordEncoder());
     encoders.put(Encoder.MD4.name(), new Md4PasswordEncoder());

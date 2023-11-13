@@ -22,7 +22,7 @@ import com.oner365.common.enums.StatusEnum;
  * 
  * @author ${author}
  */
- @ApiModel(value = "${functionName}")
+@ApiModel(value = "${functionName}")
 public class ${ClassName}Dto implements Serializable {
 
     private static final long serialVersionUID = 1L;

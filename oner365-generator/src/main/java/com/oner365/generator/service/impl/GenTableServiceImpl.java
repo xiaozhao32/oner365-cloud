@@ -39,6 +39,7 @@ import com.oner365.generator.util.GenUtils;
 import com.oner365.generator.util.VelocityInitializer;
 import com.oner365.generator.util.VelocityUtils;
 import com.oner365.util.DataUtils;
+import com.oner365.util.DateUtil;
 
 /**
  * 业务 服务层实现
@@ -85,11 +86,13 @@ public class GenTableServiceImpl implements IGenTableService {
   public Boolean updateGenTable(GenTable genTable) {
     String options = JSON.toJSONString(genTable.getParams());
     genTable.setOptions(options);
+    genTable.setUpdateTime(DateUtil.getDate());
     int row = genTableMapper.updateGenTable(genTable);
     if (row > 0) {
-      for (GenTableColumn cenTableColumn : genTable.getColumns()) {
+      genTable.getColumns().forEach(cenTableColumn -> {
+        cenTableColumn.setUpdateTime(DateUtil.getDate());
         genTableColumnMapper.updateGenTableColumn(cenTableColumn);
-      }
+      });
       return Boolean.TRUE;
     }
     return Boolean.FALSE;
@@ -110,14 +113,16 @@ public class GenTableServiceImpl implements IGenTableService {
       for (GenTable table : tableList) {
         String tableName = table.getTableName();
         GenUtils.initTable(genConfig, table, operName);
+        table.setCreateTime(DateUtil.getDate());
         int row = genTableMapper.insertGenTable(table);
         if (row > 0) {
           // 保存列信息
           List<GenTableColumn> genTableColumns = genTableColumnMapper.selectDbTableColumnsByName(tableName);
-          for (GenTableColumn column : genTableColumns) {
+          genTableColumns.forEach(column -> {
             GenUtils.initColumnField(column, table);
+            column.setCreateTime(DateUtil.getDate());
             genTableColumnMapper.insertGenTableColumn(column);
-          }
+          });
         }
       }
       return Boolean.TRUE;
@@ -208,6 +213,7 @@ public class GenTableServiceImpl implements IGenTableService {
     dbTableColumns.forEach(column -> {
       if (!tableColumnNames.contains(column.getColumnName())) {
         GenUtils.initColumnField(column, table);
+        table.setCreateTime(DateUtil.getDate());
         genTableColumnMapper.insertGenTableColumn(column);
       }
     });

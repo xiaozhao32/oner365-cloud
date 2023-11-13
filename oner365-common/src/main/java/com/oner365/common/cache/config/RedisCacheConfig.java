@@ -101,11 +101,11 @@ public class RedisCacheConfig implements CachingConfigurer {
   @ConditionalOnProperty(value = { "spring.redis.sentinel.enable" }, havingValue = "true")
   LettuceConnectionFactory redisSentinelConnectionFactory(RedisProperties redisProperties) {
     RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration(
-        redisProperties.getSentinel().getMaster(), new HashSet<String>(redisProperties.getSentinel().getNodes()));
+        redisProperties.getSentinel().getMaster(), new HashSet<>(redisProperties.getSentinel().getNodes()));
     if (!ObjectUtils.isEmpty(redisProperties.getPassword())) {
       redisSentinelConfiguration.setPassword(redisProperties.getPassword());
     }
-    GenericObjectPoolConfig<Object> poolConfig = new GenericObjectPoolConfig<Object>();
+    GenericObjectPoolConfig<Object> poolConfig = new GenericObjectPoolConfig<>();
     LettuceClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder()
         .poolConfig(poolConfig).build();
     return new LettuceConnectionFactory(redisSentinelConfiguration, lettuceClientConfiguration);

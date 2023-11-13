@@ -67,7 +67,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</where>
 	</select>
 
-	<select id="selectDbTableList" parameterType="com.oner365.generator.entity.GenTable" resultMap="GenTableResult">
+	<select id="selectDbTableList" parameterType="com.oner365.generator.entity.GenTable" resultMap="GenTableResult" databaseId="mysql">
 		select table_name, table_comment, create_time, update_time from information_schema.tables
 		where table_schema = (select database())
 		AND table_name NOT LIKE 'qrtz_%' AND table_name NOT LIKE 'gen_%'
@@ -80,7 +80,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</if>
 	</select>
 	
-	<select id="selectDbTableListByNames" resultMap="GenTableResult">
+	<select id="selectDbTableList" parameterType="com.oner365.generator.entity.GenTable" resultMap="GenTableResult" databaseId="postgres">
+		select tablename as table_name, tablename as table_comment from pg_tables
+		where schemaname='public' 
+		AND tablename NOT LIKE 'qrtz_%' AND tablename NOT LIKE 'gen_%'
+		AND tablename NOT IN (select table_name from gen_table)
+		<if test="tableName != null and tableName != ''">
+			AND lower(tablename) like lower(concat('%', #{tableName}, '%'))
+		</if>
+		<if test="tableComment != null and tableComment != ''">
+			AND lower(tablename) like lower(concat('%', #{tableComment}, '%'))
+		</if>
+	</select>
+	
+	<select id="selectDbTableListByNames" resultMap="GenTableResult" databaseId="mysql">
 		select table_name, table_comment, create_time, update_time from information_schema.tables
 		where table_name NOT LIKE 'qrtz_%' and table_name NOT LIKE 'gen_%' and table_schema = (select database())
 		and table_name in
@@ -89,10 +102,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         </foreach> 
 	</select>
 	
-	<select id="selectTableByName" parameterType="String" resultMap="GenTableResult">
+	<select id="selectDbTableListByNames" resultMap="GenTableResult" databaseId="postgres">
+		select tablename as table_name, tablename as table_comment from pg_tables
+		where schemaname='public' 
+		 AND tablename NOT LIKE 'qrtz_%' AND tablename NOT LIKE 'gen_%'
+		and tablename in
+	    <foreach collection="array" item="name" open="(" separator="," close=")">
+ 			#{name}
+        </foreach> 
+	</select>
+	
+	<select id="selectTableByName" parameterType="String" resultMap="GenTableResult" databaseId="mysql">
 		select table_name, table_comment, create_time, update_time from information_schema.tables
 		where table_comment <![CDATA[ <> ]]> '' and table_schema = (select database())
 		and table_name = #{tableName}
+	</select>
+	
+	<select id="selectTableByName" parameterType="String" resultMap="GenTableResult" databaseId="postgres">
+		select tablename as table_name, tablename as table_comment from pg_tables
+		where tablename <![CDATA[ <> ]]> '' and tablename = #{tableName}
 	</select>
 	
 	<select id="selectGenTableById" parameterType="Long" resultMap="GenTableResult">
@@ -126,7 +154,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="genPath != null and genPath != ''">gen_path,</if>
 			<if test="remark != null and remark != ''">remark,</if>
  			<if test="createBy != null and createBy != ''">create_by,</if>
-			create_time
+			<if test="createTime != null">create_time</if>
          )values(
 			<if test="tableName != null">#{tableName},</if>
 			<if test="tableComment != null and tableComment != ''">#{tableComment},</if>
@@ -141,7 +169,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			<if test="genPath != null and genPath != ''">#{genPath},</if>
 			<if test="remark != null and remark != ''">#{remark},</if>
  			<if test="createBy != null and createBy != ''">#{createBy},</if>
-			sysdate()
+			<if test="createTime != null">#{createTime}</if>
          )
     </insert>
     
@@ -162,7 +190,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             <if test="options != null and options != ''">options = #{options},</if>
             <if test="updateBy != null and updateBy != ''">update_by = #{updateBy},</if>
             <if test="remark != null">remark = #{remark},</if>
-            update_time = sysdate()
+            <if test="updateTime != null">update_time = #{updateTime}</if>
         </set>
         where table_id = #{tableId}
     </update>
