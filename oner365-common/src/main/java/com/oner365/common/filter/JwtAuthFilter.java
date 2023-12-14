@@ -18,19 +18,19 @@ package com.oner365.common.filter;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.cache.RedisCache;
 import com.oner365.common.cache.constants.CacheConstants;
@@ -48,10 +48,10 @@ import com.oner365.util.RequestUtils;
 @Component
 public class JwtAuthFilter implements Filter {
 
-  @Autowired
+  @Resource
   private AccessTokenProperties tokenProperties;
 
-  @Autowired
+  @Resource
   private RedisCache redisCache;
 
   @Override
@@ -63,27 +63,29 @@ public class JwtAuthFilter implements Filter {
     String authToken = httpRequest.getHeader(HttpHeaders.AUTHORIZATION);
     if (!DataUtils.isEmpty(authToken)) {
       // 获取缓存
-      String tokenInfo = redisCache.getCacheObject(CacheConstants.CACHE_TOKEN_NAME + authToken.hashCode());
-      if (tokenInfo == null) {
-        tokenInfo = JwtUtils.getUsernameFromToken(authToken, tokenProperties.getSecret());
+      JSONObject authUser = redisCache.getCacheObject(CacheConstants.CACHE_TOKEN_NAME + authToken.hashCode());
+      if (authUser == null) {
+        String tokenInfo = JwtUtils.getUsernameFromToken(authToken, tokenProperties.getSecret());
         if (tokenInfo != null) {
-          redisCache.setCacheObject(CacheConstants.CACHE_TOKEN_NAME + authToken.hashCode(), tokenInfo,
+          authUser = JSON.parseObject(tokenInfo);
+          redisCache.setCacheObject(CacheConstants.CACHE_TOKEN_NAME + authToken.hashCode(), authUser,
               PublicConstants.EXPIRE_TIME, TimeUnit.MINUTES);
-          setHttpRequest(httpRequest, tokenInfo, authToken);
+          setHttpRequest(httpRequest, new AuthUser(authUser), authToken);
         }
       } else {
-        setHttpRequest(httpRequest, tokenInfo, authToken);
+        setHttpRequest(httpRequest, new AuthUser(authUser), authToken);
       }
     }
     RequestUtils.setHttpRequest(httpRequest);
     chain.doFilter(request, response);
   }
-  
-  private void setHttpRequest(HttpServletRequest httpRequest, String tokenInfo, String authToken) {
-    AuthUser authUser = new AuthUser(JSON.parseObject(tokenInfo));
+
+  private void setHttpRequest(HttpServletRequest httpRequest, AuthUser authUser, String authToken) {
     httpRequest.setAttribute(RequestUtils.AUTH_USER, authUser);
-    httpRequest.setAttribute(RequestUtils.ACCESS_TOKEN, authToken);
-    
+    if (authToken != null) {
+      httpRequest.setAttribute(RequestUtils.ACCESS_TOKEN, authToken);
+    }
+
     // token 过期处理
     validateToken(authUser, authToken);
   }
@@ -94,16 +96,6 @@ public class JwtAuthFilter implements Filter {
       String key = CacheConstants.CACHE_LOGIN_NAME + authUser.getUserName();
       redisCache.deleteObject(key);
     }
-  }
-
-  @Override
-  public void init(FilterConfig filterConfig) {
-    // init
-  }
-
-  @Override
-  public void destroy() {
-    // destroy
   }
 
 }
