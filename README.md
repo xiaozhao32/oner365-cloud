@@ -4,8 +4,8 @@
 ---
 
 <p align="center">
-	<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://shields.io/badge/Spring%20Framework-5.3.30-blue" alt="Spring Framework 5.3.30"></a>
-    <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://shields.io/badge/Spring%20Boot-2.7.17-blue" alt="Spring Boot 2.7.17"></a>
+	<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://shields.io/badge/Spring%20Framework-5.3.31-blue" alt="Spring Framework 5.3.31"></a>
+    <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://shields.io/badge/Spring%20Boot-2.7.18-blue" alt="Spring Boot 2.7.18"></a>
     <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://shields.io/badge/Spring%20Cloud-2021.0.8-blue" alt="Spring Cloud 2021.0.8"></a>
     <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://shields.io/badge/Spring%20Cloud%20Alibaba-2021.1-blue" alt="Spring Cloud Alibaba 2021.1"></a>
     <a href="https://nacos.io/zh-cn/index.html" target="_blank"><img src="https://shields.io/badge/Nacos-2.2.3-brightgreen" alt="Nacos 2.2.3"></a>
@@ -37,18 +37,19 @@
 
 #### 技术框架
 
-1. 数据库：MySQL
-2. 缓存：Redis
-3. 队列：RabbitMQ && RocketMQ && Kafka &&  && Mqtt
-4. 文件处理：Fastdfs && Hadoop && Minio && Local
-5. 搜索引擎：Elasticserach
-6. 配置管理：Alibaba Nacos
-7. 分布式事务：Alibaba Seata
-8. 限流策略：Alibaba Sentinel
-9. 通信框架：Apache Dubbo
-10. 分库分表：Apache Shardingsphere 
-11. 链路监控：Apache Skywalking
-12. API框架：Swagger
+1. 数据库: MySQL
+2. 缓存: Redis
+3. 队列: RabbitMQ && RocketMQ && Kafka &&  && Mqtt
+4. 文件处理: Fastdfs && Hadoop && Minio && Local
+5. 搜索引擎: Elasticserach
+6. 配置管理: Alibaba Nacos
+7. 分布式事务: Alibaba Seata
+8. 限流策略: Alibaba Sentinel
+9. 通信框架: Apache Dubbo
+10. 分库分表: Apache Shardingsphere 
+11. 链路监控: Apache Skywalking
+12. API框架: 
+13. 用户认证: Ldap
 
 #### 使用说明
 
@@ -84,6 +85,7 @@
 14. 状态机Statemachine - 8721 oner365-statemachine
 15. 密码加密Vault - 8722 oner365-vault
 16. Mqtt - 8723 oner365-mqtt
+17. Ldap - 8724 oner365-ldap
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos

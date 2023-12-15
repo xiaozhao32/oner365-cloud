@@ -46,8 +46,8 @@
 		<org.springframework.statemachine.version>2.5.1</org.springframework.statemachine.version>
 		<org.springframework.security.version>5.8.7</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.8</org.springframework.cloud.version>
-		<org.springframework.boot.version>2.7.17</org.springframework.boot.version>
-		<org.springframework.version>5.3.30</org.springframework.version>
+		<org.springframework.boot.version>2.7.18</org.springframework.boot.version>
+		<org.springframework.version>5.3.31</org.springframework.version>
 		<org.springframework.kafka.version>2.9.12</org.springframework.kafka.version>
 
 		<org.apache.rocketmq.boot.starter.version>2.2.3</org.apache.rocketmq.boot.starter.version>
@@ -57,7 +57,7 @@
 		<org.apache.httpcore.version>4.4.16</org.apache.httpcore.version>
 		<org.apache.zookeeper.version>3.8.1</org.apache.zookeeper.version>
 		<org.apache.rocketmq.version>4.9.5</org.apache.rocketmq.version>
-		<org.apache.tomcat.version>9.0.82</org.apache.tomcat.version>
+		<org.apache.tomcat.version>9.0.83</org.apache.tomcat.version>
 		<org.apache.pdfbox.version>2.0.26</org.apache.pdfbox.version>
 		<org.apache.hadoop.version>3.3.4</org.apache.hadoop.version>
 		<org.apache.pulsar.version>3.0.0</org.apache.pulsar.version>
@@ -1471,6 +1471,8 @@
 		<module>oner365-websocket</module>
 		<!-- 生成框架 -->
 		<module>oner365-generator</module>
+		<!-- Ldap -->
+		<module>oner365-ldap</module>
 
 	</modules>
 
