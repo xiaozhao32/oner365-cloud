@@ -69,8 +69,8 @@
 		<org.hibernate.version>5.6.15.Final</org.hibernate.version>
 		<com.vladmihalcea.version>2.21.1</com.vladmihalcea.version>
 		
-		<org.mybatis.spring.boot.version>2.3.1</org.mybatis.spring.boot.version>
-		<org.mybatis.version>3.5.13</org.mybatis.version>
+		<org.mybatis.spring.boot.version>2.3.2</org.mybatis.spring.boot.version>
+		<org.mybatis.version>3.5.15</org.mybatis.version>
 
 		<org.elasticsearch.version>7.17.7</org.elasticsearch.version>
 		<org.slf4j.version>1.7.36</org.slf4j.version>
@@ -264,6 +264,7 @@
 				<groupId>org.springframework</groupId>
 				<artifactId>spring-test</artifactId>
 				<version>${org.springframework.version}</version>
+				<scope>test</scope>
 			</dependency>
 			
 			<dependency>
@@ -855,6 +856,7 @@
 			    <groupId>junit</groupId>
 			    <artifactId>junit</artifactId>
 			    <version>${junit.version}</version>
+			    <scope>test</scope>
 			</dependency>
 
 			<!-- mybatis -->
@@ -1414,7 +1416,6 @@
 				<configuration>
 					<source>${java.version}</source>
 					<target>${java.version}</target>
-					<skip>true</skip>
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
