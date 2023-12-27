@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.hadoop.config.ResponseData;
+import com.oner365.common.ResponseData;
 import com.oner365.hadoop.dto.FileInfoDto;
 import com.oner365.hadoop.entity.User;
 import com.oner365.hadoop.service.HadoopHdfsService;
@@ -48,8 +48,8 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/info")
-  public ResponseData<List<FileInfoDto>> readPathInfo(@RequestParam("path") String path) {
-    return ResponseData.success(service.readPathInfo(path));
+  public List<FileInfoDto> readPathInfo(@RequestParam("path") String path) {
+    return service.readPathInfo(path);
   }
 
   /**
@@ -108,9 +108,8 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/user")
-  public ResponseData<User> openFileToUser(@RequestParam("path") String path) {
-    User result = service.openFileToObject(path, User.class);
-    return ResponseData.success(result);
+  public User openFileToUser(@RequestParam("path") String path) {
+    return service.openFileToObject(path, User.class);
   }
 
   /**
@@ -120,9 +119,8 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/list")
-  public ResponseData<List<FileInfoDto>> listFile(@RequestParam("path") String path) {
-    List<FileInfoDto> result = service.listFile(path);
-    return ResponseData.success(result);
+  public List<FileInfoDto> listFile(@RequestParam("path") String path) {
+    return service.listFile(path);
   }
 
   /**

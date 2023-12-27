@@ -1,0 +1,19 @@
+
+server: 
+  port: 8725
+
+spring: 
+  application:
+    name: oner365-zookeeper
+    
+  profiles:
+    active: dev
+    
+  cloud:
+  
+    zookeeper:
+      connect-string: localhost:2181
+     
+logging:
+  file:
+    path: /Users/zhaoyong/Downloads/logs

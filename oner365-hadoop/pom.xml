@@ -15,6 +15,12 @@
 	<name>oner365-hadoop</name>
 
 	<dependencies>
+		<!-- common -->
+		<dependency>
+			<groupId>com.oner365</groupId>
+			<artifactId>oner365-common</artifactId>
+		</dependency>
+		
 		<!-- spring-boot -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
@@ -28,18 +34,6 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-sentinel</artifactId>
         </dependency> -->
-        <dependency>
-		    <groupId>org.springframework.cloud</groupId>
-		    <artifactId>spring-cloud-loadbalancer</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework.cloud</groupId>
-		    <artifactId>spring-cloud-starter-openfeign</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-configuration-processor</artifactId>
@@ -84,21 +78,27 @@
 		    <artifactId>javax.servlet.jsp-api</artifactId>
 		    <scope>provided</scope>
 		</dependency>
-		<!-- fastjson -->
+		
+		<!-- hive -->
 		<dependency>
-			<groupId>com.alibaba</groupId>
-			<artifactId>fastjson</artifactId>
-		</dependency>
-		<!-- logback logstash -->
-		<dependency>
-		    <groupId>net.logstash.logback</groupId>
-		    <artifactId>logstash-logback-encoder</artifactId>
+			<groupId>org.apache.hive</groupId>
+			<artifactId>hive-jdbc</artifactId>
 		</dependency>
 		<dependency>
-		    <groupId>org.codehaus.janino</groupId>
-		    <artifactId>janino</artifactId>
+		    <groupId>org.apache.hive</groupId>
+		    <artifactId>hive-common</artifactId>
+		    <exclusions>
+				<exclusion>
+					<groupId>org.eclipse.jetty</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.hive</groupId>
+		    		<artifactId>hive-shims</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-
+		
 	</dependencies>
 
 	<build>
