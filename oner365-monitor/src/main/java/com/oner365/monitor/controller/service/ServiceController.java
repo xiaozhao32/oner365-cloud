@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.alibaba.fastjson.JSONObject;
+import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.monitor.deploy.DeployServer;
@@ -71,34 +72,34 @@ public class ServiceController extends BaseController {
   /**
    * 动态刷新配置
    * 
-   * @return String
+   * @return ResponseResult<String>
    */
   @GetMapping("/refresh")
-  public String refreshConfig() {
-    return ResultEnum.SUCCESS.getName();
+  public ResponseResult<String> refreshConfig() {
+    return ResponseResult.success(ResultEnum.SUCCESS.getName());
   }
 
   /**
    * 上传服务
    *
    * @param multipartFile 文件
-   * @return String
+   * @return ResponseResult<String>
    */
   @PostMapping("/upload")
-  public String uploadService(@RequestParam("multipartFile") MultipartFile multipartFile, String ip, int port,
+  public ResponseResult<String> uploadService(@RequestParam("multipartFile") MultipartFile multipartFile, String ip, int port,
       String serviceName) {
-    return ResultEnum.SUCCESS.getName();
+    return ResponseResult.success(ResultEnum.SUCCESS.getName());
   }
 
   /**
    * 重启服务
    * 
    * @param deployServer 对象
-   * @return String
+   * @return ResponseResult<String>
    */
   @PostMapping("/reset")
-  public String resetService(@RequestBody DeployServer deployServer) {
-    return ResultEnum.SUCCESS.getName();
+  public ResponseResult<String> resetService(@RequestBody DeployServer deployServer) {
+    return ResponseResult.success(ResultEnum.SUCCESS.getName());
   }
 
 }

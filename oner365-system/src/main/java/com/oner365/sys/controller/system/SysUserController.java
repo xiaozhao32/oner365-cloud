@@ -85,7 +85,7 @@ public class SysUserController extends BaseController {
    * @return ResponseData<SysUserInfoVo>
    */
   @GetMapping("/get/{id}")
-  public ResponseData<SysUserInfoVo> get(@PathVariable String id) {
+  public SysUserInfoVo get(@PathVariable String id) {
     SysUserDto sysUser = sysUserService.getById(id);
 
     SysUserInfoVo result = new SysUserInfoVo();
@@ -99,7 +99,7 @@ public class SysUserController extends BaseController {
     result.setRoleList(sysRoleService.findList(data));
     result.setJobList(sysJobService.findList(data));
 
-    return ResponseData.success(result);
+    return result;
   }
 
   /**
@@ -118,21 +118,21 @@ public class SysUserController extends BaseController {
    * 
    * @param authUser 登录对象
    * @param file     文件
-   * @return String
+   * @return ResponseResult<String>
    */
   @PostMapping("/avatar")
-  public String avatar(@CurrentUser AuthUser authUser, @RequestParam("avatarfile") MultipartFile file) {
+  public ResponseResult<String> avatar(@CurrentUser AuthUser authUser, @RequestParam("avatarfile") MultipartFile file) {
     if (!file.isEmpty()) {
       ResponseData<ResponseResult<String>> responseData = fileServiceClient.uploadFile(file, "avatar");
       if (responseData != null) {
         ResponseResult<String> result = responseData.getResult();
         if (result != null) {
-          sysUserService.updateAvatar(authUser.getId(), result.getMsg());
-          return result.getMsg();
+          SysUserDto sysUserDto = sysUserService.updateAvatar(authUser.getId(), result.getMsg());
+          return ResponseResult.success(sysUserDto.getAvatar());
         }
       }
     }
-    return "";
+    return ResponseResult.error("上传文件不能为空!");
   }
 
   /**
@@ -143,12 +143,13 @@ public class SysUserController extends BaseController {
    * @return ResponseData
    */
   @PostMapping("/update/profile")
-  public SysUserDto updateUserProfile(@RequestBody SysUserVo sysUserVo, @CurrentUser AuthUser authUser) {
+  public ResponseResult<SysUserDto> updateUserProfile(@RequestBody SysUserVo sysUserVo, @CurrentUser AuthUser authUser) {
     if (sysUserVo != null) {
       sysUserVo.setId(authUser.getId());
-      return sysUserService.updateUserProfile(sysUserVo);
+      SysUserDto result = sysUserService.updateUserProfile(sysUserVo);
+      return ResponseResult.success(result);
     }
-    return null;
+    return ResponseResult.error("个人信息不能为空!");
   }
 
   /**
@@ -184,7 +185,7 @@ public class SysUserController extends BaseController {
    *
    * @param authUser         登录对象
    * @param modifyPasswordVo 请求参数
-   * @return Boolean
+   * @return ResponseResult<Boolean>
    */
   @PostMapping("/update/password")
   public ResponseResult<Boolean> editPassword(@CurrentUser AuthUser authUser,

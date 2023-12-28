@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.code.kaptcha.Producer;
 import com.oner365.common.ResponseData;
+import com.oner365.common.ResponseResult;
 import com.oner365.common.auth.AuthUser;
 import com.oner365.common.auth.annotation.CurrentUser;
 import com.oner365.common.cache.RedisCache;
@@ -169,15 +170,15 @@ public class AuthController extends BaseController {
     /**
      * 退出登录
      * 
-     * @return String
+     * @return ResponseResult<String>
      */
     @PostMapping("/logout")
-    public ResponseData<String> logout(@CurrentUser AuthUser authUser) {
+    public ResponseResult<String> logout(@CurrentUser AuthUser authUser) {
         if (authUser != null) {
             String key = CacheConstants.CACHE_LOGIN_NAME + authUser.getUserName();
             redisCache.deleteObject(key);
         }
-        return ResponseData.success(ResultEnum.SUCCESS.getName());
+        return ResponseResult.success(ResultEnum.SUCCESS.getName());
     }
 
 }

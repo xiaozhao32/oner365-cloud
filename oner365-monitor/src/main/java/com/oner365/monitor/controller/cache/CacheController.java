@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Properties;
 import java.util.stream.IntStream;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.data.redis.connection.RedisServerCommands;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.common.ResponseData;
+import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 import com.oner365.monitor.dto.CacheCommandStatsDto;
@@ -23,8 +25,6 @@ import com.oner365.monitor.dto.CacheJedisInfoDto;
 import com.oner365.util.JedisUtils;
 
 import redis.clients.jedis.Jedis;
-
-import javax.annotation.Resource;
 
 /**
  * 缓存监控
@@ -103,17 +103,17 @@ public class CacheController extends BaseController {
    * 清理缓存
    *
    * @param index db
-   * @return String
+   * @return ResponseResult<String>
    */
   @GetMapping("/clean")
-  public ResponseData<String> clean(int index) {
+  public ResponseResult<String> clean(int index) {
     try (Jedis jedis = JedisUtils.getJedis(redisProperties)){
       if (jedis.isConnected()) {
         jedis.select(index);
         jedis.flushDB();
       }
     }
-    return ResponseData.success(ResultEnum.SUCCESS.getName());
+    return ResponseResult.success(ResultEnum.SUCCESS.getName());
   }
 
 

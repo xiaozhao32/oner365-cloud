@@ -4,6 +4,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ResultEnum;
 import com.oner365.controller.BaseController;
 
@@ -18,10 +19,10 @@ public class DashboardController extends BaseController {
 
     /**
      * 首页信息
-     * @return String
+     * @return ResponseResult<String>
      */
     @GetMapping("/index")
-    public String index() {
-        return ResultEnum.SUCCESS.getName();
+    public ResponseResult<String> index() {
+        return ResponseResult.success(ResultEnum.SUCCESS.getName());
     }
 }
