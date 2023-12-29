@@ -26,6 +26,8 @@ deploy:
       - oner365-statemachine:8721
       - oner365-vault:8722
       - oner365-mqtt:8723
+      - oner365-ldap:8724
+      - oner365-zookeeper:8725
     libs: 
       - oner365-common
       - oner365-api

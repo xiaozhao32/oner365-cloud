@@ -86,6 +86,7 @@
 15. 密码加密Vault - 8722 oner365-vault
 16. Mqtt - 8723 oner365-mqtt
 17. Ldap - 8724 oner365-ldap
+18. Zookeeper - 8725 oner365-zookeeper
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos
