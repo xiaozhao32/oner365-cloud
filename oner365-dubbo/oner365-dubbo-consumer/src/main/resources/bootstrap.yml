@@ -27,10 +27,10 @@ dubbo:
   config-center:
     group: ${spring.profiles.active}
   registry:
-    address: nacos://${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
+    address: nacos://${spring.cloud.nacos.server-addr}
   protocol:
     name: dubbo
-    port: 20881
+    port: -1
   consumer:
     group: ${spring.profiles.active}
     version: 1.0
