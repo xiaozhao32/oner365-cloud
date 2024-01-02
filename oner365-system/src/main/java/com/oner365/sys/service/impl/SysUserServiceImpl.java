@@ -9,10 +9,11 @@ import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
@@ -21,19 +22,23 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.oner365.common.cache.RedisCache;
-import com.oner365.common.cache.annotation.GeneratorCache;
-import com.oner365.common.cache.annotation.RedisCacheAble;
-import com.oner365.common.cache.constants.CacheConstants;
-import com.oner365.common.config.properties.AccessTokenProperties;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.common.exception.ProjectRuntimeException;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.Criteria;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.common.query.QueryUtils;
-import com.oner365.common.query.Restrictions;
+import com.oner365.data.commons.config.properties.AccessTokenProperties;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.exception.ProjectRuntimeException;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.commons.util.DateUtil;
+import com.oner365.data.commons.util.JwtUtils;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.Criteria;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.query.QueryUtils;
+import com.oner365.data.jpa.query.Restrictions;
+import com.oner365.data.redis.RedisCache;
+import com.oner365.data.redis.annotation.GeneratorCache;
+import com.oner365.data.redis.annotation.RedisCacheAble;
+import com.oner365.data.redis.constants.CacheConstants;
+import com.oner365.data.web.utils.RequestUtils;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysJobDao;
 import com.oner365.sys.dao.ISysOrganizationDao;
@@ -55,10 +60,6 @@ import com.oner365.sys.entity.SysUserOrg;
 import com.oner365.sys.entity.SysUserRole;
 import com.oner365.sys.service.ISysUserService;
 import com.oner365.sys.vo.SysUserVo;
-import com.oner365.util.DataUtils;
-import com.oner365.util.DateUtil;
-import com.oner365.util.JwtUtils;
-import com.oner365.util.RequestUtils;
 
 /**
  * 系统用户接口实现类
@@ -73,34 +74,34 @@ public class SysUserServiceImpl implements ISysUserService {
   private static final String CACHE_NAME = "SysUser";
   private static final String CACHE_ORG_NAME = "SysOrganization";
 
-  @Autowired
+  @Resource
   private RedisCache redisCache;
 
-  @Autowired
+  @Resource
   private ISysUserDao userDao;
 
-  @Autowired
+  @Resource
   private ISysRoleDao sysRoleDao;
 
-  @Autowired
+  @Resource
   private ISysOrganizationDao sysOrganizationDao;
 
-  @Autowired
+  @Resource
   private ISysJobDao sysJobDao;
   
-  @Autowired
+  @Resource
   private ISysRoleMenuDao roleMenuDao;
 
-  @Autowired
+  @Resource
   private ISysUserRoleDao userRoleDao;
 
-  @Autowired
+  @Resource
   private ISysUserOrgDao userOrgDao;
 
-  @Autowired
+  @Resource
   private ISysUserJobDao userJobDao;
 
-  @Autowired
+  @Resource
   private AccessTokenProperties tokenProperties;
 
   @Override

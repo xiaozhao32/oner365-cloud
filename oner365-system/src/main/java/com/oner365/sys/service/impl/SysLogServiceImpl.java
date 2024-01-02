@@ -5,20 +5,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.oner365.common.exception.ProjectRuntimeException;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.Criteria;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.common.query.QueryUtils;
-import com.oner365.common.query.Restrictions;
+import com.oner365.data.commons.exception.ProjectRuntimeException;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.Criteria;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.query.QueryUtils;
+import com.oner365.data.jpa.query.Restrictions;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysLogDao;
 import com.oner365.sys.dto.SysLogDto;
@@ -36,7 +37,7 @@ public class SysLogServiceImpl implements ISysLogService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SysLogServiceImpl.class);
 
-  @Autowired
+  @Resource
   private ISysLogDao dao;
 
   @Override

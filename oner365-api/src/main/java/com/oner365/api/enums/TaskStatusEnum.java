@@ -3,7 +3,7 @@ package com.oner365.api.enums;
 import java.util.Arrays;
 import java.util.Optional;
 
-import com.oner365.common.enums.BaseEnum;
+import com.oner365.data.commons.enums.BaseEnum;
 
 /**
  * 枚举 - 任务状态

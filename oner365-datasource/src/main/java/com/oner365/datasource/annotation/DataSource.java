@@ -6,7 +6,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import com.oner365.common.datasource.constants.DataSourceConstants;
+import com.oner365.data.datasource.constants.DataSourceConstants;
 
 /**
  * 数据源注解

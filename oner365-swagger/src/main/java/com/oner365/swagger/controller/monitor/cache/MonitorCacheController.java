@@ -2,14 +2,14 @@ package com.oner365.swagger.controller.monitor.cache;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.oner365.common.ResponseData;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.reponse.ResponseData;
 import com.oner365.swagger.client.monitor.IMonitorCacheClient;
 import com.oner365.swagger.dto.CacheInfoDto;
 import com.oner365.swagger.dto.CacheJedisInfoDto;
@@ -25,9 +25,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "缓存管理")
 @RequestMapping("/monitor/cache")
-public class MonitorCacheController extends BaseController {
+public class MonitorCacheController {
 
-  @Autowired
+  @Resource
   private IMonitorCacheClient client;
 
   /**

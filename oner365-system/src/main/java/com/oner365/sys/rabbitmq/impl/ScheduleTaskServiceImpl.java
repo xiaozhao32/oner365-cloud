@@ -1,5 +1,7 @@
 package com.oner365.sys.rabbitmq.impl;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -13,15 +15,13 @@ import com.oner365.api.rabbitmq.dto.InvokeParamDto;
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
 import com.oner365.api.rabbitmq.dto.UpdateTaskExecuteSatusDto;
-import com.oner365.common.ResponseData;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.ResultEnum;
-import com.oner365.common.enums.StatusEnum;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.enums.ResultEnum;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.web.utils.HttpClientUtils;
 import com.oner365.sys.client.IMonitorServiceClient;
 import com.oner365.sys.constants.SysConstants;
-import com.oner365.util.DataUtils;
-
-import javax.annotation.Resource;
 
 /**
  * IScheduleTaskService实现类
@@ -76,7 +76,7 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
     LOGGER.info("taskExecute  saveTaskLog ");
     SysTaskLogDto log = new SysTaskLogDto();
     log.setTaskId(taskId);
-    log.setExecuteIp(DataUtils.getLocalhost());
+    log.setExecuteIp(HttpClientUtils.getLocalhost());
     log.setExecuteServerName(SysConstants.SCHEDULE_SERVER_NAME);
     log.setStatus(TaskStatusEnum.NORMAL);
     log.setTaskMessage("执行时间：" + (System.currentTimeMillis() - time) + "毫秒");

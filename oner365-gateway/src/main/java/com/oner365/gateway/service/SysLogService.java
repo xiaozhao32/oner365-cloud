@@ -1,5 +1,6 @@
 package com.oner365.gateway.service;
 
+import com.oner365.data.jpa.service.BaseService;
 import com.oner365.gateway.vo.SysLogVo;
 
 /**

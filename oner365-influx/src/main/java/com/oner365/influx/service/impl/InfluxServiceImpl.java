@@ -2,7 +2,8 @@ package com.oner365.influx.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.oner365.influx.config.InfluxConfig;
@@ -18,10 +19,10 @@ import com.oner365.influx.service.InfluxService;
 @Service
 public class InfluxServiceImpl implements InfluxService {
 
-  @Autowired
+  @Resource
   private InfluxConfig config;
   
-  @Autowired
+  @Resource
   private InfluxProperties influxProperties;
   
   @Override

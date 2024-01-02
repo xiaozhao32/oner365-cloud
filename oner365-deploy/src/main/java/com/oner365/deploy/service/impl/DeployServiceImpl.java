@@ -5,8 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oner365.deploy.config.properties.LocalDeployProperties;
@@ -28,9 +29,9 @@ public class DeployServiceImpl implements DeployService {
   /** 冒号 */
   private static final String COLON = ":";
   
-  @Autowired
+  @Resource
   private LocalDeployProperties localDeployProperties;
-  @Autowired
+  @Resource
   private ServerDeployProperties serverDeployProperties;
 
   @Override

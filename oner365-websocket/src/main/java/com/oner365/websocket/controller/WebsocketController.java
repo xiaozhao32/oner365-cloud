@@ -5,8 +5,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.common.ResponseData;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.web.controller.BaseController;
 
 /**
  * 测试ws

@@ -3,7 +3,7 @@ package com.oner365.swagger.vo;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.oner365.common.enums.StatusEnum;
+import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 菜单类型对象

@@ -4,9 +4,10 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -18,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.oner365.common.ResponseData;
+import com.oner365.data.commons.reponse.ResponseData;
 
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.SwaggerResource;
@@ -33,7 +34,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ResponseAdvice.class);
 
-  @Autowired
+  @Resource
   private ObjectMapper objectMapper;
 
   @Override

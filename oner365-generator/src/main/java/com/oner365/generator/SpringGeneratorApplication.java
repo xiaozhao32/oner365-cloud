@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableFeignClients
 @EnableDiscoveryClient
 @MapperScan({ "com.oner365.generator.mapper" })
-@ComponentScan({ "com.oner365.common", "com.oner365.generator" })
+@ComponentScan({ "com.oner365" })
 public class SpringGeneratorApplication {
 
     public static void main(String[] args) {

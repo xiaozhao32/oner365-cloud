@@ -12,10 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.StorageEnum;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.enums.StorageEnum;
+import com.oner365.data.commons.util.DataUtils;
 import com.oner365.files.vo.SysFileStorageVo;
-import com.oner365.util.DataUtils;
 
 /**
  * 本地文件上传

@@ -7,7 +7,7 @@ import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 
-import com.oner365.common.enums.StatusEnum;
+import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 机构表 - nt_sys_organization

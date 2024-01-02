@@ -11,9 +11,9 @@ import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
+import com.oner365.data.commons.util.DataUtils;
 import com.oner365.datasource.annotation.DataSource;
 import com.oner365.datasource.dynamic.DataSourceHolder;
-import com.oner365.util.DataUtils;
 
 /**
  * 数据源拦截器

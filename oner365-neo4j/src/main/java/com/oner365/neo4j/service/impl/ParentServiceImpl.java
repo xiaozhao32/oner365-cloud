@@ -1,8 +1,9 @@
 package com.oner365.neo4j.service.impl;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oner365.neo4j.dao.ParentRepository;
@@ -20,10 +21,10 @@ public class ParentServiceImpl implements ParentService {
   
   private final Logger logger = LoggerFactory.getLogger(ParentServiceImpl.class);
 
-  @Autowired
+  @Resource
   private ParentRepository repository;
 
-  @Override
+  @Resource
   public ParentNode save(ParentNode entity) {
     return repository.save(entity);
   }

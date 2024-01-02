@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.concurrent.ListenableFuture;
 import org.springframework.util.concurrent.ListenableFutureCallback;
 
-import com.oner365.common.enums.ResultEnum;
+import com.oner365.data.commons.enums.ResultEnum;
 import com.oner365.kafka.config.properties.KafkaProperties;
 import com.oner365.kafka.service.IKafkaConsumerService;
 

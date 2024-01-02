@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@ComponentScan({ "com.oner365.gateway" })
+@ComponentScan({ "com.oner365" })
 public class SpringCloudGatewayApplication {
 
     public static void main(String[] args) {

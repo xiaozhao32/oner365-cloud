@@ -1,6 +1,7 @@
 package com.oner365.gateway.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,7 +18,7 @@ import com.oner365.gateway.vo.SysLogVo;
 @Service
 public class SysLogServiceImpl implements SysLogService {
 
-  @Autowired
+  @Resource
   private ISysLogDao dao;
 
   @Override

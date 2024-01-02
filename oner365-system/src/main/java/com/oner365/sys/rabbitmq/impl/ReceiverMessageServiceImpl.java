@@ -1,6 +1,7 @@
 package com.oner365.sys.rabbitmq.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -16,7 +17,7 @@ import com.oner365.sys.vo.SysMessageVo;
 @Service
 public class ReceiverMessageServiceImpl implements IReceiverMessageService {
 
-  @Autowired
+  @Resource
   private ISysMessageService sysMessageService;
 
   @Override

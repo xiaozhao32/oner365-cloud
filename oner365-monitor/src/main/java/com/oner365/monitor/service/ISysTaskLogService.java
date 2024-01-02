@@ -3,9 +3,9 @@ package com.oner365.monitor.service;
 import java.util.List;
 
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.common.service.BaseService;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.service.BaseService;
 import com.oner365.monitor.vo.SysTaskLogVo;
 
 /**

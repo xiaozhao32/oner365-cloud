@@ -3,10 +3,11 @@ package com.oner365.gateway.config;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.ApplicationEventPublisher;
@@ -22,10 +23,10 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
-import com.oner365.gateway.config.properties.AccessTokenProperties;
+import com.oner365.data.commons.config.properties.AccessTokenProperties;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.commons.util.JwtUtils;
 import com.oner365.gateway.config.properties.IgnoreWhiteProperties;
-import com.oner365.gateway.constants.ResponseData;
-import com.oner365.gateway.jwt.JwtUtils;
 import com.oner365.gateway.log.event.SysLogEvent;
 import com.oner365.gateway.util.DataUtils;
 import com.oner365.gateway.vo.SysLogVo;
@@ -42,13 +43,13 @@ public class TokenFilter implements GlobalFilter, Ordered {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TokenFilter.class);
 
-    @Autowired
+    @Resource
     private ApplicationEventPublisher publisher;
 
-    @Autowired
+    @Resource
     private IgnoreWhiteProperties ignoreWhiteProperties;
 
-    @Autowired
+    @Resource
     private AccessTokenProperties accessTokenProperties;
 
     @Override

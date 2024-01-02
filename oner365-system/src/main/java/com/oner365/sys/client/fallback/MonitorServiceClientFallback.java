@@ -3,9 +3,9 @@ package com.oner365.sys.client.fallback;
 import org.springframework.stereotype.Component;
 
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
-import com.oner365.common.ResponseData;
-import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.enums.ResultEnum;
+import com.oner365.data.commons.enums.ErrorInfoEnum;
+import com.oner365.data.commons.enums.ResultEnum;
+import com.oner365.data.commons.reponse.ResponseData;
 import com.oner365.sys.client.IMonitorServiceClient;
 
 /**

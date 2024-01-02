@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.oner365.api.rabbitmq.dto.InvokeParamDto;
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
+import com.oner365.data.commons.util.DataUtils;
 import com.oner365.monitor.entity.InvokeParam;
-import com.oner365.util.DataUtils;
 
 /**
  * 任务执行工具

@@ -6,26 +6,28 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.oner365.common.cache.annotation.GeneratorCache;
-import com.oner365.common.cache.annotation.RedisCacheAble;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.common.exception.ProjectRuntimeException;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.AttributeBean;
-import com.oner365.common.query.Criteria;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.common.query.QueryUtils;
-import com.oner365.common.query.Restrictions;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.exception.ProjectRuntimeException;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.AttributeBean;
+import com.oner365.data.jpa.query.Criteria;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.query.QueryUtils;
+import com.oner365.data.jpa.query.Restrictions;
+import com.oner365.data.redis.annotation.GeneratorCache;
+import com.oner365.data.redis.annotation.RedisCacheAble;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysDictItemTypeDao;
 import com.oner365.sys.dto.SysDictItemDto;
@@ -34,7 +36,6 @@ import com.oner365.sys.entity.SysDictItemType;
 import com.oner365.sys.service.ISysDictItemService;
 import com.oner365.sys.service.ISysDictItemTypeService;
 import com.oner365.sys.vo.SysDictItemTypeVo;
-import com.oner365.util.DataUtils;
 
 /**
  * 字典类型接口实现类
@@ -49,10 +50,10 @@ public class SysDictItemTypeServiceImpl implements ISysDictItemTypeService {
   private static final String CACHE_NAME = "SysDictItemType";
   private static final String CACHE_ITEM_NAME = "SysDictItem";
 
-  @Autowired
+  @Resource
   private ISysDictItemTypeDao dao;
 
-  @Autowired
+  @Resource
   private ISysDictItemService sysDictItemService;
 
   @Override

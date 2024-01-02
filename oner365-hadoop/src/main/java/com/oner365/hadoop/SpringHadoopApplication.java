@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableFeignClients
 @EnableDiscoveryClient
-@ComponentScan({ "com.oner365.common", "com.oner365.hadoop" })
+@ComponentScan({ "com.oner365" })
 public class SpringHadoopApplication {
 
     public static void main(String[] args) {

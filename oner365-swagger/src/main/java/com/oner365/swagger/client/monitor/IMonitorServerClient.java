@@ -3,7 +3,7 @@ package com.oner365.swagger.client.monitor;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.oner365.common.ResponseData;
+import com.oner365.data.commons.reponse.ResponseData;
 import com.oner365.swagger.constants.PathConstants;
 import com.oner365.swagger.dto.Server;
 

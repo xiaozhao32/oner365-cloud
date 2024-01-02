@@ -1,6 +1,6 @@
 package com.oner365.kafka.service;
 
-import com.oner365.common.enums.ResultEnum;
+import com.oner365.data.commons.enums.ResultEnum;
 
 /**
  * Kafka消费者接口

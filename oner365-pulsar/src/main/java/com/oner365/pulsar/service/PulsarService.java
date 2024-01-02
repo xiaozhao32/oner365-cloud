@@ -1,7 +1,7 @@
 package com.oner365.pulsar.service;
 
 import com.alibaba.fastjson.JSONObject;
-import com.oner365.common.enums.ResultEnum;
+import com.oner365.data.commons.enums.ResultEnum;
 
 /**
  * pulsar service

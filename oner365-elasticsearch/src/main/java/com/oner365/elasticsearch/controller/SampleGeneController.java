@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,15 +17,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
-import com.oner365.common.ResponseResult;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.commons.util.GeneTransFormUtils;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.elasticsearch.dto.SampleGeneDto;
 import com.oner365.elasticsearch.service.ISampleGeneElasticsearchService;
 import com.oner365.elasticsearch.vo.SampleGeneVo;
-import com.oner365.util.DataUtils;
-import com.oner365.util.GeneTransFormUtils;
 
 /**
  * Elasticsearch Controller
@@ -37,7 +38,7 @@ import com.oner365.util.GeneTransFormUtils;
 @RequestMapping("/sample/gene")
 public class SampleGeneController extends BaseController {
 
-  @Autowired
+  @Resource
   private ISampleGeneElasticsearchService service;
 
   /**

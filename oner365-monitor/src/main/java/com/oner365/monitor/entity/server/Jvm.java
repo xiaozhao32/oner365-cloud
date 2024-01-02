@@ -3,8 +3,8 @@ package com.oner365.monitor.entity.server;
 import java.io.Serializable;
 import java.lang.management.ManagementFactory;
 
-import com.oner365.util.Arith;
-import com.oner365.util.DateUtil;
+import com.oner365.data.commons.util.Arith;
+import com.oner365.data.commons.util.DateUtil;
 
 /**
  * JVM相关信息

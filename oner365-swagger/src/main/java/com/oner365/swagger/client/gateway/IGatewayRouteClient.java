@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.oner365.common.ResponseData;
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
 import com.oner365.swagger.dto.GatewayRouteDto;
 import com.oner365.swagger.vo.GatewayRouteVo;

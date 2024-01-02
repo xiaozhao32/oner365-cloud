@@ -3,7 +3,8 @@ package com.oner365.monitor.controller.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,9 +17,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.alibaba.fastjson.JSONObject;
-import com.oner365.common.ResponseResult;
-import com.oner365.common.enums.ResultEnum;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.enums.ResultEnum;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.monitor.deploy.DeployServer;
 
 import reactor.core.publisher.Mono;
@@ -32,10 +33,10 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/service")
 public class ServiceController extends BaseController {
 
-  @Autowired
+  @Resource
   private DiscoveryClient discoveryClient;
 
-  @Autowired
+  @Resource
   private WebClient webClient;
 
   /**

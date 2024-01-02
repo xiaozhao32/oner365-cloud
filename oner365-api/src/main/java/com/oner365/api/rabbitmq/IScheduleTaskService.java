@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 import com.oner365.api.constants.ScheduleTaskConstants;
 import com.oner365.api.rabbitmq.dto.InvokeParamDto;
-import com.oner365.common.service.BaseService;
+import com.oner365.data.jpa.service.BaseService;
 
 /**
  * 定时任务监听

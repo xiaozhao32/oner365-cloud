@@ -4,7 +4,7 @@ import java.io.File;
 
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.common.enums.StorageEnum;
+import com.oner365.data.commons.enums.StorageEnum;
 import com.oner365.files.dto.SysFileStorageDto;
 
 /**

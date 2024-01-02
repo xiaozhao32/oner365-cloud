@@ -4,10 +4,11 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import javax.annotation.Resource;
+
 import org.apache.hadoop.fs.FileSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +27,7 @@ public class HadoopHdfsConfig {
   
   private static final Logger LOGGER = LoggerFactory.getLogger(HadoopHdfsConfig.class);
 
-  @Autowired
+  @Resource
   private HdfsProperties hdfsProperties;
 
   /**

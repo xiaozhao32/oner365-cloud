@@ -3,9 +3,10 @@ package com.oner365.websocket.config;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.BinaryMessage;
 import org.springframework.web.socket.CloseStatus;
@@ -17,8 +18,8 @@ import org.springframework.web.socket.handler.AbstractWebSocketHandler;
 
 import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
-import com.oner365.common.cache.RedisCache;
-import com.oner365.util.DataUtils;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.redis.RedisCache;
 import com.oner365.websocket.constants.WebSocketConstants;
 import com.oner365.websocket.entity.WebSocketData;
 import com.oner365.websocket.service.IRedisSendMessageService;
@@ -35,10 +36,10 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(WebSocketHandler.class);
 
-  @Autowired
+  @Resource
   private IRedisSendMessageService redisSendMessageService;
 
-  @Autowired
+  @Resource
   private RedisCache redisCache;
 
   /**

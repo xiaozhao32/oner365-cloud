@@ -1,13 +1,14 @@
 package com.oner365.rocketmq.service.impl;
 
+import javax.annotation.Resource;
+
 import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.MessagingException;
 import org.springframework.stereotype.Service;
 
-import com.oner365.common.enums.ResultEnum;
+import com.oner365.data.commons.enums.ResultEnum;
 import com.oner365.rocketmq.config.properties.RocketmqProperties;
 import com.oner365.rocketmq.service.RocketmqService;
 
@@ -22,10 +23,10 @@ public class RocketmqServiceImpl implements RocketmqService {
 
   private final Logger logger = LoggerFactory.getLogger(RocketmqService.class);
 
-  @Autowired
+  @Resource
   private RocketmqProperties rocketmqProperties;
 
-  @Autowired
+  @Resource
   private RocketMQTemplate rocketmqTemplate;
 
   @Override

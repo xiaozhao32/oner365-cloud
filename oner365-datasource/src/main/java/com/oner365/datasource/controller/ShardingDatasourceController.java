@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.common.datasource.util.DataSourceUtil;
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.controller.BaseController;
-import com.oner365.util.DateUtil;
-import com.oner365.util.SnowFlakeUtils;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.util.DateUtil;
+import com.oner365.data.commons.util.SnowFlakeUtils;
+import com.oner365.data.datasource.util.DataSourceUtil;
+import com.oner365.data.web.controller.BaseController;
 
 /**
  * 接口测试

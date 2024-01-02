@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.common.ResponseResult;
-import com.oner365.common.auth.AuthUser;
-import com.oner365.common.auth.annotation.CurrentUser;
-import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.auth.AuthUser;
+import com.oner365.data.commons.auth.annotation.CurrentUser;
+import com.oner365.data.commons.enums.ErrorInfoEnum;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dto.SysMenuDto;
 import com.oner365.sys.dto.SysMenuInfoDto;
@@ -41,10 +42,10 @@ import com.oner365.sys.vo.SysMenuVo;
 @RequestMapping("/menus")
 public class SysMenuController extends BaseController {
 
-  @Autowired
+  @Resource
   public ISysMenuService menuService;
 
-  @Autowired
+  @Resource
   public ISysMenuOperationService operationService;
 
   /**

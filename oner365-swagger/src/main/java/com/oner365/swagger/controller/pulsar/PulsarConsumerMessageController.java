@@ -1,13 +1,13 @@
 package com.oner365.swagger.controller.pulsar;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.oner365.common.ResponseData;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.reponse.ResponseData;
 import com.oner365.swagger.client.pulsar.IPulsarConsumerClient;
 
 import io.swagger.annotations.Api;
@@ -22,9 +22,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "消息服务 - Pulsar")
 @RequestMapping("/pulsar/message")
-public class PulsarConsumerMessageController extends BaseController {
+public class PulsarConsumerMessageController {
 
-  @Autowired
+  @Resource
   private IPulsarConsumerClient client;
 
   /**

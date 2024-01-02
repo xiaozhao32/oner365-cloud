@@ -1,0 +1,3 @@
+# HandlerMethodArgumentResolver
+org.springframework.web.method.support.HandlerMethodArgumentResolver=\
+com.oner365.data.web.resolver.CurrentUserMethodArgumentResolver

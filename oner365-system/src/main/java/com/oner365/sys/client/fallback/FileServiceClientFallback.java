@@ -3,10 +3,10 @@ package com.oner365.sys.client.fallback;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.common.ResponseData;
-import com.oner365.common.ResponseResult;
-import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.enums.ResultEnum;
+import com.oner365.data.commons.enums.ErrorInfoEnum;
+import com.oner365.data.commons.enums.ResultEnum;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.sys.client.IFileServiceClient;
 
 /**

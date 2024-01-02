@@ -3,7 +3,7 @@ package com.oner365.api.rabbitmq.dto;
 import java.io.Serializable;
 
 import com.alibaba.fastjson.JSON;
-import com.oner365.common.enums.StatusEnum;
+import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 更新定时任务执行状态dto

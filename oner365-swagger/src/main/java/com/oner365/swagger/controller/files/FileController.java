@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.nio.charset.Charset;
 
+import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,13 +22,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.oner365.common.ResponseData;
-import com.oner365.common.ResponseResult;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.commons.util.DateUtil;
 import com.oner365.swagger.client.files.IFilesStorageClient;
-import com.oner365.util.DataUtils;
-import com.oner365.util.DateUtil;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,9 +41,11 @@ import io.swagger.annotations.ApiParam;
 @RestController
 @Api(tags = "文件中心")
 @RequestMapping("/file")
-public class FileController extends BaseController {
+public class FileController {
+  
+  private final Logger logger = LoggerFactory.getLogger(FileController.class);
 
-  @Autowired
+  @Resource
   private IFilesStorageClient client;
 
   /**

@@ -14,7 +14,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.oner365.api.enums.TaskStatusEnum;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.data.commons.constants.PublicConstants;
 
 /**
  * 定时任务调度日志表 nt_sys_task_log

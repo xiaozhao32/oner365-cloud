@@ -10,8 +10,8 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.GeoPointField;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
+import com.oner365.data.commons.util.DateUtil;
 import com.oner365.elasticsearch.dto.GeoPoint;
-import com.oner365.util.DateUtil;
 
 /**
  * 坐标信息

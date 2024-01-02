@@ -2,7 +2,8 @@ package com.oner365.swagger.controller.elasticsearch;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,11 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.oner365.common.ResponseData;
-import com.oner365.common.ResponseResult;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.elasticsearch.IElasticsearchSampleGeneClient;
 import com.oner365.swagger.dto.SampleGeneDto;
 import com.oner365.swagger.vo.SampleGeneVo;
@@ -33,9 +33,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "Elasticsearch 基因型信息")
 @RequestMapping("/elasticsearch/sample/gene")
-public class ElasticsearchSampleGeneController extends BaseController {
+public class ElasticsearchSampleGeneController {
 
-  @Autowired
+  @Resource
   private IElasticsearchSampleGeneClient client;
 
   /**

@@ -6,7 +6,7 @@
 
 	<groupId>com.oner365</groupId>
 	<artifactId>oner365-cloud</artifactId>
-	<version>2.0.2</version>
+	<version>2.1.0</version>
 	<packaging>pom</packaging>
 
 	<name>oner365-cloud</name>
@@ -1477,15 +1477,35 @@
 
 			<!-- oner365 -->
 			<dependency>
-				<groupId>com.oner365</groupId>
-				<artifactId>oner365-common</artifactId>
+				<groupId>com.oner365.data</groupId>
+				<artifactId>oner365-data-commons</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.oner365</groupId>
-				<artifactId>oner365-api</artifactId>
+				<groupId>com.oner365.data</groupId>
+				<artifactId>oner365-data-datasource</artifactId>
 				<version>${project.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.oner365.data</groupId>
+				<artifactId>oner365-data-jpa</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.oner365.data</groupId>
+				<artifactId>oner365-data-redis</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.oner365.data</groupId>
+				<artifactId>oner365-data-web</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+	            <groupId>com.oner365</groupId>
+	            <artifactId>oner365-api</artifactId>
+	            <version>${project.version}</version>
+	        </dependency>
 			<dependency>
 				<groupId>com.oner365</groupId>
 				<artifactId>oner365-dubbo-api</artifactId>
@@ -1560,7 +1580,7 @@
 	<modules>
 
 		<!-- 工具包 -->
-		<module>oner365-common</module>
+		<module>oner365-data</module>
 		<!-- api -->
 		<module>oner365-api</module>
 		<!-- 网关前置 -->

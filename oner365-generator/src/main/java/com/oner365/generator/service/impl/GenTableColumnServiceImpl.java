@@ -2,14 +2,15 @@ package com.oner365.generator.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
 
+import com.oner365.data.commons.util.ConvertString;
+import com.oner365.data.commons.util.DateUtil;
 import com.oner365.generator.entity.GenTableColumn;
 import com.oner365.generator.mapper.GenTableColumnMapper;
 import com.oner365.generator.service.IGenTableColumnService;
-import com.oner365.util.ConvertString;
-import com.oner365.util.DateUtil;
 
 /**
  * 业务字段 服务层实现
@@ -18,7 +19,7 @@ import com.oner365.util.DateUtil;
  */
 @Service
 public class GenTableColumnServiceImpl implements IGenTableColumnService {
-    @Autowired
+    @Resource
     private GenTableColumnMapper genTableColumnMapper;
 
     /**

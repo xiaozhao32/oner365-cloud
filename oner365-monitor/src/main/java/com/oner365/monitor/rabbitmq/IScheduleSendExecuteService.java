@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 import com.oner365.api.constants.ScheduleTaskConstants;
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
 import com.oner365.api.rabbitmq.dto.UpdateTaskExecuteSatusDto;
-import com.oner365.common.service.BaseService;
+import com.oner365.data.jpa.service.BaseService;
 import com.oner365.monitor.exception.TaskException;
 
 /**

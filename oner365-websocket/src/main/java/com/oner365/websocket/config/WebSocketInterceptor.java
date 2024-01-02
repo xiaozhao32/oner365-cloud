@@ -2,17 +2,19 @@ package com.oner365.websocket.config;
 
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.server.HandshakeInterceptor;
 
-import com.oner365.common.sequence.sequence.SnowflakeSequence;
-import com.oner365.util.DataUtils;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.web.sequence.sequence.SnowflakeSequence;
+import com.oner365.data.web.utils.HttpClientUtils;
 import com.oner365.websocket.vo.WebSocketLinkVo;
 
 /**
@@ -31,7 +33,7 @@ public class WebSocketInterceptor implements HandshakeInterceptor {
   
   public static final String USER_ID = "userId";
   
-  @Autowired
+  @Resource
   private SnowflakeSequence snowflakeSequence;
   
   
@@ -44,7 +46,7 @@ public class WebSocketInterceptor implements HandshakeInterceptor {
       Map<String, Object> attributes) {
     LOGGER.info("握手开始");
     // 获得请求参数
-    WebSocketLinkVo websocketLinkVo = DataUtils.getUrlParam(request.getURI().getQuery(), WebSocketLinkVo.class);
+    WebSocketLinkVo websocketLinkVo = HttpClientUtils.getUrlParam(request.getURI().getQuery(), WebSocketLinkVo.class);
     if (!DataUtils.isEmpty(websocketLinkVo.getUser())) {
       // 放入属性域
       attributes.put(TOKEN, websocketLinkVo.getToken() != null ? websocketLinkVo.getToken():snowflakeSequence.nextNo());

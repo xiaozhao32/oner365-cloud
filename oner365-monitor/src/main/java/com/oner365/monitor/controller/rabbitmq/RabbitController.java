@@ -5,7 +5,8 @@ import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,13 +18,13 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.oner365.common.config.properties.RabbitmqProperties;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.util.Base64Utils;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.web.controller.BaseController;
+import com.oner365.data.web.utils.HttpClientUtils;
+import com.oner365.monitor.config.properties.RabbitmqProperties;
 import com.oner365.monitor.enums.RabbitmqTypeEnum;
-import com.oner365.util.Base64Utils;
-import com.oner365.util.DataUtils;
-import com.oner365.util.HttpClientUtils;
 
 import reactor.core.publisher.Mono;
 
@@ -37,10 +38,10 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/rabbitmq")
 public class RabbitController extends BaseController {
 
-  @Autowired
+  @Resource
   private RabbitmqProperties rabbitmqProperties;
   
-  @Autowired
+  @Resource
   private WebClient client;
 
   /**

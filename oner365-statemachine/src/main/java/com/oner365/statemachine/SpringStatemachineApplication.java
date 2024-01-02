@@ -2,7 +2,6 @@ package com.oner365.statemachine;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 /**
@@ -10,8 +9,8 @@ import org.springframework.context.annotation.ComponentScan;
  * 
  * @author zhaoyong
  */
-@SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
-@ComponentScan({ "com.oner365.common", "com.oner365.statemachine" })
+@SpringBootApplication
+@ComponentScan({ "com.oner365" })
 public class SpringStatemachineApplication {
 
   public static void main(String[] args) {

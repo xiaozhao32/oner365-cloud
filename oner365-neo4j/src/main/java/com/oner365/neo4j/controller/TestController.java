@@ -1,6 +1,7 @@
 package com.oner365.neo4j.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,9 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.common.ResponseData;
-import com.oner365.common.enums.ResultEnum;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.enums.ResultEnum;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.neo4j.entity.ParentNode;
 import com.oner365.neo4j.entity.SonNode;
 import com.oner365.neo4j.service.ParentService;
@@ -26,10 +27,10 @@ import com.oner365.neo4j.service.SonService;
 @RequestMapping("/neo4j/test")
 public class TestController extends BaseController {
 
-  @Autowired
+  @Resource
   private ParentService parentService;
   
-  @Autowired
+  @Resource
   private SonService sonService;
 
   /**

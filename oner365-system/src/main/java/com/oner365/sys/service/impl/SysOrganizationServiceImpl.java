@@ -9,9 +9,10 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -19,17 +20,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import com.oner365.common.cache.annotation.GeneratorCache;
-import com.oner365.common.cache.annotation.RedisCacheAble;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.datasource.constants.DataSourceConstants;
-import com.oner365.common.datasource.util.DataSourceUtil;
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.common.exception.ProjectRuntimeException;
-import com.oner365.common.query.Criteria;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.common.query.QueryUtils;
-import com.oner365.common.query.Restrictions;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.exception.ProjectRuntimeException;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.datasource.constants.DataSourceConstants;
+import com.oner365.data.datasource.util.DataSourceUtil;
+import com.oner365.data.jpa.query.Criteria;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.query.QueryUtils;
+import com.oner365.data.jpa.query.Restrictions;
+import com.oner365.data.redis.annotation.GeneratorCache;
+import com.oner365.data.redis.annotation.RedisCacheAble;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysOrganizationDao;
 import com.oner365.sys.dto.SysOrganizationDto;
@@ -40,7 +42,6 @@ import com.oner365.sys.mapper.SysOrganizationMapper;
 import com.oner365.sys.service.ISysOrganizationService;
 import com.oner365.sys.vo.DataSourceConfigVo;
 import com.oner365.sys.vo.SysOrganizationVo;
-import com.oner365.util.DataUtils;
 
 /**
  * 机构接口实现类
@@ -54,10 +55,10 @@ public class SysOrganizationServiceImpl implements ISysOrganizationService {
 
   private static final String CACHE_NAME = "SysOrganization";
 
-  @Autowired
+  @Resource
   private ISysOrganizationDao dao;
 
-  @Autowired
+  @Resource
   private SysOrganizationMapper organizationMapper;
 
   @Override

@@ -3,7 +3,7 @@ package com.oner365.sys.dto;
 import java.io.Serializable;
 
 import com.google.common.base.MoreObjects;
-import com.oner365.common.enums.StatusEnum;
+import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 字典 SysDictItem

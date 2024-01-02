@@ -2,12 +2,13 @@ package com.oner365.influx.controller;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.controller.BaseController;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.influx.entity.Mem;
 import com.oner365.influx.service.InfluxService;
 
@@ -21,7 +22,7 @@ import com.oner365.influx.service.InfluxService;
 @RequestMapping("/influx/test")
 public class InfluxTestController extends BaseController {
 
-  @Autowired
+  @Resource
   private InfluxService service;
 
   /**

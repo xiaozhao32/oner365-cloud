@@ -1,9 +1,10 @@
 package com.oner365.deploy.test;
 
+import javax.annotation.Resource;
+
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -26,7 +27,7 @@ class DeployTest {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(DeployTest.class);
   
-  @Autowired
+  @Resource
   private DeployService deployService;
 
   /**

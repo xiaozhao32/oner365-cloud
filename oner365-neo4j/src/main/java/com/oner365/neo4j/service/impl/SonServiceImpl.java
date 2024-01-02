@@ -1,8 +1,9 @@
 package com.oner365.neo4j.service.impl;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.oner365.neo4j.dao.SonRepository;
@@ -20,7 +21,7 @@ public class SonServiceImpl implements SonService {
   
   private final Logger logger = LoggerFactory.getLogger(SonServiceImpl.class);
 
-  @Autowired
+  @Resource
   private SonRepository repository;
 
   @Override

@@ -1,6 +1,6 @@
 package com.oner365.statemachine.constants;
 
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.data.commons.constants.PublicConstants;
 
 /**
  * 状态机常量

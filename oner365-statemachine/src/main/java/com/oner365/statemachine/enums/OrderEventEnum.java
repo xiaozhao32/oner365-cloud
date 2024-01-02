@@ -1,6 +1,6 @@
 package com.oner365.statemachine.enums;
 
-import com.oner365.common.enums.BaseEnum;
+import com.oner365.data.commons.enums.BaseEnum;
 
 /**
  * 枚举 - 订单事件

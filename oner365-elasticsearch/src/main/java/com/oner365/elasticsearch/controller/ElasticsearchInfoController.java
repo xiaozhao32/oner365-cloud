@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponseInterceptor;
@@ -17,7 +19,6 @@ import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.message.BasicHeader;
 import org.elasticsearch.client.RestClient;
 import org.elasticsearch.client.RestClientBuilder.HttpClientConfigCallback;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.elasticsearch.ElasticsearchProperties;
 import org.springframework.http.HttpHeaders;
 import org.springframework.util.ObjectUtils;
@@ -25,8 +26,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.elasticsearch.dto.ClusterDto;
 import com.oner365.elasticsearch.dto.ClusterMappingDto;
 import com.oner365.elasticsearch.dto.TransportClientDto;
@@ -53,7 +54,7 @@ import co.elastic.clients.transport.rest_client.RestClientTransport;
 @RequestMapping("/info")
 public class ElasticsearchInfoController extends BaseController {
 
-  @Autowired
+  @Resource
   private ElasticsearchProperties elasticsearchProperties;
 
   /**

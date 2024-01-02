@@ -18,11 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.cassandra.entity.Employee;
 import com.oner365.cassandra.service.IEmployeeService;
-import com.oner365.common.ResponseResult;
-import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.enums.ErrorInfoEnum;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
 
 /**
  * Employee Controller
@@ -32,7 +31,7 @@ import com.oner365.controller.BaseController;
  */
 @RestController
 @RequestMapping("/employee")
-public class EmployeeController extends BaseController {
+public class EmployeeController {
 
   @Resource
   private IEmployeeService service;

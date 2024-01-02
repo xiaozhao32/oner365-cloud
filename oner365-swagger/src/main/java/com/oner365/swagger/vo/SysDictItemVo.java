@@ -2,7 +2,7 @@ package com.oner365.swagger.vo;
 
 import java.io.Serializable;
 
-import com.oner365.common.enums.StatusEnum;
+import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 字典 SysDictItem

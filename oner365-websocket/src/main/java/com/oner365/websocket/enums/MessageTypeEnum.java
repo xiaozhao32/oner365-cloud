@@ -1,6 +1,6 @@
 package com.oner365.websocket.enums;
 
-import com.oner365.common.enums.BaseEnum;
+import com.oner365.data.commons.enums.BaseEnum;
 
 /**
  * 枚举 - 通道类型

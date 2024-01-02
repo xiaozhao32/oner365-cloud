@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,17 +25,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.common.ResponseResult;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.StorageEnum;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.enums.StorageEnum;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.commons.util.DateUtil;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.files.dto.SysFileStorageDto;
 import com.oner365.files.service.IFileStorageService;
 import com.oner365.files.storage.IFileStorageClient;
-import com.oner365.util.DataUtils;
-import com.oner365.util.DateUtil;
 
 /**
  * 文件上传
@@ -50,7 +49,7 @@ public class FileController extends BaseController {
   @Resource
   private IFileStorageClient fileStorageClient;
 
-  @Autowired
+  @Resource
   private IFileStorageService fileStorageService;
 
   /**

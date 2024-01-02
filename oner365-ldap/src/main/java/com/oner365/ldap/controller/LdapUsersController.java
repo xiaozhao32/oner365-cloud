@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.controller.BaseController;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.ldap.entity.LdapUser;
 import com.oner365.ldap.service.ILdapUsersService;
 import com.oner365.ldap.vo.LdapUserVo;

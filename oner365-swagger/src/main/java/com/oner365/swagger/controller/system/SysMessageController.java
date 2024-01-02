@@ -2,9 +2,9 @@ package com.oner365.swagger.controller.system;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,12 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.oner365.common.ResponseData;
-import com.oner365.common.ResponseResult;
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.system.ISystemMessageClient;
 import com.oner365.swagger.dto.SysMessageDto;
 import com.oner365.swagger.enums.MessageTypeEnum;
@@ -39,9 +38,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "系统管理 - 消息")
 @RequestMapping("/system/message")
-public class SysMessageController extends BaseController {
+public class SysMessageController {
   
-  @Autowired
+  @Resource
   private ISystemMessageClient client;
   
   /**

@@ -10,12 +10,12 @@ import org.apache.velocity.VelocityContext;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.commons.util.DateUtil;
 import com.oner365.generator.constants.GenConstants;
 import com.oner365.generator.entity.GenTable;
 import com.oner365.generator.entity.GenTableColumn;
-import com.oner365.util.DataUtils;
-import com.oner365.util.DateUtil;
 
 /**
  * 模板处理工具类

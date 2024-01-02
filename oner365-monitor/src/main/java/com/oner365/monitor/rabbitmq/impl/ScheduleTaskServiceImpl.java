@@ -1,8 +1,9 @@
 package com.oner365.monitor.rabbitmq.impl;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -11,15 +12,15 @@ import com.oner365.api.enums.TaskStatusEnum;
 import com.oner365.api.rabbitmq.IScheduleTaskService;
 import com.oner365.api.rabbitmq.dto.InvokeParamDto;
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.StatusEnum;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.util.DateUtil;
+import com.oner365.data.web.utils.HttpClientUtils;
 import com.oner365.monitor.constants.ScheduleConstants;
 import com.oner365.monitor.service.ISysTaskLogService;
 import com.oner365.monitor.service.ISysTaskService;
 import com.oner365.monitor.vo.SysTaskLogVo;
 import com.oner365.monitor.vo.SysTaskVo;
-import com.oner365.util.DataUtils;
-import com.oner365.util.DateUtil;
 
 /**
  * IScheduleTaskService实现类
@@ -31,10 +32,10 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleTaskServiceImpl.class);
 
-  @Autowired
+  @Resource
   private ISysTaskLogService sysTaskLogService;
 
-  @Autowired
+  @Resource
   private ISysTaskService sysTaskService;
 
   @Override
@@ -84,7 +85,7 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
     long time = System.currentTimeMillis();
     LOGGER.info("taskExecute  saveTaskLog ");
     SysTaskLogVo log = new SysTaskLogVo();
-    log.setExecuteIp(DataUtils.getLocalhost());
+    log.setExecuteIp(HttpClientUtils.getLocalhost());
     log.setExecuteServerName(ScheduleConstants.SCHEDULE_SERVER_NAME);
     log.setStatus(TaskStatusEnum.NORMAL);
     log.setTaskMessage("执行时间：" + (System.currentTimeMillis() - time) + "毫秒");

@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-import com.oner365.common.enums.StorageEnum;
+import com.oner365.data.commons.enums.StorageEnum;
 
 /**
  * 文件对象

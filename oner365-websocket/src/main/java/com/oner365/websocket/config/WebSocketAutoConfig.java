@@ -1,6 +1,7 @@
 package com.oner365.websocket.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -15,10 +16,10 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 public class WebSocketAutoConfig implements WebSocketConfigurer {
 
-  @Autowired
+  @Resource
   private WebSocketHandler webSocketHandler;
 
-  @Autowired
+  @Resource
   private WebSocketInterceptor webSocketInterceptor;
 
   @Override

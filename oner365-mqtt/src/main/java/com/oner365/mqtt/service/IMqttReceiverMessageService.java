@@ -1,14 +1,12 @@
 package com.oner365.mqtt.service;
 
-import com.oner365.common.service.BaseService;
-
 /**
  * MQTT 接收者
  *
  * @author zhaoyong
  *
  */
-public interface IMqttReceiverMessageService extends BaseService {
+public interface IMqttReceiverMessageService {
 
   /**
    * 接收消息

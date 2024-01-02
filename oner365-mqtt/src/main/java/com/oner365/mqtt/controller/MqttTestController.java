@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
-import com.oner365.controller.BaseController;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.mqtt.service.IMqttSendMessageService;
 
 /**

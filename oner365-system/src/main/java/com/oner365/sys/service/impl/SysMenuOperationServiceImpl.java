@@ -5,24 +5,26 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.oner365.common.cache.annotation.GeneratorCache;
-import com.oner365.common.cache.annotation.RedisCacheAble;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.common.exception.ProjectRuntimeException;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.Criteria;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.common.query.QueryUtils;
-import com.oner365.common.query.Restrictions;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.exception.ProjectRuntimeException;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.Criteria;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.query.QueryUtils;
+import com.oner365.data.jpa.query.Restrictions;
+import com.oner365.data.redis.annotation.GeneratorCache;
+import com.oner365.data.redis.annotation.RedisCacheAble;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dao.ISysMenuOperDao;
 import com.oner365.sys.dao.ISysMenuOperationDao;
@@ -30,7 +32,6 @@ import com.oner365.sys.dto.SysMenuOperationDto;
 import com.oner365.sys.entity.SysMenuOperation;
 import com.oner365.sys.service.ISysMenuOperationService;
 import com.oner365.sys.vo.SysMenuOperationVo;
-import com.oner365.util.DataUtils;
 
 /**
  * 菜单操作接口实现类
@@ -44,10 +45,10 @@ public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
 
   private static final String CACHE_NAME = "SysMenuOperation";
 
-  @Autowired
+  @Resource
   private ISysMenuOperationDao menuOperationDao;
 
-  @Autowired
+  @Resource
   private ISysMenuOperDao menuOperDao;
 
   @Override

@@ -5,10 +5,11 @@ import java.util.List;
 import org.springframework.cloud.gateway.route.RouteDefinition;
 import org.springframework.context.ApplicationEventPublisherAware;
 
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.service.BaseService;
 import com.oner365.gateway.dto.GatewayRouteDto;
-import com.oner365.gateway.enums.StatusEnum;
-import com.oner365.gateway.page.PageInfo;
-import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.vo.GatewayRouteVo;
 
 /**

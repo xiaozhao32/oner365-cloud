@@ -18,7 +18,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableFeignClients
 @EnableScheduling
 @EnableAsync
-@ComponentScan({ "com.oner365.common", "com.oner365.elasticsearch" })
+@ComponentScan({ "com.oner365" })
 public class SpringElasticsearchApplication {
 
     public static void main(String[] args) {

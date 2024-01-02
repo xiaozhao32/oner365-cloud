@@ -8,10 +8,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.event.RefreshRoutesEvent;
 import org.springframework.cloud.gateway.filter.FilterDefinition;
 import org.springframework.cloud.gateway.handler.predicate.PredicateDefinition;
@@ -22,19 +23,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.query.QueryUtils;
 import com.oner365.gateway.constants.GatewayConstants;
 import com.oner365.gateway.dao.IGatewayRouteDao;
 import com.oner365.gateway.dto.GatewayRouteDto;
 import com.oner365.gateway.entity.GatewayFilter;
 import com.oner365.gateway.entity.GatewayPredicate;
 import com.oner365.gateway.entity.GatewayRoute;
-import com.oner365.gateway.enums.StatusEnum;
-import com.oner365.gateway.page.PageInfo;
-import com.oner365.gateway.query.QueryCriteriaBean;
-import com.oner365.gateway.query.QueryUtils;
 import com.oner365.gateway.service.DynamicRouteService;
 import com.oner365.gateway.service.IRedisSendMessageService;
-import com.oner365.gateway.util.DataUtils;
 import com.oner365.gateway.vo.GatewayRouteVo;
 
 import reactor.core.publisher.Mono;
@@ -51,14 +52,13 @@ public class DynamicRouteServiceImpl implements DynamicRouteService {
 
   private static final String HTTP = "http";
 
-  @Autowired
+  @Resource
   private IGatewayRouteDao gatewayRouteDao;
 
-  @Autowired
+  @Resource
   private RouteDefinitionWriter routeDefinitionWriter;
 
-  
-  @Autowired
+  @Resource
   private IRedisSendMessageService redisSendMessageService;
 
   private ApplicationEventPublisher publisher;

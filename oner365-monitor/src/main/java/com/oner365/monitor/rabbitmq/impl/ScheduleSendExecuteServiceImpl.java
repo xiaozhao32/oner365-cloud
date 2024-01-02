@@ -1,9 +1,10 @@
 package com.oner365.monitor.rabbitmq.impl;
 
+import javax.annotation.Resource;
+
 import org.quartz.SchedulerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alibaba.fastjson.JSON;
@@ -27,10 +28,10 @@ public class ScheduleSendExecuteServiceImpl implements IScheduleSendExecuteServi
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleSendExecuteServiceImpl.class);
 
-  @Autowired
+  @Resource
   private ISysTaskLogService sysTaskLogService;
 
-  @Autowired
+  @Resource
   private ISysTaskService sysTaskService;
 
   @Override

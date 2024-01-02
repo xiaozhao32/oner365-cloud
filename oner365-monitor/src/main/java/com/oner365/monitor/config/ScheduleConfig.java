@@ -2,16 +2,16 @@ package com.oner365.monitor.config;
 
 import java.util.Properties;
 
+import javax.annotation.Resource;
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.quartz.SchedulerFactoryBeanCustomizer;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.oner365.common.datasource.constants.DataSourceConstants;
+import com.oner365.data.datasource.constants.DataSourceConstants;
 
 /**
  * 定时任务配置
@@ -22,7 +22,7 @@ import com.oner365.common.datasource.constants.DataSourceConstants;
 @EnableScheduling
 public class ScheduleConfig implements SchedulerFactoryBeanCustomizer {
 
-    @Autowired
+    @Resource
     private DataSource dataSource;
 
     @Override

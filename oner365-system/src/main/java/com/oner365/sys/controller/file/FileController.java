@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.common.ResponseData;
-import com.oner365.common.ResponseResult;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.sys.client.IFileServiceClient;
 
 /**

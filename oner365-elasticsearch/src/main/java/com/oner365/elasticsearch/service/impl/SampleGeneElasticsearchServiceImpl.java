@@ -8,8 +8,8 @@ import java.util.stream.StreamSupport;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.elasticsearch.dao.ISampleGeneElasticsearchDao;
 import com.oner365.elasticsearch.dto.SampleGeneDto;
 import com.oner365.elasticsearch.entity.SampleGene;

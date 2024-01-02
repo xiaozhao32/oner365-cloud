@@ -14,7 +14,7 @@ import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.oner365.gateway.enums.StatusEnum;
+import com.oner365.data.commons.enums.StatusEnum;
 import com.vladmihalcea.hibernate.type.json.JsonStringType;
 
 /**

@@ -1,6 +1,7 @@
 package com.oner365.gateway.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
@@ -16,7 +17,7 @@ import com.oner365.gateway.service.DynamicRouteService;
 @Component
 public class GatewayRouteConfig implements ApplicationRunner {
 
-  @Autowired
+  @Resource
   private DynamicRouteService dynamicRouteService;
 
   @Override

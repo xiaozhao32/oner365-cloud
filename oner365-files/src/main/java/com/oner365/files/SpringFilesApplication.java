@@ -21,7 +21,7 @@ import com.github.tobato.fastdfs.FdfsClientConfig;
 
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan({ "com.oner365.common", "com.oner365.files" })
+@ComponentScan({ "com.oner365" })
 public class SpringFilesApplication {
 
     public static void main(String[] args) {

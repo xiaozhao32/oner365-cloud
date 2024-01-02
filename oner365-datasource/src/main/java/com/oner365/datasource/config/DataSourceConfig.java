@@ -19,9 +19,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 
 import com.alibaba.druid.pool.DruidDataSource;
-import com.oner365.common.cache.RedisCache;
-import com.oner365.common.datasource.constants.DataSourceConstants;
-import com.oner365.common.datasource.util.DataSourceUtil;
+import com.oner365.data.datasource.constants.DataSourceConstants;
+import com.oner365.data.datasource.util.DataSourceUtil;
+import com.oner365.data.redis.RedisCache;
 import com.oner365.datasource.dynamic.DynamicDataSource;
 
 /**

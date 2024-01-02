@@ -1,13 +1,13 @@
 package com.oner365.swagger.controller.elasticsearch;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.oner365.common.ResponseData;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.reponse.ResponseData;
 import com.oner365.swagger.client.elasticsearch.IElasticsearchInfoClient;
 import com.oner365.swagger.dto.TransportClientDto;
 
@@ -22,9 +22,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @Api(tags = "Elasticsearch 信息")
 @RequestMapping("/elasticsearch/info")
-public class ElasticsearchInfoController extends BaseController {
+public class ElasticsearchInfoController {
 
-  @Autowired
+  @Resource
   private IElasticsearchInfoClient client;
 
   /**

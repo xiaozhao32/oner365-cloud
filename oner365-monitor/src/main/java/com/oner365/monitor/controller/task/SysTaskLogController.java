@@ -2,7 +2,8 @@ package com.oner365.monitor.controller.task;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.controller.BaseController;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.monitor.service.ISysTaskLogService;
 
 /**
@@ -27,7 +28,7 @@ import com.oner365.monitor.service.ISysTaskLogService;
 @RequestMapping("/taskLog")
 public class SysTaskLogController extends BaseController {
 
-  @Autowired
+  @Resource
   private ISysTaskLogService taskLogService;
 
   /**

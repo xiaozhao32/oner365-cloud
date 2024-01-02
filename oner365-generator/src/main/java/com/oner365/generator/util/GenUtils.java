@@ -5,12 +5,12 @@ import java.util.Arrays;
 import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.util.DataUtils;
 import com.oner365.generator.config.GenConfig;
 import com.oner365.generator.constants.GenConstants;
 import com.oner365.generator.entity.GenTable;
 import com.oner365.generator.entity.GenTableColumn;
-import com.oner365.util.DataUtils;
 
 /**
  * 代码生成器 工具类

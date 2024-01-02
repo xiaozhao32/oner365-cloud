@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
-import com.oner365.common.ResponseData;
+import com.oner365.data.commons.reponse.ResponseData;
 import com.oner365.sys.client.fallback.MonitorServiceClientFallback;
 
 /**

@@ -2,7 +2,8 @@ package com.oner365.swagger.controller.system;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,10 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.oner365.common.ResponseData;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.system.ISystemLogClient;
 import com.oner365.swagger.dto.SysLogDto;
 import com.oner365.swagger.vo.SysLogVo;
@@ -34,9 +34,9 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/system/log")
 @Api(tags = "系统管理 - 日志")
-public class SysLogController extends BaseController {
+public class SysLogController {
   
-  @Autowired
+  @Resource
   private ISystemLogClient client;
   
   /**

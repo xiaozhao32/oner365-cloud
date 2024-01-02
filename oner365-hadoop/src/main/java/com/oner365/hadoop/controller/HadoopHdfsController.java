@@ -2,8 +2,9 @@ package com.oner365.hadoop.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.hadoop.fs.BlockLocation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.common.ResponseData;
+import com.oner365.data.commons.reponse.ResponseData;
 import com.oner365.hadoop.dto.FileInfoDto;
 import com.oner365.hadoop.entity.User;
 import com.oner365.hadoop.service.HadoopHdfsService;
@@ -26,7 +27,7 @@ import com.oner365.hadoop.service.HadoopHdfsService;
 @RequestMapping("/hdfs")
 public class HadoopHdfsController {
 
-  @Autowired
+  @Resource
   private HadoopHdfsService service;
 
   /**

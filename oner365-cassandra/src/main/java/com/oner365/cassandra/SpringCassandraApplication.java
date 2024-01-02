@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan({ "com.oner365.common", "com.oner365.cassandra" })
+@ComponentScan({ "com.oner365" })
 public class SpringCassandraApplication {
 
   public static void main(String[] args) {

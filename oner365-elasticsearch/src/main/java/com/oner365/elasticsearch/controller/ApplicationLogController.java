@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.controller.BaseController;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.elasticsearch.dto.ApplicationLogDto;
 import com.oner365.elasticsearch.service.IApplicationLogElasticsearchService;
 
@@ -29,7 +30,7 @@ import com.oner365.elasticsearch.service.IApplicationLogElasticsearchService;
 @RequestMapping("/application/log")
 public class ApplicationLogController extends BaseController {
 
-  @Autowired
+  @Resource
   private IApplicationLogElasticsearchService service;
 
   /**

@@ -2,7 +2,7 @@ package com.oner365.monitor.entity.server;
 
 import java.io.Serializable;
 
-import com.oner365.util.Arith;
+import com.oner365.data.commons.util.Arith;
 
 /**
  * 內存相关信息

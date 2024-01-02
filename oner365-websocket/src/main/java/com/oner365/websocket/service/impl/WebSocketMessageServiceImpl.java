@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.socket.TextMessage;
 
-import com.oner365.util.DataUtils;
+import com.oner365.data.commons.util.DataUtils;
 import com.oner365.websocket.config.WebSocketHandler;
 import com.oner365.websocket.constants.WebSocketConstants;
 import com.oner365.websocket.service.IWebSocketMessageService;

@@ -1,25 +1,30 @@
 package com.oner365.monitor.service.impl;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.annotation.Resource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import com.oner365.api.rabbitmq.dto.SysTaskLogDto;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.common.query.QueryUtils;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.commons.util.DateUtil;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.query.QueryUtils;
 import com.oner365.monitor.dao.ISysTaskLogDao;
 import com.oner365.monitor.entity.SysTaskLog;
 import com.oner365.monitor.mapper.SysTaskLogMapper;
 import com.oner365.monitor.service.ISysTaskLogService;
 import com.oner365.monitor.vo.SysTaskLogVo;
-import com.oner365.util.DataUtils;
-import com.oner365.util.DateUtil;
 
 /**
  * 定时任务调度日志信息 服务层
@@ -31,10 +36,10 @@ public class SysTaskLogServiceImpl implements ISysTaskLogService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SysTaskLogServiceImpl.class);
 
-  @Autowired
+  @Resource
   private ISysTaskLogDao dao;
 
-  @Autowired
+  @Resource
   private SysTaskLogMapper taskLogMapper;
 
   @Override

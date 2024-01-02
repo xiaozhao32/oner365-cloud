@@ -4,7 +4,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import javax.annotation.Resource;
+
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.gateway.constants.ResponseData;
+import com.oner365.data.commons.enums.ResultEnum;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.gateway.dto.GatewayRouteDto;
-import com.oner365.gateway.enums.ResultEnum;
-import com.oner365.gateway.enums.StatusEnum;
-import com.oner365.gateway.page.PageInfo;
-import com.oner365.gateway.query.QueryCriteriaBean;
 import com.oner365.gateway.service.DynamicRouteService;
 import com.oner365.gateway.vo.GatewayRouteVo;
 
@@ -33,7 +35,7 @@ import com.oner365.gateway.vo.GatewayRouteVo;
 @RequestMapping("/route")
 public class DynamicRouteController {
 
-  @Autowired
+  @Resource
   private DynamicRouteService dynamicRouteService;
 
   /**
@@ -63,13 +65,13 @@ public class DynamicRouteController {
    * 增加路由
    *
    * @param gatewayRouteVo 路由对象
-   * @return ResponseData<GatewayRouteDto>
+   * @return ResponseData<ResponseResult<GatewayRouteDto>>
    */
   @PostMapping("/add")
-  public ResponseData<GatewayRouteDto> add(@Validated @RequestBody GatewayRouteVo gatewayRouteVo) {
+  public ResponseData<ResponseResult<GatewayRouteDto>> add(@Validated @RequestBody GatewayRouteVo gatewayRouteVo) {
     if (gatewayRouteVo != null) {
       GatewayRouteDto result = dynamicRouteService.save(gatewayRouteVo);
-      return ResponseData.success(result);
+      return ResponseData.success(ResponseResult.success(result));
     }
     return ResponseData.error(ResultEnum.ERROR.getName());
   }
@@ -82,20 +84,24 @@ public class DynamicRouteController {
   @GetMapping("/refresh")
   public ResponseData<List<GatewayRouteDto>> refresh() {
     List<GatewayRouteDto> list = dynamicRouteService.refreshRoute();
-    return ResponseData.success(list);
+    ResponseData<List<GatewayRouteDto>> result = new ResponseData<>();
+    result.setResult(list);
+    result.setCode(ResultEnum.SUCCESS.getCode());
+    result.setMessage(ResultEnum.SUCCESS.getName());
+    return result;
   }
 
   /**
    * 更新路由
    *
    * @param gatewayRouteVo 路由对象
-   * @return ResponseData<GatewayRouteDto>
+   * @return ResponseData<ResponseResult<GatewayRouteDto>>
    */
   @PostMapping("/update")
-  public ResponseData<GatewayRouteDto> update(@Validated @RequestBody GatewayRouteVo gatewayRouteVo) {
+  public ResponseData<ResponseResult<GatewayRouteDto>> update(@Validated @RequestBody GatewayRouteVo gatewayRouteVo) {
     if (gatewayRouteVo != null) {
       GatewayRouteDto result = dynamicRouteService.update(gatewayRouteVo);
-      return ResponseData.success(result);
+      return ResponseData.success(ResponseResult.success(result));
     }
     return ResponseData.error(ResultEnum.ERROR.getName());
   }
@@ -121,8 +127,12 @@ public class DynamicRouteController {
    */
   @DeleteMapping("/delete")
   public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
-    List<Boolean> result = Arrays.stream(ids).map(id -> dynamicRouteService.delete(id)).collect(Collectors.toList());
-    return ResponseData.success(result);
+    List<Boolean> list = Arrays.stream(ids).map(id -> dynamicRouteService.delete(id)).collect(Collectors.toList());
+    ResponseData<List<Boolean>> result = new ResponseData<>();
+    result.setResult(list);
+    result.setCode(ResultEnum.SUCCESS.getCode());
+    result.setMessage(ResultEnum.SUCCESS.getName());
+    return result;
   }
 
 }

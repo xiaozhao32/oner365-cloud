@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.google.common.base.MoreObjects;
-import com.oner365.common.enums.StatusEnum;
+import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.swagger.dto.GatewayFilter;
 import com.oner365.swagger.dto.GatewayPredicate;
 

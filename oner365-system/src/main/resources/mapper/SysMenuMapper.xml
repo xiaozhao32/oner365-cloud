@@ -13,7 +13,7 @@
 		<result property="path"     	  column="path"    		  />
 		<result property="component"      column="component"      />
 		
-		<result property="status" column="status" javaType="com.oner365.common.enums.StatusEnum" />
+		<result property="status" column="status" javaType="com.oner365.data.commons.enums.StatusEnum" />
 		<result property="icon"           column="icon"           />
 		<result property="createTime"     column="create_time"    />
 	</resultMap>

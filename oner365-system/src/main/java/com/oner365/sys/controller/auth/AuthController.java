@@ -21,16 +21,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.code.kaptcha.Producer;
-import com.oner365.common.ResponseData;
-import com.oner365.common.ResponseResult;
-import com.oner365.common.auth.AuthUser;
-import com.oner365.common.auth.annotation.CurrentUser;
-import com.oner365.common.cache.RedisCache;
-import com.oner365.common.cache.constants.CacheConstants;
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.enums.ResultEnum;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.auth.AuthUser;
+import com.oner365.data.commons.auth.annotation.CurrentUser;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.enums.ErrorInfoEnum;
+import com.oner365.data.commons.enums.ResultEnum;
+import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.redis.RedisCache;
+import com.oner365.data.redis.constants.CacheConstants;
+import com.oner365.data.web.controller.BaseController;
+import com.oner365.data.web.utils.HttpClientUtils;
+import com.oner365.data.web.utils.RequestUtils;
 import com.oner365.sys.constants.SysConstants;
 import com.oner365.sys.dto.CaptchaImageDto;
 import com.oner365.sys.dto.LoginUserDto;
@@ -39,8 +42,6 @@ import com.oner365.sys.dto.SysMenuTreeDto;
 import com.oner365.sys.service.ISysRoleService;
 import com.oner365.sys.service.ISysUserService;
 import com.oner365.sys.vo.LoginUserVo;
-import com.oner365.util.DataUtils;
-import com.oner365.util.RequestUtils;
 
 /**
  * 认证登录接口
@@ -91,7 +92,7 @@ public class AuthController extends BaseController {
             return ResponseData.error(ErrorInfoEnum.PASSWORD_NOT_NULL.getName());
         }
         // ip地址
-        String ip = DataUtils.getIpAddress(RequestUtils.getHttpRequest());
+        String ip = HttpClientUtils.getIpAddress(RequestUtils.getHttpRequest());
 
         // 登录
         LoginUserDto result = sysUserService.login(userName, password, ip);

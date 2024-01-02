@@ -3,7 +3,7 @@ package com.oner365.files.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import com.oner365.common.enums.StorageEnum;
+import com.oner365.data.commons.enums.StorageEnum;
 
 /**
  * 文件对象

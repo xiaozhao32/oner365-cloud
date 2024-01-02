@@ -2,8 +2,9 @@ package com.oner365.monitor.controller.task;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,13 +17,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
-import com.oner365.common.ResponseResult;
-import com.oner365.common.auth.AuthUser;
-import com.oner365.common.auth.annotation.CurrentUser;
-import com.oner365.common.enums.ErrorInfoEnum;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.controller.BaseController;
+import com.oner365.data.commons.auth.AuthUser;
+import com.oner365.data.commons.auth.annotation.CurrentUser;
+import com.oner365.data.commons.enums.ErrorInfoEnum;
+import com.oner365.data.commons.reponse.ResponseResult;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.web.controller.BaseController;
 import com.oner365.monitor.exception.TaskException;
 import com.oner365.monitor.service.ISysTaskService;
 import com.oner365.monitor.util.CronUtils;
@@ -37,7 +38,7 @@ import com.oner365.monitor.vo.SysTaskVo;
 @RequestMapping("/task")
 public class SysTaskController extends BaseController {
 
-  @Autowired
+  @Resource
   private ISysTaskService taskService;
 
   /**

@@ -3,9 +3,9 @@ package com.oner365.cassandra.service;
 import java.util.List;
 
 import com.oner365.cassandra.entity.Employee;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.common.service.BaseService;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.service.BaseService;
 
 /**
  * Employee Service

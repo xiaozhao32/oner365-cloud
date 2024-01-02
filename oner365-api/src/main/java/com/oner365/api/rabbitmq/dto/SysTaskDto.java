@@ -6,7 +6,7 @@ import java.util.Date;
 import com.google.common.base.MoreObjects;
 import com.oner365.api.enums.MisfirePolicyEnum;
 import com.oner365.api.enums.TaskStatusEnum;
-import com.oner365.common.enums.StatusEnum;
+import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 定时任务调度表 nt_sys_task

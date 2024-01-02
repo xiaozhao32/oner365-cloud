@@ -14,7 +14,7 @@
 </p>
 <p align="center">
     <a href="#"><img src="https://shields.io/badge/Author-Zy&Lt-orange" alt="Zy&Lt"></a>
-    <a href="#"><img src="https://shields.io/badge/Version-2.0.2-red" alt="Version 2.0.2"></a>
+    <a href="#"><img src="https://shields.io/badge/Version-2.1.0-red" alt="Version 2.1.0"></a>
     <a href="https://github.com/xiaozhao32/oner365-cloud"><img src="https://img.shields.io/github/stars/xiaozhao32/oner365-cloud?style=flat&logo=github" alt="Github star"></a>
     <a href="https://github.com/xiaozhao32/oner365-cloud"><img src="https://img.shields.io/github/forks/xiaozhao32/oner365-cloud?style=flat&logo=github" alt="Github fork"></a>
     <a href="https://gitee.com/xiaozhao32/oner365-cloud"><img src="https://gitee.com/xiaozhao32/oner365-cloud/badge/star.svg?theme=dark" alt="Gitee star"></a>

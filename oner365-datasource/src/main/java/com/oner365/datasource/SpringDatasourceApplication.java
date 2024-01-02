@@ -14,7 +14,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableFeignClients
-@ComponentScan({ "com.oner365.common", "com.oner365.datasource" })
+@ComponentScan({ "com.oner365" })
 public class SpringDatasourceApplication {
 
   public static void main(String[] args) {

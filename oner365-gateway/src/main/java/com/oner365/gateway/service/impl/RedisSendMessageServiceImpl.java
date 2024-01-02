@@ -2,9 +2,10 @@ package com.oner365.gateway.service.impl;
 
 import java.io.Serializable;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,7 @@ public class RedisSendMessageServiceImpl implements IRedisSendMessageService {
   
   private final Logger logger = LoggerFactory.getLogger(RedisSendMessageServiceImpl.class);
 
-  @Autowired
+  @Resource
   public RedisTemplate<String,Serializable> redisTemplate;
 
   @Override

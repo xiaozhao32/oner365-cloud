@@ -5,8 +5,8 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.elasticsearch.dao.IApplicationLogDao;
 import com.oner365.elasticsearch.dto.ApplicationLogDto;
 import com.oner365.elasticsearch.entity.ApplicationLog;

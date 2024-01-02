@@ -1,6 +1,6 @@
 package com.oner365.api.constants;
 
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.data.commons.constants.PublicConstants;
 
 /**
  * 定时任务队列常量

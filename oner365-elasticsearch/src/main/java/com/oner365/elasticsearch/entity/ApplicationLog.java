@@ -10,7 +10,7 @@ import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import org.springframework.data.elasticsearch.annotations.Setting;
 
-import com.oner365.util.DateUtil;
+import com.oner365.data.commons.util.DateUtil;
 
 /**
  * 应用日志

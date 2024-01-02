@@ -2,10 +2,10 @@ package com.oner365.datasource.service;
 
 import java.util.List;
 
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.common.page.PageInfo;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.common.service.BaseService;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.jpa.page.PageInfo;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.service.BaseService;
 import com.oner365.datasource.dto.OrderDto;
 import com.oner365.datasource.vo.OrderVo;
 

@@ -2,9 +2,9 @@ package com.oner365.sys.service;
 
 import java.util.List;
 
-import com.oner365.common.enums.StatusEnum;
-import com.oner365.common.query.QueryCriteriaBean;
-import com.oner365.common.service.BaseService;
+import com.oner365.data.commons.enums.StatusEnum;
+import com.oner365.data.jpa.query.QueryCriteriaBean;
+import com.oner365.data.jpa.service.BaseService;
 import com.oner365.sys.dto.SysMenuDto;
 import com.oner365.sys.dto.TreeSelect;
 import com.oner365.sys.vo.SysMenuVo;

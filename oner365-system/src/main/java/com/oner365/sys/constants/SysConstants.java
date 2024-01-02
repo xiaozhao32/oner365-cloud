@@ -1,6 +1,6 @@
 package com.oner365.sys.constants;
 
-import com.oner365.common.constants.PublicConstants;
+import com.oner365.data.commons.constants.PublicConstants;
 
 /**
  * 系统用户常量

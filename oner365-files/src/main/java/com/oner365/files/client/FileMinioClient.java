@@ -6,24 +6,25 @@ import java.io.InputStream;
 import java.time.LocalDateTime;
 import java.util.concurrent.TimeUnit;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.common.constants.PublicConstants;
-import com.oner365.common.enums.StorageEnum;
+import com.oner365.data.commons.constants.PublicConstants;
+import com.oner365.data.commons.enums.StorageEnum;
+import com.oner365.data.commons.util.DataUtils;
 import com.oner365.files.config.properties.MinioProperties;
 import com.oner365.files.dto.SysFileStorageDto;
 import com.oner365.files.service.IFileStorageService;
 import com.oner365.files.storage.IFileStorageClient;
 import com.oner365.files.storage.condition.MinioStorageCondition;
 import com.oner365.files.vo.SysFileStorageVo;
-import com.oner365.util.DataUtils;
 
 import io.minio.GetObjectArgs;
 import io.minio.GetObjectResponse;
@@ -47,13 +48,13 @@ public class FileMinioClient implements IFileStorageClient {
 
   private final Logger logger = LoggerFactory.getLogger(FileMinioClient.class);
 
-  @Autowired
+  @Resource
   private MinioProperties minioProperties;
 
-  @Autowired
+  @Resource
   private MinioClient minioClient;
 
-  @Autowired
+  @Resource
   private IFileStorageService fileStorageService;
 
   @Override

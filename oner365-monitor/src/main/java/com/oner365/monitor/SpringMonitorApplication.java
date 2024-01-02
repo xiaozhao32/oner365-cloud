@@ -15,7 +15,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableDiscoveryClient
 @EnableFeignClients
 @MapperScan({ "com.oner365.monitor.mapper" })
-@ComponentScan({ "com.oner365.common", "com.oner365.monitor", "com.oner365.api" })
+@ComponentScan({ "com.oner365" })
 public class SpringMonitorApplication {
 
     public static void main(String[] args) {
