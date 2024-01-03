@@ -50,7 +50,7 @@ public class DataSourceConfig {
    * 获取数据源
    */
   @Bean(name = "primaryDataSource")
-  @ConfigurationProperties(prefix = "spring.datasource")
+  @ConfigurationProperties(prefix = "spring.datasource.druid")
   DataSource primaryDataSource() {
     return new DruidDataSource();
   }

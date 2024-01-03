@@ -46,8 +46,12 @@ public class PublicConstants {
 
   /** 返回编码 */
   public static final String CODE = "code";
-  /** 返回消息 */
+  public static final String STATUS = "status";
+  public static final String PATH = "path";
+  public static final String METHOD = "method";
   public static final String MSG = "msg";
+  public static final String MESSAGE = "message";
+  public static final String RESULT = "result";
 
   /** 默认值 */
   public static final String DEFAULT_VALUE = "1";

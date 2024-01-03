@@ -25,7 +25,7 @@ import com.oner365.datasource.dynamic.DynamicDataSource;
 @RequestMapping("/dynamic")
 public class DynamicDatasourceController extends BaseController {
   
-  @Resource
+  @Resource(name = "dynamicDataSource")
   private DynamicDataSource dataSource;
 
   /**
