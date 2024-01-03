@@ -1572,6 +1572,15 @@
 					<encoding>${project.build.sourceEncoding}</encoding>
 				</configuration>
 			</plugin>
+			
+			<plugin>
+      			<groupId>org.codehaus.mojo</groupId>
+      			<artifactId>versions-maven-plugin</artifactId>
+      			<version>2.3</version>
+			    <configuration>
+			    	<generateBackupPoms>false</generateBackupPoms>
+			    </configuration>
+			</plugin>
 
 		</plugins>
 	</build>
