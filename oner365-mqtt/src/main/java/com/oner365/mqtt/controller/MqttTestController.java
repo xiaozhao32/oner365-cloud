@@ -26,13 +26,13 @@ public class MqttTestController extends BaseController {
   /**
    * 测试发送
    * 
-   * @param data 参数
+   * @param message 参数
    * @return JSONObject
    */
   @GetMapping("/send")
-  public JSONObject send(String data) {
+  public JSONObject send(String message) {
     JSONObject json = new JSONObject();
-    json.put("data", data);
+    json.put("message", message);
     service.sendMessage(json.toJSONString());
     return json;
   }

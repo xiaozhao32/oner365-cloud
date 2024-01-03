@@ -30,6 +30,24 @@ public interface IHadoopHdfsClient {
    */
   @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_MKDIR)
   ResponseData<Boolean> mkdir(@RequestParam("path") String path);
+  
+  /**
+   * 读取HDFS目录信息
+   *
+   * @param path 文件
+   * @return ResponseData
+   */
+  @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_INFO)
+  ResponseData<List<FileInfoDto>> readPathInfo(@RequestParam("path") String path);
+  
+  /**
+   * 获取HDFS文件在集群中的位置
+   *
+   * @param path 文件
+   * @return ResponseData
+   */
+  @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_LOCATIONS)
+  ResponseData<Object> getFileBlockLocations(@RequestParam("path") String path);
 
   /**
    * 上传文件
@@ -40,6 +58,15 @@ public interface IHadoopHdfsClient {
    */
   @PostMapping(PathConstants.REQUEST_HADOOP_HDFS_CREATE)
   ResponseData<Boolean> createFile(@RequestParam("path") String path, @RequestParam("file") MultipartFile file);
+  
+  /**
+   * 读取HDFS文件内容
+   *
+   * @param path 文件
+   * @return ResponseData
+   */
+  @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_READ)
+  ResponseData<String> readFile(@RequestParam("path") String path);
 
   /**
    * 获取文件

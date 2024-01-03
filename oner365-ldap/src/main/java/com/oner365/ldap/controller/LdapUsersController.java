@@ -37,8 +37,7 @@ public class LdapUsersController extends BaseController {
    */
   @GetMapping("/list")
   public List<LdapUser> findList() {
-    List<LdapUser> result = ldapService.findList();
-    return result;
+    return ldapService.findList();
   }
 
   /**
@@ -59,7 +58,7 @@ public class LdapUsersController extends BaseController {
    * @param userName 账号
    * @return 用户对象
    */
-  @GetMapping("/get/{userId}")
+  @GetMapping("/get/{userName}")
   public LdapUser getUser(@PathVariable("userName") String userName) {
     return ldapService.getUser(userName);
   }

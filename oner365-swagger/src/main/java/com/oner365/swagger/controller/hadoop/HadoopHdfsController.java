@@ -46,6 +46,32 @@ public class HadoopHdfsController {
   public ResponseData<Boolean> mkdir(@RequestParam("path") String path) {
     return client.mkdir(path);
   }
+  
+  /**
+   * 读取HDFS目录信息
+   *
+   * @param path 文件
+   * @return ResponseData
+   */
+  @ApiOperation("2.读取目录")
+  @ApiOperationSupport(order = 2)
+  @GetMapping("/info")
+  public ResponseData<List<FileInfoDto>> readPathInfo(@RequestParam("path") String path) {
+    return client.readPathInfo(path);
+  }
+
+  /**
+   * 获取HDFS文件在集群中的位置
+   *
+   * @param path 文件
+   * @return ResponseData
+   */
+  @ApiOperation("3.获取位置")
+  @ApiOperationSupport(order = 3)
+  @GetMapping("/locations")
+  public ResponseData<Object> getFileBlockLocations(@RequestParam("path") String path) {
+    return client.getFileBlockLocations(path);
+  }
 
   /**
    * 创建文件
@@ -54,11 +80,24 @@ public class HadoopHdfsController {
    * @param file 文件
    * @return ResponseData
    */
-  @ApiOperation("2.创建文件")
-  @ApiOperationSupport(order = 2)
+  @ApiOperation("4.创建文件")
+  @ApiOperationSupport(order = 4)
   @PostMapping("/create")
   public ResponseData<Boolean> createFile(@RequestParam("path") String path, @RequestParam("file") MultipartFile file) {
     return client.createFile(path, file);
+  }
+  
+  /**
+   * 读取HDFS文件内容
+   *
+   * @param path 文件
+   * @return ResponseData
+   */
+  @ApiOperation("5.读取内容")
+  @ApiOperationSupport(order = 5)
+  @GetMapping("/read")
+  public ResponseData<String> readFile(@RequestParam("path") String path) {
+    return client.readFile(path);
   }
 
   /**
@@ -67,8 +106,8 @@ public class HadoopHdfsController {
    * @param path 文件
    * @return ResponseData
    */
-  @ApiOperation("3.获取文件")
-  @ApiOperationSupport(order = 3)
+  @ApiOperation("6.获取文件")
+  @ApiOperationSupport(order = 6)
   @GetMapping("/bytes")
   public ResponseData<byte[]> openFileToBytes(@RequestParam("path") String path) {
     return client.openFileToBytes(path);
@@ -80,8 +119,8 @@ public class HadoopHdfsController {
    * @param path 文件
    * @return ResponseData
    */
-  @ApiOperation("4.获取文件列表")
-  @ApiOperationSupport(order = 4)
+  @ApiOperation("7.获取文件列表")
+  @ApiOperationSupport(order = 7)
   @GetMapping("/list")
   public ResponseData<List<FileInfoDto>> listFile(@RequestParam("path") String path) {
     return client.listFile(path);
@@ -93,8 +132,8 @@ public class HadoopHdfsController {
    * @param path 文件
    * @return ResponseData
    */
-  @ApiOperation("5.删除文件")
-  @ApiOperationSupport(order = 5)
+  @ApiOperation("8.删除文件")
+  @ApiOperationSupport(order = 8)
   @DeleteMapping("/delete")
   public ResponseData<Boolean> deleteFile(@RequestParam("path") String path) {
     return client.deleteFile(path);

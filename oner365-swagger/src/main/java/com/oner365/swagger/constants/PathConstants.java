@@ -249,6 +249,13 @@ public class PathConstants {
   public static final String REQUEST_HADOOP_HDFS_COPY = "/hdfs/copy";
   public static final String REQUEST_HADOOP_HDFS_EXIST = "/hdfs/exist";
   
+  /** mqtt */
+  public static final String FEIGN_CLIENT_MQTT = "oner365-mqtt";
+  /** mqtt context */
+  public static final String CONTEXT_MQTT_CONSUMER_ID = "IMqttConsumerClient";
+  /** mqtt消息 */
+  public static final String REQUEST_MQTT_CONSUMER_MESSAGE_SEND = "/message/send";
+  
   /** kafka */
   public static final String FEIGN_CLIENT_KAFKA = "oner365-kafka";
   /** kafka context */
@@ -276,6 +283,18 @@ public class PathConstants {
   public static final String CONTEXT_DUBBO_CONSUMER_ID = "IDubboConsumerClient";
   /** dubbo消息 */
   public static final String REQUEST_DUBBO_CONSUMER_MESSAGE_SEND = "/message/send";
+  
+  /** ldap */
+  public static final String FEIGN_CLIENT_LDAP = "oner365-ldap";
+  /** ldap context */
+  public static final String CONTEXT_LDAP_USERS_ID = "ILdapUsersClient";
+  /** ldap 用户 */
+  public static final String REQUEST_LDAP_USERS_AUTH = "/users/auth";
+  public static final String REQUEST_LDAP_USERS_LIST = "/users/list";
+  public static final String REQUEST_LDAP_USERS_GET_ID = "/users/get/{id}";
+  public static final String REQUEST_LDAP_USERS_CREATE = "/users/create";
+  public static final String REQUEST_LDAP_USERS_UPDATE = "/users/update";
+  public static final String REQUEST_LDAP_USERS_DELETE = "/users/delete/{id}";
 
   private PathConstants() {
   }
