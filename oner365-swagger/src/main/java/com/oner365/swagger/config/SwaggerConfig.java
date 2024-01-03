@@ -72,10 +72,10 @@ public class SwaggerConfig implements WebMvcConfigurer {
   Docket filesApi() {
     return buildApi("Files(文件中心)", "com.oner365.swagger.controller.files");
   }
-
+  
   @Bean
-  Docket rabbitmqApi() {
-    return buildApi("Rabbitmq(消息队列)", "com.oner365.swagger.controller.rabbitmq");
+  Docket mqttApi() {
+    return buildApi("Mqtt(消息队列)", "com.oner365.swagger.controller.mqtt");
   }
 
   @Bean
@@ -97,7 +97,17 @@ public class SwaggerConfig implements WebMvcConfigurer {
   Docket dubboApi() {
     return buildApi("Dubbo(Dubbo服务)", "com.oner365.swagger.controller.dubbo");
   }
-
+  
+  @Bean
+  Docket hadoopApi() {
+    return buildApi("Hadoop(文件中心)", "com.oner365.swagger.controller.hadoop");
+  }
+  
+  @Bean
+  Docket ldapApi() {
+    return buildApi("Ldap(用户中心)", "com.oner365.swagger.controller.ldap");
+  }
+  
   private Docket buildApi(String groupName, String packageName) {
     return new Docket(DocumentationType.OAS_30).pathMapping(PublicConstants.DELIMITER).groupName(groupName)
         .apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.basePackage(packageName)).paths(PathSelectors.any())
