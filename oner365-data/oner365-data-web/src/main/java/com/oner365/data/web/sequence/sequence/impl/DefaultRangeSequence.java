@@ -9,7 +9,7 @@ import com.oner365.data.web.sequence.exception.SeqException;
 import com.oner365.data.web.sequence.range.BizName;
 import com.oner365.data.web.sequence.range.SeqRange;
 import com.oner365.data.web.sequence.range.SeqRangeMgr;
-import com.oner365.data.web.sequence.sequence.RangeSequence;;
+import com.oner365.data.web.sequence.sequence.RangeSequence;
 
 /**
  * sequence default range

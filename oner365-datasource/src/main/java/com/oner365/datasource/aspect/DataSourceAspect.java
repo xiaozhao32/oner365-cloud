@@ -27,7 +27,7 @@ public class DataSourceAspect {
 
   @Pointcut("@annotation(com.oner365.datasource.annotation.DataSource)")
   public void annotationPoint() {
-
+    // around
   }
 
   @Around("annotationPoint()")

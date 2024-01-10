@@ -45,10 +45,13 @@ public class MqttConfig {
   MqttPahoClientFactory mqttPahoClientFactory() {
     DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
     MqttConnectOptions options = new MqttConnectOptions();
-    options.setCleanSession(false);
     options.setServerURIs(mqttProperties.getUri().split(","));
     options.setUserName(mqttProperties.getUsername());
     options.setPassword(mqttProperties.getPassword().toCharArray());
+    options.setConnectionTimeout(mqttProperties.getConnectionTimeout());
+    options.setKeepAliveInterval(mqttProperties.getKeepAliveInterval());
+    options.setCleanSession(mqttProperties.isCleanSession());
+    options.setWill("/lastWill", "Payload exception".getBytes(), 1, false);
     factory.setConnectionOptions(options);
     return factory;
   }

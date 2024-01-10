@@ -27,14 +27,14 @@ import com.oner365.data.web.xss.XssHttpServletRequestWrapper;
 @Component
 public class XssFilter implements Filter {
 
-  public List<String> excludes = new ArrayList<>();
+  private static final List<String> EXCLUDES_LIST = new ArrayList<>();
 
   @Override
   public void init(FilterConfig filterConfig) throws ServletException {
     String tempExcludes = filterConfig.getInitParameter("excludes");
     if (!DataUtils.isEmpty(tempExcludes)) {
       String[] url = tempExcludes.split(",");
-      excludes.addAll(Arrays.asList(url));
+      EXCLUDES_LIST.addAll(Arrays.asList(url));
     }
   }
 
@@ -57,11 +57,7 @@ public class XssFilter implements Filter {
     if (method == null || method.matches(HttpMethod.GET.name()) || method.matches(HttpMethod.DELETE.name())) {
       return true;
     }
-    return DataUtils.matches(url, excludes);
+    return DataUtils.matches(url, EXCLUDES_LIST);
   }
 
-  @Override
-  public void destroy() {
-
-  }
 }
