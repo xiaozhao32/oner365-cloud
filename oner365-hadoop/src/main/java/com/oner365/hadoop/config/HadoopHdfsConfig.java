@@ -46,6 +46,7 @@ public class HadoopHdfsConfig {
       return FileSystem.get(new URI(hdfsProperties.getPath()), configuration, hdfsProperties.getUsername());
     } catch (InterruptedException e) {
       LOGGER.error("FileSystem InterruptedException:", e);
+      Thread.currentThread().interrupt();
     } catch (IOException e) {
       LOGGER.error("FileSystem IOException:", e);
     } catch (URISyntaxException e) {

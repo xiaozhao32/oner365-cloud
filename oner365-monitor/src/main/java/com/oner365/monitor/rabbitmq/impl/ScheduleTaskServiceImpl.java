@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.oner365.api.enums.TaskStatusEnum;
 import com.oner365.api.rabbitmq.IScheduleTaskService;
@@ -40,7 +39,7 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
 
   @Override
   public void scheduleTask(InvokeParamDto invokeParamDto) {
-    LOGGER.info("MQ pull : {},MQ NAME:{}", JSON.toJSONString(invokeParamDto), PublicConstants.QUEUE_NAME);
+    LOGGER.info("MQ pull: id:{},MQ NAME:{}", invokeParamDto.getTaskId(), PublicConstants.QUEUE_NAME);
     if (ScheduleConstants.SCHEDULE_SERVER_NAME.equals(invokeParamDto.getTaskServerName())) {
       taskExecute(invokeParamDto.getConcurrent(), invokeParamDto.getTaskId(), invokeParamDto.getTaskParam());
     }
@@ -83,7 +82,7 @@ public class ScheduleTaskServiceImpl implements IScheduleTaskService {
 
   private void executeLog(SysTaskDto sysTask, StatusEnum status) {
     long time = System.currentTimeMillis();
-    LOGGER.info("taskExecute  saveTaskLog ");
+    LOGGER.info("taskExecute  saveTaskLog: {}", status);
     SysTaskLogVo log = new SysTaskLogVo();
     log.setExecuteIp(HttpClientUtils.getLocalhost());
     log.setExecuteServerName(ScheduleConstants.SCHEDULE_SERVER_NAME);

@@ -36,7 +36,7 @@ public class OrderPayAction implements Action<OrderStateEnum, OrderEventEnum> {
       logger.error("处理失败 订单不存在: {}", context.getMessage());
       return;
     }
-    logger.info("处理订单: {}", order.toString());
+    logger.info("处理订单 id: {}, state: {}", order.getId(), order.getOrderState());
   }
 
 }

@@ -25,7 +25,7 @@ public class PulsarListener implements MessageListener<JSONObject> {
   
   private static final long serialVersionUID = 1L;
 
-  private final Logger logger = LoggerFactory.getLogger(PulsarListener.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(PulsarListener.class);
 
   @Resource
   private PulsarProperties pulsarProperties;
@@ -38,7 +38,8 @@ public class PulsarListener implements MessageListener<JSONObject> {
     try {
       byte[] bytes = msg.getData();
       if (bytes != null) {
-        logger.info("Pulsar data: {}, topic: {}", new String(bytes), consumer.getTopic());
+        String data = new String(bytes);
+        LOGGER.info("Pulsar data: {}, topic: {}", data, consumer.getTopic());
         consumer.acknowledge(msg);
       }
     } catch (PulsarClientException e) {

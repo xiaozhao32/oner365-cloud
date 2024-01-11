@@ -1,7 +1,9 @@
 package com.oner365.ldap.factory;
 
-import javax.net.ssl.X509TrustManager;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+
+import javax.net.ssl.X509TrustManager;
 
 /**
  * Ldap Trust
@@ -10,10 +12,14 @@ import java.security.cert.X509Certificate;
  */
 public class LdapTrustManager implements X509TrustManager {
   
-  public void checkClientTrusted(X509Certificate[] cert, String authType) {
+  @Override
+  public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+    // checkClientTrusted
   }
 
-  public void checkServerTrusted(X509Certificate[] cert, String authType) {
+  @Override
+  public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
+    // checkServerTrusted
   }
 
   public X509Certificate[] getAcceptedIssuers() {

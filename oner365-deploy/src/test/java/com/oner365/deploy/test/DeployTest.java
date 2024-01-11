@@ -2,6 +2,7 @@ package com.oner365.deploy.test;
 
 import javax.annotation.Resource;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,11 +36,12 @@ class DeployTest {
    */
   @Test
   void deployNativeTest() {
-    DeployEntity entity = deployService.getDeployEntity();
+    DeployEntity deploy = deployService.getDeployEntity();
     ServerEntity server = deployService.getServerEntity();
-    LOGGER.info("Deploy project: {}", entity);
+    LOGGER.info("Deploy project: {}", deploy);
+    Assertions.assertNotNull(server);
     // 部署目录
-    DeployMethod.deployNative(entity, server);
+    DeployMethod.deployNative(deploy, server);
   }
 
   /**
@@ -51,6 +53,7 @@ class DeployTest {
     ServerEntity server = deployService.getServerEntity();
     LOGGER.info("Deploy project: {}", server);
     LOGGER.info("Server: {}", server);
+    Assertions.assertNotNull(server);
     // 部署服务器开关
     if (server.getIsDeploy()) {
       DeployMethod.deployServer(deploy, server);

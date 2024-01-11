@@ -21,7 +21,7 @@ import com.oner365.websocket.vo.WebSocketMessageVo;
 @Service
 public class RedisSendMessageServiceImpl implements IRedisSendMessageService {
   
-  private final Logger logger = LoggerFactory.getLogger(IRedisSendMessageService.class);
+  private final Logger logger = LoggerFactory.getLogger(RedisSendMessageServiceImpl.class);
 
   @Resource
   public RedisTemplate<String,Serializable> redisTemplate;

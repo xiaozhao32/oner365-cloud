@@ -39,12 +39,12 @@ public class WebSocketConstants extends PublicConstants {
     /**
      * websocket 用户存储
      */
-    public static Map<String, WebSocketData> userMap = new ConcurrentHashMap<>();
+    public static final Map<String, WebSocketData> userMap = new ConcurrentHashMap<>();
    
     /**
      * websocket 显示消息通道存储
      */
-    public static Map<String, List<WebSocketData>> showMessageMap = new ConcurrentHashMap<>();
+    public static final Map<String, List<WebSocketData>> showMessageMap = new ConcurrentHashMap<>();
 
 
     /**
@@ -60,7 +60,7 @@ public class WebSocketConstants extends PublicConstants {
     /**
      * websocket 心跳在线时间
      */
-    public static int HEART_BEAT_TIME = 120;
+    public static final int HEART_BEAT_TIME = 120;
 
     /**
      * Constructor

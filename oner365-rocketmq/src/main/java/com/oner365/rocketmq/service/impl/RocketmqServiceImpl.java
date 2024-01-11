@@ -21,7 +21,7 @@ import com.oner365.rocketmq.service.RocketmqService;
 @Service
 public class RocketmqServiceImpl implements RocketmqService {
 
-  private final Logger logger = LoggerFactory.getLogger(RocketmqService.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(RocketmqServiceImpl.class);
 
   @Resource
   private RocketmqProperties rocketmqProperties;
@@ -35,7 +35,7 @@ public class RocketmqServiceImpl implements RocketmqService {
       rocketmqTemplate.convertAndSend(rocketmqProperties.getTopic(), message);
       return ResultEnum.SUCCESS;
     } catch (MessagingException e) {
-      logger.error("convertAndSend error:", e);
+      LOGGER.error("convertAndSend error:", e);
     }
     return ResultEnum.ERROR;
   }

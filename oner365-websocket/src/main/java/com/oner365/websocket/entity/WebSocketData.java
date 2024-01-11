@@ -20,30 +20,27 @@ public class WebSocketData implements Serializable {
    * 通道号
    */
   private String token;
-  
+
   /**
    * 通道session
    */
   private WebSocketSession session;
-  
+
   /**
    * 用户名
    */
   private String user;
-  
+
   /**
    * 用户id
    */
   private String userId;
 
-  
-
-
   public WebSocketData() {
     super();
   }
-  
-  public WebSocketData(String user,String token,String userId,WebSocketSession session) {
+
+  public WebSocketData(String user, String token, String userId, WebSocketSession session) {
     this.user = user;
     this.token = token;
     this.session = session;
@@ -81,7 +78,5 @@ public class WebSocketData implements Serializable {
   public void setUserId(String userId) {
     this.userId = userId;
   }
-
-
 
 }

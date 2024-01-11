@@ -20,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
-import com.oner365.gateway.constants.GatewayConstants;
+import com.oner365.data.commons.constants.PublicConstants;
 import com.oner365.gateway.enums.GatewayErrorEnum;
 
 import reactor.core.publisher.Mono;
@@ -66,21 +66,21 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
     private Map<String, Object> setErrorAttribute(HttpMethod method, String path, Throwable ex) {
         Map<String, Object> result = new HashMap<>(8);
         if (method != null) {
-            result.put(GatewayConstants.METHOD, method.name());
+            result.put(PublicConstants.METHOD, method.name());
         }
-        result.put(GatewayConstants.PATH, path);
-        result.put(GatewayConstants.RESULT, ex.getMessage());
+        result.put(PublicConstants.PATH, path);
+        result.put(PublicConstants.RESULT, ex.getMessage());
 
         if (ex instanceof NotFoundException) {
-            result.put(GatewayConstants.CODE, HttpStatus.INTERNAL_SERVER_ERROR.value());
+            result.put(PublicConstants.CODE, HttpStatus.INTERNAL_SERVER_ERROR.value());
             String errorMessage = GatewayErrorEnum.getDescription(ex.getMessage());
-            result.put(GatewayConstants.MESSAGE, String.format("【%s】服务异常!", errorMessage));
+            result.put(PublicConstants.MESSAGE, String.format("【%s】服务异常!", errorMessage));
         } else if (ex instanceof ResponseStatusException) {
-            result.put(GatewayConstants.CODE, HttpStatus.NOT_FOUND.value());
-            result.put(GatewayConstants.MESSAGE, HttpStatus.NOT_FOUND.name());
+            result.put(PublicConstants.CODE, HttpStatus.NOT_FOUND.value());
+            result.put(PublicConstants.MESSAGE, HttpStatus.NOT_FOUND.name());
         } else {
-            result.put(GatewayConstants.CODE, HttpStatus.SERVICE_UNAVAILABLE.value());
-            result.put(GatewayConstants.MESSAGE, HttpStatus.SERVICE_UNAVAILABLE.name());
+            result.put(PublicConstants.CODE, HttpStatus.SERVICE_UNAVAILABLE.value());
+            result.put(PublicConstants.MESSAGE, HttpStatus.SERVICE_UNAVAILABLE.name());
         }
         return result;
     }
