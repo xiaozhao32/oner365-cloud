@@ -8,7 +8,7 @@ import java.util.List;
  * Excel数据对象
  * @author zhaoyong
  */
-public class ExcelData<T> implements Serializable {
+public class ExcelData<T extends Serializable> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

@@ -108,7 +108,7 @@ public class GenTable implements Serializable {
     protected static final String[] TREE_ENTITY = { "parentName", "parentId", "orderNum", "ancestors", "children" };
     
     /** 请求参数 */
-    private Map<String, Object> params = new HashMap<>();
+    private Map<String, Serializable> params = new HashMap<>();
     
     public Long getTableId() {
         return tableId;
@@ -372,14 +372,14 @@ public class GenTable implements Serializable {
     /**
      * @return the params
      */
-    public Map<String, Object> getParams() {
+    public Map<String, Serializable> getParams() {
         return params;
     }
 
     /**
      * @param params the params to set
      */
-    public void setParams(Map<String, Object> params) {
+    public void setParams(Map<String, Serializable> params) {
         this.params = params;
     }
 
