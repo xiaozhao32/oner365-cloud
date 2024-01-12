@@ -102,7 +102,7 @@ public class PublicConstants {
   /**
    * Constructor
    */
-  public PublicConstants() {
+  protected PublicConstants() {
     super();
   }
 }

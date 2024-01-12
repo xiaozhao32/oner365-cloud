@@ -47,7 +47,7 @@ public class DeployServiceImpl implements DeployService {
     localDeployProperties.getProjects().forEach(project -> {
         String name = StringUtils.substringBefore(project, COLON);
         String portString = StringUtils.substringAfter(project, COLON);
-        Integer port = StringUtils.isEmpty(portString) == true ? 0 : Integer.parseInt(portString);
+        Integer port = StringUtils.isEmpty(portString) ? 0 : Integer.parseInt(portString);
         
         projects.add(name);
         proejctPorts.put(name, port);

@@ -250,8 +250,6 @@ public class DeployMethod {
       }
       // 准备执行的命令
       commands.add("chmod 750 " + targetRoot + DELIMITER + projectName + DELIMITER + "*.sh");
-      // 启动
-//      commands.add(targetRoot + DELIMITER + "start.sh");
     }
     return commands;
   }

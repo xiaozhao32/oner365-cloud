@@ -43,6 +43,8 @@ public final class HtmlFilter {
   private static final Pattern P_LEFT_ARROW = Pattern.compile("<");
   private static final Pattern P_RIGHT_ARROW = Pattern.compile(">");
   private static final Pattern P_BOTH_ARROWS = Pattern.compile("<>");
+  
+  private static final String P_STRONG = "strong";
 
   /**
    * could grow large... maybe use seat's ReferenceMap
@@ -121,16 +123,16 @@ public final class HtmlFilter {
 
     final ArrayList<String> noAttr = new ArrayList<>();
     vAllowed.put("b", noAttr);
-    vAllowed.put("strong", noAttr);
+    vAllowed.put(P_STRONG, noAttr);
     vAllowed.put("i", noAttr);
     vAllowed.put("em", noAttr);
 
     vSelfClosingTags = new String[] { "img" };
-    vNeedClosingTags = new String[] { "a", "b", "strong", "i", "em" };
+    vNeedClosingTags = new String[] { "a", "b", P_STRONG, "i", "em" };
     vDisallowed = new String[] {};
     vAllowedProtocols = new String[] { "http", "mailto", "https" };
     vProtocolAtts = new String[] { "src", "href" };
-    vRemoveBlanks = new String[] { "a", "b", "strong", "i", "em" };
+    vRemoveBlanks = new String[] { "a", "b", P_STRONG, "i", "em" };
     vAllowedEntities = new String[] { "amp", "gt", "lt", "quot" };
     stripComment = true;
     encodeQuotes = true;

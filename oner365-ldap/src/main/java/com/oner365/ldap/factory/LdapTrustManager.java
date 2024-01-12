@@ -5,25 +5,33 @@ import java.security.cert.X509Certificate;
 
 import javax.net.ssl.X509TrustManager;
 
+import org.apache.http.ssl.TrustStrategy;
+
 /**
  * Ldap Trust
  * 
  * @author zhaoyong
  */
 public class LdapTrustManager implements X509TrustManager {
-  
+
+  private X509TrustManager trustManager;
+
+  private TrustStrategy trustStrategy;
+
   @Override
-  public void checkClientTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-    // checkClientTrusted
+  public void checkClientTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    this.trustManager.checkClientTrusted(chain, authType);
   }
 
   @Override
-  public void checkServerTrusted(X509Certificate[] arg0, String arg1) throws CertificateException {
-    // checkServerTrusted
+  public void checkServerTrusted(X509Certificate[] chain, String authType) throws CertificateException {
+    if (!this.trustStrategy.isTrusted(chain, authType)) {
+      this.trustManager.checkServerTrusted(chain, authType);
+    }
   }
 
   public X509Certificate[] getAcceptedIssuers() {
-    return new X509Certificate[0];
+    return this.trustManager.getAcceptedIssuers();
   }
-  
+
 }
