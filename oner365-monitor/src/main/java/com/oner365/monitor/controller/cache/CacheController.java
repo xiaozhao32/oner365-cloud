@@ -50,10 +50,9 @@ public class CacheController extends BaseController {
    */
   @GetMapping("/index")
   public CacheInfoDto index() {
-    Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
-    Properties commandStats = (Properties) redisTemplate
-            .execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
-    Long dbSize = (Long) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);
+    Properties info = redisTemplate.execute((RedisCallback<Properties>) RedisServerCommands::info);
+    Properties commandStats = redisTemplate.execute((RedisCallback<Properties>) connection -> connection.info("commandstats"));
+    Long dbSize = redisTemplate.execute(RedisServerCommands::dbSize);
 
     CacheInfoDto result = new CacheInfoDto();
     result.setInfo(info);

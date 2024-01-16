@@ -32,7 +32,7 @@ public final class HtmlFilter {
   private static final Pattern P_ENTITY_UNICODE = Pattern.compile("&#x([0-9a-f]+);?");
   private static final Pattern P_ENCODE = Pattern.compile("%([0-9a-f]{2});?");
   private static final Pattern P_VALID_ENTITIES = Pattern.compile("&([^&;]*)(?=(;|&|$))");
-  private static final Pattern P_VALID_QUOTES = Pattern.compile("(>|^)([^<]+?)(<|$)", Pattern.DOTALL);
+  private static final Pattern P_VALID_QUOTES = Pattern.compile("(>|^)([^<]+)(<|$)", Pattern.DOTALL);
   private static final Pattern P_END_ARROW = Pattern.compile("^>");
   private static final Pattern P_BODY_TO_END = Pattern.compile("<([^>]*?)(?=<|$)");
   private static final Pattern P_XML_CONTENT = Pattern.compile("(^|>)([^<]*?)(?=>)");
@@ -330,13 +330,9 @@ public final class HtmlFilter {
     Matcher m = P_END_TAG.matcher(s);
     if (m.find()) {
       final String name = m.group(1).toLowerCase();
-      if (allowed(name)) {
-        if (!inArray(name, vSelfClosingTags)) {
-          if (vTagCounts.containsKey(name)) {
-            vTagCounts.put(name, vTagCounts.get(name) - 1);
-            return "</" + name + ">";
-          }
-        }
+      if (allowed(name) && !inArray(name, vSelfClosingTags) && vTagCounts.containsKey(name)) {
+        vTagCounts.put(name, vTagCounts.get(name) - 1);
+        return "</" + name + ">";
       }
     }
 

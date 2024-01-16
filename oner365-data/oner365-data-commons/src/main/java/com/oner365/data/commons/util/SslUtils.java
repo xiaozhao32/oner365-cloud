@@ -1,5 +1,6 @@
 package com.oner365.data.commons.util;
 
+import java.net.URI;
 import java.net.URL;
 import java.security.PublicKey;
 import java.security.cert.Certificate;
@@ -33,7 +34,7 @@ public class SslUtils {
   public static String getSslPublicKey(String sslUrl) {
     HttpsURLConnection connection = null;
     try {
-      URL url = new URL(sslUrl);
+      URL url = new URI(sslUrl).toURL();
       connection = (HttpsURLConnection) url.openConnection();
       connection.connect();
       Optional<Certificate> optional = Arrays.stream(connection.getServerCertificates()).findFirst();
@@ -52,6 +53,5 @@ public class SslUtils {
     }
     return null;
   }
-  
 
 }
