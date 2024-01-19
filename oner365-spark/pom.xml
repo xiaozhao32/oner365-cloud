@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
@@ -9,9 +10,9 @@
 		<version>2.1.0</version>
 	</parent>
 
-	<artifactId>oner365-kafka</artifactId>
+	<artifactId>oner365-spark</artifactId>
 
-	<name>oner365-kafka</name>
+	<name>oner365-spark</name>
 
 	<dependencies>
 		
@@ -20,8 +21,8 @@
 			<groupId>com.oner365.data</groupId>
 			<artifactId>oner365-data-web</artifactId>
 		</dependency>
-        
-        <!-- spring-boot -->
+		
+		<!-- spring-boot -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -30,30 +31,38 @@
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
-        
-        <!-- kafka -->    
 		<dependency>
-		    <groupId>org.springframework.kafka</groupId>
-		    <artifactId>spring-kafka</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.kafka</groupId>
-		    <artifactId>kafka_${scala.version}</artifactId>
-		</dependency>
-				
-		<dependency>
-		    <groupId>org.apache.kafka</groupId>
-		    <artifactId>kafka-clients</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
 		</dependency>
 		
-		<!-- kafka logback -->
+		<!-- spark -->
 		<dependency>
-      		<groupId>com.github.danielwegener</groupId>
-      		<artifactId>logback-kafka-appender</artifactId>
-      		<version>0.2.0-RC2</version>
-    	</dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-core_${scala.version}</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-sql_${scala.version}</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-streaming_${scala.version}</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-mllib_${scala.version}</artifactId>
+		    <scope>provided</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-hive_${scala.version}</artifactId>
+		    <scope>provided</scope>
+		</dependency>
 		
-	</dependencies> 
+	</dependencies>
 
 	<build>
 		<!-- 加载父级 lib 方式 -->
@@ -69,7 +78,7 @@
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>../lib/</classpathPrefix>
 							<useUniqueVersions>false</useUniqueVersions>
-							<mainClass>com.oner365.kafka.SpringKafkaApplication</mainClass>
+							<mainClass>com.oner365.spark.SpringSparkApplication</mainClass>
 						</manifest>
 						<manifestEntries>
 							<Class-Path>./resources/</Class-Path>
@@ -104,4 +113,5 @@
 		
 		</plugins>
 	</build>
+
 </project>

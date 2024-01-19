@@ -37,7 +37,7 @@
 
 #### 技术框架
 
-1. 数据库: MySQL
+1. 数据库: MySQL && Postgres
 2. 缓存: Redis
 3. 队列: RabbitMQ && RocketMQ && Kafka &&  && Mqtt
 4. 文件处理: Fastdfs && Hadoop && Minio && Local
@@ -50,6 +50,12 @@
 11. 链路监控: Apache Skywalking
 12. API框架: 
 13. 用户认证: Ldap
+14. 时序数据库: Influx
+15. 图数据库: Neo4j
+16. 密码加密: Spring Vault
+17. 状态机Statemachine: Spring Statemachine
+18. Hadoop Zookeeper: Zookeeper 
+19. Hadoop Spark: Spark
 
 #### 使用说明
 
@@ -87,6 +93,7 @@
 16. Mqtt - 8723 oner365-mqtt
 17. Ldap - 8724 oner365-ldap
 18. Zookeeper - 8725 oner365-zookeeper
+19. Spark - 8726 oner365-spark
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos

@@ -67,6 +67,7 @@
 		<org.apache.kafka.version>3.6.0</org.apache.kafka.version>
 		<org.apache.poi.version>5.2.3</org.apache.poi.version>
 		<org.apache.derby.version>10.17.1.0</org.apache.derby.version>
+		<org.apache.spark.version>3.5.0</org.apache.spark.version>
 
 		<org.hibernate.validator.version>6.2.5.Final</org.hibernate.validator.version>
 		<org.hibernate.version>5.6.15.Final</org.hibernate.version>
@@ -143,6 +144,7 @@
 		<joda.time.version>2.12.5</joda.time.version>
 		<junit.version>4.13.2</junit.version>
 		
+		<scala.version>2.13</scala.version>
  		<org.apache.maven.plugins.version>3.3.0</org.apache.maven.plugins.version>
 	</properties>
 
@@ -487,6 +489,12 @@
 			    <groupId>org.apache.logging.log4j</groupId>
 			    <artifactId>log4j-core</artifactId>
 			    <version>${org.apache.logging.log4j.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.logging.log4j</groupId>
+			    <artifactId>log4j-1.2-api</artifactId>
+			    <version>${org.apache.logging.log4j.version}</version>
+			    <scope>test</scope>
 			</dependency>
 			<dependency>
 			    <groupId>org.apache.logging.log4j</groupId>
@@ -922,7 +930,7 @@
 			
 			<dependency>
 			    <groupId>com.fasterxml.jackson.module</groupId>
-			    <artifactId>jackson-module-scala_2.13</artifactId>
+			    <artifactId>jackson-module-scala_${scala.version}</artifactId>
 			    <version>${com.fasterxml.jackson.version}</version>
 			</dependency>
 
@@ -1229,7 +1237,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.apache.kafka</groupId>
-				<artifactId>kafka_2.13</artifactId>
+				<artifactId>kafka_${scala.version}</artifactId>
 				<version>${org.apache.kafka.version}</version>
 			</dependency>
 			<dependency>
@@ -1319,6 +1327,16 @@
 				<groupId>org.apache.hadoop</groupId>
 				<artifactId>hadoop-client</artifactId>
 				<version>${org.apache.hadoop.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.hadoop</groupId>
+				<artifactId>hadoop-client-api</artifactId>
+				<version>${org.apache.hadoop.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.hadoop</groupId>
+			    <artifactId>hadoop-client-runtime</artifactId>
+			    <version>${org.apache.hadoop.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.hadoop</groupId>
@@ -1429,8 +1447,23 @@
 			</dependency>
 			<dependency>
 			    <groupId>org.apache.hive</groupId>
+			    <artifactId>hive-exec</artifactId>
+			    <version>${org.apache.hive.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.hive</groupId>
 			    <artifactId>hive-jdbc</artifactId>
 			    <version>${org.apache.hive.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.hive</groupId>
+				<artifactId>hive-llap-client</artifactId>
+				<version>${org.apache.hive.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.hive</groupId>
+				<artifactId>hive-llap-common</artifactId>
+				<version>${org.apache.hive.version}</version>
 			</dependency>
 			<dependency>
 			    <groupId>org.apache.hive</groupId>
@@ -1473,6 +1506,36 @@
 			    <groupId>org.apache.hbase</groupId>
 			    <artifactId>hbase-server</artifactId>
 			    <version>${org.apache.hbase.version}</version>
+			</dependency>
+			
+			<!-- spark -->
+			<dependency>
+			    <groupId>org.apache.spark</groupId>
+			    <artifactId>spark-core_${scala.version}</artifactId>
+			    <version>${org.apache.spark.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.spark</groupId>
+			    <artifactId>spark-sql_${scala.version}</artifactId>
+			    <version>${org.apache.spark.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.spark</groupId>
+			    <artifactId>spark-streaming_${scala.version}</artifactId>
+			    <version>${org.apache.spark.version}</version>
+			    <scope>provided</scope>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.spark</groupId>
+			    <artifactId>spark-mllib_${scala.version}</artifactId>
+			    <version>${org.apache.spark.version}</version>
+			    <scope>provided</scope>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.spark</groupId>
+			    <artifactId>spark-hive_${scala.version}</artifactId>
+			    <version>${org.apache.spark.version}</version>
+			    <scope>provided</scope>
 			</dependency>
 
 			<!-- oner365 -->
@@ -1638,6 +1701,8 @@
 		<module>oner365-ldap</module>
 		<!-- zookeeper -->
 		<module>oner365-zookeeper</module>
+		<!-- spark -->
+		<module>oner365-spark</module>
 
 	</modules>
 
