@@ -42,17 +42,17 @@
 		<java.version>1.8</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-		<org.springframework.integration.version>5.5.19</org.springframework.integration.version>
+		<org.springframework.integration.version>5.5.20</org.springframework.integration.version>
 		<org.springframework.statemachine.version>2.5.1</org.springframework.statemachine.version>
-		<org.springframework.security.version>5.8.7</org.springframework.security.version>
-		<org.springframework.cloud.version>2021.0.8</org.springframework.cloud.version>
+		<org.springframework.security.version>5.8.9</org.springframework.security.version>
+		<org.springframework.cloud.version>2021.0.9</org.springframework.cloud.version>
 		<org.springframework.boot.version>2.7.18</org.springframework.boot.version>
 		<org.springframework.version>5.3.31</org.springframework.version>
-		<org.springframework.kafka.version>2.9.12</org.springframework.kafka.version>
+		<org.springframework.kafka.version>2.9.13</org.springframework.kafka.version>
 
 		<org.apache.rocketmq.boot.starter.version>2.2.3</org.apache.rocketmq.boot.starter.version>
 		<org.apache.shardingsphere.version>4.0.0-RC1</org.apache.shardingsphere.version>
-		<org.apache.logging.log4j.version>2.20.0</org.apache.logging.log4j.version>
+		<org.apache.logging.log4j.version>2.21.1</org.apache.logging.log4j.version>
 		<org.apache.httpclient.version>4.5.14</org.apache.httpclient.version>
 		<org.apache.httpcore.version>4.4.16</org.apache.httpcore.version>
 		<org.apache.zookeeper.version>3.8.1</org.apache.zookeeper.version>
@@ -65,9 +65,11 @@
 		<org.apache.pulsar.version>3.0.0</org.apache.pulsar.version>
 		<org.apache.dubbo.version>3.2.10</org.apache.dubbo.version>
 		<org.apache.kafka.version>3.6.0</org.apache.kafka.version>
-		<org.apache.poi.version>5.2.3</org.apache.poi.version>
+		<org.apache.poi.version>5.2.5</org.apache.poi.version>
 		<org.apache.derby.version>10.17.1.0</org.apache.derby.version>
 		<org.apache.spark.version>3.5.0</org.apache.spark.version>
+		<org.apache.avro.version>1.11.2</org.apache.avro.version>
+		<org.apache.orc.version>1.9.1</org.apache.orc.version>
 
 		<org.hibernate.validator.version>6.2.5.Final</org.hibernate.validator.version>
 		<org.hibernate.version>5.6.15.Final</org.hibernate.version>
@@ -82,17 +84,22 @@
 		
 		<org.jetbrains.kotlin.version>1.9.0</org.jetbrains.kotlin.version>
 		<org.eclipse.jetty.version>9.4.53.v20231009</org.eclipse.jetty.version>
+		<org.checkframework.version>3.42.0</org.checkframework.version>
 		<org.projectlombok.version>1.18.24</org.projectlombok.version>
 		<org.junit.platform.version>1.7.2</org.junit.platform.version>
 		<org.xerial.snappy.version>1.1.8.4</org.xerial.snappy.version>
 		<org.mortbay.jetty.version>6.1.26</org.mortbay.jetty.version>
 		<org.hdrhistogram.version>2.1.12</org.hdrhistogram.version>
 		<org.bouncycastle.version>1.70</org.bouncycastle.version>
+		<org.scala.lang.version>2.13.11</org.scala.lang.version>
+		<org.objenesis.version>3.3</org.objenesis.version>
 		<org.javassist.version>3.29.2-GA</org.javassist.version>
 		<org.freemarker.version>2.3.32</org.freemarker.version>
 		<org.codehaus.version>3.1.10</org.codehaus.version>
+		<org.antlr4.version>4.13.1</org.antlr4.version>
+		<org.ow2.asm.version>9.6</org.ow2.asm.version>
 		<org.quartz.version>2.3.2</org.quartz.version>
-		<org.yaml.version>2.0</org.yaml.version>
+		<org.yaml.version>2.2</org.yaml.version>
 		<org.lz4.version>1.8.0</org.lz4.version>
 		
 		<org.postgresql.version>42.5.4</org.postgresql.version>
@@ -104,7 +111,7 @@
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
 		<com.alibaba.nacos.version>2.2.3</com.alibaba.nacos.version>
-		<com.alibaba.druid.version>1.2.18</com.alibaba.druid.version>
+		<com.alibaba.druid.version>1.2.21</com.alibaba.druid.version>
 		<com.alibaba.fastjson.version>1.2.83</com.alibaba.fastjson.version>
 		
 		<com.thoughtworks.paranamer.version>2.8</com.thoughtworks.paranamer.version>
@@ -112,6 +119,7 @@
 		<com.google.code.gson.version>2.10.1</com.google.code.gson.version>
 		<com.google.guava.version>33.0.0-jre</com.google.guava.version>
 		<com.google.protobuf.version>3.22.4</com.google.protobuf.version>
+		<com.githubluben.luben.version>1.5.5-4</com.githubluben.luben.version>
 		<com.github.xiaoymin.version>3.0.3</com.github.xiaoymin.version>
 		<com.github.penggle.version>2.3.2</com.github.penggle.version>
 		<com.github.tobato.version>1.27.2</com.github.tobato.version>
@@ -128,7 +136,8 @@
 		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
 		<io.undertow.version>2.3.10.Final</io.undertow.version>
 		<io.springfox.version>3.0.0</io.springfox.version>
-		<io.netty.version>4.1.101.Final</io.netty.version>
+		<io.netty.version>4.1.106.Final</io.netty.version>
+		<io.airlift.version>0.25</io.airlift.version>
 		<io.minio.version>8.5.4</io.minio.version>
 		
 		<net.logstash.logback.version>7.2</net.logstash.logback.version>
@@ -136,7 +145,7 @@
 		<net.minidev.version>2.4.11</net.minidev.version>
 		<net.java.dev.jna.version>5.12.1</net.java.dev.jna.version>
 		<net.sf.jopt.version>5.0.4</net.sf.jopt.version>
-		<de.codecentric.version>2.7.10</de.codecentric.version>
+		<de.codecentric.version>2.7.15</de.codecentric.version>
 		<redis.clients.version>4.3.2</redis.clients.version>
 		<javax.servlet.jsp.version>2.3.3</javax.servlet.jsp.version>
 		<jakarta.json.version>2.1.1</jakarta.json.version>
@@ -423,7 +432,7 @@
 			<dependency>
 				<groupId>commons-io</groupId>
 				<artifactId>commons-io</artifactId>
-				<version>2.13.0</version>
+				<version>2.15.0</version>
 			</dependency>
 			<dependency>
 				<groupId>commons-lang</groupId>
@@ -448,7 +457,7 @@
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 				<artifactId>commons-pool2</artifactId>
-				<version>2.11.1</version>
+				<version>2.12.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.commons</groupId>
@@ -463,7 +472,7 @@
 			<dependency>
 				<groupId>org.apache.commons</groupId>
 	    		<artifactId>commons-compress</artifactId>
-	    		<version>1.23.0</version>
+	    		<version>1.25.0</version>
 			</dependency>
 			<dependency>
 				<groupId>org.apache.ant</groupId>
@@ -593,6 +602,12 @@
 			    <version>${org.lz4.version}</version>
 			</dependency>
 			
+			<dependency>
+			    <groupId>org.checkerframework</groupId>
+			    <artifactId>checker-qual</artifactId>
+			    <version>${org.checkframework.version}</version>
+			</dependency>
+
 			<!-- bouncycastle -->
 			<dependency>
 			    <groupId>org.bouncycastle</groupId>
@@ -646,6 +661,12 @@
 			    <groupId>io.minio</groupId>
 			    <artifactId>minio</artifactId>
 			    <version>${io.minio.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.airlift</groupId>
+				<artifactId>aircompressor</artifactId>
+				<version>${io.airlift.version}</version>
 			</dependency>
 
 			<!-- google -->
@@ -749,6 +770,36 @@
 			    <groupId>org.codehaus.janino</groupId>
 			    <artifactId>janino</artifactId>
 			    <version>${org.codehaus.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.antlr</groupId>
+				<artifactId>antlr4-runtime</artifactId>
+				<version>${org.antlr4.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm</artifactId>
+				<version>${org.ow2.asm.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm-commons</artifactId>
+				<version>${org.ow2.asm.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm-tree</artifactId>
+				<version>${org.ow2.asm.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.ow2.asm</groupId>
+				<artifactId>asm-util</artifactId>
+				<version>${org.ow2.asm.version}</version>
 			</dependency>
 			
 			<!-- byte-buddy -->
@@ -1055,6 +1106,18 @@
 				<artifactId>netty-codec</artifactId>
 				<version>${io.netty.version}</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-codec-dns</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-codec-haproxy</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>io.netty</groupId>
@@ -1067,10 +1130,46 @@
 				<artifactId>netty-codec-http2</artifactId>
 				<version>${io.netty.version}</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-codec-memcache</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-codec-mqtt</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-codec-redis</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-codec-smtp</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>io.netty</groupId>
 				<artifactId>netty-codec-socks</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-codec-stomp</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-codec-xml</artifactId>
 				<version>${io.netty.version}</version>
 			</dependency>
 
@@ -1091,16 +1190,46 @@
 				<artifactId>netty-handler-proxy</artifactId>
 				<version>${io.netty.version}</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-handler-ssl-ocsp</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>io.netty</groupId>
 				<artifactId>netty-resolver</artifactId>
 				<version>${io.netty.version}</version>
 			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-resolver-dns</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-resolver-dns-classes-macos</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
 
 			<dependency>
 				<groupId>io.netty</groupId>
 				<artifactId>netty-transport</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-transport-classes-epoll</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-transport-classes-kqueue</artifactId>
 				<version>${io.netty.version}</version>
 			</dependency>
 
@@ -1113,6 +1242,24 @@
 			<dependency>
 				<groupId>io.netty</groupId>
 				<artifactId>netty-transport-native-unix-common</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-transport-rxtx</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-transport-sctp</artifactId>
+				<version>${io.netty.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>io.netty</groupId>
+				<artifactId>netty-transport-udt</artifactId>
 				<version>${io.netty.version}</version>
 			</dependency>
 
@@ -1536,6 +1683,48 @@
 			    <artifactId>spark-hive_${scala.version}</artifactId>
 			    <version>${org.apache.spark.version}</version>
 			    <scope>provided</scope>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.apache.avro</groupId>
+				<artifactId>avro</artifactId>
+				<version>${org.apache.avro.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.apache.orc</groupId>
+				<artifactId>orc-core</artifactId>
+				<version>${org.apache.orc.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.apache.orc</groupId>
+				<artifactId>orc-shims</artifactId>
+				<version>${org.apache.orc.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.objenesis</groupId>
+				<artifactId>objenesis</artifactId>
+				<version>${org.objenesis.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.scala-lang</groupId>
+				<artifactId>scala-library</artifactId>
+				<version>${org.scala.lang.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>org.scala-lang</groupId>
+				<artifactId>scala-reflect</artifactId>
+				<version>${org.scala.lang.version}</version>
+			</dependency>
+			
+			<dependency>
+				<groupId>com.github.luben</groupId>
+				<artifactId>zstd-jni</artifactId>
+				<version>${com.githubluben.luben.version}</version>
 			</dependency>
 
 			<!-- oner365 -->

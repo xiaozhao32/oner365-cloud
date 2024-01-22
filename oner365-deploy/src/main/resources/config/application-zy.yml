@@ -28,9 +28,14 @@ deploy:
       - oner365-mqtt:8723
       - oner365-ldap:8724
       - oner365-zookeeper:8725
+      - oner365-spark:8726
     libs: 
-      - oner365-common
       - oner365-api
+      - oner365-data-commons
+      - oner365-data-datasource
+      - oner365-data-jpa
+      - oner365-data-redis
+      - oner365-data-web
     
   server:
     deploy: false
