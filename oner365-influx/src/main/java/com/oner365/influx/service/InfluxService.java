@@ -12,6 +12,14 @@ import com.oner365.influx.entity.Mem;
 public interface InfluxService {
 
   /**
+   * 写入对象
+   * 
+   * @param vo 对象
+   * @return 是否成功
+   */
+  Boolean save(Mem vo);
+
+  /**
    * 查询对象
    *
    * @param data 查询参数
