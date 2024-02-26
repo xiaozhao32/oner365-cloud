@@ -13,7 +13,7 @@ import org.springframework.data.neo4j.core.schema.Property;
  * @author zhaoyong
  *
  */
-@Node("SonNode")
+@Node
 public class SonNode implements Serializable {
 
   private static final long serialVersionUID = 1L;

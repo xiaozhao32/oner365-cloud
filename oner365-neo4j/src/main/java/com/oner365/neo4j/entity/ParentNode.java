@@ -9,6 +9,7 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Property;
 import org.springframework.data.neo4j.core.schema.Relationship;
+import org.springframework.stereotype.Component;
 
 /**
  * 父节点
@@ -16,7 +17,8 @@ import org.springframework.data.neo4j.core.schema.Relationship;
  * @author zhaoyong
  *
  */
-@Node("ParentNode")
+@Node
+@Component
 public class ParentNode implements Serializable {
 
   private static final long serialVersionUID = 1L;
