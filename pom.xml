@@ -96,7 +96,7 @@
 		<org.javassist.version>3.29.2-GA</org.javassist.version>
 		<org.freemarker.version>2.3.32</org.freemarker.version>
 		<org.codehaus.version>3.1.10</org.codehaus.version>
-		<org.antlr4.version>4.13.1</org.antlr4.version>
+		<org.antlr4.version>4.7.1</org.antlr4.version>
 		<org.ow2.asm.version>9.6</org.ow2.asm.version>
 		<org.quartz.version>2.3.2</org.quartz.version>
 		<org.yaml.version>2.2</org.yaml.version>
