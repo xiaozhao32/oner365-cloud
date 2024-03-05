@@ -12,6 +12,7 @@ deploy:
       - oner365-files:8705
       - oner365-monitor:8706
       - oner365-system:8707
+      - oner365-dubbo-provider:8708
       - oner365-elasticsearch:8709
       - oner365-kafka:8710
       - oner365-generator:8711
@@ -21,6 +22,7 @@ deploy:
       - oner365-pulsar:8715
       - oner365-datasource:8716
       - oner365-influx:8717
+      - oner365-dubbo-consumer:8718
       - oner365-neo4j:8719
       - oner365-cassandra:8720
       - oner365-statemachine:8721
@@ -36,6 +38,7 @@ deploy:
       - oner365-data-jpa
       - oner365-data-redis
       - oner365-data-web
+      - oner365-dubbo-api
     
   server:
     deploy: false
