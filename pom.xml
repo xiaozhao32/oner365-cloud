@@ -55,6 +55,8 @@
 		<org.apache.logging.log4j.version>2.21.1</org.apache.logging.log4j.version>
 		<org.apache.httpclient.version>4.5.14</org.apache.httpclient.version>
 		<org.apache.httpcore.version>4.4.16</org.apache.httpcore.version>
+		<org.apache.httpcore5.version>5.2.1</org.apache.httpcore5.version>
+		<org.apache.httpclient5.version>5.2.1</org.apache.httpclient5.version>
 		<org.apache.zookeeper.version>3.8.1</org.apache.zookeeper.version>
 		<org.apache.rocketmq.version>4.9.5</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.83</org.apache.tomcat.version>
@@ -108,6 +110,7 @@
 		<com.oracle.version>21.9.0.0</com.oracle.version>
 		<com.dameng.version>8.1.1.49</com.dameng.version>
 		<com.mysql.version>8.0.32</com.mysql.version>
+		<com.clickhouse.version>0.6.0</com.clickhouse.version>
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
 		<com.alibaba.nacos.version>2.2.3</com.alibaba.nacos.version>
@@ -521,6 +524,21 @@
 			    <version>${org.slf4j.version}</version>
 			</dependency>
 			<dependency>
+			    <groupId>org.apache.httpcomponents.core5</groupId>
+			    <artifactId>httpcore5</artifactId>
+			    <version>${org.apache.httpcore5.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.httpcomponents.core5</groupId>
+			    <artifactId>httpcore5-h2</artifactId>
+			    <version>${org.apache.httpcore5.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.httpcomponents.client5</groupId>
+			    <artifactId>httpclient5</artifactId>
+			    <version>${org.apache.httpclient5.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.apache.httpcomponents</groupId>
 				<artifactId>httpclient</artifactId>
 				<version>${org.apache.httpclient.version}</version>
@@ -891,6 +909,12 @@
 			    <artifactId>derby</artifactId>
 			    <version>${org.apache.derby.version}</version>
 			    <scope>test</scope>
+			</dependency>
+			<!-- ClickHouse -->
+			<dependency>
+			    <groupId>com.clickhouse</groupId>
+			    <artifactId>clickhouse-jdbc</artifactId>
+			    <version>${com.clickhouse.version}</version>
 			</dependency>
 			
 			<!-- kotlin -->
