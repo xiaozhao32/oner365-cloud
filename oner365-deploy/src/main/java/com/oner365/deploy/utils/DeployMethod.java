@@ -139,7 +139,7 @@ public class DeployMethod {
       DataUtils.createFolder(targetPath);
       DataUtils.copyFile(path, targetPath);
       DataUtils.copyDirectory(resourcePath, targetPath);
-      DataUtils.copyDirectory(libPath, deployEntity.getName());
+      DataUtils.copyDirectory(libPath, targetPath);
 
       // 制作 Linux 启动脚本
       String readFile = DeployMethod.class.getResource("/service/start.sh").getPath();
@@ -176,8 +176,6 @@ public class DeployMethod {
           composeLines.add("    ports: ");
           composeLines.add("      - \"" + deployEntity.getProejctPorts().get(projectName) + ":"
                   + deployEntity.getProejctPorts().get(projectName) + "\"");
-          composeLines.add("    volumes: ");
-          composeLines.add("      - ./lib:" + serverEntity.getServerName() + "/lib");
           composeLines.add("    extra_hosts: ");
           composeLines.add("      - \"oner365-nacos:" + serverEntity.getServerList().get(0).getIp() + "\"");
           composeLines.add("    privileged: true");

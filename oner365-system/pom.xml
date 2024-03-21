@@ -49,6 +49,10 @@
             <groupId>de.codecentric</groupId>
             <artifactId>spring-boot-admin-starter-client</artifactId>
         </dependency>
+        <dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
 	</dependencies> 
 
 	<build>
@@ -63,7 +67,7 @@
 						<addMavenDescriptor>true</addMavenDescriptor>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<classpathPrefix>../lib/</classpathPrefix>
+							<classpathPrefix>./lib/</classpathPrefix>
 							<useUniqueVersions>false</useUniqueVersions>
 							<mainClass>com.oner365.sys.SpringSystemApplication</mainClass>
 						</manifest>
@@ -97,6 +101,25 @@
                    </execution>
                </executions>
            </plugin>
+           
+           <plugin>
+				<groupId>com.spotify</groupId>
+				<artifactId>docker-maven-plugin</artifactId>
+				<version>1.2.2</version>
+				<configuration>
+					<imageName>${project.artifactId}</imageName>
+					<imageTags>
+						<imageTag>${project.version}</imageTag>
+					</imageTags>
+					
+					<dockerDirectory>./</dockerDirectory>
+					<dockerHost>http://172.16.80.132:2375</dockerHost>
+					<buildArgs>
+						<JAR_FILE>target/${project.build.finalName}.jar</JAR_FILE>
+		                <OUT_DIRECTORY>target</OUT_DIRECTORY>
+					</buildArgs>
+				</configuration>
+			</plugin>
 		
 		</plugins>
 	</build>
