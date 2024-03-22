@@ -66,7 +66,7 @@ public class DataSourceConfig {
     
     if (DataSourceConstants.DS_TYPE_DB.equals(datasourceType)) {
       try {
-        String sql = "select `connect_name`, `db_name`, `ip_address`, `url`, `user_name`, `password`, `port`, `driver_name`, `ds_type` from nt_data_source_config";
+        String sql = "select connect_name, db_name, ip_address, url, user_name, password, port, driver_name, ds_type from nt_data_source_config";
         List<Map<String, String>> list = DataSourceUtil.execute(primarySource.getConnection(), sql);
         list.forEach(map -> {
           if (DataSourceConstants.DS_TYPE_DB.equals(map.get(DS_TYPE))) {
