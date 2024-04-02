@@ -10,6 +10,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.oner365.data.commons.constants.PublicConstants;
 import com.oner365.zookeeper.config.properties.ZooKeeperProperties;
 
 /**
@@ -36,6 +37,7 @@ public class ZookeeperConfig {
     RetryPolicy retryPolicy = new ExponentialBackoffRetry(properties.getBaseSleepTimeMs(), properties.getMaxRetries());
 
     CuratorFramework client = CuratorFrameworkFactory.builder().connectString(properties.getConnectString())
+        .namespace(PublicConstants.NAME)
         .connectionTimeoutMs((int) properties.getConnectionTimeout().toMillis())
         .sessionTimeoutMs((int) properties.getSessionTimeout().toMillis()).retryPolicy(retryPolicy).build();
     client.start();
