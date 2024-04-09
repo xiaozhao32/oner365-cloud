@@ -56,6 +56,7 @@
 17. 状态机Statemachine: Spring Statemachine
 18. Hadoop Zookeeper: Zookeeper 
 19. Hadoop Spark: Spark
+20. 非关系型数据库: Mongodb
 
 #### 使用说明
 
@@ -94,6 +95,7 @@
 17. Ldap - 8724 oner365-ldap
 18. Zookeeper - 8725 oner365-zookeeper
 19. Spark - 8726 oner365-spark
+20. Mongodb - 8727 oner365-mongodb
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos

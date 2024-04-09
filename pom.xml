@@ -1916,6 +1916,8 @@
 		<module>oner365-zookeeper</module>
 		<!-- spark -->
 		<module>oner365-spark</module>
+		<!-- mongodb -->
+		<module>oner365-mongodb</module>
 
 	</modules>
 

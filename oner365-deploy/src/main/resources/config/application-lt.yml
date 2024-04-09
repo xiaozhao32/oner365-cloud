@@ -31,6 +31,7 @@ deploy:
       - oner365-ldap:8724
       - oner365-zookeeper:8725
       - oner365-spark:8726
+      - oner365-mongodb:8727
     libs: 
       - oner365-api
       - oner365-data-commons
