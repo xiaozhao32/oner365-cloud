@@ -18,6 +18,7 @@ import org.springframework.cloud.client.discovery.DiscoveryClient;
 import org.springframework.stereotype.Service;
 
 import com.oner365.data.commons.util.DataUtils;
+import com.oner365.zookeeper.constants.ZookeeperConstants;
 import com.oner365.zookeeper.service.IZookeeperService;
 import com.oner365.zookeeper.vo.PathNodeVo;
 
@@ -41,8 +42,6 @@ public class ZookeeperServiceImpl implements IZookeeperService {
   @Resource
   private CuratorFramework client;
 
-  private static final String ROOT_PATH = "/data";
-  
   @PreDestroy
   public void destory() {
     logger.info("destroy Zookeeper client.");
@@ -59,12 +58,13 @@ public class ZookeeperServiceImpl implements IZookeeperService {
   @Override
   public String createNode(PathNodeVo vo, CreateMode createMode) {
     try {
-      logger.info("createNode path:{}", ROOT_PATH + vo.getPath());
+      String path = ZookeeperConstants.ROOT_PATH + vo.getPath();
+      logger.info("createNode path:{}", path);
 
       if (DataUtils.isEmpty(vo.getValue())) {
-        client.create().creatingParentsIfNeeded().withMode(createMode).forPath(ROOT_PATH + vo.getPath());
+        client.create().creatingParentsIfNeeded().withMode(createMode).forPath(path);
       } else {
-        client.create().creatingParentsIfNeeded().withMode(createMode).forPath(ROOT_PATH + vo.getPath(),
+        client.create().creatingParentsIfNeeded().withMode(createMode).forPath(path,
             vo.getValue().getBytes());
       }
       return vo.getPath();
@@ -77,7 +77,8 @@ public class ZookeeperServiceImpl implements IZookeeperService {
   @Override
   public String updateNode(PathNodeVo vo) {
     try {
-      client.setData().forPath(ROOT_PATH + vo.getPath(), vo.getValue().getBytes());
+      String path = ZookeeperConstants.ROOT_PATH + vo.getPath();
+      client.setData().forPath(path, vo.getValue().getBytes());
       return vo.getPath();
     } catch (Exception e) {
       logger.error("updateNode error", e);
@@ -86,9 +87,10 @@ public class ZookeeperServiceImpl implements IZookeeperService {
   }
 
   @Override
-  public String getNode(String path) {
+  public String getNode(String nodePath) {
     try {
-      byte[] bytes = client.getData().forPath(ROOT_PATH + path);
+      String path = ZookeeperConstants.ROOT_PATH + nodePath;
+      byte[] bytes = client.getData().forPath(path);
       if (bytes.length > 0) {
         return new String(bytes);
       }
@@ -99,9 +101,10 @@ public class ZookeeperServiceImpl implements IZookeeperService {
   }
 
   @Override
-  public Boolean checkNode(String path) {
+  public Boolean checkNode(String nodePath) {
     try {
-      Stat stat = client.checkExists().forPath(ROOT_PATH + path);
+      String path = ZookeeperConstants.ROOT_PATH + nodePath;
+      Stat stat = client.checkExists().forPath(path);
       if (stat != null) {
         return Boolean.TRUE;
       }
@@ -112,9 +115,10 @@ public class ZookeeperServiceImpl implements IZookeeperService {
   }
 
   @Override
-  public Boolean deleteNode(String path) {
+  public Boolean deleteNode(String nodePath) {
     try {
-      client.delete().deletingChildrenIfNeeded().forPath(ROOT_PATH + path);
+      String path = ZookeeperConstants.ROOT_PATH + nodePath;
+      client.delete().deletingChildrenIfNeeded().forPath(path);
       return Boolean.TRUE;
     } catch (Exception e) {
       logger.error("deleteNode error", e);
@@ -123,9 +127,10 @@ public class ZookeeperServiceImpl implements IZookeeperService {
   }
 
   @Override
-  public List<ACL> getAcl(String path) {
+  public List<ACL> getAcl(String nodePath) {
     try {
-      return client.getACL().forPath(ROOT_PATH + path);
+      String path = ZookeeperConstants.ROOT_PATH + nodePath;
+      return client.getACL().forPath(path);
     } catch (Exception e) {
       logger.error("getAcl error", e);
     }

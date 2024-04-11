@@ -61,7 +61,8 @@ public class TestController {
    */
   @PutMapping("/path/create")
   public ResponseData<String> createNode(@Validated @RequestBody PathNodeVo vo) {
-    if (zookeeperService.checkNode(vo.getPath())) {
+    Boolean check = zookeeperService.checkNode(vo.getPath());
+    if (Boolean.TRUE.equals(check)) {
       return ResponseData.error(String.format(MESSAGE_NODE_EXISTS, vo.getPath()));
     }
     String result = zookeeperService.createNode(vo, CreateMode.PERSISTENT);
@@ -76,7 +77,8 @@ public class TestController {
    */
   @PostMapping("/path/update")
   public ResponseData<String> updateNode(@Validated @RequestBody PathNodeVo vo) {
-    if (!zookeeperService.checkNode(vo.getPath())) {
+    Boolean check = zookeeperService.checkNode(vo.getPath());
+    if (!Boolean.TRUE.equals(check)) {
       return ResponseData.error(String.format(MESSAGE_NODE_NOT_EXISTS, vo.getPath()));
     }
     String result = zookeeperService.updateNode(vo);
@@ -91,7 +93,8 @@ public class TestController {
    */
   @GetMapping("/path/get")
   public ResponseData<String> getNode(@RequestParam("path") String path) {
-    if (!zookeeperService.checkNode(path)) {
+    Boolean check = zookeeperService.checkNode(path);
+    if (!Boolean.TRUE.equals(check)) {
       return ResponseData.error(String.format(MESSAGE_NODE_NOT_EXISTS, path));
     }
     String result = zookeeperService.getNode(path);
@@ -118,7 +121,8 @@ public class TestController {
    */
   @DeleteMapping("/path/delete")
   public ResponseData<Boolean> deleteNode(@RequestParam("path") String path) {
-    if (!zookeeperService.checkNode(path)) {
+    Boolean check = zookeeperService.checkNode(path);
+    if (!Boolean.TRUE.equals(check)) {
       return ResponseData.error(String.format(MESSAGE_NODE_NOT_EXISTS, path));
     }
     Boolean result = zookeeperService.deleteNode(path);
@@ -133,7 +137,8 @@ public class TestController {
    */
   @GetMapping("/path/acl")
   public ResponseData<List<ACL>> getAcl(@RequestParam("path") String path) {
-    if (!zookeeperService.checkNode(path)) {
+    Boolean check = zookeeperService.checkNode(path);
+    if (!Boolean.TRUE.equals(check)) {
       ResponseData<List<ACL>> result = new ResponseData<>();
       result.setCode(ResultEnum.ERROR.getCode());
       result.setMessage(String.format(MESSAGE_NODE_NOT_EXISTS, path));
