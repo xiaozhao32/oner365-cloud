@@ -44,7 +44,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
       @NonNull MediaType selectedContentType, @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
       @NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response) {
     if (body == null) {
-      return null;
+      return ResponseData.error("服务异常, 请联系管理员系统日志!");
     }
     if (body instanceof String) {
       try {
