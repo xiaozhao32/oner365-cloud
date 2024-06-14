@@ -16,6 +16,21 @@ spring:
         api-path: 
         
   cloud:
+    # consul
+#    consul:
+#       host: localhost
+#       port: 8850
+#      discovery:
+#        service-name: ${spring.application.name}
+#        heartbeat:
+#          enabled: true
+#      config:
+#        enabled: true
+#        format: yaml
+#        prefixes:
+#        - ${spring.profiles.active}
+#        data-key: data
+
     nacos:
       server-addr: ${NACOS-HOST:oner365-nacos}:${NACOS-PORT:8848}
       discovery:
