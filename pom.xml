@@ -44,10 +44,10 @@
 
 		<org.springframework.integration.version>5.5.20</org.springframework.integration.version>
 		<org.springframework.statemachine.version>2.5.1</org.springframework.statemachine.version>
-		<org.springframework.security.version>5.8.9</org.springframework.security.version>
+		<org.springframework.security.version>5.8.13</org.springframework.security.version>
 		<org.springframework.cloud.version>2021.0.9</org.springframework.cloud.version>
 		<org.springframework.boot.version>2.7.18</org.springframework.boot.version>
-		<org.springframework.version>5.3.31</org.springframework.version>
+		<org.springframework.version>5.3.37</org.springframework.version>
 		<org.springframework.kafka.version>2.9.13</org.springframework.kafka.version>
 
 		<org.apache.rocketmq.boot.starter.version>2.2.3</org.apache.rocketmq.boot.starter.version>
@@ -113,7 +113,7 @@
 		<com.clickhouse.version>0.6.0</com.clickhouse.version>
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
-		<com.alibaba.nacos.version>2.2.3</com.alibaba.nacos.version>
+		<com.alibaba.nacos.version>2.3.2</com.alibaba.nacos.version>
 		<com.alibaba.druid.version>1.2.21</com.alibaba.druid.version>
 		<com.alibaba.fastjson.version>1.2.83</com.alibaba.fastjson.version>
 		
