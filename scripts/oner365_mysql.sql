@@ -292,6 +292,23 @@ INSERT INTO `nt_sys_job` VALUES ('ff8080817cbb7ffa017cbb80c1d70003', '前台', '
 COMMIT;
 
 -- ----------------------------
+-- Records of nt_sys_config
+-- ----------------------------
+DROP TABLE IF EXISTS `nt_sys_config`;
+CREATE TABLE `nt_sys_config` (
+  `id` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '主键',
+  `config_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '配置名称',
+  `config_value` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '配置内容',
+  `status` int NOT NULL COMMENT '状态',
+  `create_user` varchar(32) COMMENT '创建人',
+  `create_time` datetime NOT NULL COMMENT '创建时间',
+  `update_user` varchar(32) COMMENT '更新人',
+  `update_time` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `uk_config_name` (`config_name`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC COMMENT='系统配置表';
+
+-- ----------------------------
 -- Table structure for nt_sys_log
 -- ----------------------------
 DROP TABLE IF EXISTS `nt_sys_log`;

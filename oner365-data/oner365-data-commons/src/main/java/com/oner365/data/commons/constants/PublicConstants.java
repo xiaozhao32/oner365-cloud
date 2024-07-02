@@ -82,6 +82,9 @@ public class PublicConstants {
   
   /** 文件存储 */
   public static final String FILE_STORAGE = "file.storage";
+  
+  /** 队列类型方式 */
+  public static final String QUEUE_TYPE = "queue.type";
 
   /** 分隔符 */
   public static final String DELIMITER = "/";

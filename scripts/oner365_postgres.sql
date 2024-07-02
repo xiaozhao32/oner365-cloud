@@ -358,6 +358,36 @@ INSERT INTO "public"."nt_sys_job" VALUES ('4028b881745e46ae01745e4c3cd90008', '�
 COMMIT;
 
 -- ----------------------------
+-- Table structure for nt_sys_config
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."nt_sys_config";
+CREATE TABLE "public"."nt_sys_config" (
+  "id" varchar(64) COLLATE "pg_catalog"."default" NOT NULL,
+  "config_name" varchar(32) COLLATE "pg_catalog"."default" NOT NULL,
+  "config_value" varchar(255) COLLATE "pg_catalog"."default",
+  "status" int4 NOT NULL,
+  "create_user" varchar(32) COLLATE "pg_catalog"."default",
+  "create_time" timestamp(6) NOT NULL,
+  "update_user" varchar(32) COLLATE "pg_catalog"."default",
+  "update_time" timestamp(6)
+)
+;
+COMMENT ON COLUMN "public"."nt_sys_config"."id" IS '主键';
+COMMENT ON COLUMN "public"."nt_sys_config"."config_name" IS '配置名称';
+COMMENT ON COLUMN "public"."nt_sys_config"."config_value" IS '配置内容';
+COMMENT ON COLUMN "public"."nt_sys_config"."status" IS '状态';
+COMMENT ON COLUMN "public"."nt_sys_config"."create_user" IS '创建人';
+COMMENT ON COLUMN "public"."nt_sys_config"."create_time" IS '创建时间';
+COMMENT ON COLUMN "public"."nt_sys_config"."update_user" IS '更新人';
+COMMENT ON COLUMN "public"."nt_sys_config"."update_time" IS '更新时间';
+COMMENT ON TABLE "public"."nt_sys_config" IS '系统配置表';
+ALTER TABLE "public"."nt_sys_config" ADD CONSTRAINT "nt_sys_config_pkey" PRIMARY KEY ("id");
+CREATE UNIQUE INDEX "idx_config_name" ON "public"."nt_sys_config" USING btree (
+  "config_name" COLLATE "pg_catalog"."default" "pg_catalog"."text_ops" ASC NULLS LAST
+);
+COMMIT;
+
+-- ----------------------------
 -- Table structure for nt_sys_log
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."nt_sys_log";

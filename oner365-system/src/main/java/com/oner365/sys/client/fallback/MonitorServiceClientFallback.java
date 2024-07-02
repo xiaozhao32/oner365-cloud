@@ -18,7 +18,7 @@ public class MonitorServiceClientFallback implements IMonitorServiceClient {
 
   @Override
   public ResponseData<SysTaskDto> getInfo(String id) {
-    return new ResponseData<>(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
+    return ResponseData.error(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
   }
 
 }

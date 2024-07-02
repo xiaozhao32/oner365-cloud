@@ -42,28 +42,24 @@ public class ResponseResult<T extends Serializable> implements Serializable {
   /**
    * 返回错误结果
    *
-   * @param code    编码
    * @param message 消息
-   * @return ResponseResult
+   * @return ResponseData
    */
-  @SuppressWarnings("unchecked")
-  public static <T extends Serializable> ResponseResult<T> error(int code, String message) {
-    ResponseResult<T> response = new ResponseResult<>();
-    response.setCode(code);
-    response.setMsg((T) message);
-    return response;
+  public static <T extends Serializable> ResponseResult<T> error(String message) {
+    return error(ResultEnum.ERROR.getCode(), message);
   }
 
   /**
    * 返回错误结果
    *
+   * @param code    编码
    * @param message 消息
-   * @return ResponseResult
+   * @return ResponseData
    */
   @SuppressWarnings("unchecked")
-  public static <T extends Serializable> ResponseResult<T> error(String message) {
+  public static <T extends Serializable> ResponseResult<T> error(int code, String message) {
     ResponseResult<T> response = new ResponseResult<>();
-    response.setCode(ResultEnum.ERROR.getCode());
+    response.setCode(code);
     response.setMsg((T) message);
     return response;
   }

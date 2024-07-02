@@ -23,12 +23,12 @@ public class GenUtils {
    * 数据库字符串类型
    */
   protected static final String[] COLUMN_TYPE_STR = { "char", "varchar", "nvarchar", "varchar2", "tinytext", "text",
-      "mediumtext", "longtext" };
+      "mediumtext", "longtext", "character varying" };
 
   /**
    * 数据库时间类型
    */
-  protected static final String[] COLUMN_TYPE_DATE_TIME = { GenConstants.HTML_DATE_TIME, "time", "timestamp" };
+  protected static final String[] COLUMN_TYPE_DATE_TIME = { GenConstants.HTML_DATE_TIME, "time", "timestamp", "timestamp without time zone" };
 
   /**
    * 数据库日期类型
