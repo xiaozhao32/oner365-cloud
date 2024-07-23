@@ -43,6 +43,13 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
   public Object beforeBodyWrite(@Nullable Object body, @NonNull MethodParameter returnType,
       @NonNull MediaType selectedContentType, @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType,
       @NonNull ServerHttpRequest request, @NonNull ServerHttpResponse response) {
+    // swagger
+    if (request.getURI().getPath().contains("/swagger")
+        || request.getURI().getPath().contains("/webjars")
+        || request.getURI().getPath().contains("/v3")) {
+      return body;
+    }
+
     if (body == null) {
       return ResponseData.error("服务异常, 请联系管理员系统日志!");
     }
