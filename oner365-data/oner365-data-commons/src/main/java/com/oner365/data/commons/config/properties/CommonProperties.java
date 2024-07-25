@@ -31,7 +31,7 @@ public class CommonProperties {
   /**
    * 服务端口
    */
-  @Value("${server.port}")
+  @Value("${server.port:8704}")
   private int port;
   
   /**
