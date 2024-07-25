@@ -24,9 +24,9 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
 import com.oner365.data.commons.config.properties.AccessTokenProperties;
+import com.oner365.data.commons.config.properties.IgnoreWhiteProperties;
 import com.oner365.data.commons.reponse.ResponseData;
 import com.oner365.data.commons.util.JwtUtils;
-import com.oner365.gateway.config.properties.IgnoreWhiteProperties;
 import com.oner365.gateway.log.event.SysLogEvent;
 import com.oner365.gateway.util.DataUtils;
 import com.oner365.gateway.vo.SysLogVo;
