@@ -152,19 +152,21 @@ public class DeployUtils {
       for (String s : commands) {
         LOGGER.info("> {}", s);
         Session session = getSession(con);
-        session.execCommand(s);
-
-        InputStream eis = new StreamGobbler(session.getStderr());
-        List<String> list = IOUtils.readLines(eis, Charset.defaultCharset());
-        eis.close();
-
-        if (list.isEmpty()) {
-          InputStream is = new StreamGobbler(session.getStdout());
-          list = IOUtils.readLines(is, Charset.defaultCharset());
-          is.close();
+        if (session != null) {
+          session.execCommand(s);
+  
+          InputStream eis = new StreamGobbler(session.getStderr());
+          List<String> list = IOUtils.readLines(eis, Charset.defaultCharset());
+          eis.close();
+  
+          if (list.isEmpty()) {
+            InputStream is = new StreamGobbler(session.getStdout());
+            list = IOUtils.readLines(is, Charset.defaultCharset());
+            is.close();
+          }
+          result.add(list);
+          close(null, session, null);
         }
-        result.add(list);
-        close(null, session, null);
       }
     } catch (Exception e) {
       List<String> list = new ArrayList<>();

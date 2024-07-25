@@ -109,7 +109,6 @@ public class QueryUtils {
       Class<?> clazz = Class.forName(PublicConstants.initEnumMap.get(key));
       if (clazz.isEnum()) {
         Field f = clazz.getDeclaredField(value);
-        f.setAccessible(true);
         return f.get(value);
       }
     } catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.oner365.monitor.config;
 
+import java.util.Objects;
 import java.util.Properties;
 
 import javax.annotation.Resource;
@@ -32,7 +33,7 @@ public class ScheduleConfig implements SchedulerFactoryBeanCustomizer {
         
         // Postgres 设置
         DruidDataSource source = (DruidDataSource) dataSource;
-        if (DataSourceConstants.DRIVER_NAME_POSTGRESQL.equals(source.getDriverClassName())) {
+        if (DataSourceConstants.DRIVER_NAME_POSTGRESQL.equals(Objects.requireNonNull(source).getDriverClassName())) {
           Properties properties = new Properties();
           properties.put("org.quartz.jobStore.driverDelegateClass", "org.quartz.impl.jdbcjobstore.PostgreSQLDelegate");
           schedulerFactoryBean.setQuartzProperties(properties);

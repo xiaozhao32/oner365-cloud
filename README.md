@@ -4,9 +4,9 @@
 ---
 
 <p align="center">
-	<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://shields.io/badge/Spring%20Framework-5.3.31-blue" alt="Spring Framework 5.3.31"></a>
+	<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://shields.io/badge/Spring%20Framework-5.3.37-blue" alt="Spring Framework 5.3.37"></a>
     <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://shields.io/badge/Spring%20Boot-2.7.18-blue" alt="Spring Boot 2.7.18"></a>
-    <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://shields.io/badge/Spring%20Cloud-2021.0.8-blue" alt="Spring Cloud 2021.0.8"></a>
+    <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://shields.io/badge/Spring%20Cloud-2021.0.9-blue" alt="Spring Cloud 2021.0.9"></a>
     <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://shields.io/badge/Spring%20Cloud%20Alibaba-2021.1-blue" alt="Spring Cloud Alibaba 2021.1"></a>
     <a href="https://nacos.io/zh-cn/index.html" target="_blank"><img src="https://shields.io/badge/Nacos-2.2.3-brightgreen" alt="Nacos 2.2.3"></a>
 	<a href="./LICENSE"><img src="https://shields.io/badge/License-Apache--2.0-green" alt="License Apache 2.0"></a>
@@ -37,7 +37,7 @@
 
 #### 技术框架
 
-1. 数据库: MySQL
+1. 数据库: MySQL && Postgres
 2. 缓存: Redis
 3. 队列: RabbitMQ && RocketMQ && Kafka &&  && Mqtt
 4. 文件处理: Fastdfs && Hadoop && Minio && Local
@@ -50,6 +50,13 @@
 11. 链路监控: Apache Skywalking
 12. API框架: 
 13. 用户认证: Ldap
+14. 时序数据库: Influx
+15. 图数据库: Neo4j
+16. 密码加密: Spring Vault
+17. 状态机Statemachine: Spring Statemachine
+18. Hadoop Zookeeper: Zookeeper 
+19. Hadoop Spark: Spark
+20. 非关系型数据库: Mongodb
 
 #### 使用说明
 
@@ -87,6 +94,8 @@
 16. Mqtt - 8723 oner365-mqtt
 17. Ldap - 8724 oner365-ldap
 18. Zookeeper - 8725 oner365-zookeeper
+19. Spark - 8726 oner365-spark
+20. Mongodb - 8727 oner365-mongodb
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos

@@ -4,6 +4,7 @@ import static java.util.Optional.ofNullable;
 
 import java.lang.annotation.Annotation;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import java.util.StringJoiner;
@@ -110,7 +111,7 @@ public class WebMvcRequestHandler implements RequestHandler {
 
   @Override
   public RequestHandlerKey key() {
-    return new RequestHandlerKey(requestMapping.getPathPatternsCondition().getPatternValues(),
+    return new RequestHandlerKey(Objects.requireNonNull(requestMapping.getPathPatternsCondition()).getPatternValues(),
         requestMapping.getMethodsCondition().getMethods(),
         requestMapping.getConsumesCondition().getConsumableMediaTypes(),
         requestMapping.getProducesCondition().getProducibleMediaTypes());

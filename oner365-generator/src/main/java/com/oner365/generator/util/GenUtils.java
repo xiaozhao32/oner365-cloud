@@ -23,12 +23,12 @@ public class GenUtils {
    * 数据库字符串类型
    */
   protected static final String[] COLUMN_TYPE_STR = { "char", "varchar", "nvarchar", "varchar2", "tinytext", "text",
-      "mediumtext", "longtext" };
+      "mediumtext", "longtext", "character varying" };
 
   /**
    * 数据库时间类型
    */
-  protected static final String[] COLUMN_TYPE_DATE_TIME = { GenConstants.HTML_DATE_TIME, "time", "timestamp" };
+  protected static final String[] COLUMN_TYPE_DATE_TIME = { GenConstants.HTML_DATE_TIME, "time", "timestamp", "timestamp without time zone" };
 
   /**
    * 数据库日期类型
@@ -126,39 +126,17 @@ public class GenUtils {
       column.setJavaType(GenConstants.TYPE_JSON);
       column.setHtmlType(GenConstants.HTML_TEXTAREA);
     } else if (arraysContains(COLUMN_TYPE_NUMBER, dataType)) {
-      column.setHtmlType(GenConstants.HTML_INPUT);
-
-      // 如果是浮点型 统一用BigDecimal
-      String[] str = StringUtils.split(StringUtils.substringBetween(column.getColumnType(), "(", ")"), ",");
-      if (str != null && str.length == POS_2 && Integer.parseInt(str[1]) > 0) {
-        column.setJavaType(GenConstants.TYPE_BIG_DECIMAL);
-      }
-      // 如果是整形
-      else if (str != null && str.length == 1 && Integer.parseInt(str[0]) <= POS_10) {
-        column.setJavaType(GenConstants.TYPE_INTEGER);
-      }
-      // 长整形
-      else {
-        column.setJavaType(GenConstants.TYPE_LONG);
-      }
+      setColumnNumber(column);
     }
 
     // 插入字段（默认所有字段都需要插入）
     column.setIsInsert(GenConstants.REQUIRE);
 
-    // 编辑字段
-    if (!arraysContains(COLUMN_NAME_NOT_EDIT, columnName) && !column.isPk()) {
-      column.setIsEdit(GenConstants.REQUIRE);
-    }
-    // 列表字段
-    if (!arraysContains(COLUMN_NAME_NOT_LIST, columnName) && !column.isPk()) {
-      column.setIsList(GenConstants.REQUIRE);
-    }
-    // 查询字段
-    if (!arraysContains(COLUMN_NAME_NOT_QUERY, columnName) && !column.isPk()) {
-      column.setIsQuery(GenConstants.REQUIRE);
-    }
-
+    setColumnOper(column, columnName);
+    setColumnType(column, columnName);
+  }
+  
+  private static void setColumnType(GenTableColumn column, String columnName) {
     // 查询字段类型
     if (StringUtils.endsWithIgnoreCase(columnName, PARAM_NAME)) {
       column.setQueryType(GenConstants.QUERY_LIKE);
@@ -180,6 +158,39 @@ public class GenUtils {
     // 内容字段设置富文本控件
     else if (StringUtils.endsWithIgnoreCase(columnName, PARAM_CONTENT)) {
       column.setHtmlType(GenConstants.HTML_EDITOR);
+    }
+  }
+  
+  private static void setColumnOper(GenTableColumn column, String columnName) {
+    // 编辑字段
+    if (!arraysContains(COLUMN_NAME_NOT_EDIT, columnName) && !column.isPk()) {
+      column.setIsEdit(GenConstants.REQUIRE);
+    }
+    // 列表字段
+    if (!arraysContains(COLUMN_NAME_NOT_LIST, columnName) && !column.isPk()) {
+      column.setIsList(GenConstants.REQUIRE);
+    }
+    // 查询字段
+    if (!arraysContains(COLUMN_NAME_NOT_QUERY, columnName) && !column.isPk()) {
+      column.setIsQuery(GenConstants.REQUIRE);
+    }
+  }
+  
+  private static void setColumnNumber(GenTableColumn column) {
+    column.setHtmlType(GenConstants.HTML_INPUT);
+
+    // 如果是浮点型 统一用BigDecimal
+    String[] str = StringUtils.split(StringUtils.substringBetween(column.getColumnType(), "(", ")"), ",");
+    if (str != null && str.length == POS_2 && Integer.parseInt(str[1]) > 0) {
+      column.setJavaType(GenConstants.TYPE_BIG_DECIMAL);
+    }
+    // 如果是整形
+    else if (str != null && str.length == 1 && Integer.parseInt(str[0]) <= POS_10) {
+      column.setJavaType(GenConstants.TYPE_INTEGER);
+    }
+    // 长整形
+    else {
+      column.setJavaType(GenConstants.TYPE_LONG);
     }
   }
 

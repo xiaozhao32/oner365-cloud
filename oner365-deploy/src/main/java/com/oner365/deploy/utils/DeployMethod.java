@@ -31,6 +31,7 @@ public class DeployMethod {
   private static final String FILE_LIB = "lib";
   private static final String FILE_TARGET = "target";
   private static final String FILE_RESOURCES = "resources";
+  private static final String DUBBO_PATH = "oner365-dubbo";
   /** 分隔符 */
   private static final String DELIMITER = "/";
   private static final String DOCKER_COMPOSE_YML = "docker-compose.yml";
@@ -116,11 +117,20 @@ public class DeployMethod {
     composeLines.add("services:");
     for (String projectName : deployEntity.getProjects()) {
       // jar包全路径
-      String path = deployEntity.getLocation() + File.separator + projectName + File.separator + FILE_TARGET
+      String projectPathName;
+      // 层级目录部署
+      if (projectName.contains(DUBBO_PATH)) {
+        // dubbo
+        projectPathName = DUBBO_PATH + File.separator + projectName;
+      } else {
+        // default
+        projectPathName = projectName;
+      }
+      String path = deployEntity.getLocation() + File.separator + projectPathName + File.separator + FILE_TARGET
           + File.separator + projectName + "-" + deployEntity.getVersion() + "." + deployEntity.getSuffix();
-      String resourcePath = deployEntity.getLocation() + File.separator + projectName + File.separator + FILE_TARGET
+      String resourcePath = deployEntity.getLocation() + File.separator + projectPathName + File.separator + FILE_TARGET
           + File.separator + FILE_RESOURCES;
-      String libPath = deployEntity.getLocation() + File.separator + projectName + File.separator + FILE_TARGET
+      String libPath = deployEntity.getLocation() + File.separator + projectPathName + File.separator + FILE_TARGET
           + File.separator + FILE_LIB;
       // 目标目录
       String targetPath = deployEntity.getName() + File.separator + projectName;
@@ -129,7 +139,7 @@ public class DeployMethod {
       DataUtils.createFolder(targetPath);
       DataUtils.copyFile(path, targetPath);
       DataUtils.copyDirectory(resourcePath, targetPath);
-      DataUtils.copyDirectory(libPath, deployEntity.getName());
+      DataUtils.copyDirectory(libPath, targetPath);
 
       // 制作 Linux 启动脚本
       String readFile = DeployMethod.class.getResource("/service/start.sh").getPath();
@@ -166,8 +176,6 @@ public class DeployMethod {
           composeLines.add("    ports: ");
           composeLines.add("      - \"" + deployEntity.getProejctPorts().get(projectName) + ":"
                   + deployEntity.getProejctPorts().get(projectName) + "\"");
-          composeLines.add("    volumes: ");
-          composeLines.add("      - ./lib:" + serverEntity.getServerName() + "/lib");
           composeLines.add("    extra_hosts: ");
           composeLines.add("      - \"oner365-nacos:" + serverEntity.getServerList().get(0).getIp() + "\"");
           composeLines.add("    privileged: true");
@@ -250,8 +258,6 @@ public class DeployMethod {
       }
       // 准备执行的命令
       commands.add("chmod 750 " + targetRoot + DELIMITER + projectName + DELIMITER + "*.sh");
-      // 启动
-//      commands.add(targetRoot + DELIMITER + "start.sh");
     }
     return commands;
   }

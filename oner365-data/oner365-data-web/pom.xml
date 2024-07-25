@@ -24,6 +24,11 @@
 			<artifactId>jakarta.validation-api</artifactId>
 		</dependency>
 		
+		<dependency>
+		    <groupId>javax.xml.bind</groupId>
+		    <artifactId>jaxb-api</artifactId>
+		</dependency>
+		
 		<!-- kaptcha -->
         <dependency>
             <groupId>com.github.penggle</groupId>

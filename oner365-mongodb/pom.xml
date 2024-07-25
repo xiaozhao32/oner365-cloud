@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.oner365</groupId>
+		<artifactId>oner365-cloud</artifactId>
+		<version>2.1.0</version>
+	</parent>
+
+	<artifactId>oner365-mongodb</artifactId>
+
+	<name>oner365-mongodb</name>
+
+	<dependencies>
+		
+		<!-- oner365 -->
+		<dependency>
+			<groupId>com.oner365.data</groupId>
+			<artifactId>oner365-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.oner365.data</groupId>
+			<artifactId>oner365-data-web</artifactId>
+		</dependency>
+        
+        <!-- spring-boot -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+		
+		<!-- mongodb -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-mongodb</artifactId>
+		</dependency>
+		
+	</dependencies> 
+
+	<build>
+		<!-- 加载父级 lib 方式 -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${org.apache.maven.plugins.version}</version>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>true</addMavenDescriptor>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>./lib/</classpathPrefix>
+							<useUniqueVersions>false</useUniqueVersions>
+							<mainClass>com.oner365.mongodb.SpringMongodbApplication</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>./resources/</Class-Path>
+						</manifestEntries>
+					</archive>
+					<outputDirectory>${project.build.directory}</outputDirectory>
+					<includes>
+						<include>**/*.class</include>
+					</includes>
+				</configuration>
+			</plugin>
+			
+			<plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-dependency-plugin</artifactId>
+               <version>${org.apache.maven.plugins.version}</version>
+               <executions>
+                   <execution>
+                       <id>copy-dependencies</id>
+                       <phase>package</phase>
+                       <goals>
+                           <goal>copy-dependencies</goal>
+                       </goals>
+                       <configuration>
+                           <outputDirectory>
+                               ${project.build.directory}/lib/
+                           </outputDirectory>
+                       </configuration>
+                   </execution>
+               </executions>
+           </plugin>
+		
+		</plugins>
+	</build>
+</project>

@@ -19,7 +19,7 @@ public class FileServiceClientFallback implements IFileServiceClient {
 
   @Override
   public ResponseData<ResponseResult<String>> uploadFile(MultipartFile multipartFile, String dictory) {
-    return new ResponseData<>(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
+    return ResponseData.error(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
   }
   
   @Override
@@ -29,7 +29,7 @@ public class FileServiceClientFallback implements IFileServiceClient {
 
   @Override
   public ResponseData<String> delete(String... ids) {
-    return new ResponseData<>(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
+    return ResponseData.error(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
   }
 
 }

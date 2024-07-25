@@ -67,10 +67,10 @@ public class FileMinioClient implements IFileStorageClient {
       ObjectWriteResponse writeResponse = minioClient
           .putObject(PutObjectArgs.builder().bucket(minioProperties.getBucket()).object(path)
               .stream(inputStream, file.getSize(), -1).contentType(file.getContentType()).build());
-      String url = writeResponse.object();
-      logger.info("file path: {}", url);
-      saveFileStorage(url, file.getOriginalFilename(), file.getSize());
-      return url;
+      String result = writeResponse.object();
+      logger.info("uploadFile path: {}", result);
+      saveFileStorage(result, file.getOriginalFilename(), file.getSize());
+      return result;
     } catch (Exception e) {
       logger.error("uploadFile MultipartFile Error:", e);
     }
@@ -86,10 +86,10 @@ public class FileMinioClient implements IFileStorageClient {
       }
       ObjectWriteResponse writeResponse = minioClient.putObject(PutObjectArgs.builder()
           .bucket(minioProperties.getBucket()).object(path).stream(inputStream, file.length(), -1).build());
-      String url = writeResponse.object();
-      logger.info("file path: {}", url);
-      saveFileStorage(url, file.getName(), file.length());
-      return url;
+      String result = writeResponse.object();
+      logger.info("uploadFile path: {}", result);
+      saveFileStorage(result, file.getName(), file.length());
+      return result;
     } catch (Exception e) {
       logger.error("uploadFile File Error:", e);
     }
@@ -127,9 +127,7 @@ public class FileMinioClient implements IFileStorageClient {
     try {
       StatObjectResponse objectResponse = minioClient
           .statObject(StatObjectArgs.builder().bucket(minioProperties.getBucket()).object(path).build());
-      logger.info("file path: {}", path);
-      logger.info("file contentType: {}", objectResponse.contentType());
-      logger.info("file size: {}", objectResponse.size());
+      logger.info("file path: {}, size: {}", path, objectResponse.size());
       return objectResponse.size();
     } catch (Exception e) {
       logger.error("statObject error:", e);

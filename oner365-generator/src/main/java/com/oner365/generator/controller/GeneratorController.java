@@ -164,7 +164,6 @@ public class GeneratorController extends BaseController {
   private void genCode(HttpServletResponse response, byte[] data) {
     try (ServletOutputStream output = response.getOutputStream()) {
       response.reset();
-      response.addHeader(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*");
       response.addHeader(HttpHeaders.ACCESS_CONTROL_EXPOSE_HEADERS, HttpHeaders.CONTENT_DISPOSITION);
       response.setHeader(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"Generator.zip\"");
       response.setContentLength(data.length);

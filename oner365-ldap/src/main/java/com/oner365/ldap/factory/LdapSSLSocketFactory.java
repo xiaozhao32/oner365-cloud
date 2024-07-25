@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  */
 public class LdapSSLSocketFactory extends SSLSocketFactory {
   
-  private final static Logger logger = LoggerFactory.getLogger(LdapSSLSocketFactory.class);
+  private static final Logger logger = LoggerFactory.getLogger(LdapSSLSocketFactory.class);
   private SSLSocketFactory factory;
 
   public LdapSSLSocketFactory() {

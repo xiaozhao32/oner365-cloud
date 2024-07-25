@@ -1,5 +1,7 @@
 package com.oner365.dubbo.api.service;
 
+import javax.validation.constraints.NotEmpty;
+
 /**
  * Echo Service
  * @author zhaoyong
@@ -12,5 +14,5 @@ public interface IEchoService {
      * @param message data
      * @return String 
      */
-    String echo(String message);
+    String echo(@NotEmpty String message);
 }

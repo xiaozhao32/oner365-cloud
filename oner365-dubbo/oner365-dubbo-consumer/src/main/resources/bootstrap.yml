@@ -34,3 +34,5 @@ dubbo:
   consumer:
     group: ${spring.profiles.active}
     version: 1.0
+    validation: true
+    

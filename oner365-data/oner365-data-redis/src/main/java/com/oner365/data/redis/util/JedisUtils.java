@@ -36,7 +36,7 @@ public class JedisUtils {
     if (redisProperties.getSentinel() != null) {
       Sentinel sentinel = redisProperties.getSentinel();
       try (JedisSentinelPool pool = new JedisSentinelPool(sentinel.getMaster(), new HashSet<>(sentinel.getNodes()),
-          redisProperties.getPassword())) {
+          redisProperties.getPassword(), sentinel.getPassword())) {
         Jedis jedis = pool.getResource();
         return getConnect(jedis, redisProperties.getPassword());
       }

@@ -210,7 +210,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
     } catch (IOException e) {
       LOGGER.error("openFileToBytes error:", e);
     }
-    return null;
+    return new byte[0];
   }
 
   @Override
@@ -227,7 +227,7 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
     } catch (IOException e) {
       LOGGER.error("getFileBlockLocations error:", e);
     }
-    return null;
+    return new BlockLocation[0];
   }
 
 }

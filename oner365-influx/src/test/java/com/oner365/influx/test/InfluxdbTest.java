@@ -3,6 +3,8 @@ package com.oner365.influx.test;
 import java.time.Instant;
 import java.util.List;
 
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,11 +23,12 @@ import com.oner365.influx.entity.Mem;
  * @author zhaoyong
  *
  */
-public class InfluxdbTest {
+class InfluxdbTest {
   
   private static final Logger LOGGER = LoggerFactory.getLogger(InfluxdbTest.class);
 
-  public static void main(final String[] args) {
+  @Test
+  void influxdbTest() {
 
     // You can generate an API token from the "API Tokens Tab" in the UI
     String url = "http://localhost:8086";
@@ -36,7 +39,7 @@ public class InfluxdbTest {
     try (InfluxDBClient client = InfluxDBClientFactory.create(url, token.toCharArray())) {
       // 保存
 //      writeData(client, bucket, org);
-      
+      Assertions.assertNotNull(client);
       // 查询
       queryData(client, bucket, org);
     } catch (Exception e) {

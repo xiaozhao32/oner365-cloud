@@ -12,7 +12,7 @@
 	<property name="LOG_MAX_SIZE" value="100MB" />
 	
 	<!-- 控制台的日志输出样式 -->
-	<property name="CONSOLE_LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}] [%r] [%thread] [%clr(%5p)] [%clr(%C{1} %M:%L)] - %clr(%m%n)" />
+	<property name="CONSOLE_LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}] [%r] [%thread] [%clr(%p)] [%clr(%C %M:%L)] - %clr(%m%n)" />
 
 	<!-- 控制台输出 -->
 	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
@@ -35,7 +35,7 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">  
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
         </layout>
     </appender>
     
@@ -49,7 +49,7 @@
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
         <layout class="ch.qos.logback.classic.PatternLayout">  
-            <pattern>[%d{yyyy-MM-dd HH:mm:ss.SSS}] %level [%thread] %file:%line - %msg%n</pattern>  
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>  
         </layout>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>

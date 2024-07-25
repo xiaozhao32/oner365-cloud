@@ -89,9 +89,9 @@ public class WebSocketHandler extends AbstractWebSocketHandler {
       }
 
     } else if (message instanceof BinaryMessage) {
-
+      // BinaryMessage
     } else if (message instanceof PongMessage) {
-
+      // PongMessage
     } else {
       LOGGER.info("Unexpected WebSocket message type: {}", message);
     }

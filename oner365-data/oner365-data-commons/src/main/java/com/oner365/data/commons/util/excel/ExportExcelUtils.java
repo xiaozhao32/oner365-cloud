@@ -6,13 +6,11 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
-import java.math.BigDecimal;
 import java.nio.charset.Charset;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -39,7 +37,7 @@ import com.oner365.data.commons.util.DateUtil;
 
 /**
  * Excel 导出工具
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -59,7 +57,7 @@ public class ExportExcelUtils {
 
   /**
    * 创建Excel
-   * 
+   *
    * @param extension  扩展名
    * @param fileSuffix 默认扩展名
    * @return Workbook
@@ -82,7 +80,7 @@ public class ExportExcelUtils {
    * @param titleKey   字段名称
    * @param dataList   列表数据 List<Object>
    * @param filePath   文件目录路径
-   * @param fileSuffix 默认扩展名
+   * @param fileSuffix 文件扩展名
    */
   public static void exportExcel(String fileName, String[] columnName, String[] titleKey, List<?> dataList,
       String filePath, String fileSuffix) {
@@ -117,11 +115,7 @@ public class ExportExcelUtils {
     String extension = DataUtils.getExtension(fileName);
     try (Workbook workbook = createWorkbook(extension, fileSuffix);
         FileOutputStream fileOut = DataUtils.getFileOutputStream(filePath, fileName)) {
-      for (Map.Entry<String, List<?>> map : mapList.entrySet()) {
-        String sheetName = map.getKey();
-        List<?> dataList = map.getValue();
-        export(workbook, sheetName, columnName, titleKey, dataList);
-      }
+      mapList.forEach((sheetName, dataList) -> export(workbook, sheetName, columnName, titleKey, dataList));
 
       workbook.write(fileOut);
       fileOut.flush();
@@ -151,23 +145,23 @@ public class ExportExcelUtils {
 
   private static void adaptor(Sheet sheet, int columnNum) {
     // 让列宽随着导出的列长自动适应
-    for (int colNum = 0; colNum < columnNum; colNum++) {
+    IntStream.range(0, columnNum).forEach(colNum -> {
       int columnWidth = sheet.getColumnWidth(colNum) / 256;
       Row currentRow = sheet.getRow(sheet.getLastRowNum());
       columnWidth = getColumnWidth(currentRow, colNum, columnWidth);
       sheet.setColumnWidth(colNum, (columnWidth + 4) * 256);
-    }
+    });
   }
 
   /***
    * Excel导出
-   * 
+   *
    * @param sheetName  文件名称
    * @param titleKey   表格列名称
    * @param columnName 字段名称
    * @param objectList 列表数据
    */
-  private static void export(Workbook workbook, String sheetName, String[] columnName, String[] titleKey,
+  public static void export(Workbook workbook, String sheetName, String[] columnName, String[] titleKey,
       List<?> objectList) {
     try {
       Sheet sheet = workbook.createSheet(sheetName);
@@ -195,10 +189,7 @@ public class ExportExcelUtils {
         Object object = objectList.get(i);
         // 获取实体类的所有属性，返回Field数组
         Field[] field = object.getClass().getDeclaredFields();
-        String[] pName = new String[field.length];
-        for (int j = 0; j < field.length; j++) {
-          pName[j] = field[j].getName();
-        }
+        String[] pName = Arrays.stream(field).map(Field::getName).toArray(String[]::new);
 
         for (int n = 0; n < titleKey.length; n++) {
           for (int j = 0; j < pName.length; j++) {
@@ -229,9 +220,9 @@ public class ExportExcelUtils {
                 Cell cell = row.createCell(n);
                 cell.setCellValue(value);
                 cell.setCellStyle(contextStyle);
-              } else if (type.equals(BigDecimal.class)) {
+              } else if (type.equals(java.math.BigDecimal.class)) {
                 Method m = object.getClass().getMethod(NAME + name);
-                BigDecimal value = (BigDecimal) m.invoke(object);
+                java.math.BigDecimal value = (java.math.BigDecimal) m.invoke(object);
                 double d = 0d;
                 if (value != null) {
                   d = value.doubleValue();
@@ -257,7 +248,7 @@ public class ExportExcelUtils {
                 Cell cell = row.createCell(n);
                 cell.setCellValue(value);
                 cell.setCellStyle(contextStyle);
-              } else if (type.equals(Timestamp.class)) {
+              } else if (type.equals(java.sql.Timestamp.class)) {
                 Method m = object.getClass().getMethod(NAME + name);
                 String dateString = DataUtils.getString(m.invoke(object));
                 String value = StringUtils.EMPTY;
@@ -268,9 +259,9 @@ public class ExportExcelUtils {
                 Cell cell = row.createCell(n);
                 cell.setCellValue(value);
                 cell.setCellStyle(contextStyle);
-              } else if (type.equals(Date.class)) {
+              } else if (type.equals(java.util.Date.class)) {
                 Method m = object.getClass().getMethod(NAME + name);
-                Date d = (Date) m.invoke(object);
+                java.util.Date d = (java.util.Date) m.invoke(object);
                 String value = StringUtils.EMPTY;
                 if (d != null) {
                   value = DateUtil.dateToString(d, DateUtil.FULL_TIME_FORMAT);
@@ -290,7 +281,7 @@ public class ExportExcelUtils {
                 cell.setCellStyle(contextStyle);
               } else if (type.equals(java.time.LocalDateTime.class)) {
                 Method m = object.getClass().getMethod(NAME + name);
-                LocalDateTime d = (LocalDateTime) m.invoke(object);
+                java.time.LocalDateTime d = (java.time.LocalDateTime) m.invoke(object);
                 String value = StringUtils.EMPTY;
                 if (d != null) {
                   value = DateUtil.dateToString(DateUtil.localDateTimeToDate(d), DateUtil.FULL_TIME_FORMAT);
@@ -332,7 +323,7 @@ public class ExportExcelUtils {
 
   /**
    * 反射获取对象
-   * 
+   *
    * @param object      对象
    * @param arrayString 字符串
    * @return Object
@@ -363,7 +354,7 @@ public class ExportExcelUtils {
 
   /***
    * 根据单元格内容计算单元格宽度
-   * 
+   *
    * @param currentRow  当前行
    * @param colNum      当前列号
    * @param columnWidth 单元格宽度
@@ -387,7 +378,7 @@ public class ExportExcelUtils {
 
   /***
    * 构造单元格样式-内容
-   * 
+   *
    * @param workbook 工作薄
    * @return 单元格样式
    */
@@ -402,13 +393,14 @@ public class ExportExcelUtils {
 
     // 设置自动换行
     style.setWrapText(false);
+    // 单元格锁定
     style.setLocked(false);
     return style;
   }
 
   /***
    * 构造单元格样式-标题
-   * 
+   *
    * @param workbook 工作薄
    * @return 单元格样式
    */
@@ -423,6 +415,7 @@ public class ExportExcelUtils {
 
     // 设置自动换行:
     style.setWrapText(false);
+    // 单元格锁定
     style.setLocked(true);
     return style;
   }
@@ -447,7 +440,7 @@ public class ExportExcelUtils {
 
   /**
    * 设置字体
-   * 
+   *
    * @param workbook Workbook
    * @return Font
    */

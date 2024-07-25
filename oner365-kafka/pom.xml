@@ -38,7 +38,7 @@
 		</dependency>
 		<dependency>
 		    <groupId>org.apache.kafka</groupId>
-		    <artifactId>kafka_2.13</artifactId>
+		    <artifactId>kafka_${scala.version}</artifactId>
 		</dependency>
 				
 		<dependency>
@@ -67,7 +67,7 @@
 						<addMavenDescriptor>true</addMavenDescriptor>
 						<manifest>
 							<addClasspath>true</addClasspath>
-							<classpathPrefix>../lib/</classpathPrefix>
+							<classpathPrefix>./lib/</classpathPrefix>
 							<useUniqueVersions>false</useUniqueVersions>
 							<mainClass>com.oner365.kafka.SpringKafkaApplication</mainClass>
 						</manifest>

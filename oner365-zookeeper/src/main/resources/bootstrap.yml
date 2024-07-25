@@ -13,6 +13,10 @@ spring:
   
     zookeeper:
       connect-string: localhost:2181
+      connection-timeout: 10s
+      session-timeout: 60s
+      base-sleep-time-ms: 5000
+      max-retries: 10
      
 logging:
   file:

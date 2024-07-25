@@ -29,10 +29,10 @@ public class RedisMessageReceiver implements MessageListener {
   @Override
   public void onMessage(Message message, byte[] pattern) {
     byte[] bytes = message.getBody();
-    if (bytes != null) {
-      LOGGER.info("message:{}", new String(bytes));
-      WebSocketMessageVo webSocketMessageVo = JSON.toJavaObject(JSON.parseObject(new String(bytes)),
-          WebSocketMessageVo.class);
+    if (bytes.length != 0) {
+      String context = new String(bytes);
+      LOGGER.info("message:{}", context);
+      WebSocketMessageVo webSocketMessageVo = JSON.toJavaObject(JSON.parseObject(context), WebSocketMessageVo.class);
       webSocketMessageService.sendMessage(webSocketMessageVo);
     }
   }

@@ -5,7 +5,6 @@ import javax.annotation.Resource;
 import org.apache.pulsar.client.api.Consumer;
 import org.apache.pulsar.client.api.Message;
 import org.apache.pulsar.client.api.MessageListener;
-import org.apache.pulsar.client.api.PulsarClient;
 import org.apache.pulsar.client.api.PulsarClientException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,20 +24,18 @@ public class PulsarListener implements MessageListener<JSONObject> {
   
   private static final long serialVersionUID = 1L;
 
-  private final Logger logger = LoggerFactory.getLogger(PulsarListener.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(PulsarListener.class);
 
   @Resource
   private PulsarProperties pulsarProperties;
-
-  @Resource
-  private PulsarClient pulsarClient;
 
   @Override
   public void received(Consumer<JSONObject> consumer, Message<JSONObject> msg) {
     try {
       byte[] bytes = msg.getData();
       if (bytes != null) {
-        logger.info("Pulsar data: {}, topic: {}", new String(bytes), consumer.getTopic());
+        String data = new String(bytes);
+        LOGGER.info("Pulsar data: {}, topic: {}", data, consumer.getTopic());
         consumer.acknowledge(msg);
       }
     } catch (PulsarClientException e) {

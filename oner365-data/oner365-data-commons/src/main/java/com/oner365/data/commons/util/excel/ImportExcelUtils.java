@@ -2,6 +2,7 @@ package com.oner365.data.commons.util.excel;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -69,7 +70,7 @@ public class ImportExcelUtils {
    * @param extension excel后缀
    * @return ExcelData
    */
-  public static <T> ExcelData<T> readExcel(InputStream is, Integer sheetAt, Integer titleRow, String extension,
+  public static <T extends Serializable> ExcelData<T> readExcel(InputStream is, Integer sheetAt, Integer titleRow, String extension,
       Class<T> clazz) {
     try (Workbook workbook = getWorkbook(is, extension)) {
       return readExcel(workbook, sheetAt, titleRow, clazz);
@@ -79,7 +80,7 @@ public class ImportExcelUtils {
     return null;
   }
 
-  private static <T> ExcelData<T> readExcel(Workbook wb, Integer sheetAt, Integer titleRow, Class<T> clazz) {
+  private static <T extends Serializable> ExcelData<T> readExcel(Workbook wb, Integer sheetAt, Integer titleRow, Class<T> clazz) {
     ExcelData<T> excelData = new ExcelData<>();
     // 读取Sheet, 默认0
     Sheet sheet = wb.getSheetAt(sheetAt == null ? 0 : sheetAt);

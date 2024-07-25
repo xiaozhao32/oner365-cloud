@@ -8,7 +8,7 @@ import java.util.List;
  * Excel数据对象
  * @author zhaoyong
  */
-public class ExcelData<T> implements Serializable {
+public class ExcelData<T extends Serializable> implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,6 +26,16 @@ public class ExcelData<T> implements Serializable {
      * 列表数据
      */
     private List<T> dataList = new ArrayList<>();
+    
+    /***
+     * 执行结果
+     */
+    private Integer code;
+    
+    /***
+     * 执行信息
+     */
+    private String message;
 
     /**
      * 构造方法
@@ -83,5 +93,48 @@ public class ExcelData<T> implements Serializable {
     public void setDataList(List<T> dataList) {
         this.dataList = dataList;
     }
+
+    /**
+     * @return the code
+     */
+    public Integer getCode() {
+      return code;
+    }
+
+    /**
+     * @param code the code to set
+     */
+    public void setCode(Integer code) {
+      this.code = code;
+    }
+
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+      return message;
+    }
+
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+      this.message = message;
+    }
+    
+    /**
+     * 返回错误结果
+     *
+     * @param code    编码
+     * @param message 消息
+     * @return ResponseData
+     */
+    public static <T extends Serializable> ExcelData<T> error(int code, String message) {
+      ExcelData<T> excelData = new ExcelData<>();
+      excelData.setCode(code);
+      excelData.setMessage(message);
+      return excelData;
+    }
+    
 
 }

@@ -50,10 +50,9 @@ public class CacheController extends BaseController {
    */
   @GetMapping("/index")
   public CacheInfoDto index() {
-    Properties info = (Properties) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::info);
-    Properties commandStats = (Properties) redisTemplate
-            .execute((RedisCallback<Object>) connection -> connection.info("commandstats"));
-    Long dbSize = (Long) redisTemplate.execute((RedisCallback<Object>) RedisServerCommands::dbSize);
+    Properties info = redisTemplate.execute((RedisCallback<Properties>) RedisServerCommands::info);
+    Properties commandStats = redisTemplate.execute((RedisCallback<Properties>) connection -> connection.info("commandstats"));
+    Long dbSize = redisTemplate.execute(RedisServerCommands::dbSize);
 
     CacheInfoDto result = new CacheInfoDto();
     result.setInfo(info);
@@ -81,19 +80,26 @@ public class CacheController extends BaseController {
   @GetMapping("/list")
   public List<CacheJedisInfoDto> cacheList() {
     List<CacheJedisInfoDto> result = new ArrayList<>();
-    try (Jedis jedis = JedisUtils.getJedis(redisProperties)) {
-      if (jedis.isConnected()) {
-        IntStream.range(0, DB_LENGTH).forEach(i -> {
-          jedis.select(i);
-          long size = jedis.dbSize();
-          if (size != 0L) {
-            CacheJedisInfoDto dto = new CacheJedisInfoDto();
-            dto.setName("DB" + i);
-            dto.setIndex(i);
-            dto.setSize(size);
-            result.add(dto);
-          }
-        });
+    if (redisProperties.getCluster() != null) {
+        CacheJedisInfoDto dto = new CacheJedisInfoDto();
+        dto.setName("Cluster");
+        dto.setIndex(0);
+        dto.setSize(redisTemplate.execute(RedisServerCommands::dbSize));
+        result.add(dto);
+    } else {
+      try (Jedis jedis = JedisUtils.getJedis(redisProperties)) {
+        if (jedis.isConnected()) {
+          IntStream.range(0, DB_LENGTH).forEach(i -> {
+            jedis.select(i);
+            if (jedis.dbSize() != 0L) {
+              CacheJedisInfoDto dto = new CacheJedisInfoDto();
+              dto.setName("DB" + i);
+              dto.setIndex(i);
+              dto.setSize(jedis.dbSize());
+              result.add(dto);
+            }
+          });
+        }
       }
     }
     return result;
@@ -107,10 +113,17 @@ public class CacheController extends BaseController {
    */
   @GetMapping("/clean")
   public ResponseResult<String> clean(int index) {
-    try (Jedis jedis = JedisUtils.getJedis(redisProperties)){
-      if (jedis.isConnected()) {
-        jedis.select(index);
-        jedis.flushDB();
+    if (redisProperties.getCluster() != null) {
+      redisTemplate.execute((RedisCallback<Properties>)connection -> {
+        connection.serverCommands().flushAll();
+        return null;
+      });
+    } else {
+      try (Jedis jedis = JedisUtils.getJedis(redisProperties)) {
+        if (jedis.isConnected()) {
+          jedis.select(index);
+          jedis.flushDB();
+        }
       }
     }
     return ResponseResult.success(ResultEnum.SUCCESS.getName());

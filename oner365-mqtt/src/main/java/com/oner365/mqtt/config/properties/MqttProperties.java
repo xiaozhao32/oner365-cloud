@@ -31,6 +31,21 @@ public class MqttProperties {
   private String clientId;
 
   /**
+   * 超时时间(秒)
+   */
+  private int connectionTimeout = 30;
+
+  /**
+   * 保持会话时间(秒)
+   */
+  private int keepAliveInterval = 30;
+
+  /**
+   * 是否清除会话
+   */
+  private boolean cleanSession = true;
+
+  /**
    * 构造方法
    */
   public MqttProperties() {
@@ -91,6 +106,30 @@ public class MqttProperties {
    */
   public void setClientId(String clientId) {
     this.clientId = clientId;
+  }
+
+  public int getConnectionTimeout() {
+    return connectionTimeout;
+  }
+
+  public void setConnectionTimeout(int connectionTimeout) {
+    this.connectionTimeout = connectionTimeout;
+  }
+
+  public int getKeepAliveInterval() {
+    return keepAliveInterval;
+  }
+
+  public void setKeepAliveInterval(int keepAliveInterval) {
+    this.keepAliveInterval = keepAliveInterval;
+  }
+
+  public boolean isCleanSession() {
+    return cleanSession;
+  }
+
+  public void setCleanSession(boolean cleanSession) {
+    this.cleanSession = cleanSession;
   }
 
 }

@@ -22,37 +22,36 @@ import com.oner365.kafka.service.IKafkaConsumerService;
 @Service
 public class KafkaConsumerServiceImpl implements IKafkaConsumerService {
 
-    private final Logger logger = LoggerFactory.getLogger(IKafkaConsumerService.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerServiceImpl.class);
 
-    @Resource
-    private KafkaProperties kafkaProperties;
+  @Resource
+  private KafkaProperties kafkaProperties;
 
-    @Resource
-    private KafkaTemplate<String, Object> kafkaTemplate;
+  @Resource
+  private KafkaTemplate<String, Object> kafkaTemplate;
 
-    @Override
-    public ResultEnum convertAndSend(Object message) {
-        try {
-            ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(kafkaProperties.getTopic(),
-                    message);
-            future.addCallback(new ListenableFutureCallback<Object>() {
+  @Override
+  public ResultEnum convertAndSend(Object message) {
+    try {
+      ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(kafkaProperties.getTopic(), message);
+      future.addCallback(new ListenableFutureCallback<Object>() {
 
-                @Override
-                public void onSuccess(Object result) {
-                    logger.info("Kafka callback success:{}", result);
-                }
-
-                @Override
-                public void onFailure(Throwable e) {
-                    logger.error("Kafka callback error:", e);
-                }
-
-            });
-            return ResultEnum.SUCCESS;
-        } catch (Exception e) {
-            logger.error("convertAndSend error:", e);
+        @Override
+        public void onSuccess(Object result) {
+          LOGGER.info("Kafka callback success:{}", result);
         }
-        return ResultEnum.ERROR;
+
+        @Override
+        public void onFailure(Throwable e) {
+          LOGGER.error("Kafka callback error:", e);
+        }
+
+      });
+      return ResultEnum.SUCCESS;
+    } catch (Exception e) {
+      LOGGER.error("convertAndSend error:", e);
     }
+    return ResultEnum.ERROR;
+  }
 
 }

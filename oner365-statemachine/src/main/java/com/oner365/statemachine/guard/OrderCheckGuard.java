@@ -26,8 +26,11 @@ public class OrderCheckGuard implements Guard<OrderStateEnum, OrderEventEnum> {
   public boolean evaluate(StateContext<OrderStateEnum, OrderEventEnum> context) {
     // 检查订单
     Order order = (Order) context.getMessage().getHeaders().get(StatemachineConstants.HEADER_NAME);
-    logger.info("检查订单: {}", order.toString());
-    return true;
+    if (order != null) {
+      logger.info("检查订单 id: {}, state: {}", order.getId(), order.getOrderState());
+      return true;
+    }
+    return false;
   }
 
 }

@@ -82,6 +82,9 @@ public class PublicConstants {
   
   /** 文件存储 */
   public static final String FILE_STORAGE = "file.storage";
+  
+  /** 队列类型方式 */
+  public static final String QUEUE_TYPE = "queue.type";
 
   /** 分隔符 */
   public static final String DELIMITER = "/";
@@ -97,12 +100,17 @@ public class PublicConstants {
   /**
    * 枚举集合
    */
-  public static Map<String, String> initEnumMap = new HashMap<>();
+  public static final Map<String, String> initEnumMap = new HashMap<>();
+  
+  /**
+   * 队列锁时间
+   */
+  public static final Integer QUEUE_LOCK_TIME_SECOND = 10;
   
   /**
    * Constructor
    */
-  public PublicConstants() {
+  protected PublicConstants() {
     super();
   }
 }
