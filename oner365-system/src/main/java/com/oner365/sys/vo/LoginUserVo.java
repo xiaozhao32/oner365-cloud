@@ -20,13 +20,13 @@ public class LoginUserVo implements Serializable {
     /**
      * 账号 userName
      */
-    @NotBlank(message = "登录账号不能为空")
+    @NotBlank(message = "{system.vo.loginUser.userName.message}")
     private String userName;
     
     /**
      * 密码 password
      */
-    @NotBlank(message = "登录密码不能为空")
+    @NotBlank(message = "{system.vo.loginUser.password.message}")
     private String password;
     
     /**

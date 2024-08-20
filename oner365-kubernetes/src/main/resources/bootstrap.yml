@@ -1,0 +1,42 @@
+
+server: 
+  port: 8728
+
+spring: 
+  application:
+    name: oner365-kubernetes
+    
+  profiles:
+    active: dev
+    
+  main:
+    allow-bean-definition-overriding: true
+    
+  cloud:
+    kubernetes:
+      config:
+        name: ${spring.application.name}-config
+        namespace: default
+        
+      discovery:
+        all-namespaces: true
+        
+      secrets:
+        name: ${spring.application.name}-secrets
+        namespace: default
+        
+      reload:
+        enabled: true
+        mode: event
+        monitoring-config-maps: true
+        monitoring-secrets: true
+        strategy: restart-context
+        
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+    
+     
+

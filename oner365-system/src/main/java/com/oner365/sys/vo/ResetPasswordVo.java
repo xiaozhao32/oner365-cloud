@@ -20,13 +20,13 @@ public class ResetPasswordVo implements Serializable {
     /**
      * 账号 userId
      */
-    @NotBlank(message = "账号id不能为空")
+    @NotBlank(message = "{system.vo.reset.userId.message}")
     private String userId;
     
     /**
      * 密码 password
      */
-    @NotBlank(message = "重置密码不能为空")
+    @NotBlank(message = "{system.vo.reset.password.message}")
     private String password;
     
     /**

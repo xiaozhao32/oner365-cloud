@@ -36,13 +36,13 @@ public class SysUserVo implements Serializable {
   /**
    * 账号
    */
-  @NotBlank(message = "账号不能为空")
+  @NotBlank(message = "{system.vo.loginUser.userName.message}")
   private String userName;
 
   /**
    * 密码
    */
-  @NotBlank(message = "账号密码不能为空")
+  @NotBlank(message = "{system.vo.loginUser.password.message}")
   private String password;
 
   /**

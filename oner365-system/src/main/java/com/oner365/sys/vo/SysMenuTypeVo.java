@@ -28,19 +28,19 @@ public class SysMenuTypeVo implements Serializable {
   /**
    * 类型名称
    */
-  @NotBlank(message = "菜单类型名称不能为空")
+  @NotBlank(message = "{system.vo.menuType.typeName.message}")
   private String typeName;
 
   /**
    * 类型编码
    */
-  @NotBlank(message = "菜单编码不能为空")
+  @NotBlank(message = "{system.vo.menuType.typeCode.message}")
   private String typeCode;
 
   /**
    * 状态
    */
-  @NotNull(message = "菜单状态不能为空")
+  @NotNull(message = "{system.vo.menuType.status.message}")
   private StatusEnum status;
 
   /**

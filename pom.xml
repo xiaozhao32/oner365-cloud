@@ -67,7 +67,7 @@
 		<org.apache.pulsar.version>3.3.1</org.apache.pulsar.version>
 		<org.apache.dubbo.version>3.2.11</org.apache.dubbo.version>
 		<org.apache.kafka.version>3.6.0</org.apache.kafka.version>
-		<org.apache.poi.version>5.2.5</org.apache.poi.version>
+		<org.apache.poi.version>5.3.0</org.apache.poi.version>
 		<org.apache.derby.version>10.17.1.0</org.apache.derby.version>
 		<org.apache.spark.version>3.5.0</org.apache.spark.version>
 		<org.apache.avro.version>1.11.2</org.apache.avro.version>

@@ -25,7 +25,7 @@ public class CheckOrgCodeVo implements Serializable {
     /**
      * 编码
      */
-    @NotBlank(message = "机构编码不能为空")
+    @NotBlank(message = "{system.vo.check.org.code.message}")
     private String code;
     
     /**

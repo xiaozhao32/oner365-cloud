@@ -23,7 +23,7 @@ public class SysJobVo implements Serializable {
   /**
    * 职位名称 job_name
    */
-  @NotBlank(message = "职位名称不能为空")
+  @NotBlank(message = "{system.vo.job.jobName.message}")
   private String jobName;
 
   /**

@@ -25,13 +25,13 @@ public class SysRoleVo implements Serializable {
   /**
    * 角色标识 role_code
    */
-  @NotBlank(message = "角色标识不能为空")
+  @NotBlank(message = "{system.vo.role.roleCode.message}")
   private String roleCode;
 
   /**
    * 角色名称 role_name
    */
-  @NotBlank(message = "角色名称不能为空")
+  @NotBlank(message = "{system.vo.role.roleName.message}")
   private String roleName;
 
   /**
