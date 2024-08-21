@@ -2,6 +2,7 @@ package com.oner365.swagger.client.kafka;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.data.commons.reponse.ResponseData;
@@ -24,4 +25,13 @@ public interface IKafkaConsumerClient {
    */
   @GetMapping(PathConstants.REQUEST_KAFKA_CONSUMER_MESSAGE_SEND)
   ResponseData<String> send(@RequestParam(value = "message") String message);
+
+  /**
+   * KafkaStreams 统计单词个数
+   * 
+   * @param word 单词
+   * @return 统计单词个数
+   */
+  @GetMapping(PathConstants.REQUEST_KAFKA_CONSUMER_MESSAGE_WORD_COUNTS)
+  ResponseData<Long> getWordCount(@PathVariable("word") String word);
 }

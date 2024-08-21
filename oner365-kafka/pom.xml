@@ -31,6 +31,12 @@
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
         </dependency>
         
+        <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
+        
         <!-- kafka -->    
 		<dependency>
 		    <groupId>org.springframework.kafka</groupId>
@@ -45,6 +51,10 @@
 		    <groupId>org.apache.kafka</groupId>
 		    <artifactId>kafka-clients</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.kafka</groupId>
+			<artifactId>kafka-streams</artifactId>
+		</dependency>
 		
 		<!-- kafka logback -->
 		<dependency>
@@ -52,7 +62,7 @@
       		<artifactId>logback-kafka-appender</artifactId>
       		<version>0.2.0-RC2</version>
     	</dependency>
-		
+
 	</dependencies> 
 
 	<build>

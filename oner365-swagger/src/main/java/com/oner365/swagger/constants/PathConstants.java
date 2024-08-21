@@ -262,6 +262,7 @@ public class PathConstants {
   public static final String CONTEXT_KAFKA_CONSUMER_ID = "IKafkaConsumerClient";
   /** kafka消息 */
   public static final String REQUEST_KAFKA_CONSUMER_MESSAGE_SEND = "/message/send";
+  public static final String REQUEST_KAFKA_CONSUMER_MESSAGE_WORD_COUNTS = "/message/word/count/{word}";
   
   /** rocketmq */
   public static final String FEIGN_CLIENT_ROCKETMQ = "oner365-rocketmq";
