@@ -108,6 +108,11 @@ public class SwaggerConfig implements WebMvcConfigurer {
     return buildApi("Ldap(用户中心)", "com.oner365.swagger.controller.ldap");
   }
   
+  @Bean
+  Docket postgisApi() {
+    return buildApi("Postgis(地图处理)", "com.oner365.swagger.controller.postgis");
+  }
+  
   private Docket buildApi(String groupName, String packageName) {
     return new Docket(DocumentationType.OAS_30).pathMapping(PublicConstants.DELIMITER).groupName(groupName)
         .apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.basePackage(packageName)).paths(PathSelectors.any())

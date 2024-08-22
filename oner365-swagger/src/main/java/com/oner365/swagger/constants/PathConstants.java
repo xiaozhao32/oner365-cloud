@@ -296,6 +296,16 @@ public class PathConstants {
   public static final String REQUEST_LDAP_USERS_CREATE = "/users/create";
   public static final String REQUEST_LDAP_USERS_UPDATE = "/users/update";
   public static final String REQUEST_LDAP_USERS_DELETE = "/users/delete/{id}";
+  
+  /** Postgis */
+  public static final String FEIGN_CLIENT_POSTGIS = "oner365-postgis";
+  /** Postgis context */
+  public static final String CONTEXT_POSTGIS_POSITION_ID = "IPostgisPositionClient";
+  /** Postgis uri */
+  public static final String REQUEST_POSTGIS_POSITION_LIST = "/position/list";
+  public static final String REQUEST_POSTGIS_POSITION_SAVE = "/position/save";
+  public static final String REQUEST_POSTGIS_POSITION_GET_ID = "/position/get/{id}";
+  public static final String REQUEST_POSTGIS_POSITION_DELETE = "/position/delete";
 
   private PathConstants() {
   }

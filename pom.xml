@@ -1928,8 +1928,8 @@
 		<module>oner365-mongodb</module>
 		<!-- kubernetes -->
 		<module>oner365-kubernetes</module>
-		<!-- ai -->
-		<module>oner365-ai</module>
+		<!-- postgis -->
+		<module>oner365-postgis</module>
 
 	</modules>
 
