@@ -36,6 +36,9 @@ public class PositionDto implements Serializable {
   @ApiModelProperty(value = "面")
   private Polygon polygon;
   
+  @ApiModelProperty(value = "线")
+  private Polygon lineString;
+  
   @ApiModelProperty(value = "创建时间")
   private Timestamp createTime;
   
@@ -96,6 +99,14 @@ public class PositionDto implements Serializable {
 
   public void setPostgisType(PostgisTypeEnum postgisType) {
     this.postgisType = postgisType;
+  }
+
+  public Polygon getLineString() {
+    return lineString;
+  }
+
+  public void setLineString(Polygon lineString) {
+    this.lineString = lineString;
   }
 
 }

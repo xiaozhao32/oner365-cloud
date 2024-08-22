@@ -8,8 +8,10 @@ import javax.annotation.Resource;
 
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
+import org.locationtech.jts.geom.LineString;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
+import org.locationtech.jts.geom.PrecisionModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -61,12 +63,27 @@ public class PositionServiceImpl implements IPositionService {
 
     // point
     if (vo.getPoint() != null) {
-      GeometryFactory geometryFactory = new GeometryFactory();
+      GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), PostgisConstants.SRID);
       Point point = geometryFactory.createPoint(new Coordinate(vo.getPoint().getX(), vo.getPoint().getY()));
       point.setSRID(PostgisConstants.SRID);
       entity.setPostgisType(PostgisTypeEnum.POINT);
       entity.setPositionPoint(point);
     }
+    // linestring
+    if (vo.getLineString() != null) {
+      List<PointVo> points = vo.getLineString().getPoints();
+      List<Coordinate> coordinates = new ArrayList<>();
+      for (PointVo point : points) {
+        coordinates.add(new Coordinate(point.getX(), point.getY()));
+      }
+      
+      GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), PostgisConstants.SRID);
+      LineString lineString = geometryFactory.createLineString(coordinates.toArray(new Coordinate[0]));
+      lineString.setSRID(PostgisConstants.SRID);
+      entity.setPostgisType(PostgisTypeEnum.LINESTRING);
+      entity.setPositionLineString(lineString);
+    }
+    
     // polygon
     if (vo.getPolygon() != null) {
       List<PointVo> points = vo.getPolygon().getPoints();
@@ -75,7 +92,7 @@ public class PositionServiceImpl implements IPositionService {
         coordinates.add(new Coordinate(point.getX(), point.getY()));
       }
 
-      GeometryFactory geometryFactory = new GeometryFactory();
+      GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), PostgisConstants.SRID);
       Polygon polygon = geometryFactory.createPolygon(coordinates.toArray(new Coordinate[0]));
       polygon.setSRID(PostgisConstants.SRID);
       entity.setPostgisType(PostgisTypeEnum.POLYGON);
@@ -101,6 +118,18 @@ public class PositionServiceImpl implements IPositionService {
             entity.getPositionPoint().getY());
         result.setPoint(point);
       }
+      // lineString
+      if (entity.getPositionLineString() != null) {
+        List<org.springframework.data.geo.Point> pointList = new ArrayList<>();
+        for (Coordinate coordinate : entity.getPositionLineString().getCoordinates()) {
+          org.springframework.data.geo.Point point = new org.springframework.data.geo.Point(coordinate.getX(),
+              coordinate.getY());
+          pointList.add(point);
+        }
+        org.springframework.data.geo.Polygon polygon = new org.springframework.data.geo.Polygon(pointList);
+        result.setLineString(polygon);
+      }
+      
       // polygon
       if (entity.getPositionPolygon() != null) {
         List<org.springframework.data.geo.Point> pointList = new ArrayList<>();

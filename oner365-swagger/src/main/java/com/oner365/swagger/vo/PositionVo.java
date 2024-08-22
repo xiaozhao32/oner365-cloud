@@ -22,6 +22,8 @@ public class PositionVo implements Serializable {
   private PointVo point;
 
   private PolygonVo polygon;
+  
+  private LineStringVo lineString;
 
   public String getId() {
     return id;
@@ -61,6 +63,14 @@ public class PositionVo implements Serializable {
 
   public void setPostgisType(PostgisTypeEnum postgisType) {
     this.postgisType = postgisType;
+  }
+
+  public LineStringVo getLineString() {
+    return lineString;
+  }
+
+  public void setLineString(LineStringVo lineString) {
+    this.lineString = lineString;
   }
 
 }

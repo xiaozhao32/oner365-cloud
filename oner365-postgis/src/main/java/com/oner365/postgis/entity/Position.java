@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 
@@ -62,6 +66,30 @@ public class Position implements Serializable {
    */
   @Column(name = "position_polygon", columnDefinition = "geometry(Polygon,4326)")
   private Polygon positionPolygon;
+  
+  /**
+   * Geometry LineString
+   */
+  @Column(name = "position_line_string", columnDefinition = "geometry(Polygon,4326)")
+  private LineString positionLineString;
+  
+  /**
+   * Geometry MultiPoint
+   */
+  @Column(name = "position_multi_point", columnDefinition = "geometry(Point,4326)")
+  private MultiPoint multiPoint;
+  
+  /**
+   * Geometry MultiPolygon
+   */
+  @Column(name = "position_multi_line_string", columnDefinition = "geometry(Point,4326)")
+  private MultiLineString multiLineString;
+  
+  /**
+   * Geometry MultiPolygon
+   */
+  @Column(name = "position_multi_polygon", columnDefinition = "geometry(Point,4326)")
+  private MultiPolygon multiPolygon;
 
   /**
    * 创建时间
@@ -131,6 +159,38 @@ public class Position implements Serializable {
     this.postgisType = postgisType;
   }
 
+  public LineString getPositionLineString() {
+    return positionLineString;
+  }
+
+  public void setPositionLineString(LineString positionLineString) {
+    this.positionLineString = positionLineString;
+  }
+
+  public MultiPoint getMultiPoint() {
+    return multiPoint;
+  }
+
+  public void setMultiPoint(MultiPoint multiPoint) {
+    this.multiPoint = multiPoint;
+  }
+
+  public MultiLineString getMultiLineString() {
+    return multiLineString;
+  }
+
+  public void setMultiLineString(MultiLineString multiLineString) {
+    this.multiLineString = multiLineString;
+  }
+
+  public MultiPolygon getMultiPolygon() {
+    return multiPolygon;
+  }
+
+  public void setMultiPolygon(MultiPolygon multiPolygon) {
+    this.multiPolygon = multiPolygon;
+  }
+  
   @Override
   public String toString() {
     return JSON.toJSONString(this);

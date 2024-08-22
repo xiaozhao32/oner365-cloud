@@ -27,6 +27,8 @@ public class PositionDto implements Serializable {
   
   private Polygon polygon;
   
+  private Polygon lineString;
+  
   private LocalDateTime createTime;
   
   private LocalDateTime updateTime;
@@ -85,6 +87,14 @@ public class PositionDto implements Serializable {
 
   public void setPostgisType(PostgisTypeEnum postgisType) {
     this.postgisType = postgisType;
+  }
+
+  public Polygon getLineString() {
+    return lineString;
+  }
+
+  public void setLineString(Polygon lineString) {
+    this.lineString = lineString;
   }
 
 }
