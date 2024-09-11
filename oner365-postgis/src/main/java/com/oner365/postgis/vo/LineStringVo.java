@@ -12,7 +12,14 @@ public class LineStringVo implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * Point List
+   */
   private List<PointVo> points;
+  
+  public LineStringVo() {
+    super();
+  }
 
   public List<PointVo> getPoints() {
     return points;

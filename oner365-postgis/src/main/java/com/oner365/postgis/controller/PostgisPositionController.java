@@ -22,7 +22,7 @@ import com.oner365.postgis.vo.PositionVo;
 
 /**
  * Position Controller
- * 
+ *
  * @author zhaoyong
  */
 @RestController
@@ -34,18 +34,17 @@ public class PostgisPositionController extends BaseController {
 
   /**
    * 集合列表
-   * 
+   *
    * @return 集合
    */
   @GetMapping("/list")
   public List<PositionDto> findList() {
-    List<PositionDto> result = service.findList();
-    return result;
+    return service.findList();
   }
 
   /**
    * 保存
-   * 
+   *
    * @return ResponseData
    */
   @PutMapping("/save")
@@ -56,7 +55,7 @@ public class PostgisPositionController extends BaseController {
 
   /**
    * 按主键查询
-   * 
+   *
    * @param id 主键
    * @return ResponseData
    */
@@ -68,7 +67,7 @@ public class PostgisPositionController extends BaseController {
 
   /**
    * 删除
-   * 
+   *
    * @param ids 编号
    * @return List<Boolean>
    */

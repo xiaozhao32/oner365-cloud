@@ -102,6 +102,10 @@ public class Position implements Serializable {
    */
   @Column(name = "update_time", insertable = false)
   private LocalDateTime updateTime;
+  
+  public Position() {
+    super();
+  }
 
   public String getId() {
     return id;

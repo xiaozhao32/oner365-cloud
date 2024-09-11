@@ -13,17 +13,54 @@ public class PositionVo implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * 主键
+   */
   private String id;
 
+  /**
+   * 名称
+   */
   private String positionName;
   
+  /**
+   * 枚举类型
+   */
   private PostgisTypeEnum postgisType;
 
+  /**
+   * Geometry Point
+   */
   private PointVo point;
 
+  /**
+   * Geometry Polygon
+   */
   private PolygonVo polygon;
   
+  /**
+   * Geometry LineString
+   */
   private LineStringVo lineString;
+  
+  /**
+   * Geometry MultiPoint
+   */
+  private MultiPointVo multiPoint;
+  
+  /**
+   * Geometry MultiLineString
+   */
+  private MultiLineStringVo multiLineString;
+  
+  /**
+   * Geometry MultiPolygon
+   */
+  private MultiPolygonVo multiPolygon;
+  
+  public PositionVo() {
+    super();
+  }
 
   public String getId() {
     return id;
@@ -71,6 +108,30 @@ public class PositionVo implements Serializable {
 
   public void setLineString(LineStringVo lineString) {
     this.lineString = lineString;
+  }
+
+  public MultiPointVo getMultiPoint() {
+    return multiPoint;
+  }
+
+  public void setMultiPoint(MultiPointVo multiPoint) {
+    this.multiPoint = multiPoint;
+  }
+
+  public MultiLineStringVo getMultiLineString() {
+    return multiLineString;
+  }
+
+  public void setMultiLineString(MultiLineStringVo multiLineString) {
+    this.multiLineString = multiLineString;
+  }
+
+  public MultiPolygonVo getMultiPolygon() {
+    return multiPolygon;
+  }
+
+  public void setMultiPolygon(MultiPolygonVo multiPolygon) {
+    this.multiPolygon = multiPolygon;
   }
 
 }

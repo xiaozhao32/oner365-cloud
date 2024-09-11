@@ -9,6 +9,9 @@ import javax.annotation.Resource;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.LineString;
+import org.locationtech.jts.geom.MultiLineString;
+import org.locationtech.jts.geom.MultiPoint;
+import org.locationtech.jts.geom.MultiPolygon;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.Polygon;
 import org.locationtech.jts.geom.PrecisionModel;
@@ -24,7 +27,9 @@ import com.oner365.postgis.entity.Position;
 import com.oner365.postgis.enums.PostgisTypeEnum;
 import com.oner365.postgis.repository.IPositionRepository;
 import com.oner365.postgis.service.IPositionService;
+import com.oner365.postgis.vo.LineStringVo;
 import com.oner365.postgis.vo.PointVo;
+import com.oner365.postgis.vo.PolygonVo;
 import com.oner365.postgis.vo.PositionVo;
 
 /**
@@ -62,45 +67,108 @@ public class PositionServiceImpl implements IPositionService {
     entity.setUpdateTime(LocalDateTime.now());
 
     // point
+    setPoint(entity, vo);
+
+    // linestring
+    setLineString(entity, vo);
+
+    // polygon
+    setPolygon(entity, vo);
+
+    // multiPoint
+    setMultiPoint(entity, vo);
+
+    // multiLineString
+    setMultiLineString(entity, vo);
+
+    // multiPolygon
+    setMultiPolygon(entity, vo);
+
+    Position po = repository.save(entity);
+    return builder(po);
+  }
+
+  private GeometryFactory buildGeometryFactory() {
+    return new GeometryFactory(new PrecisionModel(), PostgisConstants.SRID);
+  }
+
+  private void setPoint(Position entity, PositionVo vo) {
     if (vo.getPoint() != null) {
-      GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), PostgisConstants.SRID);
-      Point point = geometryFactory.createPoint(new Coordinate(vo.getPoint().getX(), vo.getPoint().getY()));
+      Point point = buildGeometryFactory().createPoint(new Coordinate(vo.getPoint().getX(), vo.getPoint().getY()));
       point.setSRID(PostgisConstants.SRID);
       entity.setPostgisType(PostgisTypeEnum.POINT);
       entity.setPositionPoint(point);
     }
-    // linestring
+  }
+
+  private void setMultiPoint(Position entity, PositionVo vo) {
+    if (vo.getMultiPoint() != null) {
+      MultiPoint multiPoint = buildGeometryFactory().createMultiPointFromCoords(setCoordinate(vo.getMultiPoint().getPoints()));
+      multiPoint.setSRID(PostgisConstants.SRID);
+      entity.setPostgisType(PostgisTypeEnum.MULTIPOINT);
+      entity.setMultiPoint(multiPoint);
+    }
+  }
+
+  private void setLineString(Position entity, PositionVo vo) {
     if (vo.getLineString() != null) {
-      List<PointVo> points = vo.getLineString().getPoints();
-      List<Coordinate> coordinates = new ArrayList<>();
-      for (PointVo point : points) {
-        coordinates.add(new Coordinate(point.getX(), point.getY()));
-      }
-      
-      GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), PostgisConstants.SRID);
-      LineString lineString = geometryFactory.createLineString(coordinates.toArray(new Coordinate[0]));
+      LineString lineString = buildGeometryFactory().createLineString(setCoordinate(vo.getLineString().getPoints()));
       lineString.setSRID(PostgisConstants.SRID);
       entity.setPostgisType(PostgisTypeEnum.LINESTRING);
       entity.setPositionLineString(lineString);
     }
-    
-    // polygon
-    if (vo.getPolygon() != null) {
-      List<PointVo> points = vo.getPolygon().getPoints();
-      List<Coordinate> coordinates = new ArrayList<>();
-      for (PointVo point : points) {
-        coordinates.add(new Coordinate(point.getX(), point.getY()));
-      }
+  }
 
-      GeometryFactory geometryFactory = new GeometryFactory(new PrecisionModel(), PostgisConstants.SRID);
-      Polygon polygon = geometryFactory.createPolygon(coordinates.toArray(new Coordinate[0]));
+  private void setMultiLineString(Position entity, PositionVo vo) {
+    if (vo.getMultiLineString() != null) {
+      List<LineStringVo> lineStringVos = vo.getMultiLineString().getLineStrings();
+      List<LineString> lineStrings = new ArrayList<>();
+      for (LineStringVo lineStringVo : lineStringVos) {
+        if (!lineStringVo.getPoints().isEmpty()) {
+          LineString lineString = buildGeometryFactory().createLineString(setCoordinate(lineStringVo.getPoints()));
+          lineStrings.add(lineString);
+        }
+      }
+      MultiLineString multiLineString = buildGeometryFactory().createMultiLineString(lineStrings.toArray(new LineString[0]));
+      multiLineString.setSRID(PostgisConstants.SRID);
+      entity.setPostgisType(PostgisTypeEnum.MULTILINESTRING);
+      entity.setMultiLineString(multiLineString);
+    }
+  }
+
+  private void setPolygon(Position entity, PositionVo vo) {
+    if (vo.getPolygon() != null) {
+      Polygon polygon = buildGeometryFactory().createPolygon(setCoordinate(vo.getPolygon().getPoints()));
       polygon.setSRID(PostgisConstants.SRID);
       entity.setPostgisType(PostgisTypeEnum.POLYGON);
       entity.setPositionPolygon(polygon);
     }
+  }
 
-    Position po = repository.save(entity);
-    return builder(po);
+  private void setMultiPolygon(Position entity, PositionVo vo) {
+    if (vo.getMultiPolygon() != null) {
+      List<PolygonVo> polygonVos = vo.getMultiPolygon().getPolygons();
+      List<Polygon> polygons = new ArrayList<>();
+      for (PolygonVo polygonVo : polygonVos) {
+        if (!polygonVo.getPoints().isEmpty()) {
+          Polygon polygon = buildGeometryFactory().createPolygon(setCoordinate(polygonVo.getPoints()));
+          polygons.add(polygon);
+        }
+      }
+
+      MultiPolygon multiPolygon = buildGeometryFactory().createMultiPolygon(polygons.toArray(new Polygon[0]));
+      multiPolygon.setSRID(PostgisConstants.SRID);
+      entity.setPostgisType(PostgisTypeEnum.MULTIPOLYGON);
+      entity.setMultiPolygon(multiPolygon);
+    }
+  }
+  
+  private Coordinate[] setCoordinate(List<PointVo> points) {
+    List<Coordinate> coordinates = new ArrayList<>();
+    for (PointVo point : points) {
+      coordinates.add(new Coordinate(point.getX(), point.getY()));
+    }
+    return coordinates.toArray(new Coordinate[0]);
   }
 
   @Override
@@ -111,48 +179,97 @@ public class PositionServiceImpl implements IPositionService {
 
   private PositionDto builder(Position entity) {
     try {
-      PositionDto result = new PositionDto();
-      // point
-      if (entity.getPositionPoint() != null) {
-        org.springframework.data.geo.Point point = new org.springframework.data.geo.Point(entity.getPositionPoint().getX(),
-            entity.getPositionPoint().getY());
-        result.setPoint(point);
+      if (entity != null) {
+        PositionDto result = new PositionDto();
+        result.setId(entity.getId());
+        result.setPositionName(entity.getPositionName());
+        result.setPostgisType(entity.getPostgisType());
+        result.setCreateTime(entity.getCreateTime());
+        result.setUpdateTime(entity.getUpdateTime());
+  
+        // point
+        builderPoint(result, entity);
+  
+        // lineString
+        builderLineString(result, entity);
+  
+        // polygon
+        builderPolygon(result, entity);
+        
+        // multiPoint
+        builderMultiPoint(result, entity);
+        
+        // multiLineString
+        builderMultiLineString(result, entity);
+        
+        // multiPolygon
+        builderMultiPolygon(result, entity);
+  
+        return result;
       }
-      // lineString
-      if (entity.getPositionLineString() != null) {
-        List<org.springframework.data.geo.Point> pointList = new ArrayList<>();
-        for (Coordinate coordinate : entity.getPositionLineString().getCoordinates()) {
-          org.springframework.data.geo.Point point = new org.springframework.data.geo.Point(coordinate.getX(),
-              coordinate.getY());
-          pointList.add(point);
-        }
-        org.springframework.data.geo.Polygon polygon = new org.springframework.data.geo.Polygon(pointList);
-        result.setLineString(polygon);
-      }
-      
-      // polygon
-      if (entity.getPositionPolygon() != null) {
-        List<org.springframework.data.geo.Point> pointList = new ArrayList<>();
-        for (Coordinate coordinate : entity.getPositionPolygon().getCoordinates()) {
-          org.springframework.data.geo.Point point = new org.springframework.data.geo.Point(coordinate.getX(),
-              coordinate.getY());
-          pointList.add(point);
-        }
-        org.springframework.data.geo.Polygon polygon = new org.springframework.data.geo.Polygon(pointList);
-        result.setPolygon(polygon);
-      }
-
-      result.setId(entity.getId());
-      result.setPositionName(entity.getPositionName());
-      result.setPostgisType(entity.getPostgisType());
-      result.setCreateTime(entity.getCreateTime());
-      result.setUpdateTime(entity.getUpdateTime());
-
-      return result;
     } catch (Exception e) {
       logger.error("Position entity error", e);
     }
     return null;
+  }
+
+  private void builderPoint(PositionDto result, Position entity) {
+    if (entity.getPositionPoint() != null) {
+      result.setPoint(
+          new org.springframework.data.geo.Point(entity.getPositionPoint().getX(), entity.getPositionPoint().getY()));
+    }
+  }
+  
+  private void builderMultiPoint(PositionDto result, Position entity) {
+    if (entity.getMultiPoint() != null) {
+      result.setMultiPoint(builderPointList(entity.getMultiPoint().getCoordinates()));
+    }
+  }
+
+  private void builderLineString(PositionDto result, Position entity) {
+    if (entity.getPositionLineString() != null) {
+      result.setLineString(new org.springframework.data.geo.Polygon(builderPointList(entity.getPositionLineString().getCoordinates())));
+    }
+  }
+  
+  private void builderMultiLineString(PositionDto result, Position entity) {
+    if (entity.getMultiLineString() != null) {
+      MultiLineString multiLineString = entity.getMultiLineString();
+      List<org.springframework.data.geo.Polygon> polygonList = new ArrayList<>();
+      for (int i = 0; i < multiLineString.getNumGeometries(); i++) {
+        Coordinate[] coordinates = multiLineString.getGeometryN(i).getCoordinates();
+        org.springframework.data.geo.Polygon polygon = new org.springframework.data.geo.Polygon(builderPointList(coordinates));
+        polygonList.add(polygon);
+      }
+      result.setMultiLineString(polygonList);
+    }
+  }
+
+  private void builderPolygon(PositionDto result, Position entity) {
+    if (entity.getPositionPolygon() != null) {
+      result.setPolygon(new org.springframework.data.geo.Polygon(builderPointList(entity.getPositionPolygon().getCoordinates())));
+    }
+  }
+  
+  private void builderMultiPolygon(PositionDto result, Position entity) {
+    if (entity.getMultiPolygon() != null) {
+      MultiPolygon multiPolygon = entity.getMultiPolygon();
+      List<org.springframework.data.geo.Polygon> polygonList = new ArrayList<>();
+      for (int i = 0; i < multiPolygon.getNumGeometries(); i++) {
+        Coordinate[] coordinates = multiPolygon.getGeometryN(i).getCoordinates();
+        org.springframework.data.geo.Polygon polygon = new org.springframework.data.geo.Polygon(builderPointList(coordinates));
+        polygonList.add(polygon);
+      }
+      result.setMultiPolygon(polygonList);
+    }
+  }
+  
+  private List<org.springframework.data.geo.Point> builderPointList(Coordinate[] coordinates) {
+    List<org.springframework.data.geo.Point> pointList = new ArrayList<>();
+    for (Coordinate coordinate : coordinates) {
+      pointList.add(new org.springframework.data.geo.Point(coordinate.getX(), coordinate.getY()));
+    }
+    return pointList;
   }
 
   @Override

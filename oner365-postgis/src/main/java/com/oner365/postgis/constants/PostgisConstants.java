@@ -11,4 +11,7 @@ public class PostgisConstants {
    * SRID
    */
   public static final int SRID = 4326;
+
+  private PostgisConstants() {
+  }
 }
