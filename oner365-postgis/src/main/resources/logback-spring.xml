@@ -5,12 +5,12 @@
 	<springProperty scope="context" name="LOG_NAME" source="spring.application.name" />
 	<springProperty scope="context" name="LOG_FILE" source="logging.file.path" />
 	<!-- logstash -->
-	<springProperty scope="context" name="LOGSTASH_ENABELD" source="logging.logstash.enabled" />
+	<springProperty scope="context" name="LOGSTASH_ENABLED" source="logging.logstash.enabled" />
 	<springProperty scope="context" name="LOGSTASH_ADDRESSES" source="logging.logstash.addresses" />
-	
+
 	<property name="LOG_LEVEL" value="INFO" />
 	<property name="LOG_MAX_SIZE" value="100MB" />
-	
+
 	<!-- 控制台的日志输出样式 -->
 	<property name="CONSOLE_LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}] [%r] [%thread] [%clr(%p)] [%clr(%C %M:%L)] - %clr(%m%n)" />
 
@@ -24,42 +24,42 @@
 			<charset>utf8</charset>
 		</encoder>
 	</appender>
-	
+
 	<!-- 文件信息配置 -->
 	<appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${LOG_FILE}/${LOG_NAME}.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_FILE}/archive/${LOG_NAME}_INFO_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>  
-            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+            <FileNamePattern>${LOG_FILE}/archive/${LOG_NAME}_INFO_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>${LOG_MAX_SIZE}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">  
+        <layout class="ch.qos.logback.classic.PatternLayout">
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
         </layout>
     </appender>
-    
+
     <!-- 文件错误日志配置 -->
-    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <File>${LOG_FILE}/${LOG_NAME}_error.log</File>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <FileNamePattern>${LOG_FILE}/archive/${LOG_NAME}_ERROR_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>  
-            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+            <FileNamePattern>${LOG_FILE}/archive/${LOG_NAME}_ERROR_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>${LOG_MAX_SIZE}</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
         </rollingPolicy>
-        <layout class="ch.qos.logback.classic.PatternLayout">  
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>  
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
         </layout>
         <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
-            <onMatch>ACCEPT</onMatch>  
-            <onMismatch>DENY</onMismatch>  
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 
 	<!-- logstash 远程日志配置 -->
-	<if condition='property("LOGSTASH_ENABELD").equals("true")'>
+	<if condition='property("LOGSTASH_ENABLED").equals("true")'>
 	<then>
 		<appender name="LOGSTASH_APPENDER" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
 			<!-- 多个input索引监听修改对应logstash监听端口即可 -->
@@ -68,13 +68,13 @@
 		</appender>
 	</then>
 	</if>
-	
+
 	<!-- 日志输出级别 -->
 	<root level="${LOG_LEVEL}">
 		<appender-ref ref="CONSOLE" />
 		<appender-ref ref="FILE_INFO" />
 		<appender-ref ref="FILE_ERROR" />
-		<if condition='property("LOGSTASH_ENABELD").equals("true")'>
+		<if condition='property("LOGSTASH_ENABLED").equals("true")'>
 		<then>
 			<appender-ref ref="LOGSTASH_APPENDER" />
 		</then>

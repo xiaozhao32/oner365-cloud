@@ -48,9 +48,14 @@
 		    <version>2024.1.0</version>
 		</dependency>
 		<dependency>
+		    <groupId>org.geolatte</groupId>
+		    <artifactId>geolatte-geom</artifactId>
+		    <version>1.9.1</version>
+		</dependency>
+		<dependency>
 		    <groupId>org.locationtech.jts</groupId>
 		    <artifactId>jts-core</artifactId>
-		    <version>1.19.0</version>
+		    <version>1.20.0</version>
 		</dependency>
 		<dependency>
 		    <groupId>org.hibernate</groupId>

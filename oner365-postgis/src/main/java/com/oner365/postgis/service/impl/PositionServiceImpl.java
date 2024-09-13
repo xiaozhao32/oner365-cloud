@@ -2,7 +2,10 @@ package com.oner365.postgis.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
@@ -162,7 +165,7 @@ public class PositionServiceImpl implements IPositionService {
       entity.setMultiPolygon(multiPolygon);
     }
   }
-  
+
   private Coordinate[] setCoordinate(List<PointVo> points) {
     List<Coordinate> coordinates = new ArrayList<>();
     for (PointVo point : points) {
@@ -186,25 +189,25 @@ public class PositionServiceImpl implements IPositionService {
         result.setPostgisType(entity.getPostgisType());
         result.setCreateTime(entity.getCreateTime());
         result.setUpdateTime(entity.getUpdateTime());
-  
+
         // point
         builderPoint(result, entity);
-  
+
         // lineString
         builderLineString(result, entity);
-  
+
         // polygon
         builderPolygon(result, entity);
-        
+
         // multiPoint
         builderMultiPoint(result, entity);
-        
+
         // multiLineString
         builderMultiLineString(result, entity);
-        
+
         // multiPolygon
         builderMultiPolygon(result, entity);
-  
+
         return result;
       }
     } catch (Exception e) {
@@ -219,7 +222,7 @@ public class PositionServiceImpl implements IPositionService {
           new org.springframework.data.geo.Point(entity.getPositionPoint().getX(), entity.getPositionPoint().getY()));
     }
   }
-  
+
   private void builderMultiPoint(PositionDto result, Position entity) {
     if (entity.getMultiPoint() != null) {
       result.setMultiPoint(builderPointList(entity.getMultiPoint().getCoordinates()));
@@ -231,17 +234,15 @@ public class PositionServiceImpl implements IPositionService {
       result.setLineString(new org.springframework.data.geo.Polygon(builderPointList(entity.getPositionLineString().getCoordinates())));
     }
   }
-  
+
   private void builderMultiLineString(PositionDto result, Position entity) {
     if (entity.getMultiLineString() != null) {
       MultiLineString multiLineString = entity.getMultiLineString();
-      List<org.springframework.data.geo.Polygon> polygonList = new ArrayList<>();
-      for (int i = 0; i < multiLineString.getNumGeometries(); i++) {
-        Coordinate[] coordinates = multiLineString.getGeometryN(i).getCoordinates();
-        org.springframework.data.geo.Polygon polygon = new org.springframework.data.geo.Polygon(builderPointList(coordinates));
-        polygonList.add(polygon);
-      }
-      result.setMultiLineString(polygonList);
+      List<org.springframework.data.geo.Polygon> multiLineStringList = IntStream.range(0, multiLineString.getNumGeometries())
+              .mapToObj(i -> multiLineString.getGeometryN(i).getCoordinates())
+              .map(coordinates -> new org.springframework.data.geo.Polygon(builderPointList(coordinates)))
+              .collect(Collectors.toList());
+      result.setMultiLineString(multiLineStringList);
     }
   }
 
@@ -250,26 +251,22 @@ public class PositionServiceImpl implements IPositionService {
       result.setPolygon(new org.springframework.data.geo.Polygon(builderPointList(entity.getPositionPolygon().getCoordinates())));
     }
   }
-  
+
   private void builderMultiPolygon(PositionDto result, Position entity) {
     if (entity.getMultiPolygon() != null) {
       MultiPolygon multiPolygon = entity.getMultiPolygon();
-      List<org.springframework.data.geo.Polygon> polygonList = new ArrayList<>();
-      for (int i = 0; i < multiPolygon.getNumGeometries(); i++) {
-        Coordinate[] coordinates = multiPolygon.getGeometryN(i).getCoordinates();
-        org.springframework.data.geo.Polygon polygon = new org.springframework.data.geo.Polygon(builderPointList(coordinates));
-        polygonList.add(polygon);
-      }
-      result.setMultiPolygon(polygonList);
+      List<org.springframework.data.geo.Polygon> polygonList = IntStream.range(0, multiPolygon.getNumGeometries())
+              .mapToObj(i -> multiPolygon.getGeometryN(i).getCoordinates())
+              .map(coordinates -> new org.springframework.data.geo.Polygon(builderPointList(coordinates)))
+              .collect(Collectors.toList());
+        result.setMultiPolygon(polygonList);
     }
   }
-  
+
   private List<org.springframework.data.geo.Point> builderPointList(Coordinate[] coordinates) {
-    List<org.springframework.data.geo.Point> pointList = new ArrayList<>();
-    for (Coordinate coordinate : coordinates) {
-      pointList.add(new org.springframework.data.geo.Point(coordinate.getX(), coordinate.getY()));
-    }
-    return pointList;
+    return Arrays.stream(coordinates)
+            .map(coordinate -> new org.springframework.data.geo.Point(coordinate.getX(), coordinate.getY()))
+            .collect(Collectors.toList());
   }
 
   @Override
