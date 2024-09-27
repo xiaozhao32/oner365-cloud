@@ -80,7 +80,7 @@ public class Position implements Serializable {
   private MultiPoint multiPoint;
   
   /**
-   * Geometry MultiPolygon
+   * Geometry MultiLineString
    */
   @Column(name = "position_multi_line_string", columnDefinition = "geometry(Point,4326)")
   private MultiLineString multiLineString;

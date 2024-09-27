@@ -41,7 +41,7 @@ public class DynamicDatasourceController extends BaseController {
     try {
       DataSourceHolder.setDataSource("nacos");
       String sql = "select * from config_info limit 1";
-      List<Map<String, String>> list = DataSourceUtil.execute(dataSource.getConnection(), sql);
+      List<Map<String, Object>> list = DataSourceUtil.execute(dataSource.getConnection(), sql);
       result.put("result1", list);
     } catch (Exception e) {
       logger.error("ds1 connection error", e);
@@ -53,7 +53,7 @@ public class DynamicDatasourceController extends BaseController {
     try {
       DataSourceHolder.setDataSource("oner365");
       String sql = "select * from hibernate_sequence limit 1";
-      List<Map<String, String>> list = DataSourceUtil.execute(dataSource.getConnection(), sql);
+      List<Map<String, Object>> list = DataSourceUtil.execute(dataSource.getConnection(), sql);
       result.put("result2", list);
     } catch (Exception e) {
       logger.error("ds2 connection error", e);

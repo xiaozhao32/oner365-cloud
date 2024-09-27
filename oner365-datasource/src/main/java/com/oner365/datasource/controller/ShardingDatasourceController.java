@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import javax.sql.DataSource;
 
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,17 +36,33 @@ public class ShardingDatasourceController extends BaseController {
    * 
    * @param orderId 订单id
    * @param userId  用户id
-   * @return List<Map<String, String>>
+   * @return List<Map<String, Object>>
    */
-  @GetMapping("/test")
-  public List<Map<String, String>> testDataSource(Integer orderId, Integer userId) {
+  @PostMapping("/save")
+  public List<Map<String, Object>> testDataSource(Integer orderId, Integer userId) {
     String sql = "insert into t_order(id, order_id, user_id, status, create_time) " + "values('"
         + new SnowFlakeUtils(1L, 1L).nextId() + "'," + orderId + "," + userId + ",'"+StatusEnum.YES.ordinal()+"','" + DateUtil.getCurrentTime()
         + "')";
     try (Connection con = shardingDataSource.getConnection()) {
       return DataSourceUtil.execute(con, sql);
     } catch (Exception e) {
-      logger.error("testDataSource error:", e);
+      logger.error("shardingDataSource save error:", e);
+    }
+    return Collections.emptyList();
+  }
+  
+  /**
+   * 测试分库查询
+   * 
+   * @return List<Map<String, Object>>
+   */
+  @GetMapping("/list")
+  public List<Map<String, Object>> findList() {
+    String sql = "select * from t_order";
+    try (Connection con = shardingDataSource.getConnection()) {
+      return DataSourceUtil.execute(con, sql);
+    } catch (Exception e) {
+      logger.error("shardingDataSource list error:", e);
     }
     return Collections.emptyList();
   }
