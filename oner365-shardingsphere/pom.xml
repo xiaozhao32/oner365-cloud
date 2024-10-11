@@ -9,20 +9,15 @@
         <version>2.1.0</version>
     </parent>
 
-    <artifactId>oner365-datasource</artifactId>
+    <artifactId>oner365-shardingsphere</artifactId>
 
-    <name>oner365-datasource</name>
+    <name>oner365-shardingsphere</name>
 
     <dependencies>
 		<!-- oner365 -->
         <dependency>
             <groupId>com.oner365</groupId>
             <artifactId>oner365-api</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.oner365.data</groupId>
-            <artifactId>oner365-data-datasource</artifactId>
         </dependency>
         
         <!-- spring-boot -->
@@ -40,13 +35,19 @@
 			<artifactId>spring-boot-configuration-processor</artifactId>
 			<optional>true</optional>
 		</dependency>
+		
+		<!-- MYSQL -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+    		<artifactId>mysql-connector-j</artifactId>
+        </dependency>
 
         <!-- shardingsphere -->
-		<dependency>
-			<groupId>org.apache.shardingsphere</groupId>
-			<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-			<version>4.0.0-RC1</version>
-		</dependency>
+        <dependency>
+            <groupId>org.apache.shardingsphere</groupId>
+            <artifactId>shardingsphere-jdbc-core-spring-boot-starter</artifactId>
+            <version>5.2.1</version>
+        </dependency>
 		
     </dependencies> 
 
@@ -64,7 +65,7 @@
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>./lib/</classpathPrefix>
                             <useUniqueVersions>false</useUniqueVersions>
-                            <mainClass>com.oner365.datasource.SpringDatasourceApplication</mainClass>
+                            <mainClass>com.oner365.shardingsphere.SpringShardingsphereApplication</mainClass>
                         </manifest>
                         <manifestEntries>
                             <Class-Path>./resources/</Class-Path>

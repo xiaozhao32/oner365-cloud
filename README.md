@@ -100,6 +100,7 @@
 20. Mongodb - 8727 oner365-mongodb
 21. Kubernetes - 8728 oner365-kubernetes
 22. Postgis - 8729 oner365-postgis
+23. 主从分表 - 8730 oner365-shardingsphere
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos

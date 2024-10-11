@@ -51,7 +51,6 @@
 		<org.springframework.kafka.version>2.9.13</org.springframework.kafka.version>
 
 		<org.apache.rocketmq.boot.starter.version>2.2.3</org.apache.rocketmq.boot.starter.version>
-		<org.apache.shardingsphere.version>4.0.0-RC1</org.apache.shardingsphere.version>
 		<org.apache.logging.log4j.version>2.23.1</org.apache.logging.log4j.version>
 		<org.apache.httpclient.version>4.5.14</org.apache.httpclient.version>
 		<org.apache.httpcore.version>4.4.16</org.apache.httpcore.version>
@@ -98,10 +97,10 @@
 		<org.javassist.version>3.30.2-GA</org.javassist.version>
 		<org.freemarker.version>2.3.32</org.freemarker.version>
 		<org.codehaus.version>3.1.10</org.codehaus.version>
-		<org.antlr4.version>4.7.1</org.antlr4.version>
+		<org.antlr4.version>4.9.2</org.antlr4.version>
 		<org.ow2.asm.version>9.6</org.ow2.asm.version>
 		<org.quartz.version>2.3.2</org.quartz.version>
-		<org.yaml.version>2.2</org.yaml.version>
+		<org.yaml.version>1.33</org.yaml.version>
 		<org.lz4.version>1.8.0</org.lz4.version>
 		
 		<org.postgresql.version>42.7.3</org.postgresql.version>
@@ -586,13 +585,6 @@
 				<version>${org.apache.zookeeper.version}</version>
 			</dependency>
 			
-			<!-- shardingsphere -->
-			<dependency>
-				<groupId>org.apache.shardingsphere</groupId>
-				<artifactId>sharding-jdbc-spring-boot-starter</artifactId>
-				<version>${org.apache.shardingsphere.version}</version>
-			</dependency>
-
 			<!-- yaml -->
 			<dependency>
 				<groupId>org.yaml</groupId>
@@ -1930,6 +1922,8 @@
 		<module>oner365-kubernetes</module>
 		<!-- postgis -->
 		<module>oner365-postgis</module>
+		<!-- shardingsphere -->
+		<module>oner365-shardingsphere</module>
 
 	</modules>
 
