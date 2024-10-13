@@ -2,6 +2,7 @@ package com.oner365.kafka.service.impl;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -12,6 +13,7 @@ import org.springframework.util.concurrent.ListenableFutureCallback;
 
 import com.oner365.data.commons.enums.ResultEnum;
 import com.oner365.kafka.config.properties.KafkaProperties;
+import com.oner365.kafka.constants.KafkaConstants;
 import com.oner365.kafka.service.IKafkaConsumerService;
 
 /**
@@ -32,8 +34,15 @@ public class KafkaConsumerServiceImpl implements IKafkaConsumerService {
 
   @Override
   public ResultEnum convertAndSend(Object message) {
+    boolean isContains = StringUtils.contains(kafkaProperties.getTopics(), KafkaConstants.TOPIC_1);
+    if (!isContains) {
+      LOGGER.error("spring.kafka.topics= " + KafkaConstants.TOPIC_1 + " is not config.");
+      return ResultEnum.ERROR;
+    }
+    
     try {
-      ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(kafkaProperties.getTopic(), message);
+      // 发送到 Topic1
+      ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(KafkaConstants.TOPIC_1, message);
       future.addCallback(new ListenableFutureCallback<Object>() {
 
         @Override

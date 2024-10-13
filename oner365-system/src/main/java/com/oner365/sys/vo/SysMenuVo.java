@@ -29,13 +29,13 @@ public class SysMenuVo implements Serializable {
   /**
    * 菜单类别 menu_type_id
    */
-  @NotBlank(message = "菜单类别不能为空")
+  @NotBlank(message = "{system.vo.menu.menuTypeId.message}")
   private String menuTypeId;
 
   /**
    * 菜单名称 menu_name
    */
-  @NotBlank(message = "菜单名称不能为空")
+  @NotBlank(message = "{system.vo.menu.menuName.message}")
   private String menuName;
 
   /**

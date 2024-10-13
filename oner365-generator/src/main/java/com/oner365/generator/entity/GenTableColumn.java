@@ -40,7 +40,7 @@ public class GenTableColumn implements Serializable {
     private String javaType;
 
     /** JAVA字段名 */
-    @NotBlank(message = "Java属性不能为空")
+    @NotBlank(message = "{generator.entity.column.javaField.message}")
     private String javaField;
 
     /** 是否主键（1是） */

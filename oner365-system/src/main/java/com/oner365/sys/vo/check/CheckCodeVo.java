@@ -25,7 +25,7 @@ public class CheckCodeVo implements Serializable {
     /**
      * 编码
      */
-    @NotBlank(message = "检测编码不能为空")
+    @NotBlank(message = "{system.vo.check.code.message}")
     private String code;
     
     /**

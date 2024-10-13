@@ -4,11 +4,11 @@
 ---
 
 <p align="center">
-	<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://shields.io/badge/Spring%20Framework-5.3.37-blue" alt="Spring Framework 5.3.37"></a>
+	<a href="https://spring.io/projects/spring-framework" target="_blank"><img src="https://shields.io/badge/Spring%20Framework-5.3.39-blue" alt="Spring Framework 5.3.39"></a>
     <a href="https://spring.io/projects/spring-boot" target="_blank"><img src="https://shields.io/badge/Spring%20Boot-2.7.18-blue" alt="Spring Boot 2.7.18"></a>
     <a href="https://spring.io/projects/spring-cloud" target="_blank"><img src="https://shields.io/badge/Spring%20Cloud-2021.0.9-blue" alt="Spring Cloud 2021.0.9"></a>
     <a href="https://github.com/alibaba/spring-cloud-alibaba" target="_blank"><img src="https://shields.io/badge/Spring%20Cloud%20Alibaba-2021.1-blue" alt="Spring Cloud Alibaba 2021.1"></a>
-    <a href="https://nacos.io/zh-cn/index.html" target="_blank"><img src="https://shields.io/badge/Nacos-2.2.3-brightgreen" alt="Nacos 2.2.3"></a>
+    <a href="https://nacos.io/zh-cn/index.html" target="_blank"><img src="https://shields.io/badge/Nacos-2.3.2-brightgreen" alt="Nacos 2.3.2"></a>
 	<a href="./LICENSE"><img src="https://shields.io/badge/License-Apache--2.0-green" alt="License Apache 2.0"></a>
     <a href="https://www.oracle.com/java/technologies/javase-downloads.html" target="_blank"><img src="https://img.shields.io/badge/JDK-8%2C11%2C17-green" alt="Java 8,11,17"></a>
 </p>
@@ -57,6 +57,8 @@
 18. Hadoop Zookeeper: Zookeeper 
 19. Hadoop Spark: Spark
 20. 非关系型数据库: Mongodb
+21. Kubernetes对接: Kubernetes
+22. Postgis服务: Postgis
 
 #### 使用说明
 
@@ -96,6 +98,9 @@
 18. Zookeeper - 8725 oner365-zookeeper
 19. Spark - 8726 oner365-spark
 20. Mongodb - 8727 oner365-mongodb
+21. Kubernetes - 8728 oner365-kubernetes
+22. Postgis - 8729 oner365-postgis
+23. 主从分表 - 8730 oner365-shardingsphere
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos

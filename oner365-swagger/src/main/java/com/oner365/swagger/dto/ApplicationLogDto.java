@@ -1,7 +1,7 @@
 package com.oner365.swagger.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import org.springframework.boot.logging.LogLevel;
 
@@ -64,7 +64,7 @@ public class ApplicationLogDto implements Serializable {
    * 创建时间
    */
   @ApiModelProperty(value = "创建时间")
-  private LocalDateTime createTime;
+  private Timestamp createTime;
   
   /**
    * 构造方法
@@ -160,14 +160,14 @@ public class ApplicationLogDto implements Serializable {
   /**
    * @return the createTime
    */
-  public LocalDateTime getCreateTime() {
+  public Timestamp getCreateTime() {
     return createTime;
   }
 
   /**
    * @param createTime the createTime to set
    */
-  public void setCreateTime(LocalDateTime createTime) {
+  public void setCreateTime(Timestamp createTime) {
     this.createTime = createTime;
   }
 

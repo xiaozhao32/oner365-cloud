@@ -1,7 +1,7 @@
 package com.oner365.swagger.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.MoreObjects;
@@ -54,13 +54,13 @@ public class SysRoleDto implements Serializable {
      * 创建时间 create_time
      */
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     /**
      * 更新时间 update_time
      */
     @ApiModelProperty(value = "更新时间")
-    private LocalDateTime updateTime;
+    private Timestamp updateTime;
     
     /**
      * 菜单id
@@ -127,19 +127,19 @@ public class SysRoleDto implements Serializable {
         this.status = status;
     }
 
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
-    public LocalDateTime getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
 

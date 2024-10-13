@@ -24,7 +24,7 @@ import com.oner365.neo4j.service.SonService;
  *
  */
 @RestController
-@RequestMapping("/neo4j/test")
+@RequestMapping("/test")
 public class TestController extends BaseController {
 
   @Resource

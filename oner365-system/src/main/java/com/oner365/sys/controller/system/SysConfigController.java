@@ -35,7 +35,7 @@ import com.oner365.sys.vo.check.CheckConfigNameVo;
  * @author zhaoyong
  */
 @RestController
-@RequestMapping("/system/config")
+@RequestMapping("/config")
 public class SysConfigController extends BaseController {
 
   @Resource

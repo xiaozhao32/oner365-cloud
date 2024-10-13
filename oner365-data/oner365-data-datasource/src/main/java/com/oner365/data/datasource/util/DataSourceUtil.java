@@ -203,16 +203,16 @@ public class DataSourceUtil {
    *
    * @param sql
    *            SQL
-   * @return List<Map<String, String>>
+   * @return List<Map<String, Object>>
    */
-  public static List<Map<String, String>> execute(Connection con, String sql) {
+  public static List<Map<String, Object>> execute(Connection con, String sql) {
       final String[] key = new String[] { "create ", "drop ", "alter ", "insert ", "update ", "delete ", "call ", "set "};
 
       if (sql == null) {
           return Collections.emptyList();
       }
 
-      List<Map<String, String>> resultList = new ArrayList<>();
+      List<Map<String, Object>> resultList = new ArrayList<>();
 
       try (PreparedStatement ps = con.prepareStatement(sql)) {
           // 判断是否是执行语句
@@ -225,7 +225,7 @@ public class DataSourceUtil {
           }
 
       } catch (Exception e) {
-          Map<String, String> map = new HashMap<>(1);
+          Map<String, Object> map = new HashMap<>(1);
           map.put("sql", sql);
           map.put("error", e.getMessage());
           resultList.add(map);
@@ -244,7 +244,7 @@ public class DataSourceUtil {
    * @param resultList 结果
    * @throws SQLException 异常
    */
-  private static void execute(Connection con, PreparedStatement ps, List<Map<String, String>> resultList)
+  private static void execute(Connection con, PreparedStatement ps, List<Map<String, Object>> resultList)
           throws SQLException {
       // SQL执行
       con.setAutoCommit(false);
@@ -252,7 +252,7 @@ public class DataSourceUtil {
       con.commit();
 
       // 返回结果
-      Map<String, String> map = new HashMap<>(1);
+      Map<String, Object> map = new HashMap<>(1);
       map.put("result", String.valueOf(result));
       resultList.add(map);
   }
@@ -264,15 +264,15 @@ public class DataSourceUtil {
    * @param resultList 结果
    * @throws SQLException 异常
    */
-  private static void execute(PreparedStatement ps, List<Map<String, String>> resultList) throws SQLException {
+  private static void execute(PreparedStatement ps, List<Map<String, Object>> resultList) throws SQLException {
       try (ResultSet rs = ps.executeQuery()) {
           // 返回结果
           ResultSetMetaData md = rs.getMetaData();
           int column = md.getColumnCount();
           while (rs.next()) {
-              Map<String, String> map = new HashMap<>(10);
+              Map<String, Object> map = new HashMap<>(10);
               for (int i = 1; i <= column; i++) {
-                  map.put(md.getColumnName(i).toLowerCase(), rs.getString(i));
+                  map.put(md.getColumnName(i).toLowerCase(), rs.getObject(i));
               }
               resultList.add(map);
           }

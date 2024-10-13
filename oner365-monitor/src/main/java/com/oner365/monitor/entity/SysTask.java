@@ -44,15 +44,27 @@ public class SysTask implements Serializable {
   @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
   private String id;
 
-  /** 任务名称 */
+  /**
+   * 任务名称
+   */
+  @NotBlank(message = "{monitor.entity.task.taskName.message}")
+  @Size(max = 64, message = "{monitor.entity.task.taskName.size}")
   @Column(name = "task_name", nullable = false, length = 64)
   private String taskName;
 
-  /** 任务组名 */
+  /**
+   * 任务组名
+   */
+  @NotBlank(message = "{monitor.entity.task.taskGroup.message}")
+  @Size(max = 64, message = "{monitor.entity.task.taskGroup.size}")
   @Column(name = "task_group", nullable = false, length = 64)
   private String taskGroup;
 
-  /** 调用目标字符串 */
+  /**
+   * 调用目标字符串
+   */
+  @NotBlank(message = "{monitor.entity.task.invokeTarget.message}")
+  @Size(max = 1000, message = "{monitor.entity.task.invokeTarget.size}")
   @Column(name = "invoke_target", nullable = false, length = 500)
   private String invokeTarget;
 
@@ -62,6 +74,8 @@ public class SysTask implements Serializable {
   private InvokeParam invokeParam;
 
   /** cron执行表达式 */
+  @NotBlank(message = "{monitor.entity.task.cronExpression.message}")
+  @Size(max = 255, message = "{monitor.entity.task.cronExpression.size}")
   @Column(name = "cron_expression")
   private String cronExpression;
 
@@ -112,8 +126,6 @@ public class SysTask implements Serializable {
     this.id = id;
   }
 
-  @NotBlank(message = "任务名称不能为空")
-  @Size(max = 64, message = "任务名称不能超过64个字符")
   public String getTaskName() {
     return taskName;
   }
@@ -130,8 +142,6 @@ public class SysTask implements Serializable {
     this.taskGroup = taskGroup;
   }
 
-  @NotBlank(message = "调用目标字符串不能为空")
-  @Size(max = 1000, message = "调用目标字符串长度不能超过500个字符")
   public String getInvokeTarget() {
     return invokeTarget;
   }
@@ -140,8 +150,6 @@ public class SysTask implements Serializable {
     this.invokeTarget = invokeTarget;
   }
 
-  @NotBlank(message = "Cron执行表达式不能为空")
-  @Size(max = 255, message = "Cron执行表达式不能超过255个字符")
   public String getCronExpression() {
     return cronExpression;
   }

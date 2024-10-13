@@ -26,19 +26,19 @@ public class SysDictItemVo implements Serializable {
   /**
    * 字典类型编码 type_id
    */
-  @NotBlank(message = "字典类型编码不能为空")
+  @NotBlank(message = "{system.vo.dictItemType.typeCode.message}")
   private String typeId;
 
   /**
    * 字典编码 item_code
    */
-  @NotBlank(message = "字典编码不能为空")
+  @NotBlank(message = "{system.vo.dictItem.itemCode.message}")
   private String itemCode;
 
   /**
    * 字典名称 item_name
    */
-  @NotBlank(message = "字典名称不能为空")
+  @NotBlank(message = "{system.vo.dictItem.itemName.message}")
   private String itemName;
 
   /**

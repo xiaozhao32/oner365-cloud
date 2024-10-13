@@ -20,13 +20,13 @@ public class ModifyPasswordVo implements Serializable {
     /**
      * 旧密码 oldPassword
      */
-    @NotBlank(message = "旧密码不能为空")
+    @NotBlank(message = "{system.vo.modify.oldPassword.message}")
     private String oldPassword;
     
     /**
      * 新密码 password
      */
-    @NotBlank(message = "新密码不能为空")
+    @NotBlank(message = "{system.vo.modify.newPassword.message}")
     private String password;
     
     /**

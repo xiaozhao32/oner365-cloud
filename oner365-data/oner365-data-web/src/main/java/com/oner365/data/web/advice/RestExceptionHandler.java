@@ -1,53 +1,76 @@
 package com.oner365.data.web.advice;
 
-import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.oner365.data.commons.enums.ResultEnum;
 import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.web.entity.GatewayError;
 
 /**
- * 全局异常信息
+ * 异常处理
  * 
  * @author zhaoyong
  *
  */
-@RestControllerAdvice
+@ResponseBody
+@ControllerAdvice
 public class RestExceptionHandler {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RestExceptionHandler.class);
 
+  private static final String ERROR_MESSAGE = "服务器异常，请联系管理员!";
+
   /**
-   * 验证异常信息处理
-   * 
-   * @param e BindException
-   * @return ResponseData
+   * 构造方法
    */
-  @ExceptionHandler(BindException.class)
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ResponseData<String> exception(BindException e) {
-    LOGGER.error("[验证异常] 异常信息:{}", Objects.requireNonNull(e.getFieldError()).getDefaultMessage());
-    return ResponseData.error(ResultEnum.ERROR.getCode(),
-        Objects.requireNonNull(e.getFieldError()).getDefaultMessage());
+  public RestExceptionHandler() {
+    super();
   }
 
   /**
-   * 异常信息处理
+   * 请求参数异常处理
    * 
-   * @param e Exception
+   * @param request 请求对象
+   * @param e       异常
+   * @return ResponseData
+   */
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  public ResponseData<GatewayError> handleMethodArgumentNotValidException(HttpServletRequest request,
+      MethodArgumentNotValidException e) {
+    LOGGER.error("[参数异常] 请求路径:{}, 异常信息:{}", request.getRequestURI(), e.getMessage());
+    GatewayError result = getErrorAttributes(request, e.getBindingResult().getFieldError().getDefaultMessage());
+    return ResponseData.error(result, HttpStatus.INTERNAL_SERVER_ERROR.value(), ERROR_MESSAGE);
+  }
+
+  /**
+   * 异常处理
+   * 
+   * @param request 请求对象
+   * @param e       异常
    * @return ResponseData
    */
   @ExceptionHandler(Exception.class)
-  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public ResponseData<String> exception(Exception e) {
-    LOGGER.error("[请求异常] 异常信息:{}", e.getMessage(), e);
-    return ResponseData.error(ResultEnum.ERROR.getCode(), e.getMessage());
+  public ResponseData<GatewayError> exceptionHandler(HttpServletRequest request, Exception e) {
+    LOGGER.error("[网关异常] 请求路径:{}, 异常信息:{}", request.getRequestURI(), e.getMessage());
+    GatewayError result = getErrorAttributes(request, e.getMessage());
+    return ResponseData.error(result, HttpStatus.INTERNAL_SERVER_ERROR.value(), ERROR_MESSAGE);
+  }
+
+  private GatewayError getErrorAttributes(HttpServletRequest request, String message) {
+    GatewayError result = new GatewayError();
+    result.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    result.setMethod(request.getMethod());
+    result.setPath(request.getRequestURI());
+
+    result.setMessage(ERROR_MESSAGE);
+    result.setResult(message);
+    return result;
   }
 }

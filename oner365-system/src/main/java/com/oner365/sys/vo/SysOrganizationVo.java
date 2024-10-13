@@ -27,7 +27,7 @@ public class SysOrganizationVo implements Serializable {
   /**
    * 机构名称 org_name
    */
-  @NotBlank(message = "机构名称不能为空")
+  @NotBlank(message = "{system.vo.org.orgName.message}")
   private String orgName;
 
   /**
@@ -38,7 +38,7 @@ public class SysOrganizationVo implements Serializable {
   /**
    * 机构代码 org_code
    */
-  @NotBlank(message = "机构代码不能为空")
+  @NotBlank(message = "{system.vo.org.orgCode.message}")
   private String orgCode;
 
   /**

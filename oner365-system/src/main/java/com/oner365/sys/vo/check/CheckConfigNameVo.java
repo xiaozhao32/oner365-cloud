@@ -25,7 +25,7 @@ public class CheckConfigNameVo implements Serializable {
   /**
    * 编码
    */
-  @NotBlank(message = "检测配置名称不能为空")
+  @NotBlank(message = "{system.vo.check.config.name.message}")
   private String configName;
 
   /**

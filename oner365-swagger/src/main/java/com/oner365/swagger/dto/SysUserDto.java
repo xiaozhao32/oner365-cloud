@@ -1,7 +1,7 @@
 package com.oner365.swagger.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,13 +78,13 @@ public class SysUserDto implements Serializable {
      * 最后登录时间
      */
     @ApiModelProperty(value = "最后登录时间")
-    private LocalDateTime lastTime;
+    private Timestamp lastTime;
 
     /**
      * 创建时间
      */
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     /**
      * 最后登录ip
@@ -244,28 +244,28 @@ public class SysUserDto implements Serializable {
     /**
      * @return the lastTime
      */
-    public LocalDateTime getLastTime() {
+    public Timestamp getLastTime() {
         return lastTime;
     }
 
     /**
      * @param lastTime the lastTime to set
      */
-    public void setLastTime(LocalDateTime lastTime) {
+    public void setLastTime(Timestamp lastTime) {
         this.lastTime = lastTime;
     }
 
     /**
      * @return the createTime
      */
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
     /**
      * @param createTime the createTime to set
      */
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 

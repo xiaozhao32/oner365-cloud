@@ -16,7 +16,7 @@ public class PathNodeVo implements Serializable {
   /**
    * 路径
    */
-  @NotBlank(message = "路径不能为空")
+  @NotBlank(message = "{zookeeper.vo.pathNode.path.message}")
   private String path;
 
   /**

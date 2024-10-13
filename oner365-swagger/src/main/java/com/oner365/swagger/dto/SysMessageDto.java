@@ -1,7 +1,7 @@
 package com.oner365.swagger.dto;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.sql.Timestamp;
 
 import com.google.common.base.MoreObjects;
 import com.oner365.swagger.enums.MessageStatusEnum;
@@ -83,13 +83,13 @@ public class SysMessageDto implements Serializable {
      * 创建时间 create_time
      */
     @ApiModelProperty(value = "创建时间")
-    private LocalDateTime createTime;
+    private Timestamp createTime;
 
     /**
      * 更新时间 update_time
      */
     @ApiModelProperty(value = "更新时间")
-    private LocalDateTime updateTime;
+    private Timestamp updateTime;
 
     /**
      * Constructor
@@ -227,28 +227,28 @@ public class SysMessageDto implements Serializable {
     /**
      * @return the createTime
      */
-    public LocalDateTime getCreateTime() {
+    public Timestamp getCreateTime() {
         return createTime;
     }
 
     /**
      * @param createTime the createTime to set
      */
-    public void setCreateTime(LocalDateTime createTime) {
+    public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
 
     /**
      * @return the updateTime
      */
-    public LocalDateTime getUpdateTime() {
+    public Timestamp getUpdateTime() {
         return updateTime;
     }
 
     /**
      * @param updateTime the updateTime to set
      */
-    public void setUpdateTime(LocalDateTime updateTime) {
+    public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
     
