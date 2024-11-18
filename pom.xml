@@ -96,7 +96,7 @@
 		<org.objenesis.version>3.3</org.objenesis.version>
 		<org.javassist.version>3.30.2-GA</org.javassist.version>
 		<org.freemarker.version>2.3.32</org.freemarker.version>
-		<org.codehaus.version>3.1.10</org.codehaus.version>
+		<org.codehaus.version>3.1.12</org.codehaus.version>
 		<org.antlr4.version>4.9.2</org.antlr4.version>
 		<org.ow2.asm.version>9.6</org.ow2.asm.version>
 		<org.quartz.version>2.3.2</org.quartz.version>
