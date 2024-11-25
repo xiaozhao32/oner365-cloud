@@ -6,7 +6,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.annotation.Resource;
 
@@ -69,21 +72,22 @@ public class HadoopHdfsServiceImpl implements HadoopHdfsService {
 
   @Override
   public List<FileInfoDto> readPathInfo(String path) {
-    List<FileInfoDto> result = new ArrayList<>();
     try {
       FileStatus[] statusList = fileSystem.listStatus(new Path(path));
-      for (FileStatus fileStatus : statusList) {
+
+      return IntStream.range(0, statusList.length).mapToObj(i -> statusList[i]).map(fileStatus -> {
         FileInfoDto fileInfoDto = new FileInfoDto();
         fileInfoDto.setFileName(fileStatus.getPath().getName());
         fileInfoDto.setFilePath(fileStatus.getPath().toString());
         fileInfoDto.setSize(fileStatus.getLen());
         fileInfoDto.setIsDirectory(fileStatus.isDirectory());
-        result.add(fileInfoDto);
-      }
+        return fileInfoDto;
+      }).collect(Collectors.toList());
+
     } catch (IOException e) {
       LOGGER.error("readPathInfo error:", e);
     }
-    return result;
+    return Collections.emptyList();
   }
 
   @Override

@@ -1,11 +1,11 @@
 package com.oner365.postgis.service.impl;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+import java.util.stream.StreamSupport;
 
 import javax.annotation.Resource;
 
@@ -51,11 +51,7 @@ public class PositionServiceImpl implements IPositionService {
   @Override
   public List<PositionDto> findList() {
     Iterable<Position> list = repository.findAll();
-    List<PositionDto> result = new ArrayList<>();
-    for (Position po : list) {
-      result.add(builder(po));
-    }
-    return result;
+    return StreamSupport.stream(list.spliterator(), false).map(po -> builder(po)).collect(Collectors.toList());
   }
 
   @Override
@@ -125,14 +121,12 @@ public class PositionServiceImpl implements IPositionService {
   private void setMultiLineString(Position entity, PositionVo vo) {
     if (vo.getMultiLineString() != null) {
       List<LineStringVo> lineStringVos = vo.getMultiLineString().getLineStrings();
-      List<LineString> lineStrings = new ArrayList<>();
-      for (LineStringVo lineStringVo : lineStringVos) {
-        if (!lineStringVo.getPoints().isEmpty()) {
-          LineString lineString = buildGeometryFactory().createLineString(setCoordinate(lineStringVo.getPoints()));
-          lineStrings.add(lineString);
-        }
-      }
-      MultiLineString multiLineString = buildGeometryFactory().createMultiLineString(lineStrings.toArray(new LineString[0]));
+      List<LineString> lineStrings = lineStringVos.stream().filter(lineStringVo -> !lineStringVo.getPoints().isEmpty())
+          .map(lineStringVo -> buildGeometryFactory().createLineString(setCoordinate(lineStringVo.getPoints())))
+          .collect(Collectors.toList());
+
+      MultiLineString multiLineString = buildGeometryFactory()
+          .createMultiLineString(lineStrings.toArray(new LineString[0]));
       multiLineString.setSRID(PostgisConstants.SRID);
       entity.setPostgisType(PostgisTypeEnum.MULTILINESTRING);
       entity.setMultiLineString(multiLineString);
@@ -151,13 +145,9 @@ public class PositionServiceImpl implements IPositionService {
   private void setMultiPolygon(Position entity, PositionVo vo) {
     if (vo.getMultiPolygon() != null) {
       List<PolygonVo> polygonVos = vo.getMultiPolygon().getPolygons();
-      List<Polygon> polygons = new ArrayList<>();
-      for (PolygonVo polygonVo : polygonVos) {
-        if (!polygonVo.getPoints().isEmpty()) {
-          Polygon polygon = buildGeometryFactory().createPolygon(setCoordinate(polygonVo.getPoints()));
-          polygons.add(polygon);
-        }
-      }
+      List<Polygon> polygons = polygonVos.stream().filter(polygonVo -> !polygonVo.getPoints().isEmpty())
+          .map(polygonVo -> buildGeometryFactory().createPolygon(setCoordinate(polygonVo.getPoints())))
+          .collect(Collectors.toList());
 
       MultiPolygon multiPolygon = buildGeometryFactory().createMultiPolygon(polygons.toArray(new Polygon[0]));
       multiPolygon.setSRID(PostgisConstants.SRID);
@@ -167,10 +157,8 @@ public class PositionServiceImpl implements IPositionService {
   }
 
   private Coordinate[] setCoordinate(List<PointVo> points) {
-    List<Coordinate> coordinates = new ArrayList<>();
-    for (PointVo point : points) {
-      coordinates.add(new Coordinate(point.getX(), point.getY()));
-    }
+    List<Coordinate> coordinates = points.stream().map(point -> new Coordinate(point.getX(), point.getY()))
+        .collect(Collectors.toList());
     return coordinates.toArray(new Coordinate[0]);
   }
 
