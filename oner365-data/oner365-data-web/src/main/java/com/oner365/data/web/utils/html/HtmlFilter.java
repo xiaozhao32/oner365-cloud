@@ -1,6 +1,7 @@
 package com.oner365.data.web.utils.html;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -509,13 +510,8 @@ public final class HtmlFilter {
     return inArray(entity, vAllowedEntities);
   }
 
-  private static boolean inArray(final String s, final String[] array) {
-    for (String item : array) {
-      if (item != null && item.equals(s)) {
-        return true;
-      }
-    }
-    return false;
+  public static boolean inArray(final String s, final String[] array) {
+    return Arrays.asList(array).contains(s);
   }
 
   private boolean allowed(final String name) {
@@ -525,4 +521,5 @@ public final class HtmlFilter {
   private boolean allowedAttribute(final String name, final String paramName) {
     return allowed(name) && (vAllowed.isEmpty() || vAllowed.get(name).contains(paramName));
   }
+  
 }

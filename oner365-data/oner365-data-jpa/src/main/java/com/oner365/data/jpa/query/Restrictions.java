@@ -1,6 +1,8 @@
 package com.oner365.data.jpa.query;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import com.oner365.data.commons.util.DataUtils;
 import com.oner365.data.jpa.query.Criterion.Operator;
@@ -145,13 +147,9 @@ public class Restrictions {
         if (ignoreNull || value == null || value.isEmpty()) {
             return null;
         }
-        SimpleExpression[] ses = new SimpleExpression[value.size()];
-        int i = 0;
-        for (Object obj : value) {
-            ses[i] = new SimpleExpression(fieldName, obj, Operator.EQ);
-            i++;
-        }
-        return new LogicalExpression(ses, Operator.OR);
+        List<SimpleExpression> simpleExpressionList = value.stream()
+            .map(obj -> new SimpleExpression(fieldName, obj, Operator.EQ)).collect(Collectors.toList());
+        return new LogicalExpression(simpleExpressionList.toArray(new SimpleExpression[] {}), Operator.OR);
     }
 
     /**
