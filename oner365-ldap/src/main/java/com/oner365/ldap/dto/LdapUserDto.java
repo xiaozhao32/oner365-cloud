@@ -1,60 +1,27 @@
-package com.oner365.ldap.entity;
+package com.oner365.ldap.dto;
 
 import java.io.Serializable;
 
-import javax.naming.Name;
-
-import org.springframework.data.domain.Persistable;
-import org.springframework.ldap.odm.annotations.Attribute;
-import org.springframework.ldap.odm.annotations.Attribute.Type;
-import org.springframework.ldap.odm.annotations.Entry;
-import org.springframework.ldap.odm.annotations.Id;
-import org.springframework.ldap.odm.annotations.Transient;
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 /**
- * Ldap - Po
+ * Ldap - UserDto
  * 
  * @author zhaoyong
  * 
  */
-@Entry(base = "", objectClasses = { "posixAccount", "top", "inetOrgPerson" })
-@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
-public class LdapUser implements Persistable<Object>, Serializable {
+public class LdapUserDto implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
-  @Id
-  private Name id;
-  @Attribute(name = "cn")
   private String commonName;
-  @Attribute(name = "sn")
   private String sn;
-  @Attribute(name = "givenName")
   private String givenName;
-  @Attribute(name = "uid")
   private String uid;
-  @Attribute(name = "uidNumber")
   private Integer uidNumber;
-  @Attribute(name = "gidNumber")
   private Integer gidNumber;
-  @Attribute(name = "userPassword", type = Type.STRING)
   private String password;
-  @Attribute(name = "homeDirectory")
   private String homeDirectory;
-  @Attribute(name = "createTimestamp")
   private String createTime;
-  @Transient
   private boolean isNew;
-
-  public Name getId() {
-    return id;
-  }
-
-  public void setId(Name id) {
-    this.id = id;
-  }
 
   public String getCommonName() {
     return commonName;

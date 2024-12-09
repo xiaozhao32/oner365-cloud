@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.data.web.controller.BaseController;
-import com.oner365.ldap.entity.LdapUser;
+import com.oner365.ldap.dto.LdapUserDto;
 import com.oner365.ldap.service.ILdapUsersService;
 import com.oner365.ldap.vo.LdapUserVo;
 
@@ -36,7 +36,7 @@ public class LdapUsersController extends BaseController {
    * @return 集合
    */
   @GetMapping("/list")
-  public List<LdapUser> findList() {
+  public List<LdapUserDto> findList() {
     return ldapService.findList();
   }
 
@@ -59,7 +59,7 @@ public class LdapUsersController extends BaseController {
    * @return 用户对象
    */
   @GetMapping("/get/{userName}")
-  public LdapUser getUser(@PathVariable("userName") String userName) {
+  public LdapUserDto getUser(@PathVariable("userName") String userName) {
     return ldapService.getUser(userName);
   }
 
@@ -71,13 +71,13 @@ public class LdapUsersController extends BaseController {
    */
   @PutMapping("/create")
   public Boolean create(@RequestBody LdapUserVo vo) {
-    LdapUser user = getUser(vo.getCommonName());
+    LdapUserDto user = getUser(vo.getCommonName());
     if (user != null) {
       logger.error("用户已存在!");
       return Boolean.FALSE;
     }
 
-    LdapUser result = ldapService.createUser(vo);
+    LdapUserDto result = ldapService.createUser(vo);
     logger.info("create user:{}", result.getCommonName());
     return Boolean.TRUE;
   }
@@ -90,13 +90,13 @@ public class LdapUsersController extends BaseController {
    */
   @PutMapping("/update")
   public Boolean update(@RequestBody LdapUserVo vo) {
-    LdapUser user = getUser(vo.getCommonName());
+    LdapUserDto user = getUser(vo.getCommonName());
     if (user == null) {
       logger.error("用户不存在!");
       return Boolean.FALSE;
     }
 
-    LdapUser result = ldapService.updateUser(vo);
+    LdapUserDto result = ldapService.updateUser(vo);
     logger.info("update user:{}", result.getCommonName());
     return Boolean.TRUE;
   }
@@ -109,7 +109,7 @@ public class LdapUsersController extends BaseController {
    */
   @DeleteMapping("/delete/{userName}")
   public Boolean delete(@PathVariable("userName") String userName) {
-    LdapUser user = getUser(userName);
+    LdapUserDto user = getUser(userName);
     if (user == null) {
       return Boolean.FALSE;
     }

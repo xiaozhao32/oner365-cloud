@@ -2,6 +2,7 @@ package com.oner365.ldap.service.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 import javax.naming.Name;
@@ -15,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.oner365.ldap.config.properties.LdapProperties;
 import com.oner365.ldap.constants.LdapConstants;
+import com.oner365.ldap.dto.LdapUserDto;
 import com.oner365.ldap.entity.LdapUser;
 import com.oner365.ldap.repository.ILdapUsersRepository;
 import com.oner365.ldap.service.ILdapUsersService;
@@ -38,8 +40,9 @@ public class LdapUsersServiceImpl implements ILdapUsersService {
   public LdapProperties ldapProperties;
 
   @Override
-  public List<LdapUser> findList() {
-    return repository.findAll();
+  public List<LdapUserDto> findList() {
+    List<LdapUser> list = repository.findAll();
+    return builderList(list);
   }
 
   @Override
@@ -49,15 +52,16 @@ public class LdapUsersServiceImpl implements ILdapUsersService {
   }
 
   @Override
-  public LdapUser getUser(String userName) {
+  public LdapUserDto getUser(String userName) {
     Name name = getName(userName);
     Optional<LdapUser> optional = repository.findById(name);
-    return optional.orElse(null);
+    LdapUser entity = optional.orElse(null);
+    return builder(entity);
   }
 
   @Override
   @Transactional
-  public LdapUser createUser(LdapUserVo vo) {
+  public LdapUserDto createUser(LdapUserVo vo) {
     Name name = getName(vo.getCommonName());
     LdapUser user = new LdapUser();
     user.setCommonName(vo.getCommonName());
@@ -70,12 +74,13 @@ public class LdapUsersServiceImpl implements ILdapUsersService {
     user.setPassword(vo.getPassword());
     user.setHomeDirectory(LdapConstants.DIRECTORY + vo.getCommonName());
     user.setNew(Boolean.TRUE);
-    return repository.save(user);
+    LdapUser entity = repository.save(user);
+    return builder(entity);
   }
 
   @Override
   @Transactional
-  public LdapUser updateUser(LdapUserVo vo) {
+  public LdapUserDto updateUser(LdapUserVo vo) {
     Name name = getName(vo.getCommonName());
     LdapUser user = new LdapUser();
     user.setCommonName(vo.getCommonName());
@@ -87,13 +92,53 @@ public class LdapUsersServiceImpl implements ILdapUsersService {
     user.setId(name);
     user.setPassword(vo.getPassword());
     user.setNew(Boolean.FALSE);
-    return repository.save(user);
+    LdapUser entity = repository.save(user);
+    return builder(entity);
+  }
+
+  private LdapUserDto builder(LdapUser entity) {
+    if (entity != null) {
+      LdapUserDto result = new LdapUserDto();
+      result.setCommonName(entity.getCommonName());
+      result.setCreateTime(entity.getCreateTime());
+      result.setGidNumber(entity.getGidNumber());
+      result.setGivenName(entity.getGivenName());
+      result.setHomeDirectory(entity.getHomeDirectory());
+      result.setNew(entity.isNew());
+      result.setPassword(entity.getPassword());
+      result.setSn(entity.getSn());
+      result.setUid(entity.getUid());
+      result.setUidNumber(entity.getUidNumber());
+      return result;
+    }
+    return null;
+  }
+
+  private LdapUser build(LdapUserDto dto) {
+    Name name = getName(dto.getCommonName());
+    LdapUser user = new LdapUser();
+    user.setCommonName(dto.getCommonName());
+    user.setUid(dto.getUid());
+    user.setUidNumber(dto.getUidNumber());
+    user.setGivenName(dto.getGivenName());
+    user.setGidNumber(dto.getGidNumber());
+    user.setSn(dto.getSn());
+    user.setId(name);
+    user.setPassword(dto.getPassword());
+    user.setHomeDirectory(LdapConstants.DIRECTORY + dto.getCommonName());
+    user.setNew(Boolean.TRUE);
+    return user;
+  }
+
+  private List<LdapUserDto> builderList(List<LdapUser> list) {
+    return list.stream().map(entity -> builder(entity)).collect(Collectors.toList());
   }
 
   @Override
   @Transactional
-  public void deleteUser(LdapUser user) {
-    repository.delete(user);
+  public void deleteUser(LdapUserDto user) {
+    LdapUser entity = build(user);
+    repository.delete(entity);
   }
 
   private Name getName(String cn) {
