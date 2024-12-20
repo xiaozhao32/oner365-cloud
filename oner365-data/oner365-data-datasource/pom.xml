@@ -36,25 +36,6 @@
 			<artifactId>postgresql</artifactId>
 		</dependency>
 		
-		<!-- ClickHouse -->
-		<dependency>
-    		<groupId>com.clickhouse</groupId>
-    		<artifactId>clickhouse-jdbc</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.httpcomponents.core5</groupId>
-		    <artifactId>httpcore5</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>org.apache.httpcomponents.client5</groupId>
-		    <artifactId>httpclient5</artifactId>
-		</dependency>
-		<dependency>
-		    <groupId>org.lz4</groupId>
-		    <artifactId>lz4-java</artifactId>
-		</dependency>
-
-		
 		<!-- mybatis -->
 	    <dependency>    
 			<groupId>org.mybatis.spring.boot</groupId>    

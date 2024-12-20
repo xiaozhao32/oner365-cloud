@@ -68,7 +68,7 @@ public class ApplicationLog implements Serializable {
   /**
    * 创建时间
    */
-  @Field(name="createTime", type = FieldType.Date, pattern = DateUtil.FULL_TIME_FORMAT)
+  @Field(name="createTime", type = FieldType.Date, pattern = DateUtil.FULL_UTC_TIME_FORMAT)
   private LocalDateTime createTime;
   
   /**

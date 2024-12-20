@@ -111,6 +111,11 @@ public class DateUtil {
    * 格式：年－月－日 小时:分钟:秒:毫秒
    */
   public static final String FULL_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss:SSS";
+  
+  /**
+   * UTC时间
+   */
+  public static final String FULL_UTC_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'";
 
   /**
    * 格式：年－月－日 23:59:59:999
