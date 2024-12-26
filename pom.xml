@@ -136,7 +136,7 @@
 		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
 		<io.projectreactor.core.version>3.5.6</io.projectreactor.core.version>
 		<io.projectreactor.netty.version>1.1.6</io.projectreactor.netty.version>
-		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
+		<io.jsonwebtoken.version>0.12.6</io.jsonwebtoken.version>
 		<io.undertow.version>2.3.10.Final</io.undertow.version>
 		<io.springfox.version>3.0.0</io.springfox.version>
 		<io.netty.version>4.1.112.Final</io.netty.version>
