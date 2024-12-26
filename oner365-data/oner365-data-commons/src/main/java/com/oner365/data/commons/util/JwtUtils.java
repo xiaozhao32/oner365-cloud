@@ -80,7 +80,10 @@ public class JwtUtils {
     } catch (ExpiredJwtException e) {
       LOGGER.error("token: {}, 已过期: {}", token, e.getMessage());
       return e.getClaims();
+    } catch (Exception e) {
+      LOGGER.error("getClaimsFromToken error", e);
     }
+    return null;
   }
 
   /**
