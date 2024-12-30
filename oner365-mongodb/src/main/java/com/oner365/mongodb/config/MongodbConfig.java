@@ -1,5 +1,6 @@
 package com.oner365.mongodb.config;
 
+import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -22,7 +23,7 @@ import com.oner365.mongodb.config.properties.MongodbProperties;
 @EnableConfigurationProperties(MongodbProperties.class)
 @EnableMongoRepositories(basePackages = "com.oner365.mongodb.repository")
 public class MongodbConfig {
-  
+
   @Resource
   private MongodbProperties properties;
 
@@ -33,7 +34,12 @@ public class MongodbConfig {
 
   @Bean
   MongoDatabaseFactory mongoDatabaseFactory() {
-    return new SimpleMongoClientDatabaseFactory(MongoClients.create(), properties.getDatabase());
+    return new SimpleMongoClientDatabaseFactory(mongoClient(), properties.getDatabase());
+  }
+
+  @PreDestroy
+  void destroy() {
+    mongoClient().close();
   }
 
 }
