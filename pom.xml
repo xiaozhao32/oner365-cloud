@@ -54,8 +54,8 @@
 		<org.apache.logging.log4j.version>2.23.1</org.apache.logging.log4j.version>
 		<org.apache.httpclient.version>4.5.14</org.apache.httpclient.version>
 		<org.apache.httpcore.version>4.4.16</org.apache.httpcore.version>
-		<org.apache.httpcore5.version>5.2.1</org.apache.httpcore5.version>
-		<org.apache.httpclient5.version>5.2.1</org.apache.httpclient5.version>
+		<org.apache.httpcore5.version>5.3.1</org.apache.httpcore5.version>
+		<org.apache.httpclient5.version>5.4.1</org.apache.httpclient5.version>
 		<org.apache.zookeeper.version>3.8.1</org.apache.zookeeper.version>
 		<org.apache.rocketmq.version>5.2.0</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.93</org.apache.tomcat.version>
@@ -109,7 +109,7 @@
 		<com.oracle.version>21.9.0.0</com.oracle.version>
 		<com.dameng.version>8.1.1.49</com.dameng.version>
 		<com.mysql.version>8.4.0</com.mysql.version>
-		<com.clickhouse.version>0.6.0</com.clickhouse.version>
+		<com.clickhouse.version>0.7.1</com.clickhouse.version>
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
 		<com.alibaba.nacos.version>2.3.2</com.alibaba.nacos.version>
@@ -1917,6 +1917,8 @@
 		<module>oner365-postgis</module>
 		<!-- shardingsphere -->
 		<module>oner365-shardingsphere</module>
+		<!-- clickhouse -->
+		<module>oner365-clickhouse</module>
 
 	</modules>
 

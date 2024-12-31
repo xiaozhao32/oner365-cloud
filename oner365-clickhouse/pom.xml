@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.oner365</groupId>
+		<artifactId>oner365-cloud</artifactId>
+		<version>2.1.0</version>
+	</parent>
+
+	<artifactId>oner365-clickhouse</artifactId>
+
+	<name>oner365-clickhouse</name>
+
+	<dependencies>
+
+		<!-- oner365 -->
+        <dependency>
+            <groupId>com.oner365</groupId>
+            <artifactId>oner365-api</artifactId>
+        </dependency>
+        
+		<!-- druid -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid-spring-boot-starter</artifactId>
+		</dependency>
+		
+		<!-- mybatis -->
+	    <dependency>    
+			<groupId>org.mybatis.spring.boot</groupId>    
+			<artifactId>mybatis-spring-boot-starter</artifactId>    
+		</dependency>
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+		</dependency>
+        
+        <dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>javax.persistence-api</artifactId>
+		</dependency>
+
+		<!-- nacos config -->
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
+        </dependency>
+        <dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-bootstrap</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-actuator-autoconfigure</artifactId>
+		</dependency>
+
+		<!-- clickhouse -->
+		<dependency>
+		    <groupId>com.clickhouse</groupId>
+			<artifactId>clickhouse-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.lz4</groupId>
+			<artifactId>lz4-java</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.httpcomponents.core5</groupId>
+		    <artifactId>httpcore5</artifactId>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.httpcomponents.client5</groupId>
+		    <artifactId>httpclient5</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<!-- 加载父级 lib 方式 -->
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${org.apache.maven.plugins.version}</version>
+				<configuration>
+					<archive>
+						<addMavenDescriptor>true</addMavenDescriptor>
+						<manifest>
+							<addClasspath>true</addClasspath>
+							<classpathPrefix>./lib/</classpathPrefix>
+							<useUniqueVersions>false</useUniqueVersions>
+							<mainClass>com.oner365.clickhouse.SpringClickhouseApplication</mainClass>
+						</manifest>
+						<manifestEntries>
+							<Class-Path>./resources/</Class-Path>
+						</manifestEntries>
+					</archive>
+					<outputDirectory>${project.build.directory}</outputDirectory>
+					<includes>
+						<include>**/*.class</include>
+					</includes>
+				</configuration>
+			</plugin>
+
+			<plugin>
+               <groupId>org.apache.maven.plugins</groupId>
+               <artifactId>maven-dependency-plugin</artifactId>
+               <version>${org.apache.maven.plugins.version}</version>
+               <executions>
+                   <execution>
+                       <id>copy-dependencies</id>
+                       <phase>package</phase>
+                       <goals>
+                           <goal>copy-dependencies</goal>
+                       </goals>
+                       <configuration>
+                           <outputDirectory>
+                               ${project.build.directory}/lib/
+                           </outputDirectory>
+                       </configuration>
+                   </execution>
+               </executions>
+           </plugin>
+
+		</plugins>
+	</build>
+</project>
