@@ -2,7 +2,7 @@ package com.oner365.ldap.service;
 
 import java.util.List;
 
-import com.oner365.ldap.entity.LdapUser;
+import com.oner365.ldap.dto.LdapUserDto;
 import com.oner365.ldap.vo.LdapUserVo;
 
 /**
@@ -17,7 +17,7 @@ public interface ILdapUsersService {
    * 
    * @return
    */
-  List<LdapUser> findList();
+  List<LdapUserDto> findList();
 
   /**
    * 用户认证
@@ -34,7 +34,7 @@ public interface ILdapUsersService {
    * @param userName 账号
    * @return LdapUser
    */
-  LdapUser getUser(String userName);
+  LdapUserDto getUser(String userName);
 
   /**
    * 创建用户
@@ -42,7 +42,7 @@ public interface ILdapUsersService {
    * @param vo 用户对象
    * @return LdapUser
    */
-  LdapUser createUser(LdapUserVo vo);
+  LdapUserDto createUser(LdapUserVo vo);
 
   /**
    * 修改用户
@@ -50,13 +50,13 @@ public interface ILdapUsersService {
    * @param vo 用户对象
    * @return LdapUser
    */
-  LdapUser updateUser(LdapUserVo vo);
+  LdapUserDto updateUser(LdapUserVo vo);
 
   /**
    * 删除用户
    * 
    * @param user 对象
    */
-  void deleteUser(LdapUser user);
+  void deleteUser(LdapUserDto user);
 
 }

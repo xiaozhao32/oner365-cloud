@@ -54,8 +54,8 @@
 		<org.apache.logging.log4j.version>2.23.1</org.apache.logging.log4j.version>
 		<org.apache.httpclient.version>4.5.14</org.apache.httpclient.version>
 		<org.apache.httpcore.version>4.4.16</org.apache.httpcore.version>
-		<org.apache.httpcore5.version>5.2.1</org.apache.httpcore5.version>
-		<org.apache.httpclient5.version>5.2.1</org.apache.httpclient5.version>
+		<org.apache.httpcore5.version>5.3.1</org.apache.httpcore5.version>
+		<org.apache.httpclient5.version>5.4.1</org.apache.httpclient5.version>
 		<org.apache.zookeeper.version>3.8.1</org.apache.zookeeper.version>
 		<org.apache.rocketmq.version>5.2.0</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.93</org.apache.tomcat.version>
@@ -96,7 +96,7 @@
 		<org.objenesis.version>3.3</org.objenesis.version>
 		<org.javassist.version>3.30.2-GA</org.javassist.version>
 		<org.freemarker.version>2.3.32</org.freemarker.version>
-		<org.codehaus.version>3.1.10</org.codehaus.version>
+		<org.codehaus.version>3.1.12</org.codehaus.version>
 		<org.antlr4.version>4.9.2</org.antlr4.version>
 		<org.ow2.asm.version>9.6</org.ow2.asm.version>
 		<org.quartz.version>2.3.2</org.quartz.version>
@@ -109,7 +109,7 @@
 		<com.oracle.version>21.9.0.0</com.oracle.version>
 		<com.dameng.version>8.1.1.49</com.dameng.version>
 		<com.mysql.version>8.4.0</com.mysql.version>
-		<com.clickhouse.version>0.6.0</com.clickhouse.version>
+		<com.clickhouse.version>0.7.1</com.clickhouse.version>
 
 		<com.alibaba.cloud.version>2021.1</com.alibaba.cloud.version>
 		<com.alibaba.nacos.version>2.3.2</com.alibaba.nacos.version>
@@ -136,7 +136,7 @@
 		<io.github.openfeign.form.version>3.8.0</io.github.openfeign.form.version>
 		<io.projectreactor.core.version>3.5.6</io.projectreactor.core.version>
 		<io.projectreactor.netty.version>1.1.6</io.projectreactor.netty.version>
-		<io.jsonwebtoken.version>0.9.1</io.jsonwebtoken.version>
+		<io.jsonwebtoken.version>0.12.6</io.jsonwebtoken.version>
 		<io.undertow.version>2.3.10.Final</io.undertow.version>
 		<io.springfox.version>3.0.0</io.springfox.version>
 		<io.netty.version>4.1.112.Final</io.netty.version>
@@ -1791,13 +1791,6 @@
 		</dependencies>
 	</dependencyManagement>
 
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-bootstrap</artifactId>
-		</dependency>
-	</dependencies>
-
 	<build>
 		<plugins>
 			
@@ -1924,6 +1917,8 @@
 		<module>oner365-postgis</module>
 		<!-- shardingsphere -->
 		<module>oner365-shardingsphere</module>
+		<!-- clickhouse -->
+		<module>oner365-clickhouse</module>
 
 	</modules>
 

@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -140,8 +141,8 @@ public class JobInvokeUtil {
         }
         String[] methodParams = methodStr.split(",");
         List<Object[]> classes = new LinkedList<>();
-        for (String methodParam : methodParams) {
-            String str = StringUtils.trimToEmpty(methodParam);
+        IntStream.range(0, methodParams.length).forEach(index -> {
+            String str = StringUtils.trimToEmpty(methodParams[index]);
             // String字符串类型，包含'
             if (StringUtils.contains(str, "'")) {
                 classes.add(new Object[] { StringUtils.replace(str, "'", ""), String.class });
@@ -162,7 +163,7 @@ public class JobInvokeUtil {
             else {
                 classes.add(new Object[] { Integer.valueOf(str), Integer.class });
             }
-        }
+        });
         return classes;
     }
 

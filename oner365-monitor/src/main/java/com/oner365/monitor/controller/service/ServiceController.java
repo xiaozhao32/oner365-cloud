@@ -1,7 +1,7 @@
 package com.oner365.monitor.controller.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -46,15 +46,10 @@ public class ServiceController extends BaseController {
    */
   @GetMapping("/index")
   public List<List<ServiceInstance>> index() {
-    List<List<ServiceInstance>> serviceList = new ArrayList<>();
     // 获取服务名称
-    List<String> serviceNameList = discoveryClient.getServices();
-    for (String serviceName : serviceNameList) {
-      // 获取服务中的实例列表
-      List<ServiceInstance> serviceInstances = discoveryClient.getInstances(serviceName);
-      serviceList.add(serviceInstances);
-    }
-    return serviceList;
+    return discoveryClient.getServices().stream()
+        .map(serviceName -> discoveryClient.getInstances(serviceName))
+        .collect(Collectors.toList());
   }
 
   /**

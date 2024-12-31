@@ -44,7 +44,7 @@ public class RestExceptionHandler {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseData<GatewayError> handleMethodArgumentNotValidException(HttpServletRequest request,
       MethodArgumentNotValidException e) {
-    LOGGER.error("[参数异常] 请求路径:{}, 异常信息:{}", request.getRequestURI(), e.getMessage());
+    LOGGER.error("[参数异常] 请求路径:{}, 异常信息:{}", request.getRequestURI(), e);
     GatewayError result = getErrorAttributes(request, e.getBindingResult().getFieldError().getDefaultMessage());
     return ResponseData.error(result, HttpStatus.INTERNAL_SERVER_ERROR.value(), ERROR_MESSAGE);
   }
@@ -58,7 +58,7 @@ public class RestExceptionHandler {
    */
   @ExceptionHandler(Exception.class)
   public ResponseData<GatewayError> exceptionHandler(HttpServletRequest request, Exception e) {
-    LOGGER.error("[网关异常] 请求路径:{}, 异常信息:{}", request.getRequestURI(), e.getMessage());
+    LOGGER.error("[网关异常] 请求路径:{}, 异常信息:{}", request.getRequestURI(), e);
     GatewayError result = getErrorAttributes(request, e.getMessage());
     return ResponseData.error(result, HttpStatus.INTERNAL_SERVER_ERROR.value(), ERROR_MESSAGE);
   }

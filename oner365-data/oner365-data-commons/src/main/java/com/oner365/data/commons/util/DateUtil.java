@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -87,11 +88,6 @@ public class DateUtil {
   public static final int MAX_SECOND = 59;
 
   /**
-   *
-   */
-  public static final String DATE_FORMAT = "yyyy/MM/dd HH:mm:ss";
-
-  /**
    * 东8区
    */
   public static final String DATE_TIMEZONE = "GMT+8";
@@ -115,6 +111,11 @@ public class DateUtil {
    * 格式：年－月－日 小时:分钟:秒:毫秒
    */
   public static final String FULL_DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss:SSS";
+  
+  /**
+   * UTC时间
+   */
+  public static final String FULL_UTC_TIME_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'";
 
   /**
    * 格式：年－月－日 23:59:59:999
@@ -755,7 +756,7 @@ public class DateUtil {
   }
 
   /**
-   * 转换时间
+   * Date -> LocalDateTime
    *
    * @param date 时间
    * @return LocalDateTime
@@ -766,9 +767,22 @@ public class DateUtil {
     }
     return null;
   }
+  
+  /**
+   * Date -> LocalDate
+   *
+   * @param date 时间
+   * @return LocalDate
+   */
+  public static LocalDate dateToLocalDate(Date date) {
+    if (date != null) {
+      return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+    return null;
+  }
 
   /**
-   * 转换时间
+   * LocalDateTime -> Date
    *
    * @param localDateTime 时间
    * @return Date
@@ -776,6 +790,19 @@ public class DateUtil {
   public static Date localDateTimeToDate(LocalDateTime localDateTime) {
     if (localDateTime != null) {
       return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());
+    }
+    return null;
+  }
+  
+  /**
+   * LocalDate -> Date
+   *
+   * @param localDate 时间
+   * @return Date
+   */
+  public static Date localDateToDate(LocalDate localDate) {
+    if (localDate != null) {
+      return Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
     }
     return null;
   }

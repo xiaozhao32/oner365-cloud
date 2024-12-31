@@ -11,6 +11,8 @@ import org.springframework.ldap.odm.annotations.Entry;
 import org.springframework.ldap.odm.annotations.Id;
 import org.springframework.ldap.odm.annotations.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 /**
  * Ldap - Po
  * 
@@ -18,6 +20,7 @@ import org.springframework.ldap.odm.annotations.Transient;
  * 
  */
 @Entry(base = "", objectClasses = { "posixAccount", "top", "inetOrgPerson" })
+@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
 public class LdapUser implements Persistable<Object>, Serializable {
 
   private static final long serialVersionUID = 1L;

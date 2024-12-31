@@ -59,6 +59,7 @@
 20. 非关系型数据库: Mongodb
 21. Kubernetes对接: Kubernetes
 22. Postgis服务: Postgis
+23. Clickhouse: Clickhouse
 
 #### 使用说明
 
@@ -101,6 +102,7 @@
 21. Kubernetes - 8728 oner365-kubernetes
 22. Postgis - 8729 oner365-postgis
 23. 主从分表 - 8730 oner365-shardingsphere
+24. Clickhouse - 8731 oner365-clickhouse
 
 ### 启动服务
 1. 配置nacos地址到 hosts 中 如: 127.0.0.1 oner365-nacos
