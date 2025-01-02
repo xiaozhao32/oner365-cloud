@@ -51,7 +51,7 @@ public class PositionServiceImpl implements IPositionService {
   @Override
   public List<PositionDto> findList() {
     Iterable<Position> list = repository.findAll();
-    return StreamSupport.stream(list.spliterator(), false).map(po -> builder(po)).collect(Collectors.toList());
+    return StreamSupport.stream(list.spliterator(), false).map(this::builder).collect(Collectors.toList());
   }
 
   @Override

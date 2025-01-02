@@ -49,10 +49,9 @@ public class SparkServiceImpl implements SparkService {
           return v * 100;
         }
       });
-      // result: {100, 200, 300, 400, 500}
 
-      // 计算结果
-      int sum = mappedRDD.reduce(new Function2<Integer, Integer, Integer>() {
+      // 计算结果 {100, 200, 300, 400, 500} = 1500
+      return mappedRDD.reduce(new Function2<Integer, Integer, Integer>() {
         private static final long serialVersionUID = 1L;
 
         @Override
@@ -60,8 +59,6 @@ public class SparkServiceImpl implements SparkService {
           return v1 + v2;
         }
       });
-      // result: 1500
-      return sum;
     }
   }
 }

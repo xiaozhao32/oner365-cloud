@@ -45,7 +45,7 @@ public class DataUtils {
       if (srcFile.exists()) {
         FileUtils.copyDirectoryToDirectory(srcFile, targetFile);
       } else {
-        LOGGER.error("copyDirectory not exists:" + filePath);
+        LOGGER.error("copyDirectory not exists:{}", filePath);
       }
     } catch (Exception e) {
       LOGGER.error("Error copyDirectory:", e);
@@ -65,7 +65,7 @@ public class DataUtils {
       if (srcFile.exists()) {
         FileUtils.copyFileToDirectory(srcFile, targetFile);
       } else {
-        LOGGER.error("copyFile not exists:" + filePath);
+        LOGGER.error("copyFile not exists:{}", filePath);
       }
     } catch (Exception e) {
       LOGGER.error("Error copyDirectory:", e);

@@ -5,12 +5,14 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.commons.util.DataUtils;
 import com.oner365.data.web.entity.GatewayError;
 
 /**
@@ -45,7 +47,13 @@ public class RestExceptionHandler {
   public ResponseData<GatewayError> handleMethodArgumentNotValidException(HttpServletRequest request,
       MethodArgumentNotValidException e) {
     LOGGER.error("[参数异常] 请求路径:{}, 异常信息:{}", request.getRequestURI(), e);
-    GatewayError result = getErrorAttributes(request, e.getBindingResult().getFieldError().getDefaultMessage());
+    if (DataUtils.isEmpty(e.getBindingResult())) {
+      return ResponseData.error(null, HttpStatus.INTERNAL_SERVER_ERROR.value(), ERROR_MESSAGE); 
+    }
+    
+    FieldError fieldError = e.getBindingResult().getFieldError();
+    String message = fieldError == null ? "" : fieldError.getDefaultMessage();
+    GatewayError result = getErrorAttributes(request, message);
     return ResponseData.error(result, HttpStatus.INTERNAL_SERVER_ERROR.value(), ERROR_MESSAGE);
   }
 

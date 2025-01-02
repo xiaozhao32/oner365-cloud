@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oner365.data.web.controller.BaseController;
 import com.oner365.shardingsphere.entity.MasterSlave;
 import com.oner365.shardingsphere.service.IMasterSlaveService;
+import com.oner365.shardingsphere.vo.MasterSlaveVo;
 
 /**
  * 主从测试
@@ -43,7 +44,7 @@ public class MasterSlaveController extends BaseController {
    * @return 是否成功
    */
   @PostMapping("/save")
-  public Boolean save(@RequestBody MasterSlave vo) {
+  public Boolean save(@RequestBody MasterSlaveVo vo) {
     return service.save(vo);
   }
 }
