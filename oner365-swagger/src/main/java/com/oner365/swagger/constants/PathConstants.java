@@ -306,6 +306,16 @@ public class PathConstants {
   public static final String REQUEST_POSTGIS_POSITION_SAVE = "/position/save";
   public static final String REQUEST_POSTGIS_POSITION_GET_ID = "/position/get/{id}";
   public static final String REQUEST_POSTGIS_POSITION_DELETE = "/position/delete";
+  
+  /** Mongodb */
+  public static final String FEIGN_CLIENT_MONGODB = "oner365-mongodb";
+  /** Mongodb context */
+  public static final String CONTEXT_MONGODB_PERSON_ID = "IMongodbPersonClient";
+  /** Mongodb uri */
+  public static final String REQUEST_MONGODB_PERSON_PAGE = "/person/page";
+  public static final String REQUEST_MONGODB_PERSON_SAVE = "/person/save";
+  public static final String REQUEST_MONGODB_PERSON_GET_ID = "/person/get/{id}";
+  public static final String REQUEST_MONGODB_PERSON_DELETE = "/person/delete";
 
   private PathConstants() {
   }

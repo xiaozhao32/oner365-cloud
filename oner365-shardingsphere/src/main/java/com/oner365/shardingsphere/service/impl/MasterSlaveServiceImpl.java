@@ -38,7 +38,8 @@ public class MasterSlaveServiceImpl implements IMasterSlaveService {
   public Boolean save(MasterSlaveVo vo) {
     try {
       MasterSlave entity = dao.save(build(vo));
-      logger.info("entity:{}", JSON.toJSONString(entity));
+      String result = JSON.toJSONString(entity);
+      logger.info("entity:{}", result);
       return Boolean.TRUE;
     } catch (Exception e) {
       logger.error("MasterSlave save error", e);
