@@ -61,9 +61,12 @@ public class KafkaController extends BaseController {
   @GetMapping("/word/count/{word}")
   public ResponseData<Long> getWordCount(@PathVariable("word") String word) {
     KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
-    ReadOnlyKeyValueStore<String, Long> counts = kafkaStreams
-        .store(StoreQueryParameters.fromNameAndType("counts", QueryableStoreTypes.keyValueStore()));
-    Long result = counts.get(word);
-    return ResponseData.success(result);
+    if (kafkaStreams != null) {
+      ReadOnlyKeyValueStore<String, Long> counts = kafkaStreams
+          .store(StoreQueryParameters.fromNameAndType("counts", QueryableStoreTypes.keyValueStore()));
+      Long result = counts.get(word);
+      return ResponseData.success(result);
+    }
+    return ResponseData.error(ResultEnum.ERROR.getName());
   }
 }

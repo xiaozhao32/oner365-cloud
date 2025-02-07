@@ -131,7 +131,7 @@ public class LdapUsersServiceImpl implements ILdapUsersService {
   }
 
   private List<LdapUserDto> builderList(List<LdapUser> list) {
-    return list.stream().map(entity -> builder(entity)).collect(Collectors.toList());
+    return list.stream().map(this::builder).collect(Collectors.toList());
   }
 
   @Override

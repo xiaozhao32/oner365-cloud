@@ -36,9 +36,9 @@ public class InfluxServiceImpl implements InfluxService {
   @Override
   public Boolean save(Mem vo) {
     try (WriteApi writeApi = config.getInfluxClient().makeWriteApi()) {
-      Map<String, String> tagMap = new HashMap<String, String>();
+      Map<String, String> tagMap = new HashMap<>();
       tagMap.put("host", vo.getHost());
-      Map<String, Object> fieldMap = new HashMap<String, Object>();
+      Map<String, Object> fieldMap = new HashMap<>();
       fieldMap.put("_value", vo.getUsedPercent());
 
       Point point = Point.measurement("mem").addTags(tagMap).addFields(fieldMap);

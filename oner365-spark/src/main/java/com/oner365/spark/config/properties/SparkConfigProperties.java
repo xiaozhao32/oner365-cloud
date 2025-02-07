@@ -53,5 +53,5 @@ public class SparkConfigProperties {
   public void setEventLogDir(String eventLogDir) {
     this.eventLogDir = eventLogDir;
   }
-
+  
 }

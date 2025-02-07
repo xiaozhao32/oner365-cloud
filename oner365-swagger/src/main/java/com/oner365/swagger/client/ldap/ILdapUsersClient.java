@@ -18,7 +18,7 @@ import com.oner365.swagger.vo.LdapUserVo;
 
 /**
  * Ldap服务 - 用户
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -27,7 +27,7 @@ public interface ILdapUsersClient {
 
   /**
    * 认证用户
-   * 
+   *
    * @param userName 用户名称
    * @param password 密码
    * @return 是否成功
@@ -38,7 +38,7 @@ public interface ILdapUsersClient {
 
   /**
    * 获取全部用户
-   * 
+   *
    * @return 集合
    */
   @GetMapping(PathConstants.REQUEST_LDAP_USERS_LIST)
@@ -46,7 +46,7 @@ public interface ILdapUsersClient {
 
   /**
    * 获取用户
-   * 
+   *
    * @param id 账号
    * @return 用户对象
    */
@@ -55,28 +55,28 @@ public interface ILdapUsersClient {
 
   /**
    * 新增用户
-   * 
+   *
    * @param vo 用户对象
    * @return 是否成功
    */
   @PutMapping(PathConstants.REQUEST_LDAP_USERS_CREATE)
-  public ResponseData<Boolean> create(@RequestBody LdapUserVo vo);
+  ResponseData<Boolean> create(@RequestBody LdapUserVo vo);
 
   /**
    * 修改用户
-   * 
+   *
    * @param vo 用户对象
    * @return 是否成功
    */
   @PutMapping(PathConstants.REQUEST_LDAP_USERS_UPDATE)
-  public ResponseData<Boolean> update(@RequestBody LdapUserVo vo);
+  ResponseData<Boolean> update(@RequestBody LdapUserVo vo);
 
   /**
    * 删除用户
-   * 
+   *
    * @param id 账号
    * @return 是否成功
    */
   @DeleteMapping(PathConstants.REQUEST_LDAP_USERS_DELETE)
-  public ResponseData<Boolean> delete(@PathVariable("id") String id);
+  ResponseData<Boolean> delete(@PathVariable("id") String id);
 }

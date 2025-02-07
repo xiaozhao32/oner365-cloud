@@ -12,7 +12,6 @@ import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItem;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.core.log.LogFormatUtils;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -149,15 +148,6 @@ public class CommonsMultipartFile implements MultipartFile, Serializable {
 
         try {
             this.fileItem.write(dest);
-            LogFormatUtils.traceDebug(logger, traceOn -> {
-                String action = "transferred";
-                if (!this.fileItem.isInMemory()) {
-                    action = (isAvailable() ? "copied" : "moved");
-                }
-                return "Part '" + getName() + "',  filename '" + getOriginalFilename() + "'"
-                        + (traceOn ? ", stored " + getStorageDescription() : "") + ": " + action + " to ["
-                        + dest.getAbsolutePath() + "]";
-            });
         } catch (FileUploadException ex) {
             throw new IllegalStateException(ex.getMessage(), ex);
         } catch (IllegalStateException | IOException ex) {

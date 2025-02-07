@@ -39,7 +39,6 @@ public class JobInvokeUtil {
         String invokeTarget = sysTask.getInvokeTarget();
         String beanName = getBeanName(invokeTarget);
         String methodName = getMethodName(invokeTarget);
-//        List<Object[]> methodParams = getMethodParams(invokeTarget);
         InvokeParamDto param = sysTask.getInvokeParam();
         if (param != null) {
           param.setConcurrent(sysTask.getConcurrent());

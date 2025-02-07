@@ -13,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.oner365.shardingsphere.dao.IMasterSlaveDao;
 import com.oner365.shardingsphere.entity.MasterSlave;
 import com.oner365.shardingsphere.service.IMasterSlaveService;
+import com.oner365.shardingsphere.vo.MasterSlaveVo;
 
 /**
  * 主从测试实现类
@@ -34,15 +35,23 @@ public class MasterSlaveServiceImpl implements IMasterSlaveService {
 
   @Override
   @Transactional
-  public Boolean save(MasterSlave vo) {
+  public Boolean save(MasterSlaveVo vo) {
     try {
-      MasterSlave entity = dao.save(vo);
-      logger.info("entity:{}", JSON.toJSONString(entity));
+      MasterSlave entity = dao.save(build(vo));
+      String result = JSON.toJSONString(entity);
+      logger.info("entity:{}", result);
       return Boolean.TRUE;
     } catch (Exception e) {
       logger.error("MasterSlave save error", e);
     }
     return Boolean.FALSE;
+  }
+  
+  private MasterSlave build(MasterSlaveVo vo) {
+    MasterSlave result = new MasterSlave();
+    result.setId(vo.getId());
+    result.setName(vo.getName());
+    return result;
   }
 
 }

@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.data.web.controller.BaseController;
-import com.oner365.mongodb.entity.Person;
+import com.oner365.mongodb.dto.PersonDto;
 import com.oner365.mongodb.service.IPersonService;
+import com.oner365.mongodb.vo.PersonVo;
 
 /**
  * Person Controller
@@ -36,7 +37,7 @@ public class PersonController extends BaseController {
    * @return PageInfo
    */
   @PostMapping("/page")
-  public PageInfo<Person> page(@RequestBody QueryCriteriaBean data) {
+  public PageInfo<PersonDto> page(@RequestBody QueryCriteriaBean data) {
     return service.page(data);
   }
 
@@ -44,22 +45,22 @@ public class PersonController extends BaseController {
    * Get Person
    * 
    * @param id 主键
-   * @return Person
+   * @return PersonDto
    */
   @GetMapping("/get/{id}")
-  public Person get(@PathVariable("id") String id) {
+  public PersonDto get(@PathVariable("id") String id) {
     return service.getById(id);
   }
 
   /**
    * Save Person
    * 
-   * @param entity 对象
+   * @param vo 对象
    * @return Person
    */
   @PutMapping("/save")
-  public Person save(@RequestBody Person entity) {
-    return service.save(entity);
+  public PersonDto save(@RequestBody PersonVo vo) {
+    return service.save(vo);
   }
 
   /**
