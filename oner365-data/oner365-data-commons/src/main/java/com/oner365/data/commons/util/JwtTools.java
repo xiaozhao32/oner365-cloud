@@ -35,7 +35,7 @@ public class JwtTools {
      * @param secret 签名key
      * @return 加密后的token
      */
-    public static String getToken(String body, Date time, String secret) {
+    public static String generateToken(String body, Date time, String secret) {
         try {
             return JWT.create().withIssuer(PARAM_AUTH).withClaim(PARAM_BODY, body)
                     .withExpiresAt(time)
@@ -66,6 +66,22 @@ public class JwtTools {
             LOGGER.error("decodeToken IllegalArgumentException:", e);
         }
         return null;
+    }
+    
+    /**
+     * 验证token 有效期
+     * 
+     * @param token 字符串token
+     * @param secret 签名key
+     * @return 是否有效
+     */
+    public static Boolean validateToken(String token, String secret) {
+      DecodedJWT decoded = decodeToken(token, secret);
+      Date expiration = decoded.getExpiresAt();
+      if (expiration != null) {
+        return expiration.after(DateUtil.getDate());
+      }
+      return false;
     }
 
 }
