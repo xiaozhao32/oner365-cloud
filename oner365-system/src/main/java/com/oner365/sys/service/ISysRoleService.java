@@ -2,7 +2,6 @@ package com.oner365.sys.service;
 
 import java.util.List;
 
-import com.alibaba.fastjson.JSONArray;
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
@@ -103,7 +102,7 @@ public interface ISysRoleService extends BaseService {
    * @param roleId   角色id
    * @return Boolean
    */
-  Boolean saveAuthority(String menuType, JSONArray menuIds, String roleId);
+  Boolean saveAuthority(String menuType, List<String> menuIds, String roleId);
 
   /**
    * 角色菜单权限

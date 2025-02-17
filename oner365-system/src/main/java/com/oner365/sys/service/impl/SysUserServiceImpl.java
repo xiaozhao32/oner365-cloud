@@ -11,7 +11,6 @@ import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cache.annotation.CacheEvict;
@@ -29,6 +28,7 @@ import com.oner365.data.commons.exception.ProjectRuntimeException;
 import com.oner365.data.commons.util.DataUtils;
 import com.oner365.data.commons.util.DateUtil;
 import com.oner365.data.commons.util.JwtUtils;
+import com.oner365.data.commons.util.Md5Util;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.Criteria;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
@@ -107,7 +107,7 @@ public class SysUserServiceImpl implements ISysUserService {
   @Override
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   public LoginUserDto login(String userName, String p, String ip) {
-    String password = DigestUtils.md5Hex(p).toUpperCase();
+    String password = Md5Util.getInstance().getMd5(p).toUpperCase();
     SysUser user = getUserByUserName(userName, password, ip);
     if (user != null) {
       String key = CacheConstants.CACHE_LOGIN_NAME + userName;
@@ -343,7 +343,7 @@ public class SysUserServiceImpl implements ISysUserService {
   public Boolean editPassword(String id, String p) {
     Optional<SysUser> optional = userDao.findById(id);
     if (optional.isPresent()) {
-      optional.get().setPassword(DigestUtils.md5Hex(p).toUpperCase());
+      optional.get().setPassword(Md5Util.getInstance().getMd5(p).toUpperCase());
       userDao.save(optional.get());
       return Boolean.TRUE;
     }
