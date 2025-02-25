@@ -2,8 +2,8 @@ package com.oner365.swagger.vo;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
-import com.alibaba.fastjson.JSONArray;
 import com.oner365.data.commons.enums.StatusEnum;
 
 /**
@@ -53,7 +53,7 @@ public class SysRoleVo implements Serializable {
   /**
    * 菜单id
    */
-  private JSONArray menuIds;
+  private List<String> menuIds;
 
   /**
    * 菜单类型
@@ -129,11 +129,11 @@ public class SysRoleVo implements Serializable {
     this.updateTime = updateTime;
   }
 
-  public JSONArray getMenuIds() {
+  public List<String> getMenuIds() {
     return menuIds;
   }
 
-  public void setMenuIds(JSONArray menuIds) {
+  public void setMenuIds(List<String> menuIds) {
     this.menuIds = menuIds;
   }
 
