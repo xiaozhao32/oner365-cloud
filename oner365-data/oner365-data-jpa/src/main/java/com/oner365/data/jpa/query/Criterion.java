@@ -1,7 +1,5 @@
 package com.oner365.data.jpa.query;
 
-import java.io.Serializable;
-
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
@@ -11,7 +9,7 @@ import javax.persistence.criteria.Root;
  * 条件接口 - 用户提供条件表达式接口
  * @author zhaoyong
  */
-public interface Criterion  extends Serializable {
+public interface Criterion {
 
     /**
      * 枚举参数

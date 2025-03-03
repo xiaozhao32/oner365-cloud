@@ -1,6 +1,5 @@
 package com.oner365.websocket.vo;
 
-import java.io.Serializable;
 import java.util.List;
 
 import com.oner365.websocket.entity.WebSocketData;
@@ -11,12 +10,7 @@ import com.oner365.websocket.enums.MessageTypeEnum;
  * 
  * @author liutao
  */
-public class WebSocketMessageVo implements Serializable {
-
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
+public class WebSocketMessageVo {
 
   /**
    * 用户名

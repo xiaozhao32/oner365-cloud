@@ -77,6 +77,10 @@ public class JwtTools {
      */
     public static Boolean validateToken(String token, String secret) {
       DecodedJWT decoded = decodeToken(token, secret);
+      if (decoded == null) {
+        return false;
+      }
+      
       Date expiration = decoded.getExpiresAt();
       if (expiration != null) {
         return expiration.after(DateUtil.getDate());

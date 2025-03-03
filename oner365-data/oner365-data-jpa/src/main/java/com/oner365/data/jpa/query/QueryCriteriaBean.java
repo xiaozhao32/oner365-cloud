@@ -1,6 +1,5 @@
 package com.oner365.data.jpa.query;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,9 +10,7 @@ import com.oner365.data.commons.constants.PublicConstants;
  * 
  * @author zhaoyong
  */
-public class QueryCriteriaBean implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class QueryCriteriaBean {
 
     /***
      * 页码
