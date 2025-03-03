@@ -1,14 +1,10 @@
 package com.oner365.data.jpa.query;
 
-import java.io.Serializable;
-
 /**
  * 查询属性配置
  * @author zhaoyong
  */
-public class AttributeBean implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class AttributeBean {
 
     /**
      * 相等 EQ, 不相等 NE, 模糊 LIKE, 大于 GT, 小于 LT, 大于等于 GTE, 小于等于 LTE, 和 AND, 或 OR, 包含 IN, 之间 BE

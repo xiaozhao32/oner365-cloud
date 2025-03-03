@@ -17,10 +17,6 @@ import javax.persistence.criteria.Root;
 public class LogicalExpression implements Criterion {
 
   /**
-  * 
-  */
-  private static final long serialVersionUID = 1L;
-  /**
    * 逻辑表达式中包含的表达式
    */
   private final Criterion[] criterion;
