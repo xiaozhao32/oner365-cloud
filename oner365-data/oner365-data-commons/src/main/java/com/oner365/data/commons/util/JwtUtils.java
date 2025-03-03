@@ -1,8 +1,8 @@
 package com.oner365.data.commons.util;
 
 import java.util.Date;
-
-import javax.crypto.SecretKey;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +12,7 @@ import com.alibaba.fastjson.JSON;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
  * JavaWebToken常用类
@@ -23,11 +24,6 @@ public class JwtUtils {
   private static final Logger LOGGER = LoggerFactory.getLogger(JwtUtils.class);
 
   /**
-   * 加密方式
-   */
-  private static final SecretKey SECRET_KEY = Jwts.SIG.HS512.key().build();
-
-  /**
    * Token 解析中的参数
    */
   private static final String TOKEN_USER_NAME = "userName";
@@ -35,7 +31,7 @@ public class JwtUtils {
   private JwtUtils() {
 
   }
-
+  
   /**
    * 创建token
    *
@@ -45,8 +41,10 @@ public class JwtUtils {
    * @return String
    */
   public static String generateToken(String username, Date expired, String secret) {
-    return Jwts.builder().subject(RsaUtils.encrypt(username)).audience().add(secret).and().issuedAt(DateUtil.getDate())
-        .expiration(expired).encryptWith(SECRET_KEY, Jwts.ENC.A256CBC_HS512).compact();
+    Map<String, Object> claims = new HashMap<>(2);
+    claims.put("sub", RsaUtils.encrypt(username));
+    claims.put("created", DateUtil.getDate());
+    return Jwts.builder().setClaims(claims).setExpiration(expired).signWith(SignatureAlgorithm.HS512, secret).compact();
   }
 
   /**
@@ -60,8 +58,8 @@ public class JwtUtils {
     if (DataUtils.isEmpty(token)) {
       return null;
     }
-    final Claims claims = getClaimsFromToken(token);
-    if (claims != null && claims.getAudience().contains(secret)) {
+    final Claims claims = getClaimsFromToken(token, secret);
+    if (claims != null && claims.getSubject() != null) {
       return RsaUtils.decrypt(claims.getSubject());
     }
     return null;
@@ -74,9 +72,9 @@ public class JwtUtils {
    * @param secret 加密秘钥
    * @return Claims
    */
-  private static Claims getClaimsFromToken(String token) {
+  private static Claims getClaimsFromToken(String token, String secret) {
     try {
-      return Jwts.parser().decryptWith(SECRET_KEY).build().parseEncryptedClaims(token).getPayload();
+      return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody();
     } catch (ExpiredJwtException e) {
       LOGGER.error("token: {}, 已过期: {}", token, e.getMessage());
       return e.getClaims();
@@ -126,8 +124,8 @@ public class JwtUtils {
    */
   public static Date getExpirationDateFromToken(String token, String secret) {
     Date expiration = null;
-    final Claims claims = getClaimsFromToken(token);
-    if (claims != null && claims.getAudience().contains(secret)) {
+    final Claims claims = getClaimsFromToken(token, secret);
+    if (claims != null) {
       expiration = claims.getExpiration();
     }
     return expiration;
