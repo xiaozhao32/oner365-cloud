@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.system.ISystemMenuTypeClient;
@@ -111,12 +110,12 @@ public class SysMenuTypeController {
    * 保存
    *
    * @param sysMenuTypeVo 菜单类型对象
-   * @return ResponseData<ResponseResult<SysMenuTypeDto>>
+   * @return ResponseData<SysMenuTypeDto>
    */
   @ApiOperation("6.保存")
   @ApiOperationSupport(order = 6)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<SysMenuTypeDto>> save(@RequestBody SysMenuTypeVo sysMenuTypeVo) {
+  public ResponseData<SysMenuTypeDto> save(@RequestBody SysMenuTypeVo sysMenuTypeVo) {
     return client.save(sysMenuTypeVo);
   }
   

@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.elasticsearch.IElasticsearchSampleGeneClient;
@@ -68,12 +67,12 @@ public class ElasticsearchSampleGeneController {
    * 保存
    *
    * @param sampleGeneVo 基因对象
-   * @return ResponseData<ResponseResult<SampleGeneDto>>
+   * @return ResponseData<SampleGeneDto>
    */
   @ApiOperation("3.保存")
   @ApiOperationSupport(order = 3)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<SampleGeneDto>> save(@RequestBody SampleGeneVo sampleGeneVo) {
+  public ResponseData<SampleGeneDto> save(@RequestBody SampleGeneVo sampleGeneVo) {
     if (sampleGeneVo == null) {
       return ResponseData.error("基因对象为空!");
     }

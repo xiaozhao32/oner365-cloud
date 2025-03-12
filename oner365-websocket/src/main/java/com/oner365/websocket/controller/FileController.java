@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.websocket.client.IFileServiceClient;
 
 /**
@@ -33,10 +31,10 @@ public class FileController {
 	 * 		方式: Post
 	 * 		参数: @RequestPart
 	 * @param multipartFile 文件
-	 * @return ResponseData
+	 * @return String 文件路径
 	 */
 	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public ResponseData<ResponseResult<String>> uploadFile(@RequestPart("multipartFile") MultipartFile multipartFile) {
+	public String uploadFile(@RequestPart("multipartFile") MultipartFile multipartFile) {
 		return client.upload(multipartFile);
 	}
 }

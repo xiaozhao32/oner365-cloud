@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -49,10 +48,10 @@ public interface IMongodbPersonClient {
    * 保存
    * 
    * @param personVo 保存对象
-   * @return ResponseData<ResponseResult<PersonDto>>
+   * @return ResponseData<PersonDto>
    */
   @PutMapping(PathConstants.REQUEST_MONGODB_PERSON_SAVE)
-  ResponseData<ResponseResult<PersonDto>> save(@RequestBody PersonVo personVo);
+  ResponseData<PersonDto> save(@RequestBody PersonVo personVo);
 
   /**
    * 删除

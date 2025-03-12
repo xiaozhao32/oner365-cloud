@@ -16,9 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.data.commons.enums.ErrorInfoEnum;
 import com.oner365.data.commons.enums.StatusEnum;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.data.web.controller.BaseController;
@@ -77,15 +75,11 @@ public class OrderController extends BaseController {
    * 用户订单保存
    *
    * @param vo 订单对象
-   * @return ResponseResult<OrderDto>
+   * @return OrderDto
    */
   @PutMapping("/save")
-  public ResponseResult<OrderDto> save(@RequestBody OrderVo vo) {
-    if (vo != null) {
-      OrderDto entity = service.save(vo);
-      return ResponseResult.success(entity);
-    }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+  public OrderDto save(@RequestBody OrderVo vo) {
+    return service.save(vo);
   }
 
   /**

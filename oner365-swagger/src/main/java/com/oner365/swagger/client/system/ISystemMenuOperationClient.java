@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -72,10 +71,10 @@ public interface ISystemMenuOperationClient {
    * 保存
    * 
    * @param sysMenuOperationVo 保存对象
-   * @return ResponseData<ResponseResult<SysMenuOperationDto>>
+   * @return ResponseData<SysMenuOperationDto>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_MENU_OPERATION_SAVE)
-  ResponseData<ResponseResult<SysMenuOperationDto>> save(@RequestBody SysMenuOperationVo sysMenuOperationVo);
+  ResponseData<SysMenuOperationDto> save(@RequestBody SysMenuOperationVo sysMenuOperationVo);
 
   /**
    * 删除

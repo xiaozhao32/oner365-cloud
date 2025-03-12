@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.system.ISystemJobClient;
@@ -86,12 +85,12 @@ public class SysJobController {
    * 用户职位保存
    *
    * @param sysJobVo 职位对象
-   * @return ResponseData<ResponseResult<SysJobDto>>
+   * @return ResponseData<SysJobDto>
    */
   @ApiOperation("4.保存")
   @ApiOperationSupport(order = 4)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<SysJobDto>> save(@RequestBody SysJobVo sysJobVo) {
+  public ResponseData<SysJobDto> save(@RequestBody SysJobVo sysJobVo) {
     return client.save(sysJobVo);
   }
 

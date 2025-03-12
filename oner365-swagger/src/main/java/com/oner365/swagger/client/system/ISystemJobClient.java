@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -62,10 +61,10 @@ public interface ISystemJobClient {
    * 保存
    * 
    * @param sysJobVo 保存对象
-   * @return ResponseData<ResponseResult<SysJobDto>>
+   * @return ResponseData<SysJobDto>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_JOB_SAVE)
-  ResponseData<ResponseResult<SysJobDto>> save(@RequestBody SysJobVo sysJobVo);
+  ResponseData<SysJobDto> save(@RequestBody SysJobVo sysJobVo);
 
   /**
    * 删除

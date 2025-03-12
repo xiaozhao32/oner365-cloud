@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.data.commons.auth.AuthUser;
 import com.oner365.data.commons.auth.annotation.CurrentUser;
-import com.oner365.data.commons.enums.ErrorInfoEnum;
 import com.oner365.data.commons.enums.StatusEnum;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.data.web.controller.BaseController;
 import com.oner365.sys.constants.SysConstants;
@@ -133,15 +131,11 @@ public class SysMenuController extends BaseController {
    * 保存菜单
    *
    * @param sysMenuVo 菜单对象
-   * @return ResponseResult<SysMenuDto>
+   * @return SysMenuDto
    */
   @PutMapping("/save")
-  public ResponseResult<SysMenuDto> save(@Validated @RequestBody SysMenuVo sysMenuVo) {
-    if (sysMenuVo != null) {
-      SysMenuDto entity = menuService.save(sysMenuVo);
-      return ResponseResult.success(entity);
-    }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+  public SysMenuDto save(@Validated @RequestBody SysMenuVo sysMenuVo) {
+    return menuService.save(sysMenuVo);
   }
 
   /**

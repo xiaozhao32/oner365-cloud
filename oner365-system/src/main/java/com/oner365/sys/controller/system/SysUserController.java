@@ -24,8 +24,6 @@ import com.oner365.data.commons.auth.AuthUser;
 import com.oner365.data.commons.auth.annotation.CurrentUser;
 import com.oner365.data.commons.enums.ErrorInfoEnum;
 import com.oner365.data.commons.enums.StatusEnum;
-import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.commons.util.Md5Util;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.AttributeBean;
@@ -81,7 +79,7 @@ public class SysUserController extends BaseController {
    * 获取信息
    *
    * @param id 编号
-   * @return ResponseData<SysUserInfoVo>
+   * @return SysUserInfoVo
    */
   @GetMapping("/get/{id}")
   public SysUserInfoVo get(@PathVariable String id) {
@@ -117,21 +115,18 @@ public class SysUserController extends BaseController {
    * 
    * @param authUser 登录对象
    * @param file     文件
-   * @return ResponseResult<String>
+   * @return String
    */
   @PostMapping("/avatar")
-  public ResponseResult<String> avatar(@CurrentUser AuthUser authUser, @RequestParam("avatarfile") MultipartFile file) {
+  public String avatar(@CurrentUser AuthUser authUser, @RequestParam("avatarfile") MultipartFile file) {
     if (!file.isEmpty()) {
-      ResponseData<ResponseResult<String>> responseData = fileServiceClient.uploadFile(file, "avatar");
-      if (responseData != null) {
-        ResponseResult<String> result = responseData.getResult();
-        if (result != null) {
-          SysUserDto sysUserDto = sysUserService.updateAvatar(authUser.getId(), result.getMsg());
-          return ResponseResult.success(sysUserDto.getAvatar());
-        }
+      String result = fileServiceClient.uploadFile(file, "avatar");
+      if (result != null) {
+        SysUserDto sysUserDto = sysUserService.updateAvatar(authUser.getId(), result);
+        return sysUserDto.getAvatar();
       }
     }
-    return ResponseResult.error("上传文件不能为空!");
+    return null;
   }
 
   /**
@@ -142,13 +137,9 @@ public class SysUserController extends BaseController {
    * @return ResponseData
    */
   @PostMapping("/update/profile")
-  public ResponseResult<SysUserDto> updateUserProfile(@RequestBody SysUserVo sysUserVo, @CurrentUser AuthUser authUser) {
-    if (sysUserVo != null) {
-      sysUserVo.setId(authUser.getId());
-      SysUserDto result = sysUserService.updateUserProfile(sysUserVo);
-      return ResponseResult.success(result);
-    }
-    return ResponseResult.error("个人信息不能为空!");
+  public SysUserDto updateUserProfile(@RequestBody SysUserVo sysUserVo, @CurrentUser AuthUser authUser) {
+    sysUserVo.setId(authUser.getId());
+    return sysUserService.updateUserProfile(sysUserVo);
   }
 
   /**
@@ -184,22 +175,19 @@ public class SysUserController extends BaseController {
    *
    * @param authUser         登录对象
    * @param modifyPasswordVo 请求参数
-   * @return ResponseResult<Boolean>
+   * @return String
    */
   @PostMapping("/update/password")
-  public ResponseResult<Boolean> editPassword(@CurrentUser AuthUser authUser,
+  public String editPassword(@CurrentUser AuthUser authUser,
       @Validated @RequestBody ModifyPasswordVo modifyPasswordVo) {
-    if (modifyPasswordVo != null) {
-      String oldPassword = Md5Util.getInstance().getMd5(modifyPasswordVo.getOldPassword()).toUpperCase();
-      SysUserDto sysUser = sysUserService.getById(authUser.getId());
+    String oldPassword = Md5Util.getInstance().getMd5(modifyPasswordVo.getOldPassword()).toUpperCase();
+    SysUserDto sysUser = sysUserService.getById(authUser.getId());
 
-      if (!oldPassword.equals(sysUser.getPassword())) {
-        return ResponseResult.error(ErrorInfoEnum.PASSWORD_ERROR.getName());
-      }
-      Boolean result = sysUserService.editPassword(authUser.getId(), modifyPasswordVo.getPassword());
-      return ResponseResult.success(result);
+    if (!oldPassword.equals(sysUser.getPassword())) {
+      return ErrorInfoEnum.PASSWORD_ERROR.getName();
     }
-    return ResponseResult.error(ErrorInfoEnum.PARAM.getName());
+    Boolean result = sysUserService.editPassword(authUser.getId(), modifyPasswordVo.getPassword());
+    return String.valueOf(result);
   }
 
   /**
@@ -218,16 +206,12 @@ public class SysUserController extends BaseController {
    * 用户保存
    *
    * @param sysUserVo 用户对象
-   * @return ResponseResult<SysUserDto>
+   * @return SysUserDto
    */
   @PutMapping("/save")
-  public ResponseResult<SysUserDto> save(@Validated @RequestBody SysUserVo sysUserVo) {
-    if (sysUserVo != null) {
-      sysUserVo.setLastIp(HttpClientUtils.getIpAddress(RequestUtils.getHttpRequest()));
-      SysUserDto entity = sysUserService.saveUser(sysUserVo);
-      return ResponseResult.success(entity);
-    }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+  public SysUserDto save(@Validated @RequestBody SysUserVo sysUserVo) {
+    sysUserVo.setLastIp(HttpClientUtils.getIpAddress(RequestUtils.getHttpRequest()));
+    return sysUserService.saveUser(sysUserVo);
   }
 
   /**

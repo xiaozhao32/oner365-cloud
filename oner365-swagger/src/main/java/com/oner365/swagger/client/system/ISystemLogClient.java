@@ -50,7 +50,7 @@ public interface ISystemLogClient {
    * 保存
    * 
    * @param sysLogVo 保存对象
-   * @return ResponseData<ResponseResult<Boolean>>
+   * @return ResponseData<Boolean>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_LOG_SAVE)
   ResponseData<Boolean> save(@RequestBody SysLogVo sysLogVo);

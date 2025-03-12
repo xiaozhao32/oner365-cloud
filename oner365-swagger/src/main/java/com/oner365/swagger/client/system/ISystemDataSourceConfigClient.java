@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -59,10 +58,10 @@ public interface ISystemDataSourceConfigClient {
    * 保存
    * 
    * @param dataSourceConfigVo 数据源对象
-   * @return ResponseData<ResponseResult<DataSourceConfigDto>>
+   * @return ResponseData<DataSourceConfigDto>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_DATASOURCE_SAVE)
-  ResponseData<ResponseResult<DataSourceConfigDto>> save(@RequestBody DataSourceConfigVo dataSourceConfigVo);
+  ResponseData<DataSourceConfigDto> save(@RequestBody DataSourceConfigVo dataSourceConfigVo);
 
   /**
    * 删除

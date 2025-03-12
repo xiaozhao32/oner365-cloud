@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.system.ISystemDictClient;
@@ -142,12 +141,12 @@ public class SysDictItemController {
    * 字典类别保存
    *
    * @param sysDictItemTypeVo 字典类别对象
-   * @return ResponseData<ResponseResult<SysDictItemTypeDto>>
+   * @return ResponseData<SysDictItemTypeDto>
    */
   @ApiOperation("8.字典类别保存")
   @ApiOperationSupport(order = 8)
   @PutMapping("/type/save")
-  public ResponseData<ResponseResult<SysDictItemTypeDto>> saveDictItemType(@RequestBody SysDictItemTypeVo sysDictItemTypeVo) {
+  public ResponseData<SysDictItemTypeDto> saveDictItemType(@RequestBody SysDictItemTypeVo sysDictItemTypeVo) {
     return client.saveDictItemType(sysDictItemTypeVo);
   }
   
@@ -234,12 +233,12 @@ public class SysDictItemController {
    * 保存字典信息
    *
    * @param sysDictItemVo 字典对象
-   * @return ResponseData<ResponseResult<SysDictItemDto>>
+   * @return ResponseData<SysDictItemDto>
    */
   @ApiOperation("15.保存字典")
   @ApiOperationSupport(order = 15)
   @PutMapping("/item/save")
-  public ResponseData<ResponseResult<SysDictItemDto>> saveDictItem(@RequestBody SysDictItemVo sysDictItemVo) {
+  public ResponseData<SysDictItemDto> saveDictItem(@RequestBody SysDictItemVo sysDictItemVo) {
     return client.saveDictItem(sysDictItemVo);
   }
   

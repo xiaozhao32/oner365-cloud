@@ -21,8 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oner365.data.commons.constants.PublicConstants;
-import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.web.controller.BaseController;
 import com.oner365.sys.client.IFileServiceClient;
 
@@ -43,10 +41,10 @@ public class FileController extends BaseController {
    * 上传文件 需要指定 类型: Content-Type: multipart/form-data 方式: Post 参数: @RequestPart
    *
    * @param multipartFile 文件
-   * @return ResponseData
+   * @return String
    */
   @PostMapping(value = "/upload")
-  public ResponseData<ResponseResult<String>> uploadFile(@RequestBody MultipartFile multipartFile, String dictory) {
+  public String uploadFile(@RequestBody MultipartFile multipartFile, String dictory) {
     return fileServiceClient.uploadFile(multipartFile, dictory);
   }
 
