@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
-import com.oner365.common.ResponseResult;
 import com.oner365.common.enums.ErrorInfoEnum;
 import com.oner365.common.page.PageInfo;
 import com.oner365.common.query.QueryCriteriaBean;
@@ -91,17 +90,13 @@ public class ${ClassName}Controller extends BaseController {
      * ${functionName}保存
      *
      * @param ${className}Vo 对象
-     * @return ResponseResult<${ClassName}Dto>
+     * @return ${ClassName}Dto
      */
     @ApiOperation("4.保存")
     @ApiOperationSupport(order = 4)
     @PutMapping("/save")
-    public ResponseResult<${ClassName}Dto> save(@RequestBody ${ClassName}Vo ${className}Vo) {
-        if (${className}Vo != null) {
-            ${ClassName}Dto entity = ${className}Service.save(${className}Vo);
-            return ResponseResult.success(entity);
-        }
-        return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+    public ${ClassName}Dto save(@RequestBody ${ClassName}Vo ${className}Vo) {
+      return ${className}Service.save(${className}Vo);
     }
 
     /**

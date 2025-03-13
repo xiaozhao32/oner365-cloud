@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.data.commons.enums.ErrorInfoEnum;
 import com.oner365.data.commons.enums.StatusEnum;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.data.web.controller.BaseController;
@@ -93,22 +91,18 @@ public class SysRoleController extends BaseController {
    * 角色权限保存
    * 
    * @param sysRoleVo 参数
-   * @return ResponseResult<Boolean>
+   * @return Boolean
    */
   @PutMapping("/save")
-  public ResponseResult<Boolean> save(@Validated @RequestBody SysRoleVo sysRoleVo) {
-    if (sysRoleVo != null) {
-      // 保存角色
-      SysRoleDto entity = roleService.save(sysRoleVo);
-      Boolean code = Boolean.FALSE;
-      if (entity != null && sysRoleVo.getMenuType() != null) {
-        // 保存权限
-        code = roleService.saveAuthority(sysRoleVo.getMenuType(), sysRoleVo.getMenuIds(), entity.getId());
-      }
-      return ResponseResult.success(code);
-
+  public Boolean save(@Validated @RequestBody SysRoleVo sysRoleVo) {
+    // 保存角色
+    SysRoleDto entity = roleService.save(sysRoleVo);
+    Boolean result = Boolean.FALSE;
+    if (entity != null && sysRoleVo.getMenuType() != null) {
+      // 保存权限
+      result = roleService.saveAuthority(sysRoleVo.getMenuType(), sysRoleVo.getMenuIds(), entity.getId());
     }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+    return result;
   }
 
   /**

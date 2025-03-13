@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.system.ISystemMessageClient;
@@ -47,12 +46,12 @@ public class SysMessageController {
    * 查询结果 有返回 true 并且删除
    * 
    * @param messageType 消息类型
-   * @return ResponseData<ResponseResult<Boolean>>
+   * @return ResponseData<Boolean>
    */
   @ApiOperation("1.刷新结果")
   @ApiOperationSupport(order = 1)
   @GetMapping("/refresh")
-  public ResponseData<ResponseResult<Boolean>> refresh(@RequestParam("messageType") MessageTypeEnum messageType) {
+  public ResponseData<Boolean> refresh(@RequestParam("messageType") MessageTypeEnum messageType) {
     return client.refresh(messageType);
   }
   
@@ -100,12 +99,12 @@ public class SysMessageController {
    * 保存
    *
    * @param sysMessageVo 消息对象
-   * @return ResponseData<ResponseResult<SysMessageDto>>
+   * @return ResponseData<SysMessageDto>
    */
   @ApiOperation("5.保存")
   @ApiOperationSupport(order = 5)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<SysMessageDto>> save(@RequestBody SysMessageVo sysMessageVo) {
+  public ResponseData<SysMessageDto> save(@RequestBody SysMessageVo sysMessageVo) {
     return client.save(sysMessageVo);
   }
   

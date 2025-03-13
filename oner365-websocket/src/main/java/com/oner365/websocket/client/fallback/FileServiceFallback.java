@@ -3,8 +3,6 @@ package com.oner365.websocket.client.fallback;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.websocket.client.IFileServiceClient;
 
 /**
@@ -16,7 +14,7 @@ import com.oner365.websocket.client.IFileServiceClient;
 public class FileServiceFallback implements IFileServiceClient {
 
 	@Override
-	public ResponseData<ResponseResult<String>> upload(MultipartFile multipartFile) {
+	public String upload(MultipartFile multipartFile) {
 		return null;
 	}
 

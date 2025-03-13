@@ -19,10 +19,6 @@ import com.oner365.data.commons.util.DateUtil;
  */
 public class SimpleExpression implements Criterion {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
   private static final String POINT = ".";
   private static final String COLLECTION = "List";
 

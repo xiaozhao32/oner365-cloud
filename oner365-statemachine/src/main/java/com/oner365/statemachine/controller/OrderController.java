@@ -7,11 +7,11 @@ import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateMachine;
 import org.springframework.statemachine.persist.StateMachinePersister;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.data.commons.constants.PublicConstants;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.web.controller.BaseController;
 import com.oner365.statemachine.constants.StatemachineConstants;
 import com.oner365.statemachine.entity.Order;
@@ -40,14 +40,10 @@ public class OrderController extends BaseController {
    *
    * @return String
    */
-  @GetMapping("/test")
-  public ResponseResult<OrderVo> index(Integer orderId) {
-    if (orderId == null) {
-      return ResponseResult.error("订单号不能为空");
-    }
-
+  @GetMapping("/test/{orderId}")
+  public OrderVo index(@PathVariable Integer orderId) {
     Order order = getOrder(orderId);
-    return ResponseResult.success(getOrderVo(order));
+    return getOrderVo(order);
   }
 
   /**

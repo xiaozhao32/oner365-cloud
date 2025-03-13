@@ -1,5 +1,7 @@
 package com.oner365.sys.client;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,8 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.sys.client.fallback.FileServiceClientFallback;
 
 /**
@@ -32,7 +32,7 @@ public interface IFileServiceClient {
      * @return ResponseData
      */
   @PostMapping(value = "/storage/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  ResponseData<ResponseResult<String>> uploadFile(@RequestPart("file") MultipartFile file,
+  String uploadFile(@RequestPart("file") MultipartFile file,
       @RequestParam("dictory") String dictory);
   
   /**
@@ -48,9 +48,9 @@ public interface IFileServiceClient {
    * 删除文件
    * 
    * @param ids 文件id
-   * @return ResponseData
+   * @return List<Boolean>
    */
   @DeleteMapping("/storage/delete")
-  ResponseData<String> delete(@RequestBody String... ids);
+  List<Boolean> delete(@RequestBody String... ids);
 
 }

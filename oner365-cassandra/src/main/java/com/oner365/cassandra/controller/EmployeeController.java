@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.cassandra.entity.Employee;
 import com.oner365.cassandra.service.IEmployeeService;
-import com.oner365.data.commons.enums.ErrorInfoEnum;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 
@@ -65,27 +63,19 @@ public class EmployeeController {
    * @return Employee
    */
   @GetMapping("/get/{id}")
-  public ResponseResult<Employee> get(@PathVariable Integer id) {
-    Employee entity = service.getById(id);
-    if (entity != null) {
-      return ResponseResult.success(entity);
-    }
-    return ResponseResult.error(ErrorInfoEnum.QUERY_ERROR.getName());
+  public Employee get(@PathVariable Integer id) {
+    return service.getById(id);
   }
   
   /**
    * 保存
    *
    * @param employeeVo 对象
-   * @return ResponseResult<Employee>
+   * @return Employee
    */
   @PutMapping("/save")
-  public ResponseResult<Employee> save(@Validated @RequestBody Employee employeeVo) {
-    if (employeeVo != null) {
-      Employee entity = service.save(employeeVo);
-      return ResponseResult.success(entity);
-    }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+  public Employee save(@Validated @RequestBody Employee employeeVo) {
+    return service.save(employeeVo);
   }
   
   /**

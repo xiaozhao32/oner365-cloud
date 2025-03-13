@@ -2,8 +2,8 @@ package com.oner365.swagger.dto;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.List;
 
-import com.alibaba.fastjson.JSONArray;
 import com.google.common.base.MoreObjects;
 import com.oner365.data.commons.enums.StatusEnum;
 
@@ -66,7 +66,7 @@ public class SysRoleDto implements Serializable {
      * 菜单id
      */
     @ApiModelProperty(value = "菜单id")
-    private JSONArray menuIds;
+    private List<String> menuIds;
     
     /**
      * 菜单类型
@@ -143,19 +143,11 @@ public class SysRoleDto implements Serializable {
         this.updateTime = updateTime;
     }
 
-    /**
-     * toString Method
-     */
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", id).toString();
-    }
-
-    public JSONArray getMenuIds() {
+    public List<String> getMenuIds() {
         return menuIds;
     }
 
-    public void setMenuIds(JSONArray menuIds) {
+    public void setMenuIds(List<String> menuIds) {
         this.menuIds = menuIds;
     }
 
@@ -165,5 +157,13 @@ public class SysRoleDto implements Serializable {
 
     public void setMenuType(String menuType) {
         this.menuType = menuType;
+    }
+    
+    /**
+     * toString Method
+     */
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this).add("id", id).toString();
     }
 }

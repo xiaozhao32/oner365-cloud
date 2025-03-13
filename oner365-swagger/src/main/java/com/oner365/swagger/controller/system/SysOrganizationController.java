@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.swagger.client.system.ISystemOrgClient;
 import com.oner365.swagger.dto.SysMenuTreeSelectDto;
 import com.oner365.swagger.dto.SysOrganizationDto;
@@ -152,12 +151,12 @@ public class SysOrganizationController {
    * 机构信息保存
    *
    * @param sysOrganizationVo 机构对象
-   * @return ResponseData<ResponseResult<SysOrganizationDto>>
+   * @return ResponseData<SysOrganizationDto>
    */
   @ApiOperation("10.保存")
   @ApiOperationSupport(order = 10)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<SysOrganizationDto>> save(@RequestBody SysOrganizationVo sysOrganizationVo) {
+  public ResponseData<SysOrganizationDto> save(@RequestBody SysOrganizationVo sysOrganizationVo) {
     return client.save(sysOrganizationVo);
   }
   

@@ -1,7 +1,5 @@
 package com.oner365.websocket.entity;
 
-import java.io.Serializable;
-
 import org.springframework.web.socket.WebSocketSession;
 
 /**
@@ -9,12 +7,7 @@ import org.springframework.web.socket.WebSocketSession;
  * 
  * @author liutao
  */
-public class WebSocketData implements Serializable {
-
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
+public class WebSocketData {
 
   /**
    * 通道号

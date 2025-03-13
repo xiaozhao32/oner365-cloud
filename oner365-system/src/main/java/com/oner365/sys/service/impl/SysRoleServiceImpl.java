@@ -18,7 +18,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.alibaba.fastjson.JSONArray;
 import com.oner365.data.commons.constants.PublicConstants;
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.exception.ProjectRuntimeException;
@@ -164,14 +163,14 @@ public class SysRoleServiceImpl implements ISysRoleService {
   @Transactional(rollbackFor = ProjectRuntimeException.class)
   @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
       @CacheEvict(value = CACHE_MENU_NAME, allEntries = true) })
-  public Boolean saveAuthority(String menuType, JSONArray menuIds, String roleId) {
+  public Boolean saveAuthority(String menuType, List<String> menuIds, String roleId) {
     roleMenuDao.deleteRoleMenuByRoleId(roleId);
     menuIds.forEach(menuId -> {
       SysRoleMenu roleMenu = new SysRoleMenu();
       roleMenu.setRoleId(roleId);
-      roleMenu.setMenuId(menuId.toString());
+      roleMenu.setMenuId(menuId);
       roleMenu.setMenuTypeId(menuType);
-      roleMenu.setId(roleId + menuType + menuId.toString());
+      roleMenu.setId(roleId + menuType + menuId);
       roleMenuDao.save(roleMenu);
     });
     return Boolean.TRUE;

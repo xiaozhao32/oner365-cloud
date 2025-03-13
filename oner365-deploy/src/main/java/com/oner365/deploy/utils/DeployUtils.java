@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.exec.CommandLine;
+import org.apache.commons.exec.DaemonExecutor;
 import org.apache.commons.exec.DefaultExecuteResultHandler;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.PumpStreamHandler;
@@ -209,7 +210,7 @@ public class DeployUtils {
     try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
       CommandLine commandLine = CommandLine.parse(command);
 
-      DefaultExecutor exec = new DefaultExecutor();
+      DefaultExecutor exec = DaemonExecutor.builder().get();
       PumpStreamHandler streamHandler = new PumpStreamHandler(outStream);
       exec.setStreamHandler(streamHandler);
       exec.execute(commandLine);
@@ -248,7 +249,7 @@ public class DeployUtils {
     try (ByteArrayOutputStream outstream = new ByteArrayOutputStream()) {
       CommandLine commandLine = CommandLine.parse(command);
 
-      DefaultExecutor exec = new DefaultExecutor();
+      DefaultExecutor exec = DaemonExecutor.builder().get();
       DefaultExecuteResultHandler handler = new DefaultExecuteResultHandler();
 
       PumpStreamHandler streamHandler = new PumpStreamHandler(outstream);

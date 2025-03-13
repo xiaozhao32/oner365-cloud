@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.data.commons.enums.ErrorInfoEnum;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.data.web.controller.BaseController;
@@ -76,15 +74,11 @@ public class DataSourceConfigController extends BaseController {
    * 保存
    * 
    * @param dataSourceConfigVo 数据源对象
-   * @return ResponseResult<DataSourceConfigDto>
+   * @return DataSourceConfigDto
    */
   @PutMapping("/save")
-  public ResponseResult<DataSourceConfigDto> save(@Validated @RequestBody DataSourceConfigVo dataSourceConfigVo) {
-    if (dataSourceConfigVo != null) {
-      DataSourceConfigDto entity = service.save(dataSourceConfigVo);
-      return ResponseResult.success(entity);
-    }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+  public DataSourceConfigDto save(@Validated @RequestBody DataSourceConfigVo dataSourceConfigVo) {
+    return service.save(dataSourceConfigVo);
   }
 
   /**

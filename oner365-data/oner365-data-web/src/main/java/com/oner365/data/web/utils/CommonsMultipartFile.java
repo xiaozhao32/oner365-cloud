@@ -3,7 +3,6 @@ package com.oner365.data.web.utils;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
@@ -15,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 /**
  * {@link MultipartFile} implementation for Apache Commons FileUpload.
@@ -24,9 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @since 29.09.2003
  * @see CommonsMultipartResolver
  */
-public class CommonsMultipartFile implements MultipartFile, Serializable {
-
-    private static final long serialVersionUID = 1L;
+public class CommonsMultipartFile implements MultipartFile {
 
     protected static final Log logger = LogFactory.getLog(CommonsMultipartFile.class);
 

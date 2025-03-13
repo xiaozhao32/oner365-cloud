@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.system.ISystemUserClient;
@@ -166,12 +165,12 @@ public class SysUserController {
    * 用户保存
    *
    * @param sysUserVo 用户对象
-   * @return ResponseData<ResponseResult<SysUserDto>>
+   * @return ResponseData<SysUserDto>
    */
   @ApiOperation("10.保存")
   @ApiOperationSupport(order = 10)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<SysUserDto>> save(@RequestBody SysUserVo sysUserVo) {
+  public ResponseData<SysUserDto> save(@RequestBody SysUserVo sysUserVo) {
     return client.save(sysUserVo);
   }
   

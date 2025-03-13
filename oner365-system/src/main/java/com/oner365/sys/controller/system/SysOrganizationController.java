@@ -19,9 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.data.commons.auth.AuthUser;
 import com.oner365.data.commons.auth.annotation.CurrentUser;
-import com.oner365.data.commons.enums.ErrorInfoEnum;
 import com.oner365.data.commons.enums.StatusEnum;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.data.web.controller.BaseController;
 import com.oner365.sys.dto.SysMenuTreeSelectDto;
@@ -166,17 +164,13 @@ public class SysOrganizationController extends BaseController {
    *
    * @param sysOrganizationVo 机构对象
    * @param authUser          登录对象
-   * @return ResponseResult<SysOrganizationDto>
+   * @return SysOrganizationDto
    */
   @PutMapping("/save")
-  public ResponseResult<SysOrganizationDto> save(@Validated @RequestBody SysOrganizationVo sysOrganizationVo,
+  public SysOrganizationDto save(@Validated @RequestBody SysOrganizationVo sysOrganizationVo,
       @CurrentUser AuthUser authUser) {
-    if (sysOrganizationVo != null) {
-      sysOrganizationVo.setCreateUser(authUser.getId());
-      SysOrganizationDto entity = sysOrgService.save(sysOrganizationVo);
-      return ResponseResult.success(entity);
-    }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+    sysOrganizationVo.setCreateUser(authUser.getId());
+    return sysOrgService.save(sysOrganizationVo);
   }
 
   /**

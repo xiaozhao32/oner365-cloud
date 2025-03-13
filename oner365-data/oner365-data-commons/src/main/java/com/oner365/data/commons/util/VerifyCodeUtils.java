@@ -36,7 +36,7 @@ public class VerifyCodeUtils {
    */
   private VerifyCodeUtils() {
   }
-
+  
   /**
    * 使用系统默认字符源生成验证码
    *
@@ -59,10 +59,11 @@ public class VerifyCodeUtils {
       sources = VERIFY_CODES;
     }
     int codesLen = sources.length();
-    Random rand = new Random(System.currentTimeMillis());
+    SecureRandom random = new SecureRandom();
+    random.nextBytes(new byte[sources.length()]);
     StringBuilder verifyCode = new StringBuilder(verifySize);
     for (int i = 0; i < verifySize; i++) {
-      verifyCode.append(sources.charAt(rand.nextInt(codesLen - 1)));
+      verifyCode.append(sources.charAt(random.nextInt(codesLen - 1)));
     }
     return verifyCode.toString();
   }

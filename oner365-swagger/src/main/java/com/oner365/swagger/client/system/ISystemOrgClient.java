@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.swagger.constants.PathConstants;
 import com.oner365.swagger.dto.SysMenuTreeSelectDto;
 import com.oner365.swagger.dto.SysOrganizationDto;
@@ -109,10 +108,10 @@ public interface ISystemOrgClient {
    * 保存
    * 
    * @param sysOrganizationVo 保存对象
-   * @return ResponseData<ResponseResult<SysOrganizationDto>>
+   * @return ResponseData<SysOrganizationDto>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_ORG_SAVE)
-  ResponseData<ResponseResult<SysOrganizationDto>> save(@RequestBody SysOrganizationVo sysOrganizationVo);
+  ResponseData<SysOrganizationDto> save(@RequestBody SysOrganizationVo sysOrganizationVo);
 
   /**
    * 删除
