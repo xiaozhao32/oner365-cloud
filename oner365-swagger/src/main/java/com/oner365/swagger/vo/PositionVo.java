@@ -4,25 +4,53 @@ import java.io.Serializable;
 
 import com.oner365.swagger.enums.PostgisTypeEnum;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * Position VO
  * 
  * @author zhaoyong
  */
+@ApiModel(value = "位置信息")
 public class PositionVo implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  /**
+   * 主键
+   */
+  @ApiModelProperty(value = "主键")
   private String id;
 
+  /**
+   * 位置名称
+   */
+  @ApiModelProperty(value = "位置名称")
   private String positionName;
   
+  /**
+   * 类型
+   */
+  @ApiModelProperty(value = "类型")
   private PostgisTypeEnum postgisType;
 
+  /**
+   * 点
+   */
+  @ApiModelProperty(value = "点")
   private PointVo point;
 
+  /**
+   * 面
+   */
+  @ApiModelProperty(value = "面")
   private PolygonVo polygon;
   
+  /**
+   * 线
+   */
+  @ApiModelProperty(value = "线")
   private LineStringVo lineString;
 
   public String getId() {

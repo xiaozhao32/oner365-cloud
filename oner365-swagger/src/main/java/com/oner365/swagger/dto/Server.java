@@ -10,11 +10,15 @@ import com.oner365.swagger.dto.server.Mem;
 import com.oner365.swagger.dto.server.Sys;
 import com.oner365.swagger.dto.server.SysFile;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 服务器相关信息
  *
  * @author zhaoyong
  */
+@ApiModel(value = "服务器信息")
 public class Server implements Serializable {
 
   private static final long serialVersionUID = 1L;
@@ -22,26 +26,31 @@ public class Server implements Serializable {
   /**
    * CPU相关信息
    */
+  @ApiModelProperty(value = "CPU信息")
   private Cpu cpu = new Cpu();
 
   /**
    * 內存相关信息
    */
+  @ApiModelProperty(value = "内存信息")
   private Mem mem = new Mem();
 
   /**
    * JVM相关信息
    */
+  @ApiModelProperty(value = "JVM信息")
   private Jvm jvm = new Jvm();
 
   /**
    * 服务器相关信息
    */
+  @ApiModelProperty(value = "配置信息")
   private Sys sys = new Sys();
 
   /**
    * 磁盘相关信息
    */
+  @ApiModelProperty(value = "磁盘信息")
   private List<SysFile> sysFiles = new LinkedList<>();
 
   public Cpu getCpu() {

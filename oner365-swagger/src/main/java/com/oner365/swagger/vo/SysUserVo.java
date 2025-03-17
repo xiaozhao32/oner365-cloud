@@ -4,16 +4,21 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import javax.validation.constraints.NotBlank;
 
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.swagger.enums.SysUserSexEnum;
 import com.oner365.swagger.enums.SysUserTypeEnum;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 系统用户
  *
  * @author zhaoyong
  */
+@ApiModel(value = "用户信息")
 public class SysUserVo implements Serializable {
 
   /**
@@ -24,110 +29,164 @@ public class SysUserVo implements Serializable {
   /**
    * 主键
    */
+  @ApiModelProperty(value = "主键")
   private String id;
 
   /**
    * 用户标识
    */
+  @ApiModelProperty(value = "用户标识")
   private String userCode;
 
   /**
    * 账号
    */
+  @ApiModelProperty(value = "账号", required = true)
+  @NotBlank(message = "{system.vo.loginUser.userName.message}")
   private String userName;
 
   /**
    * 密码
    */
+  @ApiModelProperty(value = "密码", required = true)
+  @NotBlank(message = "{system.vo.loginUser.password.message}")
   private String password;
 
   /**
    * 真实姓名
    */
+  @ApiModelProperty(value = "真实姓名")
   private String realName;
 
   /**
    * 头像
    */
+  @ApiModelProperty(value = "头像")
   private String avatar;
 
   /**
    * 性别
    */
+  @ApiModelProperty(value = "性别")
   private SysUserSexEnum sex;
 
   /**
    * 状态
    */
+  @ApiModelProperty(value = "状态")
   private StatusEnum status;
 
   /**
    * 最后登录时间
    */
+  @ApiModelProperty(value = "最后登录时间")
   private LocalDateTime lastTime;
 
   /**
    * 创建时间
    */
+  @ApiModelProperty(value = "创建时间")
   private LocalDateTime createTime;
 
   /**
    * 最后登录ip
    */
+  @ApiModelProperty(value = "最后登录ip")
   private String lastIp;
 
   /**
    * 邮箱
    */
+  @ApiModelProperty(value = "邮箱")
   private String email;
 
   /**
    * 电话
    */
+  @ApiModelProperty(value = "电话")
   private String phone;
 
   /**
    * 身份证
    */
+  @ApiModelProperty(value = "身份证")
   private String idCard;
 
   /**
    * 是否管理员
    */
+  @ApiModelProperty(value = "是否管理员")
   private String isAdmin;
 
   /**
    * 默认密码
    */
+  @ApiModelProperty(value = "默认密码")
   private String defaultPassword;
 
   /**
    * 状态
    */
+  @ApiModelProperty(value = "状态")
   private StatusEnum activeStatus;
 
   /**
    * 用户类型
    */
+  @ApiModelProperty(value = "用户类型")
   private SysUserTypeEnum userType;
 
   /**
    * 证件类型
    */
+  @ApiModelProperty(value = "证件类型")
   private String idType;
 
   /**
    * 备注
    */
+  @ApiModelProperty(value = "备注")
   private String remark;
 
+  /**
+   * 角色ID
+   */
+  @ApiModelProperty(value = "角色ID列表")
   private List<String> roles = new ArrayList<>();
+
+  /**
+   * 角色名称列表
+   */
+  @ApiModelProperty(value = "角色名称列表")
   private List<String> roleNameList = new ArrayList<>();
+
+  /**
+   * 职位ID
+   */
+  @ApiModelProperty(value = "职位ID列表")
   private List<String> jobs = new ArrayList<>();
+
+  /**
+   * 职位名称列表
+   */
+  @ApiModelProperty(value = "职位名称列表")
   private List<String> jobNameList = new ArrayList<>();
+
+  /**
+   * 机构ID
+   */
+  @ApiModelProperty(value = "机构ID列表")
   private List<String> orgs = new ArrayList<>();
+
+  /**
+   * 机构名称列表
+   */
+  @ApiModelProperty(value = "机构名称列表")
   private List<String> orgNameList = new ArrayList<>();
 
+  /**
+   * 构造方法
+   */
   public SysUserVo() {
     super();
   }
@@ -412,52 +471,87 @@ public class SysUserVo implements Serializable {
     this.sex = sex;
   }
 
+  /**
+   * @return the roles
+   */
   public List<String> getRoles() {
     return roles;
   }
 
+  /**
+   * @param roles the roles to set
+   */
   public void setRoles(List<String> roles) {
     this.roles = roles;
   }
 
+  /**
+   * @return the roleNameList
+   */
   public List<String> getRoleNameList() {
     return roleNameList;
   }
 
+  /**
+   * @param roleNameList the roleNameList to set
+   */
   public void setRoleNameList(List<String> roleNameList) {
     this.roleNameList = roleNameList;
   }
 
+  /**
+   * @return the jobs
+   */
   public List<String> getJobs() {
     return jobs;
   }
 
+  /**
+   * @param jobs the jobs to set
+   */
   public void setJobs(List<String> jobs) {
     this.jobs = jobs;
   }
 
+  /**
+   * @return the jobNameList
+   */
   public List<String> getJobNameList() {
     return jobNameList;
   }
 
+  /**
+   * @param jobNameList the jobNameList to set
+   */
   public void setJobNameList(List<String> jobNameList) {
     this.jobNameList = jobNameList;
   }
 
+  /**
+   * @return the orgs
+   */
   public List<String> getOrgs() {
     return orgs;
   }
 
+  /**
+   * @param orgs the orgs to set
+   */
   public void setOrgs(List<String> orgs) {
     this.orgs = orgs;
   }
 
+  /**
+   * @return the orgNameList
+   */
   public List<String> getOrgNameList() {
     return orgNameList;
   }
 
+  /**
+   * @param orgNameList the orgNameList to set
+   */
   public void setOrgNameList(List<String> orgNameList) {
     this.orgNameList = orgNameList;
   }
-
 }
