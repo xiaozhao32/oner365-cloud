@@ -33,10 +33,10 @@ public class RelationNode implements Serializable {
   private String name;
 
   /**
-   * 子对象
+   * 目标关系的人员
    */
   @TargetNode
-  private SonNode sonNode;
+  private ParentNode parentNode;
 
   /**
    * 构造方法
@@ -45,15 +45,6 @@ public class RelationNode implements Serializable {
     super();
   }
   
-  /**
-   * 构造方法
-   */
-  public RelationNode(String name, SonNode sonNode) {
-    this.name = name;
-    this.sonNode = sonNode;
-
-  }
-
   /**
    * @return the id
    */
@@ -82,17 +73,12 @@ public class RelationNode implements Serializable {
     this.name = name;
   }
 
-  /**
-   * @return the sonNode
-   */
-  public SonNode getSonNode() {
-    return sonNode;
+  public ParentNode getParentNode() {
+    return parentNode;
   }
 
-  /**
-   * @param sonNode the sonNode to set
-   */
-  public void setSonNode(SonNode sonNode) {
-    this.sonNode = sonNode;
+  public void setParentNode(ParentNode parentNode) {
+    this.parentNode = parentNode;
   }
+
 }

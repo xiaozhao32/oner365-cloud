@@ -1,8 +1,8 @@
 package com.oner365.neo4j.entity;
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.data.neo4j.core.schema.GeneratedValue;
 import org.springframework.data.neo4j.core.schema.Id;
@@ -12,7 +12,7 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 import org.springframework.stereotype.Component;
 
 /**
- * 父节点
+ * 人员节点
  * 
  * @author zhaoyong
  *
@@ -39,8 +39,8 @@ public class ParentNode implements Serializable {
   /**
    * 关系
    */
-  @Relationship(type = "RelationEdge", direction = Relationship.Direction.OUTGOING)
-  private Set<RelationNode> relation = new HashSet<>();
+  @Relationship(direction = Relationship.Direction.OUTGOING)
+  private List<RelationNode> relationList = new ArrayList<>();
   
   /**
    * 构造方法
@@ -56,9 +56,8 @@ public class ParentNode implements Serializable {
     this.name = name;
   }
 
-  public void addRelation(SonNode sonNode, String name) {
-    RelationNode relationNode = new RelationNode(name, sonNode);
-    relation.add(relationNode);
+  public void addRelation(RelationNode relationNode) {
+    relationList.add(relationNode);
   }
 
   /**
@@ -90,17 +89,17 @@ public class ParentNode implements Serializable {
   }
 
   /**
-   * @return the relation
+   * @return the relationList
    */
-  public Set<RelationNode> getRelation() {
-    return relation;
+  public List<RelationNode> getRelationList() {
+    return relationList;
   }
 
   /**
-   * @param relation the relation to set
+   * @param relationList the relationList to set
    */
-  public void setRelation(Set<RelationNode> relation) {
-    this.relation = relation;
+  public void setRelationList(List<RelationNode> relationList) {
+    this.relationList = relationList;
   }
 
 }

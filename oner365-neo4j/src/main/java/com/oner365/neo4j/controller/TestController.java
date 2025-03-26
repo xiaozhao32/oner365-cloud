@@ -13,9 +13,7 @@ import com.oner365.data.commons.enums.ResultEnum;
 import com.oner365.data.commons.reponse.ResponseData;
 import com.oner365.data.web.controller.BaseController;
 import com.oner365.neo4j.entity.ParentNode;
-import com.oner365.neo4j.entity.SonNode;
 import com.oner365.neo4j.service.ParentService;
-import com.oner365.neo4j.service.SonService;
 
 /**
  * neo4j test
@@ -30,11 +28,8 @@ public class TestController extends BaseController {
   @Resource
   private ParentService parentService;
   
-  @Resource
-  private SonService sonService;
-
   /**
-   * 保存父节点
+   * 保存人员节点
    * 
    * @return ParentNode
    */
@@ -44,9 +39,9 @@ public class TestController extends BaseController {
   }
   
   /**
-   * 删除父节点
+   * 删除当前人员节点
    * 
-   * @param id 父节点
+   * @param id 人员节点
    */
   @DeleteMapping("/parent/delete/{id}")
   public ResponseData<ResultEnum> deleteParent(@PathVariable Long id) {
@@ -57,28 +52,4 @@ public class TestController extends BaseController {
     return ResponseData.error(ResultEnum.ERROR.name());
   }
   
-  /**
-   * 保存子节点
-   * 
-   * @return SonNode
-   */
-  @PostMapping("/son/save")
-  public SonNode save(@RequestBody SonNode sonNode) {
-    return sonService.save(sonNode);
-  }
-
-  /**
-   * 删除子节点
-   * 
-   * @param id 子节点
-   */
-  @DeleteMapping("/son/delete/{id}")
-  public ResponseData<ResultEnum> deleteSon(@PathVariable Long id) {
-    boolean result = sonService.delete(id);
-    if (result) {
-      return ResponseData.success(ResultEnum.SUCCESS);
-    }
-    return ResponseData.error(ResultEnum.ERROR.name());
-  }
-
 }
