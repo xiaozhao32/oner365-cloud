@@ -6,6 +6,8 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.kafka.common.serialization.Serdes;
+import org.apache.kafka.streams.StreamsBuilder;
+import org.apache.kafka.streams.kstream.KStream;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,4 +47,10 @@ public class KafkaConfig {
 
     return new KafkaStreamsConfiguration(props);
   }
+
+  @Bean
+  KStream<Integer, String> kStream(StreamsBuilder kStreamBuilder) {
+    return kStreamBuilder.stream(kafkaProperties.getTopics());
+  }
+
 }

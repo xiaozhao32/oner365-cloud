@@ -1452,6 +1452,11 @@
 				<version>${org.apache.kafka.version}</version>
 			</dependency>
 			<dependency>
+			    <groupId>org.apache.kafka</groupId>
+			    <artifactId>kafka-streams</artifactId>
+			    <version>${org.apache.kafka.version}</version>
+			</dependency>
+			<dependency>
 				<groupId>org.apache.kafka</groupId>
 				<artifactId>kafka-storage</artifactId>
 				<version>${org.apache.kafka.version}</version>
