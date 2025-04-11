@@ -35,6 +35,10 @@ public class DeployMethod {
   /** 分隔符 */
   private static final String DELIMITER = "/";
   private static final String DOCKER_COMPOSE_YML = "docker-compose.yml";
+  
+  private static String SHELL_START_FILE = DeployMethod.class.getResource("/service/start.sh").getPath();
+  private static String BAT_START_FILE = DeployMethod.class.getResource("/service/start.bat").getPath();
+  private static String DOCKER_FILE = DeployMethod.class.getResource("/docker/dockerfile").getPath();
 
   private DeployMethod() {
   }
@@ -142,28 +146,28 @@ public class DeployMethod {
       DataUtils.copyDirectory(libPath, targetPath);
 
       // 制作 Linux 启动脚本
-      String readFile = DeployMethod.class.getResource("/service/start.sh").getPath();
-      String writeFile = targetPath + File.separator + "start.sh";
-      Map<String, Object> items = new HashMap<>(1);
-      items.put("SERVICE_NAME=", "SERVICE_NAME=" + projectName);
-      items.put("VERSION=", "VERSION=" + deployEntity.getVersion());
-      items.put("ACTIVE=", "ACTIVE=" + deployEntity.getActive());
-      DeployUtils.replaceContextFileCreate(readFile, writeFile, items);
+      String shellWriteFile = targetPath + File.separator + "start.sh";
+      Map<String, Object> shellMap = new HashMap<>(5);
+      shellMap.put("SERVICE_NAME=", "SERVICE_NAME=" + projectName);
+      shellMap.put("VERSION=", "VERSION=" + deployEntity.getVersion());
+      
+      shellMap.put("SPRING_PROFILES_ACTIVE=", "SPRING_PROFILES_ACTIVE=" + deployEntity.getActive());
+      shellMap.put("SPRING_CLOUD_NACOS_SERVER_ADDR=", "SPRING_CLOUD_NACOS_SERVER_ADDR=" + deployEntity.getServerAddr());
+      DeployUtils.replaceContextFileCreate(SHELL_START_FILE, shellWriteFile, shellMap);
 
       // 制作 Windows 启动脚本
-      readFile = DeployMethod.class.getResource("/service/start.bat").getPath();
-      writeFile = targetPath + File.separator + "start.bat";
-      items = new HashMap<>(1);
-      items.put("RESOURCE_NAME", projectName + "-" + deployEntity.getVersion() + "." + deployEntity.getSuffix());
-      DeployUtils.replaceContextFileCreate(readFile, writeFile, items);
+      String batWriteFile = targetPath + File.separator + "start.bat";
+      Map<String, Object> batMap = new HashMap<>(5);
+      batMap.put("RESOURCE_NAME", projectName + "-" + deployEntity.getVersion() + "." + deployEntity.getSuffix());
+      DeployUtils.replaceContextFileCreate(BAT_START_FILE, batWriteFile, batMap);
       
       // 制作 dockerfile 脚本
-      readFile = DeployMethod.class.getResource("/docker/dockerfile").getPath();
-      writeFile = targetPath + File.separator + "dockerfile";
-      items = new HashMap<>(1);
-      items.put("SERVICE_NAME", projectName);
-      items.put("#EXPOSE", "EXPOSE " + deployEntity.getProejctPorts().get(projectName));
-      DeployUtils.replaceContextFileCreate(readFile, writeFile, items);
+      String dockerWriteFile = targetPath + File.separator + "dockerfile";
+      Map<String, Object> dockerMap = new HashMap<>(5);
+      dockerMap.put("SERVICE_NAME", projectName);
+      dockerMap.put("SERVICE_VERSION", deployEntity.getVersion());
+      dockerMap.put("#EXPOSE", "EXPOSE " + deployEntity.getProejctPorts().get(projectName));
+      DeployUtils.replaceContextFileCreate(DOCKER_FILE, dockerWriteFile, dockerMap);
       
       // docker-compose
       if (!serverEntity.getServerList().isEmpty()) {

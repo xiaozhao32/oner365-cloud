@@ -33,6 +33,8 @@ public class DeployEntity implements Serializable {
     private Map<String, Integer> proejctPorts;
     /** jar包 */
     private List<String> libs = new ArrayList<>();
+    
+    private String serverAddr;
 
     /**
      * 构造方法
@@ -114,6 +116,14 @@ public class DeployEntity implements Serializable {
      */
     public void setProejctPorts(Map<String, Integer> proejctPorts) {
         this.proejctPorts = proejctPorts;
+    }
+
+    public String getServerAddr() {
+      return serverAddr;
+    }
+
+    public void setServerAddr(String serverAddr) {
+      this.serverAddr = serverAddr;
     }
 
 }

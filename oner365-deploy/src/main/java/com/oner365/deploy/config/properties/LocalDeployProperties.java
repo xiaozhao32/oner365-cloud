@@ -28,6 +28,8 @@ public class LocalDeployProperties {
   private String suffix;
   /** 部署环境 */
   private String active;
+  /** 配置地址 */
+  private String serverAddr;
   /** 项目名称 */
   private List<String> projects;
   /** jar包 */
@@ -99,6 +101,14 @@ public class LocalDeployProperties {
   @Override
   public String toString() {
       return JSON.toJSONString(this);
+  }
+
+  public String getServerAddr() {
+    return serverAddr;
+  }
+
+  public void setServerAddr(String serverAddr) {
+    this.serverAddr = serverAddr;
   }
 
 }

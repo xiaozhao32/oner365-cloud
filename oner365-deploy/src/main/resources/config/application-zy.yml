@@ -1,11 +1,13 @@
 #部署目录
+
 deploy:
   local:
     location: /Users/zhaoyong/Documents/git/oner365/oner365-cloud
     name: /Users/zhaoyong/Documents/deploy/nacos
     version: 2.1.0
     suffix: jar
-    active: zy
+    active: dev
+    server-addr: oner365-nacos:8848
     projects: 
       - oner365-websocket:8703
       - oner365-gateway:8704
@@ -32,6 +34,10 @@ deploy:
       - oner365-zookeeper:8725
       - oner365-spark:8726
       - oner365-mongodb:8727
+      - oner365-kubernetes:8728
+      - oner365-postgis:8729
+      - oner365-shardingsphere:8730
+      - oner365-clickhouse:8731
     libs: 
       - oner365-api
       - oner365-data-commons
