@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.system.ISystemRoleClient;
@@ -99,12 +98,12 @@ public class SysRoleController {
    * 角色权限保存
    *
    * @param sysRoleVo 参数
-   * @return ResponseData<ResponseResult<SysRoleDto>>
+   * @return ResponseData<SysRoleDto>
    */
   @ApiOperation("5.保存")
   @ApiOperationSupport(order = 5)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<SysRoleDto>> save(@RequestBody SysRoleVo sysRoleVo) {
+  public ResponseData<SysRoleDto> save(@RequestBody SysRoleVo sysRoleVo) {
     return client.save(sysRoleVo);
   }
   

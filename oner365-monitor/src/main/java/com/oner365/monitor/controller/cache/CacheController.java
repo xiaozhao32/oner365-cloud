@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oner365.data.commons.enums.ResultEnum;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.redis.util.JedisUtils;
 import com.oner365.data.web.controller.BaseController;
 import com.oner365.monitor.dto.CacheCommandStatsDto;
@@ -109,10 +108,10 @@ public class CacheController extends BaseController {
    * 清理缓存
    *
    * @param index db
-   * @return ResponseResult<String>
+   * @return String
    */
   @GetMapping("/clean")
-  public ResponseResult<String> clean(int index) {
+  public String clean(int index) {
     if (redisProperties.getCluster() != null) {
       redisTemplate.execute((RedisCallback<Properties>)connection -> {
         connection.serverCommands().flushAll();
@@ -126,7 +125,7 @@ public class CacheController extends BaseController {
         }
       }
     }
-    return ResponseResult.success(ResultEnum.SUCCESS.getName());
+    return ResultEnum.SUCCESS.getName();
   }
 
 

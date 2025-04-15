@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.swagger.constants.PathConstants;
 
 /**
@@ -26,10 +24,10 @@ public interface IFilesStorageClient {
    * 
    * @param file 文件
    * @param dictory 上传目录
-   * @return ResponseData<ResponseResult<String>>
+   * @return ResponseData<String>
    */
   @PostMapping(value = PathConstants.REQUEST_FILES_STORAGE_UPLOAD, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  ResponseData<ResponseResult<String>> upload(@RequestPart("file") MultipartFile file,
+  String upload(@RequestPart("file") MultipartFile file,
       @RequestParam(name = "dictory", required = false) String dictory);
   
   /**

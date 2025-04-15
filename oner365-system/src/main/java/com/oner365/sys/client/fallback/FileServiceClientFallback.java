@@ -1,12 +1,12 @@
 package com.oner365.sys.client.fallback;
 
+import java.util.Collections;
+import java.util.List;
+
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.oner365.data.commons.enums.ErrorInfoEnum;
-import com.oner365.data.commons.enums.ResultEnum;
-import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.sys.client.IFileServiceClient;
 
 /**
@@ -18,8 +18,8 @@ import com.oner365.sys.client.IFileServiceClient;
 public class FileServiceClientFallback implements IFileServiceClient {
 
   @Override
-  public ResponseData<ResponseResult<String>> uploadFile(MultipartFile multipartFile, String dictory) {
-    return ResponseData.error(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
+  public String uploadFile(MultipartFile multipartFile, String dictory) {
+    return ErrorInfoEnum.PARAM.getName();
   }
   
   @Override
@@ -28,8 +28,8 @@ public class FileServiceClientFallback implements IFileServiceClient {
   }
 
   @Override
-  public ResponseData<String> delete(String... ids) {
-    return ResponseData.error(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
+  public List<Boolean> delete(String... ids) {
+    return Collections.singletonList(Boolean.FALSE);
   }
 
 }

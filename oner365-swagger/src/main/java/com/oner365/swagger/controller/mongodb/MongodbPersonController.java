@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.mongodb.IMongodbPersonClient;
@@ -68,12 +67,12 @@ public class MongodbPersonController {
    * 人员信息保存
    *
    * @param personVo 职位对象
-   * @return ResponseData<ResponseResult<PersonDto>>
+   * @return ResponseData<PersonDto>
    */
   @ApiOperation("3.保存")
   @ApiOperationSupport(order = 4)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<PersonDto>> save(@RequestBody PersonVo personVo) {
+  public ResponseData<PersonDto> save(@RequestBody PersonVo personVo) {
     return client.save(personVo);
   }
 

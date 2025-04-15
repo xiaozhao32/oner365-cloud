@@ -3,12 +3,16 @@ package com.oner365.swagger.vo;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * Mongodb Person Vo
  * 
  * @author zhaoyong
  *
  */
+@ApiModel(value = "人员信息")
 public class PersonVo implements Serializable {
 
   /**
@@ -19,26 +23,31 @@ public class PersonVo implements Serializable {
   /** 
    * 主键
    */
+  @ApiModelProperty(value = "主键")
   private String id;
   
   /**
    * 姓名
    */
+  @ApiModelProperty(value = "姓名")
   private String name;
   
   /**
    * 年龄
    */
+  @ApiModelProperty(value = "年龄")
   private int age;
   
   /**
    * 创建时间
    */
+  @ApiModelProperty(value = "创建时间")
   private Timestamp createTime;
   
   /**
    * 更新时间
    */
+  @ApiModelProperty(value = "更新时间")
   private Timestamp updateTime;
   
   public PersonVo() {

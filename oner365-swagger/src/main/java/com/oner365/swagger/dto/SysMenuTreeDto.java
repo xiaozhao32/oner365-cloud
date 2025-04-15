@@ -4,12 +4,16 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 菜单树
  * 
  * @author zhaoyong
  *
  */
+@ApiModel(value = "菜单树信息")
 public class SysMenuTreeDto implements Serializable {
 
   /**
@@ -17,16 +21,70 @@ public class SysMenuTreeDto implements Serializable {
    */
   private static final long serialVersionUID = 1L;
   
+  /**
+   * 主键
+   */
+  @ApiModelProperty(value = "主键")
   private String id;
+  
+  /**
+   * 菜单名称
+   */
+  @ApiModelProperty(value = "菜单名称")
   private String name;
+  
+  /**
+   * 菜单路径
+   */
+  @ApiModelProperty(value = "菜单路径")
   private String path;
+  
+  /**
+   * 菜单元素
+   */
+  @ApiModelProperty(value = "菜单元素")
   private String component;
+  
+  /**
+   * 是否父节点
+   */
+  @ApiModelProperty(value = "是否父节点")
   private Boolean parent;
+  
+  /**
+   * 是否隐藏
+   */
+  @ApiModelProperty(value = "是否隐藏")
   private Boolean hidden;
+  
+  /**
+   * 是否显示
+   */
+  @ApiModelProperty(value = "是否显示")
   private Boolean alwaysShow;
+  
+  /**
+   * 重定向地址
+   */
+  @ApiModelProperty(value = "重定向地址")
   private String redirect;
+  
+  /**
+   * 菜单icon
+   */
+  @ApiModelProperty(value = "菜单icon")
   private SysMenuIconDto meta;
+  
+  /**
+   * 是否展开
+   */
+  @ApiModelProperty(value = "是否展开")
   private Boolean expand = false;
+  
+  /**
+   * 子菜单信息
+   */
+  @ApiModelProperty(value = "子菜单信息")
   private List<SysMenuTreeDto> children = new ArrayList<>();
   
   public SysMenuTreeDto() {

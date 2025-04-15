@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.oner365.data.commons.enums.ResultEnum;
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.gateway.dto.GatewayRouteDto;
@@ -65,13 +64,13 @@ public class DynamicRouteController {
    * 增加路由
    *
    * @param gatewayRouteVo 路由对象
-   * @return ResponseData<ResponseResult<GatewayRouteDto>>
+   * @return ResponseData<GatewayRouteDto>
    */
   @PostMapping("/add")
-  public ResponseData<ResponseResult<GatewayRouteDto>> add(@Validated @RequestBody GatewayRouteVo gatewayRouteVo) {
+  public ResponseData<GatewayRouteDto> add(@Validated @RequestBody GatewayRouteVo gatewayRouteVo) {
     if (gatewayRouteVo != null) {
       GatewayRouteDto result = dynamicRouteService.save(gatewayRouteVo);
-      return ResponseData.success(ResponseResult.success(result));
+      return ResponseData.success(result);
     }
     return ResponseData.error(ResultEnum.ERROR.getName());
   }
@@ -95,13 +94,13 @@ public class DynamicRouteController {
    * 更新路由
    *
    * @param gatewayRouteVo 路由对象
-   * @return ResponseData<ResponseResult<GatewayRouteDto>>
+   * @return ResponseData<GatewayRouteDto>
    */
   @PostMapping("/update")
-  public ResponseData<ResponseResult<GatewayRouteDto>> update(@Validated @RequestBody GatewayRouteVo gatewayRouteVo) {
+  public ResponseData<GatewayRouteDto> update(@Validated @RequestBody GatewayRouteVo gatewayRouteVo) {
     if (gatewayRouteVo != null) {
       GatewayRouteDto result = dynamicRouteService.update(gatewayRouteVo);
-      return ResponseData.success(ResponseResult.success(result));
+      return ResponseData.success(result);
     }
     return ResponseData.error(ResultEnum.ERROR.getName());
   }

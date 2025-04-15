@@ -1,5 +1,10 @@
 {"properties": [
   {
+    "name": "deploy.local.server-addr",
+    "type": "java.lang.String",
+    "description": "A description for 'Nacos Server Address'."
+  },
+  {
     "name": "deploy.local.location",
     "type": "java.lang.String",
     "description": "A description for 'deploy.local.location'."

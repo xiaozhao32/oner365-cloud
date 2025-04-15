@@ -15,7 +15,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -119,10 +118,10 @@ public interface ISystemUserClient {
    * 保存
    * 
    * @param sysUserVo 保存对象
-   * @return ResponseData<ResponseResult<SysUserDto>>
+   * @return ResponseData<SysUserDto>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_USER_SAVE)
-  ResponseData<ResponseResult<SysUserDto>> save(@RequestBody SysUserVo sysUserVo);
+  ResponseData<SysUserDto> save(@RequestBody SysUserVo sysUserVo);
 
   /**
    * 删除

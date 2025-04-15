@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.oner365.data.commons.constants.PublicConstants;
 import com.oner365.data.commons.enums.StorageEnum;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.commons.util.DataUtils;
 import com.oner365.data.commons.util.DateUtil;
 import com.oner365.data.jpa.page.PageInfo;
@@ -68,17 +67,16 @@ public class FileController extends BaseController {
    * 
    * @param file    MultipartFile
    * @param dictory 目录
-   * @return ResponseResult<String>
+   * @return String
    */
   @PostMapping("/upload")
-  public ResponseResult<String> uploadMultipartFile(@RequestBody MultipartFile file,
+  public String uploadMultipartFile(@RequestBody MultipartFile file,
       @RequestParam(name = "dictory", required = false) String dictory) {
     String targetDictory = dictory;
     if (DataUtils.isEmpty(targetDictory)) {
       targetDictory = DateUtil.getCurrentDate();
     }
-    String url = fileStorageClient.uploadFile(file, targetDictory);
-    return ResponseResult.success(url);
+    return fileStorageClient.uploadFile(file, targetDictory);
   }
 
   /**
@@ -118,9 +116,8 @@ public class FileController extends BaseController {
    * @return 文件下载地址
    */
   @GetMapping("/path")
-  public ResponseResult<String> downloadPath(@RequestParam("path") String path) {
-    String result = fileStorageClient.downloadPath(path);
-    return ResponseResult.success(result);
+  public String downloadPath(@RequestParam("path") String path) {
+    return fileStorageClient.downloadPath(path);
   }
 
   /**

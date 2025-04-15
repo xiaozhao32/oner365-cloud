@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -35,10 +34,10 @@ public interface ISystemMessageClient {
    * 查询结果 有返回 true 并且更新状态
    * 
    * @param messageType 消息类型
-   * @return ResponseResult<Boolean>
+   * @return ResponseData<Boolean>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_REFRESH)
-  ResponseData<ResponseResult<Boolean>> refresh(@RequestParam("messageType") MessageTypeEnum messageType);
+  ResponseData<Boolean> refresh(@RequestParam("messageType") MessageTypeEnum messageType);
 
   /**
    * 列表
@@ -72,10 +71,10 @@ public interface ISystemMessageClient {
    * 保存
    * 
    * @param sysMessageVo 保存对象
-   * @return ResponseData<ResponseResult<SysMessageDto>>
+   * @return ResponseData<SysMessageDto>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_SAVE)
-  ResponseData<ResponseResult<SysMessageDto>> save(@RequestBody SysMessageVo sysMessageVo);
+  ResponseData<SysMessageDto> save(@RequestBody SysMessageVo sysMessageVo);
 
   /**
    * 删除

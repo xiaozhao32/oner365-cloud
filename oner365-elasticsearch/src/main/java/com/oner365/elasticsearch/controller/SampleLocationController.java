@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.data.web.controller.BaseController;
@@ -62,15 +61,11 @@ public class SampleLocationController extends BaseController {
    * 保存
    *
    * @param sampleLocationVo 坐标对象
-   * @return ResponseResult<SampleLocationDto>
+   * @return SampleLocationDto
    */
   @PutMapping("/save")
-  public ResponseResult<SampleLocationDto> save(@RequestBody SampleLocationVo sampleLocationVo) {
-    if (sampleLocationVo == null) {
-      return ResponseResult.error("坐标对象为空!");
-    }
-    SampleLocationDto entity = service.save(sampleLocationVo);
-    return ResponseResult.success(entity);
+  public SampleLocationDto save(@RequestBody SampleLocationVo sampleLocationVo) {
+    return service.save(sampleLocationVo);
   }
 
   /**

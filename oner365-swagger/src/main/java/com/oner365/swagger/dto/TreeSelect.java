@@ -7,21 +7,28 @@ import java.util.stream.Collectors;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.oner365.data.commons.util.DataUtils;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * Treeselect树结构实体类
  * 
  * @author zhaoyong
  */
+@ApiModel(value = "结构树信息")
 public class TreeSelect implements Serializable {
     private static final long serialVersionUID = 1L;
 
     /** 节点ID */
+    @ApiModelProperty(value = "节点id")
     private String id;
 
     /** 节点名称 */
+    @ApiModelProperty(value = "节点名称")
     private String label;
 
     /** 子节点 */
+    @ApiModelProperty(value = "子节点集合")
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     private List<TreeSelect> children;
 

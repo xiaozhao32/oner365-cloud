@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.elasticsearch.IElasticsearchSampleLocationClient;
@@ -68,12 +67,12 @@ public class ElasticsearchSampleLocationController {
    * 保存
    *
    * @param sampleLocationVo 坐标对象
-   * @return ResponseData<ResponseResult<SampleLocationDto>>
+   * @return ResponseData<SampleLocationDto>
    */
   @ApiOperation("3.保存")
   @ApiOperationSupport(order = 3)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<SampleLocationDto>> save(@RequestBody SampleLocationVo sampleLocationVo) {
+  public ResponseData<SampleLocationDto> save(@RequestBody SampleLocationVo sampleLocationVo) {
     if (sampleLocationVo == null) {
       return ResponseData.error("坐标对象为空!");
     }

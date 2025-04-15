@@ -29,16 +29,16 @@ public class PulsarController extends BaseController {
    * 测试发送
    *
    * @param data 参数
-   * @return ResponseData<JSONObject>
+   * @return ResponseData<String>
    */
   @GetMapping("/send")
-  public ResponseData<JSONObject> send(String data) {
-    logger.info("Pulsar send message:{}", data);
+  public ResponseData<String> send(String message) {
+    logger.info("Pulsar send message:{}", message);
     JSONObject json = new JSONObject();
-    json.put("data", data);
+    json.put("message", message);
     ResultEnum result = pulsarService.convertAndSend(json);
     if (ResultEnum.SUCCESS.equals(result)) {
-      return ResponseData.success(json);
+      return ResponseData.success(message);
     }
     return ResponseData.error(result.getName());
   }

@@ -2,12 +2,16 @@ package com.oner365.swagger.dto;
 
 import java.io.Serializable;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * 获取验证码
  * 
  * @author zhaoyong
  *
  */
+@ApiModel(value = "验证码信息")
 public class CaptchaImageDto implements Serializable {
 
   /**
@@ -18,11 +22,13 @@ public class CaptchaImageDto implements Serializable {
   /**
    * uuid
    */
+  @ApiModelProperty(value = "唯一ID")
   private String uuid;
   
   /**
    * img base64
    */
+  @ApiModelProperty(value = "验证码图片")
   private String img;
   
   public CaptchaImageDto() {

@@ -2,22 +2,39 @@ package com.oner365.swagger.vo;
 
 import java.io.Serializable;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * Ldap - Vo
  * 
  * @author zhaoyong
  * 
  */
+@ApiModel(value = "LDAP 用户信息")
 public class LdapUserVo implements Serializable {
 
   private static final long serialVersionUID = 1L;
 
+  @ApiModelProperty(value = "组织名称")
   private String commonName;
+  
+  @ApiModelProperty(value = "序列号")
   private String sn;
+  
+  @ApiModelProperty(value = "名称")
   private String givenName;
+  
+  @ApiModelProperty(value = "账号id")
   private String uid;
+  
+  @ApiModelProperty(value = "uidNumber")
   private Integer uidNumber;
+  
+  @ApiModelProperty(value = "gidNumber")
   private Integer gidNumber;
+  
+  @ApiModelProperty(value = "密码")
   private String password;
 
   public String getCommonName() {

@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.enums.ErrorInfoEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.client.system.ISystemDataSourceConfigClient;
@@ -84,12 +83,12 @@ public class DataSourceConfigController {
    * 保存
    * 
    * @param dataSourceConfigVo 数据源对象
-   * @return ResponseData<ResponseResult<DataSourceConfigDto>>
+   * @return ResponseData<DataSourceConfigDto>
    */
   @ApiOperation("4.保存")
   @ApiOperationSupport(order = 4)
   @PutMapping("/save")
-  public ResponseData<ResponseResult<DataSourceConfigDto>> save(@RequestBody DataSourceConfigVo dataSourceConfigVo) {
+  public ResponseData<DataSourceConfigDto> save(@RequestBody DataSourceConfigVo dataSourceConfigVo) {
     if (dataSourceConfigVo != null) {
       return client.save(dataSourceConfigVo);
     }

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.swagger.constants.PathConstants;
@@ -102,10 +101,10 @@ public interface ISystemDictClient {
    * 字典类别保存
    *
    * @param sysDictItemTypeVo 字典类别对象
-   * @return ResponseData<ResponseResult<SysDictItemTypeDto>>
+   * @return ResponseData<SysDictItemTypeDto>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_TYPE_SAVE)
-  ResponseData<ResponseResult<SysDictItemTypeDto>> saveDictItemType(@RequestBody SysDictItemTypeVo sysDictItemTypeVo);
+  ResponseData<SysDictItemTypeDto> saveDictItemType(@RequestBody SysDictItemTypeVo sysDictItemTypeVo);
   
   /**
    * 删除字典类别
@@ -166,10 +165,10 @@ public interface ISystemDictClient {
    * 保存字典信息
    *
    * @param sysDictItemVo 字典对象
-   * @return ResponseData<ResponseResult<SysDictItemDto>>
+   * @return ResponseData<SysDictItemDto>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_ITEM_SAVE)
-  ResponseData<ResponseResult<SysDictItemDto>> saveDictItem(@RequestBody SysDictItemVo sysDictItemVo);
+  ResponseData<SysDictItemDto> saveDictItem(@RequestBody SysDictItemVo sysDictItemVo);
   
   /**
    * 删除字典信息

@@ -27,7 +27,6 @@ import com.oner365.data.commons.constants.PublicConstants;
 import com.oner365.data.commons.enums.ErrorInfoEnum;
 import com.oner365.data.commons.enums.ResultEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.commons.util.DataUtils;
 import com.oner365.data.redis.RedisCache;
 import com.oner365.data.redis.constants.CacheConstants;
@@ -171,15 +170,15 @@ public class AuthController extends BaseController {
     /**
      * 退出登录
      * 
-     * @return ResponseResult<String>
+     * @return ResponseData<String>
      */
     @PostMapping("/logout")
-    public ResponseResult<String> logout(@CurrentUser AuthUser authUser) {
+    public ResponseData<String> logout(@CurrentUser AuthUser authUser) {
         if (authUser != null) {
             String key = CacheConstants.CACHE_LOGIN_NAME + authUser.getUserName();
             redisCache.deleteObject(key);
         }
-        return ResponseResult.success(ResultEnum.SUCCESS.getName());
+        return ResponseData.success(ResultEnum.SUCCESS.getName());
     }
 
 }

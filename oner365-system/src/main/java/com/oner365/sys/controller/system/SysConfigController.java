@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.data.commons.enums.ErrorInfoEnum;
 import com.oner365.data.commons.enums.StatusEnum;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.data.web.controller.BaseController;
@@ -79,15 +77,11 @@ public class SysConfigController extends BaseController {
    * 系统配置保存
    *
    * @param sysConfigVo 对象
-   * @return ResponseResult<SysConfigDto>
+   * @return SysConfigDto
    */
   @PutMapping("/save")
-  public ResponseResult<SysConfigDto> save(@RequestBody SysConfigVo sysConfigVo) {
-    if (sysConfigVo != null) {
-      SysConfigDto entity = sysConfigService.save(sysConfigVo);
-      return ResponseResult.success(entity);
-    }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+  public SysConfigDto save(@RequestBody SysConfigVo sysConfigVo) {
+    return sysConfigService.save(sysConfigVo);
   }
 
   /**

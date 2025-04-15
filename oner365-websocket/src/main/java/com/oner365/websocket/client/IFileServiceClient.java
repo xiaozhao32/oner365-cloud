@@ -6,8 +6,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.websocket.client.fallback.FileServiceFallback;
 
 /**
@@ -26,9 +24,9 @@ public interface IFileServiceClient {
 	 *
 	 * 		服务端接收方式: @RequestBody
 	 * @param file 文件
-	 * @return ResponseData
+	 * @return String 文件路径
 	 */
 	@PostMapping(value="/storage/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	ResponseData<ResponseResult<String>> upload(@RequestPart("file") MultipartFile file);
+	String upload(@RequestPart("file") MultipartFile file);
 
 }

@@ -23,8 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.github.xiaoymin.knife4j.annotations.ApiOperationSupport;
 import com.oner365.data.commons.constants.PublicConstants;
-import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.commons.util.DataUtils;
 import com.oner365.data.commons.util.DateUtil;
 import com.oner365.swagger.client.files.IFilesStorageClient;
@@ -53,12 +51,12 @@ public class FileController {
    *
    * @param file    MultipartFile
    * @param dictory 目录
-   * @return ResponseResult<String>
+   * @return String
    */
   @ApiOperation("1.文件上传")
   @ApiOperationSupport(order = 1)
   @PostMapping("/upload")
-  public ResponseData<ResponseResult<String>> upload(
+  public String upload(
       @ApiParam(name = "file", value = "文件") @RequestPart("file") MultipartFile file,
       @ApiParam(name = "dictory", value = "上传目录") @RequestParam(name = "dictory", required = false) String dictory) {
     String targetDictory = null;

@@ -57,6 +57,8 @@ public class DeployServiceImpl implements DeployService {
     
     result.setActive(localDeployProperties.getActive());
     result.setLibs(localDeployProperties.getLibs());
+    
+    result.setServerAddr(localDeployProperties.getServerAddr());
     return result;
   }
 

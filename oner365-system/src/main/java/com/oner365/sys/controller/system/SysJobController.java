@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oner365.data.commons.enums.ErrorInfoEnum;
 import com.oner365.data.commons.enums.StatusEnum;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.data.jpa.page.PageInfo;
 import com.oner365.data.jpa.query.QueryCriteriaBean;
 import com.oner365.data.web.controller.BaseController;
@@ -78,15 +76,11 @@ public class SysJobController extends BaseController {
    * 用户职位保存
    *
    * @param sysJobVo 职位对象
-   * @return ResponseResult<SysJobDto>
+   * @return SysJobDto
    */
   @PutMapping("/save")
-  public ResponseResult<SysJobDto> save(@Validated @RequestBody SysJobVo sysJobVo) {
-    if (sysJobVo != null) {
-      SysJobDto entity = sysJobService.save(sysJobVo);
-      return ResponseResult.success(entity);
-    }
-    return ResponseResult.error(ErrorInfoEnum.SAVE_ERROR.getName());
+  public SysJobDto save(@Validated @RequestBody SysJobVo sysJobVo) {
+    return sysJobService.save(sysJobVo);
   }
 
   /**

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.oner365.data.commons.enums.StatusEnum;
 import com.oner365.data.commons.reponse.ResponseData;
-import com.oner365.data.commons.reponse.ResponseResult;
 import com.oner365.swagger.constants.PathConstants;
 import com.oner365.swagger.dto.SysMenuDto;
 import com.oner365.swagger.dto.SysMenuInfoDto;
@@ -81,10 +80,10 @@ public interface ISystemMenuClient {
    * 保存
    * 
    * @param sysMenuVo 保存对象
-   * @return ResponseData<ResponseResult<SysMenuDto>>
+   * @return ResponseData<SysMenuDto>
    */
   @PutMapping(PathConstants.REQUEST_SYSTEM_MENU_SAVE)
-  ResponseData<ResponseResult<SysMenuDto>> save(@RequestBody SysMenuVo sysMenuVo);
+  ResponseData<SysMenuDto> save(@RequestBody SysMenuVo sysMenuVo);
 
   /**
    * 删除
