@@ -57,6 +57,7 @@
 		<org.apache.httpcore5.version>5.3.1</org.apache.httpcore5.version>
 		<org.apache.httpclient5.version>5.4.1</org.apache.httpclient5.version>
 		<org.apache.zookeeper.version>3.8.1</org.apache.zookeeper.version>
+		<org.apache.activemq.version>5.16.7</org.apache.activemq.version>
 		<org.apache.rocketmq.version>5.2.0</org.apache.rocketmq.version>
 		<org.apache.tomcat.version>9.0.93</org.apache.tomcat.version>
 		<org.apache.pdfbox.version>2.0.26</org.apache.pdfbox.version>
@@ -1479,6 +1480,28 @@
 					</exclusion>
 				</exclusions>
 	        </dependency>
+	        
+	        <!-- activemq --> 
+			<dependency>
+			    <groupId>org.apache.activemq</groupId>
+			    <artifactId>activemq-all</artifactId>
+			    <version>${org.apache.activemq.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.activemq</groupId>
+			    <artifactId>activemq-pool</artifactId>
+			    <version>${org.apache.activemq.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.activemq</groupId>
+			    <artifactId>activemq-client</artifactId>
+			    <version>${org.apache.activemq.version}</version>
+			</dependency>
+			<dependency>
+			    <groupId>org.apache.activemq</groupId>
+			    <artifactId>activemq-jms-pool</artifactId>
+			    <version>${org.apache.activemq.version}</version>
+			</dependency>
 
 			<!-- rocketmq -->
 			<dependency>
@@ -1960,6 +1983,8 @@
 		<module>oner365-shardingsphere</module>
 		<!-- clickhouse -->
 		<module>oner365-clickhouse</module>
+		<!-- activemq -->
+		<module>oner365-activemq</module>
 
 	</modules>
 
