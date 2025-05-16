@@ -23,6 +23,6 @@ public interface IMonitorServiceClient {
    * @return ResponseData
    */
   @GetMapping(value = "/task/{id}")
-  ResponseData<SysTaskDto> getInfo(@PathVariable("id") String id);
+  ResponseData<SysTaskDto> getInfo(@PathVariable String id);
 
 }

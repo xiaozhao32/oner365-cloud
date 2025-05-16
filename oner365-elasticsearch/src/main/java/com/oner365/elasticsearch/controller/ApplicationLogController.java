@@ -51,7 +51,7 @@ public class ApplicationLogController extends BaseController {
    * @return ApplicationLogDto
    */
   @GetMapping("/get/{id}")
-  public ApplicationLogDto get(@PathVariable("id") String id) {
+  public ApplicationLogDto get(@PathVariable String id) {
     return service.findById(id);
   }
 

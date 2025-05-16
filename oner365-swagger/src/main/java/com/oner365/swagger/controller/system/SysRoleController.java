@@ -77,7 +77,7 @@ public class SysRoleController {
   @ApiOperation("3.修改状态")
   @ApiOperationSupport(order = 3)
   @PostMapping("/status/{id}")
-  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
     return client.editStatus(id, status);
   }
   

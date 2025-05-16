@@ -69,7 +69,7 @@ public class SysRoleController extends BaseController {
    * @return Boolean
    */
   @PostMapping("/status/{id}")
-  public Boolean editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public Boolean editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
     return roleService.editStatus(id, status);
   }
 

@@ -42,7 +42,7 @@ public interface IElasticsearchSampleLocationClient {
    * @return ResponseData<SampleLocationDto>
    */
   @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_GET_ID)
-  ResponseData<SampleLocationDto> get(@PathVariable("id") String id);
+  ResponseData<SampleLocationDto> get(@PathVariable String id);
 
   /**
    * 保存

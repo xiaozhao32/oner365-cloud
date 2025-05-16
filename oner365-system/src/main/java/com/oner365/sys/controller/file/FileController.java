@@ -55,7 +55,7 @@ public class FileController extends BaseController {
    * @return byte[] 字节流
    */
   @GetMapping("/byte/download")
-  public byte[] download(@RequestParam("fileUrl") String fileUrl) {
+  public byte[] download(@RequestParam String fileUrl) {
     return fileServiceClient.download(fileUrl);
   }
 
@@ -66,7 +66,7 @@ public class FileController extends BaseController {
    * @param response response
    */
   @GetMapping("/download")
-  public void download(@RequestParam("fileUrl") String fileUrl, HttpServletResponse response) {
+  public void download(@RequestParam String fileUrl, HttpServletResponse response) {
     String filename = fileUrl;
     boolean isFilename = StringUtils.contains(filename, PublicConstants.DELIMITER);
     if (isFilename) {

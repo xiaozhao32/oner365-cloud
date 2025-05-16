@@ -97,7 +97,7 @@ public class SysOrganizationController extends BaseController {
    * @return List<SysOrganizationDto>
    */
   @GetMapping("/parent")
-  public List<SysOrganizationDto> findListByParentId(@RequestParam("parentId") String parentId) {
+  public List<SysOrganizationDto> findListByParentId(@RequestParam String parentId) {
     return sysOrgService.findListByParentId(parentId);
   }
 
@@ -138,7 +138,7 @@ public class SysOrganizationController extends BaseController {
    */
   @PostMapping("/user/{userId}")
   public SysMenuTreeSelectDto userTreeSelect(@RequestBody SysOrganizationVo sysOrganizationVo,
-      @PathVariable("userId") String userId, @CurrentUser AuthUser authUser) {
+      @PathVariable String userId, @CurrentUser AuthUser authUser) {
     List<SysOrganizationDto> list = sysOrgService.selectList(sysOrganizationVo);
     SysMenuTreeSelectDto result = new SysMenuTreeSelectDto();
     
@@ -155,7 +155,7 @@ public class SysOrganizationController extends BaseController {
    * @return Boolean
    */
   @PostMapping("/status/{id}")
-  public Boolean editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public Boolean editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
     return sysOrgService.editStatus(id, status);
   }
 

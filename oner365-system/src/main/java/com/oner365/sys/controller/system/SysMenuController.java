@@ -80,7 +80,7 @@ public class SysMenuController extends BaseController {
    * @return Boolean
    */
   @PostMapping("/status/{id}")
-  public Boolean editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public Boolean editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
     return menuService.editStatus(id, status);
   }
 
@@ -112,7 +112,7 @@ public class SysMenuController extends BaseController {
    * @return SysMenuTreeSelectDto
    */
   @PostMapping("/role/{roleId}")
-  public SysMenuTreeSelectDto roleMenuTreeSelect(@RequestBody SysMenuVo sysMenuVo, @PathVariable("roleId") String roleId,
+  public SysMenuTreeSelectDto roleMenuTreeSelect(@RequestBody SysMenuVo sysMenuVo, @PathVariable String roleId,
       @CurrentUser AuthUser authUser) {
     List<SysMenuDto> menus;
     if (SysConstants.DEFAULT_ROLE.equals(authUser.getIsAdmin())) {

@@ -64,8 +64,8 @@ public class RabbitController extends BaseController {
    * @return JSONObject
    */
   @GetMapping("/list/{type}")
-  public JSONObject list(@PathVariable("type") RabbitmqTypeEnum type, @RequestParam("pageIndex") int pageIndex,
-      @RequestParam("pageSize") int pageSize, String name) {
+  public JSONObject list(@PathVariable RabbitmqTypeEnum type, @RequestParam int pageIndex,
+      @RequestParam int pageSize, String name) {
     String url = getUrl(type.getCode(), name, pageIndex, pageSize);
     return request(url);
   }
@@ -78,7 +78,7 @@ public class RabbitController extends BaseController {
    * @return JSONObject
    */
   @DeleteMapping("/delete/{type}/{name}")
-  public JSONObject delete(@PathVariable("type") String type, @PathVariable("name") String name) {
+  public JSONObject delete(@PathVariable String type, @PathVariable String name) {
     try {
       String vhost = rabbitmqProperties.getVirtualHost();
       JSONObject paramJson = new JSONObject();

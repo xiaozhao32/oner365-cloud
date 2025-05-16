@@ -68,7 +68,7 @@ public class PostgisPositionController {
   @ApiOperation("3.主键查询")
   @ApiOperationSupport(order = 3)
   @GetMapping("/get/{id}")
-  public ResponseData<PositionDto> get(@PathVariable("id") String id) {
+  public ResponseData<PositionDto> get(@PathVariable String id) {
     return client.get(id);
   }
 

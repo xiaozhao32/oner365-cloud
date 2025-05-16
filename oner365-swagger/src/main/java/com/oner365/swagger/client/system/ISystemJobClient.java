@@ -45,7 +45,7 @@ public interface ISystemJobClient {
    * @return ResponseData<SysJobDto>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_JOB_GET_ID)
-  ResponseData<SysJobDto> getById(@PathVariable(value = "id") String id);
+  ResponseData<SysJobDto> getById(@PathVariable String id);
 
   /**
    * 修改状态
@@ -55,7 +55,7 @@ public interface ISystemJobClient {
    * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_JOB_STATUS)
-  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
   /**
    * 保存

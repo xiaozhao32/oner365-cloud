@@ -100,7 +100,7 @@ public class SysLogController {
   @ApiOperation("5.删除日志")
   @ApiOperationSupport(order = 5)
   @DeleteMapping("/days/delete")
-  public ResponseData<Boolean> deleteLog(@RequestParam("days") Integer days) {
+  public ResponseData<Boolean> deleteLog(@RequestParam Integer days) {
     return client.deleteDays(days);
   }
   

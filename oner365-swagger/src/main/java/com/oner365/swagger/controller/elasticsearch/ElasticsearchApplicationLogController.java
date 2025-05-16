@@ -57,7 +57,7 @@ public class ElasticsearchApplicationLogController {
   @ApiOperation("2.按id查询")
   @ApiOperationSupport(order = 2)
   @GetMapping("/get/{id}")
-  public ResponseData<ApplicationLogDto> get(@PathVariable("id") String id) {
+  public ResponseData<ApplicationLogDto> get(@PathVariable String id) {
     return client.get(id);
   }
 

@@ -48,7 +48,7 @@ public class PersonController extends BaseController {
    * @return PersonDto
    */
   @GetMapping("/get/{id}")
-  public PersonDto get(@PathVariable("id") String id) {
+  public PersonDto get(@PathVariable String id) {
     return service.getById(id);
   }
 
@@ -70,7 +70,7 @@ public class PersonController extends BaseController {
    * @return Person
    */
   @DeleteMapping("/delete/{id}")
-  public Boolean delete(@PathVariable("id") String id) {
+  public Boolean delete(@PathVariable String id) {
     return service.delete(id);
   }
 

@@ -45,7 +45,7 @@ public interface ISystemOrgClient {
    * @return ResponseData<SysOrganizationDto>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_ORG_GET_ID)
-  ResponseData<SysOrganizationDto> getById(@PathVariable(value = "id") String id);
+  ResponseData<SysOrganizationDto> getById(@PathVariable String id);
 
   /**
    * 检测连接
@@ -54,7 +54,7 @@ public interface ISystemOrgClient {
    * @return ResponseData<Boolean>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_ORG_CONNECTION_CHECK)
-  ResponseData<Boolean> checkConnection(@PathVariable(value = "id") String id);
+  ResponseData<Boolean> checkConnection(@PathVariable String id);
 
   /**
    * 按父级id查询
@@ -63,7 +63,7 @@ public interface ISystemOrgClient {
    * @return ResponseData<List<SysOrganizationDto>>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_ORG_PARENT)
-  ResponseData<List<SysOrganizationDto>> parent(@RequestParam("parentId") String parentId);
+  ResponseData<List<SysOrganizationDto>> parent(@RequestParam String parentId);
 
   /**
    * 判断是否存在
@@ -92,7 +92,7 @@ public interface ISystemOrgClient {
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_USER)
   ResponseData<SysMenuTreeSelectDto> userTreeselect(@RequestBody SysOrganizationVo sysOrganizationVo,
-      @PathVariable("userId") String userId);
+      @PathVariable String userId);
 
   /**
    * 修改状态
@@ -102,7 +102,7 @@ public interface ISystemOrgClient {
    * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_STATUS)
-  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
   /**
    * 保存

@@ -53,7 +53,7 @@ public class SampleLocationController extends BaseController {
    * @return SampleLocationDto
    */
   @GetMapping("/get/{id}")
-  public SampleLocationDto get(@PathVariable("id") String id) {
+  public SampleLocationDto get(@PathVariable String id) {
     return service.findById(id);
   }
 

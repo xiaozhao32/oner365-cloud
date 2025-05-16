@@ -40,7 +40,7 @@ public interface IElasticsearchApplicationLogClient {
    * @return ResponseData<ApplicationLogDto>
    */
   @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_APPLICATION_LOG_GET_ID)
-  ResponseData<ApplicationLogDto> get(@PathVariable("id") String id);
+  ResponseData<ApplicationLogDto> get(@PathVariable String id);
 
   /**
    * 删除

@@ -23,6 +23,6 @@ public interface IPulsarConsumerClient {
    * @return ResponseData<String>
    */
   @GetMapping(PathConstants.REQUEST_PULSAR_CONSUMER_MESSAGE_SEND)
-  ResponseData<String> send(@RequestParam(value = "message") String message);
+  ResponseData<String> send(@RequestParam String message);
 
 }

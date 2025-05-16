@@ -81,7 +81,7 @@ public class ServiceController extends BaseController {
    * @return String
    */
   @PostMapping("/upload")
-  public String uploadService(@RequestParam("multipartFile") MultipartFile multipartFile, String ip, int port,
+  public String uploadService(@RequestParam MultipartFile multipartFile, String ip, int port,
       String serviceName) {
     return ResultEnum.SUCCESS.getName();
   }

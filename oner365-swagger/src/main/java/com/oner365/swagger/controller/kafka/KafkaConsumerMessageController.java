@@ -50,7 +50,7 @@ public class KafkaConsumerMessageController {
   @ApiOperation("2.统计单词个数")
   @ApiOperationSupport(order = 2)
   @GetMapping("/word/count/{word}")
-  public ResponseData<Long> getWordCount(@PathVariable("word") String word) {
+  public ResponseData<Long> getWordCount(@PathVariable String word) {
     return client.getWordCount(word);
   }
 }

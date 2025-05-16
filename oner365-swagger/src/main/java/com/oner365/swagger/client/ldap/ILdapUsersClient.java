@@ -33,8 +33,8 @@ public interface ILdapUsersClient {
    * @return 是否成功
    */
   @PostMapping(PathConstants.REQUEST_LDAP_USERS_AUTH)
-  ResponseData<Boolean> auth(@RequestParam(value = "userName") String userName,
-      @RequestParam(value = "password") String password);
+  ResponseData<Boolean> auth(@RequestParam String userName,
+      @RequestParam String password);
 
   /**
    * 获取全部用户
@@ -51,7 +51,7 @@ public interface ILdapUsersClient {
    * @return 用户对象
    */
   @GetMapping(PathConstants.REQUEST_LDAP_USERS_GET_ID)
-  ResponseData<LdapUserDto> getUser(@PathVariable("id") String id);
+  ResponseData<LdapUserDto> getUser(@PathVariable String id);
 
   /**
    * 新增用户
@@ -78,5 +78,5 @@ public interface ILdapUsersClient {
    * @return 是否成功
    */
   @DeleteMapping(PathConstants.REQUEST_LDAP_USERS_DELETE)
-  ResponseData<Boolean> delete(@PathVariable("id") String id);
+  ResponseData<Boolean> delete(@PathVariable String id);
 }

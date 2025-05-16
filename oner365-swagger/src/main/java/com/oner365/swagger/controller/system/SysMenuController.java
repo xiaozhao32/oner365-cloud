@@ -76,7 +76,7 @@ public class SysMenuController {
   @ApiOperation("3.修改状态")
   @ApiOperationSupport(order = 3)
   @PostMapping("/status/{id}")
-  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
     return client.editStatus(id, status);
   }
   
@@ -103,7 +103,7 @@ public class SysMenuController {
   @ApiOperation("5.获取权限")
   @ApiOperationSupport(order = 5)
   @PostMapping("/role/{roleId}")
-  public ResponseData<SysMenuTreeSelectDto> roleMenuTreeselect(@RequestBody SysMenuVo sysMenuVo, @PathVariable("roleId") String roleId) {
+  public ResponseData<SysMenuTreeSelectDto> roleMenuTreeselect(@RequestBody SysMenuVo sysMenuVo, @PathVariable String roleId) {
     return client.roleMenuTreeselect(sysMenuVo, roleId);
   }
   

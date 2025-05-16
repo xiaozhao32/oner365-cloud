@@ -59,7 +59,7 @@ public class KafkaController extends BaseController {
    * @return 统计单词个数
    */
   @GetMapping("/word/count/{word}")
-  public ResponseData<Long> getWordCount(@PathVariable("word") String word) {
+  public ResponseData<Long> getWordCount(@PathVariable String word) {
     KafkaStreams kafkaStreams = factoryBean.getKafkaStreams();
     if (kafkaStreams != null) {
       ReadOnlyKeyValueStore<String, Long> counts = kafkaStreams

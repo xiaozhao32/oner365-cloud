@@ -58,7 +58,7 @@ public class FileController {
   @PostMapping("/upload")
   public String upload(
       @ApiParam(name = "file", value = "文件") @RequestPart("file") MultipartFile file,
-      @ApiParam(name = "dictory", value = "上传目录") @RequestParam(name = "dictory", required = false) String dictory) {
+      @ApiParam(name = "dictory", value = "上传目录") @RequestParam(required = false) String dictory) {
     String targetDictory = null;
     if (DataUtils.isEmpty(dictory)) {
       targetDictory = DateUtil.getCurrentDate();
@@ -75,7 +75,7 @@ public class FileController {
   @ApiOperation("2.文件下载")
   @ApiOperationSupport(order = 2)
   @GetMapping("/download")
-  public void download(@RequestParam("fileUrl") String fileUrl, HttpServletResponse response) {
+  public void download(@RequestParam String fileUrl, HttpServletResponse response) {
     String filename = fileUrl;
     boolean isFilename = StringUtils.contains(filename, PublicConstants.DELIMITER);
     if (isFilename) {

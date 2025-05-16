@@ -88,7 +88,7 @@ public class SysOrganizationController {
   @ApiOperation("5.父级id查询")
   @ApiOperationSupport(order = 5)
   @GetMapping("/parent")
-  public ResponseData<List<SysOrganizationDto>> parent(@RequestParam("parentId") String parentId) {
+  public ResponseData<List<SysOrganizationDto>> parent(@RequestParam String parentId) {
     return client.parent(parentId);
   }
 
@@ -129,7 +129,7 @@ public class SysOrganizationController {
   @ApiOperationSupport(order = 8)
   @PostMapping("/user/{userId}")
   public ResponseData<SysMenuTreeSelectDto> userTreeselect(@RequestBody SysOrganizationVo sysOrganizationVo,
-      @PathVariable("userId") String userId) {
+      @PathVariable String userId) {
     return client.userTreeselect(sysOrganizationVo, userId);
   }
 
@@ -143,7 +143,7 @@ public class SysOrganizationController {
   @ApiOperation("9.修改状态")
   @ApiOperationSupport(order = 9)
   @PostMapping("/status/{id}")
-  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
     return client.editStatus(id, status);
   }
 

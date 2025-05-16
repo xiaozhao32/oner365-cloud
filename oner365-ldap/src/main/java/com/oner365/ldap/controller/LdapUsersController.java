@@ -59,7 +59,7 @@ public class LdapUsersController extends BaseController {
    * @return 用户对象
    */
   @GetMapping("/get/{userName}")
-  public LdapUserDto getUser(@PathVariable("userName") String userName) {
+  public LdapUserDto getUser(@PathVariable String userName) {
     return ldapService.getUser(userName);
   }
 
@@ -108,7 +108,7 @@ public class LdapUsersController extends BaseController {
    * @return 是否成功
    */
   @DeleteMapping("/delete/{userName}")
-  public Boolean delete(@PathVariable("userName") String userName) {
+  public Boolean delete(@PathVariable String userName) {
     LdapUserDto user = getUser(userName);
     if (user == null) {
       return Boolean.FALSE;

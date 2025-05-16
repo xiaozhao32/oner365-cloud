@@ -89,7 +89,7 @@ public class SysMenuTypeController {
   @ApiOperation("4.修改状态")
   @ApiOperationSupport(order = 4)
   @PostMapping("/status/{id}")
-  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
     return client.editStatus(id, status);
   }
   

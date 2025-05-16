@@ -37,7 +37,7 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/mkdir")
-  public ResponseData<Boolean> mkdir(@RequestParam("path") String path) {
+  public ResponseData<Boolean> mkdir(@RequestParam String path) {
     boolean result = service.mkdir(path);
     return ResponseData.success(result);
   }
@@ -49,7 +49,7 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/info")
-  public List<FileInfoDto> readPathInfo(@RequestParam("path") String path) {
+  public List<FileInfoDto> readPathInfo(@RequestParam String path) {
     return service.readPathInfo(path);
   }
 
@@ -60,7 +60,7 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/locations")
-  public ResponseData<BlockLocation[]> getFileBlockLocations(@RequestParam("path") String path) {
+  public ResponseData<BlockLocation[]> getFileBlockLocations(@RequestParam String path) {
     BlockLocation[] result = service.getFileBlockLocations(path);
     return ResponseData.success(result);
   }
@@ -73,7 +73,7 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @PostMapping("/create")
-  public ResponseData<Boolean> createFile(@RequestParam("path") String path, @RequestParam("file") MultipartFile file) {
+  public ResponseData<Boolean> createFile(@RequestParam String path, @RequestParam MultipartFile file) {
     service.createFile(path, file);
     return ResponseData.success(Boolean.TRUE);
   }
@@ -85,7 +85,7 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/read")
-  public ResponseData<String> readFile(@RequestParam("path") String path) {
+  public ResponseData<String> readFile(@RequestParam String path) {
     String result = service.readFile(path);
     return ResponseData.success(result);
   }
@@ -97,7 +97,7 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/bytes")
-  public ResponseData<byte[]> openFileToBytes(@RequestParam("path") String path) {
+  public ResponseData<byte[]> openFileToBytes(@RequestParam String path) {
     byte[] result = service.openFileToBytes(path);
     return ResponseData.success(result);
   }
@@ -109,7 +109,7 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/user")
-  public User openFileToUser(@RequestParam("path") String path) {
+  public User openFileToUser(@RequestParam String path) {
     return service.openFileToObject(path, User.class);
   }
 
@@ -120,7 +120,7 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/list")
-  public List<FileInfoDto> listFile(@RequestParam("path") String path) {
+  public List<FileInfoDto> listFile(@RequestParam String path) {
     return service.listFile(path);
   }
 
@@ -132,8 +132,8 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/rename")
-  public ResponseData<Boolean> renameFile(@RequestParam("oldName") String oldName,
-      @RequestParam("newName") String newName) {
+  public ResponseData<Boolean> renameFile(@RequestParam String oldName,
+      @RequestParam String newName) {
     boolean result = service.renameFile(oldName, newName);
     return ResponseData.success(result);
   }
@@ -145,7 +145,7 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @DeleteMapping("/delete")
-  public ResponseData<Boolean> deleteFile(@RequestParam("path") String path) {
+  public ResponseData<Boolean> deleteFile(@RequestParam String path) {
     boolean result = service.deleteFile(path);
     return ResponseData.success(result);
   }
@@ -158,8 +158,8 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @PostMapping("/upload")
-  public ResponseData<Boolean> uploadFile(@RequestParam("path") String path,
-      @RequestParam("uploadPath") String uploadPath) {
+  public ResponseData<Boolean> uploadFile(@RequestParam String path,
+      @RequestParam String uploadPath) {
     service.uploadFile(path, uploadPath);
     return ResponseData.success(Boolean.TRUE);
   }
@@ -172,8 +172,8 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @PostMapping("/download")
-  public ResponseData<Boolean> downloadFile(@RequestParam("path") String path,
-      @RequestParam("downloadPath") String downloadPath) {
+  public ResponseData<Boolean> downloadFile(@RequestParam String path,
+      @RequestParam String downloadPath) {
     service.downloadFile(path, downloadPath);
     return ResponseData.success(Boolean.TRUE);
   }
@@ -186,8 +186,8 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/copy")
-  public ResponseData<Boolean> copyFile(@RequestParam("sourcePath") String sourcePath,
-      @RequestParam("targetPath") String targetPath) {
+  public ResponseData<Boolean> copyFile(@RequestParam String sourcePath,
+      @RequestParam String targetPath) {
     service.copyFile(sourcePath, targetPath);
     return ResponseData.success(Boolean.TRUE);
   }
@@ -199,7 +199,7 @@ public class HadoopHdfsController {
    * @return ResponseData
    */
   @GetMapping("/exist")
-  public ResponseData<Boolean> existFile(@RequestParam("path") String path) {
+  public ResponseData<Boolean> existFile(@RequestParam String path) {
     boolean result = service.existFile(path);
     return ResponseData.success(result);
   }

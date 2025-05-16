@@ -43,5 +43,5 @@ public interface IMonitorCacheClient {
    * @return ResponseData<String>
    */
   @GetMapping(PathConstants.REQUEST_MONITOR_CACHE_CLEAN)
-  ResponseData<String> clean(@RequestParam(value = "index") int index);
+  ResponseData<String> clean(@RequestParam int index);
 }

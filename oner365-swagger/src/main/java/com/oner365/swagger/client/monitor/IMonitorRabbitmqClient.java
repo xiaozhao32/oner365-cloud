@@ -39,8 +39,8 @@ public interface IMonitorRabbitmqClient {
    * @return ResponseData<Serializable>
    */
   @GetMapping(PathConstants.REQUEST_MONITOR_RABBITMQ_LIST)
-  ResponseData<Serializable> list(@PathVariable("type") RabbitmqTypeEnum type, @RequestParam("pageIndex") int pageIndex,
-      @RequestParam("pageSize") int pageSize, @RequestParam("name") String name);
+  ResponseData<Serializable> list(@PathVariable RabbitmqTypeEnum type, @RequestParam int pageIndex,
+      @RequestParam int pageSize, @RequestParam String name);
   
   /**
    * 删除
@@ -50,6 +50,6 @@ public interface IMonitorRabbitmqClient {
    * @return ResponseData<Serializable>
    */
   @DeleteMapping(PathConstants.REQUEST_MONITOR_RABBITMQ_DELETE)
-  ResponseData<Serializable> delete(@PathVariable("type") String type, @PathVariable("name") String name);
+  ResponseData<Serializable> delete(@PathVariable String type, @PathVariable String name);
 
 }

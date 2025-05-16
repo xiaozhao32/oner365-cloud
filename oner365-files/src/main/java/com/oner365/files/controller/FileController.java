@@ -71,7 +71,7 @@ public class FileController extends BaseController {
    */
   @PostMapping("/upload")
   public String uploadMultipartFile(@RequestBody MultipartFile file,
-      @RequestParam(name = "dictory", required = false) String dictory) {
+      @RequestParam(required = false) String dictory) {
     String targetDictory = dictory;
     if (DataUtils.isEmpty(targetDictory)) {
       targetDictory = DateUtil.getCurrentDate();
@@ -87,7 +87,7 @@ public class FileController extends BaseController {
    * @param response HttpServletResponse
    */
   @GetMapping("/download")
-  public void download(@RequestParam("fileUrl") String fileUrl, String filename, HttpServletResponse response) {
+  public void download(@RequestParam String fileUrl, String filename, HttpServletResponse response) {
     byte[] data = fileStorageClient.download(fileUrl);
     if (data == null) {
       response.setStatus(HttpStatus.SC_NOT_FOUND);
@@ -116,7 +116,7 @@ public class FileController extends BaseController {
    * @return 文件下载地址
    */
   @GetMapping("/path")
-  public String downloadPath(@RequestParam("path") String path) {
+  public String downloadPath(@RequestParam String path) {
     return fileStorageClient.downloadPath(path);
   }
 

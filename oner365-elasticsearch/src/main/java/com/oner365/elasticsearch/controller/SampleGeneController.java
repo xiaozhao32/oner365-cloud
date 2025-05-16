@@ -58,7 +58,7 @@ public class SampleGeneController extends BaseController {
    * @return SampleGeneDto
    */
   @GetMapping("/get/{id}")
-  public SampleGeneDto get(@PathVariable("id") String id) {
+  public SampleGeneDto get(@PathVariable String id) {
     SampleGeneDto sampleGene = service.findById(id);
     if (sampleGene != null && !DataUtils.isEmpty(sampleGene.getGeneInfo())) {
       // 基因型格式转换

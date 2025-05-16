@@ -92,7 +92,7 @@ public class TestController {
    * @return 返回结果
    */
   @GetMapping("/path/get")
-  public ResponseData<String> getNode(@RequestParam("path") String path) {
+  public ResponseData<String> getNode(@RequestParam String path) {
     Boolean check = zookeeperService.checkNode(path);
     if (!Boolean.TRUE.equals(check)) {
       return ResponseData.error(String.format(MESSAGE_NODE_NOT_EXISTS, path));
@@ -108,7 +108,7 @@ public class TestController {
    * @return 是否存在
    */
   @GetMapping("/path/check")
-  public ResponseData<Boolean> checkNode(@RequestParam("path") String path) {
+  public ResponseData<Boolean> checkNode(@RequestParam String path) {
     Boolean result = zookeeperService.checkNode(path);
     return ResponseData.success(result);
   }
@@ -120,7 +120,7 @@ public class TestController {
    * @return 是否成功
    */
   @DeleteMapping("/path/delete")
-  public ResponseData<Boolean> deleteNode(@RequestParam("path") String path) {
+  public ResponseData<Boolean> deleteNode(@RequestParam String path) {
     Boolean check = zookeeperService.checkNode(path);
     if (!Boolean.TRUE.equals(check)) {
       return ResponseData.error(String.format(MESSAGE_NODE_NOT_EXISTS, path));
@@ -136,7 +136,7 @@ public class TestController {
    * @return 集合
    */
   @GetMapping("/path/acl")
-  public ResponseData<List<ACL>> getAcl(@RequestParam("path") String path) {
+  public ResponseData<List<ACL>> getAcl(@RequestParam String path) {
     Boolean check = zookeeperService.checkNode(path);
     if (!Boolean.TRUE.equals(check)) {
       ResponseData<List<ACL>> result = new ResponseData<>();

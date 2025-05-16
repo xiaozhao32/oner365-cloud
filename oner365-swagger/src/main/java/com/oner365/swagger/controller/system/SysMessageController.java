@@ -51,7 +51,7 @@ public class SysMessageController {
   @ApiOperation("1.刷新结果")
   @ApiOperationSupport(order = 1)
   @GetMapping("/refresh")
-  public ResponseData<Boolean> refresh(@RequestParam("messageType") MessageTypeEnum messageType) {
+  public ResponseData<Boolean> refresh(@RequestParam MessageTypeEnum messageType) {
     return client.refresh(messageType);
   }
   
@@ -91,7 +91,7 @@ public class SysMessageController {
   @ApiOperation("4.修改状态")
   @ApiOperationSupport(order = 4)
   @PostMapping("/status/{id}")
-  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
     return client.editStatus(id, status);
   }
   

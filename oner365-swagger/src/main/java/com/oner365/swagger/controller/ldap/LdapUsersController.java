@@ -70,7 +70,7 @@ public class LdapUsersController {
   @ApiOperation("3.获取用户")
   @ApiOperationSupport(order = 3)
   @GetMapping("/get/{id}")
-  public ResponseData<LdapUserDto> getUser(@PathVariable("id") String id) {
+  public ResponseData<LdapUserDto> getUser(@PathVariable String id) {
     return client.getUser(id);
   }
 
@@ -109,7 +109,7 @@ public class LdapUsersController {
   @ApiOperation("6.删除用户")
   @ApiOperationSupport(order = 6)
   @DeleteMapping("/delete/{id}")
-  public ResponseData<Boolean> delete(@PathVariable("id") String id) {
+  public ResponseData<Boolean> delete(@PathVariable String id) {
     return client.delete(id);
   }
 

@@ -37,7 +37,7 @@ public interface ISystemMessageClient {
    * @return ResponseData<Boolean>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_REFRESH)
-  ResponseData<Boolean> refresh(@RequestParam("messageType") MessageTypeEnum messageType);
+  ResponseData<Boolean> refresh(@RequestParam MessageTypeEnum messageType);
 
   /**
    * 列表
@@ -55,7 +55,7 @@ public interface ISystemMessageClient {
    * @return ResponseData<SysMessageDto>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_GET_ID)
-  ResponseData<SysMessageDto> getById(@PathVariable(value = "id") String id);
+  ResponseData<SysMessageDto> getById(@PathVariable String id);
 
   /**
    * 修改状态
@@ -65,7 +65,7 @@ public interface ISystemMessageClient {
    * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_STATUS)
-  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
   
   /**
    * 保存

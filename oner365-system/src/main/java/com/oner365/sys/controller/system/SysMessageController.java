@@ -48,7 +48,7 @@ public class SysMessageController extends BaseController {
    * @return Boolean
    */
   @GetMapping("/refresh")
-  public Boolean refresh(@RequestParam("messageType") MessageTypeEnum messageType) {
+  public Boolean refresh(@RequestParam MessageTypeEnum messageType) {
     QueryCriteriaBean data = new QueryCriteriaBean();
     data.setWhereList(Collections.singletonList(new AttributeBean("messageType", messageType)));
     List<SysMessageDto> list = sysMessageService.findList(data);
@@ -89,7 +89,7 @@ public class SysMessageController extends BaseController {
    * @return Boolean
    */
   @PostMapping("/status/{id}")
-  public Boolean editStatus(@PathVariable String id, @RequestParam("status") MessageStatusEnum status) {
+  public Boolean editStatus(@PathVariable String id, @RequestParam MessageStatusEnum status) {
     return sysMessageService.editStatus(id, status);
   }
   

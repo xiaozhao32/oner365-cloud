@@ -60,7 +60,7 @@ public class PostgisPositionController extends BaseController {
    * @return ResponseData
    */
   @GetMapping("/get/{id}")
-  public ResponseData<PositionDto> get(@PathVariable("id") String id) {
+  public ResponseData<PositionDto> get(@PathVariable String id) {
     PositionDto result = service.getById(id);
     return ResponseData.success(result);
   }

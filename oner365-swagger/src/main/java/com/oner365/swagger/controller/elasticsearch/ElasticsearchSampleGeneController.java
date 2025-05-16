@@ -59,7 +59,7 @@ public class ElasticsearchSampleGeneController {
   @ApiOperation("2.按id查询")
   @ApiOperationSupport(order = 2)
   @GetMapping("/get/{id}")
-  public ResponseData<SampleGeneDto> get(@PathVariable("id") String id) {
+  public ResponseData<SampleGeneDto> get(@PathVariable String id) {
     return client.get(id);
   }
 

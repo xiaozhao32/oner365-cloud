@@ -43,7 +43,7 @@ public interface IGatewayRouteClient {
    * @return ResponseData
    */
   @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_GET_ID)
-  ResponseData<GatewayRouteDto> get(@PathVariable(value = "id") String id);
+  ResponseData<GatewayRouteDto> get(@PathVariable String id);
 
   /**
    * 增加路由
@@ -79,8 +79,8 @@ public interface IGatewayRouteClient {
    * @return ResponseData
    */
   @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_STATUS)
-  ResponseData<Boolean> updateRouteStatus(@PathVariable(value = "id") String id,
-      @PathVariable(value = "status") StatusEnum status);
+  ResponseData<Boolean> updateRouteStatus(@PathVariable String id,
+      @PathVariable StatusEnum status);
 
   /**
    * 删除路由

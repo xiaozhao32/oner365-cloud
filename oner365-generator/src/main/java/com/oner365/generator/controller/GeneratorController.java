@@ -99,7 +99,7 @@ public class GeneratorController extends BaseController {
    * 预览代码
    */
   @GetMapping("/preview/{tableId}")
-  public Map<String, String> preview(@PathVariable("tableId") Long tableId) {
+  public Map<String, String> preview(@PathVariable Long tableId) {
     return genTableService.previewCode(tableId);
   }
   
@@ -107,7 +107,7 @@ public class GeneratorController extends BaseController {
    * 生成代码（下载方式）
    */
   @GetMapping("/download/{tableName}")
-  public void download(HttpServletResponse response, @PathVariable("tableName") String tableName) {
+  public void download(HttpServletResponse response, @PathVariable String tableName) {
     byte[] data = genTableService.downloadCode(tableName);
     genCode(response, data);
   }
@@ -116,7 +116,7 @@ public class GeneratorController extends BaseController {
    * 生成代码（自定义路径）
    */
   @GetMapping("/code/{tableName}")
-  public Boolean genCode(@PathVariable("tableName") String tableName) {
+  public Boolean genCode(@PathVariable String tableName) {
     return genTableService.generatorCode(tableName);
   }
 
@@ -124,7 +124,7 @@ public class GeneratorController extends BaseController {
    * 同步数据库
    */
   @GetMapping("/sync/{tableName}")
-  public Boolean synchDb(@PathVariable("tableName") String tableName) {
+  public Boolean synchDb(@PathVariable String tableName) {
     return genTableService.synchDb(tableName);
   }
   

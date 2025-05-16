@@ -24,7 +24,7 @@ public interface IKafkaConsumerClient {
    * @return ResponseData<String>
    */
   @GetMapping(PathConstants.REQUEST_KAFKA_CONSUMER_MESSAGE_SEND)
-  ResponseData<String> send(@RequestParam(value = "message") String message);
+  ResponseData<String> send(@RequestParam String message);
 
   /**
    * KafkaStreams 统计单词个数
@@ -33,5 +33,5 @@ public interface IKafkaConsumerClient {
    * @return 统计单词个数
    */
   @GetMapping(PathConstants.REQUEST_KAFKA_CONSUMER_MESSAGE_WORD_COUNTS)
-  ResponseData<Long> getWordCount(@PathVariable("word") String word);
+  ResponseData<Long> getWordCount(@PathVariable String word);
 }

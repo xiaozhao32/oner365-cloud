@@ -49,7 +49,7 @@ public interface ISystemUserClient {
    * @return ResponseData<SysUserDto>
    */
   @GetMapping(PathConstants.REQUEST_SYSTEM_USER_GET_ID)
-  ResponseData<SysUserDto> getById(@PathVariable(value = "id") String id);
+  ResponseData<SysUserDto> getById(@PathVariable String id);
   
   /**
    * 获取个人信息
@@ -112,7 +112,7 @@ public interface ISystemUserClient {
    * @return ResponseData<Boolean>
    */
   @PostMapping(PathConstants.REQUEST_SYSTEM_USER_STATUS)
-  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
+  ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
   /**
    * 保存

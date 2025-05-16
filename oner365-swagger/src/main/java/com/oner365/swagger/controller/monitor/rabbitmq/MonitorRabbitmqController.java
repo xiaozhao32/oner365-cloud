@@ -57,8 +57,8 @@ public class MonitorRabbitmqController {
   @ApiOperation("2.获取队列列表")
   @ApiOperationSupport(order = 2)
   @GetMapping("/list/{type}")
-  public ResponseData<Serializable> list(@PathVariable("type") RabbitmqTypeEnum type,
-      @RequestParam("pageIndex") int pageIndex, @RequestParam("pageSize") int pageSize, String name) {
+  public ResponseData<Serializable> list(@PathVariable RabbitmqTypeEnum type,
+      @RequestParam int pageIndex, @RequestParam int pageSize, String name) {
     return client.list(type, pageIndex, pageSize, name);
   }
 
@@ -72,7 +72,7 @@ public class MonitorRabbitmqController {
   @ApiOperation("3.删除不同类型的队列")
   @ApiOperationSupport(order = 3)
   @DeleteMapping("/delete/{type}/{name}")
-  public ResponseData<Serializable> delete(@PathVariable("type") String type, @PathVariable("name") String name) {
+  public ResponseData<Serializable> delete(@PathVariable String type, @PathVariable String name) {
     return client.delete(type, name);
   }
 }

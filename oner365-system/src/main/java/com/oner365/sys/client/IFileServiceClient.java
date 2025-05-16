@@ -33,7 +33,7 @@ public interface IFileServiceClient {
      */
   @PostMapping(value = "/storage/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   String uploadFile(@RequestPart("file") MultipartFile file,
-      @RequestParam("dictory") String dictory);
+      @RequestParam String dictory);
   
   /**
    * 下载文件
@@ -42,7 +42,7 @@ public interface IFileServiceClient {
    * @return byte[] 字节流
    */
   @GetMapping("/storage/byte/download")
-  byte[] download(@RequestParam("fileUrl") String fileUrl);
+  byte[] download(@RequestParam String fileUrl);
 
   /**
    * 删除文件

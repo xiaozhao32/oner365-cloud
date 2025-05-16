@@ -133,7 +133,7 @@ public class SysDictItemController {
   @ApiOperation("7.修改类别状态")
   @ApiOperationSupport(order = 7)
   @PostMapping("/type/status/{id}")
-  public ResponseData<Boolean> editTypeStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editTypeStatus(@PathVariable String id, @RequestParam StatusEnum status) {
     return client.editTypeStatus(id, status);
   }
   
@@ -225,7 +225,7 @@ public class SysDictItemController {
   @ApiOperation("14.修改字典状态")
   @ApiOperationSupport(order = 14)
   @PostMapping("/item/status/{id}")
-  public ResponseData<Boolean> editItemStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
+  public ResponseData<Boolean> editItemStatus(@PathVariable String id, @RequestParam StatusEnum status) {
     return client.editItemStatus(id, status);
   }
   
