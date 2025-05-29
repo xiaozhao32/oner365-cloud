@@ -32,7 +32,6 @@ public class JobInvokeUtil {
 
     /**
      * 执行方法
-     *
      * @param sysTask 系统任务
      */
     public static void invokeMethod(SysTaskDto sysTask) {
@@ -41,36 +40,38 @@ public class JobInvokeUtil {
         String methodName = getMethodName(invokeTarget);
         InvokeParamDto param = sysTask.getInvokeParam();
         if (param != null) {
-          param.setConcurrent(sysTask.getConcurrent());
-          param.setTaskId(sysTask.getId());
+            param.setConcurrent(sysTask.getConcurrent());
+            param.setTaskId(sysTask.getId());
         }
 
         try {
             if (!isValidClassName(beanName)) {
                 Object bean = SpringUtils.getBean(beanName);
                 invokeMethod(bean, methodName, param);
-            } else {
+            }
+            else {
                 Object bean = Class.forName(beanName).getDeclaredConstructor().newInstance();
                 invokeMethod(bean, methodName, param);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("invokeMethod error:", e);
         }
     }
 
     /**
      * 调用任务方法
-     *
-     * @param bean       目标对象
+     * @param bean 目标对象
      * @param methodName 方法名称
-     * @param param      方法参数
+     * @param param 方法参数
      */
     private static void invokeMethod(Object bean, String methodName, InvokeParamDto param)
             throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
         if (param != null) {
             Method method = bean.getClass().getDeclaredMethod(methodName, InvokeParam.class);
             method.invoke(bean, JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(param)), InvokeParam.class));
-        } else {
+        }
+        else {
             Method method = bean.getClass().getDeclaredMethod(methodName);
             method.invoke(bean);
         }
@@ -78,9 +79,8 @@ public class JobInvokeUtil {
 
     /**
      * 调用任务方法
-     *
-     * @param bean         目标对象
-     * @param methodName   方法名称
+     * @param bean 目标对象
+     * @param methodName 方法名称
      * @param methodParams 方法参数
      */
     @SuppressWarnings("unused")
@@ -89,7 +89,8 @@ public class JobInvokeUtil {
         if (methodParams != null && !methodParams.isEmpty()) {
             Method method = bean.getClass().getDeclaredMethod(methodName, getMethodParamsType(methodParams));
             method.invoke(bean, getMethodParamsValue(methodParams));
-        } else {
+        }
+        else {
             Method method = bean.getClass().getDeclaredMethod(methodName);
             method.invoke(bean);
         }
@@ -97,7 +98,6 @@ public class JobInvokeUtil {
 
     /**
      * 校验是否为为class包名
-     *
      * @param invokeTarget 名称
      * @return true是 false否
      */
@@ -107,7 +107,6 @@ public class JobInvokeUtil {
 
     /**
      * 获取bean名称
-     *
      * @param invokeTarget 目标字符串
      * @return bean名称
      */
@@ -118,7 +117,6 @@ public class JobInvokeUtil {
 
     /**
      * 获取bean方法
-     *
      * @param invokeTarget 目标字符串
      * @return method方法
      */
@@ -129,7 +127,6 @@ public class JobInvokeUtil {
 
     /**
      * 获取method方法参数相关列表
-     *
      * @param invokeTarget 目标字符串
      * @return method方法相关参数列表
      */
@@ -168,7 +165,6 @@ public class JobInvokeUtil {
 
     /**
      * 获取参数类型
-     *
      * @param methodParams 参数相关列表
      * @return 参数类型列表
      */
@@ -184,7 +180,6 @@ public class JobInvokeUtil {
 
     /**
      * 获取参数值
-     *
      * @param methodParams 参数相关列表
      * @return 参数值列表
      */
@@ -197,4 +192,5 @@ public class JobInvokeUtil {
         }
         return classes;
     }
+
 }

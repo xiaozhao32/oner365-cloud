@@ -23,4 +23,5 @@ public class DateBizName implements BizName {
     public String create() {
         return this.bizName + DateUtil.getCurrentDate();
     }
+
 }

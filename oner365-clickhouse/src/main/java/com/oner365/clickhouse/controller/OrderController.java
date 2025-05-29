@@ -26,7 +26,7 @@ import com.oner365.data.web.controller.BaseController;
 
 /**
  * 测试 jpa 方式的分库分表
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -34,62 +34,58 @@ import com.oner365.data.web.controller.BaseController;
 @RequestMapping("/order")
 public class OrderController extends BaseController {
 
-  @Resource
-  private IOrderService service;
+    @Resource
+    private IOrderService service;
 
-  /**
-   * 订单列表
-   *
-   * @param data 查询参数
-   * @return PageInfo<OrderDto>
-   */
-  @PostMapping("/list")
-  public PageInfo<OrderDto> pageList(@RequestBody QueryCriteriaBean data) {
-    return service.pageList(data);
-  }
+    /**
+     * 订单列表
+     * @param data 查询参数
+     * @return PageInfo<OrderDto>
+     */
+    @PostMapping("/list")
+    public PageInfo<OrderDto> pageList(@RequestBody QueryCriteriaBean data) {
+        return service.pageList(data);
+    }
 
-  /**
-   * 获取订单
-   *
-   * @param id 编号
-   * @return OrderDto
-   */
-  @GetMapping("/get/{id}")
-  public OrderDto get(@PathVariable String id) {
-    return service.getById(id);
-  }
+    /**
+     * 获取订单
+     * @param id 编号
+     * @return OrderDto
+     */
+    @GetMapping("/get/{id}")
+    public OrderDto get(@PathVariable String id) {
+        return service.getById(id);
+    }
 
-  /**
-   * 修改订单状态
-   *
-   * @param id     主键
-   * @param status 状态
-   * @return Boolean
-   */
-  @PostMapping("/status/{id}")
-  public Boolean editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
-    return service.editStatus(id, status);
-  }
+    /**
+     * 修改订单状态
+     * @param id 主键
+     * @param status 状态
+     * @return Boolean
+     */
+    @PostMapping("/status/{id}")
+    public Boolean editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
+        return service.editStatus(id, status);
+    }
 
-  /**
-   * 用户订单保存
-   *
-   * @param vo 订单对象
-   * @return OrderDto
-   */
-  @PutMapping("/save")
-  public OrderDto save(@RequestBody OrderVo vo) {
-    return service.save(vo);
-  }
+    /**
+     * 用户订单保存
+     * @param vo 订单对象
+     * @return OrderDto
+     */
+    @PutMapping("/save")
+    public OrderDto save(@RequestBody OrderVo vo) {
+        return service.save(vo);
+    }
 
-  /**
-   * 删除用户订单
-   *
-   * @param ids 编号
-   * @return List<Boolean>
-   */
-  @DeleteMapping("/delete")
-  public List<Boolean> delete(@RequestBody String... ids) {
-    return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
-  }
+    /**
+     * 删除用户订单
+     * @param ids 编号
+     * @return List<Boolean>
+     */
+    @DeleteMapping("/delete")
+    public List<Boolean> delete(@RequestBody String... ids) {
+        return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
+    }
+
 }

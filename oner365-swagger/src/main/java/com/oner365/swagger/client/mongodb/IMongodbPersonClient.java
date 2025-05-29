@@ -19,46 +19,43 @@ import com.oner365.swagger.vo.PersonVo;
 
 /**
  * Mongodb服务 - 用户
- * 
+ *
  * @author zhaoyong
  *
  */
 @FeignClient(value = PathConstants.FEIGN_CLIENT_MONGODB, contextId = PathConstants.CONTEXT_MONGODB_PERSON_ID)
 public interface IMongodbPersonClient {
 
-  /**
-   * 列表
-   * 
-   * @param data 查询参数
-   * @return ResponseData<PageInfo<PersonDto>>
-   */
-  @PostMapping(PathConstants.REQUEST_MONGODB_PERSON_PAGE)
-  ResponseData<PageInfo<PersonDto>> page(@RequestBody QueryCriteriaBean data);
+    /**
+     * 列表
+     * @param data 查询参数
+     * @return ResponseData<PageInfo<PersonDto>>
+     */
+    @PostMapping(PathConstants.REQUEST_MONGODB_PERSON_PAGE)
+    ResponseData<PageInfo<PersonDto>> page(@RequestBody QueryCriteriaBean data);
 
-  /**
-   * 按id获取查询
-   * 
-   * @param id 编号
-   * @return ResponseData<PersonDto>
-   */
-  @GetMapping(PathConstants.REQUEST_MONGODB_PERSON_GET_ID)
-  ResponseData<PersonDto> getById(@PathVariable String id);
+    /**
+     * 按id获取查询
+     * @param id 编号
+     * @return ResponseData<PersonDto>
+     */
+    @GetMapping(PathConstants.REQUEST_MONGODB_PERSON_GET_ID)
+    ResponseData<PersonDto> getById(@PathVariable String id);
 
-  /**
-   * 保存
-   * 
-   * @param personVo 保存对象
-   * @return ResponseData<PersonDto>
-   */
-  @PutMapping(PathConstants.REQUEST_MONGODB_PERSON_SAVE)
-  ResponseData<PersonDto> save(@RequestBody PersonVo personVo);
+    /**
+     * 保存
+     * @param personVo 保存对象
+     * @return ResponseData<PersonDto>
+     */
+    @PutMapping(PathConstants.REQUEST_MONGODB_PERSON_SAVE)
+    ResponseData<PersonDto> save(@RequestBody PersonVo personVo);
 
-  /**
-   * 删除
-   * 
-   * @param ids 编号
-   * @return ResponseData<List<Boolean>>
-   */
-  @DeleteMapping(PathConstants.REQUEST_MONGODB_PERSON_DELETE)
-  ResponseData<List<Boolean>> deleteById(@RequestBody String... ids);
+    /**
+     * 删除
+     * @param ids 编号
+     * @return ResponseData<List<Boolean>>
+     */
+    @DeleteMapping(PathConstants.REQUEST_MONGODB_PERSON_DELETE)
+    ResponseData<List<Boolean>> deleteById(@RequestBody String... ids);
+
 }

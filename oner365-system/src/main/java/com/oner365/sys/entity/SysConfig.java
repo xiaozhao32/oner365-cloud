@@ -24,7 +24,7 @@ import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * nt_sys_config 对象 nt_sys_config
- * 
+ *
  * @author zhaoyong
  */
 @Entity
@@ -40,32 +40,40 @@ public class SysConfig implements Serializable {
     @GeneratedValue(generator = "generator")
     @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
     private String id;
+
     /** 配置名称 */
     @Column(name = "config_name", nullable = false)
     private String configName;
+
     /** 配置内容 */
-    @Column( name = "config_value")
+    @Column(name = "config_value")
     private String configValue;
+
     /** 状态 */
     @Enumerated
     @Column(name = "status", nullable = false)
     private StatusEnum status;
+
     /** 创建时间 */
     @CreatedDate
     @Column(name = "create_time", updatable = false)
     private LocalDateTime createTime;
+
     /** 更新时间 */
     @LastModifiedDate
     @Column(name = "update_time", insertable = false)
     private LocalDateTime updateTime;
+
     /** 创建人 */
     @CreatedBy
     @Column(name = "create_user")
     private String createUser;
+
     /** 更新人 */
     @LastModifiedBy
     @Column(name = "update_user")
     private String updateUser;
+
     public void setId(String id) {
         this.id = id;
     }
@@ -73,6 +81,7 @@ public class SysConfig implements Serializable {
     public String getId() {
         return id;
     }
+
     public void setConfigName(String configName) {
         this.configName = configName;
     }
@@ -80,6 +89,7 @@ public class SysConfig implements Serializable {
     public String getConfigName() {
         return configName;
     }
+
     public void setConfigValue(String configValue) {
         this.configValue = configValue;
     }
@@ -87,6 +97,7 @@ public class SysConfig implements Serializable {
     public String getConfigValue() {
         return configValue;
     }
+
     public void setStatus(StatusEnum status) {
         this.status = status;
     }
@@ -94,6 +105,7 @@ public class SysConfig implements Serializable {
     public StatusEnum getStatus() {
         return status;
     }
+
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
@@ -101,6 +113,7 @@ public class SysConfig implements Serializable {
     public LocalDateTime getCreateTime() {
         return createTime;
     }
+
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
@@ -108,6 +121,7 @@ public class SysConfig implements Serializable {
     public LocalDateTime getUpdateTime() {
         return updateTime;
     }
+
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
     }
@@ -115,6 +129,7 @@ public class SysConfig implements Serializable {
     public String getCreateUser() {
         return createUser;
     }
+
     public void setUpdateUser(String updateUser) {
         this.updateUser = updateUser;
     }

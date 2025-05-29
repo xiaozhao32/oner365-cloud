@@ -7,62 +7,62 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 菜单操作对象
- * 
+ *
  * @author zhaoyong
  *
  */
 @ApiModel(value = "菜单操作信息")
 public class SysMenuOperDto implements Serializable {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 操作id
-   */
-  @ApiModelProperty(value = "操作id")
-  private String operId;
-  
-  /**
-   * 操作名称
-   */
-  @ApiModelProperty(value = "操作名称")
-  private String operName;
-  
-  /**
-   * 操作类型
-   */
-  @ApiModelProperty(value = "操作类型")
-  private String operType;
-  
-  public SysMenuOperDto() {
-    super();
-  }
+    /**
+     * 操作id
+     */
+    @ApiModelProperty(value = "操作id")
+    private String operId;
 
-  public String getOperId() {
-    return operId;
-  }
+    /**
+     * 操作名称
+     */
+    @ApiModelProperty(value = "操作名称")
+    private String operName;
 
-  public void setOperId(String operId) {
-    this.operId = operId;
-  }
+    /**
+     * 操作类型
+     */
+    @ApiModelProperty(value = "操作类型")
+    private String operType;
 
-  public String getOperName() {
-    return operName;
-  }
+    public SysMenuOperDto() {
+        super();
+    }
 
-  public void setOperName(String operName) {
-    this.operName = operName;
-  }
+    public String getOperId() {
+        return operId;
+    }
 
-  public String getOperType() {
-    return operType;
-  }
+    public void setOperId(String operId) {
+        this.operId = operId;
+    }
 
-  public void setOperType(String operType) {
-    this.operType = operType;
-  }
-  
+    public String getOperName() {
+        return operName;
+    }
+
+    public void setOperName(String operName) {
+        this.operName = operName;
+    }
+
+    public String getOperType() {
+        return operType;
+    }
+
+    public void setOperType(String operType) {
+        this.operType = operType;
+    }
+
 }

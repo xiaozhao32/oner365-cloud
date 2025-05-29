@@ -12,23 +12,23 @@ import org.springframework.http.HttpMethod;
  */
 public class HttpDelete extends HttpEntityEnclosingRequestBase {
 
-  @Override
-  public String getMethod() {
-    return HttpMethod.DELETE.name();
-  }
+    @Override
+    public String getMethod() {
+        return HttpMethod.DELETE.name();
+    }
 
-  public HttpDelete(final String uri) {
-    super();
-    setURI(URI.create(uri));
-  }
+    public HttpDelete(final String uri) {
+        super();
+        setURI(URI.create(uri));
+    }
 
-  public HttpDelete(final URI uri) {
-    super();
-    setURI(uri);
-  }
+    public HttpDelete(final URI uri) {
+        super();
+        setURI(uri);
+    }
 
-  public HttpDelete() {
-    super();
-  }
+    public HttpDelete() {
+        super();
+    }
 
 }

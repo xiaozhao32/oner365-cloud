@@ -5,44 +5,44 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Token相关配置
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 @ConfigurationProperties(prefix = "token")
 public class AccessTokenProperties {
 
-  /**
-   * token密钥
-   */
-  private String secret;
+    /**
+     * token密钥
+     */
+    private String secret;
 
-  /**
-   * token过期分钟
-   */
-  private int expireTime;
+    /**
+     * token过期分钟
+     */
+    private int expireTime;
 
-  /**
-   * 构造方法
-   */
-  public AccessTokenProperties() {
-    super();
-  }
+    /**
+     * 构造方法
+     */
+    public AccessTokenProperties() {
+        super();
+    }
 
-  public String getSecret() {
-    return secret;
-  }
+    public String getSecret() {
+        return secret;
+    }
 
-  public void setSecret(String secret) {
-    this.secret = secret;
-  }
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
 
-  public int getExpireTime() {
-    return expireTime;
-  }
+    public int getExpireTime() {
+        return expireTime;
+    }
 
-  public void setExpireTime(int expireTime) {
-    this.expireTime = expireTime;
-  }
+    public void setExpireTime(int expireTime) {
+        this.expireTime = expireTime;
+    }
 
 }

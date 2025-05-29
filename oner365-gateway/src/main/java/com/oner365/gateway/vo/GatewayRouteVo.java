@@ -13,6 +13,7 @@ import com.oner365.gateway.entity.GatewayPredicate;
 
 /**
  * Gateway的路由定义模型
+ *
  * @author zhaoyong
  */
 public class GatewayRouteVo implements Serializable {
@@ -118,7 +119,7 @@ public class GatewayRouteVo implements Serializable {
     public void setPattern(String pattern) {
         this.pattern = pattern;
     }
-    
+
     /**
      * toString Method
      */

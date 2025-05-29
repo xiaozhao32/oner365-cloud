@@ -4,68 +4,57 @@ import java.io.Serializable;
 
 /**
  * websocket 连接传输类
- * 
+ *
  * @author liutao
  */
 public class WebSocketLinkVo implements Serializable {
 
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 用户名
-   */
-  private String user;
-  
-  /**
-   * 用户id
-   */
-  private String userId;
+    /**
+     * 用户名
+     */
+    private String user;
 
-  /**
-   * 通道标识
-   */
-  private String token;
-  
+    /**
+     * 用户id
+     */
+    private String userId;
 
+    /**
+     * 通道标识
+     */
+    private String token;
 
+    public WebSocketLinkVo() {
+        super();
+    }
 
-  public WebSocketLinkVo() {
-    super();
-  }
+    public String getUser() {
+        return user;
+    }
 
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-  public String getUser() {
-    return user;
-  }
+    public String getToken() {
+        return token;
+    }
 
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-  public void setUser(String user) {
-    this.user = user;
-  }
+    public String getUserId() {
+        return userId;
+    }
 
-
-  public String getToken() {
-    return token;
-  }
-
-
-  public void setToken(String token) {
-    this.token = token;
-  }
-
-
-  public String getUserId() {
-    return userId;
-  }
-
-
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
-  
-  
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
 }

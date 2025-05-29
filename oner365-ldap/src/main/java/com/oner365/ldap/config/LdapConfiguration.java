@@ -14,7 +14,7 @@ import com.oner365.ldap.config.properties.LdapProperties;
 
 /**
  * Ldap Config
- * 
+ *
  * @author zhaoyong
  */
 @AutoConfiguration
@@ -22,29 +22,30 @@ import com.oner365.ldap.config.properties.LdapProperties;
 @EnableLdapRepositories(basePackages = "com.oner365.ldap.repository")
 public class LdapConfiguration {
 
-  @Resource
-  private LdapProperties properties;
+    @Resource
+    private LdapProperties properties;
 
-  @Bean
-  ContextSource contextSource() {
-    System.setProperty("com.sun.jndi.ldap.object.disableEndpointIdentification", "true");
-    
-    LdapContextSource source = new LdapContextSource();
-    source.setUserDn(properties.getUsername());
-    source.setPassword(properties.getPassword());
-    source.setBase(properties.getBase());
-    source.setUrl(properties.getUrls());
-    
-    source.setAnonymousReadOnly(false);
-    source.setPooled(false);
-    source.afterPropertiesSet();
-    return source;
-  }
+    @Bean
+    ContextSource contextSource() {
+        System.setProperty("com.sun.jndi.ldap.object.disableEndpointIdentification", "true");
 
-  @Bean
-  LdapTemplate ldapTemplate(ContextSource contextSource) {
-    LdapTemplate template = new LdapTemplate(contextSource);
-    template.setIgnorePartialResultException(true);
-    return template;
-  }
+        LdapContextSource source = new LdapContextSource();
+        source.setUserDn(properties.getUsername());
+        source.setPassword(properties.getPassword());
+        source.setBase(properties.getBase());
+        source.setUrl(properties.getUrls());
+
+        source.setAnonymousReadOnly(false);
+        source.setPooled(false);
+        source.afterPropertiesSet();
+        return source;
+    }
+
+    @Bean
+    LdapTemplate ldapTemplate(ContextSource contextSource) {
+        LdapTemplate template = new LdapTemplate(contextSource);
+        template.setIgnorePartialResultException(true);
+        return template;
+    }
+
 }

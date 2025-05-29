@@ -12,32 +12,33 @@ import com.oner365.neo4j.service.ParentService;
 
 /**
  * 节点实现类
- * 
+ *
  * @author zhaoyong
  *
  */
 @Service
 public class ParentServiceImpl implements ParentService {
-  
-  private final Logger logger = LoggerFactory.getLogger(ParentServiceImpl.class);
 
-  @Resource
-  private ParentRepository repository;
+    private final Logger logger = LoggerFactory.getLogger(ParentServiceImpl.class);
 
-  @Resource
-  public ParentNode save(ParentNode entity) {
-    return repository.save(entity);
-  }
+    @Resource
+    private ParentRepository repository;
 
-  @Override
-  public boolean delete(Long id) {
-    try {
-      repository.deleteById(id);
-      return true;
-    } catch (Exception e) {
-      logger.error("parent delete error:", e);
+    @Resource
+    public ParentNode save(ParentNode entity) {
+        return repository.save(entity);
     }
-    return false;
-  }
+
+    @Override
+    public boolean delete(Long id) {
+        try {
+            repository.deleteById(id);
+            return true;
+        }
+        catch (Exception e) {
+            logger.error("parent delete error:", e);
+        }
+        return false;
+    }
 
 }

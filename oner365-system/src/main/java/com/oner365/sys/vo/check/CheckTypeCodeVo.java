@@ -6,33 +6,33 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * 检测编码
- * 
+ *
  * @author zhaoyong
  *
  */
 public class CheckTypeCodeVo implements Serializable {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * 主键 id
      */
     private String id;
-    
+
     /**
      * 编码
      */
     @NotBlank(message = "{system.vo.check.type.code.message}")
     private String code;
-    
+
     /**
      * 类型id
      */
     private String typeId;
-    
+
     /**
      * 构造方法
      */
@@ -55,7 +55,7 @@ public class CheckTypeCodeVo implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
-    
+
     public String getTypeId() {
         return typeId;
     }

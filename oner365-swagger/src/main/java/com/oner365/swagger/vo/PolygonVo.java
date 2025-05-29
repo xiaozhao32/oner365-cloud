@@ -14,17 +14,17 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel(value = "面")
 public class PolygonVo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @ApiModelProperty(value = "集合")
-  private List<PointVo> points;
+    @ApiModelProperty(value = "集合")
+    private List<PointVo> points;
 
-  public List<PointVo> getPoints() {
-    return points;
-  }
+    public List<PointVo> getPoints() {
+        return points;
+    }
 
-  public void setPoints(List<PointVo> points) {
-    this.points = points;
-  }
+    public void setPoints(List<PointVo> points) {
+        this.points = points;
+    }
 
 }

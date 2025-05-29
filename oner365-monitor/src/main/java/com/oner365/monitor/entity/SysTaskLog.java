@@ -25,197 +25,198 @@ import com.oner365.data.commons.constants.PublicConstants;
 @Table(name = "nt_sys_task_log")
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class SysTaskLog implements Serializable {
-  private static final long serialVersionUID = 1L;
 
-  /** ID */
-  @Id
-  @GeneratedValue(generator = "generator")
-  @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
-  private String id;
+    private static final long serialVersionUID = 1L;
 
-  /** 任务名称 */
-  @Column(name = "task_name", nullable = false, length = 64)
-  private String taskName;
+    /** ID */
+    @Id
+    @GeneratedValue(generator = "generator")
+    @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
+    private String id;
 
-  /** 任务组名 */
-  @Column(name = "task_group", nullable = false, length = 64)
-  private String taskGroup;
+    /** 任务名称 */
+    @Column(name = "task_name", nullable = false, length = 64)
+    private String taskName;
 
-  /** 调用目标字符串 */
-  @Column(name = "invoke_target", nullable = false, length = 500)
-  private String invokeTarget;
+    /** 任务组名 */
+    @Column(name = "task_group", nullable = false, length = 64)
+    private String taskGroup;
 
-  /** 日志信息 */
-  @Column(name = "task_message", length = 500)
-  private String taskMessage;
+    /** 调用目标字符串 */
+    @Column(name = "invoke_target", nullable = false, length = 500)
+    private String invokeTarget;
 
-  /** 执行状态 */
-  @Enumerated
-  @Column(name = "status", length = 1)
-  private TaskStatusEnum status;
+    /** 日志信息 */
+    @Column(name = "task_message", length = 500)
+    private String taskMessage;
 
-  /** 异常信息 */
-  @Column(name = "exception_info", length = 2000)
-  private String exceptionInfo;
+    /** 执行状态 */
+    @Enumerated
+    @Column(name = "status", length = 1)
+    private TaskStatusEnum status;
 
-  /** 开始时间 */
-  @Column(name = "start_time")
-  private Date startTime;
+    /** 异常信息 */
+    @Column(name = "exception_info", length = 2000)
+    private String exceptionInfo;
 
-  /** 停止时间 */
-  @Column(name = "stop_time")
-  private Date stopTime;
+    /** 开始时间 */
+    @Column(name = "start_time")
+    private Date startTime;
 
-  /**
-   * 执行任务服务ip
-   */
-  @Column(name = "execute_ip", length = 64)
-  private String executeIp;
+    /** 停止时间 */
+    @Column(name = "stop_time")
+    private Date stopTime;
 
-  /**
-   * 执行任务服务名称
-   */
-  @Column(name = "execute_server_name", length = 64)
-  private String executeServerName;
+    /**
+     * 执行任务服务ip
+     */
+    @Column(name = "execute_ip", length = 64)
+    private String executeIp;
 
-  /** 备注 */
-  @Column(name = "remark", length = 500)
-  private String remark;
+    /**
+     * 执行任务服务名称
+     */
+    @Column(name = "execute_server_name", length = 64)
+    private String executeServerName;
 
-  /** 创建人 */
-  @Column(name = "create_user", length = 32)
-  private String createUser;
+    /** 备注 */
+    @Column(name = "remark", length = 500)
+    private String remark;
 
-  /** 创建时间 */
-  @Column(name = "create_time", updatable = false)
-  private Date createTime;
+    /** 创建人 */
+    @Column(name = "create_user", length = 32)
+    private String createUser;
 
-  /** 更新时间 */
-  @Column(name = "update_time", updatable = true)
-  private Date updateTime;
+    /** 创建时间 */
+    @Column(name = "create_time", updatable = false)
+    private Date createTime;
 
-  public SysTaskLog() {
-    super();
-  }
+    /** 更新时间 */
+    @Column(name = "update_time", updatable = true)
+    private Date updateTime;
 
-  public String getId() {
-    return id;
-  }
+    public SysTaskLog() {
+        super();
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public String getTaskName() {
-    return taskName;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public void setTaskName(String taskName) {
-    this.taskName = taskName;
-  }
+    public String getTaskName() {
+        return taskName;
+    }
 
-  public String getTaskGroup() {
-    return taskGroup;
-  }
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
 
-  public void setTaskGroup(String taskGroup) {
-    this.taskGroup = taskGroup;
-  }
+    public String getTaskGroup() {
+        return taskGroup;
+    }
 
-  public String getInvokeTarget() {
-    return invokeTarget;
-  }
+    public void setTaskGroup(String taskGroup) {
+        this.taskGroup = taskGroup;
+    }
 
-  public void setInvokeTarget(String invokeTarget) {
-    this.invokeTarget = invokeTarget;
-  }
+    public String getInvokeTarget() {
+        return invokeTarget;
+    }
 
-  public String getTaskMessage() {
-    return taskMessage;
-  }
+    public void setInvokeTarget(String invokeTarget) {
+        this.invokeTarget = invokeTarget;
+    }
 
-  public void setTaskMessage(String taskMessage) {
-    this.taskMessage = taskMessage;
-  }
+    public String getTaskMessage() {
+        return taskMessage;
+    }
 
-  public TaskStatusEnum getStatus() {
-    return status;
-  }
+    public void setTaskMessage(String taskMessage) {
+        this.taskMessage = taskMessage;
+    }
 
-  public void setStatus(TaskStatusEnum status) {
-    this.status = status;
-  }
+    public TaskStatusEnum getStatus() {
+        return status;
+    }
 
-  public String getExceptionInfo() {
-    return exceptionInfo;
-  }
+    public void setStatus(TaskStatusEnum status) {
+        this.status = status;
+    }
 
-  public void setExceptionInfo(String exceptionInfo) {
-    this.exceptionInfo = exceptionInfo;
-  }
+    public String getExceptionInfo() {
+        return exceptionInfo;
+    }
 
-  public Date getStartTime() {
-    return startTime;
-  }
+    public void setExceptionInfo(String exceptionInfo) {
+        this.exceptionInfo = exceptionInfo;
+    }
 
-  public void setStartTime(Date startTime) {
-    this.startTime = startTime;
-  }
+    public Date getStartTime() {
+        return startTime;
+    }
 
-  public Date getStopTime() {
-    return stopTime;
-  }
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
 
-  public void setStopTime(Date stopTime) {
-    this.stopTime = stopTime;
-  }
+    public Date getStopTime() {
+        return stopTime;
+    }
 
-  public String getRemark() {
-    return remark;
-  }
+    public void setStopTime(Date stopTime) {
+        this.stopTime = stopTime;
+    }
 
-  public void setRemark(String remark) {
-    this.remark = remark;
-  }
+    public String getRemark() {
+        return remark;
+    }
 
-  public String getCreateUser() {
-    return createUser;
-  }
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
-  public void setCreateUser(String createUser) {
-    this.createUser = createUser;
-  }
+    public String getCreateUser() {
+        return createUser;
+    }
 
-  public Date getCreateTime() {
-    return createTime;
-  }
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
 
-  public void setCreateTime(Date createTime) {
-    this.createTime = createTime;
-  }
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-  public Date getUpdateTime() {
-    return updateTime;
-  }
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-  public void setUpdateTime(Date updateTime) {
-    this.updateTime = updateTime;
-  }
+    public Date getUpdateTime() {
+        return updateTime;
+    }
 
-  public String getExecuteIp() {
-    return executeIp;
-  }
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
-  public void setExecuteIp(String executeIp) {
-    this.executeIp = executeIp;
-  }
+    public String getExecuteIp() {
+        return executeIp;
+    }
 
-  public String getExecuteServerName() {
-    return executeServerName;
-  }
+    public void setExecuteIp(String executeIp) {
+        this.executeIp = executeIp;
+    }
 
-  public void setExecuteServerName(String executeServerName) {
-    this.executeServerName = executeServerName;
-  }
+    public String getExecuteServerName() {
+        return executeServerName;
+    }
+
+    public void setExecuteServerName(String executeServerName) {
+        this.executeServerName = executeServerName;
+    }
 
 }

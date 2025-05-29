@@ -19,7 +19,6 @@ public enum StatusEnum implements BaseEnum {
 
     /**
      * 构造方法
-     *
      * @param name 名称
      */
     StatusEnum(String name) {
@@ -28,7 +27,6 @@ public enum StatusEnum implements BaseEnum {
 
     /**
      * get name
-     *
      * @return name
      */
     @Override

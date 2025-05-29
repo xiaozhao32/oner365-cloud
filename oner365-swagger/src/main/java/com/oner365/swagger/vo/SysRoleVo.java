@@ -66,14 +66,14 @@ public class SysRoleVo implements Serializable {
      */
     @ApiModelProperty(value = "更新时间")
     private LocalDateTime updateTime;
-    
+
     /**
      * 菜单id
      */
     @ApiModelProperty(value = "菜单id")
     @NotEmpty(message = "{system.vo.role.menuIds.message}")
     private List<String> menuIds;
-    
+
     /**
      * 菜单类型
      */
@@ -164,7 +164,7 @@ public class SysRoleVo implements Serializable {
     public void setMenuType(String menuType) {
         this.menuType = menuType;
     }
-    
+
     /**
      * toString Method
      */
@@ -172,4 +172,5 @@ public class SysRoleVo implements Serializable {
     public String toString() {
         return MoreObjects.toStringHelper(this).add("id", id).toString();
     }
+
 }

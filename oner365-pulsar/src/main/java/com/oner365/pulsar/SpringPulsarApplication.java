@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Pulsar 服务
- * 
+ *
  * @author zhaoyong
  */
 @SpringBootApplication
@@ -17,8 +17,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({ "com.oner365" })
 public class SpringPulsarApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SpringPulsarApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SpringPulsarApplication.class, args);
+    }
 
 }

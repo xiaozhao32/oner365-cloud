@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * 登录对象
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -16,29 +16,29 @@ public class LoginUserVo implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * 账号 userName
      */
     @NotBlank(message = "{system.vo.loginUser.userName.message}")
     private String userName;
-    
+
     /**
      * 密码 password
      */
     @NotBlank(message = "{system.vo.loginUser.password.message}")
     private String password;
-    
+
     /**
      * 图片验证码 uuid
      */
     private String uuid;
-    
+
     /**
      * 验证码 code
      */
     private String code;
-    
+
     /**
      * 构造方法
      */

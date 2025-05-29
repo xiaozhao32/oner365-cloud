@@ -29,10 +29,15 @@ public class GenConstants {
     public static final String PARENT_MENU_NAME = "parentMenuName";
 
     public static final String PARAM_ID = "id";
+
     public static final String PARAM_CREATE_USER = "create_user";
+
     public static final String PARAM_CREATE_TIME = "create_time";
+
     public static final String PARAM_UPDATE_USER = "update_user";
+
     public static final String PARAM_UPDATE_TIME = "update_time";
+
     public static final String PARAM_REMARK = "remark";
 
     /** 文本框 */
@@ -52,10 +57,10 @@ public class GenConstants {
 
     /** 日期控件 */
     public static final String HTML_DATE = "date";
-    
+
     /** 时间控件 */
     public static final String HTML_DATE_TIME = "datetime";
-    
+
     /** 上传控件 */
     public static final String HTML_UPLOAD_IMAGE = "uploadImage";
 
@@ -79,13 +84,13 @@ public class GenConstants {
 
     /** 日期类型 */
     public static final String TYPE_DATE = "LocalDate";
-    
+
     /** 时间类型 */
     public static final String TYPE_DATE_TIME = "LocalDateTime";
-    
+
     /** 枚举状态类型 */
     public static final String TYPE_ENUM_STATUS = "StatusEnum";
-    
+
     /** json类型 */
     public static final String TYPE_JSON = "json";
 
@@ -99,4 +104,5 @@ public class GenConstants {
     private GenConstants() {
         super();
     }
+
 }

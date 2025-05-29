@@ -13,7 +13,7 @@ import com.oner365.monitor.rabbitmq.IScheduleSendTaskService;
 
 /**
  * 定时任务调度测试
- * 
+ *
  * @author liutao
  */
 @Component("systemTask")
@@ -23,17 +23,18 @@ public class SystemTask {
 
     @Resource
     private IScheduleSendTaskService service;
-    
+
     public void taskParams(String params) {
-      LOGGER.info("执行有参方法：{}", params);
+        LOGGER.info("执行有参方法：{}", params);
     }
 
     public void taskNoParams() {
-      LOGGER.info("执行无参方法");
+        LOGGER.info("执行无参方法");
     }
 
     public void taskRun(InvokeParam param) {
         LOGGER.info("执行【{}】定时任务: {}", param.getTaskServerName(), param);
         service.pullTask(JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(param)), InvokeParamDto.class));
     }
+
 }

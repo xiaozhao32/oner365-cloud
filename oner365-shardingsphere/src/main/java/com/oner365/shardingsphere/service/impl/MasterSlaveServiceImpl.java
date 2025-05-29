@@ -17,41 +17,42 @@ import com.oner365.shardingsphere.vo.MasterSlaveVo;
 
 /**
  * 主从测试实现类
- * 
+ *
  * @author zhaoyong
  */
 @Service
 public class MasterSlaveServiceImpl implements IMasterSlaveService {
-  
-  private final Logger logger = LoggerFactory.getLogger(MasterSlaveServiceImpl.class);
-  
-  @Resource
-  private IMasterSlaveDao dao;
 
-  @Override
-  public List<MasterSlave> findList() {
-    return dao.findAll();
-  }
+    private final Logger logger = LoggerFactory.getLogger(MasterSlaveServiceImpl.class);
 
-  @Override
-  @Transactional
-  public Boolean save(MasterSlaveVo vo) {
-    try {
-      MasterSlave entity = dao.save(build(vo));
-      String result = JSON.toJSONString(entity);
-      logger.info("entity:{}", result);
-      return Boolean.TRUE;
-    } catch (Exception e) {
-      logger.error("MasterSlave save error", e);
+    @Resource
+    private IMasterSlaveDao dao;
+
+    @Override
+    public List<MasterSlave> findList() {
+        return dao.findAll();
     }
-    return Boolean.FALSE;
-  }
-  
-  private MasterSlave build(MasterSlaveVo vo) {
-    MasterSlave result = new MasterSlave();
-    result.setId(vo.getId());
-    result.setName(vo.getName());
-    return result;
-  }
+
+    @Override
+    @Transactional
+    public Boolean save(MasterSlaveVo vo) {
+        try {
+            MasterSlave entity = dao.save(build(vo));
+            String result = JSON.toJSONString(entity);
+            logger.info("entity:{}", result);
+            return Boolean.TRUE;
+        }
+        catch (Exception e) {
+            logger.error("MasterSlave save error", e);
+        }
+        return Boolean.FALSE;
+    }
+
+    private MasterSlave build(MasterSlaveVo vo) {
+        MasterSlave result = new MasterSlave();
+        result.setId(vo.getId());
+        result.setName(vo.getName());
+        return result;
+    }
 
 }

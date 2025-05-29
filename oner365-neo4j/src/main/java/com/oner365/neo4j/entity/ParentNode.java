@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * 人员节点
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -21,85 +21,85 @@ import org.springframework.stereotype.Component;
 @Component
 public class ParentNode implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键
-   */
-  @Id
-  @GeneratedValue
-  private Long id;
+    /**
+     * 主键
+     */
+    @Id
+    @GeneratedValue
+    private Long id;
 
-  /**
-   * 姓名
-   */
-  @Property(name = "name")
-  private String name;
+    /**
+     * 姓名
+     */
+    @Property(name = "name")
+    private String name;
 
-  /**
-   * 关系
-   */
-  @Relationship(direction = Relationship.Direction.OUTGOING)
-  private List<RelationNode> relationList = new ArrayList<>();
-  
-  /**
-   * 构造方法
-   */
-  public ParentNode() {
-    super();
-  }
+    /**
+     * 关系
+     */
+    @Relationship(direction = Relationship.Direction.OUTGOING)
+    private List<RelationNode> relationList = new ArrayList<>();
 
-  /**
-   * 构造方法
-   */
-  public ParentNode(String name) {
-    this.name = name;
-  }
+    /**
+     * 构造方法
+     */
+    public ParentNode() {
+        super();
+    }
 
-  public void addRelation(RelationNode relationNode) {
-    relationList.add(relationNode);
-  }
+    /**
+     * 构造方法
+     */
+    public ParentNode(String name) {
+        this.name = name;
+    }
 
-  /**
-   * @return the id
-   */
-  public Long getId() {
-    return id;
-  }
+    public void addRelation(RelationNode relationNode) {
+        relationList.add(relationNode);
+    }
 
-  /**
-   * @param id the id to set
-   */
-  public void setId(Long id) {
-    this.id = id;
-  }
+    /**
+     * @return the id
+     */
+    public Long getId() {
+        return id;
+    }
 
-  /**
-   * @return the name
-   */
-  public String getName() {
-    return name;
-  }
+    /**
+     * @param id the id to set
+     */
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  /**
-   * @param name the name to set
-   */
-  public void setName(String name) {
-    this.name = name;
-  }
+    /**
+     * @return the name
+     */
+    public String getName() {
+        return name;
+    }
 
-  /**
-   * @return the relationList
-   */
-  public List<RelationNode> getRelationList() {
-    return relationList;
-  }
+    /**
+     * @param name the name to set
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  /**
-   * @param relationList the relationList to set
-   */
-  public void setRelationList(List<RelationNode> relationList) {
-    this.relationList = relationList;
-  }
+    /**
+     * @return the relationList
+     */
+    public List<RelationNode> getRelationList() {
+        return relationList;
+    }
+
+    /**
+     * @param relationList the relationList to set
+     */
+    public void setRelationList(List<RelationNode> relationList) {
+        this.relationList = relationList;
+    }
 
 }

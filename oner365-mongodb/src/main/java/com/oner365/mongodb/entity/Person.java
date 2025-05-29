@@ -9,67 +9,69 @@ import org.springframework.data.annotation.LastModifiedDate;
 
 /**
  * Person PO
- * 
+ *
  * @author zhaoyong
  */
 public class Person implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @Id
-  private String id;
-  private String name;
-  private int age;
-  
-  @CreatedDate
-  private Instant createTime;
-  @LastModifiedDate
-  private Instant updateTime;
-  
+    @Id
+    private String id;
 
-  public String getId() {
-    return id;
-  }
+    private String name;
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    private int age;
 
-  public String getName() {
-    return name;
-  }
+    @CreatedDate
+    private Instant createTime;
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    @LastModifiedDate
+    private Instant updateTime;
 
-  public int getAge() {
-    return age;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setAge(int age) {
-    this.age = age;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public Instant getCreateTime() {
-    return createTime;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setCreateTime(Instant createTime) {
-    this.createTime = createTime;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public Instant getUpdateTime() {
-    return updateTime;
-  }
+    public int getAge() {
+        return age;
+    }
 
-  public void setUpdateTime(Instant updateTime) {
-    this.updateTime = updateTime;
-  }
-  
-  @Override
-  public String toString() {
-    return "Person [id=" + id + ", name=" + name + ", age=" + age + "]";
-  }
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Instant getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Instant createTime) {
+        this.createTime = createTime;
+    }
+
+    public Instant getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Instant updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    @Override
+    public String toString() {
+        return "Person [id=" + id + ", name=" + name + ", age=" + age + "]";
+    }
 
 }

@@ -19,114 +19,114 @@ import com.oner365.files.vo.SysFileStorageVo;
 
 /**
  * 本地文件上传
- * 
+ *
  * @author zhaoyong
  *
  */
 public class FileLocalUploadUtils {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(FileLocalUploadUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(FileLocalUploadUtils.class);
 
-  private FileLocalUploadUtils() {
-  }
+    private FileLocalUploadUtils() {
+    }
 
-  /**
-   * 上传文件
-   * 
-   * @param file      文件
-   * @param fileWeb   web访问地址
-   * @param filePath  文件上传根目录
-   * @param uploadDir 上传的文件夹
-   * @param maxLength 文件长度
-   * @return SysFileStorage
-   */
-  public static SysFileStorageVo upload(MultipartFile file, StorageEnum storageEnum, String randomName, String fileWeb,
-      String filePath, String uploadDir, long maxLength) {
-    try {
-      long fileNameLength = file.getSize();
-      if (fileNameLength > maxLength) {
-        LOGGER.error("文件长度过大，清重新上传文件");
+    /**
+     * 上传文件
+     * @param file 文件
+     * @param fileWeb web访问地址
+     * @param filePath 文件上传根目录
+     * @param uploadDir 上传的文件夹
+     * @param maxLength 文件长度
+     * @return SysFileStorage
+     */
+    public static SysFileStorageVo upload(MultipartFile file, StorageEnum storageEnum, String randomName,
+            String fileWeb, String filePath, String uploadDir, long maxLength) {
+        try {
+            long fileNameLength = file.getSize();
+            if (fileNameLength > maxLength) {
+                LOGGER.error("文件长度过大，清重新上传文件");
+                return null;
+            }
+
+            String fileName = extractFilename(file, randomName);
+            File desc = getAbsoluteFile(filePath, uploadDir, fileName);
+            file.transferTo(desc);
+            // http url
+            return getPathFileName(file, storageEnum, fileWeb, uploadDir, fileName);
+        }
+        catch (Exception e) {
+            LOGGER.error("upload error:", e);
+        }
         return null;
-      }
-
-      String fileName = extractFilename(file, randomName);
-      File desc = getAbsoluteFile(filePath, uploadDir, fileName);
-      file.transferTo(desc);
-      // http url
-      return getPathFileName(file, storageEnum, fileWeb, uploadDir, fileName);
-    } catch (Exception e) {
-      LOGGER.error("upload error:", e);
-    }
-    return null;
-  }
-
-  private static String extractFilename(MultipartFile file, String randomName) {
-    String extension = DataUtils.getExtension(file.getOriginalFilename());
-    return randomName + "." + extension;
-  }
-
-  private static File getAbsoluteFile(String filePath, String uploadDir, String fileName) throws IOException {
-    String uploadPath = StringUtils.EMPTY;
-    if (!DataUtils.isEmpty(uploadDir)) {
-      uploadPath = uploadDir + PublicConstants.DELIMITER;
     }
 
-    String absoluteFile = filePath + File.separator + uploadPath + fileName;
-    LOGGER.info("Local upload File path: {}", absoluteFile);
-    File file = new File(absoluteFile);
-    if (!file.exists()) {
-      FileUtils.forceMkdir(new File(file.getParent()));
+    private static String extractFilename(MultipartFile file, String randomName) {
+        String extension = DataUtils.getExtension(file.getOriginalFilename());
+        return randomName + "." + extension;
     }
-    return file;
-  }
 
-  private static SysFileStorageVo getPathFileName(MultipartFile file, StorageEnum storageEnum, String fileWeb,
-      String uploadDir, String fileName) {
-    String uploadPath = StringUtils.EMPTY;
-    if (!DataUtils.isEmpty(uploadDir)) {
-      uploadPath = uploadDir + PublicConstants.DELIMITER;
-    }
-    String fileUrl = fileWeb + PublicConstants.DELIMITER + uploadPath + fileName;
+    private static File getAbsoluteFile(String filePath, String uploadDir, String fileName) throws IOException {
+        String uploadPath = StringUtils.EMPTY;
+        if (!DataUtils.isEmpty(uploadDir)) {
+            uploadPath = uploadDir + PublicConstants.DELIMITER;
+        }
 
-    String ss = fileUrl.replace(PublicConstants.FILE_HTTP, "");
-    String fastUrl = StringUtils.substringBefore(ss, PublicConstants.DELIMITER);
-    String id = uploadPath + fileName;
-    // save file
-    SysFileStorageVo fileEntity = new SysFileStorageVo();
-    fileEntity.setId(id);
-    fileEntity.setFileName(fileName);
-    fileEntity.setFastdfsUrl(PublicConstants.FILE_HTTP + fastUrl);
-    fileEntity.setFileStorage(storageEnum);
-    fileEntity.setFilePath(fileUrl);
-    fileEntity.setDisplayName(file.getOriginalFilename());
-    fileEntity.setFileSuffix(DataUtils.getExtension(file.getOriginalFilename()));
-    fileEntity.setSize(DataUtils.convertFileSize(file.getSize()));
-    fileEntity.setDirectory(false);
-    fileEntity.setCreateTime(LocalDateTime.now());
-    return fileEntity;
-  }
+        String absoluteFile = filePath + File.separator + uploadPath + fileName;
+        LOGGER.info("Local upload File path: {}", absoluteFile);
+        File file = new File(absoluteFile);
+        if (!file.exists()) {
+            FileUtils.forceMkdir(new File(file.getParent()));
+        }
+        return file;
+    }
 
-  /**
-   * 下载文件
-   * 
-   * @param filePath 文件根路径
-   * @param fileUrl  文件地址
-   * @return byte[]
-   */
-  public static byte[] download(String filePath, String fileUrl) {
-    String path = filePath + PublicConstants.DELIMITER + fileUrl;
-    LOGGER.info("Local download File path: {}", path);
-    File file = DataUtils.getFile(path);
-    if (!file.exists()) {
-      LOGGER.error("download path is not exists: {}", path);
-      return new byte[0];
+    private static SysFileStorageVo getPathFileName(MultipartFile file, StorageEnum storageEnum, String fileWeb,
+            String uploadDir, String fileName) {
+        String uploadPath = StringUtils.EMPTY;
+        if (!DataUtils.isEmpty(uploadDir)) {
+            uploadPath = uploadDir + PublicConstants.DELIMITER;
+        }
+        String fileUrl = fileWeb + PublicConstants.DELIMITER + uploadPath + fileName;
+
+        String ss = fileUrl.replace(PublicConstants.FILE_HTTP, "");
+        String fastUrl = StringUtils.substringBefore(ss, PublicConstants.DELIMITER);
+        String id = uploadPath + fileName;
+        // save file
+        SysFileStorageVo fileEntity = new SysFileStorageVo();
+        fileEntity.setId(id);
+        fileEntity.setFileName(fileName);
+        fileEntity.setFastdfsUrl(PublicConstants.FILE_HTTP + fastUrl);
+        fileEntity.setFileStorage(storageEnum);
+        fileEntity.setFilePath(fileUrl);
+        fileEntity.setDisplayName(file.getOriginalFilename());
+        fileEntity.setFileSuffix(DataUtils.getExtension(file.getOriginalFilename()));
+        fileEntity.setSize(DataUtils.convertFileSize(file.getSize()));
+        fileEntity.setDirectory(false);
+        fileEntity.setCreateTime(LocalDateTime.now());
+        return fileEntity;
     }
-    try {
-      return FileUtil.readAsByteArray(file);
-    } catch (Exception e) {
-      LOGGER.error("download error:", e);
+
+    /**
+     * 下载文件
+     * @param filePath 文件根路径
+     * @param fileUrl 文件地址
+     * @return byte[]
+     */
+    public static byte[] download(String filePath, String fileUrl) {
+        String path = filePath + PublicConstants.DELIMITER + fileUrl;
+        LOGGER.info("Local download File path: {}", path);
+        File file = DataUtils.getFile(path);
+        if (!file.exists()) {
+            LOGGER.error("download path is not exists: {}", path);
+            return new byte[0];
+        }
+        try {
+            return FileUtil.readAsByteArray(file);
+        }
+        catch (Exception e) {
+            LOGGER.error("download error:", e);
+        }
+        return new byte[0];
     }
-    return new byte[0];
-  }
 
 }

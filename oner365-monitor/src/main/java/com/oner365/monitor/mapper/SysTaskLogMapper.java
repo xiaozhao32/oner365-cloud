@@ -14,5 +14,5 @@ public interface SysTaskLogMapper {
      * 清空任务日志
      */
     void cleanTaskLog();
-    
+
 }

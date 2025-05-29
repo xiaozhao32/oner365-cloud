@@ -6,27 +6,30 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * 部署对象
+ *
  * @author zhaoyong
  */
 public class DeployServer implements Serializable {
-    
+
     private static final long serialVersionUID = 1L;
-    
+
     private String ip;
+
     private Integer port;
+
     private String username;
+
     private String password;
+
     private String serviceName;
 
     /**
-     * 构建参数 {
-     *         IP, 端口, 帐号, 密码
-     * }
+     * 构建参数 { IP, 端口, 帐号, 密码 }
      */
     public DeployServer() {
-        
+
     }
-    
+
     public DeployServer(String ip, Integer port, String username, String password) {
         this.ip = ip;
         this.port = port;
@@ -89,7 +92,7 @@ public class DeployServer implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-    
+
     @Override
     public String toString() {
         return JSON.toJSONString(this);

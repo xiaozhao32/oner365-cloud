@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * ES服务
+ *
  * @author zhaoyong
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)

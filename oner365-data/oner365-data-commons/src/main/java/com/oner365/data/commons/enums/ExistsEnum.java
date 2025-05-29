@@ -27,8 +27,7 @@ public enum ExistsEnum implements BaseEnum {
 
     /**
      * 构造方法
-     *
-     * @param code  编码
+     * @param code 编码
      * @param name 名称
      */
     ExistsEnum(Integer code, String name) {
@@ -38,7 +37,6 @@ public enum ExistsEnum implements BaseEnum {
 
     /**
      * get code
-     *
      * @return code
      */
     public Integer getCode() {
@@ -47,7 +45,6 @@ public enum ExistsEnum implements BaseEnum {
 
     /**
      * get name
-     *
      * @return name
      */
     @Override
@@ -57,13 +54,13 @@ public enum ExistsEnum implements BaseEnum {
 
     /**
      * 获取枚举
-     *
      * @param code 编码
      * @return ExistsEnum
      */
     public static ExistsEnum getCode(Integer code) {
-        Optional<ExistsEnum> result = Arrays.stream(ExistsEnum.values()).filter(e -> e.getCode().equals(code))
-                .findFirst();
+        Optional<ExistsEnum> result = Arrays.stream(ExistsEnum.values())
+            .filter(e -> e.getCode().equals(code))
+            .findFirst();
         return result.orElse(null);
     }
 

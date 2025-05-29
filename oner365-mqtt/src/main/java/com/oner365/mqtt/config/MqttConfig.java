@@ -24,7 +24,7 @@ import com.oner365.mqtt.constants.QueueConstants;
 
 /**
  * MQTT config
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -32,64 +32,64 @@ import com.oner365.mqtt.constants.QueueConstants;
 @EnableConfigurationProperties({ MqttProperties.class })
 public class MqttConfig {
 
-  private final Logger logger = LoggerFactory.getLogger(MqttConfig.class);
+    private final Logger logger = LoggerFactory.getLogger(MqttConfig.class);
 
-  @Resource
-  private MqttProperties mqttProperties;
+    @Resource
+    private MqttProperties mqttProperties;
 
-  public MqttConfig() {
-    logger.info("Queue Type: {}", "MQTT");
-  }
+    public MqttConfig() {
+        logger.info("Queue Type: {}", "MQTT");
+    }
 
-  @Bean
-  MqttPahoClientFactory mqttPahoClientFactory() {
-    DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
-    MqttConnectOptions options = new MqttConnectOptions();
-    options.setServerURIs(mqttProperties.getUri().split(","));
-    options.setUserName(mqttProperties.getUsername());
-    options.setPassword(mqttProperties.getPassword().toCharArray());
-    options.setConnectionTimeout(mqttProperties.getConnectionTimeout());
-    options.setKeepAliveInterval(mqttProperties.getKeepAliveInterval());
-    options.setCleanSession(mqttProperties.isCleanSession());
-    options.setWill("/lastWill", "Payload exception".getBytes(), 1, false);
-    factory.setConnectionOptions(options);
-    return factory;
-  }
+    @Bean
+    MqttPahoClientFactory mqttPahoClientFactory() {
+        DefaultMqttPahoClientFactory factory = new DefaultMqttPahoClientFactory();
+        MqttConnectOptions options = new MqttConnectOptions();
+        options.setServerURIs(mqttProperties.getUri().split(","));
+        options.setUserName(mqttProperties.getUsername());
+        options.setPassword(mqttProperties.getPassword().toCharArray());
+        options.setConnectionTimeout(mqttProperties.getConnectionTimeout());
+        options.setKeepAliveInterval(mqttProperties.getKeepAliveInterval());
+        options.setCleanSession(mqttProperties.isCleanSession());
+        options.setWill("/lastWill", "Payload exception".getBytes(), 1, false);
+        factory.setConnectionOptions(options);
+        return factory;
+    }
 
-  @Bean
-  MqttPahoMessageDrivenChannelAdapter adapter() {
-    // clientId不能重复
-    return new MqttPahoMessageDrivenChannelAdapter(mqttProperties.getClientId() + MqttConstants.CHANNEL_ADAPTER,
-        mqttPahoClientFactory(), QueueConstants.MESSAGE_QUEUE_NAME);
-  }
+    @Bean
+    MqttPahoMessageDrivenChannelAdapter adapter() {
+        // clientId不能重复
+        return new MqttPahoMessageDrivenChannelAdapter(mqttProperties.getClientId() + MqttConstants.CHANNEL_ADAPTER,
+                mqttPahoClientFactory(), QueueConstants.MESSAGE_QUEUE_NAME);
+    }
 
-  @Bean
-  MessageProducer messageInbound(MqttPahoMessageDrivenChannelAdapter adapter) {
-    // 入站投递的通道
-    adapter.setOutputChannel(messageInboundChannel());
-    adapter.setCompletionTimeout(MqttConstants.COMPLETION_TIMEOUT);
-    adapter.setQos(MqttConstants.QOS);
-    return adapter;
-  }
+    @Bean
+    MessageProducer messageInbound(MqttPahoMessageDrivenChannelAdapter adapter) {
+        // 入站投递的通道
+        adapter.setOutputChannel(messageInboundChannel());
+        adapter.setCompletionTimeout(MqttConstants.COMPLETION_TIMEOUT);
+        adapter.setQos(MqttConstants.QOS);
+        return adapter;
+    }
 
-  @Bean
-  @ServiceActivator(inputChannel = MqttConstants.OUT_BOUND_CHANNEL + QueueConstants.MESSAGE_QUEUE_NAME)
-  MessageHandler messageOutbound() {
-    MqttPahoMessageHandler handler = new MqttPahoMessageHandler(
-        mqttProperties.getClientId() + MqttConstants.CHANNEL_PRODUCER, mqttPahoClientFactory());
-    handler.setAsync(true);
-    handler.setDefaultTopic(QueueConstants.MESSAGE_QUEUE_NAME);
-    return handler;
-  }
+    @Bean
+    @ServiceActivator(inputChannel = MqttConstants.OUT_BOUND_CHANNEL + QueueConstants.MESSAGE_QUEUE_NAME)
+    MessageHandler messageOutbound() {
+        MqttPahoMessageHandler handler = new MqttPahoMessageHandler(
+                mqttProperties.getClientId() + MqttConstants.CHANNEL_PRODUCER, mqttPahoClientFactory());
+        handler.setAsync(true);
+        handler.setDefaultTopic(QueueConstants.MESSAGE_QUEUE_NAME);
+        return handler;
+    }
 
-  @Bean(name = MqttConstants.OUT_BOUND_CHANNEL + QueueConstants.MESSAGE_QUEUE_NAME)
-  MessageChannel messageOutboundChannel() {
-    return new DirectChannel();
-  }
+    @Bean(name = MqttConstants.OUT_BOUND_CHANNEL + QueueConstants.MESSAGE_QUEUE_NAME)
+    MessageChannel messageOutboundChannel() {
+        return new DirectChannel();
+    }
 
-  @Bean(name = MqttConstants.IN_BOUND_CHANNEL + QueueConstants.MESSAGE_QUEUE_NAME)
-  MessageChannel messageInboundChannel() {
-    return new DirectChannel();
-  }
-  
+    @Bean(name = MqttConstants.IN_BOUND_CHANNEL + QueueConstants.MESSAGE_QUEUE_NAME)
+    MessageChannel messageInboundChannel() {
+        return new DirectChannel();
+    }
+
 }

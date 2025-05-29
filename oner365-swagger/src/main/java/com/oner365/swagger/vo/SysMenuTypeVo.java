@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 菜单类型对象
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "菜单类型")
@@ -117,7 +118,7 @@ public class SysMenuTypeVo implements Serializable {
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
-    
+
     /**
      * toString Method
      */

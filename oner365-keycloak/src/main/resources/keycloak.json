@@ -1,0 +1,9 @@
+{
+  "realm": "test",
+  "auth-server-url": "http://uem.nacos.cn:32329",
+  "resource": "spring-test-scope",
+  "credentials": {
+    "secret": "wBhFfOBZbnI9PtOrr4AZNqXZFe3L8zaj"
+  },
+  "confidential-port": 0
+}

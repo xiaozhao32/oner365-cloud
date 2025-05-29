@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Kubernetes 服务
- * 
+ *
  * @author zhaoyong
  */
 @SpringBootApplication
@@ -17,8 +17,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({ "com.oner365" })
 public class SpringKubernetesApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SpringKubernetesApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SpringKubernetesApplication.class, args);
+    }
 
 }

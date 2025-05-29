@@ -9,213 +9,214 @@ import com.oner365.api.enums.TaskStatusEnum;
 
 /**
  * SysTaskLog
- * 
+ *
  * @author zhaoyong
  *
  */
 public class SysTaskLogVo implements Serializable {
-  private static final long serialVersionUID = 1L;
 
-  /**
-   * ID
-   */
-  private String id;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 任务名称
-   */
-  @NotBlank(message = "{monitor.vo.task.taskName.message}")
-  private String taskName;
+    /**
+     * ID
+     */
+    private String id;
 
-  /**
-   * 任务组名
-   */
-  @NotBlank(message = "{monitor.vo.task.taskGroup.message}")
-  private String taskGroup;
+    /**
+     * 任务名称
+     */
+    @NotBlank(message = "{monitor.vo.task.taskName.message}")
+    private String taskName;
 
-  /**
-   * 调用目标字符串
-   */
-  @NotBlank(message = "{monitor.vo.task.invokeTarget.message}")
-  private String invokeTarget;
+    /**
+     * 任务组名
+     */
+    @NotBlank(message = "{monitor.vo.task.taskGroup.message}")
+    private String taskGroup;
 
-  /**
-   * 日志信息
-   */
-  private String taskMessage;
+    /**
+     * 调用目标字符串
+     */
+    @NotBlank(message = "{monitor.vo.task.invokeTarget.message}")
+    private String invokeTarget;
 
-  /**
-   * 执行状态
-   */
-  private TaskStatusEnum status;
+    /**
+     * 日志信息
+     */
+    private String taskMessage;
 
-  /**
-   * 异常信息
-   */
-  private String exceptionInfo;
+    /**
+     * 执行状态
+     */
+    private TaskStatusEnum status;
 
-  /**
-   * 开始时间
-   */
-  private Date startTime;
+    /**
+     * 异常信息
+     */
+    private String exceptionInfo;
 
-  /**
-   * 停止时间
-   */
-  private Date stopTime;
+    /**
+     * 开始时间
+     */
+    private Date startTime;
 
-  /**
-   * 执行任务服务ip
-   */
-  private String executeIp;
+    /**
+     * 停止时间
+     */
+    private Date stopTime;
 
-  /**
-   * 执行任务服务名称
-   */
-  private String executeServerName;
+    /**
+     * 执行任务服务ip
+     */
+    private String executeIp;
 
-  /**
-   * 备注
-   */
-  private String remark;
+    /**
+     * 执行任务服务名称
+     */
+    private String executeServerName;
 
-  /**
-   * 创建人
-   */
-  private String createUser;
+    /**
+     * 备注
+     */
+    private String remark;
 
-  /**
-   * 创建时间
-   */
-  private Date createTime;
+    /**
+     * 创建人
+     */
+    private String createUser;
 
-  /**
-   * 更新时间
-   */
-  private Date updateTime;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
-  public SysTaskLogVo() {
-    super();
-  }
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
-  public String getId() {
-    return id;
-  }
+    public SysTaskLogVo() {
+        super();
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public String getTaskName() {
-    return taskName;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public void setTaskName(String taskName) {
-    this.taskName = taskName;
-  }
+    public String getTaskName() {
+        return taskName;
+    }
 
-  public String getTaskGroup() {
-    return taskGroup;
-  }
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
 
-  public void setTaskGroup(String taskGroup) {
-    this.taskGroup = taskGroup;
-  }
+    public String getTaskGroup() {
+        return taskGroup;
+    }
 
-  public String getInvokeTarget() {
-    return invokeTarget;
-  }
+    public void setTaskGroup(String taskGroup) {
+        this.taskGroup = taskGroup;
+    }
 
-  public void setInvokeTarget(String invokeTarget) {
-    this.invokeTarget = invokeTarget;
-  }
+    public String getInvokeTarget() {
+        return invokeTarget;
+    }
 
-  public String getTaskMessage() {
-    return taskMessage;
-  }
+    public void setInvokeTarget(String invokeTarget) {
+        this.invokeTarget = invokeTarget;
+    }
 
-  public void setTaskMessage(String taskMessage) {
-    this.taskMessage = taskMessage;
-  }
+    public String getTaskMessage() {
+        return taskMessage;
+    }
 
-  public TaskStatusEnum getStatus() {
-    return status;
-  }
+    public void setTaskMessage(String taskMessage) {
+        this.taskMessage = taskMessage;
+    }
 
-  public void setStatus(TaskStatusEnum status) {
-    this.status = status;
-  }
+    public TaskStatusEnum getStatus() {
+        return status;
+    }
 
-  public String getExceptionInfo() {
-    return exceptionInfo;
-  }
+    public void setStatus(TaskStatusEnum status) {
+        this.status = status;
+    }
 
-  public void setExceptionInfo(String exceptionInfo) {
-    this.exceptionInfo = exceptionInfo;
-  }
+    public String getExceptionInfo() {
+        return exceptionInfo;
+    }
 
-  public Date getStartTime() {
-    return startTime;
-  }
+    public void setExceptionInfo(String exceptionInfo) {
+        this.exceptionInfo = exceptionInfo;
+    }
 
-  public void setStartTime(Date startTime) {
-    this.startTime = startTime;
-  }
+    public Date getStartTime() {
+        return startTime;
+    }
 
-  public Date getStopTime() {
-    return stopTime;
-  }
+    public void setStartTime(Date startTime) {
+        this.startTime = startTime;
+    }
 
-  public void setStopTime(Date stopTime) {
-    this.stopTime = stopTime;
-  }
+    public Date getStopTime() {
+        return stopTime;
+    }
 
-  public String getRemark() {
-    return remark;
-  }
+    public void setStopTime(Date stopTime) {
+        this.stopTime = stopTime;
+    }
 
-  public void setRemark(String remark) {
-    this.remark = remark;
-  }
+    public String getRemark() {
+        return remark;
+    }
 
-  public String getCreateUser() {
-    return createUser;
-  }
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
 
-  public void setCreateUser(String createUser) {
-    this.createUser = createUser;
-  }
+    public String getCreateUser() {
+        return createUser;
+    }
 
-  public Date getCreateTime() {
-    return createTime;
-  }
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
 
-  public void setCreateTime(Date createTime) {
-    this.createTime = createTime;
-  }
+    public Date getCreateTime() {
+        return createTime;
+    }
 
-  public Date getUpdateTime() {
-    return updateTime;
-  }
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
 
-  public void setUpdateTime(Date updateTime) {
-    this.updateTime = updateTime;
-  }
+    public Date getUpdateTime() {
+        return updateTime;
+    }
 
-  public String getExecuteIp() {
-    return executeIp;
-  }
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
 
-  public void setExecuteIp(String executeIp) {
-    this.executeIp = executeIp;
-  }
+    public String getExecuteIp() {
+        return executeIp;
+    }
 
-  public String getExecuteServerName() {
-    return executeServerName;
-  }
+    public void setExecuteIp(String executeIp) {
+        this.executeIp = executeIp;
+    }
 
-  public void setExecuteServerName(String executeServerName) {
-    this.executeServerName = executeServerName;
-  }
+    public String getExecuteServerName() {
+        return executeServerName;
+    }
+
+    public void setExecuteServerName(String executeServerName) {
+        this.executeServerName = executeServerName;
+    }
 
 }

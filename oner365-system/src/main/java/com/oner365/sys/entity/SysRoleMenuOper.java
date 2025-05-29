@@ -16,7 +16,7 @@ import com.oner365.data.commons.constants.PublicConstants;
 
 /**
  * 基础权限--角色菜单操作表nt_sys_role_menu_oper
- * 
+ *
  * @author liutao
  */
 @Entity
@@ -24,98 +24,99 @@ import com.oner365.data.commons.constants.PublicConstants;
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class SysRoleMenuOper implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 编号 id
-   */
-  @Id
-  @GeneratedValue(generator = "generator")
-  @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
-  private String id;
+    /**
+     * 编号 id
+     */
+    @Id
+    @GeneratedValue(generator = "generator")
+    @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
+    private String id;
 
-  /**
-   * 角色 role_id
-   */
-  @Column(name = "role_id", nullable = false)
-  private String roleId;
+    /**
+     * 角色 role_id
+     */
+    @Column(name = "role_id", nullable = false)
+    private String roleId;
 
-  /**
-   * 菜单类型 menu_type_id
-   */
-  @Column(name = "menu_type_id", nullable = false)
-  private String menuTypeId;
+    /**
+     * 菜单类型 menu_type_id
+     */
+    @Column(name = "menu_type_id", nullable = false)
+    private String menuTypeId;
 
-  /**
-   * 菜单 menu_id
-   */
-  @Column(name = "menu_id", nullable = false)
-  private String menuId;
+    /**
+     * 菜单 menu_id
+     */
+    @Column(name = "menu_id", nullable = false)
+    private String menuId;
 
-  /**
-   * 菜单操作operation_id
-   */
-  @Column(name = "operation_id", nullable = false)
-  private String operationId;
+    /**
+     * 菜单操作operation_id
+     */
+    @Column(name = "operation_id", nullable = false)
+    private String operationId;
 
-  /**
-   * Generate constructor
-   */
-  public SysRoleMenuOper() {
-    super();
-  }
+    /**
+     * Generate constructor
+     */
+    public SysRoleMenuOper() {
+        super();
+    }
 
-  /**
-   * @return the id
-   */
-  public String getId() {
-    return id;
-  }
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
-  /**
-   * @param id the id to set
-   */
-  public void setId(String id) {
-    this.id = id;
-  }
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public String getRoleId() {
-    return roleId;
-  }
+    public String getRoleId() {
+        return roleId;
+    }
 
-  public void setRoleId(String roleId) {
-    this.roleId = roleId;
-  }
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
 
-  public String getMenuTypeId() {
-    return menuTypeId;
-  }
+    public String getMenuTypeId() {
+        return menuTypeId;
+    }
 
-  public void setMenuTypeId(String menuTypeId) {
-    this.menuTypeId = menuTypeId;
-  }
+    public void setMenuTypeId(String menuTypeId) {
+        this.menuTypeId = menuTypeId;
+    }
 
-  public String getMenuId() {
-    return menuId;
-  }
+    public String getMenuId() {
+        return menuId;
+    }
 
-  public void setMenuId(String menuId) {
-    this.menuId = menuId;
-  }
+    public void setMenuId(String menuId) {
+        this.menuId = menuId;
+    }
 
-  public String getOperationId() {
-    return operationId;
-  }
+    public String getOperationId() {
+        return operationId;
+    }
 
-  public void setOperationId(String operationId) {
-    this.operationId = operationId;
-  }
+    public void setOperationId(String operationId) {
+        this.operationId = operationId;
+    }
 
-  /**
-   * toString method
-   */
-  @Override
-  public String toString() {
-    return new ToStringBuilder(this).append("id", getId()).toString();
-  }
+    /**
+     * toString method
+     */
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this).append("id", getId()).toString();
+    }
+
 }

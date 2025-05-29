@@ -32,12 +32,14 @@ public class AesUtils {
     private static final String KEY_STR = "turPark";
 
     private static final int LENGTH_12 = 12;
+
     private static final int LENGTH_16 = 16;
 
     /**
      * 加密类型
      */
     private static final String ALGORITHM = "AES/GCM/NoPadding";
+
     private static final ThreadLocal<Map<String, Key>> LOCAL_MAP_KEY = new ThreadLocal<>();
 
     private AesUtils() {
@@ -60,7 +62,8 @@ public class AesUtils {
             map.put(strKey, result);
             LOCAL_MAP_KEY.set(map);
             return result;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("初始化密钥出现异常 ", e);
         }
         return null;
@@ -68,7 +71,6 @@ public class AesUtils {
 
     /**
      * 对str进行AES加密
-     *
      * @param str 字符串
      * @return String
      */
@@ -78,7 +80,6 @@ public class AesUtils {
 
     /**
      * 对str进行AES解密
-     *
      * @param str 字符串
      * @return String
      */
@@ -90,7 +91,8 @@ public class AesUtils {
         Key secretKey;
         if (LOCAL_MAP_KEY.get() != null) {
             secretKey = LOCAL_MAP_KEY.get().get(saltKey);
-        } else {
+        }
+        else {
             secretKey = getKey(saltKey);
         }
         return secretKey;
@@ -98,7 +100,6 @@ public class AesUtils {
 
     /**
      * 对str进行AES加密
-     *
      * @param str 字符串
      * @param key 键
      * @return String
@@ -118,7 +119,8 @@ public class AesUtils {
             System.arraycopy(iv, 0, message, 0, LENGTH_12);
             System.arraycopy(encryptData, 0, message, LENGTH_12, encryptData.length);
             return Base64.getEncoder().encodeToString(message);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("getEncryptString error:", e);
         }
         return null;
@@ -126,7 +128,6 @@ public class AesUtils {
 
     /**
      * 对str进行AES解密
-     *
      * @param str 字符串
      * @param key 键
      * @return String
@@ -142,7 +143,8 @@ public class AesUtils {
             cipher.init(Cipher.DECRYPT_MODE, getSecretKey(key), params);
             byte[] decryptData = cipher.doFinal(content, LENGTH_12, content.length - LENGTH_12);
             return new String(decryptData, Charset.defaultCharset());
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("getDecryptString error:", e);
         }
         return null;

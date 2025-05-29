@@ -31,7 +31,6 @@ public class RequestUtils {
 
     /**
      * set method
-     *
      * @param request HttpServletRequest
      */
     public static void setHttpRequest(HttpServletRequest request) {
@@ -40,7 +39,6 @@ public class RequestUtils {
 
     /**
      * get method
-     *
      * @return HttpServletRequest
      */
     public static HttpServletRequest getHttpRequest() {
@@ -56,7 +54,6 @@ public class RequestUtils {
 
     /**
      * 获取用户对象
-     *
      * @return AuthUser
      */
     public static AuthUser getAuthUser() {
@@ -68,7 +65,6 @@ public class RequestUtils {
 
     /**
      * 获取token
-     *
      * @return token字符串
      */
     public static String getToken() {

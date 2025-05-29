@@ -121,12 +121,17 @@ public class SysUserDto implements Serializable {
      * 备注
      */
     private String remark;
-    
+
     private List<String> roles = new ArrayList<>();
+
     private List<String> roleNameList = new ArrayList<>();
+
     private List<String> jobs = new ArrayList<>();
+
     private List<String> jobNameList = new ArrayList<>();
+
     private List<String> orgs = new ArrayList<>();
+
     private List<String> orgNameList = new ArrayList<>();
 
     public SysUserDto() {

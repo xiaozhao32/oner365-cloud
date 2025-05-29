@@ -9,100 +9,100 @@ import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 操作对象
- * 
+ *
  * @author zhaoyong
  */
 public class SysMenuOperationVo implements Serializable {
 
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 编号 id
-   */
-  private String id;
+    /**
+     * 编号 id
+     */
+    private String id;
 
-  /**
-   * 操作名称
-   */
-  @NotBlank(message = "操作名称不能为空")
-  private String operationName;
+    /**
+     * 操作名称
+     */
+    @NotBlank(message = "操作名称不能为空")
+    private String operationName;
 
-  /**
-   * 操作类型
-   */
-  private String operationType;
+    /**
+     * 操作类型
+     */
+    private String operationType;
 
-  /**
-   * 状态 status
-   */
-  private StatusEnum status;
+    /**
+     * 状态 status
+     */
+    private StatusEnum status;
 
-  /**
-   * 创建时间 create_time
-   */
-  private LocalDateTime createTime;
+    /**
+     * 创建时间 create_time
+     */
+    private LocalDateTime createTime;
 
-  /**
-   * 更新时间 update_time
-   */
-  private LocalDateTime updateTime;
+    /**
+     * 更新时间 update_time
+     */
+    private LocalDateTime updateTime;
 
-  /**
-   * Constructor
-   */
-  public SysMenuOperationVo() {
-    super();
-  }
+    /**
+     * Constructor
+     */
+    public SysMenuOperationVo() {
+        super();
+    }
 
-  public String getId() {
-    return id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public String getOperationName() {
-    return operationName;
-  }
+    public String getOperationName() {
+        return operationName;
+    }
 
-  public void setOperationName(String operationName) {
-    this.operationName = operationName;
-  }
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
+    }
 
-  public String getOperationType() {
-    return operationType;
-  }
+    public String getOperationType() {
+        return operationType;
+    }
 
-  public void setOperationType(String operationType) {
-    this.operationType = operationType;
-  }
+    public void setOperationType(String operationType) {
+        this.operationType = operationType;
+    }
 
-  public StatusEnum getStatus() {
-    return status;
-  }
+    public StatusEnum getStatus() {
+        return status;
+    }
 
-  public void setStatus(StatusEnum status) {
-    this.status = status;
-  }
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
 
-  public LocalDateTime getCreateTime() {
-    return createTime;
-  }
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
 
-  public void setCreateTime(LocalDateTime createTime) {
-    this.createTime = createTime;
-  }
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
 
-  public LocalDateTime getUpdateTime() {
-    return updateTime;
-  }
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
 
-  public void setUpdateTime(LocalDateTime updateTime) {
-    this.updateTime = updateTime;
-  }
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 
 }

@@ -7,11 +7,12 @@ package com.oner365.postgis.constants;
  */
 public class PostgisConstants {
 
-  /**
-   * SRID
-   */
-  public static final int SRID = 4326;
+    /**
+     * SRID
+     */
+    public static final int SRID = 4326;
 
-  private PostgisConstants() {
-  }
+    private PostgisConstants() {
+    }
+
 }

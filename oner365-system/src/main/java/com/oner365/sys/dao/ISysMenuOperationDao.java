@@ -8,9 +8,11 @@ import com.oner365.sys.entity.SysMenuOperation;
 
 /**
  * 菜单操作权限接口
+ *
  * @author zhaoyong
  */
-public interface ISysMenuOperationDao extends JpaRepository<SysMenuOperation, String>,JpaSpecificationExecutor<SysMenuOperation>{
+public interface ISysMenuOperationDao
+        extends JpaRepository<SysMenuOperation, String>, JpaSpecificationExecutor<SysMenuOperation> {
 
     /**
      * 查询数量
@@ -18,7 +20,8 @@ public interface ISysMenuOperationDao extends JpaRepository<SysMenuOperation, St
      * @param typeCode 类型
      * @return int
      */
-    @Query(value = "select count(id) as countRow from nt_sys_operation where id<>?1 and operation_type=?2",nativeQuery = true)
+    @Query(value = "select count(id) as countRow from nt_sys_operation where id<>?1 and operation_type=?2",
+            nativeQuery = true)
     int countTypeById(String id, String typeCode);
 
 }

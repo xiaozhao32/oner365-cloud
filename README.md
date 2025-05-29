@@ -60,6 +60,7 @@
 21. Kubernetes对接: Kubernetes
 22. Postgis服务: Postgis
 23. Clickhouse: Clickhouse
+24. 单点登录: Keycloak
 
 #### 使用说明
 
@@ -110,6 +111,7 @@
 ├── oner365-hadoop -- Apache Hadoop. [8712]
 ├── oner365-influx -- 时序数据库 Influxdb. [8717]
 ├── oner365-kafka -- Apache Kafka. [8710]
+├── oner365-keycloak -- 单点登录. [8733]
 ├── oner365-kubernetes -- K8s [8728]
 ├── oner365-ldap -- spring-data-Ldap. [8724]
 ├── oner365-mongodb -- 数据库 Mongodb. [8727]

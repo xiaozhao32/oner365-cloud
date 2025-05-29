@@ -13,25 +13,25 @@ import com.oner365.data.web.controller.BaseController;
 
 /**
  * Test Controller
- * 
+ *
  * @author zhaoyong
  */
 @RestController
 @RequestMapping("/kubernetes")
 public class TestController extends BaseController {
-  
-  @Resource
-  private DiscoveryClient discoveryClient;
 
-  /**
-   * test
-   * 
-   * @return ResponseData
-   */
-  @GetMapping("/test")
-  public ResponseData<JSONObject> test(String data) {
-    JSONObject result = new JSONObject();
-    result.put("data", data);
-    return ResponseData.success(result);
-  }
+    @Resource
+    private DiscoveryClient discoveryClient;
+
+    /**
+     * test
+     * @return ResponseData
+     */
+    @GetMapping("/test")
+    public ResponseData<JSONObject> test(String data) {
+        JSONObject result = new JSONObject();
+        result.put("data", data);
+        return ResponseData.success(result);
+    }
+
 }

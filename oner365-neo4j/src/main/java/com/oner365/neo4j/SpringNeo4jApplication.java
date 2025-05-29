@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Neo4j 服务
- * 
+ *
  * @author zhaoyong
  */
 @SpringBootApplication
@@ -17,8 +17,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({ "com.oner365" })
 public class SpringNeo4jApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SpringNeo4jApplication.class, args);
-  }
-  
+    public static void main(String[] args) {
+        SpringApplication.run(SpringNeo4jApplication.class, args);
+    }
+
 }

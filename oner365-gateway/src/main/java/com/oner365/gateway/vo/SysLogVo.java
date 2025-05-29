@@ -7,7 +7,7 @@ import com.google.common.base.MoreObjects;
 
 /**
  * 系统日志对象
- * 
+ *
  * @author zhaoyong
  */
 public class SysLogVo implements Serializable {
@@ -156,7 +156,7 @@ public class SysLogVo implements Serializable {
     public void setCreateTime(LocalDateTime createTime) {
         this.createTime = createTime;
     }
-    
+
     /**
      * toString Method
      */

@@ -19,46 +19,44 @@ import com.oner365.swagger.vo.SampleLocationVo;
 
 /**
  * Elasticsearch服务 - 坐标信息
- * 
+ *
  * @author zhaoyong
  *
  */
-@FeignClient(value = PathConstants.FEIGN_CLIENT_ELASTICSEARCH, contextId = PathConstants.CONTEXT_ELASTICSEARCH_SAMPLE_LOCATION_ID)
+@FeignClient(value = PathConstants.FEIGN_CLIENT_ELASTICSEARCH,
+        contextId = PathConstants.CONTEXT_ELASTICSEARCH_SAMPLE_LOCATION_ID)
 public interface IElasticsearchSampleLocationClient {
 
-  /**
-   * 列表
-   * 
-   * @param data 查询条件
-   * @return ResponseData<PageInfo<SampleLocationDto>>
-   */
-  @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_LIST)
-  ResponseData<PageInfo<SampleLocationDto>> list(@RequestBody QueryCriteriaBean data);
+    /**
+     * 列表
+     * @param data 查询条件
+     * @return ResponseData<PageInfo<SampleLocationDto>>
+     */
+    @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_LIST)
+    ResponseData<PageInfo<SampleLocationDto>> list(@RequestBody QueryCriteriaBean data);
 
-  /**
-   * id查询
-   * 
-   * @param id 主键
-   * @return ResponseData<SampleLocationDto>
-   */
-  @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_GET_ID)
-  ResponseData<SampleLocationDto> get(@PathVariable String id);
+    /**
+     * id查询
+     * @param id 主键
+     * @return ResponseData<SampleLocationDto>
+     */
+    @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_GET_ID)
+    ResponseData<SampleLocationDto> get(@PathVariable String id);
 
-  /**
-   * 保存
-   *
-   * @param sampleLocationVo 坐标对象
-   * @return ResponseData<SampleLocationDto>
-   */
-  @PutMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_SAVE)
-  ResponseData<SampleLocationDto> save(@RequestBody SampleLocationVo sampleLocationVo);
+    /**
+     * 保存
+     * @param sampleLocationVo 坐标对象
+     * @return ResponseData<SampleLocationDto>
+     */
+    @PutMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_SAVE)
+    ResponseData<SampleLocationDto> save(@RequestBody SampleLocationVo sampleLocationVo);
 
-  /**
-   * 删除
-   * 
-   * @param ids 主键
-   * @return ResponseData<List<Boolean>>
-   */
-  @DeleteMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_DELETE)
-  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+    /**
+     * 删除
+     * @param ids 主键
+     * @return ResponseData<List<Boolean>>
+     */
+    @DeleteMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_DELETE)
+    ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+
 }

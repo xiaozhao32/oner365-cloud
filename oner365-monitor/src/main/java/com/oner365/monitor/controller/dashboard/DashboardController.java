@@ -9,7 +9,7 @@ import com.oner365.data.web.controller.BaseController;
 
 /**
  * 首页信息
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -17,13 +17,13 @@ import com.oner365.data.web.controller.BaseController;
 @RequestMapping("/dashboard")
 public class DashboardController extends BaseController {
 
-  /**
-   * 首页信息
-   * 
-   * @return String
-   */
-  @GetMapping("/index")
-  public String index() {
-    return ResultEnum.SUCCESS.getName();
-  }
+    /**
+     * 首页信息
+     * @return String
+     */
+    @GetMapping("/index")
+    public String index() {
+        return ResultEnum.SUCCESS.getName();
+    }
+
 }

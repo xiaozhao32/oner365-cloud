@@ -24,43 +24,44 @@ import com.oner365.kafka.service.IKafkaConsumerService;
 @Service
 public class KafkaConsumerServiceImpl implements IKafkaConsumerService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(KafkaConsumerServiceImpl.class);
 
-  @Resource
-  private KafkaProperties kafkaProperties;
+    @Resource
+    private KafkaProperties kafkaProperties;
 
-  @Resource
-  private KafkaTemplate<String, Object> kafkaTemplate;
+    @Resource
+    private KafkaTemplate<String, Object> kafkaTemplate;
 
-  @Override
-  public ResultEnum convertAndSend(Object message) {
-    boolean isContains = StringUtils.contains(kafkaProperties.getTopics(), KafkaConstants.TOPIC_1);
-    if (!isContains) {
-      LOGGER.error("spring.kafka.topics= " + KafkaConstants.TOPIC_1 + " is not config.");
-      return ResultEnum.ERROR;
-    }
-    
-    try {
-      // 发送到 Topic1
-      ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(KafkaConstants.TOPIC_1, message);
-      future.addCallback(new ListenableFutureCallback<Object>() {
-
-        @Override
-        public void onSuccess(Object result) {
-          LOGGER.info("Kafka callback success:{}", result);
+    @Override
+    public ResultEnum convertAndSend(Object message) {
+        boolean isContains = StringUtils.contains(kafkaProperties.getTopics(), KafkaConstants.TOPIC_1);
+        if (!isContains) {
+            LOGGER.error("spring.kafka.topics= " + KafkaConstants.TOPIC_1 + " is not config.");
+            return ResultEnum.ERROR;
         }
 
-        @Override
-        public void onFailure(Throwable e) {
-          LOGGER.error("Kafka callback error:", e);
-        }
+        try {
+            // 发送到 Topic1
+            ListenableFuture<SendResult<String, Object>> future = kafkaTemplate.send(KafkaConstants.TOPIC_1, message);
+            future.addCallback(new ListenableFutureCallback<Object>() {
 
-      });
-      return ResultEnum.SUCCESS;
-    } catch (Exception e) {
-      LOGGER.error("convertAndSend error:", e);
+                @Override
+                public void onSuccess(Object result) {
+                    LOGGER.info("Kafka callback success:{}", result);
+                }
+
+                @Override
+                public void onFailure(Throwable e) {
+                    LOGGER.error("Kafka callback error:", e);
+                }
+
+            });
+            return ResultEnum.SUCCESS;
+        }
+        catch (Exception e) {
+            LOGGER.error("convertAndSend error:", e);
+        }
+        return ResultEnum.ERROR;
     }
-    return ResultEnum.ERROR;
-  }
 
 }

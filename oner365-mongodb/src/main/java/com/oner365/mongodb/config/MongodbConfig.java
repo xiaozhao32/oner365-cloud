@@ -16,7 +16,7 @@ import com.oner365.mongodb.config.properties.MongodbProperties;
 
 /**
  * Mongodb Config
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
@@ -24,22 +24,22 @@ import com.oner365.mongodb.config.properties.MongodbProperties;
 @EnableMongoRepositories(basePackages = "com.oner365.mongodb.repository")
 public class MongodbConfig {
 
-  @Resource
-  private MongodbProperties properties;
+    @Resource
+    private MongodbProperties properties;
 
-  @Bean
-  MongoClient mongoClient() {
-    return MongoClients.create(properties.getUri());
-  }
+    @Bean
+    MongoClient mongoClient() {
+        return MongoClients.create(properties.getUri());
+    }
 
-  @Bean
-  MongoDatabaseFactory mongoDatabaseFactory() {
-    return new SimpleMongoClientDatabaseFactory(mongoClient(), properties.getDatabase());
-  }
+    @Bean
+    MongoDatabaseFactory mongoDatabaseFactory() {
+        return new SimpleMongoClientDatabaseFactory(mongoClient(), properties.getDatabase());
+    }
 
-  @PreDestroy
-  void destroy() {
-    mongoClient().close();
-  }
+    @PreDestroy
+    void destroy() {
+        mongoClient().close();
+    }
 
 }

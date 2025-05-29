@@ -11,8 +11,8 @@ public interface SeqBuilder {
 
     /**
      * builder
-     * 
      * @return Sequence
      */
     Sequence build();
+
 }

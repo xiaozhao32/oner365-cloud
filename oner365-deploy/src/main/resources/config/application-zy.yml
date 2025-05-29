@@ -38,6 +38,8 @@ deploy:
       - oner365-postgis:8729
       - oner365-shardingsphere:8730
       - oner365-clickhouse:8731
+      - oner365-activemq:8732
+      - oner365-keycloak:8733
     libs: 
       - oner365-api
       - oner365-data-commons

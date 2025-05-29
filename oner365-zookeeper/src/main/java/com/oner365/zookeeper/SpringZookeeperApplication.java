@@ -5,14 +5,14 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Zookeeper 服务
- * 
+ *
  * @author zhaoyong
  */
 @SpringBootApplication
 public class SpringZookeeperApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SpringZookeeperApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SpringZookeeperApplication.class, args);
+    }
 
 }

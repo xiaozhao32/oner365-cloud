@@ -7,20 +7,20 @@ import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 更新定时任务执行状态dto
- * 
+ *
  * @author liutao
  */
 public class UpdateTaskExecuteSatusDto implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
-
-    /** 
-     *    任务编号  
+    /**
+     * 任务编号
      */
     private String taskId;
-    
-    /** 
-     *    执行任务状态
+
+    /**
+     * 执行任务状态
      */
     private StatusEnum executeStatus;
 
@@ -39,7 +39,7 @@ public class UpdateTaskExecuteSatusDto implements Serializable {
     public void setExecuteStatus(StatusEnum executeStatus) {
         this.executeStatus = executeStatus;
     }
-    
+
     @Override
     public String toString() {
         return JSON.toJSONString(this);

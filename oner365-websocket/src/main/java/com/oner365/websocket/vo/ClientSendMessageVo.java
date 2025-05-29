@@ -5,55 +5,49 @@ import java.util.List;
 
 /**
  * websocket 连接传输类
- * 
+ *
  * @author liutao
  */
 public class ClientSendMessageVo implements Serializable {
 
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 消息
-   */
-  private String message;
-  
-  /**
-   * 通道号
-   */
-  private List<String> userIds;
-  
+    /**
+     * 消息
+     */
+    private String message;
 
+    /**
+     * 通道号
+     */
+    private List<String> userIds;
 
-  public ClientSendMessageVo() {
-    super();
-  }
-  
-  public ClientSendMessageVo(List<String> userIds,String message) {
-    this.userIds = userIds;
-    this.message = message;
-  }
+    public ClientSendMessageVo() {
+        super();
+    }
 
+    public ClientSendMessageVo(List<String> userIds, String message) {
+        this.userIds = userIds;
+        this.message = message;
+    }
 
-  public String getMessage() {
-    return message;
-  }
+    public String getMessage() {
+        return message;
+    }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
+    public List<String> getUserIds() {
+        return userIds;
+    }
 
-  public List<String> getUserIds() {
-    return userIds;
-  }
-
-  public void setUserIds(List<String> userIds) {
-    this.userIds = userIds;
-  }
-
- 
+    public void setUserIds(List<String> userIds) {
+        this.userIds = userIds;
+    }
 
 }

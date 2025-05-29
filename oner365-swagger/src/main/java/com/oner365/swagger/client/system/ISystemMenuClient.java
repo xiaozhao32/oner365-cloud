@@ -22,75 +22,70 @@ import com.oner365.swagger.vo.SysMenuVo;
 
 /**
  * 系统服务 - 菜单管理
- * 
+ *
  * @author zhaoyong
  *
  */
 @FeignClient(value = PathConstants.FEIGN_CLIENT_SYSTEM, contextId = PathConstants.CONTEXT_SYSTEM_MENU_ID)
 public interface ISystemMenuClient {
 
-  /**
-   * 列表
-   * 
-   * @param sysMenuVo 查询参数
-   * @return ResponseData<SysMenuDto>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_LIST)
-  ResponseData<SysMenuDto> list(@RequestBody SysMenuVo sysMenuVo);
-  
-  /**
-   * 按id获取查询
-   * 
-   * @param id 编号
-   * @return ResponseData<SysMenuInfoDto>
-   */
-  @GetMapping(PathConstants.REQUEST_SYSTEM_MENU_GET_ID)
-  ResponseData<SysMenuInfoDto> getById(@PathVariable String id);
-  
-  /**
-   * 修改状态
-   * 
-   * @param id     编号
-   * @param status 状态
-   * @return ResponseData<Boolean>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_STATUS)
-  ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
-  
-  /**
-   * 获取菜单下拉树列表
-   *
-   * @param sysMenuVo 菜单对象
-   * @return ResponseData<List<TreeSelect>>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_TREE)
-  ResponseData<List<TreeSelect>> treeselect(@RequestBody SysMenuVo sysMenuVo);
-  
-  /**
-   * 加载对应角色菜单列表树
-   *
-   * @param sysMenuVo 菜单对象
-   * @param roleId    String
-   * @return ResponseData<SysMenuTreeSelectDto>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_ROLE)
-  ResponseData<SysMenuTreeSelectDto> roleMenuTreeselect(@RequestBody SysMenuVo sysMenuVo, @PathVariable String roleId);
+    /**
+     * 列表
+     * @param sysMenuVo 查询参数
+     * @return ResponseData<SysMenuDto>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_LIST)
+    ResponseData<SysMenuDto> list(@RequestBody SysMenuVo sysMenuVo);
 
-  /**
-   * 保存
-   * 
-   * @param sysMenuVo 保存对象
-   * @return ResponseData<SysMenuDto>
-   */
-  @PutMapping(PathConstants.REQUEST_SYSTEM_MENU_SAVE)
-  ResponseData<SysMenuDto> save(@RequestBody SysMenuVo sysMenuVo);
+    /**
+     * 按id获取查询
+     * @param id 编号
+     * @return ResponseData<SysMenuInfoDto>
+     */
+    @GetMapping(PathConstants.REQUEST_SYSTEM_MENU_GET_ID)
+    ResponseData<SysMenuInfoDto> getById(@PathVariable String id);
 
-  /**
-   * 删除
-   * 
-   * @param ids 编号
-   * @return ResponseData<List<Boolean>>
-   */
-  @DeleteMapping(PathConstants.REQUEST_SYSTEM_MENU_DELETE)
-  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+    /**
+     * 修改状态
+     * @param id 编号
+     * @param status 状态
+     * @return ResponseData<Boolean>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_STATUS)
+    ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
+
+    /**
+     * 获取菜单下拉树列表
+     * @param sysMenuVo 菜单对象
+     * @return ResponseData<List<TreeSelect>>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_TREE)
+    ResponseData<List<TreeSelect>> treeselect(@RequestBody SysMenuVo sysMenuVo);
+
+    /**
+     * 加载对应角色菜单列表树
+     * @param sysMenuVo 菜单对象
+     * @param roleId String
+     * @return ResponseData<SysMenuTreeSelectDto>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_ROLE)
+    ResponseData<SysMenuTreeSelectDto> roleMenuTreeselect(@RequestBody SysMenuVo sysMenuVo,
+            @PathVariable String roleId);
+
+    /**
+     * 保存
+     * @param sysMenuVo 保存对象
+     * @return ResponseData<SysMenuDto>
+     */
+    @PutMapping(PathConstants.REQUEST_SYSTEM_MENU_SAVE)
+    ResponseData<SysMenuDto> save(@RequestBody SysMenuVo sysMenuVo);
+
+    /**
+     * 删除
+     * @param ids 编号
+     * @return ResponseData<List<Boolean>>
+     */
+    @DeleteMapping(PathConstants.REQUEST_SYSTEM_MENU_DELETE)
+    ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+
 }

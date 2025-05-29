@@ -8,12 +8,13 @@ import com.oner365.gateway.service.SysLogService;
 
 /**
  * 系统日志监听
+ *
  * @author zhaoyong
  */
 public class SysLogListener {
 
     private final SysLogService sysLogService;
-    
+
     public SysLogListener(SysLogService sysLogService) {
         this.sysLogService = sysLogService;
     }
@@ -24,4 +25,5 @@ public class SysLogListener {
     public void saveSysLog(SysLogEvent event) {
         this.sysLogService.save(event.getSysLogVo());
     }
+
 }

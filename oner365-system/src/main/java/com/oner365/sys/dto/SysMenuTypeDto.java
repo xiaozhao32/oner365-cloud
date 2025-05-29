@@ -8,6 +8,7 @@ import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 菜单类型对象
+ *
  * @author zhaoyong
  */
 public class SysMenuTypeDto implements Serializable {
@@ -101,7 +102,7 @@ public class SysMenuTypeDto implements Serializable {
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
-    
+
     /**
      * toString Method
      */

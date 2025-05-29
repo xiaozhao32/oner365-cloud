@@ -22,104 +22,94 @@ import com.oner365.swagger.vo.check.CheckOrgCodeVo;
 
 /**
  * 系统服务 - 机构管理
- * 
+ *
  * @author zhaoyong
  *
  */
 @FeignClient(value = PathConstants.FEIGN_CLIENT_SYSTEM, contextId = PathConstants.CONTEXT_SYSTEM_ORG_ID)
 public interface ISystemOrgClient {
 
-  /**
-   * 列表
-   * 
-   * @param sysOrganizationVo 查询参数
-   * @return ResponseData<List<SysOrganizationDto>>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_LIST)
-  ResponseData<List<SysOrganizationDto>> findList(@RequestBody SysOrganizationVo sysOrganizationVo);
+    /**
+     * 列表
+     * @param sysOrganizationVo 查询参数
+     * @return ResponseData<List<SysOrganizationDto>>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_LIST)
+    ResponseData<List<SysOrganizationDto>> findList(@RequestBody SysOrganizationVo sysOrganizationVo);
 
-  /**
-   * 按id获取查询
-   * 
-   * @param id 编号
-   * @return ResponseData<SysOrganizationDto>
-   */
-  @GetMapping(PathConstants.REQUEST_SYSTEM_ORG_GET_ID)
-  ResponseData<SysOrganizationDto> getById(@PathVariable String id);
+    /**
+     * 按id获取查询
+     * @param id 编号
+     * @return ResponseData<SysOrganizationDto>
+     */
+    @GetMapping(PathConstants.REQUEST_SYSTEM_ORG_GET_ID)
+    ResponseData<SysOrganizationDto> getById(@PathVariable String id);
 
-  /**
-   * 检测连接
-   * 
-   * @param id 编号
-   * @return ResponseData<Boolean>
-   */
-  @GetMapping(PathConstants.REQUEST_SYSTEM_ORG_CONNECTION_CHECK)
-  ResponseData<Boolean> checkConnection(@PathVariable String id);
+    /**
+     * 检测连接
+     * @param id 编号
+     * @return ResponseData<Boolean>
+     */
+    @GetMapping(PathConstants.REQUEST_SYSTEM_ORG_CONNECTION_CHECK)
+    ResponseData<Boolean> checkConnection(@PathVariable String id);
 
-  /**
-   * 按父级id查询
-   * 
-   * @param parentId 父级id
-   * @return ResponseData<List<SysOrganizationDto>>
-   */
-  @GetMapping(PathConstants.REQUEST_SYSTEM_ORG_PARENT)
-  ResponseData<List<SysOrganizationDto>> parent(@RequestParam String parentId);
+    /**
+     * 按父级id查询
+     * @param parentId 父级id
+     * @return ResponseData<List<SysOrganizationDto>>
+     */
+    @GetMapping(PathConstants.REQUEST_SYSTEM_ORG_PARENT)
+    ResponseData<List<SysOrganizationDto>> parent(@RequestParam String parentId);
 
-  /**
-   * 判断是否存在
-   *
-   * @param checkOrgCodeVo 查询参数
-   * @return ResponseData<Boolean>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_CHECK)
-  ResponseData<Boolean> checkCode(@RequestBody CheckOrgCodeVo checkOrgCodeVo);
+    /**
+     * 判断是否存在
+     * @param checkOrgCodeVo 查询参数
+     * @return ResponseData<Boolean>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_CHECK)
+    ResponseData<Boolean> checkCode(@RequestBody CheckOrgCodeVo checkOrgCodeVo);
 
-  /**
-   * 获取菜单下拉树列表
-   * 
-   * @param sysOrganizationVo 机构对象
-   * @return ResponseData<List<TreeSelect>>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_TREE)
-  ResponseData<List<TreeSelect>> treeselect(@RequestBody SysOrganizationVo sysOrganizationVo);
+    /**
+     * 获取菜单下拉树列表
+     * @param sysOrganizationVo 机构对象
+     * @return ResponseData<List<TreeSelect>>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_TREE)
+    ResponseData<List<TreeSelect>> treeselect(@RequestBody SysOrganizationVo sysOrganizationVo);
 
-  /**
-   * 加载对应角色菜单列表树
-   *
-   * @param sysOrganizationVo 机构对象
-   * @param userId            用户id
-   * @return SysMenuTreeSelectDto
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_USER)
-  ResponseData<SysMenuTreeSelectDto> userTreeselect(@RequestBody SysOrganizationVo sysOrganizationVo,
-      @PathVariable String userId);
+    /**
+     * 加载对应角色菜单列表树
+     * @param sysOrganizationVo 机构对象
+     * @param userId 用户id
+     * @return SysMenuTreeSelectDto
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_USER)
+    ResponseData<SysMenuTreeSelectDto> userTreeselect(@RequestBody SysOrganizationVo sysOrganizationVo,
+            @PathVariable String userId);
 
-  /**
-   * 修改状态
-   * 
-   * @param id     编号
-   * @param status 状态
-   * @return ResponseData<Boolean>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_STATUS)
-  ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
+    /**
+     * 修改状态
+     * @param id 编号
+     * @param status 状态
+     * @return ResponseData<Boolean>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_ORG_STATUS)
+    ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
-  /**
-   * 保存
-   * 
-   * @param sysOrganizationVo 保存对象
-   * @return ResponseData<SysOrganizationDto>
-   */
-  @PutMapping(PathConstants.REQUEST_SYSTEM_ORG_SAVE)
-  ResponseData<SysOrganizationDto> save(@RequestBody SysOrganizationVo sysOrganizationVo);
+    /**
+     * 保存
+     * @param sysOrganizationVo 保存对象
+     * @return ResponseData<SysOrganizationDto>
+     */
+    @PutMapping(PathConstants.REQUEST_SYSTEM_ORG_SAVE)
+    ResponseData<SysOrganizationDto> save(@RequestBody SysOrganizationVo sysOrganizationVo);
 
-  /**
-   * 删除
-   * 
-   * @param ids 编号
-   * @return ResponseData<List<Boolean>>
-   */
-  @DeleteMapping(PathConstants.REQUEST_SYSTEM_ORG_DELETE)
-  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+    /**
+     * 删除
+     * @param ids 编号
+     * @return ResponseData<List<Boolean>>
+     */
+    @DeleteMapping(PathConstants.REQUEST_SYSTEM_ORG_DELETE)
+    ResponseData<List<Boolean>> delete(@RequestBody String... ids);
 
 }

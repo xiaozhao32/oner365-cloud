@@ -9,96 +9,96 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Position VO
- * 
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "位置信息")
 public class PositionVo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键
-   */
-  @ApiModelProperty(value = "主键")
-  private String id;
+    /**
+     * 主键
+     */
+    @ApiModelProperty(value = "主键")
+    private String id;
 
-  /**
-   * 位置名称
-   */
-  @ApiModelProperty(value = "位置名称")
-  private String positionName;
-  
-  /**
-   * 类型
-   */
-  @ApiModelProperty(value = "类型")
-  private PostgisTypeEnum postgisType;
+    /**
+     * 位置名称
+     */
+    @ApiModelProperty(value = "位置名称")
+    private String positionName;
 
-  /**
-   * 点
-   */
-  @ApiModelProperty(value = "点")
-  private PointVo point;
+    /**
+     * 类型
+     */
+    @ApiModelProperty(value = "类型")
+    private PostgisTypeEnum postgisType;
 
-  /**
-   * 面
-   */
-  @ApiModelProperty(value = "面")
-  private PolygonVo polygon;
-  
-  /**
-   * 线
-   */
-  @ApiModelProperty(value = "线")
-  private LineStringVo lineString;
+    /**
+     * 点
+     */
+    @ApiModelProperty(value = "点")
+    private PointVo point;
 
-  public String getId() {
-    return id;
-  }
+    /**
+     * 面
+     */
+    @ApiModelProperty(value = "面")
+    private PolygonVo polygon;
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    /**
+     * 线
+     */
+    @ApiModelProperty(value = "线")
+    private LineStringVo lineString;
 
-  public String getPositionName() {
-    return positionName;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setPositionName(String positionName) {
-    this.positionName = positionName;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public PointVo getPoint() {
-    return point;
-  }
+    public String getPositionName() {
+        return positionName;
+    }
 
-  public void setPoint(PointVo point) {
-    this.point = point;
-  }
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
 
-  public PolygonVo getPolygon() {
-    return polygon;
-  }
+    public PointVo getPoint() {
+        return point;
+    }
 
-  public void setPolygon(PolygonVo polygon) {
-    this.polygon = polygon;
-  }
+    public void setPoint(PointVo point) {
+        this.point = point;
+    }
 
-  public PostgisTypeEnum getPostgisType() {
-    return postgisType;
-  }
+    public PolygonVo getPolygon() {
+        return polygon;
+    }
 
-  public void setPostgisType(PostgisTypeEnum postgisType) {
-    this.postgisType = postgisType;
-  }
+    public void setPolygon(PolygonVo polygon) {
+        this.polygon = polygon;
+    }
 
-  public LineStringVo getLineString() {
-    return lineString;
-  }
+    public PostgisTypeEnum getPostgisType() {
+        return postgisType;
+    }
 
-  public void setLineString(LineStringVo lineString) {
-    this.lineString = lineString;
-  }
+    public void setPostgisType(PostgisTypeEnum postgisType) {
+        this.postgisType = postgisType;
+    }
+
+    public LineStringVo getLineString() {
+        return lineString;
+    }
+
+    public void setLineString(LineStringVo lineString) {
+        this.lineString = lineString;
+    }
 
 }

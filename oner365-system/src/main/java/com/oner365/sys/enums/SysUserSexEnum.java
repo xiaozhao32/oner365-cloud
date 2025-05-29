@@ -29,8 +29,7 @@ public enum SysUserSexEnum implements BaseEnum {
 
     /**
      * 构造方法
-     *
-     * @param code  编码
+     * @param code 编码
      * @param name 名称
      */
     SysUserSexEnum(String code, String name) {
@@ -40,7 +39,6 @@ public enum SysUserSexEnum implements BaseEnum {
 
     /**
      * get code
-     *
      * @return code
      */
     public String getCode() {
@@ -49,7 +47,6 @@ public enum SysUserSexEnum implements BaseEnum {
 
     /**
      * get name
-     *
      * @return name
      */
     @Override
@@ -59,14 +56,13 @@ public enum SysUserSexEnum implements BaseEnum {
 
     /**
      * 获取枚举
-     *
      * @param code 编码
      * @return MessageStatusEnum
      */
     public static SysUserSexEnum getCode(String code) {
         Optional<SysUserSexEnum> result = Arrays.stream(SysUserSexEnum.values())
-                .filter(e -> e.getCode().equals(code))
-                .findFirst();
+            .filter(e -> e.getCode().equals(code))
+            .findFirst();
         return result.orElse(null);
     }
 

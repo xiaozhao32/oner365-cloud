@@ -17,7 +17,7 @@ import com.oner365.neo4j.service.ParentService;
 
 /**
  * neo4j test
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -25,31 +25,29 @@ import com.oner365.neo4j.service.ParentService;
 @RequestMapping("/test")
 public class TestController extends BaseController {
 
-  @Resource
-  private ParentService parentService;
-  
-  /**
-   * 保存人员节点
-   * 
-   * @return ParentNode
-   */
-  @PostMapping("/parent/save")
-  public ParentNode save(@RequestBody ParentNode parentNode) {
-    return parentService.save(parentNode);
-  }
-  
-  /**
-   * 删除当前人员节点
-   * 
-   * @param id 人员节点
-   */
-  @DeleteMapping("/parent/delete/{id}")
-  public ResponseData<ResultEnum> deleteParent(@PathVariable Long id) {
-    boolean result = parentService.delete(id);
-    if (result) {
-      return ResponseData.success(ResultEnum.SUCCESS);
+    @Resource
+    private ParentService parentService;
+
+    /**
+     * 保存人员节点
+     * @return ParentNode
+     */
+    @PostMapping("/parent/save")
+    public ParentNode save(@RequestBody ParentNode parentNode) {
+        return parentService.save(parentNode);
     }
-    return ResponseData.error(ResultEnum.ERROR.name());
-  }
-  
+
+    /**
+     * 删除当前人员节点
+     * @param id 人员节点
+     */
+    @DeleteMapping("/parent/delete/{id}")
+    public ResponseData<ResultEnum> deleteParent(@PathVariable Long id) {
+        boolean result = parentService.delete(id);
+        if (result) {
+            return ResponseData.success(ResultEnum.SUCCESS);
+        }
+        return ResponseData.error(ResultEnum.ERROR.name());
+    }
+
 }

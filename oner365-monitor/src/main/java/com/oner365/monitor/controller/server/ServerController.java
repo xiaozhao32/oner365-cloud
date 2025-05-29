@@ -9,7 +9,7 @@ import com.oner365.monitor.entity.Server;
 
 /**
  * 服务器监控
- * 
+ *
  * @author zhaoyong
  */
 @RestController
@@ -25,4 +25,5 @@ public class ServerController extends BaseController {
         server.copyTo();
         return server;
     }
+
 }

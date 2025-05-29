@@ -41,162 +41,151 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/system/user")
 public class SysUserController {
 
-  @Resource
-  private ISystemUserClient client;
-  
-  /**
-   * 用户列表
-   *
-   * @param data 查询参数
-   * @return ResponseData<PageInfo<SysUserDto>>
-   */
-  @ApiOperation("1.用户列表")
-  @ApiOperationSupport(order = 1)
-  @PostMapping("/list")
-  public ResponseData<PageInfo<SysUserDto>> list(@RequestBody QueryCriteriaBean data) {
-    return client.list(data);
-  }
-  
-  /**
-   * 获取信息
-   *
-   * @param id 编号
-   * @return ResponseData<SysUserDto>
-   */
-  @ApiOperation("2.按id查询")
-  @ApiOperationSupport(order = 2)
-  @GetMapping("/get/{id}")
-  public ResponseData<SysUserDto> get(@PathVariable String id) {
-    return client.getById(id);
-  }
-  
-  /**
-   * 个人信息
-   *
-   * @return ResponseData<SysUserDto>
-   */
-  @ApiOperation("3.个人信息")
-  @ApiOperationSupport(order = 3)
-  @GetMapping("/profile")
-  public ResponseData<SysUserDto> profile() {
-    return client.profile();
-  }
-  
-  /**
-   * 上传图片
-   *
-   * @param file     文件
-   * @return ResponseData<String>
-   */
-  @ApiOperation("4.上传头像")
-  @ApiOperationSupport(order = 4)
-  @PostMapping("/avatar")
-  public ResponseData<String> avatar(@RequestParam("avatarfile") MultipartFile file) {
-    return client.avatar(file);
-  }
-  
-  /**
-   * 更新个人信息
-   *
-   * @param sysUserVo 对象
-   * @return ResponseData<SysUserDto>
-   */
-  @ApiOperation("5.更新个人信息")
-  @ApiOperationSupport(order = 5)
-  @PostMapping("/update/profile")
-  public ResponseData<SysUserDto> updateUserProfile(@RequestBody SysUserVo sysUserVo) {
-    return client.updateUserProfile(sysUserVo);
-  }
-  
-  /**
-   * 判断用户是否存在
-   *
-   * @param checkUserNameVo 查询参数
-   * @return ResponseData<Boolean>
-   */
-  @ApiOperation("6.判断存在")
-  @ApiOperationSupport(order = 6)
-  @PostMapping("/check")
-  public ResponseData<Boolean> checkUserName(@RequestBody CheckUserNameVo checkUserNameVo) {
-    return client.checkUserName(checkUserNameVo);
-  }
-  
-  /**
-   * 重置密码
-   *
-   * @param resetPasswordVo 查询参数
-   * @return ResponseData<Boolean>
-   */
-  @ApiOperation("7.重置密码")
-  @ApiOperationSupport(order = 7)
-  @PostMapping("/reset")
-  public ResponseData<Boolean> resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
-    return client.resetPassword(resetPasswordVo);
-  }
-  
-  /**
-   * 修改密码
-   *
-   * @param modifyPasswordVo 请求参数
-   * @return ResponseData<Boolean>
-   */
-  @ApiOperation("8.修改密码")
-  @ApiOperationSupport(order = 8)
-  @PostMapping("/update/password")
-  public ResponseData<Boolean> editPassword(@RequestBody ModifyPasswordVo modifyPasswordVo) {
-    return client.editPassword(modifyPasswordVo);
-  }
-  
-  /**
-   * 修改用户状态
-   *
-   * @param id     主键
-   * @param status 状态
-   * @return ResponseData<Boolean>
-   */
-  @ApiOperation("9.修改状态")
-  @ApiOperationSupport(order = 9)
-  @PostMapping("/status/{id}")
-  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
-    return client.editStatus(id, status);
-  }
-  
-  /**
-   * 用户保存
-   *
-   * @param sysUserVo 用户对象
-   * @return ResponseData<SysUserDto>
-   */
-  @ApiOperation("10.保存")
-  @ApiOperationSupport(order = 10)
-  @PutMapping("/save")
-  public ResponseData<SysUserDto> save(@RequestBody SysUserVo sysUserVo) {
-    return client.save(sysUserVo);
-  }
-  
-  /**
-   * 删除用户
-   *
-   * @param ids 编号
-   * @return ResponseData<Boolean>
-   */
-  @ApiOperation("11.删除")
-  @ApiOperationSupport(order = 11)
-  @DeleteMapping("/delete")
-  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
-    return client.delete(ids);
-  }
-  
-  /**
-   * 导出Excel
-   *
-   * @param data 参数
-   * @return ResponseEntity<byte[]>
-   */
-  @ApiOperation("12.导出")
-  @ApiOperationSupport(order = 12)
-  @PostMapping("/export")
-  public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
-    return client.export(data);
-  }
+    @Resource
+    private ISystemUserClient client;
+
+    /**
+     * 用户列表
+     * @param data 查询参数
+     * @return ResponseData<PageInfo<SysUserDto>>
+     */
+    @ApiOperation("1.用户列表")
+    @ApiOperationSupport(order = 1)
+    @PostMapping("/list")
+    public ResponseData<PageInfo<SysUserDto>> list(@RequestBody QueryCriteriaBean data) {
+        return client.list(data);
+    }
+
+    /**
+     * 获取信息
+     * @param id 编号
+     * @return ResponseData<SysUserDto>
+     */
+    @ApiOperation("2.按id查询")
+    @ApiOperationSupport(order = 2)
+    @GetMapping("/get/{id}")
+    public ResponseData<SysUserDto> get(@PathVariable String id) {
+        return client.getById(id);
+    }
+
+    /**
+     * 个人信息
+     * @return ResponseData<SysUserDto>
+     */
+    @ApiOperation("3.个人信息")
+    @ApiOperationSupport(order = 3)
+    @GetMapping("/profile")
+    public ResponseData<SysUserDto> profile() {
+        return client.profile();
+    }
+
+    /**
+     * 上传图片
+     * @param file 文件
+     * @return ResponseData<String>
+     */
+    @ApiOperation("4.上传头像")
+    @ApiOperationSupport(order = 4)
+    @PostMapping("/avatar")
+    public ResponseData<String> avatar(@RequestParam("avatarfile") MultipartFile file) {
+        return client.avatar(file);
+    }
+
+    /**
+     * 更新个人信息
+     * @param sysUserVo 对象
+     * @return ResponseData<SysUserDto>
+     */
+    @ApiOperation("5.更新个人信息")
+    @ApiOperationSupport(order = 5)
+    @PostMapping("/update/profile")
+    public ResponseData<SysUserDto> updateUserProfile(@RequestBody SysUserVo sysUserVo) {
+        return client.updateUserProfile(sysUserVo);
+    }
+
+    /**
+     * 判断用户是否存在
+     * @param checkUserNameVo 查询参数
+     * @return ResponseData<Boolean>
+     */
+    @ApiOperation("6.判断存在")
+    @ApiOperationSupport(order = 6)
+    @PostMapping("/check")
+    public ResponseData<Boolean> checkUserName(@RequestBody CheckUserNameVo checkUserNameVo) {
+        return client.checkUserName(checkUserNameVo);
+    }
+
+    /**
+     * 重置密码
+     * @param resetPasswordVo 查询参数
+     * @return ResponseData<Boolean>
+     */
+    @ApiOperation("7.重置密码")
+    @ApiOperationSupport(order = 7)
+    @PostMapping("/reset")
+    public ResponseData<Boolean> resetPassword(@RequestBody ResetPasswordVo resetPasswordVo) {
+        return client.resetPassword(resetPasswordVo);
+    }
+
+    /**
+     * 修改密码
+     * @param modifyPasswordVo 请求参数
+     * @return ResponseData<Boolean>
+     */
+    @ApiOperation("8.修改密码")
+    @ApiOperationSupport(order = 8)
+    @PostMapping("/update/password")
+    public ResponseData<Boolean> editPassword(@RequestBody ModifyPasswordVo modifyPasswordVo) {
+        return client.editPassword(modifyPasswordVo);
+    }
+
+    /**
+     * 修改用户状态
+     * @param id 主键
+     * @param status 状态
+     * @return ResponseData<Boolean>
+     */
+    @ApiOperation("9.修改状态")
+    @ApiOperationSupport(order = 9)
+    @PostMapping("/status/{id}")
+    public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
+        return client.editStatus(id, status);
+    }
+
+    /**
+     * 用户保存
+     * @param sysUserVo 用户对象
+     * @return ResponseData<SysUserDto>
+     */
+    @ApiOperation("10.保存")
+    @ApiOperationSupport(order = 10)
+    @PutMapping("/save")
+    public ResponseData<SysUserDto> save(@RequestBody SysUserVo sysUserVo) {
+        return client.save(sysUserVo);
+    }
+
+    /**
+     * 删除用户
+     * @param ids 编号
+     * @return ResponseData<Boolean>
+     */
+    @ApiOperation("11.删除")
+    @ApiOperationSupport(order = 11)
+    @DeleteMapping("/delete")
+    public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
+        return client.delete(ids);
+    }
+
+    /**
+     * 导出Excel
+     * @param data 参数
+     * @return ResponseEntity<byte[]>
+     */
+    @ApiOperation("12.导出")
+    @ApiOperationSupport(order = 12)
+    @PostMapping("/export")
+    public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
+        return client.export(data);
+    }
+
 }

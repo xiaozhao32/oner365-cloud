@@ -32,84 +32,86 @@ import com.oner365.files.vo.SysFileStorageVo;
 @Conditional(LocalStorageCondition.class)
 public class FileLocalClient implements IFileStorageClient {
 
-  private final Logger logger = LoggerFactory.getLogger(FileLocalClient.class);
+    private final Logger logger = LoggerFactory.getLogger(FileLocalClient.class);
 
-  @Resource
-  private FileLocalProperties fileLocalProperties;
+    @Resource
+    private FileLocalProperties fileLocalProperties;
 
-  @Resource
-  private IFileStorageService fileStorageService;
+    @Resource
+    private IFileStorageService fileStorageService;
 
-  @Resource
-  private SnowflakeSequence snowflakeSequence;
+    @Resource
+    private SnowflakeSequence snowflakeSequence;
 
-  @Override
-  public String uploadFile(MultipartFile file, String directory) {
-    try {
-      SysFileStorageVo entity = FileLocalUploadUtils.upload(file, getName(), snowflakeSequence.nextNo(),
-          fileLocalProperties.getWeb(), fileLocalProperties.getUpload(), directory, file.getSize() + 1);
-      SysFileStorageDto result = fileStorageService.save(entity);
-      if (result != null) {
-          return result.getId();
-      }
-    } catch (Exception e) {
-      logger.error("upload MultipartFile IOException:", e);
+    @Override
+    public String uploadFile(MultipartFile file, String directory) {
+        try {
+            SysFileStorageVo entity = FileLocalUploadUtils.upload(file, getName(), snowflakeSequence.nextNo(),
+                    fileLocalProperties.getWeb(), fileLocalProperties.getUpload(), directory, file.getSize() + 1);
+            SysFileStorageDto result = fileStorageService.save(entity);
+            if (result != null) {
+                return result.getId();
+            }
+        }
+        catch (Exception e) {
+            logger.error("upload MultipartFile IOException:", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  public String uploadFile(File file, String directory) {
-    try {
-      MultipartFile multipartFile = HttpClientUtils.convertMultipartFile(file);
-      SysFileStorageVo entity = FileLocalUploadUtils.upload(multipartFile, getName(), snowflakeSequence.nextNo(),
-          fileLocalProperties.getWeb(), fileLocalProperties.getUpload(), directory, file.length() + 1);
-      SysFileStorageDto result = fileStorageService.save(entity);
-      if (result != null) {
-          return result.getId();
-      }
-    } catch (Exception e) {
-      logger.error("upload MultipartFile IOException:", e);
+    @Override
+    public String uploadFile(File file, String directory) {
+        try {
+            MultipartFile multipartFile = HttpClientUtils.convertMultipartFile(file);
+            SysFileStorageVo entity = FileLocalUploadUtils.upload(multipartFile, getName(), snowflakeSequence.nextNo(),
+                    fileLocalProperties.getWeb(), fileLocalProperties.getUpload(), directory, file.length() + 1);
+            SysFileStorageDto result = fileStorageService.save(entity);
+            if (result != null) {
+                return result.getId();
+            }
+        }
+        catch (Exception e) {
+            logger.error("upload MultipartFile IOException:", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  public byte[] download(String path) {
-    return FileLocalUploadUtils.download(fileLocalProperties.getUpload(), path);
-  }
-  
-  @Override
-  public String downloadPath(String path) {
-    String result = fileLocalProperties.getWeb() + PublicConstants.DELIMITER + path;
-    logger.info("file download: {}", result);
-    return result;
-  }
-  
-  @Override
-  public Long getFileSize(String path) {
-    String filePath = fileLocalProperties.getUpload() + PublicConstants.DELIMITER + path;
-    File file = DataUtils.getFile(filePath);
-    if (!file.exists()) {
-      logger.error("file is not exists: {}", filePath);
-      return 0L;
+    @Override
+    public byte[] download(String path) {
+        return FileLocalUploadUtils.download(fileLocalProperties.getUpload(), path);
     }
-    return file.length();
-  }
 
-  @Override
-  public Boolean deleteFile(String id) {
-    return fileStorageService.deleteById(id);
-  }
+    @Override
+    public String downloadPath(String path) {
+        String result = fileLocalProperties.getWeb() + PublicConstants.DELIMITER + path;
+        logger.info("file download: {}", result);
+        return result;
+    }
 
-  @Override
-  public StorageEnum getName() {
-    return StorageEnum.LOCAL;
-  }
-  
-  @Override
-  public SysFileStorageDto getFile(String id) {
-    return fileStorageService.getById(id);
-  }
+    @Override
+    public Long getFileSize(String path) {
+        String filePath = fileLocalProperties.getUpload() + PublicConstants.DELIMITER + path;
+        File file = DataUtils.getFile(filePath);
+        if (!file.exists()) {
+            logger.error("file is not exists: {}", filePath);
+            return 0L;
+        }
+        return file.length();
+    }
+
+    @Override
+    public Boolean deleteFile(String id) {
+        return fileStorageService.deleteById(id);
+    }
+
+    @Override
+    public StorageEnum getName() {
+        return StorageEnum.LOCAL;
+    }
+
+    @Override
+    public SysFileStorageDto getFile(String id) {
+        return fileStorageService.getById(id);
+    }
 
 }

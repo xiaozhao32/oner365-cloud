@@ -30,7 +30,8 @@ public class DefaultSnowflakeSequence implements SnowflakeSequence {
             if (this.sequence == 0L) {
                 timestamp = tilNextMillis(this.lastTimestamp);
             }
-        } else {
+        }
+        else {
             this.sequence = 0L;
         }
         this.lastTimestamp = timestamp;
@@ -79,4 +80,5 @@ public class DefaultSnowflakeSequence implements SnowflakeSequence {
     public int nextId() {
         return 0;
     }
+
 }

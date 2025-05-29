@@ -24,19 +24,19 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/dubbo/message")
 public class DubboConsumerMessageController {
 
-  @Resource
-  private IDubboConsumerClient client;
+    @Resource
+    private IDubboConsumerClient client;
 
-  /**
-   * 发送消息
-   * 
-   * @param message 消息
-   * @return ResponseData
-   */
-  @ApiOperation("1.消息")
-  @ApiOperationSupport(order = 1)
-  @GetMapping("/send")
-  public ResponseData<String> send(String message) {
-    return ResponseData.success(client.send(message));
-  }
+    /**
+     * 发送消息
+     * @param message 消息
+     * @return ResponseData
+     */
+    @ApiOperation("1.消息")
+    @ApiOperationSupport(order = 1)
+    @GetMapping("/send")
+    public ResponseData<String> send(String message) {
+        return ResponseData.success(client.send(message));
+    }
+
 }

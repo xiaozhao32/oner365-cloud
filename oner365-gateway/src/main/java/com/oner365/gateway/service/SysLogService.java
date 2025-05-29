@@ -11,10 +11,10 @@ import com.oner365.gateway.vo.SysLogVo;
  */
 public interface SysLogService extends BaseService {
 
-  /**
-   * 保存日志
-   *
-   * @param sysLog 对象
-   */
-  void save(SysLogVo sysLog);
+    /**
+     * 保存日志
+     * @param sysLog 对象
+     */
+    void save(SysLogVo sysLog);
+
 }

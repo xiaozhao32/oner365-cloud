@@ -12,63 +12,60 @@ import com.oner365.data.commons.enums.BaseEnum;
  */
 public enum GeneTypeEnum implements BaseEnum {
 
-  /** X */
-  X("0", "X"),
-  /** Y */
-  Y("1", "Y"),
-  /** Z */
-  Z("2", "Z");
+    /** X */
+    X("0", "X"),
+    /** Y */
+    Y("1", "Y"),
+    /** Z */
+    Z("2", "Z");
 
-  /**
-   * 编码
-   */
-  private final String code;
+    /**
+     * 编码
+     */
+    private final String code;
 
-  /**
-   * 名称
-   */
-  private final String name;
+    /**
+     * 名称
+     */
+    private final String name;
 
-  /**
-   * 构造方法
-   *
-   * @param code 编码
-   * @param name 名称
-   */
-  GeneTypeEnum(String code, String name) {
-    this.code = code;
-    this.name = name;
-  }
+    /**
+     * 构造方法
+     * @param code 编码
+     * @param name 名称
+     */
+    GeneTypeEnum(String code, String name) {
+        this.code = code;
+        this.name = name;
+    }
 
-  /**
-   * get code
-   *
-   * @return code
-   */
-  public String getCode() {
-    return code;
-  }
+    /**
+     * get code
+     * @return code
+     */
+    public String getCode() {
+        return code;
+    }
 
-  /**
-   * get name
-   *
-   * @return name
-   */
-  @Override
-  public String getName() {
-    return name;
-  }
+    /**
+     * get name
+     * @return name
+     */
+    @Override
+    public String getName() {
+        return name;
+    }
 
-  /**
-   * 获取枚举
-   *
-   * @param code 编码
-   * @return StatusEnum
-   */
-  public static GeneTypeEnum getCode(String code) {
-    Optional<GeneTypeEnum> result = Arrays.stream(GeneTypeEnum.values()).filter(e -> e.getCode().equals(code))
-        .findFirst();
-    return result.orElse(null);
-  }
+    /**
+     * 获取枚举
+     * @param code 编码
+     * @return StatusEnum
+     */
+    public static GeneTypeEnum getCode(String code) {
+        Optional<GeneTypeEnum> result = Arrays.stream(GeneTypeEnum.values())
+            .filter(e -> e.getCode().equals(code))
+            .findFirst();
+        return result.orElse(null);
+    }
 
 }

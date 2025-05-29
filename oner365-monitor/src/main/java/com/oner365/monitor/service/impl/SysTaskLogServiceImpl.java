@@ -34,85 +34,90 @@ import com.oner365.monitor.vo.SysTaskLogVo;
 @Service
 public class SysTaskLogServiceImpl implements ISysTaskLogService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SysTaskLogServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SysTaskLogServiceImpl.class);
 
-  @Resource
-  private ISysTaskLogDao dao;
+    @Resource
+    private ISysTaskLogDao dao;
 
-  @Resource
-  private SysTaskLogMapper taskLogMapper;
+    @Resource
+    private SysTaskLogMapper taskLogMapper;
 
-  @Override
-  public PageInfo<SysTaskLogDto> pageList(QueryCriteriaBean data) {
-    try {
-      Page<SysTaskLog> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
-      return convert(page, SysTaskLogDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error pageList: ", e);
+    @Override
+    public PageInfo<SysTaskLogDto> pageList(QueryCriteriaBean data) {
+        try {
+            Page<SysTaskLog> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+            return convert(page, SysTaskLogDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error pageList: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  public List<SysTaskLogDto> findList(QueryCriteriaBean data) {
-    try {
-      if (data.getOrder() == null) {
-        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysTaskLogDto.class);
-      }
-      List<SysTaskLog> list = dao.findAll(QueryUtils.buildCriteria(data),
-              Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
-      return convert(list, SysTaskLogDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error findList: ", e);
+    @Override
+    public List<SysTaskLogDto> findList(QueryCriteriaBean data) {
+        try {
+            if (data.getOrder() == null) {
+                return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysTaskLogDto.class);
+            }
+            List<SysTaskLog> list = dao.findAll(QueryUtils.buildCriteria(data),
+                    Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
+            return convert(list, SysTaskLogDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return Collections.emptyList();
     }
-    return Collections.emptyList();
-  }
 
-  @Override
-  public SysTaskLogDto selectTaskLogById(String id) {
-    Optional<SysTaskLog> optional = dao.findById(id);
-    return convert(optional.orElse(null), SysTaskLogDto.class);
-  }
-
-  @Override
-  public Boolean addTaskLog(SysTaskLogVo vo) {
-    if (DataUtils.isEmpty(vo.getId())) {
-      vo.setCreateTime(DateUtil.getDate());
+    @Override
+    public SysTaskLogDto selectTaskLogById(String id) {
+        Optional<SysTaskLog> optional = dao.findById(id);
+        return convert(optional.orElse(null), SysTaskLogDto.class);
     }
-    dao.save(convert(vo, SysTaskLog.class));
-    return Boolean.TRUE;
-  }
 
-  @Override
-  public List<Boolean> deleteTaskLogByIds(String[] ids) {
-    return Arrays.stream(ids).map(this::deleteTaskLogById).collect(Collectors.toList());
-  }
-
-  @Override
-  public Boolean deleteTaskLogById(String id) {
-    try {
-      dao.deleteById(id);
-      return Boolean.TRUE;
-    } catch (Exception e) {
-      LOGGER.error("Error deleteTaskLogById:", e);
+    @Override
+    public Boolean addTaskLog(SysTaskLogVo vo) {
+        if (DataUtils.isEmpty(vo.getId())) {
+            vo.setCreateTime(DateUtil.getDate());
+        }
+        dao.save(convert(vo, SysTaskLog.class));
+        return Boolean.TRUE;
     }
-    return Boolean.FALSE;
-  }
 
-  @Override
-  public Boolean cleanTaskLog() {
-    taskLogMapper.cleanTaskLog();
-    return Boolean.TRUE;
-  }
-
-  @Override
-  public Boolean deleteTaskLogByCreateTime(String time) {
-    try {
-      dao.deleteTaskLogByCreateTime(time);
-      return Boolean.TRUE;
-    } catch (Exception e) {
-      LOGGER.error("Error deleteTaskLogByCreateTime: ", e);
+    @Override
+    public List<Boolean> deleteTaskLogByIds(String[] ids) {
+        return Arrays.stream(ids).map(this::deleteTaskLogById).collect(Collectors.toList());
     }
-    return Boolean.FALSE;
-  }
+
+    @Override
+    public Boolean deleteTaskLogById(String id) {
+        try {
+            dao.deleteById(id);
+            return Boolean.TRUE;
+        }
+        catch (Exception e) {
+            LOGGER.error("Error deleteTaskLogById:", e);
+        }
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean cleanTaskLog() {
+        taskLogMapper.cleanTaskLog();
+        return Boolean.TRUE;
+    }
+
+    @Override
+    public Boolean deleteTaskLogByCreateTime(String time) {
+        try {
+            dao.deleteTaskLogByCreateTime(time);
+            return Boolean.TRUE;
+        }
+        catch (Exception e) {
+            LOGGER.error("Error deleteTaskLogByCreateTime: ", e);
+        }
+        return Boolean.FALSE;
+    }
+
 }

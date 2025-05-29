@@ -7,21 +7,22 @@ package com.oner365.postgis.enums;
  */
 public enum PostgisTypeEnum {
 
-  /** 点 */
-  POINT,
-  
-  /** 线 */
-  LINESTRING,
+    /** 点 */
+    POINT,
 
-  /** 面 */
-  POLYGON,
+    /** 线 */
+    LINESTRING,
 
-  /** 多点 */
-  MULTIPOINT,
-  
-  /** 多线 */
-  MULTILINESTRING,
-  
-  /** 多面 */
-  MULTIPOLYGON
+    /** 面 */
+    POLYGON,
+
+    /** 多点 */
+    MULTIPOINT,
+
+    /** 多线 */
+    MULTILINESTRING,
+
+    /** 多面 */
+    MULTIPOLYGON
+
 }

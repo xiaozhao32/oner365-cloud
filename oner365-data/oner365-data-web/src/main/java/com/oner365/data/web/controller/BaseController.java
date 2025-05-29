@@ -16,6 +16,7 @@ import com.oner365.data.web.utils.HttpClientUtils;
 
 /**
  * Controller 父类
+ *
  * @author zhaoyong
  *
  */
@@ -34,9 +35,11 @@ public class BaseController {
      * @param content 内容
      * @return ResponseEntity<byte[]>
      */
-    protected <T> ResponseEntity<byte[]> exportExcel(String fileName, String[] titleKeys, String[] columnNames, List<T> content) {
-        String name = fileName + "." +fileProperties.getExcelSuffix();
-        ExportExcelUtils.exportExcel(name, titleKeys, columnNames, content, fileProperties.getDownload(), fileProperties.getExcelSuffix());
+    protected <T> ResponseEntity<byte[]> exportExcel(String fileName, String[] titleKeys, String[] columnNames,
+            List<T> content) {
+        String name = fileName + "." + fileProperties.getExcelSuffix();
+        ExportExcelUtils.exportExcel(name, titleKeys, columnNames, content, fileProperties.getDownload(),
+                fileProperties.getExcelSuffix());
         File file = DataUtils.getFile(fileProperties.getDownload(), name);
         return HttpClientUtils.download(file, name);
     }

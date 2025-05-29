@@ -4,33 +4,34 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * HDFS配置类
- * 
+ *
  * @author zhaoyong
  */
 @ConfigurationProperties(prefix = "hdfs")
 public class HdfsProperties {
 
-  private String path;
+    private String path;
 
-  private String username;
-  
-  public HdfsProperties() {
-    super();
-  }
+    private String username;
 
-  public String getPath() {
-    return path;
-  }
+    public HdfsProperties() {
+        super();
+    }
 
-  public void setPath(String path) {
-    this.path = path;
-  }
+    public String getPath() {
+        return path;
+    }
 
-  public String getUsername() {
-    return username;
-  }
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
 }

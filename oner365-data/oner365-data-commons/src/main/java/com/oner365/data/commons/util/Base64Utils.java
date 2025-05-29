@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  * base64 工具类
+ *
  * @author zhaoyong
  *
  */
@@ -61,17 +62,17 @@ public class Base64Utils {
 
     /**
      * 字符串每隔指定长度插入指定字符串
-     * @param original         处理字符串
-     * @param insertString     插入字符串
-     * @param interval         间隔的字符长度
+     * @param original 处理字符串
+     * @param insertString 插入字符串
+     * @param interval 间隔的字符长度
      * @return 字符串
      */
     public static String stringInsertByInterval(String original, String insertString, int interval) {
-        if(original==null) {
+        if (original == null) {
             return "";
         }
         int len = original.length();
-        if(interval>=len) {
+        if (interval >= len) {
             return original;
         }
 
@@ -82,7 +83,7 @@ public class Base64Utils {
         while (m.find()) {
             strList.add(m.group());
         }
-        strList =  strList.subList(0, strList.size()-1);
+        strList = strList.subList(0, strList.size() - 1);
         rtnString = StringUtils.join(strList, insertString);
         return rtnString;
     }

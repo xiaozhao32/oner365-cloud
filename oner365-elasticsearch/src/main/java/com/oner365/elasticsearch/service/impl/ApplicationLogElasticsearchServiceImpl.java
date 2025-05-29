@@ -14,35 +14,35 @@ import com.oner365.elasticsearch.service.IApplicationLogElasticsearchService;
 
 /**
  * SampleGeneElasticsearch实现类
- * 
+ *
  * @author zhaoyong
  */
 @Service
 public class ApplicationLogElasticsearchServiceImpl extends AbstractElasticsearchService
-    implements IApplicationLogElasticsearchService {
+        implements IApplicationLogElasticsearchService {
 
-  private final IApplicationLogDao dao;
+    private final IApplicationLogDao dao;
 
-  public ApplicationLogElasticsearchServiceImpl(IApplicationLogDao dao) {
-    this.dao = dao;
-  }
+    public ApplicationLogElasticsearchServiceImpl(IApplicationLogDao dao) {
+        this.dao = dao;
+    }
 
-  @Override
-  public PageInfo<ApplicationLogDto> pageList(QueryCriteriaBean data) {
-    Page<ApplicationLog> pageList = pageList(data, ApplicationLog.class);
-    return convert(pageList, ApplicationLogDto.class);
-  }
+    @Override
+    public PageInfo<ApplicationLogDto> pageList(QueryCriteriaBean data) {
+        Page<ApplicationLog> pageList = pageList(data, ApplicationLog.class);
+        return convert(pageList, ApplicationLogDto.class);
+    }
 
-  @Override
-  public ApplicationLogDto findById(String id) {
-    Optional<ApplicationLog> optional = dao.findById(id);
-    return convert(optional.orElse(null), ApplicationLogDto.class);
-  }
+    @Override
+    public ApplicationLogDto findById(String id) {
+        Optional<ApplicationLog> optional = dao.findById(id);
+        return convert(optional.orElse(null), ApplicationLogDto.class);
+    }
 
-  @Override
-  public Boolean deleteById(String id) {
-    dao.deleteById(id);
-    return Boolean.TRUE;
-  }
+    @Override
+    public Boolean deleteById(String id) {
+        dao.deleteById(id);
+        return Boolean.TRUE;
+    }
 
 }

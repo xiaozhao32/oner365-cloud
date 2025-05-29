@@ -8,22 +8,21 @@ import com.oner365.data.web.controller.BaseController;
 
 /**
  * API接口
- * 
+ *
  * @author zhaoyong
  */
 @RestController
 @RequestMapping("/api")
 public class ApiController extends BaseController {
 
-  /**
-   * 测试
-   * 
-   * @param data 数据
-   * @return String
-   */
-  @GetMapping("/test")
-  public String test(String data) {
-    return data;
-  }
+    /**
+     * 测试
+     * @param data 数据
+     * @return String
+     */
+    @GetMapping("/test")
+    public String test(String data) {
+        return data;
+    }
 
 }

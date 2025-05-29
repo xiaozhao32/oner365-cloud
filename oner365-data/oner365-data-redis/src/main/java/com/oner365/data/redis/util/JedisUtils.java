@@ -14,48 +14,48 @@ import redis.clients.jedis.JedisSentinelPool;
 
 /**
  * Jedis 工具类
- * 
+ *
  * @author zhaoyong
  *
  */
 public class JedisUtils {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(JedisUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JedisUtils.class);
 
-  private JedisUtils() {
-  }
+    private JedisUtils() {
+    }
 
-  /**
-   * 获取 Jedis
-   * 
-   * @param redisProperties 属性文件
-   * @return Jedis
-   */
-  public static Jedis getJedis(RedisProperties redisProperties) {
-    // sentinel
-    if (redisProperties.getSentinel() != null) {
-      Sentinel sentinel = redisProperties.getSentinel();
-      try (JedisSentinelPool pool = new JedisSentinelPool(sentinel.getMaster(), new HashSet<>(sentinel.getNodes()),
-          redisProperties.getPassword(), sentinel.getPassword())) {
-        Jedis jedis = pool.getResource();
+    /**
+     * 获取 Jedis
+     * @param redisProperties 属性文件
+     * @return Jedis
+     */
+    public static Jedis getJedis(RedisProperties redisProperties) {
+        // sentinel
+        if (redisProperties.getSentinel() != null) {
+            Sentinel sentinel = redisProperties.getSentinel();
+            try (JedisSentinelPool pool = new JedisSentinelPool(sentinel.getMaster(),
+                    new HashSet<>(sentinel.getNodes()), redisProperties.getPassword(), sentinel.getPassword())) {
+                Jedis jedis = pool.getResource();
+                return getConnect(jedis, redisProperties.getPassword());
+            }
+        }
+
+        // default
+        Jedis jedis = new Jedis(redisProperties.getHost(), redisProperties.getPort());
         return getConnect(jedis, redisProperties.getPassword());
-      }
     }
 
-    // default
-    Jedis jedis = new Jedis(redisProperties.getHost(), redisProperties.getPort());
-    return getConnect(jedis, redisProperties.getPassword());
-  }
-
-  private static Jedis getConnect(Jedis jedis, String password) {
-    String auth = "ok";
-    if (!DataUtils.isEmpty(password)) {
-      auth = jedis.auth(password);
-    } else {
-      jedis.connect();
+    private static Jedis getConnect(Jedis jedis, String password) {
+        String auth = "ok";
+        if (!DataUtils.isEmpty(password)) {
+            auth = jedis.auth(password);
+        }
+        else {
+            jedis.connect();
+        }
+        LOGGER.debug("info: {}", auth);
+        return jedis;
     }
-    LOGGER.debug("info: {}", auth);
-    return jedis;
-  }
 
 }

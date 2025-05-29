@@ -4,72 +4,72 @@ import org.springframework.web.socket.WebSocketSession;
 
 /**
  * websocket 连接类
- * 
+ *
  * @author liutao
  */
 public class WebSocketData {
 
-  /**
-   * 通道号
-   */
-  private String token;
+    /**
+     * 通道号
+     */
+    private String token;
 
-  /**
-   * 通道session
-   */
-  private WebSocketSession session;
+    /**
+     * 通道session
+     */
+    private WebSocketSession session;
 
-  /**
-   * 用户名
-   */
-  private String user;
+    /**
+     * 用户名
+     */
+    private String user;
 
-  /**
-   * 用户id
-   */
-  private String userId;
+    /**
+     * 用户id
+     */
+    private String userId;
 
-  public WebSocketData() {
-    super();
-  }
+    public WebSocketData() {
+        super();
+    }
 
-  public WebSocketData(String user, String token, String userId, WebSocketSession session) {
-    this.user = user;
-    this.token = token;
-    this.session = session;
-    this.userId = userId;
-  }
+    public WebSocketData(String user, String token, String userId, WebSocketSession session) {
+        this.user = user;
+        this.token = token;
+        this.session = session;
+        this.userId = userId;
+    }
 
-  public String getToken() {
-    return token;
-  }
+    public String getToken() {
+        return token;
+    }
 
-  public void setToken(String token) {
-    this.token = token;
-  }
+    public void setToken(String token) {
+        this.token = token;
+    }
 
-  public WebSocketSession getSession() {
-    return session;
-  }
+    public WebSocketSession getSession() {
+        return session;
+    }
 
-  public void setSession(WebSocketSession session) {
-    this.session = session;
-  }
+    public void setSession(WebSocketSession session) {
+        this.session = session;
+    }
 
-  public String getUser() {
-    return user;
-  }
+    public String getUser() {
+        return user;
+    }
 
-  public void setUser(String user) {
-    this.user = user;
-  }
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-  public String getUserId() {
-    return userId;
-  }
+    public String getUserId() {
+        return userId;
+    }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
 }

@@ -38,118 +38,111 @@ import com.oner365.files.storage.IFileStorageClient;
 
 /**
  * 文件上传
- * 
+ *
  * @author zhaoyong
  */
 @RestController
 @RequestMapping("/storage")
 public class FileController extends BaseController {
-  
-  @Resource
-  private IFileStorageClient fileStorageClient;
 
-  @Resource
-  private IFileStorageService fileStorageService;
+    @Resource
+    private IFileStorageClient fileStorageClient;
 
-  /**
-   * 查询列表
-   *
-   * @param data 查询参数
-   * @return PageInfo<SysFileStorage>
-   */
-  @PostMapping("/list")
-  public PageInfo<SysFileStorageDto> pageList(@RequestBody QueryCriteriaBean data) {
-    return fileStorageService.pageList(data);
-  }
-  
-  /**
-   * 文件上传
-   * 
-   * @param file    MultipartFile
-   * @param dictory 目录
-   * @return String
-   */
-  @PostMapping("/upload")
-  public String uploadMultipartFile(@RequestBody MultipartFile file,
-      @RequestParam(required = false) String dictory) {
-    String targetDictory = dictory;
-    if (DataUtils.isEmpty(targetDictory)) {
-      targetDictory = DateUtil.getCurrentDate();
-    }
-    return fileStorageClient.uploadFile(file, targetDictory);
-  }
+    @Resource
+    private IFileStorageService fileStorageService;
 
-  /**
-   * 文件下载
-   * 
-   * @param fileUrl  url 开头从组名开始
-   * @param filename 文件名称
-   * @param response HttpServletResponse
-   */
-  @GetMapping("/download")
-  public void download(@RequestParam String fileUrl, String filename, HttpServletResponse response) {
-    byte[] data = fileStorageClient.download(fileUrl);
-    if (data == null) {
-      response.setStatus(HttpStatus.SC_NOT_FOUND);
-      return;
-    }
-    if (DataUtils.isEmpty(filename)) {
-      filename = StringUtils.substringAfterLast(fileUrl, PublicConstants.DELIMITER);
+    /**
+     * 查询列表
+     * @param data 查询参数
+     * @return PageInfo<SysFileStorage>
+     */
+    @PostMapping("/list")
+    public PageInfo<SysFileStorageDto> pageList(@RequestBody QueryCriteriaBean data) {
+        return fileStorageService.pageList(data);
     }
 
-    // 写出
-    try (ServletOutputStream outputStream = response.getOutputStream()) {
-      response.setCharacterEncoding(Charset.defaultCharset().name());
-      response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
-          "attachment;filename=" + URLEncoder.encode(filename, Charset.defaultCharset().name()));
-      IOUtils.write(data, outputStream);
-    } catch (IOException e) {
-      logger.error("download IOException:", e);
+    /**
+     * 文件上传
+     * @param file MultipartFile
+     * @param dictory 目录
+     * @return String
+     */
+    @PostMapping("/upload")
+    public String uploadMultipartFile(@RequestBody MultipartFile file, @RequestParam(required = false) String dictory) {
+        String targetDictory = dictory;
+        if (DataUtils.isEmpty(targetDictory)) {
+            targetDictory = DateUtil.getCurrentDate();
+        }
+        return fileStorageClient.uploadFile(file, targetDictory);
     }
 
-  }
+    /**
+     * 文件下载
+     * @param fileUrl url 开头从组名开始
+     * @param filename 文件名称
+     * @param response HttpServletResponse
+     */
+    @GetMapping("/download")
+    public void download(@RequestParam String fileUrl, String filename, HttpServletResponse response) {
+        byte[] data = fileStorageClient.download(fileUrl);
+        if (data == null) {
+            response.setStatus(HttpStatus.SC_NOT_FOUND);
+            return;
+        }
+        if (DataUtils.isEmpty(filename)) {
+            filename = StringUtils.substringAfterLast(fileUrl, PublicConstants.DELIMITER);
+        }
 
-  /**
-   * 文件下载地址
-   *
-   * @param path url 开头从组名开始
-   * @return 文件下载地址
-   */
-  @GetMapping("/path")
-  public String downloadPath(@RequestParam String path) {
-    return fileStorageClient.downloadPath(path);
-  }
+        // 写出
+        try (ServletOutputStream outputStream = response.getOutputStream()) {
+            response.setCharacterEncoding(Charset.defaultCharset().name());
+            response.setHeader(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment;filename=" + URLEncoder.encode(filename, Charset.defaultCharset().name()));
+            IOUtils.write(data, outputStream);
+        }
+        catch (IOException e) {
+            logger.error("download IOException:", e);
+        }
 
-  /**
-   * 删除文件
-   * 
-   * @param ids 文件地址
-   * @return List<Boolean>
-   */
-  @DeleteMapping("/delete")
-  public List<Boolean> delete(@RequestBody String... ids) {
-    return Arrays.stream(ids).map(id -> fileStorageClient.deleteFile(id)).collect(Collectors.toList());
-  }
+    }
 
-  /**
-   * 获取文件存储方式
-   * 
-   * @return StorageEnum
-   */
-  @GetMapping("/name")
-  public StorageEnum getStorageName() {
-    return fileStorageClient.getName();
-  }
-  
-  /**
-   * 获取文件信息
-   *
-   * @param id 主键
-   * @return SysFileStorageDto
-   */
-  @PostMapping("/info/{id}")
-  public SysFileStorageDto getFileInfo(@PathVariable String id) {
-    return fileStorageClient.getFile(id);
-  }
+    /**
+     * 文件下载地址
+     * @param path url 开头从组名开始
+     * @return 文件下载地址
+     */
+    @GetMapping("/path")
+    public String downloadPath(@RequestParam String path) {
+        return fileStorageClient.downloadPath(path);
+    }
+
+    /**
+     * 删除文件
+     * @param ids 文件地址
+     * @return List<Boolean>
+     */
+    @DeleteMapping("/delete")
+    public List<Boolean> delete(@RequestBody String... ids) {
+        return Arrays.stream(ids).map(id -> fileStorageClient.deleteFile(id)).collect(Collectors.toList());
+    }
+
+    /**
+     * 获取文件存储方式
+     * @return StorageEnum
+     */
+    @GetMapping("/name")
+    public StorageEnum getStorageName() {
+        return fileStorageClient.getName();
+    }
+
+    /**
+     * 获取文件信息
+     * @param id 主键
+     * @return SysFileStorageDto
+     */
+    @PostMapping("/info/{id}")
+    public SysFileStorageDto getFileInfo(@PathVariable String id) {
+        return fileStorageClient.getFile(id);
+    }
 
 }

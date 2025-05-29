@@ -16,25 +16,27 @@ import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry
 @EnableWebSocket
 public class WebSocketAutoConfig implements WebSocketConfigurer {
 
-  @Resource
-  private WebSocketHandler webSocketHandler;
+    @Resource
+    private WebSocketHandler webSocketHandler;
 
-  @Resource
-  private WebSocketInterceptor webSocketInterceptor;
+    @Resource
+    private WebSocketInterceptor webSocketInterceptor;
 
-  @Override
-  public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-    // webSocket通道
-    // 指定处理器和路径
-    registry.addHandler(webSocketHandler, "/websocket")
-        // 指定自定义拦截器
-        .addInterceptors(webSocketInterceptor)
-        // 允许跨域
-        .setAllowedOrigins("*");
-    // sockJs通道
-    registry.addHandler(webSocketHandler, "/sock-js").addInterceptors(webSocketInterceptor)
-        .setAllowedOrigins("*")
-        // 开启sockJs支持
-        .withSockJS();
-  }
+    @Override
+    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+        // webSocket通道
+        // 指定处理器和路径
+        registry.addHandler(webSocketHandler, "/websocket")
+            // 指定自定义拦截器
+            .addInterceptors(webSocketInterceptor)
+            // 允许跨域
+            .setAllowedOrigins("*");
+        // sockJs通道
+        registry.addHandler(webSocketHandler, "/sock-js")
+            .addInterceptors(webSocketInterceptor)
+            .setAllowedOrigins("*")
+            // 开启sockJs支持
+            .withSockJS();
+    }
+
 }

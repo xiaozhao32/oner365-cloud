@@ -155,4 +155,5 @@ public class SysUserJob implements Serializable {
     public String toString() {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
+
 }

@@ -13,16 +13,17 @@ import com.oner365.sys.entity.SysMenuOper;
 
 /**
  * 菜单操作接口
+ *
  * @author zhaoyong
  */
-public interface ISysMenuOperDao extends JpaRepository<SysMenuOper, String>,JpaSpecificationExecutor<SysMenuOper>{
+public interface ISysMenuOperDao extends JpaRepository<SysMenuOper, String>, JpaSpecificationExecutor<SysMenuOper> {
 
     /**
      * 按菜单id查询操作列表
      * @param menuId 菜单编号
      * @return List
      */
-    @Query(value = "select operation_id from nt_sys_menu_oper  where menu_id=?1",nativeQuery=true)
+    @Query(value = "select operation_id from nt_sys_menu_oper  where menu_id=?1", nativeQuery = true)
     List<String> selectByMenuId(String menuId);
 
     /**
@@ -31,7 +32,7 @@ public interface ISysMenuOperDao extends JpaRepository<SysMenuOper, String>,JpaS
      */
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @Modifying(clearAutomatically = true)
-    @Query(value = "delete from nt_sys_menu_oper where menu_id=?1 ",nativeQuery = true)
+    @Query(value = "delete from nt_sys_menu_oper where menu_id=?1 ", nativeQuery = true)
     void deleteByMenuId(String menuId);
 
     /**
@@ -40,6 +41,7 @@ public interface ISysMenuOperDao extends JpaRepository<SysMenuOper, String>,JpaS
      */
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @Modifying(clearAutomatically = true)
-    @Query(value = "delete from nt_sys_menu_oper where operation_id=?1 ",nativeQuery = true)
+    @Query(value = "delete from nt_sys_menu_oper where operation_id=?1 ", nativeQuery = true)
     void deleteByOperationId(String operationId);
+
 }

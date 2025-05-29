@@ -37,63 +37,59 @@ import com.oner365.elasticsearch.vo.SampleGeneVo;
 @RequestMapping("/sample/gene")
 public class SampleGeneController extends BaseController {
 
-  @Resource
-  private ISampleGeneElasticsearchService service;
+    @Resource
+    private ISampleGeneElasticsearchService service;
 
-  /**
-   * 列表
-   *
-   * @param data 查询条件参数
-   * @return Page<SampleGeneDto>
-   */
-  @PostMapping("/list")
-  public PageInfo<SampleGeneDto> pageList(@RequestBody QueryCriteriaBean data) {
-    return service.pageList(data);
-  }
-
-  /**
-   * id查询
-   *
-   * @param id 编号
-   * @return SampleGeneDto
-   */
-  @GetMapping("/get/{id}")
-  public SampleGeneDto get(@PathVariable String id) {
-    SampleGeneDto sampleGene = service.findById(id);
-    if (sampleGene != null && !DataUtils.isEmpty(sampleGene.getGeneInfo())) {
-      // 基因型格式转换
-      sampleGene.setGeneList(GeneTransFormUtils.geneFormatList(sampleGene.getGeneInfo().toJSONString()));
+    /**
+     * 列表
+     * @param data 查询条件参数
+     * @return Page<SampleGeneDto>
+     */
+    @PostMapping("/list")
+    public PageInfo<SampleGeneDto> pageList(@RequestBody QueryCriteriaBean data) {
+        return service.pageList(data);
     }
-    return sampleGene;
-  }
 
-  /**
-   * 保存
-   *
-   * @param sampleGeneVo 基因对象
-   * @return SampleGeneDto
-   */
-  @PutMapping("/save")
-  public SampleGeneDto save(@RequestBody SampleGeneVo sampleGeneVo) {
-    if (!sampleGeneVo.getGeneList().isEmpty()) {
-      // 基因型格式转换
-      String jsonArray = JSON.toJSONString(sampleGeneVo.getGeneList());
-      sampleGeneVo.setGeneInfo(GeneTransFormUtils.geneFormatString(jsonArray));
-      String s = GeneTransFormUtils.geneTrimString(sampleGeneVo.getGeneInfo().toJSONString());
-      sampleGeneVo.setMatchJson(JSON.parseObject(s));
+    /**
+     * id查询
+     * @param id 编号
+     * @return SampleGeneDto
+     */
+    @GetMapping("/get/{id}")
+    public SampleGeneDto get(@PathVariable String id) {
+        SampleGeneDto sampleGene = service.findById(id);
+        if (sampleGene != null && !DataUtils.isEmpty(sampleGene.getGeneInfo())) {
+            // 基因型格式转换
+            sampleGene.setGeneList(GeneTransFormUtils.geneFormatList(sampleGene.getGeneInfo().toJSONString()));
+        }
+        return sampleGene;
     }
-    return service.save(sampleGeneVo);
-  }
 
-  /**
-   * 删除
-   *
-   * @param ids 编号
-   * @return List<Boolean>
-   */
-  @DeleteMapping("/delete")
-  public List<Boolean> delete(@RequestBody String... ids) {
-    return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
-  }
+    /**
+     * 保存
+     * @param sampleGeneVo 基因对象
+     * @return SampleGeneDto
+     */
+    @PutMapping("/save")
+    public SampleGeneDto save(@RequestBody SampleGeneVo sampleGeneVo) {
+        if (!sampleGeneVo.getGeneList().isEmpty()) {
+            // 基因型格式转换
+            String jsonArray = JSON.toJSONString(sampleGeneVo.getGeneList());
+            sampleGeneVo.setGeneInfo(GeneTransFormUtils.geneFormatString(jsonArray));
+            String s = GeneTransFormUtils.geneTrimString(sampleGeneVo.getGeneInfo().toJSONString());
+            sampleGeneVo.setMatchJson(JSON.parseObject(s));
+        }
+        return service.save(sampleGeneVo);
+    }
+
+    /**
+     * 删除
+     * @param ids 编号
+     * @return List<Boolean>
+     */
+    @DeleteMapping("/delete")
+    public List<Boolean> delete(@RequestBody String... ids) {
+        return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
+    }
 
 }

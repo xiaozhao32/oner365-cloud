@@ -35,86 +35,80 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/system/log")
 @Api(tags = "系统管理 - 日志")
 public class SysLogController {
-  
-  @Resource
-  private ISystemLogClient client;
-  
-  /**
-   * 列表
-   *
-   * @param data 查询参数
-   * @return ResponseData<PageInfo<SysLogDto>>
-   */
-  @ApiOperation("1.获取列表")
-  @ApiOperationSupport(order = 1)
-  @PostMapping("/list")
-  public ResponseData<PageInfo<SysLogDto>> list(@RequestBody QueryCriteriaBean data) {
-    return client.list(data);
-  }
-  
-  /**
-   * 获取信息
-   *
-   * @param id 编号
-   * @return ResponseData<SysLogDto>
-   */
-  @ApiOperation("2.按id查询")
-  @ApiOperationSupport(order = 2)
-  @GetMapping("/get/{id}")
-  public ResponseData<SysLogDto> get(@PathVariable String id) {
-    return client.getById(id);
-  }
-  
-  /**
-   * 保存
-   *
-   * @param sysLogVo 菜单类型对象
-   * @return ResponseData<Boolean>
-   */
-  @ApiOperation("3.保存")
-  @ApiOperationSupport(order = 3)
-  @PutMapping("/save")
-  public ResponseData<Boolean> save(@RequestBody SysLogVo sysLogVo) {
-    return client.save(sysLogVo);
-  }
-  
-  /**
-   * 删除
-   *
-   * @param ids 编号
-   * @return ResponseData<List<Boolean>>
-   */
-  @ApiOperation("4.删除")
-  @ApiOperationSupport(order = 4)
-  @DeleteMapping("/delete")
-  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
-    return client.delete(ids);
-  }
-  
-  /**
-   * 按日期删除日志
-   *
-   * @param days 天数
-   * @return ResponseData<Boolean>
-   */
-  @ApiOperation("5.删除日志")
-  @ApiOperationSupport(order = 5)
-  @DeleteMapping("/days/delete")
-  public ResponseData<Boolean> deleteLog(@RequestParam Integer days) {
-    return client.deleteDays(days);
-  }
-  
-  /**
-   * 导出日志
-   *
-   * @param data 查询参数
-   * @return ResponseEntity<byte[]>
-   */
-  @ApiOperation("6.导出")
-  @ApiOperationSupport(order = 6)
-  @PostMapping("/export")
-  public ResponseEntity<byte[]> exportItem(@RequestBody QueryCriteriaBean data) {
-    return client.export(data);
-  }
+
+    @Resource
+    private ISystemLogClient client;
+
+    /**
+     * 列表
+     * @param data 查询参数
+     * @return ResponseData<PageInfo<SysLogDto>>
+     */
+    @ApiOperation("1.获取列表")
+    @ApiOperationSupport(order = 1)
+    @PostMapping("/list")
+    public ResponseData<PageInfo<SysLogDto>> list(@RequestBody QueryCriteriaBean data) {
+        return client.list(data);
+    }
+
+    /**
+     * 获取信息
+     * @param id 编号
+     * @return ResponseData<SysLogDto>
+     */
+    @ApiOperation("2.按id查询")
+    @ApiOperationSupport(order = 2)
+    @GetMapping("/get/{id}")
+    public ResponseData<SysLogDto> get(@PathVariable String id) {
+        return client.getById(id);
+    }
+
+    /**
+     * 保存
+     * @param sysLogVo 菜单类型对象
+     * @return ResponseData<Boolean>
+     */
+    @ApiOperation("3.保存")
+    @ApiOperationSupport(order = 3)
+    @PutMapping("/save")
+    public ResponseData<Boolean> save(@RequestBody SysLogVo sysLogVo) {
+        return client.save(sysLogVo);
+    }
+
+    /**
+     * 删除
+     * @param ids 编号
+     * @return ResponseData<List<Boolean>>
+     */
+    @ApiOperation("4.删除")
+    @ApiOperationSupport(order = 4)
+    @DeleteMapping("/delete")
+    public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
+        return client.delete(ids);
+    }
+
+    /**
+     * 按日期删除日志
+     * @param days 天数
+     * @return ResponseData<Boolean>
+     */
+    @ApiOperation("5.删除日志")
+    @ApiOperationSupport(order = 5)
+    @DeleteMapping("/days/delete")
+    public ResponseData<Boolean> deleteLog(@RequestParam Integer days) {
+        return client.deleteDays(days);
+    }
+
+    /**
+     * 导出日志
+     * @param data 查询参数
+     * @return ResponseEntity<byte[]>
+     */
+    @ApiOperation("6.导出")
+    @ApiOperationSupport(order = 6)
+    @PostMapping("/export")
+    public ResponseEntity<byte[]> exportItem(@RequestBody QueryCriteriaBean data) {
+        return client.export(data);
+    }
 
 }

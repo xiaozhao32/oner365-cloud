@@ -21,21 +21,21 @@ import com.oner365.monitor.rabbitmq.IScheduleSendTaskService;
 @Service
 public class ScheduleSendTaskServiceImpl implements IScheduleSendTaskService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleSendTaskServiceImpl.class);
-  
-  @Resource
-  private RedisCache redisCache;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleSendTaskServiceImpl.class);
 
-  @Resource
-  private AmqpTemplate rabbitTemplate;
+    @Resource
+    private RedisCache redisCache;
 
-  @Override
-  public void pullTask(InvokeParamDto invokeParamDto) {
-    if (redisCache.lock(ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_NAME, PublicConstants.QUEUE_LOCK_TIME_SECOND)) {
-      LOGGER.info("MQ push: {}", invokeParamDto);
-      rabbitTemplate.convertAndSend(ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_TYPE,
-          ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_KEY, invokeParamDto);
+    @Resource
+    private AmqpTemplate rabbitTemplate;
+
+    @Override
+    public void pullTask(InvokeParamDto invokeParamDto) {
+        if (redisCache.lock(ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_NAME, PublicConstants.QUEUE_LOCK_TIME_SECOND)) {
+            LOGGER.info("MQ push: {}", invokeParamDto);
+            rabbitTemplate.convertAndSend(ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_TYPE,
+                    ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_KEY, invokeParamDto);
+        }
     }
-  }
 
 }

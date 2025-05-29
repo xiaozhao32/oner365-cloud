@@ -6,6 +6,7 @@ import java.util.List;
 
 /**
  * Excel数据对象
+ *
  * @author zhaoyong
  */
 public class ExcelData<T extends Serializable> implements Serializable {
@@ -26,12 +27,12 @@ public class ExcelData<T extends Serializable> implements Serializable {
      * 列表数据
      */
     private List<T> dataList = new ArrayList<>();
-    
+
     /***
      * 执行结果
      */
     private Integer code;
-    
+
     /***
      * 执行信息
      */
@@ -40,7 +41,7 @@ public class ExcelData<T extends Serializable> implements Serializable {
     /**
      * 构造方法
      */
-    public ExcelData(){
+    public ExcelData() {
         super();
     }
 
@@ -48,7 +49,7 @@ public class ExcelData<T extends Serializable> implements Serializable {
      * 构造方法
      * @param sheetName 名称
      */
-    public ExcelData(String sheetName){
+    public ExcelData(String sheetName) {
         this.sheetName = sheetName;
     }
 
@@ -98,43 +99,41 @@ public class ExcelData<T extends Serializable> implements Serializable {
      * @return the code
      */
     public Integer getCode() {
-      return code;
+        return code;
     }
 
     /**
      * @param code the code to set
      */
     public void setCode(Integer code) {
-      this.code = code;
+        this.code = code;
     }
 
     /**
      * @return the message
      */
     public String getMessage() {
-      return message;
+        return message;
     }
 
     /**
      * @param message the message to set
      */
     public void setMessage(String message) {
-      this.message = message;
+        this.message = message;
     }
-    
+
     /**
      * 返回错误结果
-     *
-     * @param code    编码
+     * @param code 编码
      * @param message 消息
      * @return ResponseData
      */
     public static <T extends Serializable> ExcelData<T> error(int code, String message) {
-      ExcelData<T> excelData = new ExcelData<>();
-      excelData.setCode(code);
-      excelData.setMessage(message);
-      return excelData;
+        ExcelData<T> excelData = new ExcelData<>();
+        excelData.setCode(code);
+        excelData.setMessage(message);
+        return excelData;
     }
-    
 
 }

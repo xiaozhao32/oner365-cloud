@@ -21,50 +21,50 @@ import com.oner365.data.web.controller.BaseController;
 
 /**
  * 接口测试
- * 
+ *
  * @author zhaoyong
  */
 @RestController
 @RequestMapping("/sharding")
 public class ShardingDatasourceController extends BaseController {
 
-  @Resource(name = "dataSource")
-  private DataSource shardingDataSource;
+    @Resource(name = "dataSource")
+    private DataSource shardingDataSource;
 
-  /**
-   * 测试分库分表
-   * 
-   * @param orderId 订单id
-   * @param userId  用户id
-   * @return List<Map<String, Object>>
-   */
-  @PostMapping("/save")
-  public List<Map<String, Object>> testDataSource(Integer orderId, Integer userId) {
-    String sql = "insert into t_order(id, order_id, user_id, status, create_time) " + "values('"
-        + new SnowFlakeUtils(1L, 1L).nextId() + "'," + orderId + "," + userId + ",'"+StatusEnum.YES.ordinal()+"','" + DateUtil.getCurrentTime()
-        + "')";
-    try (Connection con = shardingDataSource.getConnection()) {
-      return DataSourceUtil.execute(con, sql);
-    } catch (Exception e) {
-      logger.error("shardingDataSource save error:", e);
+    /**
+     * 测试分库分表
+     * @param orderId 订单id
+     * @param userId 用户id
+     * @return List<Map<String, Object>>
+     */
+    @PostMapping("/save")
+    public List<Map<String, Object>> testDataSource(Integer orderId, Integer userId) {
+        String sql = "insert into t_order(id, order_id, user_id, status, create_time) " + "values('"
+                + new SnowFlakeUtils(1L, 1L).nextId() + "'," + orderId + "," + userId + ",'" + StatusEnum.YES.ordinal()
+                + "','" + DateUtil.getCurrentTime() + "')";
+        try (Connection con = shardingDataSource.getConnection()) {
+            return DataSourceUtil.execute(con, sql);
+        }
+        catch (Exception e) {
+            logger.error("shardingDataSource save error:", e);
+        }
+        return Collections.emptyList();
     }
-    return Collections.emptyList();
-  }
-  
-  /**
-   * 测试分库查询
-   * 
-   * @return List<Map<String, Object>>
-   */
-  @GetMapping("/list")
-  public List<Map<String, Object>> findList() {
-    String sql = "select * from t_order";
-    try (Connection con = shardingDataSource.getConnection()) {
-      return DataSourceUtil.execute(con, sql);
-    } catch (Exception e) {
-      logger.error("shardingDataSource list error:", e);
+
+    /**
+     * 测试分库查询
+     * @return List<Map<String, Object>>
+     */
+    @GetMapping("/list")
+    public List<Map<String, Object>> findList() {
+        String sql = "select * from t_order";
+        try (Connection con = shardingDataSource.getConnection()) {
+            return DataSourceUtil.execute(con, sql);
+        }
+        catch (Exception e) {
+            logger.error("shardingDataSource list error:", e);
+        }
+        return Collections.emptyList();
     }
-    return Collections.emptyList();
-  }
 
 }

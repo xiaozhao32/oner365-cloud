@@ -13,24 +13,24 @@ import com.oner365.statemachine.enums.OrderStateEnum;
 
 /**
  * 状态机 - Guard
- * 
+ *
  * @author zhaoyong
  *
  */
 @Service
 public class OrderCheckGuard implements Guard<OrderStateEnum, OrderEventEnum> {
 
-  private final Logger logger = LoggerFactory.getLogger(OrderCheckGuard.class);
+    private final Logger logger = LoggerFactory.getLogger(OrderCheckGuard.class);
 
-  @Override
-  public boolean evaluate(StateContext<OrderStateEnum, OrderEventEnum> context) {
-    // 检查订单
-    Order order = (Order) context.getMessage().getHeaders().get(StatemachineConstants.HEADER_NAME);
-    if (order != null) {
-      logger.info("检查订单 id: {}, state: {}", order.getId(), order.getOrderState());
-      return true;
+    @Override
+    public boolean evaluate(StateContext<OrderStateEnum, OrderEventEnum> context) {
+        // 检查订单
+        Order order = (Order) context.getMessage().getHeaders().get(StatemachineConstants.HEADER_NAME);
+        if (order != null) {
+            logger.info("检查订单 id: {}, state: {}", order.getId(), order.getOrderState());
+            return true;
+        }
+        return false;
     }
-    return false;
-  }
 
 }

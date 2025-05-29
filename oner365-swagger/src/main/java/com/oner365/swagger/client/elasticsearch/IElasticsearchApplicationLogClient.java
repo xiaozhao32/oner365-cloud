@@ -17,37 +17,36 @@ import com.oner365.swagger.dto.ApplicationLogDto;
 
 /**
  * Elasticsearch服务 - 应用日志
- * 
+ *
  * @author zhaoyong
  *
  */
-@FeignClient(value = PathConstants.FEIGN_CLIENT_ELASTICSEARCH, contextId = PathConstants.CONTEXT_ELASTICSEARCH_APPLICATION_LOG_ID)
+@FeignClient(value = PathConstants.FEIGN_CLIENT_ELASTICSEARCH,
+        contextId = PathConstants.CONTEXT_ELASTICSEARCH_APPLICATION_LOG_ID)
 public interface IElasticsearchApplicationLogClient {
 
-  /**
-   * 列表
-   * 
-   * @param data 查询条件
-   * @return ResponseData<PageInfo<ApplicationLogDto>>
-   */
-  @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_APPLICATION_LOG_LIST)
-  ResponseData<PageInfo<ApplicationLogDto>> list(@RequestBody QueryCriteriaBean data);
+    /**
+     * 列表
+     * @param data 查询条件
+     * @return ResponseData<PageInfo<ApplicationLogDto>>
+     */
+    @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_APPLICATION_LOG_LIST)
+    ResponseData<PageInfo<ApplicationLogDto>> list(@RequestBody QueryCriteriaBean data);
 
-  /**
-   * id查询
-   * 
-   * @param id 主键
-   * @return ResponseData<ApplicationLogDto>
-   */
-  @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_APPLICATION_LOG_GET_ID)
-  ResponseData<ApplicationLogDto> get(@PathVariable String id);
+    /**
+     * id查询
+     * @param id 主键
+     * @return ResponseData<ApplicationLogDto>
+     */
+    @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_APPLICATION_LOG_GET_ID)
+    ResponseData<ApplicationLogDto> get(@PathVariable String id);
 
-  /**
-   * 删除
-   * 
-   * @param ids 主键
-   * @return ResponseData<List<Boolean>>
-   */
-  @DeleteMapping(PathConstants.REQUEST_ELASTICSEARCH_APPLICATION_LOG_DELETE)
-  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+    /**
+     * 删除
+     * @param ids 主键
+     * @return ResponseData<List<Boolean>>
+     */
+    @DeleteMapping(PathConstants.REQUEST_ELASTICSEARCH_APPLICATION_LOG_DELETE)
+    ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+
 }

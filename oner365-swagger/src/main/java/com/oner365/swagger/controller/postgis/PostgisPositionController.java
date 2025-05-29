@@ -32,56 +32,53 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/postgis/position")
 public class PostgisPositionController {
 
-  @Resource
-  private IPostgisPositionClient client;
+    @Resource
+    private IPostgisPositionClient client;
 
-  /**
-   * 集合列表
-   * 
-   * @return 集合
-   */
-  @ApiOperation("1.集合列表")
-  @ApiOperationSupport(order = 1)
-  @GetMapping("/list")
-  public ResponseData<List<PositionDto>> findList() {
-    return client.findList();
-  }
+    /**
+     * 集合列表
+     * @return 集合
+     */
+    @ApiOperation("1.集合列表")
+    @ApiOperationSupport(order = 1)
+    @GetMapping("/list")
+    public ResponseData<List<PositionDto>> findList() {
+        return client.findList();
+    }
 
-  /**
-   * 保存
-   * 
-   * @return ResponseData
-   */
-  @ApiOperation("2.保存")
-  @ApiOperationSupport(order = 2)
-  @PutMapping("/save")
-  public ResponseData<PositionDto> save(@RequestBody PositionVo vo) {
-    return client.save(vo);
-  }
+    /**
+     * 保存
+     * @return ResponseData
+     */
+    @ApiOperation("2.保存")
+    @ApiOperationSupport(order = 2)
+    @PutMapping("/save")
+    public ResponseData<PositionDto> save(@RequestBody PositionVo vo) {
+        return client.save(vo);
+    }
 
-  /**
-   * 按主键查询
-   * 
-   * @param id 主键
-   * @return ResponseData
-   */
-  @ApiOperation("3.主键查询")
-  @ApiOperationSupport(order = 3)
-  @GetMapping("/get/{id}")
-  public ResponseData<PositionDto> get(@PathVariable String id) {
-    return client.get(id);
-  }
+    /**
+     * 按主键查询
+     * @param id 主键
+     * @return ResponseData
+     */
+    @ApiOperation("3.主键查询")
+    @ApiOperationSupport(order = 3)
+    @GetMapping("/get/{id}")
+    public ResponseData<PositionDto> get(@PathVariable String id) {
+        return client.get(id);
+    }
 
-  /**
-   * 删除
-   * 
-   * @param ids 编号
-   * @return ResponseData<List<Boolean>>
-   */
-  @ApiOperation("4.删除")
-  @ApiOperationSupport(order = 4)
-  @DeleteMapping("/delete")
-  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
-    return client.delete(ids);
-  }
+    /**
+     * 删除
+     * @param ids 编号
+     * @return ResponseData<List<Boolean>>
+     */
+    @ApiOperation("4.删除")
+    @ApiOperationSupport(order = 4)
+    @DeleteMapping("/delete")
+    public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
+        return client.delete(ids);
+    }
+
 }

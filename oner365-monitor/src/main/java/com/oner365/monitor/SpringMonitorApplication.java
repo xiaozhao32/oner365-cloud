@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 监控服务
+ *
  * @author zhaoyong
  */
 @SpringBootApplication

@@ -5,27 +5,28 @@ import java.util.List;
 
 /**
  * LineString
- * 
+ *
  * @author zhaoyong
  */
 public class LineStringVo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * Point List
-   */
-  private List<PointVo> points;
-  
-  public LineStringVo() {
-    super();
-  }
+    /**
+     * Point List
+     */
+    private List<PointVo> points;
 
-  public List<PointVo> getPoints() {
-    return points;
-  }
+    public LineStringVo() {
+        super();
+    }
 
-  public void setPoints(List<PointVo> points) {
-    this.points = points;
-  }
+    public List<PointVo> getPoints() {
+        return points;
+    }
+
+    public void setPoints(List<PointVo> points) {
+        this.points = points;
+    }
+
 }

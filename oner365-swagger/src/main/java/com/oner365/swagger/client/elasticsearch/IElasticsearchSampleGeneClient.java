@@ -19,46 +19,44 @@ import com.oner365.swagger.vo.SampleGeneVo;
 
 /**
  * Elasticsearch服务 - 信息
- * 
+ *
  * @author zhaoyong
  *
  */
-@FeignClient(value = PathConstants.FEIGN_CLIENT_ELASTICSEARCH, contextId = PathConstants.CONTEXT_ELASTICSEARCH_SAMPLE_GENE_ID)
+@FeignClient(value = PathConstants.FEIGN_CLIENT_ELASTICSEARCH,
+        contextId = PathConstants.CONTEXT_ELASTICSEARCH_SAMPLE_GENE_ID)
 public interface IElasticsearchSampleGeneClient {
 
-  /**
-   * 列表
-   * 
-   * @param data 查询条件
-   * @return ResponseData<PageInfo<SampleGeneDto>>
-   */
-  @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_LIST)
-  ResponseData<PageInfo<SampleGeneDto>> list(@RequestBody QueryCriteriaBean data);
+    /**
+     * 列表
+     * @param data 查询条件
+     * @return ResponseData<PageInfo<SampleGeneDto>>
+     */
+    @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_LIST)
+    ResponseData<PageInfo<SampleGeneDto>> list(@RequestBody QueryCriteriaBean data);
 
-  /**
-   * id查询
-   * 
-   * @param id 主键
-   * @return ResponseData<SampleGeneDto>
-   */
-  @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_GET_ID)
-  ResponseData<SampleGeneDto> get(@PathVariable String id);
+    /**
+     * id查询
+     * @param id 主键
+     * @return ResponseData<SampleGeneDto>
+     */
+    @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_GET_ID)
+    ResponseData<SampleGeneDto> get(@PathVariable String id);
 
-  /**
-   * 保存
-   *
-   * @param sampleGeneVo 基因对象
-   * @return ResponseData<SampleGeneDto>
-   */
-  @PutMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_SAVE)
-  ResponseData<SampleGeneDto> save(@RequestBody SampleGeneVo sampleGeneVo);
+    /**
+     * 保存
+     * @param sampleGeneVo 基因对象
+     * @return ResponseData<SampleGeneDto>
+     */
+    @PutMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_SAVE)
+    ResponseData<SampleGeneDto> save(@RequestBody SampleGeneVo sampleGeneVo);
 
-  /**
-   * 删除
-   * 
-   * @param ids 主键
-   * @return ResponseData<List<Boolean>>
-   */
-  @DeleteMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_DELETE)
-  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+    /**
+     * 删除
+     * @param ids 主键
+     * @return ResponseData<List<Boolean>>
+     */
+    @DeleteMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_DELETE)
+    ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+
 }

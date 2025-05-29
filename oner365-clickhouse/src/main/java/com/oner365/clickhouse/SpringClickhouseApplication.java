@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Clickhouse 服务
- * 
+ *
  * @author zhaoyong
  */
 @SpringBootApplication
@@ -17,7 +17,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({ "com.oner365" })
 public class SpringClickhouseApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SpringClickhouseApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SpringClickhouseApplication.class, args);
+    }
+
 }

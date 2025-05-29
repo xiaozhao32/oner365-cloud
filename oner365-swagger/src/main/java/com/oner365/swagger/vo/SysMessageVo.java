@@ -15,6 +15,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 消息对象
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "系统消息")
@@ -79,7 +80,7 @@ public class SysMessageVo implements Serializable {
      */
     @ApiModelProperty(value = "接收者")
     private String receiveUser;
-    
+
     /**
      * 状态
      */
@@ -258,21 +259,21 @@ public class SysMessageVo implements Serializable {
     public void setUpdateTime(LocalDateTime updateTime) {
         this.updateTime = updateTime;
     }
-    
+
     /**
      * @return the status
      */
     public MessageStatusEnum getStatus() {
-      return status;
+        return status;
     }
 
     /**
      * @param status the status to set
      */
     public void setStatus(MessageStatusEnum status) {
-      this.status = status;
+        this.status = status;
     }
-    
+
     /**
      * toString Method
      */

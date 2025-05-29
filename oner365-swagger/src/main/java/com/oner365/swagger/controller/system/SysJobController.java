@@ -38,85 +38,80 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/system/job")
 public class SysJobController {
 
-  @Resource
-  private ISystemJobClient client;
+    @Resource
+    private ISystemJobClient client;
 
-  /**
-   * 用户职位列表
-   *
-   * @param data 查询参数
-   * @return ResponseData<Page<SysJobDto>>
-   */
-  @ApiOperation("1.获取列表")
-  @ApiOperationSupport(order = 1)
-  @PostMapping("/list")
-  public ResponseData<PageInfo<SysJobDto>> list(@RequestBody QueryCriteriaBean data) {
-    return client.list(data);
-  }
+    /**
+     * 用户职位列表
+     * @param data 查询参数
+     * @return ResponseData<Page<SysJobDto>>
+     */
+    @ApiOperation("1.获取列表")
+    @ApiOperationSupport(order = 1)
+    @PostMapping("/list")
+    public ResponseData<PageInfo<SysJobDto>> list(@RequestBody QueryCriteriaBean data) {
+        return client.list(data);
+    }
 
-  /**
-   * 获取用户职位
-   *
-   * @param id 编号
-   * @return ResponseData<SysJobDto>
-   */
-  @ApiOperation("2.按id查询")
-  @ApiOperationSupport(order = 2)
-  @GetMapping("/get/{id}")
-  public ResponseData<SysJobDto> get(@PathVariable String id) {
-    return client.getById(id);
-  }
+    /**
+     * 获取用户职位
+     * @param id 编号
+     * @return ResponseData<SysJobDto>
+     */
+    @ApiOperation("2.按id查询")
+    @ApiOperationSupport(order = 2)
+    @GetMapping("/get/{id}")
+    public ResponseData<SysJobDto> get(@PathVariable String id) {
+        return client.getById(id);
+    }
 
-  /**
-   * 修改职位状态
-   *
-   * @param id     主键
-   * @param status 状态
-   * @return ResponseData<Boolean>
-   */
-  @ApiOperation("3.修改状态")
-  @ApiOperationSupport(order = 3)
-  @PostMapping("/status/{id}")
-  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
-    return client.editStatus(id, status);
-  }
+    /**
+     * 修改职位状态
+     * @param id 主键
+     * @param status 状态
+     * @return ResponseData<Boolean>
+     */
+    @ApiOperation("3.修改状态")
+    @ApiOperationSupport(order = 3)
+    @PostMapping("/status/{id}")
+    public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
+        return client.editStatus(id, status);
+    }
 
-  /**
-   * 用户职位保存
-   *
-   * @param sysJobVo 职位对象
-   * @return ResponseData<SysJobDto>
-   */
-  @ApiOperation("4.保存")
-  @ApiOperationSupport(order = 4)
-  @PutMapping("/save")
-  public ResponseData<SysJobDto> save(@RequestBody SysJobVo sysJobVo) {
-    return client.save(sysJobVo);
-  }
+    /**
+     * 用户职位保存
+     * @param sysJobVo 职位对象
+     * @return ResponseData<SysJobDto>
+     */
+    @ApiOperation("4.保存")
+    @ApiOperationSupport(order = 4)
+    @PutMapping("/save")
+    public ResponseData<SysJobDto> save(@RequestBody SysJobVo sysJobVo) {
+        return client.save(sysJobVo);
+    }
 
-  /**
-   * 删除用户职位
-   *
-   * @param ids 编号
-   * @return ResponseData<List<Boolean>>
-   */
-  @ApiOperation("5.删除")
-  @ApiOperationSupport(order = 5)
-  @DeleteMapping("/delete")
-  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
-    return client.deleteById(ids);
-  }
+    /**
+     * 删除用户职位
+     * @param ids 编号
+     * @return ResponseData<List<Boolean>>
+     */
+    @ApiOperation("5.删除")
+    @ApiOperationSupport(order = 5)
+    @DeleteMapping("/delete")
+    public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
+        return client.deleteById(ids);
+    }
 
-  /**
-   * 导出Excel
-   *
-   * @param data 查询参数
-   * @return ResponseEntity<byte[]>
-   */
-  @ApiOperation("6.导出")
-  @ApiOperationSupport(order = 6)
-  @PostMapping("/export")
-  public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data, HttpServletResponse response) {
-    return client.export(data);
-  }
+    /**
+     * 导出Excel
+     * @param data 查询参数
+     * @return ResponseEntity<byte[]>
+     */
+    @ApiOperation("6.导出")
+    @ApiOperationSupport(order = 6)
+    @PostMapping("/export")
+    public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data, HttpServletResponse response) {
+        return client.export(data);
+    }
+
 }

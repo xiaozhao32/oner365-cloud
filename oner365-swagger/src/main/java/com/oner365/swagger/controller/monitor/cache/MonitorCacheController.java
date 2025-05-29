@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * 系统监控 - 缓存管理
- * 
+ *
  * @author zhaoyong
  */
 @RestController
@@ -27,43 +27,41 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/monitor/cache")
 public class MonitorCacheController {
 
-  @Resource
-  private IMonitorCacheClient client;
+    @Resource
+    private IMonitorCacheClient client;
 
-  /**
-   * 缓存信息
-   * 
-   * @return ResponseData<CacheInfoDto>
-   */
-  @ApiOperation("1.首页")
-  @ApiOperationSupport(order = 1)
-  @GetMapping("/index")
-  public ResponseData<CacheInfoDto> index() {
-    return client.index();
-  }
+    /**
+     * 缓存信息
+     * @return ResponseData<CacheInfoDto>
+     */
+    @ApiOperation("1.首页")
+    @ApiOperationSupport(order = 1)
+    @GetMapping("/index")
+    public ResponseData<CacheInfoDto> index() {
+        return client.index();
+    }
 
-  /**
-   * 缓存列表
-   * 
-   * @return ResponseData<List<CacheJedisInfoDto>>
-   */
-  @ApiOperation("2.缓存列表")
-  @ApiOperationSupport(order = 2)
-  @GetMapping("/list")
-  public ResponseData<List<CacheJedisInfoDto>> cacheList() {
-    return client.list();
-  }
+    /**
+     * 缓存列表
+     * @return ResponseData<List<CacheJedisInfoDto>>
+     */
+    @ApiOperation("2.缓存列表")
+    @ApiOperationSupport(order = 2)
+    @GetMapping("/list")
+    public ResponseData<List<CacheJedisInfoDto>> cacheList() {
+        return client.list();
+    }
 
-  /**
-   * 清理缓存
-   * 
-   * @param index db
-   * @return ResponseData<String>
-   */
-  @ApiOperation("3.清除缓存")
-  @ApiOperationSupport(order = 3)
-  @GetMapping("/clean")
-  public ResponseData<String> clean(int index) {
-    return client.clean(index);
-  }
+    /**
+     * 清理缓存
+     * @param index db
+     * @return ResponseData<String>
+     */
+    @ApiOperation("3.清除缓存")
+    @ApiOperationSupport(order = 3)
+    @GetMapping("/clean")
+    public ResponseData<String> clean(int index) {
+        return client.clean(index);
+    }
+
 }

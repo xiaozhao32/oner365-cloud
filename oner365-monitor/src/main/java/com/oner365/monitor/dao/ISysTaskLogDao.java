@@ -11,9 +11,10 @@ import com.oner365.monitor.entity.SysTaskLog;
 
 /**
  * 任务日志接口
+ *
  * @author zhaoyong
  */
-public interface ISysTaskLogDao extends JpaRepository<SysTaskLog, String>,JpaSpecificationExecutor<SysTaskLog>{
+public interface ISysTaskLogDao extends JpaRepository<SysTaskLog, String>, JpaSpecificationExecutor<SysTaskLog> {
 
     /**
      * 删除任务日志
@@ -21,6 +22,7 @@ public interface ISysTaskLogDao extends JpaRepository<SysTaskLog, String>,JpaSpe
      */
     @Transactional(propagation = Propagation.REQUIRED, rollbackFor = Exception.class)
     @Modifying(clearAutomatically = true)
-    @Query(value = "delete from nt_sys_task_log where create_time < ?1 ",nativeQuery = true)
+    @Query(value = "delete from nt_sys_task_log where create_time < ?1 ", nativeQuery = true)
     void deleteTaskLogByCreateTime(String time);
+
 }

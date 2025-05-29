@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 生成框架服务
+ *
  * @author zhaoyong
  */
 @SpringBootApplication
@@ -21,5 +22,5 @@ public class SpringGeneratorApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringGeneratorApplication.class, args);
     }
-    
+
 }

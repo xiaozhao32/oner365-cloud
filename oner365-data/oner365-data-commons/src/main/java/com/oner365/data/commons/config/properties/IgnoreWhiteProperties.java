@@ -8,18 +8,18 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 白名单配置
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 @ConfigurationProperties(prefix = "ignore")
 public class IgnoreWhiteProperties {
-    
+
     /**
      * 不校验列表
      */
     private List<String> whites = new ArrayList<>();
-    
+
     /**
      * 构造方法
      */

@@ -12,11 +12,12 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Treeselect树结构实体类
- * 
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "结构树信息")
 public class TreeSelect implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /** 节点ID */
@@ -35,7 +36,7 @@ public class TreeSelect implements Serializable {
     public TreeSelect() {
 
     }
-    
+
     public TreeSelect(SysOrganizationDto organization) {
         this.id = organization.getId();
         this.label = organization.getOrgName();
@@ -75,4 +76,5 @@ public class TreeSelect implements Serializable {
     public void setChildren(List<TreeSelect> children) {
         this.children = children;
     }
+
 }

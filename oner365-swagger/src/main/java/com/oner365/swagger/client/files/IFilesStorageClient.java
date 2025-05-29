@@ -12,30 +12,28 @@ import com.oner365.swagger.constants.PathConstants;
 
 /**
  * 文件服务 - 存储
- * 
+ *
  * @author zhaoyong
  *
  */
 @FeignClient(value = PathConstants.FEIGN_CLIENT_FILES, contextId = PathConstants.CONTEXT_FILES_STORAGE_ID)
 public interface IFilesStorageClient {
 
-  /**
-   * 文件上传
-   * 
-   * @param file 文件
-   * @param dictory 上传目录
-   * @return ResponseData<String>
-   */
-  @PostMapping(value = PathConstants.REQUEST_FILES_STORAGE_UPLOAD, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-  String upload(@RequestPart("file") MultipartFile file,
-      @RequestParam(required = false) String dictory);
-  
-  /**
-   * 文件流下载 如直接下载需访问文件地址
-   * 
-   * @param fileUrl 文件路径
-   * @return ResponseData<byte[]>
-   */
-  @GetMapping(PathConstants.REQUEST_FILES_STORAGE_DOWNLOAD_BYTE)
-  byte[] download(@RequestParam String fileUrl);
+    /**
+     * 文件上传
+     * @param file 文件
+     * @param dictory 上传目录
+     * @return ResponseData<String>
+     */
+    @PostMapping(value = PathConstants.REQUEST_FILES_STORAGE_UPLOAD, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    String upload(@RequestPart("file") MultipartFile file, @RequestParam(required = false) String dictory);
+
+    /**
+     * 文件流下载 如直接下载需访问文件地址
+     * @param fileUrl 文件路径
+     * @return ResponseData<byte[]>
+     */
+    @GetMapping(PathConstants.REQUEST_FILES_STORAGE_DOWNLOAD_BYTE)
+    byte[] download(@RequestParam String fileUrl);
+
 }

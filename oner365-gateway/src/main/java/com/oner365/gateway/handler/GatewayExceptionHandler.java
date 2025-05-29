@@ -33,6 +33,7 @@ import reactor.core.publisher.Mono;
 @Order(-1)
 @Configuration
 public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(GatewayExceptionHandler.class);
 
     @Override
@@ -47,15 +48,14 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
         LOGGER.error("[网关异常] 请求路径:{}, 异常信息:{}", request.getPath(), ex.getMessage());
         response.getHeaders().setContentType(MediaType.APPLICATION_JSON);
         response.setStatusCode(HttpStatus.OK);
-        
-        Map<String, Object> errorAttributes = setErrorAttribute(
-                request.getMethod(), request.getPath().value(), ex);
+
+        Map<String, Object> errorAttributes = setErrorAttribute(request.getMethod(), request.getPath().value(), ex);
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory bufferFactory = response.bufferFactory();
             return bufferFactory.wrap(JSON.toJSONBytes(errorAttributes));
         }));
     }
-    
+
     /**
      * 异常信息
      * @param method 方法名称
@@ -75,13 +75,16 @@ public class GatewayExceptionHandler implements ErrorWebExceptionHandler {
             result.put(PublicConstants.CODE, HttpStatus.INTERNAL_SERVER_ERROR.value());
             String errorMessage = GatewayErrorEnum.getDescription(ex.getMessage());
             result.put(PublicConstants.MESSAGE, String.format("【%s】服务异常!", errorMessage));
-        } else if (ex instanceof ResponseStatusException) {
+        }
+        else if (ex instanceof ResponseStatusException) {
             result.put(PublicConstants.CODE, HttpStatus.NOT_FOUND.value());
             result.put(PublicConstants.MESSAGE, HttpStatus.NOT_FOUND.name());
-        } else {
+        }
+        else {
             result.put(PublicConstants.CODE, HttpStatus.SERVICE_UNAVAILABLE.value());
             result.put(PublicConstants.MESSAGE, HttpStatus.SERVICE_UNAVAILABLE.name());
         }
         return result;
     }
+
 }

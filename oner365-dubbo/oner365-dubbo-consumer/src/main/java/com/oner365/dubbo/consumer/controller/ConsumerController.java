@@ -9,18 +9,19 @@ import com.oner365.dubbo.api.service.IEchoService;
 
 /**
  * dubbo 消费者
- * 
+ *
  * @author zhaoyong
  */
 @RestController
 @RequestMapping("/message")
 public class ConsumerController {
 
-  @DubboReference
-  private IEchoService service;
+    @DubboReference
+    private IEchoService service;
 
-  @GetMapping("/send")
-  public String send(String message) {
-    return service.echo(message);
-  }
+    @GetMapping("/send")
+    public String send(String message) {
+        return service.echo(message);
+    }
+
 }

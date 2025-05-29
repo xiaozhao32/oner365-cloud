@@ -24,53 +24,53 @@ import com.oner365.sys.enums.SysUserTypeEnum;
 
 /**
  * 初始化应用配置
- * 
+ *
  * @author zhaoyong
  *
  */
 @Component
 public class StartupRunner implements ApplicationRunner {
-  
-  private final Logger logger = LoggerFactory.getLogger(StartupRunner.class);
-  
-  @Resource
-  private RabbitAdmin rabbitAdmin; 
 
-  @Override
-  public void run(ApplicationArguments args) {
-    initEnum();
-  }
-  
-  /**
-   * 初始化枚举
-   */
-  private void initEnum() {
-    /* common */
-    PublicConstants.initEnumMap.put(PublicConstants.PARAM_STATUS, StatusEnum.class.getName());
-    PublicConstants.initEnumMap.put(PublicConstants.PARAM_FILE_STORAGE, StorageEnum.class.getName());
-    PublicConstants.initEnumMap.put("errorInfo", ErrorInfoEnum.class.getName());
-    PublicConstants.initEnumMap.put("exists", ExistsEnum.class.getName());
-    PublicConstants.initEnumMap.put("result", ResultEnum.class.getName());
-    
-    /* system */
-    PublicConstants.initEnumMap.put("messageStatus", MessageStatusEnum.class.getName());
-    PublicConstants.initEnumMap.put("messageType", MessageTypeEnum.class.getName());
-    PublicConstants.initEnumMap.put("sex", SysUserSexEnum.class.getName());
-    PublicConstants.initEnumMap.put("sysUserType", SysUserTypeEnum.class.getName());
-    
-    logger.info("Initializing Oner365 Enum map.");
-  }
-  
-  @PreDestroy
-  public void destroy() {
-    PublicConstants.initEnumMap.clear();
-    logger.info("Destroy Oner365 config.");
-    
-    rabbitAdmin.deleteQueue(SysMessageConstants.QUEUE_NAME);
-    logger.info("Destroy Rabbitmq queue.");
+    private final Logger logger = LoggerFactory.getLogger(StartupRunner.class);
 
-    rabbitAdmin.deleteExchange(SysMessageConstants.QUEUE_TYPE);
-    logger.info("Destroy Rabbitmq exchange.");
-  }
+    @Resource
+    private RabbitAdmin rabbitAdmin;
+
+    @Override
+    public void run(ApplicationArguments args) {
+        initEnum();
+    }
+
+    /**
+     * 初始化枚举
+     */
+    private void initEnum() {
+        /* common */
+        PublicConstants.initEnumMap.put(PublicConstants.PARAM_STATUS, StatusEnum.class.getName());
+        PublicConstants.initEnumMap.put(PublicConstants.PARAM_FILE_STORAGE, StorageEnum.class.getName());
+        PublicConstants.initEnumMap.put("errorInfo", ErrorInfoEnum.class.getName());
+        PublicConstants.initEnumMap.put("exists", ExistsEnum.class.getName());
+        PublicConstants.initEnumMap.put("result", ResultEnum.class.getName());
+
+        /* system */
+        PublicConstants.initEnumMap.put("messageStatus", MessageStatusEnum.class.getName());
+        PublicConstants.initEnumMap.put("messageType", MessageTypeEnum.class.getName());
+        PublicConstants.initEnumMap.put("sex", SysUserSexEnum.class.getName());
+        PublicConstants.initEnumMap.put("sysUserType", SysUserTypeEnum.class.getName());
+
+        logger.info("Initializing Oner365 Enum map.");
+    }
+
+    @PreDestroy
+    public void destroy() {
+        PublicConstants.initEnumMap.clear();
+        logger.info("Destroy Oner365 config.");
+
+        rabbitAdmin.deleteQueue(SysMessageConstants.QUEUE_NAME);
+        logger.info("Destroy Rabbitmq queue.");
+
+        rabbitAdmin.deleteExchange(SysMessageConstants.QUEUE_TYPE);
+        logger.info("Destroy Rabbitmq exchange.");
+    }
 
 }

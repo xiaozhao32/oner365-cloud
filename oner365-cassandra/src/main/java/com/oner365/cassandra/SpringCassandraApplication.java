@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Cassandra 服务
- * 
+ *
  * @author zhaoyong
  */
 @SpringBootApplication(exclude = DataSourceAutoConfiguration.class)
@@ -18,8 +18,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({ "com.oner365" })
 public class SpringCassandraApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SpringCassandraApplication.class, args);
-  }
-  
+    public static void main(String[] args) {
+        SpringApplication.run(SpringCassandraApplication.class, args);
+    }
+
 }

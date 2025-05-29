@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 字典 SysDictItem
- * 
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "字典")
@@ -130,7 +130,7 @@ public class SysDictItemVo implements Serializable {
     public void setParentId(String parentId) {
         this.parentId = parentId;
     }
-    
+
     /**
      * toString Method
      */

@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * 数据源
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -37,74 +37,70 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/system/datasource")
 public class DataSourceConfigController {
 
-  @Resource
-  private ISystemDataSourceConfigClient client;
+    @Resource
+    private ISystemDataSourceConfigClient client;
 
-  /**
-   * 列表
-   * 
-   * @param data 查询参数
-   * @return Page<DataSourceConfigDto>
-   */
-  @ApiOperation("1.获取列表")
-  @ApiOperationSupport(order = 1)
-  @PostMapping("/list")
-  public ResponseData<PageInfo<DataSourceConfigDto>> pageList(@RequestBody QueryCriteriaBean data) {
-    return client.pageList(data);
-  }
-
-  /**
-   * 按id获取信息
-   * 
-   * @param id 编号
-   * @return ResponseData<DataSourceConfigDto>
-   */
-  @ApiOperation("2.按id查询")
-  @ApiOperationSupport(order = 2)
-  @GetMapping("/get/{id}")
-  public ResponseData<DataSourceConfigDto> get(@PathVariable String id) {
-    return client.getById(id);
-  }
-
-  /**
-   * 按 connectName 获取信息
-   * 
-   * @param connectName 连接名称
-   * @return ResponseData<DataSourceConfigDto>
-   */
-  @ApiOperation("3.按连接名称查询")
-  @ApiOperationSupport(order = 3)
-  @GetMapping("/name")
-  public ResponseData<DataSourceConfigDto> getConnectName(@RequestParam String connectName) {
-    return client.getConnectName(connectName);
-  }
-
-  /**
-   * 保存
-   * 
-   * @param dataSourceConfigVo 数据源对象
-   * @return ResponseData<DataSourceConfigDto>
-   */
-  @ApiOperation("4.保存")
-  @ApiOperationSupport(order = 4)
-  @PutMapping("/save")
-  public ResponseData<DataSourceConfigDto> save(@RequestBody DataSourceConfigVo dataSourceConfigVo) {
-    if (dataSourceConfigVo != null) {
-      return client.save(dataSourceConfigVo);
+    /**
+     * 列表
+     * @param data 查询参数
+     * @return Page<DataSourceConfigDto>
+     */
+    @ApiOperation("1.获取列表")
+    @ApiOperationSupport(order = 1)
+    @PostMapping("/list")
+    public ResponseData<PageInfo<DataSourceConfigDto>> pageList(@RequestBody QueryCriteriaBean data) {
+        return client.pageList(data);
     }
-    return ResponseData.error(ErrorInfoEnum.SAVE_ERROR.getName());
-  }
 
-  /**
-   * 删除
-   * 
-   * @param ids 编号
-   * @return List<Boolean>
-   */
-  @ApiOperation("5.删除")
-  @ApiOperationSupport(order = 5)
-  @DeleteMapping("/delete")
-  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
-    return client.deleteById(ids);
-  }
+    /**
+     * 按id获取信息
+     * @param id 编号
+     * @return ResponseData<DataSourceConfigDto>
+     */
+    @ApiOperation("2.按id查询")
+    @ApiOperationSupport(order = 2)
+    @GetMapping("/get/{id}")
+    public ResponseData<DataSourceConfigDto> get(@PathVariable String id) {
+        return client.getById(id);
+    }
+
+    /**
+     * 按 connectName 获取信息
+     * @param connectName 连接名称
+     * @return ResponseData<DataSourceConfigDto>
+     */
+    @ApiOperation("3.按连接名称查询")
+    @ApiOperationSupport(order = 3)
+    @GetMapping("/name")
+    public ResponseData<DataSourceConfigDto> getConnectName(@RequestParam String connectName) {
+        return client.getConnectName(connectName);
+    }
+
+    /**
+     * 保存
+     * @param dataSourceConfigVo 数据源对象
+     * @return ResponseData<DataSourceConfigDto>
+     */
+    @ApiOperation("4.保存")
+    @ApiOperationSupport(order = 4)
+    @PutMapping("/save")
+    public ResponseData<DataSourceConfigDto> save(@RequestBody DataSourceConfigVo dataSourceConfigVo) {
+        if (dataSourceConfigVo != null) {
+            return client.save(dataSourceConfigVo);
+        }
+        return ResponseData.error(ErrorInfoEnum.SAVE_ERROR.getName());
+    }
+
+    /**
+     * 删除
+     * @param ids 编号
+     * @return List<Boolean>
+     */
+    @ApiOperation("5.删除")
+    @ApiOperationSupport(order = 5)
+    @DeleteMapping("/delete")
+    public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
+        return client.deleteById(ids);
+    }
+
 }

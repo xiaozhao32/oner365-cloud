@@ -9,10 +9,11 @@ import com.oner365.data.commons.util.DataUtils;
 
 /**
  * Treeselect树结构实体类
- * 
+ *
  * @author zhaoyong
  */
 public class TreeSelect implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /** 节点ID */
@@ -28,7 +29,7 @@ public class TreeSelect implements Serializable {
     public TreeSelect() {
 
     }
-    
+
     public TreeSelect(SysOrganizationDto organization) {
         this.id = organization.getId();
         this.label = organization.getOrgName();
@@ -68,4 +69,5 @@ public class TreeSelect implements Serializable {
     public void setChildren(List<TreeSelect> children) {
         this.children = children;
     }
+
 }

@@ -7,6 +7,7 @@ import com.oner365.sys.entity.SysMessage;
 
 /**
  * 消息接口
+ *
  * @author zhaoyong
  */
 public interface ISysMessageDao extends JpaRepository<SysMessage, String>, JpaSpecificationExecutor<SysMessage> {

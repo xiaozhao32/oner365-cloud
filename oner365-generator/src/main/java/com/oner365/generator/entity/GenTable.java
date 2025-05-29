@@ -16,10 +16,11 @@ import com.oner365.generator.constants.GenConstants;
 
 /**
  * 业务表 gen_table
- * 
+ *
  * @author zhaoyong
  */
 public class GenTable implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     /** 编号 */
@@ -90,26 +91,27 @@ public class GenTable implements Serializable {
 
     /** 上级菜单名称字段 */
     private String parentMenuName;
-    
+
     private String remark;
-    
+
     private String createBy;
-    
+
     private Date createTime;
-    
+
     private String updateBy;
-    
+
     private Date updateTime;
-    
+
     /** Entity基类字段 */
-    protected static final String[] BASE_ENTITY = { "createUser", "createTime", "updateUser", "updateTime", "status", "remark" };
+    protected static final String[] BASE_ENTITY = { "createUser", "createTime", "updateUser", "updateTime", "status",
+            "remark" };
 
     /** Tree基类字段 */
     protected static final String[] TREE_ENTITY = { "parentName", "parentId", "orderNum", "ancestors", "children" };
-    
+
     /** 请求参数 */
     private Map<String, Serializable> params = new HashMap<>();
-    
+
     public Long getTableId() {
         return tableId;
     }
@@ -293,8 +295,7 @@ public class GenTable implements Serializable {
     public static boolean isSuperColumn(String tplCategory, String javaField) {
         // 父类字段
         if (isTree(tplCategory)) {
-            return StringUtils.equalsAnyIgnoreCase(javaField,
-                    ArrayUtils.addAll(TREE_ENTITY, BASE_ENTITY));
+            return StringUtils.equalsAnyIgnoreCase(javaField, ArrayUtils.addAll(TREE_ENTITY, BASE_ENTITY));
         }
         return StringUtils.equalsAnyIgnoreCase(javaField, BASE_ENTITY);
     }

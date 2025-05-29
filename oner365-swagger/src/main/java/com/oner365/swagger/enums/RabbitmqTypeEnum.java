@@ -32,8 +32,7 @@ public enum RabbitmqTypeEnum implements Serializable {
 
     /**
      * 构造方法
-     *
-     * @param code  编码
+     * @param code 编码
      * @param name 名称
      */
     RabbitmqTypeEnum(String code, String name) {
@@ -43,7 +42,6 @@ public enum RabbitmqTypeEnum implements Serializable {
 
     /**
      * get code
-     *
      * @return code
      */
     public String getCode() {
@@ -52,7 +50,6 @@ public enum RabbitmqTypeEnum implements Serializable {
 
     /**
      * get name
-     *
      * @return name
      */
     public String getName() {
@@ -61,14 +58,13 @@ public enum RabbitmqTypeEnum implements Serializable {
 
     /**
      * 获取枚举
-     *
      * @param code 编码
      * @return StatusEnum
      */
     public static RabbitmqTypeEnum getCode(String code) {
         Optional<RabbitmqTypeEnum> result = Arrays.stream(RabbitmqTypeEnum.values())
-                .filter(e -> e.getCode().equals(code))
-                .findFirst();
+            .filter(e -> e.getCode().equals(code))
+            .findFirst();
         return result.orElse(null);
     }
 

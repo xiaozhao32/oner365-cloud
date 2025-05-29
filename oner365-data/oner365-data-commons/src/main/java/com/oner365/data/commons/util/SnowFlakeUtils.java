@@ -9,6 +9,7 @@ import com.oner365.data.commons.exception.ProjectRuntimeException;
  *
  */
 public class SnowFlakeUtils {
+
     /**
      * 起始的时间戳
      */
@@ -33,22 +34,29 @@ public class SnowFlakeUtils {
      * 每一部分的最大值
      */
     private static final long MAX_SEQUENCE = ~(-1L << SEQUENCE_BIT);
+
     private static final long MAX_MACHINE_NUM = ~(-1L << MACHINE_BIT);
+
     private static final long MAX_DATA_CENTER_NUM = ~(-1L << DATA_CENTER_BIT);
 
     /**
      * 每一部分向左的位移
      */
     private static final long MACHINE_LEFT = SEQUENCE_BIT;
+
     private static final long DATA_CENTER_LEFT = SEQUENCE_BIT + MACHINE_BIT;
+
     private static final long TIMESTAMP_LEFT = DATA_CENTER_LEFT + DATA_CENTER_BIT;
 
     /** 数据中心 */
     private final long dataCenterId;
+
     /** 机器标识 */
     private final long machineId;
+
     /** 序列号 */
     private long sequence = 0L;
+
     /** 上一次时间戳 */
     private long lastTimeStamp = -1L;
 
@@ -66,9 +74,8 @@ public class SnowFlakeUtils {
 
     /**
      * 根据指定的数据中心ID和机器标志ID生成指定的序列号
-     *
      * @param dataCenterId 数据中心ID
-     * @param machineId    机器标志ID
+     * @param machineId 机器标志ID
      */
     public SnowFlakeUtils(long dataCenterId, long machineId) {
         if (dataCenterId > MAX_DATA_CENTER_NUM || dataCenterId < 0) {
@@ -83,7 +90,6 @@ public class SnowFlakeUtils {
 
     /**
      * 产生下一个ID
-     *
      * @return long
      */
     public synchronized long nextId() {
@@ -99,7 +105,8 @@ public class SnowFlakeUtils {
             if (sequence == 0L) {
                 currTimeStamp = getNextMill();
             }
-        } else {
+        }
+        else {
             // 不同毫秒内，序列号置为0
             sequence = 0L;
         }
@@ -107,10 +114,8 @@ public class SnowFlakeUtils {
         lastTimeStamp = currTimeStamp;
 
         // 时间戳部分 | 数据中心部分 | 机器标识部分 | 序列号部分
-        return (currTimeStamp - START_TIMESTAMP) << TIMESTAMP_LEFT
-                | dataCenterId << DATA_CENTER_LEFT
-                | machineId << MACHINE_LEFT
-                | sequence;
+        return (currTimeStamp - START_TIMESTAMP) << TIMESTAMP_LEFT | dataCenterId << DATA_CENTER_LEFT
+                | machineId << MACHINE_LEFT | sequence;
     }
 
 }

@@ -4,76 +4,82 @@ import java.io.Serializable;
 
 /**
  * Ldap - Vo
- * 
+ *
  * @author zhaoyong
- * 
+ *
  */
 public class LdapUserVo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  private String commonName;
-  private String sn;
-  private String givenName;
-  private String uid;
-  private Integer uidNumber;
-  private Integer gidNumber;
-  private String password;
+    private String commonName;
 
-  public String getCommonName() {
-    return commonName;
-  }
+    private String sn;
 
-  public void setCommonName(String commonName) {
-    this.commonName = commonName;
-  }
+    private String givenName;
 
-  public String getSn() {
-    return sn;
-  }
+    private String uid;
 
-  public void setSn(String sn) {
-    this.sn = sn;
-  }
+    private Integer uidNumber;
 
-  public String getGivenName() {
-    return givenName;
-  }
+    private Integer gidNumber;
 
-  public void setGivenName(String givenName) {
-    this.givenName = givenName;
-  }
+    private String password;
 
-  public String getUid() {
-    return uid;
-  }
+    public String getCommonName() {
+        return commonName;
+    }
 
-  public void setUid(String uid) {
-    this.uid = uid;
-  }
+    public void setCommonName(String commonName) {
+        this.commonName = commonName;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public String getSn() {
+        return sn;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
 
-  public Integer getUidNumber() {
-    return uidNumber;
-  }
+    public String getGivenName() {
+        return givenName;
+    }
 
-  public void setUidNumber(Integer uidNumber) {
-    this.uidNumber = uidNumber;
-  }
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
+    }
 
-  public Integer getGidNumber() {
-    return gidNumber;
-  }
+    public String getUid() {
+        return uid;
+    }
 
-  public void setGidNumber(Integer gidNumber) {
-    this.gidNumber = gidNumber;
-  }
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Integer getUidNumber() {
+        return uidNumber;
+    }
+
+    public void setUidNumber(Integer uidNumber) {
+        this.uidNumber = uidNumber;
+    }
+
+    public Integer getGidNumber() {
+        return gidNumber;
+    }
+
+    public void setGidNumber(Integer gidNumber) {
+        this.gidNumber = gidNumber;
+    }
 
 }

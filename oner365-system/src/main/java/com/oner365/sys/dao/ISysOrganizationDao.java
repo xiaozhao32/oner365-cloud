@@ -7,8 +7,10 @@ import com.oner365.sys.entity.SysOrganization;
 
 /**
  * 机构信息接口
+ *
  * @author zhaoyong
  */
-public interface ISysOrganizationDao extends JpaRepository<SysOrganization, String>,JpaSpecificationExecutor<SysOrganization>{
+public interface ISysOrganizationDao
+        extends JpaRepository<SysOrganization, String>, JpaSpecificationExecutor<SysOrganization> {
 
 }

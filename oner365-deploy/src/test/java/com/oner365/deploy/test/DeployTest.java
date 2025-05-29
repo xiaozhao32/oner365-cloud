@@ -26,37 +26,38 @@ import com.oner365.deploy.utils.DeployMethod;
 @ActiveProfiles("lt")
 class DeployTest {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(DeployTest.class);
-  
-  @Resource
-  private DeployService deployService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(DeployTest.class);
 
-  /**
-   * 本地部署
-   */
-  @Test
-  void deployNativeTest() {
-    DeployEntity deploy = deployService.getDeployEntity();
-    ServerEntity server = deployService.getServerEntity();
-    LOGGER.info("Deploy project: {}", deploy);
-    Assertions.assertNotNull(server);
-    // 部署目录
-    DeployMethod.deployNative(deploy, server);
-  }
+    @Resource
+    private DeployService deployService;
 
-  /**
-   * 服务器部署
-   */
-  @Test
-  void deployServerTest() {
-    DeployEntity deploy = deployService.getDeployEntity();
-    ServerEntity server = deployService.getServerEntity();
-    LOGGER.info("Deploy project: {}", server);
-    LOGGER.info("Server: {}", server);
-    Assertions.assertNotNull(server);
-    // 部署服务器开关
-    if (server.getIsDeploy()) {
-      DeployMethod.deployServer(deploy, server);
+    /**
+     * 本地部署
+     */
+    @Test
+    void deployNativeTest() {
+        DeployEntity deploy = deployService.getDeployEntity();
+        ServerEntity server = deployService.getServerEntity();
+        LOGGER.info("Deploy project: {}", deploy);
+        Assertions.assertNotNull(server);
+        // 部署目录
+        DeployMethod.deployNative(deploy, server);
     }
-  }
+
+    /**
+     * 服务器部署
+     */
+    @Test
+    void deployServerTest() {
+        DeployEntity deploy = deployService.getDeployEntity();
+        ServerEntity server = deployService.getServerEntity();
+        LOGGER.info("Deploy project: {}", server);
+        LOGGER.info("Server: {}", server);
+        Assertions.assertNotNull(server);
+        // 部署服务器开关
+        if (server.getIsDeploy()) {
+            DeployMethod.deployServer(deploy, server);
+        }
+    }
+
 }

@@ -13,26 +13,26 @@ import com.oner365.vault.config.properties.VaultProperties;
 
 /**
  * Vault Config
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 @VaultPropertySource(value = "secret/oner365-springboot")
 public class VaultConfig {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(VaultConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(VaultConfig.class);
 
-  @Resource
-  private Environment env;
+    @Resource
+    private Environment env;
 
-  @Bean
-  VaultProperties getVaultProperties() {
-    VaultProperties result = new VaultProperties();
-    result.setName(env.getProperty("oner365.name"));
-    result.setPassword(env.getProperty("oner365.password"));
-    result.setUrl(env.getProperty("oner365.url"));
-    LOGGER.info("vault properties: {}", result);
-    return result;
-  }
+    @Bean
+    VaultProperties getVaultProperties() {
+        VaultProperties result = new VaultProperties();
+        result.setName(env.getProperty("oner365.name"));
+        result.setPassword(env.getProperty("oner365.password"));
+        result.setUrl(env.getProperty("oner365.url"));
+        LOGGER.info("vault properties: {}", result);
+        return result;
+    }
 
 }

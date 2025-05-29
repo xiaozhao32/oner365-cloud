@@ -2,6 +2,7 @@ package com.oner365.sys.rabbitmq;
 
 /**
  * 消息发送测试
+ *
  * @author zhaoyong
  *
  */
@@ -12,4 +13,5 @@ public interface ISendService {
      * @param message 消息
      */
     void send(String message);
+
 }

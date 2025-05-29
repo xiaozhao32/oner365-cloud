@@ -8,7 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Spark 服务
- * 
+ *
  * @author zhaoyong
  */
 @SpringBootApplication
@@ -17,8 +17,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({ "com.oner365" })
 public class SpringSparkApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(SpringSparkApplication.class, args);
-  }
+    public static void main(String[] args) {
+        SpringApplication.run(SpringSparkApplication.class, args);
+    }
 
 }

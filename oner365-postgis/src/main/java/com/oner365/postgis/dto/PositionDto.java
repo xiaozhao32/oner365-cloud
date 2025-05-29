@@ -11,158 +11,158 @@ import com.oner365.postgis.enums.PostgisTypeEnum;
 
 /**
  * Position DTO
- * 
+ *
  * @author zhaoyong
  */
 public class PositionDto implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键
-   */
-  private String id;
-  
-  /**
-   * 名称
-   */
-  private String positionName;
-  
-  /**
-   * 枚举类型
-   */
-  private PostgisTypeEnum postgisType;
+    /**
+     * 主键
+     */
+    private String id;
 
-  /**
-   * Geometry Point
-   */
-  private Point point;
-  
-  /**
-   * Geometry Polygon
-   */
-  private Polygon polygon;
-  
-  /**
-   * Geometry LineString
-   */
-  private Polygon lineString;
-  
-  /**
-   * Geometry MultiPoint
-   */
-  private List<Point> multiPoint;
-  
-  /**
-   * Geometry MultiLineString
-   */
-  private List<Polygon> multiLineString;
-  
-  /**
-   * Geometry MultiPolygon
-   */
-  private List<Polygon> multiPolygon;
-  
-  /**
-   * 创建时间
-   */
-  private LocalDateTime createTime;
-  
-  /**
-   * 更新时间
-   */
-  private LocalDateTime updateTime;
-  
-  public PositionDto() {
-    super();
-  }
+    /**
+     * 名称
+     */
+    private String positionName;
 
-  public String getId() {
-    return id;
-  }
+    /**
+     * 枚举类型
+     */
+    private PostgisTypeEnum postgisType;
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    /**
+     * Geometry Point
+     */
+    private Point point;
 
-  public Point getPoint() {
-    return point;
-  }
+    /**
+     * Geometry Polygon
+     */
+    private Polygon polygon;
 
-  public void setPoint(Point point) {
-    this.point = point;
-  }
+    /**
+     * Geometry LineString
+     */
+    private Polygon lineString;
 
-  public String getPositionName() {
-    return positionName;
-  }
+    /**
+     * Geometry MultiPoint
+     */
+    private List<Point> multiPoint;
 
-  public void setPositionName(String positionName) {
-    this.positionName = positionName;
-  }
+    /**
+     * Geometry MultiLineString
+     */
+    private List<Polygon> multiLineString;
 
-  public LocalDateTime getCreateTime() {
-    return createTime;
-  }
+    /**
+     * Geometry MultiPolygon
+     */
+    private List<Polygon> multiPolygon;
 
-  public void setCreateTime(LocalDateTime createTime) {
-    this.createTime = createTime;
-  }
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
 
-  public LocalDateTime getUpdateTime() {
-    return updateTime;
-  }
+    /**
+     * 更新时间
+     */
+    private LocalDateTime updateTime;
 
-  public void setUpdateTime(LocalDateTime updateTime) {
-    this.updateTime = updateTime;
-  }
+    public PositionDto() {
+        super();
+    }
 
-  public Polygon getPolygon() {
-    return polygon;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setPolygon(Polygon polygon) {
-    this.polygon = polygon;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public PostgisTypeEnum getPostgisType() {
-    return postgisType;
-  }
+    public Point getPoint() {
+        return point;
+    }
 
-  public void setPostgisType(PostgisTypeEnum postgisType) {
-    this.postgisType = postgisType;
-  }
+    public void setPoint(Point point) {
+        this.point = point;
+    }
 
-  public Polygon getLineString() {
-    return lineString;
-  }
+    public String getPositionName() {
+        return positionName;
+    }
 
-  public void setLineString(Polygon lineString) {
-    this.lineString = lineString;
-  }
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
 
-  public List<Point> getMultiPoint() {
-    return multiPoint;
-  }
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
 
-  public void setMultiPoint(List<Point> multiPoint) {
-    this.multiPoint = multiPoint;
-  }
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
 
-  public List<Polygon> getMultiLineString() {
-    return multiLineString;
-  }
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
 
-  public void setMultiLineString(List<Polygon> multiLineString) {
-    this.multiLineString = multiLineString;
-  }
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 
-  public List<Polygon> getMultiPolygon() {
-    return multiPolygon;
-  }
+    public Polygon getPolygon() {
+        return polygon;
+    }
 
-  public void setMultiPolygon(List<Polygon> multiPolygon) {
-    this.multiPolygon = multiPolygon;
-  }
+    public void setPolygon(Polygon polygon) {
+        this.polygon = polygon;
+    }
+
+    public PostgisTypeEnum getPostgisType() {
+        return postgisType;
+    }
+
+    public void setPostgisType(PostgisTypeEnum postgisType) {
+        this.postgisType = postgisType;
+    }
+
+    public Polygon getLineString() {
+        return lineString;
+    }
+
+    public void setLineString(Polygon lineString) {
+        this.lineString = lineString;
+    }
+
+    public List<Point> getMultiPoint() {
+        return multiPoint;
+    }
+
+    public void setMultiPoint(List<Point> multiPoint) {
+        this.multiPoint = multiPoint;
+    }
+
+    public List<Polygon> getMultiLineString() {
+        return multiLineString;
+    }
+
+    public void setMultiLineString(List<Polygon> multiLineString) {
+        this.multiLineString = multiLineString;
+    }
+
+    public List<Polygon> getMultiPolygon() {
+        return multiPolygon;
+    }
+
+    public void setMultiPolygon(List<Polygon> multiPolygon) {
+        this.multiPolygon = multiPolygon;
+    }
 
 }

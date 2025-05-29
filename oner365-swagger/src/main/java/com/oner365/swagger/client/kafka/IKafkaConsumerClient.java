@@ -10,28 +10,27 @@ import com.oner365.swagger.constants.PathConstants;
 
 /**
  * Kafka服务 - 消费
- * 
+ *
  * @author zhaoyong
  *
  */
 @FeignClient(value = PathConstants.FEIGN_CLIENT_KAFKA, contextId = PathConstants.CONTEXT_KAFKA_CONSUMER_ID)
 public interface IKafkaConsumerClient {
 
-  /**
-   * 发送消息
-   * 
-   * @param message 消息
-   * @return ResponseData<String>
-   */
-  @GetMapping(PathConstants.REQUEST_KAFKA_CONSUMER_MESSAGE_SEND)
-  ResponseData<String> send(@RequestParam String message);
+    /**
+     * 发送消息
+     * @param message 消息
+     * @return ResponseData<String>
+     */
+    @GetMapping(PathConstants.REQUEST_KAFKA_CONSUMER_MESSAGE_SEND)
+    ResponseData<String> send(@RequestParam String message);
 
-  /**
-   * KafkaStreams 统计单词个数
-   * 
-   * @param word 单词
-   * @return 统计单词个数
-   */
-  @GetMapping(PathConstants.REQUEST_KAFKA_CONSUMER_MESSAGE_WORD_COUNTS)
-  ResponseData<Long> getWordCount(@PathVariable String word);
+    /**
+     * KafkaStreams 统计单词个数
+     * @param word 单词
+     * @return 统计单词个数
+     */
+    @GetMapping(PathConstants.REQUEST_KAFKA_CONSUMER_MESSAGE_WORD_COUNTS)
+    ResponseData<Long> getWordCount(@PathVariable String word);
+
 }

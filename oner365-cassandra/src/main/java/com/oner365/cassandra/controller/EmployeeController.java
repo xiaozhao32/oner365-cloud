@@ -23,7 +23,7 @@ import com.oner365.data.jpa.query.QueryCriteriaBean;
 
 /**
  * Employee Controller
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -31,62 +31,57 @@ import com.oner365.data.jpa.query.QueryCriteriaBean;
 @RequestMapping("/employee")
 public class EmployeeController {
 
-  @Resource
-  private IEmployeeService service;
+    @Resource
+    private IEmployeeService service;
 
-  /**
-   * 获取分页列表
-   * 
-   * @param data 查询参数
-   * @return 分页列表
-   */
-  @PostMapping("/page")
-  public PageInfo<Employee> pageList(@RequestBody QueryCriteriaBean data) {
-    return service.pageList(data);
-  }
+    /**
+     * 获取分页列表
+     * @param data 查询参数
+     * @return 分页列表
+     */
+    @PostMapping("/page")
+    public PageInfo<Employee> pageList(@RequestBody QueryCriteriaBean data) {
+        return service.pageList(data);
+    }
 
-  /**
-   * 获取列表
-   * 
-   * @param data 查询参数
-   * @return 列表
-   */
-  @PostMapping("/list")
-  public List<Employee> findList(@RequestBody QueryCriteriaBean data) {
-    return service.findList(data);
-  }
+    /**
+     * 获取列表
+     * @param data 查询参数
+     * @return 列表
+     */
+    @PostMapping("/list")
+    public List<Employee> findList(@RequestBody QueryCriteriaBean data) {
+        return service.findList(data);
+    }
 
-  /**
-   * 获取详情
-   *
-   * @param id 编号
-   * @return Employee
-   */
-  @GetMapping("/get/{id}")
-  public Employee get(@PathVariable Integer id) {
-    return service.getById(id);
-  }
-  
-  /**
-   * 保存
-   *
-   * @param employeeVo 对象
-   * @return Employee
-   */
-  @PutMapping("/save")
-  public Employee save(@Validated @RequestBody Employee employeeVo) {
-    return service.save(employeeVo);
-  }
-  
-  /**
-   * 删除
-   *
-   * @param ids 编号
-   * @return List<Boolean>
-   */
-  @DeleteMapping("/delete")
-  public List<Boolean> delete(@RequestBody Integer... ids) {
-    return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
-  }
+    /**
+     * 获取详情
+     * @param id 编号
+     * @return Employee
+     */
+    @GetMapping("/get/{id}")
+    public Employee get(@PathVariable Integer id) {
+        return service.getById(id);
+    }
+
+    /**
+     * 保存
+     * @param employeeVo 对象
+     * @return Employee
+     */
+    @PutMapping("/save")
+    public Employee save(@Validated @RequestBody Employee employeeVo) {
+        return service.save(employeeVo);
+    }
+
+    /**
+     * 删除
+     * @param ids 编号
+     * @return List<Boolean>
+     */
+    @DeleteMapping("/delete")
+    public List<Boolean> delete(@RequestBody Integer... ids) {
+        return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
+    }
 
 }

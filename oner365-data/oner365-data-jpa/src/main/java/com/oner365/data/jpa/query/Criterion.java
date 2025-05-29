@@ -7,6 +7,7 @@ import javax.persistence.criteria.Root;
 
 /**
  * 条件接口 - 用户提供条件表达式接口
+ *
  * @author zhaoyong
  */
 public interface Criterion {
@@ -15,6 +16,7 @@ public interface Criterion {
      * 枚举参数
      */
     enum Operator {
+
         /* 相等 */
         EQ,
         /* 不相等 */
@@ -39,6 +41,7 @@ public interface Criterion {
         BE,
         /* 枚举 */
         ENUM
+
     }
 
     /**
@@ -49,4 +52,5 @@ public interface Criterion {
      * @return Predicate
      */
     Predicate toPredicate(Root<?> root, CriteriaQuery<?> query, CriteriaBuilder builder);
+
 }

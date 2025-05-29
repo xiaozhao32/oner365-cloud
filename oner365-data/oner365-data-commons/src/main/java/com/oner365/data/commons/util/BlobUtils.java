@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Blob 工具类
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -34,7 +34,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 构造函数，以byte[]构建blob
-     * 
      * @param bytes 字节
      */
     public BlobUtils(byte[] bytes) {
@@ -43,7 +42,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 构造函数，以blob重新构建blob
-     * 
      * @param blob blob
      */
     public BlobUtils(Blob blob) {
@@ -52,7 +50,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 初始化byte[]
-     * 
      * @param bytes 字节
      */
     private void init(byte[] bytes) {
@@ -62,13 +59,12 @@ public class BlobUtils implements Blob {
 
     /**
      * 将blob转为byte[]
-     * 
      * @param blob blob
      * @return byte[]
      */
     private byte[] blobToBytes(Blob blob) {
         try (InputStream inputStream = blob.getBinaryStream();
-            BufferedInputStream is = new BufferedInputStream(inputStream)) {
+                BufferedInputStream is = new BufferedInputStream(inputStream)) {
             byte[] bytes = new byte[(int) blob.length()];
             int len = bytes.length;
             int offset = 0;
@@ -77,7 +73,8 @@ public class BlobUtils implements Blob {
                 offset += read;
             }
             return bytes;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("blobToBytes error:", e);
         }
         return new byte[0];
@@ -85,7 +82,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 获得blob中数据实际长度
-     * 
      * @return long
      */
     @Override
@@ -95,7 +91,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 返回指定长度的byte[]
-     * 
      * @param pos pos
      * @param len len
      * @return byte[]
@@ -110,14 +105,14 @@ public class BlobUtils implements Blob {
             byte[] newBytes = new byte[len];
             System.arraycopy(blobBytes, (int) pos, newBytes, 0, len);
             return newBytes;
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             throw new SQLException("Inoperable scope of this array");
         }
     }
 
     /**
      * 返回InputStream
-     * 
      * @return InputStream
      */
     @Override
@@ -127,7 +122,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 获取此byte[]中start的字节位置
-     * 
      * @param pattern byte[]
      * @param start long
      * @return long
@@ -148,26 +142,25 @@ public class BlobUtils implements Blob {
         if (pattern.length == 0 || blobLength == 0 || pattern.length > blobLength) {
             return -1;
         }
-        
+
         return positions(pattern, start);
     }
-    
+
     private long positions(byte[] pattern, long start) {
-      int limit = blobLength - pattern.length;
-      for (int i = (int) start; i <= limit; i++) {
-          int p;
-          for (p = 0; p < pattern.length && blobBytes[i + p] == pattern[p]; p++) {
-              if (p == pattern.length) {
-                  return i + 1L;
-              }
-          }
-      }
-      return -1;
+        int limit = blobLength - pattern.length;
+        for (int i = (int) start; i <= limit; i++) {
+            int p;
+            for (p = 0; p < pattern.length && blobBytes[i + p] == pattern[p]; p++) {
+                if (p == pattern.length) {
+                    return i + 1L;
+                }
+            }
+        }
+        return -1;
     }
 
     /**
      * 获取指定的blob中start的字节位置
-     * 
      * @param pattern Blog
      * @param start long
      * @return long
@@ -180,7 +173,7 @@ public class BlobUtils implements Blob {
 
     /**
      * 不支持操作异常抛出
-     * 
+     *
      */
     void nonsupport() {
         throw new UnsupportedOperationException("This method is not supported！");
@@ -198,7 +191,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 返回指定长度部分的InputStream，并返回InputStream
-     * 
      * @param pos pos
      * @param len len
      * @return InputStream
@@ -211,7 +203,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 以指定指定长度将二进制流写入OutputStream，并返回OutputStream
-     * 
      * @param pos long
      * @return OutputStream
      * @throws SQLException 异常
@@ -239,7 +230,8 @@ public class BlobUtils implements Blob {
             }
             // 返回OutputStream
             return os;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("setBinaryStream error:", e);
         }
         return null;
@@ -247,7 +239,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 设定byte[]
-     * 
      * @param pos pos
      * @param bytes bytes
      * @param offset offset
@@ -279,7 +270,8 @@ public class BlobUtils implements Blob {
         if (isCopy) {
             blobBytes = new byte[size];
             System.arraycopy(bytes, offset, blobBytes, 0, size);
-        } else { // 否则直接替换对象
+        }
+        else { // 否则直接替换对象
             blobBytes = bytes;
         }
         return blobBytes.length;
@@ -287,7 +279,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 设定指定开始位置byte[]
-     * 
      * @param pos pos
      * @param bytes bytes
      * @return int
@@ -302,7 +293,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 设定byte[]
-     * 
      * @param pos pos
      * @param bytes bytes
      * @param offset offset
@@ -319,7 +309,6 @@ public class BlobUtils implements Blob {
 
     /**
      * 截取相应部分数据
-     * 
      * @param len len
      * @throws SQLException 异常
      */
@@ -333,4 +322,5 @@ public class BlobUtils implements Blob {
         }
         blobLength = (int) len;
     }
+
 }

@@ -7,34 +7,34 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Point VO
- * 
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "点")
 public class PointVo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @ApiModelProperty(value = "x")
-  private double x;
-  
-  @ApiModelProperty(value = "y")
-  private double y;
+    @ApiModelProperty(value = "x")
+    private double x;
 
-  public double getX() {
-    return x;
-  }
+    @ApiModelProperty(value = "y")
+    private double y;
 
-  public void setX(double x) {
-    this.x = x;
-  }
+    public double getX() {
+        return x;
+    }
 
-  public double getY() {
-    return y;
-  }
+    public void setX(double x) {
+        this.x = x;
+    }
 
-  public void setY(double y) {
-    this.y = y;
-  }
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 
 }

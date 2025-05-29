@@ -26,7 +26,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * Elasticsearch - 信息
- * 
+ *
  * @author zhaoyong
  */
 @RestController
@@ -34,61 +34,58 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/elasticsearch/sample/gene")
 public class ElasticsearchSampleGeneController {
 
-  @Resource
-  private IElasticsearchSampleGeneClient client;
+    @Resource
+    private IElasticsearchSampleGeneClient client;
 
-  /**
-   * 获取列表
-   * 
-   * @param data 查询参数
-   * @return ResponseData<PageInfo<SampleGeneDto>>
-   */
-  @ApiOperation("1.获取列表")
-  @ApiOperationSupport(order = 1)
-  @PostMapping("/list")
-  public ResponseData<PageInfo<SampleGeneDto>> list(@RequestBody QueryCriteriaBean data) {
-    return client.list(data);
-  }
-
-  /**
-   * id查询
-   *
-   * @param id 编号
-   * @return ResponseData<SampleGeneDto>
-   */
-  @ApiOperation("2.按id查询")
-  @ApiOperationSupport(order = 2)
-  @GetMapping("/get/{id}")
-  public ResponseData<SampleGeneDto> get(@PathVariable String id) {
-    return client.get(id);
-  }
-
-  /**
-   * 保存
-   *
-   * @param sampleGeneVo 基因对象
-   * @return ResponseData<SampleGeneDto>
-   */
-  @ApiOperation("3.保存")
-  @ApiOperationSupport(order = 3)
-  @PutMapping("/save")
-  public ResponseData<SampleGeneDto> save(@RequestBody SampleGeneVo sampleGeneVo) {
-    if (sampleGeneVo == null) {
-      return ResponseData.error("基因对象为空!");
+    /**
+     * 获取列表
+     * @param data 查询参数
+     * @return ResponseData<PageInfo<SampleGeneDto>>
+     */
+    @ApiOperation("1.获取列表")
+    @ApiOperationSupport(order = 1)
+    @PostMapping("/list")
+    public ResponseData<PageInfo<SampleGeneDto>> list(@RequestBody QueryCriteriaBean data) {
+        return client.list(data);
     }
-    return client.save(sampleGeneVo);
-  }
 
-  /**
-   * 删除
-   *
-   * @param ids 编号
-   * @return Integer
-   */
-  @ApiOperation("4.删除")
-  @ApiOperationSupport(order = 4)
-  @DeleteMapping("/delete")
-  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
-    return client.delete(ids);
-  }
+    /**
+     * id查询
+     * @param id 编号
+     * @return ResponseData<SampleGeneDto>
+     */
+    @ApiOperation("2.按id查询")
+    @ApiOperationSupport(order = 2)
+    @GetMapping("/get/{id}")
+    public ResponseData<SampleGeneDto> get(@PathVariable String id) {
+        return client.get(id);
+    }
+
+    /**
+     * 保存
+     * @param sampleGeneVo 基因对象
+     * @return ResponseData<SampleGeneDto>
+     */
+    @ApiOperation("3.保存")
+    @ApiOperationSupport(order = 3)
+    @PutMapping("/save")
+    public ResponseData<SampleGeneDto> save(@RequestBody SampleGeneVo sampleGeneVo) {
+        if (sampleGeneVo == null) {
+            return ResponseData.error("基因对象为空!");
+        }
+        return client.save(sampleGeneVo);
+    }
+
+    /**
+     * 删除
+     * @param ids 编号
+     * @return Integer
+     */
+    @ApiOperation("4.删除")
+    @ApiOperationSupport(order = 4)
+    @DeleteMapping("/delete")
+    public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
+        return client.delete(ids);
+    }
+
 }

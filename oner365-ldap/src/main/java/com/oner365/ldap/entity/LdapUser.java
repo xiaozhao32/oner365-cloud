@@ -15,125 +15,135 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Ldap - Po
- * 
+ *
  * @author zhaoyong
- * 
+ *
  */
 @Entry(base = "", objectClasses = { "posixAccount", "top", "inetOrgPerson" })
-@JsonIgnoreProperties(value = {"handler","hibernateLazyInitializer","fieldHandler"})
+@JsonIgnoreProperties(value = { "handler", "hibernateLazyInitializer", "fieldHandler" })
 public class LdapUser implements Persistable<Object>, Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @Id
-  private Name id;
-  @Attribute(name = "cn")
-  private String commonName;
-  @Attribute(name = "sn")
-  private String sn;
-  @Attribute(name = "givenName")
-  private String givenName;
-  @Attribute(name = "uid")
-  private String uid;
-  @Attribute(name = "uidNumber")
-  private Integer uidNumber;
-  @Attribute(name = "gidNumber")
-  private Integer gidNumber;
-  @Attribute(name = "userPassword", type = Type.STRING)
-  private String password;
-  @Attribute(name = "homeDirectory")
-  private String homeDirectory;
-  @Attribute(name = "createTimestamp")
-  private String createTime;
-  @Transient
-  private boolean isNew;
+    @Id
+    private Name id;
 
-  public Name getId() {
-    return id;
-  }
+    @Attribute(name = "cn")
+    private String commonName;
 
-  public void setId(Name id) {
-    this.id = id;
-  }
+    @Attribute(name = "sn")
+    private String sn;
 
-  public String getCommonName() {
-    return commonName;
-  }
+    @Attribute(name = "givenName")
+    private String givenName;
 
-  public void setCommonName(String commonName) {
-    this.commonName = commonName;
-  }
+    @Attribute(name = "uid")
+    private String uid;
 
-  public String getGivenName() {
-    return givenName;
-  }
+    @Attribute(name = "uidNumber")
+    private Integer uidNumber;
 
-  public void setGivenName(String givenName) {
-    this.givenName = givenName;
-  }
+    @Attribute(name = "gidNumber")
+    private Integer gidNumber;
 
-  public String getSn() {
-    return sn;
-  }
+    @Attribute(name = "userPassword", type = Type.STRING)
+    private String password;
 
-  public void setSn(String sn) {
-    this.sn = sn;
-  }
+    @Attribute(name = "homeDirectory")
+    private String homeDirectory;
 
-  public String getPassword() {
-    return password;
-  }
+    @Attribute(name = "createTimestamp")
+    private String createTime;
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    @Transient
+    private boolean isNew;
 
-  public String getCreateTime() {
-    return createTime;
-  }
+    public Name getId() {
+        return id;
+    }
 
-  public void setCreateTime(String createTime) {
-    this.createTime = createTime;
-  }
+    public void setId(Name id) {
+        this.id = id;
+    }
 
-  public String getUid() {
-    return uid;
-  }
+    public String getCommonName() {
+        return commonName;
+    }
 
-  public void setUid(String uid) {
-    this.uid = uid;
-  }
+    public void setCommonName(String commonName) {
+        this.commonName = commonName;
+    }
 
-  public boolean isNew() {
-    return isNew;
-  }
+    public String getGivenName() {
+        return givenName;
+    }
 
-  public void setNew(boolean isNew) {
-    this.isNew = isNew;
-  }
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
+    }
 
-  public Integer getUidNumber() {
-    return uidNumber;
-  }
+    public String getSn() {
+        return sn;
+    }
 
-  public void setUidNumber(Integer uidNumber) {
-    this.uidNumber = uidNumber;
-  }
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
 
-  public Integer getGidNumber() {
-    return gidNumber;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public void setGidNumber(Integer gidNumber) {
-    this.gidNumber = gidNumber;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public String getHomeDirectory() {
-    return homeDirectory;
-  }
+    public String getCreateTime() {
+        return createTime;
+    }
 
-  public void setHomeDirectory(String homeDirectory) {
-    this.homeDirectory = homeDirectory;
-  }
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+
+    public Integer getUidNumber() {
+        return uidNumber;
+    }
+
+    public void setUidNumber(Integer uidNumber) {
+        this.uidNumber = uidNumber;
+    }
+
+    public Integer getGidNumber() {
+        return gidNumber;
+    }
+
+    public void setGidNumber(Integer gidNumber) {
+        this.gidNumber = gidNumber;
+    }
+
+    public String getHomeDirectory() {
+        return homeDirectory;
+    }
+
+    public void setHomeDirectory(String homeDirectory) {
+        this.homeDirectory = homeDirectory;
+    }
 
 }

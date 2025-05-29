@@ -17,8 +17,9 @@ import com.oner365.data.commons.util.DataUtils;
  * @author zhaoyong
  */
 public class GenTableColumn implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     private static final String BLANK = " ";
 
     /** 编号 */
@@ -324,7 +325,8 @@ public class GenTableColumn implements Serializable {
                 }
             }
             return sb.deleteCharAt(sb.length() - 1).toString();
-        } else {
+        }
+        else {
             return this.columnComment;
         }
     }

@@ -20,8 +20,7 @@ public interface ISysRoleMenuDao extends JpaRepository<SysRoleMenu, String>, Jpa
 
     /**
      * 查询列表
-     *
-     * @param roleId     角色编号
+     * @param roleId 角色编号
      * @param menuTypeId 菜单类型编号
      * @return List
      */
@@ -30,7 +29,6 @@ public interface ISysRoleMenuDao extends JpaRepository<SysRoleMenu, String>, Jpa
 
     /**
      * 删除角色菜单权限
-     *
      * @param roleId 角色编号
      */
     @Transactional(rollbackFor = ProjectRuntimeException.class)
@@ -40,7 +38,6 @@ public interface ISysRoleMenuDao extends JpaRepository<SysRoleMenu, String>, Jpa
 
     /**
      * 删除角色菜单权限
-     *
      * @param menuId 菜单编号
      */
     @Transactional(rollbackFor = ProjectRuntimeException.class)

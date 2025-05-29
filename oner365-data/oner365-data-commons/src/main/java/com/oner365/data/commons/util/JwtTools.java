@@ -22,37 +22,39 @@ public class JwtTools {
     private static final Logger LOGGER = LoggerFactory.getLogger(JwtTools.class);
 
     private static final String PARAM_AUTH = "auth0";
+
     private static final String PARAM_BODY = "body";
-    
+
     private JwtTools() {
     }
 
     /**
      * 生成加密后的token
-     *
-     * @param body   加密内容
-     * @param time   时效
+     * @param body 加密内容
+     * @param time 时效
      * @param secret 签名key
      * @return 加密后的token
      */
     public static String generateToken(String body, Date time, String secret) {
         try {
-            return JWT.create().withIssuer(PARAM_AUTH).withClaim(PARAM_BODY, body)
-                    .withExpiresAt(time)
-                    .sign(Algorithm.HMAC256(secret));
-        } catch (JWTCreationException e) {
+            return JWT.create()
+                .withIssuer(PARAM_AUTH)
+                .withClaim(PARAM_BODY, body)
+                .withExpiresAt(time)
+                .sign(Algorithm.HMAC256(secret));
+        }
+        catch (JWTCreationException e) {
             LOGGER.error("getToken JWTCreationException:", e);
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             LOGGER.error("getToken IllegalArgumentException:", e);
         }
         return null;
     }
 
     /**
-     * 解密
-     * 先验证token是否被伪造，然后解码token。
-     *
-     * @param token  字符串token
+     * 解密 先验证token是否被伪造，然后解码token。
+     * @param token 字符串token
      * @param secret 签名key
      * @return 解密后的DecodedJWT对象，可以读取token中的数据。
      */
@@ -60,32 +62,33 @@ public class JwtTools {
         try {
             JWTVerifier verifier = JWT.require(Algorithm.HMAC256(secret)).withIssuer(PARAM_AUTH).build();
             return verifier.verify(token);
-        } catch (JWTVerificationException e) {
+        }
+        catch (JWTVerificationException e) {
             LOGGER.error("decodeToken JWTCreationException:", e);
-        } catch (IllegalArgumentException e) {
+        }
+        catch (IllegalArgumentException e) {
             LOGGER.error("decodeToken IllegalArgumentException:", e);
         }
         return null;
     }
-    
+
     /**
      * 验证token 有效期
-     * 
      * @param token 字符串token
      * @param secret 签名key
      * @return 是否有效
      */
     public static Boolean validateToken(String token, String secret) {
-      DecodedJWT decoded = decodeToken(token, secret);
-      if (decoded == null) {
+        DecodedJWT decoded = decodeToken(token, secret);
+        if (decoded == null) {
+            return false;
+        }
+
+        Date expiration = decoded.getExpiresAt();
+        if (expiration != null) {
+            return expiration.after(DateUtil.getDate());
+        }
         return false;
-      }
-      
-      Date expiration = decoded.getExpiresAt();
-      if (expiration != null) {
-        return expiration.after(DateUtil.getDate());
-      }
-      return false;
     }
 
 }

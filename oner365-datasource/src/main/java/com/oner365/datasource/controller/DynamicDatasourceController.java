@@ -18,49 +18,52 @@ import com.oner365.datasource.dynamic.DynamicDataSource;
 
 /**
  * 接口测试
- * 
+ *
  * @author zhaoyong
  */
 @RestController
 @RequestMapping("/dynamic")
 public class DynamicDatasourceController extends BaseController {
-  
-  @Resource(name = "dynamicDataSource")
-  private DynamicDataSource dataSource;
 
-  /**
-   * 测试切换数据源
-   * 
-   * @return ResponseData
-   */
-  @GetMapping("/test")
-  public ResponseData<HashMap<String, Object>> testDataSource() {
-    HashMap<String, Object> result = new HashMap<>(10);
+    @Resource(name = "dynamicDataSource")
+    private DynamicDataSource dataSource;
 
-    // 切换数据源1
-    try {
-      DataSourceHolder.setDataSource("nacos");
-      String sql = "select * from config_info limit 1";
-      List<Map<String, Object>> list = DataSourceUtil.execute(dataSource.getConnection(), sql);
-      result.put("result1", list);
-    } catch (Exception e) {
-      logger.error("ds1 connection error", e);
-    } finally {
-      DataSourceHolder.clearDataSource();
+    /**
+     * 测试切换数据源
+     * @return ResponseData
+     */
+    @GetMapping("/test")
+    public ResponseData<HashMap<String, Object>> testDataSource() {
+        HashMap<String, Object> result = new HashMap<>(10);
+
+        // 切换数据源1
+        try {
+            DataSourceHolder.setDataSource("nacos");
+            String sql = "select * from config_info limit 1";
+            List<Map<String, Object>> list = DataSourceUtil.execute(dataSource.getConnection(), sql);
+            result.put("result1", list);
+        }
+        catch (Exception e) {
+            logger.error("ds1 connection error", e);
+        }
+        finally {
+            DataSourceHolder.clearDataSource();
+        }
+
+        // 切换数据源2
+        try {
+            DataSourceHolder.setDataSource("oner365");
+            String sql = "select * from hibernate_sequence limit 1";
+            List<Map<String, Object>> list = DataSourceUtil.execute(dataSource.getConnection(), sql);
+            result.put("result2", list);
+        }
+        catch (Exception e) {
+            logger.error("ds2 connection error", e);
+        }
+        finally {
+            DataSourceHolder.clearDataSource();
+        }
+        return ResponseData.success(result);
     }
-
-    // 切换数据源2
-    try {
-      DataSourceHolder.setDataSource("oner365");
-      String sql = "select * from hibernate_sequence limit 1";
-      List<Map<String, Object>> list = DataSourceUtil.execute(dataSource.getConnection(), sql);
-      result.put("result2", list);
-    } catch (Exception e) {
-      logger.error("ds2 connection error", e);
-    } finally {
-      DataSourceHolder.clearDataSource();
-    }
-    return ResponseData.success(result);
-  }
 
 }

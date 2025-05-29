@@ -14,42 +14,39 @@ import com.oner365.swagger.enums.RabbitmqTypeEnum;
 
 /**
  * 监控服务 - 队列
- * 
+ *
  * @author zhaoyong
  *
  */
 @FeignClient(value = PathConstants.FEIGN_CLIENT_MONITOR, contextId = PathConstants.CONTEXT_MONITOR_RABBITMQ_ID)
 public interface IMonitorRabbitmqClient {
-  
-  /**
-   * 首页信息
-   * 
-   * @return ResponseData<Serializable>
-   */
-  @GetMapping(PathConstants.REQUEST_MONITOR_RABBITMQ_INDEX)
-  ResponseData<Serializable> index();
-  
-  /**
-   * 获取队列列表
-   * 
-   * @param type      类型
-   * @param pageIndex 分页页面
-   * @param pageSize  分页长度
-   * @param name      查询名称
-   * @return ResponseData<Serializable>
-   */
-  @GetMapping(PathConstants.REQUEST_MONITOR_RABBITMQ_LIST)
-  ResponseData<Serializable> list(@PathVariable RabbitmqTypeEnum type, @RequestParam int pageIndex,
-      @RequestParam int pageSize, @RequestParam String name);
-  
-  /**
-   * 删除
-   * 
-   * @param type 类型
-   * @param name 查询名称
-   * @return ResponseData<Serializable>
-   */
-  @DeleteMapping(PathConstants.REQUEST_MONITOR_RABBITMQ_DELETE)
-  ResponseData<Serializable> delete(@PathVariable String type, @PathVariable String name);
+
+    /**
+     * 首页信息
+     * @return ResponseData<Serializable>
+     */
+    @GetMapping(PathConstants.REQUEST_MONITOR_RABBITMQ_INDEX)
+    ResponseData<Serializable> index();
+
+    /**
+     * 获取队列列表
+     * @param type 类型
+     * @param pageIndex 分页页面
+     * @param pageSize 分页长度
+     * @param name 查询名称
+     * @return ResponseData<Serializable>
+     */
+    @GetMapping(PathConstants.REQUEST_MONITOR_RABBITMQ_LIST)
+    ResponseData<Serializable> list(@PathVariable RabbitmqTypeEnum type, @RequestParam int pageIndex,
+            @RequestParam int pageSize, @RequestParam String name);
+
+    /**
+     * 删除
+     * @param type 类型
+     * @param name 查询名称
+     * @return ResponseData<Serializable>
+     */
+    @DeleteMapping(PathConstants.REQUEST_MONITOR_RABBITMQ_DELETE)
+    ResponseData<Serializable> delete(@PathVariable String type, @PathVariable String name);
 
 }

@@ -10,23 +10,23 @@ import java.util.List;
  */
 public class PolygonVo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * Point List
-   */
-  private List<PointVo> points;
+    /**
+     * Point List
+     */
+    private List<PointVo> points;
 
-  public PolygonVo() {
-    super();
-  }
+    public PolygonVo() {
+        super();
+    }
 
-  public List<PointVo> getPoints() {
-    return points;
-  }
+    public List<PointVo> getPoints() {
+        return points;
+    }
 
-  public void setPoints(List<PointVo> points) {
-    this.points = points;
-  }
+    public void setPoints(List<PointVo> points) {
+        this.points = points;
+    }
 
 }

@@ -5,86 +5,86 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Token相关配置
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 public class CommonProperties {
-  
-  /**
-   * redis缓存开关
-   */
-  @Value("${spring.data.redis.repositories.enabled:true}")
-  private boolean redisEnabled;
 
-  /**
-   * 项目名称
-   */
-  @Value("${spring.application.name}")
-  private String serviceId;
-  
-  /**
-   * 默认ip地址
-   */
-  private String host = "localhost";
-  
-  /**
-   * 服务端口
-   */
-  @Value("${server.port:8704}")
-  private int port;
-  
-  /**
-   * 当前服务配置
-   */
-  @Value("${spring.profiles.active:default}")
-  private String scheme;
-  
-  /**
-   * 构造方法
-   */
-  public CommonProperties() {
-    super();
-  }
+    /**
+     * redis缓存开关
+     */
+    @Value("${spring.data.redis.repositories.enabled:true}")
+    private boolean redisEnabled;
 
-  public boolean isRedisEnabled() {
-    return redisEnabled;
-  }
+    /**
+     * 项目名称
+     */
+    @Value("${spring.application.name}")
+    private String serviceId;
 
-  public void setRedisEnabled(boolean redisEnabled) {
-    this.redisEnabled = redisEnabled;
-  }
+    /**
+     * 默认ip地址
+     */
+    private String host = "localhost";
 
-  public String getServiceId() {
-    return serviceId;
-  }
+    /**
+     * 服务端口
+     */
+    @Value("${server.port:8704}")
+    private int port;
 
-  public void setServiceId(String serviceId) {
-    this.serviceId = serviceId;
-  }
+    /**
+     * 当前服务配置
+     */
+    @Value("${spring.profiles.active:default}")
+    private String scheme;
 
-  public String getHost() {
-    return host;
-  }
+    /**
+     * 构造方法
+     */
+    public CommonProperties() {
+        super();
+    }
 
-  public void setHost(String host) {
-    this.host = host;
-  }
+    public boolean isRedisEnabled() {
+        return redisEnabled;
+    }
 
-  public int getPort() {
-    return port;
-  }
+    public void setRedisEnabled(boolean redisEnabled) {
+        this.redisEnabled = redisEnabled;
+    }
 
-  public void setPort(int port) {
-    this.port = port;
-  }
+    public String getServiceId() {
+        return serviceId;
+    }
 
-  public String getScheme() {
-    return scheme;
-  }
+    public void setServiceId(String serviceId) {
+        this.serviceId = serviceId;
+    }
 
-  public void setScheme(String scheme) {
-    this.scheme = scheme;
-  }
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public void setPort(int port) {
+        this.port = port;
+    }
+
+    public String getScheme() {
+        return scheme;
+    }
+
+    public void setScheme(String scheme) {
+        this.scheme = scheme;
+    }
 
 }

@@ -20,12 +20,12 @@ import com.google.code.kaptcha.util.Config;
 
 /**
  * 验证码
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 public class CaptchaConfig {
-    
+
     @Bean(name = "captchaProducer")
     DefaultKaptcha getKaptchaBean() {
         DefaultKaptcha defaultKaptcha = new DefaultKaptcha();

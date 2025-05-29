@@ -26,35 +26,35 @@ import com.oner365.monitor.vo.SysTaskVo;
 @Service
 public class ScheduleSendExecuteServiceImpl implements IScheduleSendExecuteService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleSendExecuteServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ScheduleSendExecuteServiceImpl.class);
 
-  @Resource
-  private ISysTaskLogService sysTaskLogService;
+    @Resource
+    private ISysTaskLogService sysTaskLogService;
 
-  @Resource
-  private ISysTaskService sysTaskService;
+    @Resource
+    private ISysTaskService sysTaskService;
 
-  @Override
-  public void updateTaskExecuteStatus(UpdateTaskExecuteSatusDto updateTask) throws SchedulerException, TaskException {
-    LOGGER.info("updateTaskExecuteStatus :{}", updateTask);
-    SysTaskDto sysTask = sysTaskService.selectTaskById(updateTask.getTaskId());
-    if (sysTask != null) {
-      sysTask.setExecuteStatus(updateTask.getExecuteStatus());
-      sysTaskService.save(convert(sysTask, SysTaskVo.class));
+    @Override
+    public void updateTaskExecuteStatus(UpdateTaskExecuteSatusDto updateTask) throws SchedulerException, TaskException {
+        LOGGER.info("updateTaskExecuteStatus :{}", updateTask);
+        SysTaskDto sysTask = sysTaskService.selectTaskById(updateTask.getTaskId());
+        if (sysTask != null) {
+            sysTask.setExecuteStatus(updateTask.getExecuteStatus());
+            sysTaskService.save(convert(sysTask, SysTaskVo.class));
+        }
     }
-  }
 
-  @Override
-  public void saveExecuteTaskLog(SysTaskLogDto taskLog) {
-    LOGGER.info("saveExecuteTaskLog :{}", taskLog);
-    SysTaskDto sysTask = sysTaskService.selectTaskById(taskLog.getTaskId());
-    SysTaskLogVo sysTaskLog = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(taskLog)), SysTaskLogVo.class);
-    if (sysTask != null) {
-      sysTaskLog.setTaskGroup(sysTask.getTaskGroup());
-      sysTaskLog.setTaskName(sysTask.getTaskName());
-      sysTaskLog.setInvokeTarget(sysTask.getInvokeTarget());
-      sysTaskLogService.addTaskLog(sysTaskLog);
+    @Override
+    public void saveExecuteTaskLog(SysTaskLogDto taskLog) {
+        LOGGER.info("saveExecuteTaskLog :{}", taskLog);
+        SysTaskDto sysTask = sysTaskService.selectTaskById(taskLog.getTaskId());
+        SysTaskLogVo sysTaskLog = JSON.toJavaObject(JSON.parseObject(JSON.toJSONString(taskLog)), SysTaskLogVo.class);
+        if (sysTask != null) {
+            sysTaskLog.setTaskGroup(sysTask.getTaskGroup());
+            sysTaskLog.setTaskName(sysTask.getTaskName());
+            sysTaskLog.setInvokeTarget(sysTask.getInvokeTarget());
+            sysTaskLogService.addTaskLog(sysTaskLog);
+        }
     }
-  }
 
 }

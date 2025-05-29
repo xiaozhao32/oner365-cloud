@@ -12,7 +12,7 @@ import com.oner365.data.web.controller.BaseController;
 
 /**
  * 队列 controller
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -20,20 +20,20 @@ import com.oner365.data.web.controller.BaseController;
 @RequestMapping("/message")
 public class TestController extends BaseController {
 
-  @Resource
-  private SendMessageService service;
+    @Resource
+    private SendMessageService service;
 
-  /**
-   * 测试发送
-   * 
-   * @param message 参数
-   * @return JSONObject
-   */
-  @GetMapping("/send")
-  public JSONObject send(String message) {
-    service.sendMessage(message);
-    JSONObject json = new JSONObject();
-    json.put("message", message);
-    return json;
-  }
+    /**
+     * 测试发送
+     * @param message 参数
+     * @return JSONObject
+     */
+    @GetMapping("/send")
+    public JSONObject send(String message) {
+        service.sendMessage(message);
+        JSONObject json = new JSONObject();
+        json.put("message", message);
+        return json;
+    }
+
 }

@@ -4,54 +4,54 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * Spark 配置类
- * 
+ *
  * @author zhaoyong
  */
 @ConfigurationProperties(prefix = "spring.spark")
 public class SparkConfigProperties {
 
-  private String master;
+    private String master;
 
-  private String appName;
-  
-  private String home;
-  
-  private String eventLogDir;
+    private String appName;
 
-  public SparkConfigProperties() {
-    super();
-  }
+    private String home;
 
-  public String getMaster() {
-    return master;
-  }
+    private String eventLogDir;
 
-  public void setMaster(String master) {
-    this.master = master;
-  }
+    public SparkConfigProperties() {
+        super();
+    }
 
-  public String getAppName() {
-    return appName;
-  }
+    public String getMaster() {
+        return master;
+    }
 
-  public void setAppName(String appName) {
-    this.appName = appName;
-  }
+    public void setMaster(String master) {
+        this.master = master;
+    }
 
-  public String getHome() {
-    return home;
-  }
+    public String getAppName() {
+        return appName;
+    }
 
-  public void setHome(String home) {
-    this.home = home;
-  }
+    public void setAppName(String appName) {
+        this.appName = appName;
+    }
 
-  public String getEventLogDir() {
-    return eventLogDir;
-  }
+    public String getHome() {
+        return home;
+    }
 
-  public void setEventLogDir(String eventLogDir) {
-    this.eventLogDir = eventLogDir;
-  }
-  
+    public void setHome(String home) {
+        this.home = home;
+    }
+
+    public String getEventLogDir() {
+        return eventLogDir;
+    }
+
+    public void setEventLogDir(String eventLogDir) {
+        this.eventLogDir = eventLogDir;
+    }
+
 }

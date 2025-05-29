@@ -9,6 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * 系统服务
+ *
  * @author zhaoyong
  */
 @SpringBootApplication
@@ -21,5 +22,5 @@ public class SpringSystemApplication {
     public static void main(String[] args) {
         SpringApplication.run(SpringSystemApplication.class, args);
     }
-    
+
 }

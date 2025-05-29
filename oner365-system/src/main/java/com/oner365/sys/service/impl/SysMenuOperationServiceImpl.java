@@ -41,112 +41,117 @@ import com.oner365.sys.vo.SysMenuOperationVo;
 @Service
 public class SysMenuOperationServiceImpl implements ISysMenuOperationService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SysMenuOperationServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SysMenuOperationServiceImpl.class);
 
-  private static final String CACHE_NAME = "SysMenuOperation";
+    private static final String CACHE_NAME = "SysMenuOperation";
 
-  @Resource
-  private ISysMenuOperationDao menuOperationDao;
+    @Resource
+    private ISysMenuOperationDao menuOperationDao;
 
-  @Resource
-  private ISysMenuOperDao menuOperDao;
+    @Resource
+    private ISysMenuOperDao menuOperDao;
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public PageInfo<SysMenuOperationDto> pageList(QueryCriteriaBean data) {
-    try {
-      Page<SysMenuOperation> page = menuOperationDao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
-      return convert(page, SysMenuOperationDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error pageList: ", e);
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public PageInfo<SysMenuOperationDto> pageList(QueryCriteriaBean data) {
+        try {
+            Page<SysMenuOperation> page = menuOperationDao.findAll(QueryUtils.buildCriteria(data),
+                    QueryUtils.buildPageRequest(data));
+            return convert(page, SysMenuOperationDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error pageList: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<SysMenuOperationDto> findList(QueryCriteriaBean data) {
-    try {
-      List<SysMenuOperation> list = menuOperationDao.findAll(QueryUtils.buildCriteria(data));
-      return convert(list, SysMenuOperationDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error findList: ", e);
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<SysMenuOperationDto> findList(QueryCriteriaBean data) {
+        try {
+            List<SysMenuOperation> list = menuOperationDao.findAll(QueryUtils.buildCriteria(data));
+            return convert(list, SysMenuOperationDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return Collections.emptyList();
     }
-    return Collections.emptyList();
-  }
 
-  @Override
-  @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
-  public SysMenuOperationDto getById(String id) {
-    try {
-      Optional<SysMenuOperation> optional = menuOperationDao.findById(id);
-      return convert(optional.orElse(null), SysMenuOperationDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error getById: ", e);
+    @Override
+    @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
+    public SysMenuOperationDto getById(String id) {
+        try {
+            Optional<SysMenuOperation> optional = menuOperationDao.findById(id);
+            return convert(optional.orElse(null), SysMenuOperationDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error getById: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public SysMenuOperationDto save(SysMenuOperationVo vo) {
-    if (DataUtils.isEmpty(vo.getId())) {
-      vo.setStatus(StatusEnum.YES);
-      vo.setCreateTime(LocalDateTime.now());
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public SysMenuOperationDto save(SysMenuOperationVo vo) {
+        if (DataUtils.isEmpty(vo.getId())) {
+            vo.setStatus(StatusEnum.YES);
+            vo.setCreateTime(LocalDateTime.now());
+        }
+        vo.setUpdateTime(LocalDateTime.now());
+        SysMenuOperation entity = menuOperationDao.save(convert(vo, SysMenuOperation.class));
+        return convert(entity, SysMenuOperationDto.class);
     }
-    vo.setUpdateTime(LocalDateTime.now());
-    SysMenuOperation entity = menuOperationDao.save(convert(vo, SysMenuOperation.class));
-    return convert(entity, SysMenuOperationDto.class);
-  }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Boolean deleteById(String id) {
-    // 删除菜单与操作关联
-    menuOperDao.deleteByOperationId(id);
-    // 删除操作与角色关联
-    // 删除操作
-    menuOperationDao.deleteById(id);
-    return Boolean.TRUE;
-  }
-
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<String> selectByMenuId(String menuId) {
-    return menuOperDao.selectByMenuId(menuId);
-  }
-
-  @Override
-  public Boolean checkCode(String id, String code) {
-    try {
-      Criteria<SysMenuOperation> criteria = new Criteria<>();
-      criteria.add(Restrictions.eq(SysConstants.OPERATION_TYPE, DataUtils.trimToNull(code)));
-      if (!DataUtils.isEmpty(id)) {
-        criteria.add(Restrictions.ne(SysConstants.ID, id));
-      }
-      if (menuOperationDao.count(criteria) > 0) {
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Boolean deleteById(String id) {
+        // 删除菜单与操作关联
+        menuOperDao.deleteByOperationId(id);
+        // 删除操作与角色关联
+        // 删除操作
+        menuOperationDao.deleteById(id);
         return Boolean.TRUE;
-      }
-    } catch (Exception e) {
-      LOGGER.error("Error checkCode:", e);
     }
-    return Boolean.FALSE;
-  }
-  
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Boolean editStatus(String id, StatusEnum status) {
-    Optional<SysMenuOperation> optional = menuOperationDao.findById(id);
-    if (optional.isPresent()) {
-      optional.get().setStatus(status);
-      optional.get().setUpdateTime(LocalDateTime.now());
-      menuOperationDao.save(optional.get());
-      return Boolean.TRUE;
+
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<String> selectByMenuId(String menuId) {
+        return menuOperDao.selectByMenuId(menuId);
     }
-    return Boolean.FALSE;
-  }
+
+    @Override
+    public Boolean checkCode(String id, String code) {
+        try {
+            Criteria<SysMenuOperation> criteria = new Criteria<>();
+            criteria.add(Restrictions.eq(SysConstants.OPERATION_TYPE, DataUtils.trimToNull(code)));
+            if (!DataUtils.isEmpty(id)) {
+                criteria.add(Restrictions.ne(SysConstants.ID, id));
+            }
+            if (menuOperationDao.count(criteria) > 0) {
+                return Boolean.TRUE;
+            }
+        }
+        catch (Exception e) {
+            LOGGER.error("Error checkCode:", e);
+        }
+        return Boolean.FALSE;
+    }
+
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Boolean editStatus(String id, StatusEnum status) {
+        Optional<SysMenuOperation> optional = menuOperationDao.findById(id);
+        if (optional.isPresent()) {
+            optional.get().setStatus(status);
+            optional.get().setUpdateTime(LocalDateTime.now());
+            menuOperationDao.save(optional.get());
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
 
 }

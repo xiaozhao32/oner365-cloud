@@ -9,8 +9,8 @@ public interface BizName {
 
     /**
      * 创建
-     * 
      * @return String
      */
     String create();
+
 }

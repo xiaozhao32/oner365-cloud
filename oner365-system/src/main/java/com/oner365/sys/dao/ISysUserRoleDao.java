@@ -13,16 +13,18 @@ import com.oner365.sys.entity.SysUserRole;
 
 /**
  * 用户角色权限接口
+ *
  * @author zhaoyong
  */
-public interface ISysUserRoleDao extends JpaRepository<SysUserRole, String>,JpaSpecificationExecutor<SysUserRole>{
+public interface ISysUserRoleDao extends JpaRepository<SysUserRole, String>, JpaSpecificationExecutor<SysUserRole> {
 
     /**
      * 查询用户角色权限列表
      * @param userId 用户编号
      * @return List
      */
-    @Query(value = "select r.id from nt_sys_user_role ur, nt_sys_role r where ur.role_id=r.id and user_id=?1",nativeQuery = true)
+    @Query(value = "select r.id from nt_sys_user_role ur, nt_sys_role r where ur.role_id=r.id and user_id=?1",
+            nativeQuery = true)
     List<String> findUserRoleByUserId(String userId);
 
     /**
@@ -31,7 +33,7 @@ public interface ISysUserRoleDao extends JpaRepository<SysUserRole, String>,JpaS
      */
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @Modifying(clearAutomatically = true)
-    @Query(value = "delete from nt_sys_user_role where user_id=?1 ",nativeQuery = true)
+    @Query(value = "delete from nt_sys_user_role where user_id=?1 ", nativeQuery = true)
     void deleteUserRoleByUserId(String userId);
 
     /**
@@ -40,7 +42,7 @@ public interface ISysUserRoleDao extends JpaRepository<SysUserRole, String>,JpaS
      */
     @Transactional(rollbackFor = ProjectRuntimeException.class)
     @Modifying(clearAutomatically = true)
-    @Query(value = "delete from nt_sys_user_role where role_id=?1 ",nativeQuery = true)
+    @Query(value = "delete from nt_sys_user_role where role_id=?1 ", nativeQuery = true)
     void deleteUserRoleByRoleId(String roleId);
 
 }

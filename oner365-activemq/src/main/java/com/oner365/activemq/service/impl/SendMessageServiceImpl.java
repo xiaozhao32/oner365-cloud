@@ -12,19 +12,19 @@ import com.oner365.activemq.service.SendMessageService;
 
 @Service
 public class SendMessageServiceImpl implements SendMessageService {
-  
-  private final Logger logger = LoggerFactory.getLogger(SendMessageService.class);
 
-  @Resource
-  private JmsMessagingTemplate jmsMessagingTemplate;
+    private final Logger logger = LoggerFactory.getLogger(SendMessageService.class);
 
-  @Resource
-  private Queue queue;
+    @Resource
+    private JmsMessagingTemplate jmsMessagingTemplate;
 
-  @Override
-  public void sendMessage(String message) {
-    logger.info("ActiveMQ Send Message: {}", message);
-    jmsMessagingTemplate.convertAndSend(queue, message);
-  }
+    @Resource
+    private Queue queue;
+
+    @Override
+    public void sendMessage(String message) {
+        logger.info("ActiveMQ Send Message: {}", message);
+        jmsMessagingTemplate.convertAndSend(queue, message);
+    }
 
 }

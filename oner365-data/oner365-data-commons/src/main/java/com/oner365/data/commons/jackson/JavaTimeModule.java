@@ -28,58 +28,66 @@ import com.oner365.data.commons.util.DateUtil;
 
 /**
  * JavaTimeModule
- * 
+ *
  * @author zhaoyong
  *
  */
 public class JavaTimeModule extends SimpleModule {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  public JavaTimeModule() {
-    super(PackageVersion.VERSION);
+    public JavaTimeModule() {
+        super(PackageVersion.VERSION);
 
-    addSerializer(LocalDateTime.class, new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DateUtil.FULL_TIME_FORMAT)));
-    addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DateUtil.FULL_DATE_FORMAT)));
-    addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(DateUtil.LONG_TIME_FORMAT)));
-    addSerializer(Instant.class, new InstantCustomSerializer(DateTimeFormatter.ofPattern(DateUtil.FULL_TIME_FORMAT)));
+        addSerializer(LocalDateTime.class,
+                new LocalDateTimeSerializer(DateTimeFormatter.ofPattern(DateUtil.FULL_TIME_FORMAT)));
+        addSerializer(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ofPattern(DateUtil.FULL_DATE_FORMAT)));
+        addSerializer(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ofPattern(DateUtil.LONG_TIME_FORMAT)));
+        addSerializer(Instant.class,
+                new InstantCustomSerializer(DateTimeFormatter.ofPattern(DateUtil.FULL_TIME_FORMAT)));
 
-    addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DateUtil.FULL_TIME_FORMAT)));
-    addDeserializer(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ofPattern(DateUtil.FULL_DATE_FORMAT)));
-    addDeserializer(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ofPattern(DateUtil.LONG_TIME_FORMAT)));
-    addDeserializer(Instant.class, new InstantCustomDeserializer());
-  }
-
-  static class InstantCustomSerializer extends JsonSerializer<Instant> {
-    private final DateTimeFormatter format;
-
-    private InstantCustomSerializer(DateTimeFormatter formatter) {
-      this.format = formatter;
+        addDeserializer(LocalDateTime.class,
+                new LocalDateTimeDeserializer(DateTimeFormatter.ofPattern(DateUtil.FULL_TIME_FORMAT)));
+        addDeserializer(LocalDate.class,
+                new LocalDateDeserializer(DateTimeFormatter.ofPattern(DateUtil.FULL_DATE_FORMAT)));
+        addDeserializer(LocalTime.class,
+                new LocalTimeDeserializer(DateTimeFormatter.ofPattern(DateUtil.LONG_TIME_FORMAT)));
+        addDeserializer(Instant.class, new InstantCustomDeserializer());
     }
 
-    @Override
-    public void serialize(Instant instant, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
-        throws IOException {
-      if (instant != null) {
-        String jsonValue = format.format(instant.atZone(ZoneId.systemDefault()));
-        jsonGenerator.writeString(jsonValue);
-      }
-    }
-  }
+    static class InstantCustomSerializer extends JsonSerializer<Instant> {
 
-  static class InstantCustomDeserializer extends JsonDeserializer<Instant> {
+        private final DateTimeFormatter format;
 
-    @Override
-    public Instant deserialize(JsonParser parser, DeserializationContext context) throws IOException {
-      String dateString = parser.getText().trim();
-      if (DataUtils.isEmpty(dateString)) {
-        Date pareDate = DateUtil.stringToDate(dateString, DateUtil.FULL_TIME_FORMAT);
-        if (pareDate != null) {
-          return pareDate.toInstant();
+        private InstantCustomSerializer(DateTimeFormatter formatter) {
+            this.format = formatter;
         }
-      }
-      return null;
+
+        @Override
+        public void serialize(Instant instant, JsonGenerator jsonGenerator, SerializerProvider serializerProvider)
+                throws IOException {
+            if (instant != null) {
+                String jsonValue = format.format(instant.atZone(ZoneId.systemDefault()));
+                jsonGenerator.writeString(jsonValue);
+            }
+        }
+
     }
 
-  }
+    static class InstantCustomDeserializer extends JsonDeserializer<Instant> {
+
+        @Override
+        public Instant deserialize(JsonParser parser, DeserializationContext context) throws IOException {
+            String dateString = parser.getText().trim();
+            if (DataUtils.isEmpty(dateString)) {
+                Date pareDate = DateUtil.stringToDate(dateString, DateUtil.FULL_TIME_FORMAT);
+                if (pareDate != null) {
+                    return pareDate.toInstant();
+                }
+            }
+            return null;
+        }
+
+    }
+
 }

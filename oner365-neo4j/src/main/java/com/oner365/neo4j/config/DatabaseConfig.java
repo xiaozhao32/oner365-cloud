@@ -6,22 +6,23 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Neo4j Config
- * 
+ *
  * @author zhaoyong
- * 
+ *
  */
 @Configuration
 public class DatabaseConfig {
 
-  @Bean
-  org.neo4j.cypherdsl.core.renderer.Configuration cypherDslConfiguration() {
+    @Bean
+    org.neo4j.cypherdsl.core.renderer.Configuration cypherDslConfiguration() {
 
-    Dialect dialect = Dialect.DEFAULT;
-    String neo4jVersion = System.getenv("NEO4J_VERSION");
-    if (neo4jVersion == null || neo4jVersion.startsWith("5")) {
-      dialect = Dialect.NEO4J_5;
+        Dialect dialect = Dialect.DEFAULT;
+        String neo4jVersion = System.getenv("NEO4J_VERSION");
+        if (neo4jVersion == null || neo4jVersion.startsWith("5")) {
+            dialect = Dialect.NEO4J_5;
+        }
+
+        return org.neo4j.cypherdsl.core.renderer.Configuration.newConfig().withDialect(dialect).build();
     }
 
-    return org.neo4j.cypherdsl.core.renderer.Configuration.newConfig().withDialect(dialect).build();
-  }
 }

@@ -18,45 +18,45 @@ import com.oner365.data.jpa.query.QueryUtils;
 
 /**
  * Employee Service
- * 
+ *
  * @author zhaoyong
  *
  */
 @Service
 public class EmployeeServiceImpl implements IEmployeeService {
 
-  @Resource
-  private IEmployeeDao dao;
+    @Resource
+    private IEmployeeDao dao;
 
-  public PageInfo<Employee> pageList(QueryCriteriaBean data) {
-    PageRequest pageable = QueryUtils.buildPageRequest(data);
-    Slice<Employee> slice = dao.findAll(pageable);
-    return new PageInfo<>(slice.getContent(), slice.getPageable().getPageNumber() + 1,
-        slice.getPageable().getPageSize(), slice.getContent().size());
-  }
+    public PageInfo<Employee> pageList(QueryCriteriaBean data) {
+        PageRequest pageable = QueryUtils.buildPageRequest(data);
+        Slice<Employee> slice = dao.findAll(pageable);
+        return new PageInfo<>(slice.getContent(), slice.getPageable().getPageNumber() + 1,
+                slice.getPageable().getPageSize(), slice.getContent().size());
+    }
 
-  @Override
-  public List<Employee> findList(QueryCriteriaBean data) {
-    PageRequest pageable = QueryUtils.buildPageRequest(data);
-    Slice<Employee> slice = dao.findAll(pageable);
-    return slice.getContent();
-  }
+    @Override
+    public List<Employee> findList(QueryCriteriaBean data) {
+        PageRequest pageable = QueryUtils.buildPageRequest(data);
+        Slice<Employee> slice = dao.findAll(pageable);
+        return slice.getContent();
+    }
 
-  @Override
-  public Employee getById(Integer id) {
-    Optional<Employee> optional = dao.findById(id);
-    return optional.orElse(null);
-  }
+    @Override
+    public Employee getById(Integer id) {
+        Optional<Employee> optional = dao.findById(id);
+        return optional.orElse(null);
+    }
 
-  @Override
-  public Employee save(Employee employee) {
-    return dao.save(employee);
-  }
+    @Override
+    public Employee save(Employee employee) {
+        return dao.save(employee);
+    }
 
-  @Override
-  public Boolean deleteById(Integer id) {
-    dao.deleteById(id);
-    return Boolean.TRUE;
-  }
+    @Override
+    public Boolean deleteById(Integer id) {
+        dao.deleteById(id);
+        return Boolean.TRUE;
+    }
 
 }

@@ -15,32 +15,37 @@ import com.oner365.zookeeper.config.properties.ZooKeeperProperties;
 
 /**
  * Zookeeper Config
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 @EnableConfigurationProperties({ ZooKeeperProperties.class })
 public class ZookeeperConfig {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ZookeeperConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ZookeeperConfig.class);
 
-  private final ZooKeeperProperties properties;
+    private final ZooKeeperProperties properties;
 
-  public ZookeeperConfig(ZooKeeperProperties properties) {
-    this.properties = properties;
-  }
+    public ZookeeperConfig(ZooKeeperProperties properties) {
+        this.properties = properties;
+    }
 
-  @Bean
-  CuratorFramework curatorFramework() {
-    LOGGER.info("init Zookeeper properties:{}", properties.getConnectString());
-    
-    RetryPolicy retryPolicy = new ExponentialBackoffRetry(properties.getBaseSleepTimeMs(), properties.getMaxRetries());
+    @Bean
+    CuratorFramework curatorFramework() {
+        LOGGER.info("init Zookeeper properties:{}", properties.getConnectString());
 
-    CuratorFramework client = CuratorFrameworkFactory.builder().connectString(properties.getConnectString())
-        .namespace(PublicConstants.NAME)
-        .connectionTimeoutMs((int) properties.getConnectionTimeout().toMillis())
-        .sessionTimeoutMs((int) properties.getSessionTimeout().toMillis()).retryPolicy(retryPolicy).build();
-    client.start();
-    return client;
-  }
+        RetryPolicy retryPolicy = new ExponentialBackoffRetry(properties.getBaseSleepTimeMs(),
+                properties.getMaxRetries());
+
+        CuratorFramework client = CuratorFrameworkFactory.builder()
+            .connectString(properties.getConnectString())
+            .namespace(PublicConstants.NAME)
+            .connectionTimeoutMs((int) properties.getConnectionTimeout().toMillis())
+            .sessionTimeoutMs((int) properties.getSessionTimeout().toMillis())
+            .retryPolicy(retryPolicy)
+            .build();
+        client.start();
+        return client;
+    }
+
 }

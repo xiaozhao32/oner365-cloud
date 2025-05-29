@@ -7,18 +7,19 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * Server 对象
+ *
  * @author zhaoyong
  *
  */
 public class ServerEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     /** 部署路径 */
     private String serverName;
-    
+
     private Boolean isDeploy;
-    
+
     private List<DeployServer> serverList;
 
     public String getServerName() {
@@ -36,7 +37,7 @@ public class ServerEntity implements Serializable {
     public void setIsDeploy(Boolean isDeploy) {
         this.isDeploy = isDeploy;
     }
-    
+
     public List<DeployServer> getServerList() {
         return serverList;
     }
@@ -44,7 +45,7 @@ public class ServerEntity implements Serializable {
     public void setServerList(List<DeployServer> serverList) {
         this.serverList = serverList;
     }
-    
+
     @Override
     public String toString() {
         return JSON.toJSONString(this);

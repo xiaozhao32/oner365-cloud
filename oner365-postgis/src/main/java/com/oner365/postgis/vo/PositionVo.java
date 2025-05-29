@@ -6,132 +6,132 @@ import com.oner365.postgis.enums.PostgisTypeEnum;
 
 /**
  * Position VO
- * 
+ *
  * @author zhaoyong
  */
 public class PositionVo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键
-   */
-  private String id;
+    /**
+     * 主键
+     */
+    private String id;
 
-  /**
-   * 名称
-   */
-  private String positionName;
-  
-  /**
-   * 枚举类型
-   */
-  private PostgisTypeEnum postgisType;
+    /**
+     * 名称
+     */
+    private String positionName;
 
-  /**
-   * Geometry Point
-   */
-  private PointVo point;
+    /**
+     * 枚举类型
+     */
+    private PostgisTypeEnum postgisType;
 
-  /**
-   * Geometry Polygon
-   */
-  private PolygonVo polygon;
-  
-  /**
-   * Geometry LineString
-   */
-  private LineStringVo lineString;
-  
-  /**
-   * Geometry MultiPoint
-   */
-  private MultiPointVo multiPoint;
-  
-  /**
-   * Geometry MultiLineString
-   */
-  private MultiLineStringVo multiLineString;
-  
-  /**
-   * Geometry MultiPolygon
-   */
-  private MultiPolygonVo multiPolygon;
-  
-  public PositionVo() {
-    super();
-  }
+    /**
+     * Geometry Point
+     */
+    private PointVo point;
 
-  public String getId() {
-    return id;
-  }
+    /**
+     * Geometry Polygon
+     */
+    private PolygonVo polygon;
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    /**
+     * Geometry LineString
+     */
+    private LineStringVo lineString;
 
-  public String getPositionName() {
-    return positionName;
-  }
+    /**
+     * Geometry MultiPoint
+     */
+    private MultiPointVo multiPoint;
 
-  public void setPositionName(String positionName) {
-    this.positionName = positionName;
-  }
+    /**
+     * Geometry MultiLineString
+     */
+    private MultiLineStringVo multiLineString;
 
-  public PointVo getPoint() {
-    return point;
-  }
+    /**
+     * Geometry MultiPolygon
+     */
+    private MultiPolygonVo multiPolygon;
 
-  public void setPoint(PointVo point) {
-    this.point = point;
-  }
+    public PositionVo() {
+        super();
+    }
 
-  public PolygonVo getPolygon() {
-    return polygon;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setPolygon(PolygonVo polygon) {
-    this.polygon = polygon;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public PostgisTypeEnum getPostgisType() {
-    return postgisType;
-  }
+    public String getPositionName() {
+        return positionName;
+    }
 
-  public void setPostgisType(PostgisTypeEnum postgisType) {
-    this.postgisType = postgisType;
-  }
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
 
-  public LineStringVo getLineString() {
-    return lineString;
-  }
+    public PointVo getPoint() {
+        return point;
+    }
 
-  public void setLineString(LineStringVo lineString) {
-    this.lineString = lineString;
-  }
+    public void setPoint(PointVo point) {
+        this.point = point;
+    }
 
-  public MultiPointVo getMultiPoint() {
-    return multiPoint;
-  }
+    public PolygonVo getPolygon() {
+        return polygon;
+    }
 
-  public void setMultiPoint(MultiPointVo multiPoint) {
-    this.multiPoint = multiPoint;
-  }
+    public void setPolygon(PolygonVo polygon) {
+        this.polygon = polygon;
+    }
 
-  public MultiLineStringVo getMultiLineString() {
-    return multiLineString;
-  }
+    public PostgisTypeEnum getPostgisType() {
+        return postgisType;
+    }
 
-  public void setMultiLineString(MultiLineStringVo multiLineString) {
-    this.multiLineString = multiLineString;
-  }
+    public void setPostgisType(PostgisTypeEnum postgisType) {
+        this.postgisType = postgisType;
+    }
 
-  public MultiPolygonVo getMultiPolygon() {
-    return multiPolygon;
-  }
+    public LineStringVo getLineString() {
+        return lineString;
+    }
 
-  public void setMultiPolygon(MultiPolygonVo multiPolygon) {
-    this.multiPolygon = multiPolygon;
-  }
+    public void setLineString(LineStringVo lineString) {
+        this.lineString = lineString;
+    }
+
+    public MultiPointVo getMultiPoint() {
+        return multiPoint;
+    }
+
+    public void setMultiPoint(MultiPointVo multiPoint) {
+        this.multiPoint = multiPoint;
+    }
+
+    public MultiLineStringVo getMultiLineString() {
+        return multiLineString;
+    }
+
+    public void setMultiLineString(MultiLineStringVo multiLineString) {
+        this.multiLineString = multiLineString;
+    }
+
+    public MultiPolygonVo getMultiPolygon() {
+        return multiPolygon;
+    }
+
+    public void setMultiPolygon(MultiPolygonVo multiPolygon) {
+        this.multiPolygon = multiPolygon;
+    }
 
 }

@@ -31,111 +31,104 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/hadoop/hdfs")
 public class HadoopHdfsController {
 
-  @Resource
-  private IHadoopHdfsClient client;
+    @Resource
+    private IHadoopHdfsClient client;
 
-  /**
-   * 创建文件夹
-   *
-   * @param path 文件夹
-   * @return ResponseData
-   */
-  @ApiOperation("1.创建文件夹")
-  @ApiOperationSupport(order = 1)
-  @GetMapping("/mkdir")
-  public ResponseData<Boolean> mkdir(@RequestParam String path) {
-    return client.mkdir(path);
-  }
-  
-  /**
-   * 读取HDFS目录信息
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @ApiOperation("2.读取目录")
-  @ApiOperationSupport(order = 2)
-  @GetMapping("/info")
-  public ResponseData<List<FileInfoDto>> readPathInfo(@RequestParam String path) {
-    return client.readPathInfo(path);
-  }
+    /**
+     * 创建文件夹
+     * @param path 文件夹
+     * @return ResponseData
+     */
+    @ApiOperation("1.创建文件夹")
+    @ApiOperationSupport(order = 1)
+    @GetMapping("/mkdir")
+    public ResponseData<Boolean> mkdir(@RequestParam String path) {
+        return client.mkdir(path);
+    }
 
-  /**
-   * 获取HDFS文件在集群中的位置
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @ApiOperation("3.获取位置")
-  @ApiOperationSupport(order = 3)
-  @GetMapping("/locations")
-  public ResponseData<Object> getFileBlockLocations(@RequestParam String path) {
-    return client.getFileBlockLocations(path);
-  }
+    /**
+     * 读取HDFS目录信息
+     * @param path 文件
+     * @return ResponseData
+     */
+    @ApiOperation("2.读取目录")
+    @ApiOperationSupport(order = 2)
+    @GetMapping("/info")
+    public ResponseData<List<FileInfoDto>> readPathInfo(@RequestParam String path) {
+        return client.readPathInfo(path);
+    }
 
-  /**
-   * 创建文件
-   *
-   * @param path 文件
-   * @param file 文件
-   * @return ResponseData
-   */
-  @ApiOperation("4.创建文件")
-  @ApiOperationSupport(order = 4)
-  @PostMapping("/create")
-  public ResponseData<Boolean> createFile(@RequestParam String path, @RequestParam MultipartFile file) {
-    return client.createFile(path, file);
-  }
-  
-  /**
-   * 读取HDFS文件内容
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @ApiOperation("5.读取内容")
-  @ApiOperationSupport(order = 5)
-  @GetMapping("/read")
-  public ResponseData<String> readFile(@RequestParam String path) {
-    return client.readFile(path);
-  }
+    /**
+     * 获取HDFS文件在集群中的位置
+     * @param path 文件
+     * @return ResponseData
+     */
+    @ApiOperation("3.获取位置")
+    @ApiOperationSupport(order = 3)
+    @GetMapping("/locations")
+    public ResponseData<Object> getFileBlockLocations(@RequestParam String path) {
+        return client.getFileBlockLocations(path);
+    }
 
-  /**
-   * 获取文件
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @ApiOperation("6.获取文件")
-  @ApiOperationSupport(order = 6)
-  @GetMapping("/bytes")
-  public ResponseData<byte[]> openFileToBytes(@RequestParam String path) {
-    return client.openFileToBytes(path);
-  }
+    /**
+     * 创建文件
+     * @param path 文件
+     * @param file 文件
+     * @return ResponseData
+     */
+    @ApiOperation("4.创建文件")
+    @ApiOperationSupport(order = 4)
+    @PostMapping("/create")
+    public ResponseData<Boolean> createFile(@RequestParam String path, @RequestParam MultipartFile file) {
+        return client.createFile(path, file);
+    }
 
-  /**
-   * 获取文件列表
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @ApiOperation("7.获取文件列表")
-  @ApiOperationSupport(order = 7)
-  @GetMapping("/list")
-  public ResponseData<List<FileInfoDto>> listFile(@RequestParam String path) {
-    return client.listFile(path);
-  }
+    /**
+     * 读取HDFS文件内容
+     * @param path 文件
+     * @return ResponseData
+     */
+    @ApiOperation("5.读取内容")
+    @ApiOperationSupport(order = 5)
+    @GetMapping("/read")
+    public ResponseData<String> readFile(@RequestParam String path) {
+        return client.readFile(path);
+    }
 
-  /**
-   * 删除文件
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @ApiOperation("8.删除文件")
-  @ApiOperationSupport(order = 8)
-  @DeleteMapping("/delete")
-  public ResponseData<Boolean> deleteFile(@RequestParam String path) {
-    return client.deleteFile(path);
-  }
+    /**
+     * 获取文件
+     * @param path 文件
+     * @return ResponseData
+     */
+    @ApiOperation("6.获取文件")
+    @ApiOperationSupport(order = 6)
+    @GetMapping("/bytes")
+    public ResponseData<byte[]> openFileToBytes(@RequestParam String path) {
+        return client.openFileToBytes(path);
+    }
+
+    /**
+     * 获取文件列表
+     * @param path 文件
+     * @return ResponseData
+     */
+    @ApiOperation("7.获取文件列表")
+    @ApiOperationSupport(order = 7)
+    @GetMapping("/list")
+    public ResponseData<List<FileInfoDto>> listFile(@RequestParam String path) {
+        return client.listFile(path);
+    }
+
+    /**
+     * 删除文件
+     * @param path 文件
+     * @return ResponseData
+     */
+    @ApiOperation("8.删除文件")
+    @ApiOperationSupport(order = 8)
+    @DeleteMapping("/delete")
+    public ResponseData<Boolean> deleteFile(@RequestParam String path) {
+        return client.deleteFile(path);
+    }
+
 }

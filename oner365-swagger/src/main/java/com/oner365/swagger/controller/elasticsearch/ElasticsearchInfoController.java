@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * Elasticsearch - 信息
- * 
+ *
  * @author zhaoyong
  */
 @RestController
@@ -24,18 +24,18 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/elasticsearch/info")
 public class ElasticsearchInfoController {
 
-  @Resource
-  private IElasticsearchInfoClient client;
+    @Resource
+    private IElasticsearchInfoClient client;
 
-  /**
-   * 首页信息
-   * 
-   * @return ResponseData
-   */
-  @ApiOperation("1.首页")
-  @ApiOperationSupport(order = 1)
-  @GetMapping("/index")
-  public ResponseData<TransportClientDto> index() {
-    return client.index();
-  }
+    /**
+     * 首页信息
+     * @return ResponseData
+     */
+    @ApiOperation("1.首页")
+    @ApiOperationSupport(order = 1)
+    @GetMapping("/index")
+    public ResponseData<TransportClientDto> index() {
+        return client.index();
+    }
+
 }

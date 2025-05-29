@@ -10,15 +10,15 @@ import com.oner365.activemq.constants.ActiveMQConstants;
 
 /**
  * ActiveMQ Configuration
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 public class ActiveMQConfig {
-  
-  @Bean
-  Queue queue() {
-    return new ActiveMQQueue(ActiveMQConstants.QUEUE_NAME);
-  }
-  
+
+    @Bean
+    Queue queue() {
+        return new ActiveMQQueue(ActiveMQConstants.QUEUE_NAME);
+    }
+
 }

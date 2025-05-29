@@ -24,19 +24,19 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/rocketmq/message")
 public class RocketmqConsumerMessageController {
 
-  @Resource
-  private IRocketmqConsumerClient client;
+    @Resource
+    private IRocketmqConsumerClient client;
 
-  /**
-   * 发送消息
-   * 
-   * @param message 消息
-   * @return ResponseData
-   */
-  @ApiOperation("1.消息")
-  @ApiOperationSupport(order = 1)
-  @GetMapping("/send")
-  public ResponseData<String> send(String message) {
-    return client.send(message);
-  }
+    /**
+     * 发送消息
+     * @param message 消息
+     * @return ResponseData
+     */
+    @ApiOperation("1.消息")
+    @ApiOperationSupport(order = 1)
+    @GetMapping("/send")
+    public ResponseData<String> send(String message) {
+        return client.send(message);
+    }
+
 }

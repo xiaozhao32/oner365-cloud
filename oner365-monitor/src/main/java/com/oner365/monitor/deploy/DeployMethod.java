@@ -17,6 +17,7 @@ import ch.ethz.ssh2.Connection;
 
 /**
  * 部署主要方法
+ *
  * @author zhaoyong
  *
  */
@@ -51,8 +52,8 @@ public class DeployMethod {
      * @param targetServer 目标服务
      */
     public static void stop(Connection con, String targetServer) {
-        //kill tomcat
-        String cmd = "kill -9 `cat "+targetServer+".pid 2>/dev/null` 2>/dev/null || true";
+        // kill tomcat
+        String cmd = "kill -9 `cat " + targetServer + ".pid 2>/dev/null` 2>/dev/null || true";
         execCommands(con, Collections.singletonList(cmd));
     }
 
@@ -62,7 +63,7 @@ public class DeployMethod {
      * @param targetServer 目标服务
      */
     public static void start(Connection con, String targetServer) {
-        //tomcat启动找不到java_home,需要设置 ln -s /opt/jdk1.6.0_32/bin/java /bin/java
+        // tomcat启动找不到java_home,需要设置 ln -s /opt/jdk1.6.0_32/bin/java /bin/java
         String cmd = targetServer + "/bin/startup.sh";
         execCommands(con, Collections.singletonList(cmd));
     }
@@ -72,7 +73,8 @@ public class DeployMethod {
      */
     public static void deploy(DeployServer server, String localFile, String targetPath) {
         // upload
-        String a1 = "scp -P " + server.getPort() + " " + localFile + " " + server.getUsername() + "@" + server.getIp() + PublicConstants.COLON + targetPath;
+        String a1 = "scp -P " + server.getPort() + " " + localFile + " " + server.getUsername() + "@" + server.getIp()
+                + PublicConstants.COLON + targetPath;
         LOGGER.info("> {}", a1);
         DeployUtils.execExecute(a1);
     }
@@ -98,8 +100,8 @@ public class DeployMethod {
         for (String projectName : projectNames) {
             List<String> commands = new ArrayList<>();
             // jar包全路径
-            String path = ".." + File.separator + projectName + File.separator +
-                    "target" + File.separator + projectName + "-" + version + "." + suffix;
+            String path = ".." + File.separator + projectName + File.separator + "target" + File.separator + projectName
+                    + "-" + version + "." + suffix;
             // 目标目录
             String targetPath = targetRoot + File.separator + projectName;
 
@@ -108,7 +110,8 @@ public class DeployMethod {
             if (DeployUtils.isMac()) {
                 DeployUtils.execExecute(mkdirCommand);
                 commands.add("cp -rf " + path + " " + targetPath);
-            } else {
+            }
+            else {
                 DeployUtils.execExecute("cmd /c " + mkdirCommand);
                 commands.add("cmd /c copy " + path + " " + targetPath);
             }
@@ -127,8 +130,8 @@ public class DeployMethod {
         }
     }
 
-    public static void deployServer(List<DeployServer> deployServerList,
-            String[] projectNames, String local, String targetRoot, String version, String suffix) {
+    public static void deployServer(List<DeployServer> deployServerList, String[] projectNames, String local,
+            String targetRoot, String version, String suffix) {
         try {
             // 多个目标进行部署
             for (DeployServer server : deployServerList) {
@@ -145,27 +148,31 @@ public class DeployMethod {
                 // close
                 DeployUtils.close(con, null, null);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             LOGGER.error("deployServer error:", e);
         }
     }
 
-    public static List<String> deploy(Connection con, DeployServer server,
-            String[] projectNames, String local, String targetRoot, String version, String suffix) {
+    public static List<String> deploy(Connection con, DeployServer server, String[] projectNames, String local,
+            String targetRoot, String version, String suffix) {
         List<String> commandList = new ArrayList<>();
         for (String projectName : projectNames) {
-            String localFile = local + File.separator + projectName + File.separator + projectName + "-" + version + "." + suffix;
+            String localFile = local + File.separator + projectName + File.separator + projectName + "-" + version + "."
+                    + suffix;
             String targetPath = targetRoot + PublicConstants.DELIMITER + projectName + PublicConstants.DELIMITER;
             if (DeployUtils.isMac()) {
                 // mac scp方式
                 DeployMethod.deploy(server, localFile, targetPath);
-            } else {
+            }
+            else {
                 // windows scp方式
-                DeployUtils.uploadFileMap(con, new String[]{localFile}, targetPath);
+                DeployUtils.uploadFileMap(con, new String[] { localFile }, targetPath);
             }
             // 准备执行的命令
             commandList.add(targetRoot + File.separator + projectName + File.separator + "start.sh");
         }
         return commandList;
     }
+
 }

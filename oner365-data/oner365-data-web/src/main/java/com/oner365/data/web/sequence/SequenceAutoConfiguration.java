@@ -30,8 +30,10 @@ public class SequenceAutoConfiguration {
     @Bean
     @ConditionalOnBean({ SequenceSnowflakeProperties.class })
     SnowflakeSequence snowflakeSequence(SequenceSnowflakeProperties properties) {
-        return SnowflakeSeqBuilder.create().datacenterId(properties.getDatacenterId())
-                .workerId(properties.getWorkerId()).build();
+        return SnowflakeSeqBuilder.create()
+            .datacenterId(properties.getDatacenterId())
+            .workerId(properties.getWorkerId())
+            .build();
     }
 
     @Bean

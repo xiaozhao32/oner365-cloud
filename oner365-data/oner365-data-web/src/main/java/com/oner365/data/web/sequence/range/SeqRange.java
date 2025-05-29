@@ -52,4 +52,5 @@ public class SeqRange {
     public String toString() {
         return "max: " + this.max + ", min: " + this.min + ", value: " + this.value;
     }
+
 }

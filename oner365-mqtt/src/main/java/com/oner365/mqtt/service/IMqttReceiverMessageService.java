@@ -8,10 +8,10 @@ package com.oner365.mqtt.service;
  */
 public interface IMqttReceiverMessageService {
 
-  /**
-   * 接收消息
-   *
-   * @param message 消息内容
-   */
-  void message(Object message);
+    /**
+     * 接收消息
+     * @param message 消息内容
+     */
+    void message(Object message);
+
 }

@@ -7,47 +7,48 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 菜单树对象
- * 
+ *
  * @author zhaoyong
  *
  */
 @ApiModel(value = "菜单树信息")
 public class SysMenuIconDto implements Serializable {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 菜单名称
-   */
-  @ApiModelProperty(value = "菜单名称")
-  private String title;
-  
-  /**
-   * 菜单icon
-   */
-  @ApiModelProperty(value = "菜单icon")
-  private String icon;
+    /**
+     * 菜单名称
+     */
+    @ApiModelProperty(value = "菜单名称")
+    private String title;
 
-  public SysMenuIconDto() {
-    super();
-  }
+    /**
+     * 菜单icon
+     */
+    @ApiModelProperty(value = "菜单icon")
+    private String icon;
 
-  public String getTitle() {
-    return title;
-  }
+    public SysMenuIconDto() {
+        super();
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public String getIcon() {
-    return icon;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public void setIcon(String icon) {
-    this.icon = icon;
-  }
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
 }

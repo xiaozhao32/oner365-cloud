@@ -10,7 +10,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 系统日志对象
- * 
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "系统日志")
@@ -167,7 +167,7 @@ public class SysLogDto implements Serializable {
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
     }
-    
+
     /**
      * toString Method
      */

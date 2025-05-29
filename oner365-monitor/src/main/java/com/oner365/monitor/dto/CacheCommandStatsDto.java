@@ -36,4 +36,5 @@ public class CacheCommandStatsDto implements Serializable {
     public void setValue(String value) {
         this.value = value;
     }
+
 }

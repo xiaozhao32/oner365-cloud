@@ -35,85 +35,79 @@ import com.oner365.sys.vo.SysLogVo;
 @RequestMapping("/log")
 public class SysLogController extends BaseController {
 
-  @Resource
-  private ISysLogService logService;
+    @Resource
+    private ISysLogService logService;
 
-  /**
-   * 列表
-   *
-   * @param data 查询参数
-   * @return PageInfo<SysLog>
-   */
-  @PostMapping("/list")
-  public PageInfo<SysLogDto> pageList(@RequestBody QueryCriteriaBean data) {
-    return logService.pageList(data);
-  }
-
-  /**
-   * 获取信息
-   *
-   * @param id 编号
-   * @return SysLog
-   */
-  @GetMapping("/get/{id}")
-  public SysLogDto get(@PathVariable String id) {
-    return logService.getById(id);
-  }
-
-  /**
-   * 保存
-   *
-   * @param sysLogVo 菜单类型对象
-   * @return Boolean
-   */
-  @PutMapping("/save")
-  public Boolean save(@RequestBody SysLogVo sysLogVo) {
-    if (sysLogVo != null) {
-      logService.save(sysLogVo);
-      return Boolean.TRUE;
+    /**
+     * 列表
+     * @param data 查询参数
+     * @return PageInfo<SysLog>
+     */
+    @PostMapping("/list")
+    public PageInfo<SysLogDto> pageList(@RequestBody QueryCriteriaBean data) {
+        return logService.pageList(data);
     }
-    return Boolean.FALSE;
-  }
 
-  /**
-   * 删除
-   *
-   * @param ids 编号
-   * @return List<Boolean>
-   */
-  @DeleteMapping("/delete")
-  public List<Boolean> delete(@RequestBody String... ids) {
-    return Arrays.stream(ids).map(id -> logService.deleteById(id)).collect(Collectors.toList());
-  }
+    /**
+     * 获取信息
+     * @param id 编号
+     * @return SysLog
+     */
+    @GetMapping("/get/{id}")
+    public SysLogDto get(@PathVariable String id) {
+        return logService.getById(id);
+    }
 
-  /**
-   * 按日期删除日志
-   *
-   * @param days 天数
-   * @return Boolean
-   */
-  @DeleteMapping("/days/delete")
-  public Boolean deleteLog(@RequestParam Integer days) {
-    Date date = DateUtil.getDateAgo(days);
-    return logService.deleteLog(DateUtil.dateToLocalDateTime(date));
-  }
+    /**
+     * 保存
+     * @param sysLogVo 菜单类型对象
+     * @return Boolean
+     */
+    @PutMapping("/save")
+    public Boolean save(@RequestBody SysLogVo sysLogVo) {
+        if (sysLogVo != null) {
+            logService.save(sysLogVo);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
 
-  /**
-   * 导出日志
-   *
-   * @param data 查询参数
-   * @return ResponseEntity<byte[]>
-   */
-  @PostMapping("/export")
-  public ResponseEntity<byte[]> exportItem(@RequestBody QueryCriteriaBean data) {
-    List<SysLogDto> list = logService.findList(data);
+    /**
+     * 删除
+     * @param ids 编号
+     * @return List<Boolean>
+     */
+    @DeleteMapping("/delete")
+    public List<Boolean> delete(@RequestBody String... ids) {
+        return Arrays.stream(ids).map(id -> logService.deleteById(id)).collect(Collectors.toList());
+    }
 
-    String[] titleKeys = new String[] { "编号", "请求IP", "请求方法", "服务名称", "请求地址", "请求内容", "创建时间" };
-    String[] columnNames = { "id", "operationIp", "methodName", "operationName", "operationPath", "operationContext",
-        "createTime" };
+    /**
+     * 按日期删除日志
+     * @param days 天数
+     * @return Boolean
+     */
+    @DeleteMapping("/days/delete")
+    public Boolean deleteLog(@RequestParam Integer days) {
+        Date date = DateUtil.getDateAgo(days);
+        return logService.deleteLog(DateUtil.dateToLocalDateTime(date));
+    }
 
-    String fileName = SysLogDto.class.getSimpleName() + System.currentTimeMillis();
-    return exportExcel(fileName, titleKeys, columnNames, list);
-  }
+    /**
+     * 导出日志
+     * @param data 查询参数
+     * @return ResponseEntity<byte[]>
+     */
+    @PostMapping("/export")
+    public ResponseEntity<byte[]> exportItem(@RequestBody QueryCriteriaBean data) {
+        List<SysLogDto> list = logService.findList(data);
+
+        String[] titleKeys = new String[] { "编号", "请求IP", "请求方法", "服务名称", "请求地址", "请求内容", "创建时间" };
+        String[] columnNames = { "id", "operationIp", "methodName", "operationName", "operationPath",
+                "operationContext", "createTime" };
+
+        String fileName = SysLogDto.class.getSimpleName() + System.currentTimeMillis();
+        return exportExcel(fileName, titleKeys, columnNames, list);
+    }
 
 }

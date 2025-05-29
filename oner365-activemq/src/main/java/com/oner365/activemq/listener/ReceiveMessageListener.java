@@ -9,17 +9,17 @@ import com.oner365.activemq.constants.ActiveMQConstants;
 
 /**
  * ActiveMQ Listener
- * 
+ *
  * @author zhaoyong
  */
 @Component
 public class ReceiveMessageListener {
 
-  private final Logger logger = LoggerFactory.getLogger(ReceiveMessageListener.class);
+    private final Logger logger = LoggerFactory.getLogger(ReceiveMessageListener.class);
 
-  @JmsListener(destination = ActiveMQConstants.QUEUE_NAME)
-  public void receiveMessage(String text) {
-    logger.info("ActiveMQ Receive message: {}", text);
-  }
+    @JmsListener(destination = ActiveMQConstants.QUEUE_NAME)
+    public void receiveMessage(String text) {
+        logger.info("ActiveMQ Receive message: {}", text);
+    }
 
 }

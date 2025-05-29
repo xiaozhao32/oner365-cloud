@@ -15,25 +15,25 @@ import java.util.regex.Pattern;
  */
 public class XssValidator implements ConstraintValidator<Xss, String> {
 
-  private static final String HTML_PATTERN = "<(\\S*?)[^>]*>.*?|<.*? />";
+    private static final String HTML_PATTERN = "<(\\S*?)[^>]*>.*?|<.*? />";
 
-  @Override
-  public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
-    if (DataUtils.isEmpty(value)) {
-      return true;
+    @Override
+    public boolean isValid(String value, ConstraintValidatorContext constraintValidatorContext) {
+        if (DataUtils.isEmpty(value)) {
+            return true;
+        }
+        return !containsHtml(value);
     }
-    return !containsHtml(value);
-  }
 
-  /**
-   * containsHtml
-   *
-   * @param value html value
-   * @return 是否包含
-   */
-  public static boolean containsHtml(String value) {
-    Pattern pattern = Pattern.compile(HTML_PATTERN);
-    Matcher matcher = pattern.matcher(value);
-    return matcher.matches();
-  }
+    /**
+     * containsHtml
+     * @param value html value
+     * @return 是否包含
+     */
+    public static boolean containsHtml(String value) {
+        Pattern pattern = Pattern.compile(HTML_PATTERN);
+        Matcher matcher = pattern.matcher(value);
+        return matcher.matches();
+    }
+
 }

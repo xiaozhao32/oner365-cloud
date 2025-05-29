@@ -27,37 +27,37 @@ import com.oner365.data.web.xss.XssHttpServletRequestWrapper;
 @Component
 public class XssFilter implements Filter {
 
-  private static final List<String> EXCLUDES_LIST = new ArrayList<>();
+    private static final List<String> EXCLUDES_LIST = new ArrayList<>();
 
-  @Override
-  public void init(FilterConfig filterConfig) throws ServletException {
-    String tempExcludes = filterConfig.getInitParameter("excludes");
-    if (!DataUtils.isEmpty(tempExcludes)) {
-      String[] url = tempExcludes.split(",");
-      EXCLUDES_LIST.addAll(Arrays.asList(url));
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+        String tempExcludes = filterConfig.getInitParameter("excludes");
+        if (!DataUtils.isEmpty(tempExcludes)) {
+            String[] url = tempExcludes.split(",");
+            EXCLUDES_LIST.addAll(Arrays.asList(url));
+        }
     }
-  }
 
-  @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-      throws IOException, ServletException {
-    HttpServletRequest req = (HttpServletRequest) request;
-    if (handleExcludeUrl(req)) {
-      chain.doFilter(request, response);
-      return;
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+            throws IOException, ServletException {
+        HttpServletRequest req = (HttpServletRequest) request;
+        if (handleExcludeUrl(req)) {
+            chain.doFilter(request, response);
+            return;
+        }
+        XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request);
+        chain.doFilter(xssRequest, response);
     }
-    XssHttpServletRequestWrapper xssRequest = new XssHttpServletRequestWrapper((HttpServletRequest) request);
-    chain.doFilter(xssRequest, response);
-  }
 
-  private boolean handleExcludeUrl(HttpServletRequest request) {
-    String url = request.getServletPath();
-    String method = request.getMethod();
-    // GET DELETE 不过滤
-    if (method == null || method.matches(HttpMethod.GET.name()) || method.matches(HttpMethod.DELETE.name())) {
-      return true;
+    private boolean handleExcludeUrl(HttpServletRequest request) {
+        String url = request.getServletPath();
+        String method = request.getMethod();
+        // GET DELETE 不过滤
+        if (method == null || method.matches(HttpMethod.GET.name()) || method.matches(HttpMethod.DELETE.name())) {
+            return true;
+        }
+        return DataUtils.matches(url, EXCLUDES_LIST);
     }
-    return DataUtils.matches(url, EXCLUDES_LIST);
-  }
 
 }

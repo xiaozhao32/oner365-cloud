@@ -4,50 +4,53 @@ import java.io.Serializable;
 
 /**
  * 坐标
- * 
+ *
  * @author zhaoyong
  *
  */
 public class GeoPoint implements Serializable {
-  private static final long serialVersionUID = 1L;
-  private double lat;
-  private double lon;
 
-  public GeoPoint() {
-    super();
-  }
+    private static final long serialVersionUID = 1L;
 
-  public GeoPoint(double latitude, double longitude) {
-    this.lat = latitude;
-    this.lon = longitude;
-  }
+    private double lat;
 
-  /**
-   * @return the lat
-   */
-  public double getLat() {
-    return lat;
-  }
+    private double lon;
 
-  /**
-   * @param lat the lat to set
-   */
-  public void setLat(double lat) {
-    this.lat = lat;
-  }
+    public GeoPoint() {
+        super();
+    }
 
-  /**
-   * @return the lon
-   */
-  public double getLon() {
-    return lon;
-  }
+    public GeoPoint(double latitude, double longitude) {
+        this.lat = latitude;
+        this.lon = longitude;
+    }
 
-  /**
-   * @param lon the lon to set
-   */
-  public void setLon(double lon) {
-    this.lon = lon;
-  }
+    /**
+     * @return the lat
+     */
+    public double getLat() {
+        return lat;
+    }
+
+    /**
+     * @param lat the lat to set
+     */
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    /**
+     * @return the lon
+     */
+    public double getLon() {
+        return lon;
+    }
+
+    /**
+     * @param lon the lon to set
+     */
+    public void setLon(double lon) {
+        this.lon = lon;
+    }
 
 }

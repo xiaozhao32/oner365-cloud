@@ -27,67 +27,60 @@ import com.oner365.swagger.vo.GatewayRouteVo;
 @FeignClient(value = PathConstants.FEIGN_CLIENT_GATEWAY, contextId = PathConstants.CONTEXT_GATEWAY_ROUTE_ID)
 public interface IGatewayRouteClient {
 
-  /**
-   * 路由列表
-   *
-   * @param data 查询参数
-   * @return ResponseData<String>
-   */
-  @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_LIST)
-  ResponseData<PageInfo<GatewayRouteDto>> list(@RequestBody QueryCriteriaBean data);
+    /**
+     * 路由列表
+     * @param data 查询参数
+     * @return ResponseData<String>
+     */
+    @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_LIST)
+    ResponseData<PageInfo<GatewayRouteDto>> list(@RequestBody QueryCriteriaBean data);
 
-  /**
-   * 获取路由
-   *
-   * @param id 编号
-   * @return ResponseData
-   */
-  @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_GET_ID)
-  ResponseData<GatewayRouteDto> get(@PathVariable String id);
+    /**
+     * 获取路由
+     * @param id 编号
+     * @return ResponseData
+     */
+    @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_GET_ID)
+    ResponseData<GatewayRouteDto> get(@PathVariable String id);
 
-  /**
-   * 增加路由
-   *
-   * @param gatewayRouteVo 路由对象
-   * @return ResponseData
-   */
-  @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_ADD)
-  ResponseData<GatewayRouteDto> add(@RequestBody GatewayRouteVo gatewayRouteVo);
+    /**
+     * 增加路由
+     * @param gatewayRouteVo 路由对象
+     * @return ResponseData
+     */
+    @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_ADD)
+    ResponseData<GatewayRouteDto> add(@RequestBody GatewayRouteVo gatewayRouteVo);
 
-  /**
-   * 刷新路由配置
-   *
-   * @return ResponseData
-   */
-  @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_REFRESH)
-  ResponseData<ArrayList<GatewayRouteDto>> refresh();
+    /**
+     * 刷新路由配置
+     * @return ResponseData
+     */
+    @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_REFRESH)
+    ResponseData<ArrayList<GatewayRouteDto>> refresh();
 
-  /**
-   * 更新路由
-   *
-   * @param gatewayRouteVo 路由对象
-   * @return ResponseData
-   */
-  @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_UPDATE)
-  ResponseData<GatewayRouteDto> update(@RequestBody GatewayRouteVo gatewayRouteVo);
+    /**
+     * 更新路由
+     * @param gatewayRouteVo 路由对象
+     * @return ResponseData
+     */
+    @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_UPDATE)
+    ResponseData<GatewayRouteDto> update(@RequestBody GatewayRouteVo gatewayRouteVo);
 
-  /**
-   * 更新路由状态
-   *
-   * @param id     编号
-   * @param status 状态
-   * @return ResponseData
-   */
-  @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_STATUS)
-  ResponseData<Boolean> updateRouteStatus(@PathVariable String id,
-      @PathVariable StatusEnum status);
+    /**
+     * 更新路由状态
+     * @param id 编号
+     * @param status 状态
+     * @return ResponseData
+     */
+    @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_STATUS)
+    ResponseData<Boolean> updateRouteStatus(@PathVariable String id, @PathVariable StatusEnum status);
 
-  /**
-   * 删除路由
-   *
-   * @param ids 编号
-   * @return ResponseData
-   */
-  @DeleteMapping(PathConstants.REQUEST_GATEWAY_ROUTE_DELETE)
-  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+    /**
+     * 删除路由
+     * @param ids 编号
+     * @return ResponseData
+     */
+    @DeleteMapping(PathConstants.REQUEST_GATEWAY_ROUTE_DELETE)
+    ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+
 }
