@@ -50,7 +50,7 @@ public interface ISystemMenuTypeClient {
      * @return ResponseData<SysMenuTypeDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_GET_ID)
-    ResponseData<SysMenuTypeDto> getById(@PathVariable String id);
+    ResponseData<SysMenuTypeDto> getById(@PathVariable("id") String id);
 
     /**
      * 修改状态
@@ -59,7 +59,7 @@ public interface ISystemMenuTypeClient {
      * @return ResponseData<Boolean>
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_STATUS)
-    ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
+    ResponseData<Boolean> editStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
 
     /**
      * 判断是否存在

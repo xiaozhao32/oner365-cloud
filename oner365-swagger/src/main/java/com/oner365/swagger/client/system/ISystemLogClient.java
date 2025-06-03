@@ -42,7 +42,7 @@ public interface ISystemLogClient {
      * @return ResponseData<SysLogDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_LOG_GET_ID)
-    ResponseData<SysLogDto> getById(@PathVariable String id);
+    ResponseData<SysLogDto> getById(@PathVariable("id") String id);
 
     /**
      * 保存
@@ -66,7 +66,7 @@ public interface ISystemLogClient {
      * @return ResponseData<Boolean>
      */
     @DeleteMapping(PathConstants.REQUEST_SYSTEM_LOG_DAYS_DELETE)
-    ResponseData<Boolean> deleteDays(@RequestParam Integer days);
+    ResponseData<Boolean> deleteDays(@RequestParam("days") Integer days);
 
     /**
      * 导出

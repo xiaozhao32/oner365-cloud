@@ -26,7 +26,7 @@ public interface IFilesStorageClient {
      * @return ResponseData<String>
      */
     @PostMapping(value = PathConstants.REQUEST_FILES_STORAGE_UPLOAD, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    String upload(@RequestPart("file") MultipartFile file, @RequestParam(required = false) String dictory);
+    String upload(@RequestPart("file") MultipartFile file, @RequestParam(name = "dictory", required = false) String dictory);
 
     /**
      * 文件流下载 如直接下载需访问文件地址
@@ -34,6 +34,6 @@ public interface IFilesStorageClient {
      * @return ResponseData<byte[]>
      */
     @GetMapping(PathConstants.REQUEST_FILES_STORAGE_DOWNLOAD_BYTE)
-    byte[] download(@RequestParam String fileUrl);
+    byte[] download(@RequestParam("fileUrl") String fileUrl);
 
 }

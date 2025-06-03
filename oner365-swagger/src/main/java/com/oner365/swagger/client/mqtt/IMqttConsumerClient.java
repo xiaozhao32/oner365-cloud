@@ -23,6 +23,6 @@ public interface IMqttConsumerClient {
      * @return ResponseData<JSONObject>
      */
     @GetMapping(PathConstants.REQUEST_MQTT_CONSUMER_MESSAGE_SEND)
-    ResponseData<JSONObject> send(@RequestParam String message);
+    ResponseData<JSONObject> send(@RequestParam("message") String message);
 
 }

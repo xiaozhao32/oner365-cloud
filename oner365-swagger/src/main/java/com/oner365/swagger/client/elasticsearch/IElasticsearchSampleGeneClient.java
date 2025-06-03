@@ -41,7 +41,7 @@ public interface IElasticsearchSampleGeneClient {
      * @return ResponseData<SampleGeneDto>
      */
     @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_GET_ID)
-    ResponseData<SampleGeneDto> get(@PathVariable String id);
+    ResponseData<SampleGeneDto> get(@PathVariable("id") String id);
 
     /**
      * 保存

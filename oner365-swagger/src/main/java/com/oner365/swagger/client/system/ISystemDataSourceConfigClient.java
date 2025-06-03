@@ -41,7 +41,7 @@ public interface ISystemDataSourceConfigClient {
      * @return ResponseData<DataSourceConfigDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_DATASOURCE_GET_ID)
-    ResponseData<DataSourceConfigDto> getById(@PathVariable String id);
+    ResponseData<DataSourceConfigDto> getById(@PathVariable("id") String id);
 
     /**
      * 按 connectName 获取信息
@@ -49,7 +49,7 @@ public interface ISystemDataSourceConfigClient {
      * @return ResponseData<DataSourceConfigDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_DATASOURCE_GET_CONNECT_NAME)
-    ResponseData<DataSourceConfigDto> getConnectName(@RequestParam String connectName);
+    ResponseData<DataSourceConfigDto> getConnectName(@RequestParam("connectName") String connectName);
 
     /**
      * 保存

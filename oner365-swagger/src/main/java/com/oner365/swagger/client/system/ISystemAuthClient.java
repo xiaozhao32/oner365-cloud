@@ -52,7 +52,7 @@ public interface ISystemAuthClient {
      * @return ResponseData<ArrayList<SysMenuOperDto>>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_MENU_OPERATION)
-    ResponseData<ArrayList<SysMenuOperDto>> findMenuOperByRoles(@PathVariable String menuId);
+    ResponseData<ArrayList<SysMenuOperDto>> findMenuOperByRoles(@PathVariable("menuId") String menuId);
 
     /**
      * 登出

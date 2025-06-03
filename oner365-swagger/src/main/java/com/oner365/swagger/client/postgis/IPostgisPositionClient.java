@@ -36,7 +36,7 @@ public interface IPostgisPositionClient {
      * @return ResponseData
      */
     @GetMapping(PathConstants.REQUEST_POSTGIS_POSITION_GET_ID)
-    ResponseData<PositionDto> get(@PathVariable String id);
+    ResponseData<PositionDto> get(@PathVariable("id") String id);
 
     /**
      * 保存

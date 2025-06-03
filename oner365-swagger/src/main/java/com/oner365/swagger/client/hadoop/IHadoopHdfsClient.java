@@ -28,7 +28,7 @@ public interface IHadoopHdfsClient {
      * @return ResponseData<Boolean>
      */
     @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_MKDIR)
-    ResponseData<Boolean> mkdir(@RequestParam String path);
+    ResponseData<Boolean> mkdir(@RequestParam("path") String path);
 
     /**
      * 读取HDFS目录信息
@@ -36,7 +36,7 @@ public interface IHadoopHdfsClient {
      * @return ResponseData
      */
     @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_INFO)
-    ResponseData<List<FileInfoDto>> readPathInfo(@RequestParam String path);
+    ResponseData<List<FileInfoDto>> readPathInfo(@RequestParam("path") String path);
 
     /**
      * 获取HDFS文件在集群中的位置
@@ -44,7 +44,7 @@ public interface IHadoopHdfsClient {
      * @return ResponseData
      */
     @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_LOCATIONS)
-    ResponseData<Object> getFileBlockLocations(@RequestParam String path);
+    ResponseData<Object> getFileBlockLocations(@RequestParam("path") String path);
 
     /**
      * 上传文件
@@ -53,7 +53,7 @@ public interface IHadoopHdfsClient {
      * @return ResponseData
      */
     @PostMapping(PathConstants.REQUEST_HADOOP_HDFS_CREATE)
-    ResponseData<Boolean> createFile(@RequestParam String path, @RequestParam MultipartFile file);
+    ResponseData<Boolean> createFile(@RequestParam("path") String path, @RequestParam("file") MultipartFile file);
 
     /**
      * 读取HDFS文件内容
@@ -61,7 +61,7 @@ public interface IHadoopHdfsClient {
      * @return ResponseData
      */
     @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_READ)
-    ResponseData<String> readFile(@RequestParam String path);
+    ResponseData<String> readFile(@RequestParam("path") String path);
 
     /**
      * 获取文件
@@ -69,7 +69,7 @@ public interface IHadoopHdfsClient {
      * @return ResponseData
      */
     @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_BYTES)
-    ResponseData<byte[]> openFileToBytes(@RequestParam String path);
+    ResponseData<byte[]> openFileToBytes(@RequestParam("path") String path);
 
     /**
      * 读取文件列表
@@ -77,7 +77,7 @@ public interface IHadoopHdfsClient {
      * @return ResponseData
      */
     @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_LIST)
-    ResponseData<List<FileInfoDto>> listFile(@RequestParam String path);
+    ResponseData<List<FileInfoDto>> listFile(@RequestParam("path") String path);
 
     /**
      * 删除文件
@@ -85,6 +85,6 @@ public interface IHadoopHdfsClient {
      * @return ResponseData
      */
     @DeleteMapping(PathConstants.REQUEST_HADOOP_HDFS_DELETE)
-    ResponseData<Boolean> deleteFile(@RequestParam String path);
+    ResponseData<Boolean> deleteFile(@RequestParam("path") String path);
 
 }

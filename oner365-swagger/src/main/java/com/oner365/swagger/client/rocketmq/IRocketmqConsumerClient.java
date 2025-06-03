@@ -22,6 +22,6 @@ public interface IRocketmqConsumerClient {
      * @return ResponseData<String>
      */
     @GetMapping(PathConstants.REQUEST_ROCKETMQ_CONSUMER_MESSAGE_SEND)
-    ResponseData<String> send(@RequestParam String message);
+    ResponseData<String> send(@RequestParam("message") String message);
 
 }

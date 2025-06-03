@@ -43,7 +43,7 @@ public interface ISystemMenuClient {
      * @return ResponseData<SysMenuInfoDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_MENU_GET_ID)
-    ResponseData<SysMenuInfoDto> getById(@PathVariable String id);
+    ResponseData<SysMenuInfoDto> getById(@PathVariable("id") String id);
 
     /**
      * 修改状态
@@ -52,7 +52,7 @@ public interface ISystemMenuClient {
      * @return ResponseData<Boolean>
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_STATUS)
-    ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
+    ResponseData<Boolean> editStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
 
     /**
      * 获取菜单下拉树列表
@@ -70,7 +70,7 @@ public interface ISystemMenuClient {
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_ROLE)
     ResponseData<SysMenuTreeSelectDto> roleMenuTreeselect(@RequestBody SysMenuVo sysMenuVo,
-            @PathVariable String roleId);
+            @PathVariable("roleId") String roleId);
 
     /**
      * 保存

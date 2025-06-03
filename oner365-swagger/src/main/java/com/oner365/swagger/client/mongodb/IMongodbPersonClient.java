@@ -40,7 +40,7 @@ public interface IMongodbPersonClient {
      * @return ResponseData<PersonDto>
      */
     @GetMapping(PathConstants.REQUEST_MONGODB_PERSON_GET_ID)
-    ResponseData<PersonDto> getById(@PathVariable String id);
+    ResponseData<PersonDto> getById(@PathVariable("id") String id);
 
     /**
      * 保存

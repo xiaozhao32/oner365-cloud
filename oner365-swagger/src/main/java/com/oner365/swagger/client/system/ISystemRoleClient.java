@@ -44,7 +44,7 @@ public interface ISystemRoleClient {
      * @return ResponseData<SysRoleDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_ROLE_GET_ID)
-    ResponseData<SysRoleDto> getById(@PathVariable String id);
+    ResponseData<SysRoleDto> getById(@PathVariable("id") String id);
 
     /**
      * 修改状态
@@ -53,7 +53,7 @@ public interface ISystemRoleClient {
      * @return ResponseData<Boolean>
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_ROLE_STATUS)
-    ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
+    ResponseData<Boolean> editStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
 
     /**
      * 判断类别id 类别是否存在
