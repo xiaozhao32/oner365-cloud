@@ -1,6 +1,8 @@
 package com.oner365.data.web.advice;
 
 import java.io.Serializable;
+import java.util.Base64;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -16,9 +18,15 @@ import org.springframework.lang.Nullable;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import com.alibaba.fastjson.JSON;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.oner365.data.commons.config.properties.ClientWhiteProperties;
 import com.oner365.data.commons.reponse.ResponseData;
+import com.oner365.data.commons.util.Cipher;
+import com.oner365.data.commons.util.DataUtils;
+import com.oner365.data.commons.util.RsaUtils;
+import com.oner365.data.web.utils.RequestUtils;
 
 /**
  * Controller Advice
@@ -31,6 +39,9 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ResponseAdvice.class);
 
+    @Resource
+    private ClientWhiteProperties clientWhiteProperties;
+    
     @Resource
     private ObjectMapper objectMapper;
 
@@ -45,6 +56,31 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
             @NonNull MediaType selectedContentType,
             @NonNull Class<? extends HttpMessageConverter<?>> selectedConverterType, @NonNull ServerHttpRequest request,
             @NonNull ServerHttpResponse response) {
+        
+        if (RequestUtils.validateClientWhites(request.getURI().getPath(), clientWhiteProperties.getWhites())) {
+            String sign = null;
+            List<String> headers = request.getHeaders().get("sign");
+            if (headers != null) {
+                sign = headers.stream().findFirst().orElse(null);
+            }
+            if (DataUtils.isEmpty(sign)) {
+                return null;
+            }
+            String key = RsaUtils.buildRsaDecryptByPrivateKey(sign, clientWhiteProperties.getPrivateKey());
+            if (body instanceof ResponseData) {
+                return ResponseData.success(Base64.getEncoder()
+                        .encodeToString(Cipher.encodeSms4(JSON.toJSONString(body), key.substring(0, 16).getBytes())));
+            }
+            if (body instanceof byte[]) {
+                return Base64.getEncoder()
+                        .encodeToString(Cipher.encodeSms4((byte[]) body, key.substring(0, 16).getBytes())).getBytes();
+            }
+            if (body != null) {
+                return ResponseData.success(Base64.getEncoder()
+                        .encodeToString(Cipher.encodeSms4(body.toString(), key.substring(0, 16).getBytes())));
+            }
+        }
+        
         // swagger
         if (request.getURI().getPath().contains("/swagger") || request.getURI().getPath().contains("/webjars")
                 || request.getURI().getPath().contains("/v3")) {
@@ -52,7 +88,7 @@ public class ResponseAdvice implements ResponseBodyAdvice<Object> {
         }
 
         if (body == null) {
-            return ResponseData.error("服务异常, 请联系管理员系统日志!");
+            return ResponseData.error("服务异常, 请联系管理员查看日志!");
         }
         if (body instanceof String) {
             try {
