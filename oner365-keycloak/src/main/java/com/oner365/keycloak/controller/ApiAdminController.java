@@ -1,7 +1,5 @@
 package com.oner365.keycloak.controller;
 
-import javax.annotation.security.RolesAllowed;
-
 import org.keycloak.adapters.springsecurity.token.KeycloakAuthenticationToken;
 import org.keycloak.representations.AccessToken;
 import org.keycloak.representations.UserInfo;
@@ -27,7 +25,6 @@ public class ApiAdminController extends BaseController {
      * @return String
      */
     @GetMapping
-    @RolesAllowed("ADMIN")
     public String adminEndpoint() {
         return "Hello Admin";
     }

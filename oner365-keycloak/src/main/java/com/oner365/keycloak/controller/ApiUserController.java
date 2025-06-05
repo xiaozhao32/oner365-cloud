@@ -1,7 +1,5 @@
 package com.oner365.keycloak.controller;
 
-import javax.annotation.security.RolesAllowed;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,7 +21,6 @@ public class ApiUserController extends BaseController {
      * @return String
      */
     @GetMapping
-    @RolesAllowed("USER")
     public String userEndpoint() {
         return "Hello User";
     }

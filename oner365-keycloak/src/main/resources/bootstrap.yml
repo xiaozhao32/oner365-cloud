@@ -26,13 +26,5 @@ spring:
         shared-configs:
           - application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
     
-keycloak:
-  
-  security-constraints:
-  - auth-roles:
-    - ADMIN
-    security-collections:
-    - patterns:
-      - /admin/*
   
 

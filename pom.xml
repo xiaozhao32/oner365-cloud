@@ -123,7 +123,7 @@
 		<org.quartz.version>2.3.2</org.quartz.version>
 		<org.yaml.version>1.33</org.yaml.version>
 		<org.lz4.version>1.8.0</org.lz4.version>
-		
+		<org.keycloak.version>25.0.3</org.keycloak.version>
 		<org.postgresql.version>42.7.3</org.postgresql.version>
 		<org.neo4j.version>3.2.37</org.neo4j.version>
 		<com.influxdb.version>6.5.0</com.influxdb.version>
@@ -960,6 +960,73 @@
 			    <artifactId>kotlin-stdlib-jdk8</artifactId>
 			    <version>${org.jetbrains.kotlin.version}</version>
 			</dependency>
+			
+			<!-- keycloak -->
+			<dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-core</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-adapter-core</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-crypto-default</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-adapter-spi</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-saml-adapter-core</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-saml-adapter-api-public</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-tomcat-adapter</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-undertow-adapter</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-spring-boot-2-adapter</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>spring-boot-container-bundle</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-spring-security-adapter</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-spring-boot-starter</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
+	        <dependency>
+	            <groupId>org.keycloak</groupId>
+	            <artifactId>keycloak-authz-client</artifactId>
+	            <version>${org.keycloak.version}</version>
+	        </dependency>
 
 			<!-- junit-platform -->
 			<dependency>
