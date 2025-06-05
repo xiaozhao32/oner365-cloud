@@ -11,75 +11,67 @@ import com.oner365.sys.vo.SysMenuTypeVo;
 
 /**
  * 菜单类型接口
- * 
+ *
  * @author zhaoyong
  */
 public interface ISysMenuTypeService extends BaseService {
 
-  /**
-   * 查询列表
-   *
-   * @param data 查询参数
-   * @return PageInfo
-   */
-  PageInfo<SysMenuTypeDto> pageList(QueryCriteriaBean data);
+    /**
+     * 查询列表
+     * @param data 查询参数
+     * @return PageInfo
+     */
+    PageInfo<SysMenuTypeDto> pageList(QueryCriteriaBean data);
 
-  /**
-   * 查询全部
-   *
-   * @param data 查询参数
-   * @return List
-   */
-  List<SysMenuTypeDto> findList(QueryCriteriaBean data);
+    /**
+     * 查询全部
+     * @param data 查询参数
+     * @return List
+     */
+    List<SysMenuTypeDto> findList(QueryCriteriaBean data);
 
-  /**
-   * 查询详情
-   *
-   * @param id 编号
-   * @return SysMenuTypeDto
-   */
-  SysMenuTypeDto getById(String id);
+    /**
+     * 查询详情
+     * @param id 编号
+     * @return SysMenuTypeDto
+     */
+    SysMenuTypeDto getById(String id);
 
-  /**
-   * 保存
-   *
-   * @param menuType 菜单类型对象
-   * @return SysMenuTypeDto
-   */
-  SysMenuTypeDto save(SysMenuTypeVo menuType);
+    /**
+     * 保存
+     * @param menuType 菜单类型对象
+     * @return SysMenuTypeDto
+     */
+    SysMenuTypeDto save(SysMenuTypeVo menuType);
 
-  /**
-   * 修改状态
-   *
-   * @param id     编号
-   * @param status 状态
-   * @return Boolean
-   */
-  Boolean editStatus(String id, StatusEnum status);
+    /**
+     * 修改状态
+     * @param id 编号
+     * @param status 状态
+     * @return Boolean
+     */
+    Boolean editStatus(String id, StatusEnum status);
 
-  /**
-   * 检测code
-   *
-   * @param id   编号
-   * @param code 编号
-   * @return Boolean
-   */
-  Boolean checkCode(String id, String code);
+    /**
+     * 检测code
+     * @param id 编号
+     * @param code 编号
+     * @return Boolean
+     */
+    Boolean checkCode(String id, String code);
 
-  /**
-   * 按菜单类型查询
-   *
-   * @param menuType 菜单类型
-   * @return SysMenuTypeDto
-   */
-  SysMenuTypeDto getMenuTypeByTypeCode(String menuType);
+    /**
+     * 按菜单类型查询
+     * @param menuType 菜单类型
+     * @return SysMenuTypeDto
+     */
+    SysMenuTypeDto getMenuTypeByTypeCode(String menuType);
 
-  /**
-   * 删除
-   *
-   * @param id 编号
-   * @return Boolean
-   */
-  Boolean deleteById(String id);
+    /**
+     * 删除
+     * @param id 编号
+     * @return Boolean
+     */
+    Boolean deleteById(String id);
 
 }

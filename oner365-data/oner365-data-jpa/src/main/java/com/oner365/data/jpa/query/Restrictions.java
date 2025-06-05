@@ -9,6 +9,7 @@ import com.oner365.data.jpa.query.Criterion.Operator;
 
 /**
  * 条件构造器-用于创建条件表达式
+ *
  * @author zhaoyong
  */
 public class Restrictions {
@@ -19,7 +20,6 @@ public class Restrictions {
 
     /**
      * 等于
-     *
      * @param fieldName 字段
      * @param value 值
      * @return SimpleExpression
@@ -33,7 +33,6 @@ public class Restrictions {
 
     /**
      * 不等于
-     *
      * @param fieldName 字段
      * @param value 值
      * @return SimpleExpression
@@ -47,7 +46,6 @@ public class Restrictions {
 
     /**
      * 模糊匹配
-     *
      * @param fieldName 字段
      * @param value 值
      * @return SimpleExpression
@@ -61,7 +59,6 @@ public class Restrictions {
 
     /**
      * 大于
-     *
      * @param fieldName 字段
      * @param value 值
      * @return SimpleExpression
@@ -75,7 +72,6 @@ public class Restrictions {
 
     /**
      * 小于
-     *
      * @param fieldName 字段
      * @param value 值
      * @return SimpleExpression
@@ -89,7 +85,6 @@ public class Restrictions {
 
     /**
      * 小于等于
-     *
      * @param fieldName 字段
      * @param value 值
      * @return SimpleExpression
@@ -103,7 +98,6 @@ public class Restrictions {
 
     /**
      * 大于等于
-     *
      * @param fieldName 字段
      * @param value 值
      * @return SimpleExpression
@@ -117,7 +111,6 @@ public class Restrictions {
 
     /**
      * 并且
-     *
      * @param criterion 表达式
      * @return LogicalExpression
      */
@@ -127,7 +120,6 @@ public class Restrictions {
 
     /**
      * 或者
-     *
      * @param criterion 表达式
      * @return LogicalExpression
      */
@@ -137,7 +129,6 @@ public class Restrictions {
 
     /**
      * 包含于
-     *
      * @param fieldName 字段
      * @param value 值
      * @param ignoreNull 是否忽略
@@ -148,13 +139,13 @@ public class Restrictions {
             return null;
         }
         List<SimpleExpression> simpleExpressionList = value.stream()
-            .map(obj -> new SimpleExpression(fieldName, obj, Operator.EQ)).collect(Collectors.toList());
+            .map(obj -> new SimpleExpression(fieldName, obj, Operator.EQ))
+            .collect(Collectors.toList());
         return new LogicalExpression(simpleExpressionList.toArray(new SimpleExpression[] {}), Operator.OR);
     }
 
     /**
      * between
-     *
      * @param fieldName 字段
      * @param value 值
      * @return Criterion

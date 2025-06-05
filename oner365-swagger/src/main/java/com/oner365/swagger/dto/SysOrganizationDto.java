@@ -141,7 +141,7 @@ public class SysOrganizationDto implements Serializable {
      */
     @ApiModelProperty(value = "数据源")
     private DataSourceConfigDto dataSourceConfigDto;
-    
+
     private List<SysOrganizationDto> children = new ArrayList<>();
 
     /**
@@ -424,7 +424,7 @@ public class SysOrganizationDto implements Serializable {
     public void setDataSourceConfigDto(DataSourceConfigDto dataSourceConfigDto) {
         this.dataSourceConfigDto = dataSourceConfigDto;
     }
-    
+
     /**
      * toString Method
      */

@@ -17,34 +17,33 @@ import com.oner365.shardingsphere.vo.MasterSlaveVo;
 
 /**
  * 主从测试
- * 
+ *
  * @author zhaoyong
  */
 @RestController
 @RequestMapping("/master-slave")
 public class MasterSlaveController extends BaseController {
 
-  @Resource
-  private IMasterSlaveService service;
+    @Resource
+    private IMasterSlaveService service;
 
-  /**
-   * 列表查询
-   * 
-   * @return List<MasterSlave>
-   */
-  @GetMapping("/list")
-  public List<MasterSlave> findList() {
-    return service.findList();
-  }
+    /**
+     * 列表查询
+     * @return List<MasterSlave>
+     */
+    @GetMapping("/list")
+    public List<MasterSlave> findList() {
+        return service.findList();
+    }
 
-  /**
-   * 保存
-   * 
-   * @param vo 保存对象
-   * @return 是否成功
-   */
-  @PostMapping("/save")
-  public Boolean save(@RequestBody MasterSlaveVo vo) {
-    return service.save(vo);
-  }
+    /**
+     * 保存
+     * @param vo 保存对象
+     * @return 是否成功
+     */
+    @PostMapping("/save")
+    public Boolean save(@RequestBody MasterSlaveVo vo) {
+        return service.save(vo);
+    }
+
 }

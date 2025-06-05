@@ -4,41 +4,41 @@ import java.io.Serializable;
 
 /**
  * Point VO
- * 
+ *
  * @author zhaoyong
  */
 public class PointVo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * double x
-   */
-  private double x;
-  
-  /**
-   * double y
-   */
-  private double y;
-  
-  public PointVo() {
-    super();
-  }
+    /**
+     * double x
+     */
+    private double x;
 
-  public double getX() {
-    return x;
-  }
+    /**
+     * double y
+     */
+    private double y;
 
-  public void setX(double x) {
-    this.x = x;
-  }
+    public PointVo() {
+        super();
+    }
 
-  public double getY() {
-    return y;
-  }
+    public double getX() {
+        return x;
+    }
 
-  public void setY(double y) {
-    this.y = y;
-  }
+    public void setX(double x) {
+        this.x = x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
+    }
 
 }

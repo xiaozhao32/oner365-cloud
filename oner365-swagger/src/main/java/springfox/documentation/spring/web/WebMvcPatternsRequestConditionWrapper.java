@@ -10,53 +10,57 @@ import springfox.documentation.spring.web.paths.Paths;
 
 /**
  * swagger3.0兼容springBoot2.6.0处理
- * 
+ *
  * @author zhaoyong
  */
 public class WebMvcPatternsRequestConditionWrapper
-    implements springfox.documentation.spring.wrapper.PatternsRequestCondition<PatternsRequestCondition> {
+        implements springfox.documentation.spring.wrapper.PatternsRequestCondition<PatternsRequestCondition> {
 
-  private final String contextPath;
-  private final PathPatternsRequestCondition condition;
+    private final String contextPath;
 
-  public WebMvcPatternsRequestConditionWrapper(String contextPath, PathPatternsRequestCondition condition) {
+    private final PathPatternsRequestCondition condition;
 
-    this.contextPath = contextPath;
-    this.condition = condition;
-  }
+    public WebMvcPatternsRequestConditionWrapper(String contextPath, PathPatternsRequestCondition condition) {
 
-  @Override
-  public springfox.documentation.spring.wrapper.PatternsRequestCondition<PatternsRequestCondition> combine(
-      springfox.documentation.spring.wrapper.PatternsRequestCondition<PatternsRequestCondition> other) {
-    if (other instanceof WebMvcPatternsRequestConditionWrapper && !this.equals(other)) {
-      return new WebMvcPatternsRequestConditionWrapper(contextPath,
-          condition.combine(((WebMvcPatternsRequestConditionWrapper) other).condition));
+        this.contextPath = contextPath;
+        this.condition = condition;
     }
-    return this;
-  }
 
-  @Override
-  public Set<String> getPatterns() {
-    return this.condition.getPatternValues().stream()
-        .map(p -> String.format("%s/%s", Paths.maybeChompTrailingSlash(contextPath), Paths.maybeChompLeadingSlash(p)))
-        .collect(Collectors.toSet());
-  }
-
-  @Override
-  public boolean equals(Object o) {
-    if (o instanceof WebMvcPatternsRequestConditionWrapper) {
-      return this.condition.equals(((WebMvcPatternsRequestConditionWrapper) o).condition);
+    @Override
+    public springfox.documentation.spring.wrapper.PatternsRequestCondition<PatternsRequestCondition> combine(
+            springfox.documentation.spring.wrapper.PatternsRequestCondition<PatternsRequestCondition> other) {
+        if (other instanceof WebMvcPatternsRequestConditionWrapper && !this.equals(other)) {
+            return new WebMvcPatternsRequestConditionWrapper(contextPath,
+                    condition.combine(((WebMvcPatternsRequestConditionWrapper) other).condition));
+        }
+        return this;
     }
-    return false;
-  }
 
-  @Override
-  public int hashCode() {
-    return this.condition.hashCode();
-  }
+    @Override
+    public Set<String> getPatterns() {
+        return this.condition.getPatternValues()
+            .stream()
+            .map(p -> String.format("%s/%s", Paths.maybeChompTrailingSlash(contextPath),
+                    Paths.maybeChompLeadingSlash(p)))
+            .collect(Collectors.toSet());
+    }
 
-  @Override
-  public String toString() {
-    return this.condition.toString();
-  }
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof WebMvcPatternsRequestConditionWrapper) {
+            return this.condition.equals(((WebMvcPatternsRequestConditionWrapper) o).condition);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.condition.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return this.condition.toString();
+    }
+
 }

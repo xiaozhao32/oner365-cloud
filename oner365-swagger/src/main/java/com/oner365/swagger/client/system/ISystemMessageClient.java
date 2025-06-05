@@ -23,73 +23,68 @@ import com.oner365.swagger.vo.SysMessageVo;
 
 /**
  * 系统服务 - 消息管理
- * 
+ *
  * @author zhaoyong
  *
  */
 @FeignClient(value = PathConstants.FEIGN_CLIENT_SYSTEM, contextId = PathConstants.CONTEXT_SYSTEM_MESSAGE_ID)
 public interface ISystemMessageClient {
-  
-  /**
-   * 查询结果 有返回 true 并且更新状态
-   * 
-   * @param messageType 消息类型
-   * @return ResponseData<Boolean>
-   */
-  @GetMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_REFRESH)
-  ResponseData<Boolean> refresh(@RequestParam("messageType") MessageTypeEnum messageType);
 
-  /**
-   * 列表
-   * 
-   * @param data 查询参数
-   * @return ResponseData<PageInfo<SysMessageDto>>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_LIST)
-  ResponseData<PageInfo<SysMessageDto>> list(@RequestBody QueryCriteriaBean data);
-  
-  /**
-   * 按id获取查询
-   * 
-   * @param id 编号
-   * @return ResponseData<SysMessageDto>
-   */
-  @GetMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_GET_ID)
-  ResponseData<SysMessageDto> getById(@PathVariable(value = "id") String id);
+    /**
+     * 查询结果 有返回 true 并且更新状态
+     * @param messageType 消息类型
+     * @return ResponseData<Boolean>
+     */
+    @GetMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_REFRESH)
+    ResponseData<Boolean> refresh(@RequestParam("messageType") MessageTypeEnum messageType);
 
-  /**
-   * 修改状态
-   * 
-   * @param id     编号
-   * @param status 状态
-   * @return ResponseData<Boolean>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_STATUS)
-  ResponseData<Boolean> editStatus(@PathVariable(value = "id") String id, @RequestParam("status") StatusEnum status);
-  
-  /**
-   * 保存
-   * 
-   * @param sysMessageVo 保存对象
-   * @return ResponseData<SysMessageDto>
-   */
-  @PutMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_SAVE)
-  ResponseData<SysMessageDto> save(@RequestBody SysMessageVo sysMessageVo);
+    /**
+     * 列表
+     * @param data 查询参数
+     * @return ResponseData<PageInfo<SysMessageDto>>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_LIST)
+    ResponseData<PageInfo<SysMessageDto>> list(@RequestBody QueryCriteriaBean data);
 
-  /**
-   * 删除
-   * 
-   * @param ids 编号
-   * @return ResponseData<List<Boolean>>
-   */
-  @DeleteMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_DELETE)
-  ResponseData<List<Boolean>> delete(@RequestBody String... ids);
-  
-  /**
-   * 导出
-   * @param data 查询对象
-   * @return ResponseEntity<byte[]>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_EXPORT)
-  ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data);
+    /**
+     * 按id获取查询
+     * @param id 编号
+     * @return ResponseData<SysMessageDto>
+     */
+    @GetMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_GET_ID)
+    ResponseData<SysMessageDto> getById(@PathVariable("id") String id);
+
+    /**
+     * 修改状态
+     * @param id 编号
+     * @param status 状态
+     * @return ResponseData<Boolean>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_STATUS)
+    ResponseData<Boolean> editStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
+
+    /**
+     * 保存
+     * @param sysMessageVo 保存对象
+     * @return ResponseData<SysMessageDto>
+     */
+    @PutMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_SAVE)
+    ResponseData<SysMessageDto> save(@RequestBody SysMessageVo sysMessageVo);
+
+    /**
+     * 删除
+     * @param ids 编号
+     * @return ResponseData<List<Boolean>>
+     */
+    @DeleteMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_DELETE)
+    ResponseData<List<Boolean>> delete(@RequestBody String... ids);
+
+    /**
+     * 导出
+     * @param data 查询对象
+     * @return ResponseEntity<byte[]>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_EXPORT)
+    ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data);
+
 }

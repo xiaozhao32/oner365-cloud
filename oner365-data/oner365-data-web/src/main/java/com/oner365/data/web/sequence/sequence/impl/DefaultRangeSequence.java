@@ -18,77 +18,82 @@ import com.oner365.data.web.sequence.sequence.RangeSequence;
  */
 public class DefaultRangeSequence implements RangeSequence {
 
-  private final Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
 
-  private SeqRangeMgr seqRangeMgr;
+    private SeqRangeMgr seqRangeMgr;
 
-  private SeqRange currentRange;
+    private SeqRange currentRange;
 
-  private BizName bizName;
+    private BizName bizName;
 
-  @Override
-  public long nextValue() {
-    String name = this.bizName.create();
-    if (null == this.currentRange) {
-      this.lock.lock();
-      try {
-        this.currentRange = this.seqRangeMgr.nextRange(name);
-      } finally {
-        this.lock.unlock();
-      }
-    }
-    long value = this.currentRange.getAndIncrement();
-    if (value == -1L) {
-      this.lock.lock();
-      try {
-        while (true) {
-          if (this.currentRange.isOver()) {
-            this.currentRange = this.seqRangeMgr.nextRange(name);
-          }
-          value = this.currentRange.getAndIncrement();
-          if (value == -1L) {
-            continue;
-          }
-          break;
+    @Override
+    public long nextValue() {
+        String name = this.bizName.create();
+        if (null == this.currentRange) {
+            this.lock.lock();
+            try {
+                this.currentRange = this.seqRangeMgr.nextRange(name);
+            }
+            finally {
+                this.lock.unlock();
+            }
         }
-      } finally {
-        this.lock.unlock();
-      }
+        long value = this.currentRange.getAndIncrement();
+        if (value == -1L) {
+            this.lock.lock();
+            try {
+                while (true) {
+                    if (this.currentRange.isOver()) {
+                        this.currentRange = this.seqRangeMgr.nextRange(name);
+                    }
+                    value = this.currentRange.getAndIncrement();
+                    if (value == -1L) {
+                        continue;
+                    }
+                    break;
+                }
+            }
+            finally {
+                this.lock.unlock();
+            }
+        }
+        if (value < 0L) {
+            throw new SeqException("Sequence value overflow, value = " + value);
+        }
+        return value;
     }
-    if (value < 0L) {
-      throw new SeqException("Sequence value overflow, value = " + value);
+
+    @Override
+    public int nextId() {
+        long value;
+        this.lock.lock();
+        try {
+            value = System.currentTimeMillis() / 1000L;
+        }
+        finally {
+            this.lock.unlock();
+        }
+        if (value <= 0L) {
+            throw new SeqException("Sequence value overflow, value = " + value);
+        }
+        return (int) value;
     }
-    return value;
-  }
 
-  @Override
-  public int nextId() {
-    long value;
-    this.lock.lock();
-    try {
-      value = System.currentTimeMillis() / 1000L;
-    } finally {
-      this.lock.unlock();
+    @Override
+    public String nextNo() {
+        return String.format("%s%05d",
+                DateUtil.dateToString(DateUtil.getDate(), DateUtil.DATE_HH + DateUtil.DATE_MM + DateUtil.DATE_SS),
+                nextValue());
     }
-    if (value <= 0L) {
-      throw new SeqException("Sequence value overflow, value = " + value);
+
+    @Override
+    public void setSeqRangeMgr(SeqRangeMgr seqRangeMgr) {
+        this.seqRangeMgr = seqRangeMgr;
     }
-    return (int) value;
-  }
 
-  @Override
-  public String nextNo() {
-    return String.format("%s%05d",
-        DateUtil.dateToString(DateUtil.getDate(), DateUtil.DATE_HH + DateUtil.DATE_MM + DateUtil.DATE_SS), nextValue());
-  }
+    @Override
+    public void setName(BizName name) {
+        this.bizName = name;
+    }
 
-  @Override
-  public void setSeqRangeMgr(SeqRangeMgr seqRangeMgr) {
-    this.seqRangeMgr = seqRangeMgr;
-  }
-
-  @Override
-  public void setName(BizName name) {
-    this.bizName = name;
-  }
 }

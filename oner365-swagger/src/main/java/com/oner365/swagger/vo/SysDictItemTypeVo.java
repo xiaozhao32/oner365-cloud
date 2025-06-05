@@ -12,7 +12,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 字典类型 SysDictItemType
- * 
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "字典类型")
@@ -64,7 +64,7 @@ public class SysDictItemTypeVo implements Serializable {
     /**
      * Constructor
      */
-    public SysDictItemTypeVo(){
+    public SysDictItemTypeVo() {
         super();
     }
 
@@ -115,7 +115,7 @@ public class SysDictItemTypeVo implements Serializable {
     public void setTypeCode(String typeCode) {
         this.typeCode = typeCode;
     }
-    
+
     /**
      * toString Method
      */

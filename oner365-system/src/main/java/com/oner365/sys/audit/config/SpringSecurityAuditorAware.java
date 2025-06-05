@@ -10,20 +10,20 @@ import com.oner365.data.web.utils.RequestUtils;
 
 /**
  * 审计功能 - 操作人
- * 
+ *
  * @author zhaoyong
  */
 @Component
 public class SpringSecurityAuditorAware implements AuditorAware<String> {
 
-  @NotNull
-  @Override
-  public Optional<String> getCurrentAuditor() {
-    if (RequestUtils.getAuthUser() == null) {
-      return Optional.empty();
+    @NotNull
+    @Override
+    public Optional<String> getCurrentAuditor() {
+        if (RequestUtils.getAuthUser() == null) {
+            return Optional.empty();
+        }
+        String userName = RequestUtils.getAuthUser().getUserName();
+        return Optional.of(userName);
     }
-    String userName = RequestUtils.getAuthUser().getUserName();
-    return Optional.of(userName);
-  }
 
 }

@@ -27,7 +27,6 @@ public enum QueueEnum implements BaseEnum {
 
     /**
      * 构造方法
-     *
      * @param name 名称
      */
     QueueEnum(String name) {
@@ -36,7 +35,6 @@ public enum QueueEnum implements BaseEnum {
 
     /**
      * get name
-     *
      * @return name
      */
     @Override

@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 
 /**
  * 消息接收
- * 
+ *
  * @author zhaoyong
  */
 @Service
-@RocketMQMessageListener(topic = "${rocketmq.consumer.topic}", selectorExpression = "*", consumerGroup = "${rocketmq.producer.group}")
+@RocketMQMessageListener(topic = "${rocketmq.consumer.topic}", selectorExpression = "*",
+        consumerGroup = "${rocketmq.producer.group}")
 public class RocketmqConsumerListener implements RocketMQListener<String> {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(RocketmqConsumerListener.class);

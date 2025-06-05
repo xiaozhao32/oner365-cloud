@@ -32,51 +32,47 @@ import com.oner365.elasticsearch.vo.SampleLocationVo;
 @RequestMapping("/sample/location")
 public class SampleLocationController extends BaseController {
 
-  @Resource
-  private ISampleLocationElasticsearchService service;
+    @Resource
+    private ISampleLocationElasticsearchService service;
 
-  /**
-   * 列表
-   *
-   * @param data 查询条件参数
-   * @return PageInfo<SampleLocationDto>
-   */
-  @PostMapping("/list")
-  public PageInfo<SampleLocationDto> pageList(@RequestBody QueryCriteriaBean data) {
-    return this.service.pageList(data);
-  }
+    /**
+     * 列表
+     * @param data 查询条件参数
+     * @return PageInfo<SampleLocationDto>
+     */
+    @PostMapping("/list")
+    public PageInfo<SampleLocationDto> pageList(@RequestBody QueryCriteriaBean data) {
+        return this.service.pageList(data);
+    }
 
-  /**
-   * id查询
-   *
-   * @param id 编号
-   * @return SampleLocationDto
-   */
-  @GetMapping("/get/{id}")
-  public SampleLocationDto get(@PathVariable("id") String id) {
-    return service.findById(id);
-  }
+    /**
+     * id查询
+     * @param id 编号
+     * @return SampleLocationDto
+     */
+    @GetMapping("/get/{id}")
+    public SampleLocationDto get(@PathVariable String id) {
+        return service.findById(id);
+    }
 
-  /**
-   * 保存
-   *
-   * @param sampleLocationVo 坐标对象
-   * @return SampleLocationDto
-   */
-  @PutMapping("/save")
-  public SampleLocationDto save(@RequestBody SampleLocationVo sampleLocationVo) {
-    return service.save(sampleLocationVo);
-  }
+    /**
+     * 保存
+     * @param sampleLocationVo 坐标对象
+     * @return SampleLocationDto
+     */
+    @PutMapping("/save")
+    public SampleLocationDto save(@RequestBody SampleLocationVo sampleLocationVo) {
+        return service.save(sampleLocationVo);
+    }
 
-  /**
-   * 删除
-   *
-   * @param ids 编号
-   * @return Integer
-   */
-  @DeleteMapping("/delete")
-  public List<Boolean> delete(@RequestBody String... ids) {
-    return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
-  }
+    /**
+     * 删除
+     * @param ids 编号
+     * @return Integer
+     */
+    @DeleteMapping("/delete")
+    public List<Boolean> delete(@RequestBody String... ids) {
+        return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
+    }
 
 }

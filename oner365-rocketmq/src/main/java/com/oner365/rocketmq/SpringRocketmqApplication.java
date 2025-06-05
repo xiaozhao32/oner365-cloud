@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Rocketmq服务
+ *
  * @author zhaoyong
  */
 @SpringBootApplication

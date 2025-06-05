@@ -4,48 +4,50 @@ import java.io.Serializable;
 
 /**
  * Vault Properties
- * 
+ *
  * @author zhaoyong
  */
 public class VaultProperties implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  private String name;
-  private String password;
-  private String url;
+    private String name;
 
-  public VaultProperties() {
-    super();
-  }
+    private String password;
 
-  public String getName() {
-    return name;
-  }
+    private String url;
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public VaultProperties() {
+        super();
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getUrl() {
-    return url;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public void setUrl(String url) {
-    this.url = url;
-  }
-  
-  @Override
-  public String toString() {
-    return String.format("name:%s password:%s url:%s", this.name, this.password, this.url);
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("name:%s password:%s url:%s", this.name, this.password, this.url);
+    }
 
 }

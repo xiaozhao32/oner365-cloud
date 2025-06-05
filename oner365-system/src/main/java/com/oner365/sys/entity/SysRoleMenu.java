@@ -13,6 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * 基础权限--角色惨淡表nt_sys_role_menu
+ *
  * @author liutao
  */
 @Entity
@@ -31,13 +32,13 @@ public class SysRoleMenu implements Serializable {
     /**
      * 菜单类型 menu_type_id
      */
-    @Column(name = "menu_type_id" ,nullable = false)
+    @Column(name = "menu_type_id", nullable = false)
     private String menuTypeId;
 
     /**
      * 角色 role_id
      */
-    @Column(name = "role_id" ,nullable = false)
+    @Column(name = "role_id", nullable = false)
     private String roleId;
 
     /**
@@ -45,8 +46,6 @@ public class SysRoleMenu implements Serializable {
      */
     @Column(name = "menu_id")
     private String menuId;
-
-
 
     /**
      * Generate constructor
@@ -68,7 +67,6 @@ public class SysRoleMenu implements Serializable {
     public void setId(String id) {
         this.id = id;
     }
-
 
     public String getRoleId() {
         return roleId;
@@ -101,4 +99,5 @@ public class SysRoleMenu implements Serializable {
     public String toString() {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
+
 }

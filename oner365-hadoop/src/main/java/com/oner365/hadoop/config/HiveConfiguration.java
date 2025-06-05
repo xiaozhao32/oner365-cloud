@@ -15,30 +15,31 @@ import com.oner365.hadoop.config.properties.HiveProperties;
 
 /**
  * Hive Configuration
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 @EnableConfigurationProperties({ HiveProperties.class })
 public class HiveConfiguration {
 
-  @Resource
-  private HiveProperties properties;
+    @Resource
+    private HiveProperties properties;
 
-  @Bean(name = "hiveDataSource")
-  @Qualifier("hiveDataSource")
-  DataSource dataSource() {
-    DruidDataSource dataSource = new DruidDataSource();
-    dataSource.setDriverClassName(properties.getDriverClassName());
-    dataSource.setDbType(DbType.hive);
-    dataSource.setUrl(properties.getUrl());
-    dataSource.setUsername(properties.getUsername());
-    dataSource.setPassword(properties.getPassword());
-    return dataSource;
-  }
+    @Bean(name = "hiveDataSource")
+    @Qualifier("hiveDataSource")
+    DataSource dataSource() {
+        DruidDataSource dataSource = new DruidDataSource();
+        dataSource.setDriverClassName(properties.getDriverClassName());
+        dataSource.setDbType(DbType.hive);
+        dataSource.setUrl(properties.getUrl());
+        dataSource.setUsername(properties.getUsername());
+        dataSource.setPassword(properties.getPassword());
+        return dataSource;
+    }
 
-  @Bean(name = "hiveDruidTemplate")
-  JdbcTemplate hiveDruidTemplate(@Qualifier("hiveDataSource") DataSource dataSource) {
-    return new JdbcTemplate(dataSource);
-  }
+    @Bean(name = "hiveDruidTemplate")
+    JdbcTemplate hiveDruidTemplate(@Qualifier("hiveDataSource") DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
+
 }

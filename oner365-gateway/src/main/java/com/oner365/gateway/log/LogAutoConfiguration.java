@@ -10,6 +10,7 @@ import com.oner365.gateway.service.SysLogService;
 
 /**
  * 日志监听
+ *
  * @author zhaoyong
  */
 @EnableAsync

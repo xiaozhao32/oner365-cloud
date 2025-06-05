@@ -14,26 +14,28 @@ import com.oner365.websocket.vo.WebSocketMessageVo;
 
 /**
  * 监听消息广播
- * 
+ *
  * @author liutao
  *
  */
 @Service
 public class RedisMessageReceiver implements MessageListener {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(RedisMessageReceiver.class);
-  
-  @Resource
-  private IWebSocketMessageService webSocketMessageService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisMessageReceiver.class);
 
-  @Override
-  public void onMessage(Message message, byte[] pattern) {
-    byte[] bytes = message.getBody();
-    if (bytes.length != 0) {
-      String context = new String(bytes);
-      LOGGER.info("message:{}", context);
-      WebSocketMessageVo webSocketMessageVo = JSON.toJavaObject(JSON.parseObject(context), WebSocketMessageVo.class);
-      webSocketMessageService.sendMessage(webSocketMessageVo);
+    @Resource
+    private IWebSocketMessageService webSocketMessageService;
+
+    @Override
+    public void onMessage(Message message, byte[] pattern) {
+        byte[] bytes = message.getBody();
+        if (bytes.length != 0) {
+            String context = new String(bytes);
+            LOGGER.info("message:{}", context);
+            WebSocketMessageVo webSocketMessageVo = JSON.toJavaObject(JSON.parseObject(context),
+                    WebSocketMessageVo.class);
+            webSocketMessageService.sendMessage(webSocketMessageVo);
+        }
     }
-  }
+
 }

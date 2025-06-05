@@ -2,6 +2,7 @@ package com.oner365.gateway.constants;
 
 /**
  * 网关队列常量
+ *
  * @author zhaoyong
  */
 public class GatewayFlag {

@@ -7,123 +7,123 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Ldap - UserDto
- * 
+ *
  * @author zhaoyong
- * 
+ *
  */
 @ApiModel(value = "LDAP 人员信息")
 public class LdapUserDto implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @ApiModelProperty(value = "域名称")
-  private String commonName;
-  
-  @ApiModelProperty(value = "名称")
-  private String sn;
-  
-  @ApiModelProperty(value = "姓氏")
-  private String givenName;
-  
-  @ApiModelProperty(value = "姓名")
-  private String uid;
-  
-  @ApiModelProperty(value = "账号ID")
-  private Integer uidNumber;
-  
-  @ApiModelProperty(value = "组ID")
-  private Integer gidNumber;
-  
-  @ApiModelProperty(value = "密码")
-  private String password;
-  
-  @ApiModelProperty(value = "地址")
-  private String homeDirectory;
-  
-  @ApiModelProperty(value = "创建时间")
-  private String createTime;
-  
-  @ApiModelProperty(value = "是否新建")
-  private boolean isNew;
+    @ApiModelProperty(value = "域名称")
+    private String commonName;
 
-  public String getCommonName() {
-    return commonName;
-  }
+    @ApiModelProperty(value = "名称")
+    private String sn;
 
-  public void setCommonName(String commonName) {
-    this.commonName = commonName;
-  }
+    @ApiModelProperty(value = "姓氏")
+    private String givenName;
 
-  public String getGivenName() {
-    return givenName;
-  }
+    @ApiModelProperty(value = "姓名")
+    private String uid;
 
-  public void setGivenName(String givenName) {
-    this.givenName = givenName;
-  }
+    @ApiModelProperty(value = "账号ID")
+    private Integer uidNumber;
 
-  public String getSn() {
-    return sn;
-  }
+    @ApiModelProperty(value = "组ID")
+    private Integer gidNumber;
 
-  public void setSn(String sn) {
-    this.sn = sn;
-  }
+    @ApiModelProperty(value = "密码")
+    private String password;
 
-  public String getPassword() {
-    return password;
-  }
+    @ApiModelProperty(value = "地址")
+    private String homeDirectory;
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    @ApiModelProperty(value = "创建时间")
+    private String createTime;
 
-  public String getCreateTime() {
-    return createTime;
-  }
+    @ApiModelProperty(value = "是否新建")
+    private boolean isNew;
 
-  public void setCreateTime(String createTime) {
-    this.createTime = createTime;
-  }
+    public String getCommonName() {
+        return commonName;
+    }
 
-  public String getUid() {
-    return uid;
-  }
+    public void setCommonName(String commonName) {
+        this.commonName = commonName;
+    }
 
-  public void setUid(String uid) {
-    this.uid = uid;
-  }
+    public String getGivenName() {
+        return givenName;
+    }
 
-  public boolean isNew() {
-    return isNew;
-  }
+    public void setGivenName(String givenName) {
+        this.givenName = givenName;
+    }
 
-  public void setNew(boolean isNew) {
-    this.isNew = isNew;
-  }
+    public String getSn() {
+        return sn;
+    }
 
-  public Integer getUidNumber() {
-    return uidNumber;
-  }
+    public void setSn(String sn) {
+        this.sn = sn;
+    }
 
-  public void setUidNumber(Integer uidNumber) {
-    this.uidNumber = uidNumber;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public Integer getGidNumber() {
-    return gidNumber;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public void setGidNumber(Integer gidNumber) {
-    this.gidNumber = gidNumber;
-  }
+    public String getCreateTime() {
+        return createTime;
+    }
 
-  public String getHomeDirectory() {
-    return homeDirectory;
-  }
+    public void setCreateTime(String createTime) {
+        this.createTime = createTime;
+    }
 
-  public void setHomeDirectory(String homeDirectory) {
-    this.homeDirectory = homeDirectory;
-  }
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean isNew) {
+        this.isNew = isNew;
+    }
+
+    public Integer getUidNumber() {
+        return uidNumber;
+    }
+
+    public void setUidNumber(Integer uidNumber) {
+        this.uidNumber = uidNumber;
+    }
+
+    public Integer getGidNumber() {
+        return gidNumber;
+    }
+
+    public void setGidNumber(Integer gidNumber) {
+        this.gidNumber = gidNumber;
+    }
+
+    public String getHomeDirectory() {
+        return homeDirectory;
+    }
+
+    public void setHomeDirectory(String homeDirectory) {
+        this.homeDirectory = homeDirectory;
+    }
 
 }

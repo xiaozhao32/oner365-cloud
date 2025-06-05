@@ -38,88 +38,91 @@ import com.oner365.sys.vo.SysJobVo;
 @Service
 public class SysJobServiceImpl implements ISysJobService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SysJobServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SysJobServiceImpl.class);
 
-  private static final String CACHE_NAME = "SysJob";
+    private static final String CACHE_NAME = "SysJob";
 
-  @Resource
-  private ISysJobDao dao;
+    @Resource
+    private ISysJobDao dao;
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public PageInfo<SysJobDto> pageList(QueryCriteriaBean data) {
-    try {
-      Page<SysJob> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
-      return convert(page, SysJobDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error pageList: ", e);
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public PageInfo<SysJobDto> pageList(QueryCriteriaBean data) {
+        try {
+            Page<SysJob> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+            return convert(page, SysJobDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error pageList: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<SysJobDto> findList(QueryCriteriaBean data) {
-    try {
-      if (data.getOrder() == null) {
-        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysJobDto.class);
-      }
-      List<SysJob> list = dao.findAll(QueryUtils.buildCriteria(data), 
-          Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
-      return convert(list, SysJobDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error findList: ", e);
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<SysJobDto> findList(QueryCriteriaBean data) {
+        try {
+            if (data.getOrder() == null) {
+                return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysJobDto.class);
+            }
+            List<SysJob> list = dao.findAll(QueryUtils.buildCriteria(data),
+                    Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
+            return convert(list, SysJobDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return Collections.emptyList();
     }
-    return Collections.emptyList();
-  }
 
-  @Override
-  @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
-  public SysJobDto getById(String id) {
-    try {
-      Optional<SysJob> optional = dao.findById(id);
-      if (optional.isPresent()) {
-        return convert(optional.orElse(null), SysJobDto.class);
-      }
-    } catch (Exception e) {
-      LOGGER.error("Error getById: ", e);
+    @Override
+    @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
+    public SysJobDto getById(String id) {
+        try {
+            Optional<SysJob> optional = dao.findById(id);
+            if (optional.isPresent()) {
+                return convert(optional.orElse(null), SysJobDto.class);
+            }
+        }
+        catch (Exception e) {
+            LOGGER.error("Error getById: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public SysJobDto save(SysJobVo vo) {
-    if (DataUtils.isEmpty(vo.getId())) {
-      vo.setStatus(StatusEnum.YES);
-      vo.setCreateTime(LocalDateTime.now());
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public SysJobDto save(SysJobVo vo) {
+        if (DataUtils.isEmpty(vo.getId())) {
+            vo.setStatus(StatusEnum.YES);
+            vo.setCreateTime(LocalDateTime.now());
+        }
+        vo.setUpdateTime(LocalDateTime.now());
+        SysJob entity = dao.save(convert(vo, SysJob.class));
+        return convert(entity, SysJobDto.class);
     }
-    vo.setUpdateTime(LocalDateTime.now());
-    SysJob entity = dao.save(convert(vo, SysJob.class));
-    return convert(entity, SysJobDto.class);
-  }
-  
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Boolean deleteById(String id) {
-    dao.deleteById(id);
-    return Boolean.TRUE;
-  }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Boolean editStatus(String id, StatusEnum status) {
-    Optional<SysJob> optional = dao.findById(id);
-    if (optional.isPresent()) {
-      optional.get().setStatus(status);
-      optional.get().setUpdateTime(LocalDateTime.now());
-      dao.save(optional.get());
-      return Boolean.TRUE;
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Boolean deleteById(String id) {
+        dao.deleteById(id);
+        return Boolean.TRUE;
     }
-    return Boolean.FALSE;
-  }
+
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Boolean editStatus(String id, StatusEnum status) {
+        Optional<SysJob> optional = dao.findById(id);
+        if (optional.isPresent()) {
+            optional.get().setStatus(status);
+            optional.get().setUpdateTime(LocalDateTime.now());
+            dao.save(optional.get());
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
 
 }

@@ -17,7 +17,7 @@ import com.oner365.datasource.dynamic.DataSourceHolder;
 
 /**
  * 数据源拦截器
- * 
+ *
  * @author zhaoayong
  */
 @Aspect
@@ -25,36 +25,38 @@ import com.oner365.datasource.dynamic.DataSourceHolder;
 @Component
 public class DataSourceAspect {
 
-  @Pointcut("@annotation(com.oner365.datasource.annotation.DataSource)")
-  public void annotationPoint() {
-    // around
-  }
-
-  @Around("annotationPoint()")
-  public Object around(ProceedingJoinPoint point) throws Throwable {
-    DataSource dataSource = getDataSource(point);
-
-    if (!DataUtils.isEmpty(dataSource)) {
-      DataSourceHolder.setDataSource(dataSource.value());
+    @Pointcut("@annotation(com.oner365.datasource.annotation.DataSource)")
+    public void annotationPoint() {
+        // around
     }
 
-    try {
-      return point.proceed();
-    } finally {
-      DataSourceHolder.clearDataSource();
-    }
-  }
+    @Around("annotationPoint()")
+    public Object around(ProceedingJoinPoint point) throws Throwable {
+        DataSource dataSource = getDataSource(point);
 
-  /**
-   * 切换数据源
-   */
-  public DataSource getDataSource(ProceedingJoinPoint point) {
-    MethodSignature signature = (MethodSignature) point.getSignature();
-    DataSource dataSource = AnnotationUtils.findAnnotation(signature.getMethod(), DataSource.class);
-    if (Objects.nonNull(dataSource)) {
-      return dataSource;
+        if (!DataUtils.isEmpty(dataSource)) {
+            DataSourceHolder.setDataSource(dataSource.value());
+        }
+
+        try {
+            return point.proceed();
+        }
+        finally {
+            DataSourceHolder.clearDataSource();
+        }
     }
 
-    return AnnotationUtils.findAnnotation(signature.getDeclaringType(), DataSource.class);
-  }
+    /**
+     * 切换数据源
+     */
+    public DataSource getDataSource(ProceedingJoinPoint point) {
+        MethodSignature signature = (MethodSignature) point.getSignature();
+        DataSource dataSource = AnnotationUtils.findAnnotation(signature.getMethod(), DataSource.class);
+        if (Objects.nonNull(dataSource)) {
+            return dataSource;
+        }
+
+        return AnnotationUtils.findAnnotation(signature.getDeclaringType(), DataSource.class);
+    }
+
 }

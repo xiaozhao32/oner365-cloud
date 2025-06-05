@@ -7,116 +7,103 @@ import com.oner365.websocket.enums.MessageTypeEnum;
 
 /**
  * websocket 消息传输类
- * 
+ *
  * @author liutao
  */
 public class WebSocketMessageVo {
 
-  /**
-   * 用户名
-   */
-  private String user;
-  
-  /**
-   * group token
-   */
-  private String token;
-  
+    /**
+     * 用户名
+     */
+    private String user;
 
-  /**
-   * 发送人信息
-   */
-  private WebSocketData data;
-  
-  /**
-   * 接收消息人
-   */
-  private List<String> list;
-  
-  /**
-   * 消息
-   */
-  private String message;
-  
-  /**
-   * 通道类型
-   */
-  private MessageTypeEnum messageType;
-  
-  
-  
+    /**
+     * group token
+     */
+    private String token;
 
+    /**
+     * 发送人信息
+     */
+    private WebSocketData data;
 
-  public WebSocketMessageVo() {
-    super();
-  }
-  
-  public WebSocketMessageVo(String userName,List<String> list,String message) {
-    this.message = message;
-    this.user = userName;
-    this.list = list;
-  }
-  
-  public WebSocketMessageVo(String userName,String token,String message) {
-    this.message = message;
-    this.user = userName;
-    this.token = token;
-  }
+    /**
+     * 接收消息人
+     */
+    private List<String> list;
 
+    /**
+     * 消息
+     */
+    private String message;
 
-  public String getUser() {
-    return user;
-  }
+    /**
+     * 通道类型
+     */
+    private MessageTypeEnum messageType;
 
+    public WebSocketMessageVo() {
+        super();
+    }
 
-  public void setUser(String user) {
-    this.user = user;
-  }
+    public WebSocketMessageVo(String userName, List<String> list, String message) {
+        this.message = message;
+        this.user = userName;
+        this.list = list;
+    }
 
+    public WebSocketMessageVo(String userName, String token, String message) {
+        this.message = message;
+        this.user = userName;
+        this.token = token;
+    }
 
+    public String getUser() {
+        return user;
+    }
 
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-  public WebSocketData getData() {
-    return data;
-  }
+    public WebSocketData getData() {
+        return data;
+    }
 
-  public void setData(WebSocketData data) {
-    this.data = data;
-  }
+    public void setData(WebSocketData data) {
+        this.data = data;
+    }
 
-  public List<String> getList() {
-    return list;
-  }
+    public List<String> getList() {
+        return list;
+    }
 
-  public void setList(List<String> list) {
-    this.list = list;
-  }
+    public void setList(List<String> list) {
+        this.list = list;
+    }
 
-  public String getMessage() {
-    return message;
-  }
+    public String getMessage() {
+        return message;
+    }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-  public void setMessage(String message) {
-    this.message = message;
-  }
+    public MessageTypeEnum getMessageType() {
+        return messageType;
+    }
 
-  public MessageTypeEnum getMessageType() {
-    return messageType;
-  }
+    public void setMessageType(MessageTypeEnum messageType) {
+        this.messageType = messageType;
+    }
 
-  public void setMessageType(MessageTypeEnum messageType) {
-    this.messageType = messageType;
-  }
+    public String getToken() {
+        return token;
+    }
 
-  public String getToken() {
-    return token;
-  }
-
-  public void setToken(String token) {
-    this.token = token;
-  }
-  
-  
+    public void setToken(String token) {
+        this.token = token;
+    }
 
 }

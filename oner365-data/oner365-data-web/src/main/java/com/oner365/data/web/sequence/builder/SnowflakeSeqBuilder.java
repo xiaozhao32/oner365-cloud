@@ -34,4 +34,5 @@ public class SnowflakeSeqBuilder implements SeqBuilder {
         this.workerId = workerId;
         return this;
     }
+
 }

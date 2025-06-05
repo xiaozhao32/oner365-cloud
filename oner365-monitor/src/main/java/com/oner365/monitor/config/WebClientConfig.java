@@ -24,27 +24,29 @@ import reactor.netty.http.client.HttpClient;
 @Configuration
 public class WebClientConfig {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(WebClientConfig.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(WebClientConfig.class);
 
-  /**
-   * 是否ssl验证开关
-   */
-  @Value("${webclient.ssl.enable:false}")
-  private boolean enable;
+    /**
+     * 是否ssl验证开关
+     */
+    @Value("${webclient.ssl.enable:false}")
+    private boolean enable;
 
-  @Bean
-  WebClient webClient() {
-    ClientHttpConnector httpConnector = new ReactorClientHttpConnector();
-    if (!enable) {
-      httpConnector = new ReactorClientHttpConnector(HttpClient.create().secure(sslSpec -> {
-        try {
-          sslSpec.sslContext(SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build());
-        } catch (SSLException e) {
-          LOGGER.error("webClient error:", e);
+    @Bean
+    WebClient webClient() {
+        ClientHttpConnector httpConnector = new ReactorClientHttpConnector();
+        if (!enable) {
+            httpConnector = new ReactorClientHttpConnector(HttpClient.create().secure(sslSpec -> {
+                try {
+                    sslSpec.sslContext(
+                            SslContextBuilder.forClient().trustManager(InsecureTrustManagerFactory.INSTANCE).build());
+                }
+                catch (SSLException e) {
+                    LOGGER.error("webClient error:", e);
+                }
+            }));
         }
-      }));
+        return WebClient.builder().clientConnector(httpConnector).build();
     }
-    return WebClient.builder().clientConnector(httpConnector).build();
-  }
 
 }

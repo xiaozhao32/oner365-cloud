@@ -29,101 +29,95 @@ import com.oner365.sys.vo.check.CheckConfigNameVo;
 
 /**
  * nt_sys_config Controller
- * 
+ *
  * @author zhaoyong
  */
 @RestController
 @RequestMapping("/config")
 public class SysConfigController extends BaseController {
 
-  @Resource
-  private ISysConfigService sysConfigService;
+    @Resource
+    private ISysConfigService sysConfigService;
 
-  /**
-   * 系统配置获取列表
-   *
-   * @param data 查询参数
-   * @return PageInfo<SysConfigDto>
-   */
-  @PostMapping("/list")
-  public PageInfo<SysConfigDto> pageList(@RequestBody QueryCriteriaBean data) {
-    return sysConfigService.pageList(data);
-  }
-
-  /**
-   * 获取系统配置
-   *
-   * @param id 编号
-   * @return SysConfigDto
-   */
-  @GetMapping("/get/{id}")
-  public SysConfigDto get(@PathVariable String id) {
-    return sysConfigService.getById(id);
-  }
-
-  /**
-   * 修改系统配置状态
-   *
-   * @param id     主键
-   * @param status 状态
-   * @return Boolean
-   */
-  @PostMapping("/status/{id}")
-  public Boolean editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
-    return sysConfigService.editStatus(id, status);
-  }
-
-  /**
-   * 系统配置保存
-   *
-   * @param sysConfigVo 对象
-   * @return SysConfigDto
-   */
-  @PutMapping("/save")
-  public SysConfigDto save(@RequestBody SysConfigVo sysConfigVo) {
-    return sysConfigService.save(sysConfigVo);
-  }
-
-  /**
-   * 删除系统配置
-   *
-   * @param ids 编号
-   * @return List<Boolean>
-   */
-  @DeleteMapping("/delete")
-  public List<Boolean> delete(@RequestBody String... ids) {
-    return Arrays.stream(ids).map(id -> sysConfigService.deleteById(id)).collect(Collectors.toList());
-  }
-
-  /**
-   * 导出Excel
-   *
-   * @param data 参数
-   * @return ResponseEntity<byte[]>
-   */
-  @PostMapping("/export")
-  public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
-    List<SysConfigDto> list = sysConfigService.findList(data);
-
-    String[] titleKeys = new String[] { "主键", "配置名称", "配置内容", "状态", "创建人", "创建时间", "更新人", "更新时间", };
-    String[] columnNames = { "id", "configName", "configValue", "status", "createUser", "createTime", "updateUser", "updateTime", };
-
-    String fileName = "系统配置_" + System.currentTimeMillis();
-    return exportExcel(fileName, titleKeys, columnNames, list);
-  }
-  
-  /**
-   * 判断是否存在
-   *
-   * @param checkConfigNameVo 查询参数
-   * @return Boolean
-   */
-  @PostMapping("/check")
-  public Boolean checkConfigName(@Validated @RequestBody CheckConfigNameVo checkConfigNameVo) {
-    if (checkConfigNameVo != null) {
-      return sysConfigService.checkConfigName(checkConfigNameVo.getId(), checkConfigNameVo.getConfigName());
+    /**
+     * 系统配置获取列表
+     * @param data 查询参数
+     * @return PageInfo<SysConfigDto>
+     */
+    @PostMapping("/list")
+    public PageInfo<SysConfigDto> pageList(@RequestBody QueryCriteriaBean data) {
+        return sysConfigService.pageList(data);
     }
-    return Boolean.FALSE;
-  }
+
+    /**
+     * 获取系统配置
+     * @param id 编号
+     * @return SysConfigDto
+     */
+    @GetMapping("/get/{id}")
+    public SysConfigDto get(@PathVariable String id) {
+        return sysConfigService.getById(id);
+    }
+
+    /**
+     * 修改系统配置状态
+     * @param id 主键
+     * @param status 状态
+     * @return Boolean
+     */
+    @PostMapping("/status/{id}")
+    public Boolean editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
+        return sysConfigService.editStatus(id, status);
+    }
+
+    /**
+     * 系统配置保存
+     * @param sysConfigVo 对象
+     * @return SysConfigDto
+     */
+    @PutMapping("/save")
+    public SysConfigDto save(@RequestBody SysConfigVo sysConfigVo) {
+        return sysConfigService.save(sysConfigVo);
+    }
+
+    /**
+     * 删除系统配置
+     * @param ids 编号
+     * @return List<Boolean>
+     */
+    @DeleteMapping("/delete")
+    public List<Boolean> delete(@RequestBody String... ids) {
+        return Arrays.stream(ids).map(id -> sysConfigService.deleteById(id)).collect(Collectors.toList());
+    }
+
+    /**
+     * 导出Excel
+     * @param data 参数
+     * @return ResponseEntity<byte[]>
+     */
+    @PostMapping("/export")
+    public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
+        List<SysConfigDto> list = sysConfigService.findList(data);
+
+        String[] titleKeys = new String[] { "主键", "配置名称", "配置内容", "状态", "创建人", "创建时间", "更新人", "更新时间", };
+        String[] columnNames = { "id", "configName", "configValue", "status", "createUser", "createTime", "updateUser",
+                "updateTime", };
+
+        String fileName = "系统配置_" + System.currentTimeMillis();
+        return exportExcel(fileName, titleKeys, columnNames, list);
+    }
+
+    /**
+     * 判断是否存在
+     * @param checkConfigNameVo 查询参数
+     * @return Boolean
+     */
+    @PostMapping("/check")
+    public Boolean checkConfigName(@Validated @RequestBody CheckConfigNameVo checkConfigNameVo) {
+        if (checkConfigNameVo != null) {
+            return sysConfigService.checkConfigName(checkConfigNameVo.getId(), checkConfigNameVo.getConfigName());
+        }
+        return Boolean.FALSE;
+    }
 
 }

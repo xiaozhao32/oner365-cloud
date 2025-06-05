@@ -24,20 +24,19 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/pulsar/message")
 public class PulsarConsumerMessageController {
 
-  @Resource
-  private IPulsarConsumerClient client;
+    @Resource
+    private IPulsarConsumerClient client;
 
-  /**
-   * 发送消息
-   * 
-   * @param message 消息
-   * @return ResponseData
-   */
-  @ApiOperation("1.消息")
-  @ApiOperationSupport(order = 1)
-  @GetMapping("/send")
-  public ResponseData<String> send(String message) {
-    return client.send(message);
-  }
+    /**
+     * 发送消息
+     * @param message 消息
+     * @return ResponseData
+     */
+    @ApiOperation("1.消息")
+    @ApiOperationSupport(order = 1)
+    @GetMapping("/send")
+    public ResponseData<String> send(String message) {
+        return client.send(message);
+    }
 
 }

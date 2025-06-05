@@ -23,6 +23,7 @@ import com.oner365.generator.entity.GenTableColumn;
  * @author zhaoyong
  */
 public class VelocityUtils {
+
     /** 项目空间路径 */
     private static final String PROJECT_PATH = "main/java";
 
@@ -33,17 +34,29 @@ public class VelocityUtils {
     private static final String DEFAULT_PARENT_MENU_ID = "3";
 
     private static final String ENTITY_JAVA_VM = "entity.java.vm";
+
     private static final String VO_JAVA_VM = "vo.java.vm";
+
     private static final String DTO_JAVA_VM = "dto.java.vm";
+
     private static final String MAPPER_JAVA_VM = "mapper.java.vm";
+
     private static final String DAO_JAVA_VM = "dao.java.vm";
+
     private static final String SERVICE_JAVA_VM = "service.java.vm";
+
     private static final String SERVICE_IMPL_JAVA_VM = "serviceImpl.java.vm";
+
     private static final String CONTROLLER_JAVA_VM = "controller.java.vm";
+
     private static final String MAPPER_XML_VM = "mapper.xml.vm";
+
     private static final String SQL_VM = "sql.vm";
+
     private static final String API_JS_VM = "api.js.vm";
+
     private static final String INDEX_VUE_VM = "index.vue.vm";
+
     private static final String INDEX_TREE_VUE_VM = "index-tree.vue.vm";
 
     /** 构造方法 */
@@ -53,7 +66,6 @@ public class VelocityUtils {
 
     /**
      * 设置模板变量信息
-     *
      * @return 模板列表
      */
     public static VelocityContext prepareContext(GenTable genTable) {
@@ -116,7 +128,6 @@ public class VelocityUtils {
 
     /**
      * 获取模板信息
-     *
      * @return 模板列表
      */
     public static List<String> getTemplateList(String tplCategory) {
@@ -140,7 +151,8 @@ public class VelocityUtils {
         templates.add("vm/js/api.js.vm");
         if (GenConstants.TPL_CRUD.equals(tplCategory)) {
             templates.add("vm/vue/index.vue.vm");
-        } else if (GenConstants.TPL_TREE.equals(tplCategory)) {
+        }
+        else if (GenConstants.TPL_TREE.equals(tplCategory)) {
             templates.add("vm/vue/index-tree.vue.vm");
         }
         return templates;
@@ -161,35 +173,48 @@ public class VelocityUtils {
         // 业务名称
         String businessName = genTable.getBusinessName();
 
-        String javaPath = PROJECT_PATH + PublicConstants.DELIMITER + StringUtils.replace(packageName, ".", PublicConstants.DELIMITER);
+        String javaPath = PROJECT_PATH + PublicConstants.DELIMITER
+                + StringUtils.replace(packageName, ".", PublicConstants.DELIMITER);
         String mybatisPath = MYBATIS_PATH + PublicConstants.DELIMITER + moduleName;
         String vuePath = "vue";
 
         if (template.contains(ENTITY_JAVA_VM)) {
             fileName = DataUtils.format("{}/entity/{}.java", javaPath, className);
-        } else if (template.contains(VO_JAVA_VM)) {
+        }
+        else if (template.contains(VO_JAVA_VM)) {
             fileName = DataUtils.format("{}/vo/{}Vo.java", javaPath, className);
-        } else if (template.contains(DTO_JAVA_VM)) {
-          fileName = DataUtils.format("{}/dto/{}Dto.java", javaPath, className);
-        } else if (template.contains(MAPPER_JAVA_VM)) {
+        }
+        else if (template.contains(DTO_JAVA_VM)) {
+            fileName = DataUtils.format("{}/dto/{}Dto.java", javaPath, className);
+        }
+        else if (template.contains(MAPPER_JAVA_VM)) {
             fileName = DataUtils.format("{}/mapper/{}Mapper.java", javaPath, className);
-        } else if (template.contains(DAO_JAVA_VM)) {
+        }
+        else if (template.contains(DAO_JAVA_VM)) {
             fileName = DataUtils.format("{}/dao/I{}Dao.java", javaPath, className);
-        } else if (template.contains(SERVICE_JAVA_VM)) {
+        }
+        else if (template.contains(SERVICE_JAVA_VM)) {
             fileName = DataUtils.format("{}/service/I{}Service.java", javaPath, className);
-        } else if (template.contains(SERVICE_IMPL_JAVA_VM)) {
+        }
+        else if (template.contains(SERVICE_IMPL_JAVA_VM)) {
             fileName = DataUtils.format("{}/service/impl/{}ServiceImpl.java", javaPath, className);
-        } else if (template.contains(CONTROLLER_JAVA_VM)) {
+        }
+        else if (template.contains(CONTROLLER_JAVA_VM)) {
             fileName = DataUtils.format("{}/controller/{}Controller.java", javaPath, className);
-        } else if (template.contains(MAPPER_XML_VM)) {
+        }
+        else if (template.contains(MAPPER_XML_VM)) {
             fileName = DataUtils.format("{}/{}Mapper.xml", mybatisPath, className);
-        } else if (template.contains(SQL_VM)) {
+        }
+        else if (template.contains(SQL_VM)) {
             fileName = businessName + "Menu.sql";
-        } else if (template.contains(API_JS_VM)) {
+        }
+        else if (template.contains(API_JS_VM)) {
             fileName = DataUtils.format("{}/api/{}/{}.js", vuePath, moduleName, businessName);
-        } else if (template.contains(INDEX_VUE_VM)) {
+        }
+        else if (template.contains(INDEX_VUE_VM)) {
             fileName = DataUtils.format("{}/views/{}/{}/index.vue", vuePath, moduleName, businessName);
-        } else if (template.contains(INDEX_TREE_VUE_VM)) {
+        }
+        else if (template.contains(INDEX_TREE_VUE_VM)) {
             fileName = DataUtils.format("{}/views/{}/{}/index.vue", vuePath, moduleName, businessName);
         }
         return fileName;
@@ -197,7 +222,6 @@ public class VelocityUtils {
 
     /**
      * 获取包前缀
-     *
      * @param packageName 包名称
      * @return 包前缀名称
      */
@@ -208,7 +232,6 @@ public class VelocityUtils {
 
     /**
      * 根据列类型获取导入包
-     *
      * @param columns 列集合
      * @return 返回需要导入的包列表
      */
@@ -217,9 +240,11 @@ public class VelocityUtils {
         for (GenTableColumn column : columns) {
             if (!column.isSuperColumn() && GenConstants.TYPE_DATE.equals(column.getJavaType())) {
                 importList.add("java.util.LocalDate");
-            } else if (!column.isSuperColumn() && GenConstants.TYPE_DATE_TIME.equals(column.getJavaType())) {
+            }
+            else if (!column.isSuperColumn() && GenConstants.TYPE_DATE_TIME.equals(column.getJavaType())) {
                 importList.add("java.util.LocalDateTime");
-            } else if (!column.isSuperColumn() && GenConstants.TYPE_BIG_DECIMAL.equals(column.getJavaType())) {
+            }
+            else if (!column.isSuperColumn() && GenConstants.TYPE_BIG_DECIMAL.equals(column.getJavaType())) {
                 importList.add("java.math.BigDecimal");
             }
         }
@@ -228,8 +253,7 @@ public class VelocityUtils {
 
     /**
      * 获取权限前缀
-     *
-     * @param moduleName   模块名称
+     * @param moduleName 模块名称
      * @param businessName 业务名称
      * @return 返回权限前缀
      */
@@ -239,7 +263,6 @@ public class VelocityUtils {
 
     /**
      * 获取上级菜单ID字段
-     *
      * @param paramsObj 生成其他选项
      * @return 上级菜单ID字段
      */
@@ -252,7 +275,6 @@ public class VelocityUtils {
 
     /**
      * 获取树编码
-     *
      * @param paramsObj 生成其他选项
      * @return 树编码
      */
@@ -265,7 +287,6 @@ public class VelocityUtils {
 
     /**
      * 获取树父编码
-     *
      * @param paramsObj 生成其他选项
      * @return 树父编码
      */
@@ -278,7 +299,6 @@ public class VelocityUtils {
 
     /**
      * 获取树名称
-     *
      * @param paramsObj 生成其他选项
      * @return 树名称
      */
@@ -291,7 +311,6 @@ public class VelocityUtils {
 
     /**
      * 获取需要在哪一列上面显示展开按钮
-     *
      * @param genTable 业务表对象
      * @return 展开按钮列序号
      */
@@ -311,4 +330,5 @@ public class VelocityUtils {
         }
         return num;
     }
+
 }

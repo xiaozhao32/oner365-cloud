@@ -61,13 +61,13 @@ public class SysRoleDto implements Serializable {
      */
     @ApiModelProperty(value = "更新时间")
     private Timestamp updateTime;
-    
+
     /**
      * 菜单id
      */
     @ApiModelProperty(value = "菜单id")
     private List<String> menuIds;
-    
+
     /**
      * 菜单类型
      */
@@ -158,7 +158,7 @@ public class SysRoleDto implements Serializable {
     public void setMenuType(String menuType) {
         this.menuType = menuType;
     }
-    
+
     /**
      * toString Method
      */
@@ -166,4 +166,5 @@ public class SysRoleDto implements Serializable {
     public String toString() {
         return MoreObjects.toStringHelper(this).add("id", id).toString();
     }
+
 }

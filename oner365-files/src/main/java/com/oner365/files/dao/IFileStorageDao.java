@@ -7,8 +7,10 @@ import com.oner365.files.entity.SysFileStorage;
 
 /**
  * 文件接口
+ *
  * @author zhaoyong
  */
-public interface IFileStorageDao extends JpaRepository<SysFileStorage, String>, JpaSpecificationExecutor<SysFileStorage> {
+public interface IFileStorageDao
+        extends JpaRepository<SysFileStorage, String>, JpaSpecificationExecutor<SysFileStorage> {
 
 }

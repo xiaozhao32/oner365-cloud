@@ -6,66 +6,67 @@ import com.alibaba.fastjson.JSONObject;
 
 /**
  * 定时任务调度
- * 
+ *
  * @author liutao
  */
 public class InvokeParam implements Serializable {
-  private static final long serialVersionUID = 1L;
 
-  /**
-   * 任务编号
-   */
-  private String taskId;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 执行任务服务名称
-   */
-  private String taskServerName;
+    /**
+     * 任务编号
+     */
+    private String taskId;
 
-  /**
-   * 执行计划任务是否可并发 0：不允许 1:允许
-   */
-  private String concurrent;
+    /**
+     * 执行任务服务名称
+     */
+    private String taskServerName;
 
-  public String getTaskId() {
-    return taskId;
-  }
+    /**
+     * 执行计划任务是否可并发 0：不允许 1:允许
+     */
+    private String concurrent;
 
-  public void setTaskId(String taskId) {
-    this.taskId = taskId;
-  }
+    public String getTaskId() {
+        return taskId;
+    }
 
-  /**
-   * 任务所需参数
-   */
-  private JSONObject taskParam;
+    public void setTaskId(String taskId) {
+        this.taskId = taskId;
+    }
 
-  public InvokeParam() {
-    super();
-  }
+    /**
+     * 任务所需参数
+     */
+    private JSONObject taskParam;
 
-  public String getTaskServerName() {
-    return taskServerName;
-  }
+    public InvokeParam() {
+        super();
+    }
 
-  public void setTaskServerName(String taskServerName) {
-    this.taskServerName = taskServerName;
-  }
+    public String getTaskServerName() {
+        return taskServerName;
+    }
 
-  public String getConcurrent() {
-    return concurrent;
-  }
+    public void setTaskServerName(String taskServerName) {
+        this.taskServerName = taskServerName;
+    }
 
-  public void setConcurrent(String concurrent) {
-    this.concurrent = concurrent;
-  }
+    public String getConcurrent() {
+        return concurrent;
+    }
 
-  public JSONObject getTaskParam() {
-    return taskParam;
-  }
+    public void setConcurrent(String concurrent) {
+        this.concurrent = concurrent;
+    }
 
-  public void setTaskParam(JSONObject taskParam) {
-    this.taskParam = taskParam;
-  }
+    public JSONObject getTaskParam() {
+        return taskParam;
+    }
+
+    public void setTaskParam(JSONObject taskParam) {
+        this.taskParam = taskParam;
+    }
 
 }

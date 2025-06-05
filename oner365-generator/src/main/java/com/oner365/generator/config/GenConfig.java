@@ -5,13 +5,13 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 读取代码生成相关配置
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 @ConfigurationProperties(prefix = "gen")
 public class GenConfig {
-    
+
     /** 作者 */
     private String author;
 
@@ -27,7 +27,7 @@ public class GenConfig {
     public GenConfig() {
         super();
     }
-    
+
     public String getAuthor() {
         return author;
     }

@@ -14,6 +14,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 菜单对象
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "菜单信息")
@@ -104,9 +105,11 @@ public class SysMenuVo implements Serializable {
      */
     @ApiModelProperty(value = "图标")
     private String icon;
-    
+
     private List<SysMenuVo> children = new ArrayList<>();
+
     private String userId;
+
     private List<String> operIds;
 
     /**
@@ -297,7 +300,7 @@ public class SysMenuVo implements Serializable {
     public void setMenuTypeId(String menuTypeId) {
         this.menuTypeId = menuTypeId;
     }
-    
+
     public List<SysMenuVo> getChildren() {
         return children;
     }

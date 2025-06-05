@@ -58,4 +58,5 @@ public class CacheInfoDto implements Serializable {
     public void setCommandStats(List<CacheCommandStatsDto> commandStats) {
         this.commandStats = commandStats;
     }
+
 }

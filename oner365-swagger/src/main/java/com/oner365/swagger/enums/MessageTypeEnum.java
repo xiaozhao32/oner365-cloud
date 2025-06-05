@@ -9,9 +9,9 @@ import java.io.Serializable;
  */
 public enum MessageTypeEnum implements Serializable {
 
-  /** 默认 */
-  DEFAULT,
-  /** 测试 */
-  TEST
+    /** 默认 */
+    DEFAULT,
+    /** 测试 */
+    TEST
 
 }

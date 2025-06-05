@@ -21,173 +21,173 @@ import com.oner365.data.commons.util.DateUtil;
 @Setting(refreshInterval = "-1")
 public class ApplicationLog implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-  
-  /**
-   * 主键
-   */
-  @Id
-  private String id;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 线程名称
-   */
-  @Field(name="thread_name")
-  private String threadName;
-  
-  /**
-   * 版本
-   */
-  @Field(name="@version")
-  private String version;
-  
-  /**
-   * 消息内容
-   */
-  @Field(name="message", type = FieldType.Keyword)
-  private String message;
-  
-  /**
-   * 日志级别
-   */
-  @Field(name="level", type = FieldType.Keyword)
-  private LogLevel level;
-  
-  /**
-   * 类名称
-   */
-  @Field(name="logger_name", type = FieldType.Keyword)
-  private String loggerName;
-  
-  /**
-   * 项目名称
-   */
-  @Field(name="LOG_NAME", type = FieldType.Keyword)
-  private String projectName;
-  
-  /**
-   * 创建时间
-   */
-  @Field(name="createTime", type = FieldType.Date, pattern = DateUtil.FULL_UTC_TIME_FORMAT)
-  private LocalDateTime createTime;
-  
-  /**
-   * 构造方法
-   */
-  public ApplicationLog() {
-    super();
-  }
+    /**
+     * 主键
+     */
+    @Id
+    private String id;
 
-  /**
-   * @return the id
-   */
-  public String getId() {
-    return id;
-  }
+    /**
+     * 线程名称
+     */
+    @Field(name = "thread_name")
+    private String threadName;
 
-  /**
-   * @param id the id to set
-   */
-  public void setId(String id) {
-    this.id = id;
-  }
+    /**
+     * 版本
+     */
+    @Field(name = "@version")
+    private String version;
 
-  /**
-   * @return the threadName
-   */
-  public String getThreadName() {
-    return threadName;
-  }
+    /**
+     * 消息内容
+     */
+    @Field(name = "message", type = FieldType.Keyword)
+    private String message;
 
-  /**
-   * @param threadName the threadName to set
-   */
-  public void setThreadName(String threadName) {
-    this.threadName = threadName;
-  }
+    /**
+     * 日志级别
+     */
+    @Field(name = "level", type = FieldType.Keyword)
+    private LogLevel level;
 
-  /**
-   * @return the version
-   */
-  public String getVersion() {
-    return version;
-  }
+    /**
+     * 类名称
+     */
+    @Field(name = "logger_name", type = FieldType.Keyword)
+    private String loggerName;
 
-  /**
-   * @param version the version to set
-   */
-  public void setVersion(String version) {
-    this.version = version;
-  }
+    /**
+     * 项目名称
+     */
+    @Field(name = "LOG_NAME", type = FieldType.Keyword)
+    private String projectName;
 
-  /**
-   * @return the message
-   */
-  public String getMessage() {
-    return message;
-  }
+    /**
+     * 创建时间
+     */
+    @Field(name = "createTime", type = FieldType.Date, pattern = DateUtil.FULL_UTC_TIME_FORMAT)
+    private LocalDateTime createTime;
 
-  /**
-   * @param message the message to set
-   */
-  public void setMessage(String message) {
-    this.message = message;
-  }
+    /**
+     * 构造方法
+     */
+    public ApplicationLog() {
+        super();
+    }
 
-  /**
-   * @return the loggerName
-   */
-  public String getLoggerName() {
-    return loggerName;
-  }
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
-  /**
-   * @param loggerName the loggerName to set
-   */
-  public void setLoggerName(String loggerName) {
-    this.loggerName = loggerName;
-  }
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  /**
-   * @return the createTime
-   */
-  public LocalDateTime getCreateTime() {
-    return createTime;
-  }
+    /**
+     * @return the threadName
+     */
+    public String getThreadName() {
+        return threadName;
+    }
 
-  /**
-   * @param createTime the createTime to set
-   */
-  public void setCreateTime(LocalDateTime createTime) {
-    this.createTime = createTime;
-  }
+    /**
+     * @param threadName the threadName to set
+     */
+    public void setThreadName(String threadName) {
+        this.threadName = threadName;
+    }
 
-  /**
-   * @return the level
-   */
-  public LogLevel getLevel() {
-    return level;
-  }
+    /**
+     * @return the version
+     */
+    public String getVersion() {
+        return version;
+    }
 
-  /**
-   * @param level the level to set
-   */
-  public void setLevel(LogLevel level) {
-    this.level = level;
-  }
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-  /**
-   * @return the projectName
-   */
-  public String getProjectName() {
-    return projectName;
-  }
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
 
-  /**
-   * @param projectName the projectName to set
-   */
-  public void setProjectName(String projectName) {
-    this.projectName = projectName;
-  }
-  
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    /**
+     * @return the loggerName
+     */
+    public String getLoggerName() {
+        return loggerName;
+    }
+
+    /**
+     * @param loggerName the loggerName to set
+     */
+    public void setLoggerName(String loggerName) {
+        this.loggerName = loggerName;
+    }
+
+    /**
+     * @return the createTime
+     */
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * @param createTime the createTime to set
+     */
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * @return the level
+     */
+    public LogLevel getLevel() {
+        return level;
+    }
+
+    /**
+     * @param level the level to set
+     */
+    public void setLevel(LogLevel level) {
+        this.level = level;
+    }
+
+    /**
+     * @return the projectName
+     */
+    public String getProjectName() {
+        return projectName;
+    }
+
+    /**
+     * @param projectName the projectName to set
+     */
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
 }

@@ -5,24 +5,28 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 项目配置
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 @ConfigurationProperties(prefix = "swagger")
 public class SwaggerProperties {
-    
+
     /** 名称 */
     private String name;
+
     /** 地址 */
     private String url;
+
     /** 描述 */
     private String description;
+
     /** 版本 */
     private String version;
+
     /** 邮箱 */
     private String email;
-    
+
     /**
      * 构造方法
      */
@@ -69,4 +73,5 @@ public class SwaggerProperties {
     public void setEmail(String email) {
         this.email = email;
     }
+
 }

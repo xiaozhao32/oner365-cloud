@@ -8,7 +8,7 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 
 /**
  * Elasticsearch 初始化
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -17,9 +17,9 @@ import org.springframework.data.elasticsearch.repository.config.EnableElasticsea
 @EnableElasticsearchRepositories(basePackages = "com.oner365.elasticsearch.service")
 public class ElasticsearchInitializer implements ApplicationContextInitializer<ConfigurableApplicationContext> {
 
-  @Override
-  public void initialize(ConfigurableApplicationContext applicationContext) {
-    System.setProperty("es.set.netty.runtime.available.processors", "false");
-  }
+    @Override
+    public void initialize(ConfigurableApplicationContext applicationContext) {
+        System.setProperty("es.set.netty.runtime.available.processors", "false");
+    }
 
 }

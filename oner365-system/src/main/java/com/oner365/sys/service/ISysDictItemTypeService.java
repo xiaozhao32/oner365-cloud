@@ -11,75 +11,67 @@ import com.oner365.sys.vo.SysDictItemTypeVo;
 
 /**
  * 字典类型接口
- * 
+ *
  * @author zhaoyong
  */
 public interface ISysDictItemTypeService extends BaseService {
 
-  /**
-   * 添加
-   * 
-   * @param type 字典类型
-   * @return SysDictItemTypeDto
-   */
-  SysDictItemTypeDto save(SysDictItemTypeVo type);
+    /**
+     * 添加
+     * @param type 字典类型
+     * @return SysDictItemTypeDto
+     */
+    SysDictItemTypeDto save(SysDictItemTypeVo type);
 
-  /**
-   * 按编号查询详情
-   * 
-   * @param id 主键
-   * @return SysDictItemTypeDto
-   */
-  SysDictItemTypeDto getById(String id);
+    /**
+     * 按编号查询详情
+     * @param id 主键
+     * @return SysDictItemTypeDto
+     */
+    SysDictItemTypeDto getById(String id);
 
-  /**
-   * 查询分页列表
-   * 
-   * @param data 查询参数
-   * @return PageInfo
-   */
-  PageInfo<SysDictItemTypeDto> pageList(QueryCriteriaBean data);
+    /**
+     * 查询分页列表
+     * @param data 查询参数
+     * @return PageInfo
+     */
+    PageInfo<SysDictItemTypeDto> pageList(QueryCriteriaBean data);
 
-  /**
-   * 查询列表
-   * 
-   * @param data 查询参数
-   * @return List
-   */
-  List<SysDictItemTypeDto> findList(QueryCriteriaBean data);
+    /**
+     * 查询列表
+     * @param data 查询参数
+     * @return List
+     */
+    List<SysDictItemTypeDto> findList(QueryCriteriaBean data);
 
-  /**
-   * 检测code是否存在
-   * 
-   * @param id   主键
-   * @param code 编号
-   * @return Boolean
-   */
-  Boolean checkCode(String id, String code);
+    /**
+     * 检测code是否存在
+     * @param id 主键
+     * @param code 编号
+     * @return Boolean
+     */
+    Boolean checkCode(String id, String code);
 
-  /**
-   * 删除
-   * 
-   * @param id 主键
-   * @return Boolean
-   */
-  Boolean deleteById(String id);
+    /**
+     * 删除
+     * @param id 主键
+     * @return Boolean
+     */
+    Boolean deleteById(String id);
 
-  /**
-   * 查询列表
-   * 
-   * @param codeList 查询参数
-   * @return List
-   */
-  List<SysDictItemTypeDto> findListByCodes(List<String> codeList);
+    /**
+     * 查询列表
+     * @param codeList 查询参数
+     * @return List
+     */
+    List<SysDictItemTypeDto> findListByCodes(List<String> codeList);
 
-  /**
-   * 修改状态
-   * 
-   * @param id     主键
-   * @param status 状态
-   * @return Boolean
-   */
-  Boolean editStatus(String id, StatusEnum status);
+    /**
+     * 修改状态
+     * @param id 主键
+     * @param status 状态
+     * @return Boolean
+     */
+    Boolean editStatus(String id, StatusEnum status);
 
 }

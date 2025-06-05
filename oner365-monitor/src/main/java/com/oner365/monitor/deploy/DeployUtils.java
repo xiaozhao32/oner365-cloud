@@ -37,6 +37,7 @@ import ch.ethz.ssh2.StreamGobbler;
 
 /**
  * 安装部署工具类
+ *
  * @author zhaoyong
  *
  */
@@ -57,7 +58,6 @@ public class DeployUtils {
 
     /**
      * windows程序停止
-     *
      * @param port 端口
      */
     public static void stop(int port) {
@@ -78,11 +78,12 @@ public class DeployUtils {
      */
     public static Connection getConnection(String ip, int port) {
         try {
-            /*Connection*/
+            /* Connection */
             Connection con = new Connection(ip, port);
             con.connect();
             return con;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("getConnection error:", e);
             throw new ProjectRuntimeException();
         }
@@ -96,7 +97,8 @@ public class DeployUtils {
     public static Session getSession(Connection con) {
         try {
             return con.openSession();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("getSession error:", e);
             throw new ProjectRuntimeException();
         }
@@ -105,7 +107,8 @@ public class DeployUtils {
     public static SFTPv3Client getClient(Connection con) {
         try {
             return new SFTPv3Client(con);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("getSFTPv3Client error:", e);
             throw new ProjectRuntimeException();
         }
@@ -142,7 +145,8 @@ public class DeployUtils {
         boolean result = false;
         try {
             result = con.authenticateWithPassword(user, password);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("auth error:", e);
         }
         return result;
@@ -150,8 +154,7 @@ public class DeployUtils {
 
     /**
      * 调用方式
-     *
-     * @param commands    执行命令
+     * @param commands 执行命令
      * @return List<List<String>>
      */
     public static List<List<String>> execCommand(Connection con, List<String> commands) {
@@ -176,7 +179,8 @@ public class DeployUtils {
                     close(null, session, null);
                 }
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             List<String> list = new ArrayList<>();
             list.add("ssh exec command error.");
             result.add(list);
@@ -220,7 +224,8 @@ public class DeployUtils {
             exec.setStreamHandler(streamHandler);
             exec.execute(commandLine);
             return outStream.toString(Charset.defaultCharset());
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("execExecute error:", e);
         }
         return null;
@@ -259,9 +264,11 @@ public class DeployUtils {
             exec.setStreamHandler(streamHandler);
             exec.execute(commandLine, handler);
             handler.waitFor();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("IOException execExecuteCommand error:", e);
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             LOGGER.error("InterruptedException execExecuteCommand error:", e);
             Thread.currentThread().interrupt();
         }
@@ -277,14 +284,14 @@ public class DeployUtils {
             scpClient.put(localFiles, remoteTargetDirectory);
 
             sftpClient.close();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("uploadFileMap error:", e);
         }
     }
 
     /**
      * 查询目录
-     *
      * @param sftpClient 对象
      * @param directory 目录
      * @return boolean
@@ -293,7 +300,8 @@ public class DeployUtils {
         try {
             sftpClient.ls(directory);
             return true;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             // not exception
         }
         return false;
@@ -301,7 +309,6 @@ public class DeployUtils {
 
     /**
      * 查询目录
-     *
      * @param ip ip
      * @param port 端口
      * @param user 账号
@@ -321,7 +328,8 @@ public class DeployUtils {
                 result = sftpClient.ls(directory);
             }
             DeployUtils.close(con, null, sftpClient);
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("directoryList error:", e);
         }
         return result;
@@ -329,7 +337,6 @@ public class DeployUtils {
 
     /**
      * 创建目录
-     *
      * @param sftpClient 对象
      * @param directory 目录
      * @return boolean
@@ -340,7 +347,8 @@ public class DeployUtils {
             try {
                 sftpClient.mkdir(directory, POSIX_PERMISSIONS);
                 return true;
-            } catch (IOException e) {
+            }
+            catch (IOException e) {
                 LOGGER.error("Error mkdir:", e);
             }
         }
@@ -349,32 +357,29 @@ public class DeployUtils {
 
     /**
      * 替换文件内容后生成文件 替换内容为空时直接生成(相当于拷贝文件)
-     *
-     * @param readFile        读取文件路径
-     * @param writeFile        写入文件路径
-     * @param items
-     *            替换模板内容：key替换成value, value不能为null, 可以为空字符串
+     * @param readFile 读取文件路径
+     * @param writeFile 写入文件路径
+     * @param items 替换模板内容：key替换成value, value不能为null, 可以为空字符串
      * @return boolean
      */
-    public static boolean replaceContextFileCreate(String readFile,
-            String writeFile, Map<String, Object> items) {
+    public static boolean replaceContextFileCreate(String readFile, String writeFile, Map<String, Object> items) {
         try (FileInputStream fis = new FileInputStream(readFile)) {
             writeFile(fis, writeFile, items);
             LOGGER.debug("createFile success: {}", writeFile);
             return true;
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("replaceContextFileCreate Error!", e);
         }
         return false;
     }
 
-    private static void writeFile(InputStream is,
-            String writeFile, Map<String, Object> items) {
+    private static void writeFile(InputStream is, String writeFile, Map<String, Object> items) {
         try (InputStreamReader isr = new InputStreamReader(is, Charset.defaultCharset());
-            BufferedReader in = new BufferedReader(isr);
-            FileOutputStream fos = new FileOutputStream(writeFile);
-            OutputStreamWriter osw = new OutputStreamWriter(fos, Charset.defaultCharset());
-            BufferedWriter out = new BufferedWriter(osw)) {
+                BufferedReader in = new BufferedReader(isr);
+                FileOutputStream fos = new FileOutputStream(writeFile);
+                OutputStreamWriter osw = new OutputStreamWriter(fos, Charset.defaultCharset());
+                BufferedWriter out = new BufferedWriter(osw)) {
 
             // 替换对象
             String s;
@@ -384,7 +389,8 @@ public class DeployUtils {
                 out.newLine();
             }
             out.flush();
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             LOGGER.error("writeFile Error!", e);
         }
 

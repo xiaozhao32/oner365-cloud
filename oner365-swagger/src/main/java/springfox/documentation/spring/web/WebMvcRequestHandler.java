@@ -26,120 +26,128 @@ import springfox.documentation.spring.wrapper.PatternsRequestCondition;
 
 /**
  * swagger3.0兼容springBoot2.6.0处理
- * 
+ *
  * @author zhaoyong
  */
 public class WebMvcRequestHandler implements RequestHandler {
 
-  private final String contextPath;
-  private final HandlerMethodResolver methodResolver;
-  private final RequestMappingInfo requestMapping;
-  private final HandlerMethod handlerMethod;
+    private final String contextPath;
 
-  public WebMvcRequestHandler(String contextPath, HandlerMethodResolver methodResolver,
-      RequestMappingInfo requestMapping, HandlerMethod handlerMethod) {
-    this.contextPath = contextPath;
-    this.methodResolver = methodResolver;
-    this.requestMapping = requestMapping;
-    this.handlerMethod = handlerMethod;
-  }
+    private final HandlerMethodResolver methodResolver;
 
-  @Override
-  public HandlerMethod getHandlerMethod() {
-    return handlerMethod;
-  }
+    private final RequestMappingInfo requestMapping;
 
-  @Override
-  public RequestHandler combine(RequestHandler other) {
-    return this;
-  }
+    private final HandlerMethod handlerMethod;
 
-  @Override
-  public Class<?> declaringClass() {
-    return handlerMethod.getBeanType();
-  }
+    public WebMvcRequestHandler(String contextPath, HandlerMethodResolver methodResolver,
+            RequestMappingInfo requestMapping, HandlerMethod handlerMethod) {
+        this.contextPath = contextPath;
+        this.methodResolver = methodResolver;
+        this.requestMapping = requestMapping;
+        this.handlerMethod = handlerMethod;
+    }
 
-  @Override
-  public boolean isAnnotatedWith(Class<? extends Annotation> annotation) {
-    return null != AnnotationUtils.findAnnotation(handlerMethod.getMethod(), annotation);
-  }
+    @Override
+    public HandlerMethod getHandlerMethod() {
+        return handlerMethod;
+    }
 
-  @Override
-  public PatternsRequestCondition<?> getPatternsCondition() {
-    return new WebMvcPatternsRequestConditionWrapper(contextPath, requestMapping.getPathPatternsCondition());
-  }
+    @Override
+    public RequestHandler combine(RequestHandler other) {
+        return this;
+    }
 
-  @Override
-  public String groupName() {
-    return ControllerNamingUtils.controllerNameAsGroup(handlerMethod);
-  }
+    @Override
+    public Class<?> declaringClass() {
+        return handlerMethod.getBeanType();
+    }
 
-  @Override
-  public String getName() {
-    return handlerMethod.getMethod().getName();
-  }
+    @Override
+    public boolean isAnnotatedWith(Class<? extends Annotation> annotation) {
+        return null != AnnotationUtils.findAnnotation(handlerMethod.getMethod(), annotation);
+    }
 
-  @Override
-  public Set<RequestMethod> supportedMethods() {
-    return requestMapping.getMethodsCondition().getMethods();
-  }
+    @Override
+    public PatternsRequestCondition<?> getPatternsCondition() {
+        return new WebMvcPatternsRequestConditionWrapper(contextPath, requestMapping.getPathPatternsCondition());
+    }
 
-  @Override
-  public Set<MediaType> produces() {
-    return requestMapping.getProducesCondition().getProducibleMediaTypes();
-  }
+    @Override
+    public String groupName() {
+        return ControllerNamingUtils.controllerNameAsGroup(handlerMethod);
+    }
 
-  @Override
-  public Set<MediaType> consumes() {
-    return requestMapping.getConsumesCondition().getConsumableMediaTypes();
-  }
+    @Override
+    public String getName() {
+        return handlerMethod.getMethod().getName();
+    }
 
-  @Override
-  public Set<NameValueExpression<String>> headers() {
-    return WebMvcNameValueExpressionWrapper.from(requestMapping.getHeadersCondition().getExpressions());
-  }
+    @Override
+    public Set<RequestMethod> supportedMethods() {
+        return requestMapping.getMethodsCondition().getMethods();
+    }
 
-  @Override
-  public Set<NameValueExpression<String>> params() {
-    return WebMvcNameValueExpressionWrapper.from(requestMapping.getParamsCondition().getExpressions());
-  }
+    @Override
+    public Set<MediaType> produces() {
+        return requestMapping.getProducesCondition().getProducibleMediaTypes();
+    }
 
-  @Override
-  public <T extends Annotation> Optional<T> findAnnotation(Class<T> annotation) {
-    return ofNullable(AnnotationUtils.findAnnotation(handlerMethod.getMethod(), annotation));
-  }
+    @Override
+    public Set<MediaType> consumes() {
+        return requestMapping.getConsumesCondition().getConsumableMediaTypes();
+    }
 
-  @Override
-  public RequestHandlerKey key() {
-    return new RequestHandlerKey(Objects.requireNonNull(requestMapping.getPathPatternsCondition()).getPatternValues(),
-        requestMapping.getMethodsCondition().getMethods(),
-        requestMapping.getConsumesCondition().getConsumableMediaTypes(),
-        requestMapping.getProducesCondition().getProducibleMediaTypes());
-  }
+    @Override
+    public Set<NameValueExpression<String>> headers() {
+        return WebMvcNameValueExpressionWrapper.from(requestMapping.getHeadersCondition().getExpressions());
+    }
 
-  @Override
-  public springfox.documentation.spring.wrapper.RequestMappingInfo<?> getRequestMapping() {
-    return new WebMvcRequestMappingInfoWrapper(requestMapping);
-  }
+    @Override
+    public Set<NameValueExpression<String>> params() {
+        return WebMvcNameValueExpressionWrapper.from(requestMapping.getParamsCondition().getExpressions());
+    }
 
-  @Override
-  public List<ResolvedMethodParameter> getParameters() {
-    return methodResolver.methodParameters(handlerMethod);
-  }
+    @Override
+    public <T extends Annotation> Optional<T> findAnnotation(Class<T> annotation) {
+        return ofNullable(AnnotationUtils.findAnnotation(handlerMethod.getMethod(), annotation));
+    }
 
-  @Override
-  public ResolvedType getReturnType() {
-    return methodResolver.methodReturnType(handlerMethod);
-  }
+    @Override
+    public RequestHandlerKey key() {
+        return new RequestHandlerKey(
+                Objects.requireNonNull(requestMapping.getPathPatternsCondition()).getPatternValues(),
+                requestMapping.getMethodsCondition().getMethods(),
+                requestMapping.getConsumesCondition().getConsumableMediaTypes(),
+                requestMapping.getProducesCondition().getProducibleMediaTypes());
+    }
 
-  @Override
-  public <T extends Annotation> Optional<T> findControllerAnnotation(Class<T> annotation) {
-    return ofNullable(AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), annotation));
-  }
+    @Override
+    public springfox.documentation.spring.wrapper.RequestMappingInfo<?> getRequestMapping() {
+        return new WebMvcRequestMappingInfoWrapper(requestMapping);
+    }
 
-  @Override
-  public String toString() {
-    return new StringJoiner(", ", WebMvcRequestHandler.class.getSimpleName() + "{", "}")
-        .add("requestMapping=" + requestMapping).add("handlerMethod=" + handlerMethod).add("key=" + key()).toString();
-  }
+    @Override
+    public List<ResolvedMethodParameter> getParameters() {
+        return methodResolver.methodParameters(handlerMethod);
+    }
+
+    @Override
+    public ResolvedType getReturnType() {
+        return methodResolver.methodReturnType(handlerMethod);
+    }
+
+    @Override
+    public <T extends Annotation> Optional<T> findControllerAnnotation(Class<T> annotation) {
+        return ofNullable(AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), annotation));
+    }
+
+    @Override
+    public String toString() {
+        return new StringJoiner(", ", WebMvcRequestHandler.class.getSimpleName() + "{", "}")
+            .add("requestMapping=" + requestMapping)
+            .add("handlerMethod=" + handlerMethod)
+            .add("key=" + key())
+            .toString();
+    }
+
 }

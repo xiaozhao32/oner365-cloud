@@ -22,24 +22,24 @@ import com.oner365.pulsar.service.PulsarService;
 @RequestMapping("/message")
 public class PulsarController extends BaseController {
 
-  @Resource
-  private PulsarService pulsarService;
+    @Resource
+    private PulsarService pulsarService;
 
-  /**
-   * 测试发送
-   *
-   * @param data 参数
-   * @return ResponseData<String>
-   */
-  @GetMapping("/send")
-  public ResponseData<String> send(String message) {
-    logger.info("Pulsar send message:{}", message);
-    JSONObject json = new JSONObject();
-    json.put("message", message);
-    ResultEnum result = pulsarService.convertAndSend(json);
-    if (ResultEnum.SUCCESS.equals(result)) {
-      return ResponseData.success(message);
+    /**
+     * 测试发送
+     * @param data 参数
+     * @return ResponseData<String>
+     */
+    @GetMapping("/send")
+    public ResponseData<String> send(String message) {
+        logger.info("Pulsar send message:{}", message);
+        JSONObject json = new JSONObject();
+        json.put("message", message);
+        ResultEnum result = pulsarService.convertAndSend(json);
+        if (ResultEnum.SUCCESS.equals(result)) {
+            return ResponseData.success(message);
+        }
+        return ResponseData.error(result.getName());
     }
-    return ResponseData.error(result.getName());
-  }
+
 }

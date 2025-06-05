@@ -15,13 +15,14 @@ import com.oner365.gateway.util.DataUtils;
 
 /**
  * ISyncRouteMQService实现类
+ *
  * @author zhaoyong
  */
 @Service
 public class SyncRouteMqServiceImpl implements ISyncRouteMqService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SyncRouteMqServiceImpl.class);
-    
+
     @Resource
     private RedisCache redisCache;
 
@@ -32,7 +33,8 @@ public class SyncRouteMqServiceImpl implements ISyncRouteMqService {
     public void syncRoute() {
         if (redisCache.lock(GatewayConstants.QUEUE_NAME, PublicConstants.QUEUE_LOCK_TIME_SECOND)) {
             LOGGER.info("MQ push: {}", DataUtils.getLocalhost());
-            rabbitTemplate.convertAndSend(GatewayConstants.QUEUE_TYPE, GatewayConstants.QUEUE_KEY, DataUtils.getLocalhost());
+            rabbitTemplate.convertAndSend(GatewayConstants.QUEUE_TYPE, GatewayConstants.QUEUE_KEY,
+                    DataUtils.getLocalhost());
         }
     }
 

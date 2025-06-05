@@ -5,28 +5,28 @@ import java.util.List;
 
 /**
  * MultiPolygon
- * 
+ *
  * @author zhaoyong
  */
 public class MultiPolygonVo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * Polygon List
-   */
-  private List<PolygonVo> polygons;
-  
-  public MultiPolygonVo() {
-    super();
-  }
+    /**
+     * Polygon List
+     */
+    private List<PolygonVo> polygons;
 
-  public List<PolygonVo> getPolygons() {
-    return polygons;
-  }
+    public MultiPolygonVo() {
+        super();
+    }
 
-  public void setPolygons(List<PolygonVo> polygons) {
-    this.polygons = polygons;
-  }
+    public List<PolygonVo> getPolygons() {
+        return polygons;
+    }
+
+    public void setPolygons(List<PolygonVo> polygons) {
+        this.polygons = polygons;
+    }
 
 }

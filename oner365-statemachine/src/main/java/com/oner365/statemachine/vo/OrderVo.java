@@ -6,113 +6,113 @@ import com.oner365.statemachine.enums.OrderEventEnum;
 
 /**
  * 状态机订单对象
- * 
+ *
  * @author zhaoyong
  */
 public class OrderVo implements Serializable {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
-  
-  /**
-   * 订单号
-   */
-  private int id;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 支付状态
-   */
-  private OrderEventEnum payState;
-  
-  /**
-   * 接收状态
-   */
-  private OrderEventEnum receiveState;
-  
-  /**
-   * 支付结果
-   */
-  private boolean payResult;
-  
-  /**
-   * 接收结果
-   */
-  private boolean receiveResult;
-  
-  public OrderVo() {
-    super();
-  }
+    /**
+     * 订单号
+     */
+    private int id;
 
-  /**
-   * @return the id
-   */
-  public int getId() {
-    return id;
-  }
+    /**
+     * 支付状态
+     */
+    private OrderEventEnum payState;
 
-  /**
-   * @param id the id to set
-   */
-  public void setId(int id) {
-    this.id = id;
-  }
+    /**
+     * 接收状态
+     */
+    private OrderEventEnum receiveState;
 
-  /**
-   * @return the payState
-   */
-  public OrderEventEnum getPayState() {
-    return payState;
-  }
+    /**
+     * 支付结果
+     */
+    private boolean payResult;
 
-  /**
-   * @param payState the payState to set
-   */
-  public void setPayState(OrderEventEnum payState) {
-    this.payState = payState;
-  }
+    /**
+     * 接收结果
+     */
+    private boolean receiveResult;
 
-  /**
-   * @return the receiveState
-   */
-  public OrderEventEnum getReceiveState() {
-    return receiveState;
-  }
+    public OrderVo() {
+        super();
+    }
 
-  /**
-   * @param receiveState the receiveState to set
-   */
-  public void setReceiveState(OrderEventEnum receiveState) {
-    this.receiveState = receiveState;
-  }
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
 
-  /**
-   * @return the payResult
-   */
-  public boolean isPayResult() {
-    return payResult;
-  }
+    /**
+     * @param id the id to set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  /**
-   * @param payResult the payResult to set
-   */
-  public void setPayResult(boolean payResult) {
-    this.payResult = payResult;
-  }
+    /**
+     * @return the payState
+     */
+    public OrderEventEnum getPayState() {
+        return payState;
+    }
 
-  /**
-   * @return the receiveResult
-   */
-  public boolean isReceiveResult() {
-    return receiveResult;
-  }
+    /**
+     * @param payState the payState to set
+     */
+    public void setPayState(OrderEventEnum payState) {
+        this.payState = payState;
+    }
 
-  /**
-   * @param receiveResult the receiveResult to set
-   */
-  public void setReceiveResult(boolean receiveResult) {
-    this.receiveResult = receiveResult;
-  }
+    /**
+     * @return the receiveState
+     */
+    public OrderEventEnum getReceiveState() {
+        return receiveState;
+    }
+
+    /**
+     * @param receiveState the receiveState to set
+     */
+    public void setReceiveState(OrderEventEnum receiveState) {
+        this.receiveState = receiveState;
+    }
+
+    /**
+     * @return the payResult
+     */
+    public boolean isPayResult() {
+        return payResult;
+    }
+
+    /**
+     * @param payResult the payResult to set
+     */
+    public void setPayResult(boolean payResult) {
+        this.payResult = payResult;
+    }
+
+    /**
+     * @return the receiveResult
+     */
+    public boolean isReceiveResult() {
+        return receiveResult;
+    }
+
+    /**
+     * @param receiveResult the receiveResult to set
+     */
+    public void setReceiveResult(boolean receiveResult) {
+        this.receiveResult = receiveResult;
+    }
 
 }

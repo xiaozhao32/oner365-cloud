@@ -22,9 +22,10 @@ import com.alibaba.fastjson.JSONObject;
 
 /**
  * Jwt验证用户
+ *
  * @author zhaoyong
  */
-public class AuthUser implements Serializable{
+public class AuthUser implements Serializable {
 
     /**
      *
@@ -32,15 +33,23 @@ public class AuthUser implements Serializable{
     private static final long serialVersionUID = 1L;
 
     private final String id;
+
     private final String userName;
+
     private final String password;
+
     private final String isAdmin;
+
     private final String tokenType;
+
     private final List<String> roleList;
+
     private final List<String> jobList;
+
     private final List<String> orgList;
 
     private final String userType;
+
     private final String menuType;
 
     @SuppressWarnings("unchecked")
@@ -80,9 +89,9 @@ public class AuthUser implements Serializable{
     public String getUserType() {
         return userType;
     }
-    
+
     public String getMenuType() {
-      return menuType;
+        return menuType;
     }
 
     public List<String> getRoleList() {

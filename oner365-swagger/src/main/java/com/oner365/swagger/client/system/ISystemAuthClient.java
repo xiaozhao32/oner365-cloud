@@ -18,52 +18,47 @@ import com.oner365.swagger.vo.LoginUserVo;
 
 /**
  * 系统服务 - 权限认证
- * 
+ *
  * @author zhaoyong
  */
 @FeignClient(value = PathConstants.FEIGN_CLIENT_SYSTEM, contextId = PathConstants.CONTEXT_SYSTEM_AUTH_ID)
 public interface ISystemAuthClient {
 
-  /**
-   * 登录
-   * 
-   * @param loginUserVo 登录参数
-   * @return ResponseData<LoginUserDto>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_AUTH_LOGIN)
-  ResponseData<LoginUserDto> login(@RequestBody LoginUserVo loginUserVo);
+    /**
+     * 登录
+     * @param loginUserVo 登录参数
+     * @return ResponseData<LoginUserDto>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_AUTH_LOGIN)
+    ResponseData<LoginUserDto> login(@RequestBody LoginUserVo loginUserVo);
 
-  /**
-   * 获取验证码
-   * 
-   * @return ResponseData<CaptchaImageDto>
-   */
-  @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_CAPTCHA_IMAGE)
-  ResponseData<CaptchaImageDto> captchaImage();
+    /**
+     * 获取验证码
+     * @return ResponseData<CaptchaImageDto>
+     */
+    @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_CAPTCHA_IMAGE)
+    ResponseData<CaptchaImageDto> captchaImage();
 
-  /**
-   * 获取左侧菜单
-   *
-   * @return ResponseData<ArrayList<SysMenuTreeDto>>
-   */
-  @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_MENU)
-  ResponseData<ArrayList<SysMenuTreeDto>> findMenuByRoles();
+    /**
+     * 获取左侧菜单
+     * @return ResponseData<ArrayList<SysMenuTreeDto>>
+     */
+    @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_MENU)
+    ResponseData<ArrayList<SysMenuTreeDto>> findMenuByRoles();
 
-  /**
-   * 获取菜单对应权限
-   *
-   * @param menuId 菜单id
-   * @return ResponseData<ArrayList<SysMenuOperDto>>
-   */
-  @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_MENU_OPERATION)
-  ResponseData<ArrayList<SysMenuOperDto>> findMenuOperByRoles(@PathVariable(value = "menuId") String menuId);
+    /**
+     * 获取菜单对应权限
+     * @param menuId 菜单id
+     * @return ResponseData<ArrayList<SysMenuOperDto>>
+     */
+    @GetMapping(PathConstants.REQUEST_SYSTEM_AUTH_MENU_OPERATION)
+    ResponseData<ArrayList<SysMenuOperDto>> findMenuOperByRoles(@PathVariable("menuId") String menuId);
 
-  /**
-   * 登出
-   * 
-   * @return ResponseData<String>
-   */
-  @PostMapping(PathConstants.REQUEST_SYSTEM_AUTH_LOGOUT)
-  ResponseData<String> logout();
-  
+    /**
+     * 登出
+     * @return ResponseData<String>
+     */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_AUTH_LOGOUT)
+    ResponseData<String> logout();
+
 }

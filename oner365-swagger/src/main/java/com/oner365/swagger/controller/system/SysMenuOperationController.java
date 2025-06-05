@@ -40,98 +40,92 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/system/menu/operation")
 public class SysMenuOperationController {
 
-  @Resource
-  private ISystemMenuOperationClient client;
-  
-  /**
-   * 列表
-   *
-   * @param data 查询参数
-   * @return ResponseData<PageInfo<SysMenuOperationDto>>
-   */
-  @ApiOperation("1.获取列表")
-  @ApiOperationSupport(order = 1)
-  @PostMapping("/list")
-  public ResponseData<PageInfo<SysMenuOperationDto>> findList(@RequestBody QueryCriteriaBean data) {
-    return client.list(data);
-  }
-  
-  /**
-   * 获取信息
-   *
-   * @param id 编号
-   * @return ResponseData<SysMenuOperationDto>
-   */
-  @ApiOperation("2.按id查询")
-  @ApiOperationSupport(order = 2)
-  @GetMapping("/get/{id}")
-  public ResponseData<SysMenuOperationDto> getById(@PathVariable String id) {
-    return client.getById(id);
-  }
-  
-  /**
-   * 修改职位状态
-   *
-   * @param id     主键
-   * @param status 状态
-   * @return ResponseData<Boolean>
-   */
-  @ApiOperation("3.修改状态")
-  @ApiOperationSupport(order = 3)
-  @PostMapping("/status/{id}")
-  public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
-    return client.editStatus(id, status);
-  }
-  
-  /**
-   * 判断是否存在
-   *
-   * @param checkCodeVo 查询参数
-   * @return ResponseData<Boolean>
-   */
-  @ApiOperation("4.判断是否存在")
-  @ApiOperationSupport(order = 4)
-  @PostMapping("/check")
-  public ResponseData<Boolean> checkCode(@RequestBody CheckCodeVo checkCodeVo) {
-    return client.checkCode(checkCodeVo);
-  }
-  
-  /**
-   * 保存
-   *
-   * @param sysMenuOperationVo 操作对象
-   * @return ResponseData<SysMenuOperationDto>
-   */
-  @ApiOperation("5.保存")
-  @ApiOperationSupport(order = 5)
-  @PutMapping("/save")
-  public ResponseData<SysMenuOperationDto> save(@RequestBody SysMenuOperationVo sysMenuOperationVo) {
-    return client.save(sysMenuOperationVo);
-  }
-  
-  /**
-   * 删除
-   *
-   * @param ids 编号
-   * @return ResponseData<List<Boolean>>
-   */
-  @ApiOperation("6.删除")
-  @ApiOperationSupport(order = 6)
-  @DeleteMapping("/delete")
-  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
-    return client.delete(ids);
-  }
-  
-  /**
-   * 导出Excel
-   *
-   * @param data 查询参数
-   * @return ResponseEntity<byte[]>
-   */
-  @ApiOperation("7.导出")
-  @ApiOperationSupport(order = 7)
-  @PostMapping("/export")
-  public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data, HttpServletResponse response) {
-    return client.export(data);
-  }
+    @Resource
+    private ISystemMenuOperationClient client;
+
+    /**
+     * 列表
+     * @param data 查询参数
+     * @return ResponseData<PageInfo<SysMenuOperationDto>>
+     */
+    @ApiOperation("1.获取列表")
+    @ApiOperationSupport(order = 1)
+    @PostMapping("/list")
+    public ResponseData<PageInfo<SysMenuOperationDto>> findList(@RequestBody QueryCriteriaBean data) {
+        return client.list(data);
+    }
+
+    /**
+     * 获取信息
+     * @param id 编号
+     * @return ResponseData<SysMenuOperationDto>
+     */
+    @ApiOperation("2.按id查询")
+    @ApiOperationSupport(order = 2)
+    @GetMapping("/get/{id}")
+    public ResponseData<SysMenuOperationDto> getById(@PathVariable String id) {
+        return client.getById(id);
+    }
+
+    /**
+     * 修改职位状态
+     * @param id 主键
+     * @param status 状态
+     * @return ResponseData<Boolean>
+     */
+    @ApiOperation("3.修改状态")
+    @ApiOperationSupport(order = 3)
+    @PostMapping("/status/{id}")
+    public ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
+        return client.editStatus(id, status);
+    }
+
+    /**
+     * 判断是否存在
+     * @param checkCodeVo 查询参数
+     * @return ResponseData<Boolean>
+     */
+    @ApiOperation("4.判断是否存在")
+    @ApiOperationSupport(order = 4)
+    @PostMapping("/check")
+    public ResponseData<Boolean> checkCode(@RequestBody CheckCodeVo checkCodeVo) {
+        return client.checkCode(checkCodeVo);
+    }
+
+    /**
+     * 保存
+     * @param sysMenuOperationVo 操作对象
+     * @return ResponseData<SysMenuOperationDto>
+     */
+    @ApiOperation("5.保存")
+    @ApiOperationSupport(order = 5)
+    @PutMapping("/save")
+    public ResponseData<SysMenuOperationDto> save(@RequestBody SysMenuOperationVo sysMenuOperationVo) {
+        return client.save(sysMenuOperationVo);
+    }
+
+    /**
+     * 删除
+     * @param ids 编号
+     * @return ResponseData<List<Boolean>>
+     */
+    @ApiOperation("6.删除")
+    @ApiOperationSupport(order = 6)
+    @DeleteMapping("/delete")
+    public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
+        return client.delete(ids);
+    }
+
+    /**
+     * 导出Excel
+     * @param data 查询参数
+     * @return ResponseEntity<byte[]>
+     */
+    @ApiOperation("7.导出")
+    @ApiOperationSupport(order = 7)
+    @PostMapping("/export")
+    public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data, HttpServletResponse response) {
+        return client.export(data);
+    }
+
 }

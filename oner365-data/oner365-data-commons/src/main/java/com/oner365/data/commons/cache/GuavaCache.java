@@ -41,23 +41,24 @@ public class GuavaCache<T> {
 
     /** 创建缓存 */
     private final LoadingCache<String, Optional<T>> cache = CacheBuilder.newBuilder()
-            .concurrencyLevel(CONCURRENCY_LEVEL)
-            .expireAfterWrite(EXPIRE_AFTER_WRITE, TimeUnit.MINUTES)
-            .initialCapacity(INITIAL_CAPACITY)
-            .maximumSize(MAXIMUM_SIZE)
-            .recordStats()
-            .build(new CacheLoader<String, Optional<T>>() {
-                @Override
-                public Optional<T> load(@NonNull String key) {
-                    LOGGER.debug("load: {}", key);
-                    return Optional.empty();
-                }
-                @Override
-                public ListenableFuture<Optional<T>> reload(@NonNull String key, @NonNull Optional<T> value) {
-                    LOGGER.debug("reload: {}, value: {}", key, value);
-                    return Futures.immediateFuture(load(key));
-                }
-            });
+        .concurrencyLevel(CONCURRENCY_LEVEL)
+        .expireAfterWrite(EXPIRE_AFTER_WRITE, TimeUnit.MINUTES)
+        .initialCapacity(INITIAL_CAPACITY)
+        .maximumSize(MAXIMUM_SIZE)
+        .recordStats()
+        .build(new CacheLoader<String, Optional<T>>() {
+            @Override
+            public Optional<T> load(@NonNull String key) {
+                LOGGER.debug("load: {}", key);
+                return Optional.empty();
+            }
+
+            @Override
+            public ListenableFuture<Optional<T>> reload(@NonNull String key, @NonNull Optional<T> value) {
+                LOGGER.debug("reload: {}, value: {}", key, value);
+                return Futures.immediateFuture(load(key));
+            }
+        });
 
     /**
      * 构造方法
@@ -72,12 +73,13 @@ public class GuavaCache<T> {
      * @return Optional<T>
      */
     public Optional<T> getCache(String key) {
-      if (DataUtils.isEmpty(key)) {
-      return Optional.empty();
-    }
+        if (DataUtils.isEmpty(key)) {
+            return Optional.empty();
+        }
         try {
             return cache.get(key);
-        } catch (ExecutionException e) {
+        }
+        catch (ExecutionException e) {
             LOGGER.error("getCache error: {}", e.getMessage());
         }
         return Optional.empty();
@@ -89,9 +91,9 @@ public class GuavaCache<T> {
      * @param value 值
      */
     public void setCache(String key, Optional<T> value) {
-      if (!DataUtils.isEmpty(key)) {
-          cache.put(key, value);
-      }
+        if (!DataUtils.isEmpty(key)) {
+            cache.put(key, value);
+        }
     }
 
     /**
@@ -99,9 +101,9 @@ public class GuavaCache<T> {
      * @param key 键
      */
     public void removeCache(String key) {
-      if (!DataUtils.isEmpty(key)) {
-          cache.invalidate(key);
-      }
+        if (!DataUtils.isEmpty(key)) {
+            cache.invalidate(key);
+        }
     }
 
     /**

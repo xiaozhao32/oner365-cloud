@@ -13,6 +13,7 @@ import com.oner365.data.commons.adapter.TimestampTypeAdapter;
 
 /**
  * Gson工具类
+ *
  * @author zhaoyong
  */
 public class GsonUtils {
@@ -22,14 +23,16 @@ public class GsonUtils {
     }
 
     protected static final Gson GSON = new GsonBuilder()
-            .registerTypeAdapter(Timestamp.class, new TimestampTypeAdapter()).setDateFormat(DateUtil.FULL_TIME_FORMAT)
-            .registerTypeAdapter(Date.class, new DateTypeAdapter()).setDateFormat(DateUtil.FULL_DATE_FORMAT)
-            .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter()).setDateFormat(DateUtil.FULL_TIME_FORMAT)
-            .create();
+        .registerTypeAdapter(Timestamp.class, new TimestampTypeAdapter())
+        .setDateFormat(DateUtil.FULL_TIME_FORMAT)
+        .registerTypeAdapter(Date.class, new DateTypeAdapter())
+        .setDateFormat(DateUtil.FULL_DATE_FORMAT)
+        .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeTypeAdapter())
+        .setDateFormat(DateUtil.FULL_TIME_FORMAT)
+        .create();
 
     /***
      * 把对象转化成JSON
-     *
      * @param obj 对象
      * @return String
      */
@@ -39,7 +42,6 @@ public class GsonUtils {
 
     /***
      * JSON转对象类型
-     *
      * @param json json字符串
      * @param clazz 类
      * @return T
@@ -50,7 +52,6 @@ public class GsonUtils {
 
     /***
      * JSON转对象类型
-     *
      * @param json json字符串
      * @param type new TypeToken<List<T>>() {}
      * @return T

@@ -6,28 +6,28 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * 检测编码
- * 
+ *
  * @author zhaoyong
  *
  */
 public class CheckCodeVo implements Serializable {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * 主键 id
      */
     private String id;
-    
+
     /**
      * 编码
      */
     @NotBlank(message = "{system.vo.check.code.message}")
     private String code;
-    
+
     /**
      * 构造方法
      */

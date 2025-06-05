@@ -6,10 +6,10 @@ import com.oner365.elasticsearch.entity.SampleGene;
 
 /**
  * Elasticsearch Repository
+ *
  * @author zhaoyong
  *
  */
 public interface ISampleGeneElasticsearchDao extends ElasticsearchRepository<SampleGene, String> {
-
 
 }

@@ -75,7 +75,6 @@ public class TokenFilter implements GlobalFilter, Ordered {
 
     /**
      * 验证白名单
-     *
      * @param request ServerHttpRequest
      * @return boolean
      */
@@ -86,7 +85,6 @@ public class TokenFilter implements GlobalFilter, Ordered {
 
     /**
      * 验证token
-     *
      * @param request ServerHttpRequest
      * @return boolean
      */
@@ -95,7 +93,8 @@ public class TokenFilter implements GlobalFilter, Ordered {
         if (authList != null && !authList.isEmpty()) {
             try {
                 return JwtUtils.validateToken(authList.get(0), accessTokenProperties.getSecret());
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 LOGGER.error("TokenInterceptor validateToken error: {}", request.getURI().getRawPath(), e);
             }
         }
@@ -104,7 +103,6 @@ public class TokenFilter implements GlobalFilter, Ordered {
 
     /**
      * 返回错误信息
-     *
      * @param request ServerHttpRequest
      * @param response ServerHttpResponse
      * @return Mono<Void>
@@ -118,13 +116,12 @@ public class TokenFilter implements GlobalFilter, Ordered {
         return response.writeWith(Mono.fromSupplier(() -> {
             DataBufferFactory bufferFactory = response.bufferFactory();
             return bufferFactory.wrap(JSON
-                    .toJSONBytes(ResponseData.error(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name())));
+                .toJSONBytes(ResponseData.error(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.name())));
         }));
     }
 
     /**
      * 记录日志
-     *
      * @param request 请求
      */
     private void requestLog(ServerHttpRequest request) {

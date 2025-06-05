@@ -15,11 +15,11 @@ public interface ISysRoleDao extends JpaRepository<SysRole, String>, JpaSpecific
 
     /**
      * 查询数量
-     *
-     * @param id   主键
+     * @param id 主键
      * @param code 角色编号
      * @return int
      */
     @Query(value = "select count(id) as countRow from nt_sys_role where id<>?1 and role_code=?2", nativeQuery = true)
     int countCodeById(String id, String code);
+
 }

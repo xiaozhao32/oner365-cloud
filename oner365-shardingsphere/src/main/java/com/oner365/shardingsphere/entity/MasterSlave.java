@@ -15,7 +15,7 @@ import com.oner365.data.commons.constants.PublicConstants;
 
 /**
  * 主从测试
- * 
+ *
  * @author zhaoyong
  */
 @Entity
@@ -23,36 +23,36 @@ import com.oner365.data.commons.constants.PublicConstants;
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class MasterSlave implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-  
-  /**
-   * 主键
-   */
-  @Id
-  @GeneratedValue(generator = "generator")
-  @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
-  private String id;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 订单id
-   */
-  @Column(name = "test_name", nullable = false)
-  private String name;
+    /**
+     * 主键
+     */
+    @Id
+    @GeneratedValue(generator = "generator")
+    @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
+    private String id;
 
-  public String getId() {
-    return id;
-  }
+    /**
+     * 订单id
+     */
+    @Column(name = "test_name", nullable = false)
+    private String name;
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }

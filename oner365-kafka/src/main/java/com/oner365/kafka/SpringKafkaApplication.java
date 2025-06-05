@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Kafka服务
+ *
  * @author zhaoyong
  */
 @SpringBootApplication

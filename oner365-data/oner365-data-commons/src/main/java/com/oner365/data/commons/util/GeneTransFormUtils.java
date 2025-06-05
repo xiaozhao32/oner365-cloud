@@ -29,10 +29,9 @@ public class GeneTransFormUtils {
     }
 
     /**
-     * 转换基因格式
-     *     转换格式 {"D7S820": "10/11", "D12S391": "18/18", "D13S317": "11/12", "D16S539": "10/13"}
-     *     目标类型 [{"name": "D8S1179", "value": "11,12"}, {"name": "D2S11", "value": "9,10"} ......]
-     *
+     * 转换基因格式 转换格式 {"D7S820": "10/11", "D12S391": "18/18", "D13S317": "11/12", "D16S539":
+     * "10/13"} 目标类型 [{"name": "D8S1179", "value": "11,12"}, {"name": "D2S11", "value":
+     * "9,10"} ......]
      * @param geneInfo 基因型
      * @return JSONArray
      */
@@ -51,10 +50,9 @@ public class GeneTransFormUtils {
     }
 
     /**
-     * 转换基因格式
-     *     目标类型 [{"name": "D8S1179", "value": "11,12"}, {"name": "D2S11", "value": "9,10"} ......]
-     *     转换格式 {"D7S820": "10/11", "D12S391": "18/18", "D13S317": "11/12", "D16S539": "10/13"}
-     *
+     * 转换基因格式 目标类型 [{"name": "D8S1179", "value": "11,12"}, {"name": "D2S11", "value":
+     * "9,10"} ......] 转换格式 {"D7S820": "10/11", "D12S391": "18/18", "D13S317": "11/12",
+     * "D16S539": "10/13"}
      * @param geneInfo 基因型
      * @return JSONObject
      */
@@ -71,10 +69,8 @@ public class GeneTransFormUtils {
     }
 
     /**
-     * 过滤空基因 (字符串冒号后面不能有空格)
-     *     转换格式 {"D7S820":"", "D12S391":"18/18", "D13S317":"11/12", "D16S539":"10/13"}
-     *     目标类型 {"D12S391":"18/18", "D13S317":"11/12", "D16S539":"10/13"}
-     *
+     * 过滤空基因 (字符串冒号后面不能有空格) 转换格式 {"D7S820":"", "D12S391":"18/18", "D13S317":"11/12",
+     * "D16S539":"10/13"} 目标类型 {"D12S391":"18/18", "D13S317":"11/12", "D16S539":"10/13"}
      * @param geneInfo 基因型
      * @return String
      */
@@ -84,9 +80,8 @@ public class GeneTransFormUtils {
 
     /**
      * 判断2个json是否包含 后者是否包含前者，包含返回true 否则返回false
-     *
      * @param matchJson 被比对单一基因型
-     * @param geneJson  混合基因型
+     * @param geneJson 混合基因型
      * @return boolean
      */
     public static boolean match(JSONObject matchJson, JSONObject geneJson) {
@@ -94,8 +89,10 @@ public class GeneTransFormUtils {
         for (Map.Entry<String, Object> entry : matchJson.entrySet()) {
             String key = entry.getKey();
             if (geneJson.getString(key) != null) {
-                List<String> value = new ArrayList<>(Arrays.asList(matchJson.getString(key).split(PublicConstants.DELIMITER)));
-                List<String> gene = new ArrayList<>(Arrays.asList(geneJson.getString(key).split(PublicConstants.DELIMITER)));
+                List<String> value = new ArrayList<>(
+                        Arrays.asList(matchJson.getString(key).split(PublicConstants.DELIMITER)));
+                List<String> gene = new ArrayList<>(
+                        Arrays.asList(geneJson.getString(key).split(PublicConstants.DELIMITER)));
                 if (value.size() != value.stream().filter(gene::contains).count()) {
                     flag = false;
                     break;
@@ -107,9 +104,8 @@ public class GeneTransFormUtils {
 
     /**
      * 判断2个json是否包含 后者是否包含前者，包含返回true 否则返回false
-     *
      * @param matchJson 被比中的单一基因型
-     * @param geneJson  单一基因型
+     * @param geneJson 单一基因型
      * @return boolean
      */
     public static boolean matchEquals(JSONObject matchJson, JSONObject geneJson) {
@@ -127,7 +123,6 @@ public class GeneTransFormUtils {
 
     /**
      * 同一比对测试 使用 matchEquals 测试用本方法
-     *
      * @param matchJson 比对基因
      * @param geneJson 目标基因
      * @return Map
@@ -141,10 +136,12 @@ public class GeneTransFormUtils {
             if (geneJson.getString(key) != null && matchJson.getString(key) != null) {
                 if (!geneJson.get(key).toString().equals(matchJson.getString(key))) {
                     diff++;
-                } else {
+                }
+                else {
                     m++;
                 }
-            } else {
+            }
+            else {
                 trim++;
             }
         }
@@ -153,7 +150,6 @@ public class GeneTransFormUtils {
 
     /**
      * 混合比对测试 使用 match 测试用本方法
-     *
      * @param matchJson 比对基因
      * @param geneJson 目标基因
      * @return Map
@@ -164,30 +160,33 @@ public class GeneTransFormUtils {
         int m = 0;
         for (String key : matchJson.keySet()) {
             if (geneJson.getString(key) != null) {
-                Set<String> value = new HashSet<>(Arrays.asList(matchJson.getString(key).split(PublicConstants.DELIMITER)));
-                Set<String> gene = new HashSet<>(Arrays.asList(geneJson.get(key).toString().split(PublicConstants.DELIMITER)));
+                Set<String> value = new HashSet<>(
+                        Arrays.asList(matchJson.getString(key).split(PublicConstants.DELIMITER)));
+                Set<String> gene = new HashSet<>(
+                        Arrays.asList(geneJson.get(key).toString().split(PublicConstants.DELIMITER)));
                 Set<String> s = Sets.difference(value, gene);
                 if (s.isEmpty()) {
                     m++;
                 }
-            } else {
+            }
+            else {
                 if (DataUtils.isEmpty(matchJson.getString(key))) {
                     trim++;
-                } else {
+                }
+                else {
                     diff++;
                 }
             }
         }
         return getCount(matchJson, m, diff, trim);
     }
-    
+
     /**
      * 返回结果
-     *
-     * @param matchJson  比对数据
+     * @param matchJson 比对数据
      * @param matchCount 比中数
-     * @param diffCount  不同数
-     * @param trimCount  空的数
+     * @param diffCount 不同数
+     * @param trimCount 空的数
      * @return Map<String, Integer>
      */
     private static Map<String, Integer> getCount(JSONObject matchJson, int matchCount, int diffCount, int trimCount) {

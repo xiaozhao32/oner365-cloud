@@ -10,26 +10,25 @@ import com.oner365.data.web.resolver.CurrentUserMethodArgumentResolver;
 
 /**
  * 注册用户信息
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 public class CurrentUserConfigurer implements WebMvcConfigurer {
 
-  private final CurrentUserMethodArgumentResolver resolver;
+    private final CurrentUserMethodArgumentResolver resolver;
 
-  /**
-   * 构造方法
-   * 
-   * @param resolver CurrentUserMethodArgumentResolver
-   */
-  public CurrentUserConfigurer(CurrentUserMethodArgumentResolver resolver) {
-    this.resolver = resolver;
-  }
+    /**
+     * 构造方法
+     * @param resolver CurrentUserMethodArgumentResolver
+     */
+    public CurrentUserConfigurer(CurrentUserMethodArgumentResolver resolver) {
+        this.resolver = resolver;
+    }
 
-  @Override
-  public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-    argumentResolvers.add(resolver);
-  }
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
+        argumentResolvers.add(resolver);
+    }
 
 }

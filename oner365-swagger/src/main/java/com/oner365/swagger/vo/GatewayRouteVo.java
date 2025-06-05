@@ -16,6 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Gateway的路由定义模型
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "路由信息")
@@ -129,7 +130,7 @@ public class GatewayRouteVo implements Serializable {
     public void setPattern(String pattern) {
         this.pattern = pattern;
     }
-    
+
     /**
      * toString Method
      */

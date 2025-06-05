@@ -7,6 +7,7 @@ import com.oner365.data.commons.enums.StorageEnum;
 
 /**
  * 文件对象
+ *
  * @author zhaoyong
  *
  */
@@ -28,7 +29,7 @@ public class SysFileStorageDto implements Serializable {
      * 显示名称 display_name
      */
     private String displayName;
-    
+
     /**
      * 存储方式
      */
@@ -210,4 +211,5 @@ public class SysFileStorageDto implements Serializable {
     public void setFileStorage(StorageEnum fileStorage) {
         this.fileStorage = fileStorage;
     }
+
 }

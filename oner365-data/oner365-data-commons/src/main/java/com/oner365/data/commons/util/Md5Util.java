@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Md5加密工具类
+ *
  * @author zhaoyong
  */
 public class Md5Util {
@@ -26,7 +27,7 @@ public class Md5Util {
      */
     private Md5Util() {
     }
-    
+
     public void remove() {
         LOCAL.remove();
     }
@@ -122,7 +123,8 @@ public class Md5Util {
             Mac mac = Mac.getInstance(type);
             mac.init(secretKeySpec);
             return mac.doFinal(data);
-        } catch (InvalidKeyException | NoSuchAlgorithmException e) {
+        }
+        catch (InvalidKeyException | NoSuchAlgorithmException e) {
             LOGGER.error("Error getSignature:", e);
         }
         return ArrayUtils.EMPTY_BYTE_ARRAY;

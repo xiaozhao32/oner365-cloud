@@ -51,217 +51,224 @@ import com.oner365.sys.vo.SysOrganizationVo;
 @Service
 public class SysOrganizationServiceImpl implements ISysOrganizationService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SysOrganizationServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SysOrganizationServiceImpl.class);
 
-  private static final String CACHE_NAME = "SysOrganization";
+    private static final String CACHE_NAME = "SysOrganization";
 
-  @Resource
-  private ISysOrganizationDao dao;
+    @Resource
+    private ISysOrganizationDao dao;
 
-  @Resource
-  private SysOrganizationMapper organizationMapper;
+    @Resource
+    private SysOrganizationMapper organizationMapper;
 
-  @Override
-  @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
-  public SysOrganizationDto getById(String id) {
-    try {
-      Optional<SysOrganization> optional = dao.findById(id);
-      return convert(optional.orElse(null), SysOrganizationDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error getById: ", e);
-    }
-    return null;
-  }
-
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Boolean deleteById(String id) {
-    dao.deleteById(id);
-    return Boolean.TRUE;
-  }
-
-  @Override
-  public Boolean checkCode(String orgId, String code, String type) {
-    try {
-      Criteria<SysOrganization> criteria = new Criteria<>();
-      criteria.add(Restrictions.eq(type, code));
-      if (!DataUtils.isEmpty(orgId)) {
-        criteria.add(Restrictions.ne(SysConstants.ID, orgId));
-      }
-      if (dao.count(criteria) > 0) {
-        return Boolean.TRUE;
-      }
-    } catch (Exception e) {
-      LOGGER.error("Error checkCode:", e);
-    }
-    return Boolean.FALSE;
-  }
-
-  @Override
-  public Boolean checkConnection(String id) {
-    try {
-      Optional<SysOrganization> optional = dao.findById(id);
-      if (optional.isPresent()) {
-        DataSourceConfig config = optional.get().getDataSourceConfig();
-        if (config != null) {
-          return DataSourceUtil.isConnection(config.getDriverName(), config.getUrl(), config.getUserName(),
-              config.getPassword());
+    @Override
+    @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
+    public SysOrganizationDto getById(String id) {
+        try {
+            Optional<SysOrganization> optional = dao.findById(id);
+            return convert(optional.orElse(null), SysOrganizationDto.class);
         }
-      }
-    } catch (Exception e) {
-      LOGGER.error("Error checkConnection:", e);
-    }
-    return false;
-  }
-
-  @Override
-  public Boolean isConnection(String driverName, String url, String userName, String pwd) {
-    return DataSourceUtil.isConnection(driverName, url, userName, pwd);
-  }
-
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public SysOrganizationDto save(SysOrganizationVo vo) {
-    if (DataUtils.isEmpty(vo.getId())) {
-      vo.setId(vo.getOrgCode());
-      vo.setStatus(StatusEnum.YES);
-      vo.setCreateTime(LocalDateTime.now());
+        catch (Exception e) {
+            LOGGER.error("Error getById: ", e);
+        }
+        return null;
     }
 
-    vo.setUpdateTime(LocalDateTime.now());
-
-    DataSourceConfigVo dataSourceConfigVo = vo.getDataSourceConfigVo();
-    if (dataSourceConfigVo != null) {
-      dataSourceConfigVo.setDsType(DataSourceConstants.DS_TYPE_DB);
-      dataSourceConfigVo.setCreateTime(LocalDateTime.now());
-      dataSourceConfigVo.setUpdateTime(LocalDateTime.now());
-      vo.setDataSourceConfigVo(dataSourceConfigVo);
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Boolean deleteById(String id) {
+        dao.deleteById(id);
+        return Boolean.TRUE;
     }
-    SysOrganization po = convert(vo, SysOrganization.class);
-    po.setDataSourceConfig(convert(vo.getDataSourceConfigVo(), DataSourceConfig.class));
-    SysOrganization entity = dao.save(po);
-    return convert(entity, SysOrganizationDto.class);
-  }
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<SysOrganizationDto> findListByParentId(String parentId) {
-    Criteria<SysOrganization> criteria = new Criteria<>();
-    criteria.add(Restrictions.eq("parentId", parentId));
-    return convert(dao.findAll(criteria), SysOrganizationDto.class);
-  }
-
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public SysOrganizationDto getByCode(String orgCode) {
-    Assert.notNull(orgCode, "orgCode is not empty.");
-    Criteria<SysOrganization> criteria = new Criteria<>();
-    criteria.add(Restrictions.eq("orgCode", orgCode));
-    return convert(dao.findOne(criteria), SysOrganizationDto.class);
-  }
-
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<TreeSelect> buildTreeSelect(List<SysOrganizationDto> orgList) {
-    List<SysOrganizationDto> menuTrees = buildTree(orgList);
-    return menuTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
-  }
-
-  @Override
-  public List<SysOrganizationDto> buildTree(List<SysOrganizationDto> orgList) {
-    List<SysOrganizationDto> returnList = new ArrayList<>();
-    for (SysOrganizationDto t : orgList) {
-      // 根据传入的某个父节点ID,遍历该父节点的所有子节点
-      if (SysConstants.DEFAULT_PARENT_ID.equals(t.getParentId())) {
-        recursionFn(orgList, t);
-        returnList.add(t);
-      }
+    @Override
+    public Boolean checkCode(String orgId, String code, String type) {
+        try {
+            Criteria<SysOrganization> criteria = new Criteria<>();
+            criteria.add(Restrictions.eq(type, code));
+            if (!DataUtils.isEmpty(orgId)) {
+                criteria.add(Restrictions.ne(SysConstants.ID, orgId));
+            }
+            if (dao.count(criteria) > 0) {
+                return Boolean.TRUE;
+            }
+        }
+        catch (Exception e) {
+            LOGGER.error("Error checkCode:", e);
+        }
+        return Boolean.FALSE;
     }
-    if (returnList.isEmpty()) {
-      returnList = orgList;
-    }
-    return returnList;
-  }
 
-  /**
-   * 递归列表
-   *
-   * @param list 列表
-   * @param t    对象
-   */
-  private void recursionFn(List<SysOrganizationDto> list, SysOrganizationDto t) {
-    // 得到子节点列表
-    List<SysOrganizationDto> childList = getChildList(list, t);
-    if (!childList.isEmpty()) {
-      t.setChildren(childList);
-      // 判断是否有子节点
-      childList.stream().filter(tChild -> hasChild(list, tChild)).<Consumer<? super SysOrganizationDto>>map(tChild -> n -> recursionFn(list, n)).forEach(childList::forEach);
+    @Override
+    public Boolean checkConnection(String id) {
+        try {
+            Optional<SysOrganization> optional = dao.findById(id);
+            if (optional.isPresent()) {
+                DataSourceConfig config = optional.get().getDataSourceConfig();
+                if (config != null) {
+                    return DataSourceUtil.isConnection(config.getDriverName(), config.getUrl(), config.getUserName(),
+                            config.getPassword());
+                }
+            }
+        }
+        catch (Exception e) {
+            LOGGER.error("Error checkConnection:", e);
+        }
+        return false;
     }
-  }
 
-  /**
-   * 得到子节点列表
-   */
-  private List<SysOrganizationDto> getChildList(List<SysOrganizationDto> list, SysOrganizationDto t) {
-    return list.stream().filter(n -> n.getParentId().equals(t.getId())).collect(Collectors.toList());
-  }
-
-  /**
-   * 判断是否有子节点
-   */
-  private boolean hasChild(List<SysOrganizationDto> list, SysOrganizationDto t) {
-    return !getChildList(list, t).isEmpty();
-  }
-
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<SysOrganizationDto> findList(QueryCriteriaBean data) {
-    try {
-      if (data.getOrder() == null) {
-        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysOrganizationDto.class);
-      }
-      List<SysOrganization> list = dao.findAll(QueryUtils.buildCriteria(data), 
-          Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
-      return convert(list, SysOrganizationDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error findList: ", e);
+    @Override
+    public Boolean isConnection(String driverName, String url, String userName, String pwd) {
+        return DataSourceUtil.isConnection(driverName, url, userName, pwd);
     }
-    return Collections.emptyList();
-  }
-  
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<SysOrganizationDto> selectList(SysOrganizationVo sysOrganizationVo) {
-    Criteria<SysOrganization> criteria = new Criteria<>();
-    if (!DataUtils.isEmpty(sysOrganizationVo.getOrgName())) {
-      criteria.add(Restrictions.like("orgName", sysOrganizationVo.getOrgName()));
-    }
-    if (!DataUtils.isEmpty(sysOrganizationVo.getStatus())) {
-      criteria.add(Restrictions.eq(SysConstants.STATUS, sysOrganizationVo.getStatus()));
-    }
-    return convert(dao.findAll(criteria, Sort.by(Direction.DESC, "parentId", "orgOrder")), SysOrganizationDto.class);
-  }
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<String> selectListByUserId(String userId) {
-    return organizationMapper.selectListByUserId(userId);
-  }
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public SysOrganizationDto save(SysOrganizationVo vo) {
+        if (DataUtils.isEmpty(vo.getId())) {
+            vo.setId(vo.getOrgCode());
+            vo.setStatus(StatusEnum.YES);
+            vo.setCreateTime(LocalDateTime.now());
+        }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Boolean editStatus(String id, StatusEnum status) {
-    Optional<SysOrganization> optional = dao.findById(id);
-    if (optional.isPresent()) {
-      SysOrganization entity = optional.get();
-      entity.setStatus(status);
-      dao.save(entity);
-      return Boolean.TRUE;
+        vo.setUpdateTime(LocalDateTime.now());
+
+        DataSourceConfigVo dataSourceConfigVo = vo.getDataSourceConfigVo();
+        if (dataSourceConfigVo != null) {
+            dataSourceConfigVo.setDsType(DataSourceConstants.DS_TYPE_DB);
+            dataSourceConfigVo.setCreateTime(LocalDateTime.now());
+            dataSourceConfigVo.setUpdateTime(LocalDateTime.now());
+            vo.setDataSourceConfigVo(dataSourceConfigVo);
+        }
+        SysOrganization po = convert(vo, SysOrganization.class);
+        po.setDataSourceConfig(convert(vo.getDataSourceConfigVo(), DataSourceConfig.class));
+        SysOrganization entity = dao.save(po);
+        return convert(entity, SysOrganizationDto.class);
     }
-    return Boolean.FALSE;
-  }
+
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<SysOrganizationDto> findListByParentId(String parentId) {
+        Criteria<SysOrganization> criteria = new Criteria<>();
+        criteria.add(Restrictions.eq("parentId", parentId));
+        return convert(dao.findAll(criteria), SysOrganizationDto.class);
+    }
+
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public SysOrganizationDto getByCode(String orgCode) {
+        Assert.notNull(orgCode, "orgCode is not empty.");
+        Criteria<SysOrganization> criteria = new Criteria<>();
+        criteria.add(Restrictions.eq("orgCode", orgCode));
+        return convert(dao.findOne(criteria), SysOrganizationDto.class);
+    }
+
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<TreeSelect> buildTreeSelect(List<SysOrganizationDto> orgList) {
+        List<SysOrganizationDto> menuTrees = buildTree(orgList);
+        return menuTrees.stream().map(TreeSelect::new).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<SysOrganizationDto> buildTree(List<SysOrganizationDto> orgList) {
+        List<SysOrganizationDto> returnList = new ArrayList<>();
+        for (SysOrganizationDto t : orgList) {
+            // 根据传入的某个父节点ID,遍历该父节点的所有子节点
+            if (SysConstants.DEFAULT_PARENT_ID.equals(t.getParentId())) {
+                recursionFn(orgList, t);
+                returnList.add(t);
+            }
+        }
+        if (returnList.isEmpty()) {
+            returnList = orgList;
+        }
+        return returnList;
+    }
+
+    /**
+     * 递归列表
+     * @param list 列表
+     * @param t 对象
+     */
+    private void recursionFn(List<SysOrganizationDto> list, SysOrganizationDto t) {
+        // 得到子节点列表
+        List<SysOrganizationDto> childList = getChildList(list, t);
+        if (!childList.isEmpty()) {
+            t.setChildren(childList);
+            // 判断是否有子节点
+            childList.stream()
+                .filter(tChild -> hasChild(list, tChild))
+                .<Consumer<? super SysOrganizationDto>>map(tChild -> n -> recursionFn(list, n))
+                .forEach(childList::forEach);
+        }
+    }
+
+    /**
+     * 得到子节点列表
+     */
+    private List<SysOrganizationDto> getChildList(List<SysOrganizationDto> list, SysOrganizationDto t) {
+        return list.stream().filter(n -> n.getParentId().equals(t.getId())).collect(Collectors.toList());
+    }
+
+    /**
+     * 判断是否有子节点
+     */
+    private boolean hasChild(List<SysOrganizationDto> list, SysOrganizationDto t) {
+        return !getChildList(list, t).isEmpty();
+    }
+
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<SysOrganizationDto> findList(QueryCriteriaBean data) {
+        try {
+            if (data.getOrder() == null) {
+                return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysOrganizationDto.class);
+            }
+            List<SysOrganization> list = dao.findAll(QueryUtils.buildCriteria(data),
+                    Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
+            return convert(list, SysOrganizationDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<SysOrganizationDto> selectList(SysOrganizationVo sysOrganizationVo) {
+        Criteria<SysOrganization> criteria = new Criteria<>();
+        if (!DataUtils.isEmpty(sysOrganizationVo.getOrgName())) {
+            criteria.add(Restrictions.like("orgName", sysOrganizationVo.getOrgName()));
+        }
+        if (!DataUtils.isEmpty(sysOrganizationVo.getStatus())) {
+            criteria.add(Restrictions.eq(SysConstants.STATUS, sysOrganizationVo.getStatus()));
+        }
+        return convert(dao.findAll(criteria, Sort.by(Direction.DESC, "parentId", "orgOrder")),
+                SysOrganizationDto.class);
+    }
+
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<String> selectListByUserId(String userId) {
+        return organizationMapper.selectListByUserId(userId);
+    }
+
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Boolean editStatus(String id, StatusEnum status) {
+        Optional<SysOrganization> optional = dao.findById(id);
+        if (optional.isPresent()) {
+            SysOrganization entity = optional.get();
+            entity.setStatus(status);
+            dao.save(entity);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
 
 }

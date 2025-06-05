@@ -9,7 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 登录对象
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -20,33 +20,33 @@ public class LoginUserVo implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * 账号 userName
      */
     @ApiModelProperty(value = "账号", required = true)
     @NotBlank(message = "{system.vo.loginUser.userName.message}")
     private String userName;
-    
+
     /**
      * 密码 password
      */
     @ApiModelProperty(value = "密码", required = true)
     @NotBlank(message = "{system.vo.loginUser.password.message}")
     private String password;
-    
+
     /**
      * 图片验证码 uuid
      */
     @ApiModelProperty(value = "图片验证码")
     private String uuid;
-    
+
     /**
      * 验证码 code
      */
     @ApiModelProperty(value = "验证码")
     private String code;
-    
+
     /**
      * 构造方法
      */

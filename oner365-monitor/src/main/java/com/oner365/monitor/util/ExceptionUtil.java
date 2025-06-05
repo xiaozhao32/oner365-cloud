@@ -19,7 +19,6 @@ public class ExceptionUtil {
 
     /**
      * 获取exception的详细错误信息。
-     *
      * @param e Throwable
      * @return String
      */
@@ -46,4 +45,5 @@ public class ExceptionUtil {
         }
         return StringUtils.defaultString(msg);
     }
+
 }

@@ -32,69 +32,64 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/service")
 public class ServiceController extends BaseController {
 
-  @Resource
-  private DiscoveryClient discoveryClient;
+    @Resource
+    private DiscoveryClient discoveryClient;
 
-  @Resource
-  private WebClient webClient;
+    @Resource
+    private WebClient webClient;
 
-  /**
-   * 基本信息
-   * 
-   * @return List<List<ServiceInstance>>
-   */
-  @GetMapping("/index")
-  public List<List<ServiceInstance>> index() {
-    // 获取服务名称
-    return discoveryClient.getServices().stream()
-        .map(serviceName -> discoveryClient.getInstances(serviceName))
-        .collect(Collectors.toList());
-  }
+    /**
+     * 基本信息
+     * @return List<List<ServiceInstance>>
+     */
+    @GetMapping("/index")
+    public List<List<ServiceInstance>> index() {
+        // 获取服务名称
+        return discoveryClient.getServices()
+            .stream()
+            .map(serviceName -> discoveryClient.getInstances(serviceName))
+            .collect(Collectors.toList());
+    }
 
-  /**
-   * 获取信息
-   * 
-   * @param paramJson 属性
-   * @return JSONObject
-   */
-  @PostMapping("/info")
-  public JSONObject getActuatorEnv(@RequestBody JSONObject paramJson) {
-    String uri = "/actuator/env";
-    Mono<JSONObject> mono = webClient.get().uri(uri).retrieve().bodyToMono(JSONObject.class);
-    return mono.block();
-  }
+    /**
+     * 获取信息
+     * @param paramJson 属性
+     * @return JSONObject
+     */
+    @PostMapping("/info")
+    public JSONObject getActuatorEnv(@RequestBody JSONObject paramJson) {
+        String uri = "/actuator/env";
+        Mono<JSONObject> mono = webClient.get().uri(uri).retrieve().bodyToMono(JSONObject.class);
+        return mono.block();
+    }
 
-  /**
-   * 动态刷新配置
-   * 
-   * @return String
-   */
-  @GetMapping("/refresh")
-  public String refreshConfig() {
-    return ResultEnum.SUCCESS.getName();
-  }
+    /**
+     * 动态刷新配置
+     * @return String
+     */
+    @GetMapping("/refresh")
+    public String refreshConfig() {
+        return ResultEnum.SUCCESS.getName();
+    }
 
-  /**
-   * 上传服务
-   *
-   * @param multipartFile 文件
-   * @return String
-   */
-  @PostMapping("/upload")
-  public String uploadService(@RequestParam("multipartFile") MultipartFile multipartFile, String ip, int port,
-      String serviceName) {
-    return ResultEnum.SUCCESS.getName();
-  }
+    /**
+     * 上传服务
+     * @param multipartFile 文件
+     * @return String
+     */
+    @PostMapping("/upload")
+    public String uploadService(@RequestParam MultipartFile multipartFile, String ip, int port, String serviceName) {
+        return ResultEnum.SUCCESS.getName();
+    }
 
-  /**
-   * 重启服务
-   * 
-   * @param deployServer 对象
-   * @return String
-   */
-  @PostMapping("/reset")
-  public String resetService(@RequestBody DeployServer deployServer) {
-    return ResultEnum.SUCCESS.getName();
-  }
+    /**
+     * 重启服务
+     * @param deployServer 对象
+     * @return String
+     */
+    @PostMapping("/reset")
+    public String resetService(@RequestBody DeployServer deployServer) {
+        return ResultEnum.SUCCESS.getName();
+    }
 
 }

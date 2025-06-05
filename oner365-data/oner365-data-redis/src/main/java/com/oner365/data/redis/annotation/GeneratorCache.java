@@ -13,7 +13,7 @@ import com.oner365.data.commons.constants.PublicConstants;
 
 /**
  * Generator Cache
- * 
+ *
  * @author zhaoyong
  */
 @Retention(RetentionPolicy.RUNTIME)
@@ -22,14 +22,14 @@ import com.oner365.data.commons.constants.PublicConstants;
 @Cacheable(PublicConstants.NAME)
 public @interface GeneratorCache {
 
-  @AliasFor("cacheNames")
-  String[] value() default {};
+    @AliasFor("cacheNames")
+    String[] value() default {};
 
-  @AliasFor("value")
-  String[] cacheNames() default {};
+    @AliasFor("value")
+    String[] cacheNames() default {};
 
-  String key() default "";
+    String key() default "";
 
-  String keyGenerator() default PublicConstants.KEY_GENERATOR;
+    String keyGenerator() default PublicConstants.KEY_GENERATOR;
 
 }

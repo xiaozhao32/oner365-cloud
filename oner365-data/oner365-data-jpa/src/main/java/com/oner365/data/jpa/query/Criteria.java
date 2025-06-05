@@ -18,31 +18,32 @@ import org.springframework.lang.NonNull;
  */
 public class Criteria<T> implements Specification<T> {
 
-  private static final long serialVersionUID = 1L;
-  private final List<Criterion> criterionList = new ArrayList<>();
+    private static final long serialVersionUID = 1L;
 
-  @Override
-  public Predicate toPredicate(@NonNull Root<T> root, @NonNull CriteriaQuery<?> query,
-      @NonNull CriteriaBuilder builder) {
-    if (!criterionList.isEmpty()) {
-      List<Predicate> predicates = new ArrayList<>();
-      criterionList.forEach(c -> predicates.add(c.toPredicate(root, query, builder)));
-      // 将所有条件用 and 联合起来
-      if (!predicates.isEmpty()) {
-        return builder.and(predicates.toArray(new Predicate[0]));
-      }
-    }
-    return builder.conjunction();
-  }
+    private final List<Criterion> criterionList = new ArrayList<>();
 
-  /***
-   * 增加简单条件表达式
-   *
-   * @param criterion 表达式
-   */
-  public void add(Criterion criterion) {
-    if (criterion != null) {
-      criterionList.add(criterion);
+    @Override
+    public Predicate toPredicate(@NonNull Root<T> root, @NonNull CriteriaQuery<?> query,
+            @NonNull CriteriaBuilder builder) {
+        if (!criterionList.isEmpty()) {
+            List<Predicate> predicates = new ArrayList<>();
+            criterionList.forEach(c -> predicates.add(c.toPredicate(root, query, builder)));
+            // 将所有条件用 and 联合起来
+            if (!predicates.isEmpty()) {
+                return builder.and(predicates.toArray(new Predicate[0]));
+            }
+        }
+        return builder.conjunction();
     }
-  }
+
+    /***
+     * 增加简单条件表达式
+     * @param criterion 表达式
+     */
+    public void add(Criterion criterion) {
+        if (criterion != null) {
+            criterionList.add(criterion);
+        }
+    }
+
 }

@@ -7,7 +7,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 检测用户编码
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -15,22 +15,22 @@ import io.swagger.annotations.ApiModelProperty;
 public class CheckUserNameVo implements Serializable {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * 主键 id
      */
     @ApiModelProperty(value = "主键")
     private String id;
-    
+
     /**
      * 用户名称
      */
     @ApiModelProperty(value = "用户名称")
     private String userName;
-    
+
     /**
      * 构造方法
      */

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+	<include resource="org/springframework/boot/logging/logback/defaults.xml" />
+	<springProperty scope="context" name="LOG_NAME" source="spring.application.name" />
+	<springProperty scope="context" name="LOG_FILE" source="logging.file.path" />
+	<!-- logstash -->
+	<springProperty scope="context" name="LOGSTASH_ENABLED" source="logging.logstash.enabled" />
+	<springProperty scope="context" name="LOGSTASH_ADDRESSES" source="logging.logstash.addresses" />
+	
+	<!-- kafka -->
+	<springProperty scope="context" name="KAFKA_ENABELD" source="logging.kafka.enabled" />
+	<springProperty scope="context" name="BOOTSTRAP_SERVERS" source="spring.kafka.bootstrap-servers" />
+	<springProperty scope="context" name="KAFKA_TOPIC" source="spring.kafka.template.default-topic" />
+	
+	<property name="LOG_LEVEL" value="INFO" />
+	<property name="LOG_MAX_SIZE" value="100MB" />
+	
+	<!-- 控制台的日志输出样式 -->
+	<property name="CONSOLE_LOG_PATTERN" value="[%d{yyyy-MM-dd HH:mm:ss}] [%r] [%thread] [%clr(%p)] [%clr(%C %M:%L)] - %clr(%m%n)" />
+
+	<!-- 控制台输出 -->
+	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>${LOG_LEVEL}</level>
+		</filter>
+		<encoder>
+			<pattern>${CONSOLE_LOG_PATTERN}</pattern>
+			<charset>utf8</charset>
+		</encoder>
+	</appender>
+	
+	<!-- 文件信息配置 -->
+	<appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <File>${LOG_FILE}/${LOG_NAME}.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_FILE}/archive/${LOG_NAME}_INFO_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>  
+            <timeBasedFileNamingAndTriggeringPolicy  class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+                <maxFileSize>${LOG_MAX_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">  
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+        </layout>
+    </appender>
+    
+    <!-- 文件错误日志配置 -->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">  
+        <File>${LOG_FILE}/${LOG_NAME}_error.log</File>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>${LOG_FILE}/archive/${LOG_NAME}_ERROR_%d{yyyy-MM-dd}.%i.log.zip</FileNamePattern>  
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">  
+                <maxFileSize>${LOG_MAX_SIZE}</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+        <layout class="ch.qos.logback.classic.PatternLayout">  
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>  
+        </layout>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>  
+            <onMismatch>DENY</onMismatch>  
+        </filter>
+    </appender>
+
+	<!-- logstash 远程日志配置 -->
+	<if condition='property("LOGSTASH_ENABLED").equals("true")'>
+	<then>
+		<appender name="LOGSTASH_APPENDER" class="net.logstash.logback.appender.LogstashTcpSocketAppender">
+			<!-- 多个input索引监听修改对应logstash监听端口即可 -->
+			<destination>${LOGSTASH_ADDRESSES}</destination>
+			<encoder charset="UTF-8" class="net.logstash.logback.encoder.LogstashEncoder" />
+		</appender>
+	</then>
+	</if>
+	
+	<!-- kafka -->
+	<if condition='property("KAFKA_ENABELD").equals("true")'>
+	<then>
+		<appender name="KAFKA_APPENDER" class="com.github.danielwegener.logback.kafka.KafkaAppender">
+	        <encoder>
+	            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+	        </encoder>
+	        <topic>${KAFKA_TOPIC}</topic>
+	        <keyingStrategy class="com.github.danielwegener.logback.kafka.keying.NoKeyKeyingStrategy"/>
+	        <deliveryStrategy class="com.github.danielwegener.logback.kafka.delivery.AsynchronousDeliveryStrategy"/>
+	        <producerConfig>acks=0</producerConfig>
+	        <producerConfig>linger.ms=1000</producerConfig>
+	        <producerConfig>max.block.ms=0</producerConfig>
+	        <producerConfig>bootstrap.servers=${BOOTSTRAP_SERVERS}</producerConfig>
+	    </appender>
+	</then>
+	</if>
+
+	<!-- 日志输出级别 -->
+	<root level="${LOG_LEVEL}">
+		<appender-ref ref="CONSOLE" />
+		<appender-ref ref="FILE_INFO" />
+		<appender-ref ref="FILE_ERROR" />
+		<if condition='property("LOGSTASH_ENABLED").equals("true")'>
+		<then>
+			<appender-ref ref="LOGSTASH_APPENDER" />
+		</then>
+		</if>
+		<if condition='property("KAFKA_ENABELD").equals("true")'>
+		<then>
+			<appender-ref ref="KAFKA_APPENDER" />
+		</then>
+		</if>
+	</root>
+</configuration>

@@ -4,44 +4,45 @@ import java.io.Serializable;
 
 /**
  * 获取验证码
- * 
+ *
  * @author zhaoyong
  *
  */
 public class CaptchaImageDto implements Serializable {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * uuid
-   */
-  private String uuid;
-  
-  /**
-   * img base64
-   */
-  private String img;
-  
-  public CaptchaImageDto() {
-    super();
-  }
+    /**
+     * uuid
+     */
+    private String uuid;
 
-  public String getUuid() {
-    return uuid;
-  }
+    /**
+     * img base64
+     */
+    private String img;
 
-  public void setUuid(String uuid) {
-    this.uuid = uuid;
-  }
+    public CaptchaImageDto() {
+        super();
+    }
 
-  public String getImg() {
-    return img;
-  }
+    public String getUuid() {
+        return uuid;
+    }
 
-  public void setImg(String img) {
-    this.img = img;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
+
 }

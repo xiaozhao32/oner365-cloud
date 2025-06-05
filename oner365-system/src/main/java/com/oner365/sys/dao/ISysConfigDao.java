@@ -7,9 +7,9 @@ import com.oner365.sys.entity.SysConfig;
 
 /**
  * nt_sys_config Dao 接口
- * 
+ *
  * @author zhaoyong
  */
 public interface ISysConfigDao extends JpaRepository<SysConfig, String>, JpaSpecificationExecutor<SysConfig> {
-    
+
 }

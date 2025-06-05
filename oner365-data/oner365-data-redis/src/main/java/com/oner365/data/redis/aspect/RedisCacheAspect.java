@@ -25,7 +25,7 @@ import com.oner365.data.redis.annotation.RedisCachePut;
 
 /**
  * Cache Aspect
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -33,116 +33,115 @@ import com.oner365.data.redis.annotation.RedisCachePut;
 @Component
 public class RedisCacheAspect {
 
-  @Resource
-  private RedisCache redisCache;
+    @Resource
+    private RedisCache redisCache;
 
-  /**
-   * redis缓存开关
-   */
-  @Resource
-  private CommonProperties commonProperties;
+    /**
+     * redis缓存开关
+     */
+    @Resource
+    private CommonProperties commonProperties;
 
-  @Pointcut("@annotation(com.oner365.data.redis.annotation.RedisCachePut)")
-  public void annotationPut() {
-    // RedisCachePut
-  }
-
-  @Pointcut("@annotation(com.oner365.data.redis.annotation.RedisCacheAble)")
-  public void annotationAble() {
-    // RedisCacheAble
-  }
-
-  @Pointcut("@annotation(com.oner365.data.redis.annotation.RedisCacheEvict)")
-  public void annotationEvict() {
-    // RedisCacheEvict
-  }
-
-  /**
-   * annotationAble
-   *
-   * @param joinPoint ProceedingJoinPoint
-   * @param rd        RedisCacheAble
-   * @return Object
-   * @throws Throwable 异常
-   */
-  @Around("annotationAble()&& @annotation(rd)")
-  public Object redisCacheAble(ProceedingJoinPoint joinPoint, RedisCacheAble rd) throws Throwable {
-
-    String key = "";
-    if (commonProperties.isRedisEnabled()) {
-      String preKey = rd.value();
-      String arg0 = joinPoint.getArgs()[0].toString();
-
-      Class<?> returnClassType = ((MethodSignature) joinPoint.getSignature()).getMethod().getReturnType();
-      key = preKey + "::" + arg0;
-      String rtObject = redisCache.getCacheObject(key);
-
-      // Return Cache
-      if (rtObject != null) {
-        return JSON.parseObject(rtObject, returnClassType);
-      }
+    @Pointcut("@annotation(com.oner365.data.redis.annotation.RedisCachePut)")
+    public void annotationPut() {
+        // RedisCachePut
     }
 
-    Object sourceObject = joinPoint.proceed();
-    if (sourceObject == null) {
-      return null;
+    @Pointcut("@annotation(com.oner365.data.redis.annotation.RedisCacheAble)")
+    public void annotationAble() {
+        // RedisCacheAble
     }
 
-    if (commonProperties.isRedisEnabled()) {
-      // Set cache
-      redisCache.setCacheObject(key, JSON.toJSONString(sourceObject), PublicConstants.EXPIRE_TIME, TimeUnit.MINUTES);
+    @Pointcut("@annotation(com.oner365.data.redis.annotation.RedisCacheEvict)")
+    public void annotationEvict() {
+        // RedisCacheEvict
     }
-    return sourceObject;
-  }
 
-  /**
-   * annotationEvict
-   * 
-   * @param joinPoint JoinPoint
-   * @param rd        RedisCacheEvict
-   */
-  @After("annotationEvict()&& @annotation(rd)")
-  public void redisCacheEvict(JoinPoint joinPoint, RedisCacheEvict rd) {
-    if (commonProperties.isRedisEnabled()) {
-      String preKey = rd.value();
-      String arg0 = joinPoint.getArgs()[0].toString();
+    /**
+     * annotationAble
+     * @param joinPoint ProceedingJoinPoint
+     * @param rd RedisCacheAble
+     * @return Object
+     * @throws Throwable 异常
+     */
+    @Around("annotationAble()&& @annotation(rd)")
+    public Object redisCacheAble(ProceedingJoinPoint joinPoint, RedisCacheAble rd) throws Throwable {
 
-      String key = preKey + "::" + arg0;
-      redisCache.deleteObject(key);
+        String key = "";
+        if (commonProperties.isRedisEnabled()) {
+            String preKey = rd.value();
+            String arg0 = joinPoint.getArgs()[0].toString();
+
+            Class<?> returnClassType = ((MethodSignature) joinPoint.getSignature()).getMethod().getReturnType();
+            key = preKey + "::" + arg0;
+            String rtObject = redisCache.getCacheObject(key);
+
+            // Return Cache
+            if (rtObject != null) {
+                return JSON.parseObject(rtObject, returnClassType);
+            }
+        }
+
+        Object sourceObject = joinPoint.proceed();
+        if (sourceObject == null) {
+            return null;
+        }
+
+        if (commonProperties.isRedisEnabled()) {
+            // Set cache
+            redisCache.setCacheObject(key, JSON.toJSONString(sourceObject), PublicConstants.EXPIRE_TIME,
+                    TimeUnit.MINUTES);
+        }
+        return sourceObject;
     }
-  }
 
-  /**
-   * annotationPut
-   * 
-   * @param joinPoint   JoinPoint
-   * @param resultValue Object
-   * @param rd          RedisCachePut
-   */
-  @AfterReturning(returning = "resultValue", pointcut = "annotationPut()&& @annotation(rd)")
-  public void redisCachePut(JoinPoint joinPoint, Object resultValue, RedisCachePut rd) {
+    /**
+     * annotationEvict
+     * @param joinPoint JoinPoint
+     * @param rd RedisCacheEvict
+     */
+    @After("annotationEvict()&& @annotation(rd)")
+    public void redisCacheEvict(JoinPoint joinPoint, RedisCacheEvict rd) {
+        if (commonProperties.isRedisEnabled()) {
+            String preKey = rd.value();
+            String arg0 = joinPoint.getArgs()[0].toString();
 
-    if (resultValue == null) {
-      return;
+            String key = preKey + "::" + arg0;
+            redisCache.deleteObject(key);
+        }
     }
-    if (commonProperties.isRedisEnabled()) {
-      String key = getRedisKey(rd, resultValue);
-      redisCache.deleteObject(key);
 
-      // Set cache
-      redisCache.setCacheObject(key, JSON.toJSONString(resultValue), PublicConstants.EXPIRE_TIME, TimeUnit.MINUTES);
+    /**
+     * annotationPut
+     * @param joinPoint JoinPoint
+     * @param resultValue Object
+     * @param rd RedisCachePut
+     */
+    @AfterReturning(returning = "resultValue", pointcut = "annotationPut()&& @annotation(rd)")
+    public void redisCachePut(JoinPoint joinPoint, Object resultValue, RedisCachePut rd) {
+
+        if (resultValue == null) {
+            return;
+        }
+        if (commonProperties.isRedisEnabled()) {
+            String key = getRedisKey(rd, resultValue);
+            redisCache.deleteObject(key);
+
+            // Set cache
+            redisCache.setCacheObject(key, JSON.toJSONString(resultValue), PublicConstants.EXPIRE_TIME,
+                    TimeUnit.MINUTES);
+        }
     }
-  }
 
-  private static String getRedisKey(RedisCachePut rd, Object sourceObject) {
-    String key = rd.key();
-    key = key.substring(1);
+    private static String getRedisKey(RedisCachePut rd, Object sourceObject) {
+        String key = rd.key();
+        key = key.substring(1);
 
-    String firstLetter = key.substring(0, 1).toUpperCase();
-    String getter = "get" + firstLetter + key.substring(1);
-    Object keyValue = ClassesUtil.invokeMethod(sourceObject, getter);
+        String firstLetter = key.substring(0, 1).toUpperCase();
+        String getter = "get" + firstLetter + key.substring(1);
+        Object keyValue = ClassesUtil.invokeMethod(sourceObject, getter);
 
-    return rd.value() + "::" + keyValue.toString();
-  }
+        return rd.value() + "::" + keyValue.toString();
+    }
 
 }

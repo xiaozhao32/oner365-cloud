@@ -44,7 +44,7 @@ import com.oner365.sys.vo.LoginUserVo;
 
 /**
  * 认证登录接口
- * 
+ *
  * @author zhaoyong
  */
 @RestController
@@ -65,7 +65,6 @@ public class AuthController extends BaseController {
 
     /**
      * 系统登录
-     *
      * @param loginUserVo 登录对象
      * @return ResponseData<LoginUserDto>
      */
@@ -105,7 +104,6 @@ public class AuthController extends BaseController {
 
     /**
      * 获取验证码
-     * 
      * @return CaptchaImageDto
      */
     @GetMapping("/captcha")
@@ -125,7 +123,8 @@ public class AuthController extends BaseController {
 
             result.setUuid(uuid);
             result.setImg(Base64Utils.encodeToString(stream.toByteArray()));
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
             logger.error("Error captchaImage: ", e);
         }
 
@@ -134,7 +133,6 @@ public class AuthController extends BaseController {
 
     /**
      * 获取左侧菜单
-     *
      * @return List<SysMenuTreeDto>
      */
     @GetMapping("/menu")
@@ -143,7 +141,8 @@ public class AuthController extends BaseController {
             if (user != null && !user.getRoleList().isEmpty() && !DataUtils.isEmpty(user.getMenuType())) {
                 return sysRoleService.findMenuByRoles(user.getRoleList(), user.getMenuType());
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.error("Error findMenuByRoles: ", e);
         }
         return Collections.emptyList();
@@ -151,7 +150,6 @@ public class AuthController extends BaseController {
 
     /**
      * 获取菜单对应权限
-     *
      * @param menuId 菜单id
      * @return List<SysMenuOperDto>>
      */
@@ -161,7 +159,8 @@ public class AuthController extends BaseController {
             if (user != null && !user.getRoleList().isEmpty()) {
                 return sysRoleService.findMenuOperByRoles(user.getRoleList(), menuId);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             logger.error("Error findMenuOperByRoles: ", e);
         }
         return Collections.emptyList();
@@ -169,7 +168,6 @@ public class AuthController extends BaseController {
 
     /**
      * 退出登录
-     * 
      * @return ResponseData<String>
      */
     @PostMapping("/logout")

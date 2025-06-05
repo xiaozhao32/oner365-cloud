@@ -11,298 +11,300 @@ import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 菜单对象
- * 
+ *
  * @author zhaoyong
  */
 public class SysMenuVo implements Serializable {
 
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键 id
-   */
-  private String id;
+    /**
+     * 主键 id
+     */
+    private String id;
 
-  /**
-   * 菜单类别 menu_type_id
-   */
-  @NotBlank(message = "{system.vo.menu.menuTypeId.message}")
-  private String menuTypeId;
+    /**
+     * 菜单类别 menu_type_id
+     */
+    @NotBlank(message = "{system.vo.menu.menuTypeId.message}")
+    private String menuTypeId;
 
-  /**
-   * 菜单名称 menu_name
-   */
-  @NotBlank(message = "{system.vo.menu.menuName.message}")
-  private String menuName;
+    /**
+     * 菜单名称 menu_name
+     */
+    @NotBlank(message = "{system.vo.menu.menuName.message}")
+    private String menuName;
 
-  /**
-   * 别称 another_name
-   */
-  private String anotherName;
+    /**
+     * 别称 another_name
+     */
+    private String anotherName;
 
-  /**
-   * 父级 parent_id
-   */
-  private String parentId;
+    /**
+     * 父级 parent_id
+     */
+    private String parentId;
 
-  /**
-   * 排序 menu_order
-   */
-  private Integer menuOrder;
+    /**
+     * 排序 menu_order
+     */
+    private Integer menuOrder;
 
-  /**
-   * 地址 path
-   */
-  private String path;
+    /**
+     * 地址 path
+     */
+    private String path;
 
-  /**
-   * 组件 component
-   */
-  private String component;
+    /**
+     * 组件 component
+     */
+    private String component;
 
-  /**
-   * 菜单描述 menu_description
-   */
-  private String menuDescription;
+    /**
+     * 菜单描述 menu_description
+     */
+    private String menuDescription;
 
-  /**
-   * 状态 status
-   */
-  private StatusEnum status;
+    /**
+     * 状态 status
+     */
+    private StatusEnum status;
 
-  /**
-   * 创建时间 create_time
-   */
-  private LocalDateTime createTime;
+    /**
+     * 创建时间 create_time
+     */
+    private LocalDateTime createTime;
 
-  /**
-   * 更新时间 update_time
-   */
-  private LocalDateTime updateTime;
+    /**
+     * 更新时间 update_time
+     */
+    private LocalDateTime updateTime;
 
-  /**
-   * 图标
-   */
-  private String icon;
+    /**
+     * 图标
+     */
+    private String icon;
 
-  private List<SysMenuVo> children = new ArrayList<>();
-  private String userId;
-  private List<String> operIds;
+    private List<SysMenuVo> children = new ArrayList<>();
 
-  /**
-   * Constructor
-   */
-  public SysMenuVo() {
-    super();
-  }
+    private String userId;
 
-  /**
-   * @return the id
-   */
-  public String getId() {
-    return id;
-  }
+    private List<String> operIds;
 
-  /**
-   * @param id the id to set
-   */
-  public void setId(String id) {
-    this.id = id;
-  }
+    /**
+     * Constructor
+     */
+    public SysMenuVo() {
+        super();
+    }
 
-  /**
-   * @return the menuName
-   */
-  public String getMenuName() {
-    return menuName;
-  }
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
-  /**
-   * @param menuName the menuName to set
-   */
-  public void setMenuName(String menuName) {
-    this.menuName = menuName;
-  }
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  /**
-   * @return the anotherName
-   */
-  public String getAnotherName() {
-    return anotherName;
-  }
+    /**
+     * @return the menuName
+     */
+    public String getMenuName() {
+        return menuName;
+    }
 
-  /**
-   * @param anotherName the anotherName to set
-   */
-  public void setAnotherName(String anotherName) {
-    this.anotherName = anotherName;
-  }
+    /**
+     * @param menuName the menuName to set
+     */
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
 
-  /**
-   * @return the parentId
-   */
-  public String getParentId() {
-    return parentId;
-  }
+    /**
+     * @return the anotherName
+     */
+    public String getAnotherName() {
+        return anotherName;
+    }
 
-  /**
-   * @param parentId the parentId to set
-   */
-  public void setParentId(String parentId) {
-    this.parentId = parentId;
-  }
+    /**
+     * @param anotherName the anotherName to set
+     */
+    public void setAnotherName(String anotherName) {
+        this.anotherName = anotherName;
+    }
 
-  /**
-   * @return the menuOrder
-   */
-  public Integer getMenuOrder() {
-    return menuOrder;
-  }
+    /**
+     * @return the parentId
+     */
+    public String getParentId() {
+        return parentId;
+    }
 
-  /**
-   * @param menuOrder the menuOrder to set
-   */
-  public void setMenuOrder(Integer menuOrder) {
-    this.menuOrder = menuOrder;
-  }
+    /**
+     * @param parentId the parentId to set
+     */
+    public void setParentId(String parentId) {
+        this.parentId = parentId;
+    }
 
-  /**
-   * @return the path
-   */
-  public String getPath() {
-    return path;
-  }
+    /**
+     * @return the menuOrder
+     */
+    public Integer getMenuOrder() {
+        return menuOrder;
+    }
 
-  /**
-   * @param path the path to set
-   */
-  public void setPath(String path) {
-    this.path = path;
-  }
+    /**
+     * @param menuOrder the menuOrder to set
+     */
+    public void setMenuOrder(Integer menuOrder) {
+        this.menuOrder = menuOrder;
+    }
 
-  /**
-   * @return the component
-   */
-  public String getComponent() {
-    return component;
-  }
+    /**
+     * @return the path
+     */
+    public String getPath() {
+        return path;
+    }
 
-  /**
-   * @param component the component to set
-   */
-  public void setComponent(String component) {
-    this.component = component;
-  }
+    /**
+     * @param path the path to set
+     */
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-  /**
-   * @return the menuDescription
-   */
-  public String getMenuDescription() {
-    return menuDescription;
-  }
+    /**
+     * @return the component
+     */
+    public String getComponent() {
+        return component;
+    }
 
-  /**
-   * @param menuDescription the menuDescription to set
-   */
-  public void setMenuDescription(String menuDescription) {
-    this.menuDescription = menuDescription;
-  }
+    /**
+     * @param component the component to set
+     */
+    public void setComponent(String component) {
+        this.component = component;
+    }
 
-  /**
-   * @return the status
-   */
-  public StatusEnum getStatus() {
-    return status;
-  }
+    /**
+     * @return the menuDescription
+     */
+    public String getMenuDescription() {
+        return menuDescription;
+    }
 
-  /**
-   * @param status the status to set
-   */
-  public void setStatus(StatusEnum status) {
-    this.status = status;
-  }
+    /**
+     * @param menuDescription the menuDescription to set
+     */
+    public void setMenuDescription(String menuDescription) {
+        this.menuDescription = menuDescription;
+    }
 
-  /**
-   * @return the createTime
-   */
-  public LocalDateTime getCreateTime() {
-    return createTime;
-  }
+    /**
+     * @return the status
+     */
+    public StatusEnum getStatus() {
+        return status;
+    }
 
-  /**
-   * @param createTime the createTime to set
-   */
-  public void setCreateTime(LocalDateTime createTime) {
-    this.createTime = createTime;
-  }
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
 
-  /**
-   * @return the updateTime
-   */
-  public LocalDateTime getUpdateTime() {
-    return updateTime;
-  }
+    /**
+     * @return the createTime
+     */
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
 
-  /**
-   * @param updateTime the updateTime to set
-   */
-  public void setUpdateTime(LocalDateTime updateTime) {
-    this.updateTime = updateTime;
-  }
+    /**
+     * @param createTime the createTime to set
+     */
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
 
-  /**
-   * @return the icon
-   */
-  public String getIcon() {
-    return icon;
-  }
+    /**
+     * @return the updateTime
+     */
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
 
-  /**
-   * @param icon the icon to set
-   */
-  public void setIcon(String icon) {
-    this.icon = icon;
-  }
+    /**
+     * @param updateTime the updateTime to set
+     */
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 
-  /**
-   * @return the menuTypeId
-   */
-  public String getMenuTypeId() {
-    return menuTypeId;
-  }
+    /**
+     * @return the icon
+     */
+    public String getIcon() {
+        return icon;
+    }
 
-  /**
-   * @param menuTypeId the menuTypeId to set
-   */
-  public void setMenuTypeId(String menuTypeId) {
-    this.menuTypeId = menuTypeId;
-  }
+    /**
+     * @param icon the icon to set
+     */
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
 
-  public List<SysMenuVo> getChildren() {
-    return children;
-  }
+    /**
+     * @return the menuTypeId
+     */
+    public String getMenuTypeId() {
+        return menuTypeId;
+    }
 
-  public void setChildren(List<SysMenuVo> children) {
-    this.children = children;
-  }
+    /**
+     * @param menuTypeId the menuTypeId to set
+     */
+    public void setMenuTypeId(String menuTypeId) {
+        this.menuTypeId = menuTypeId;
+    }
 
-  public String getUserId() {
-    return userId;
-  }
+    public List<SysMenuVo> getChildren() {
+        return children;
+    }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
+    public void setChildren(List<SysMenuVo> children) {
+        this.children = children;
+    }
 
-  public List<String> getOperIds() {
-    return operIds;
-  }
+    public String getUserId() {
+        return userId;
+    }
 
-  public void setOperIds(List<String> operIds) {
-    this.operIds = operIds;
-  }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public List<String> getOperIds() {
+        return operIds;
+    }
+
+    public void setOperIds(List<String> operIds) {
+        this.operIds = operIds;
+    }
 
 }

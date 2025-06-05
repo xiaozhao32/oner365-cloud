@@ -34,204 +34,217 @@ import com.oner365.hadoop.service.HadoopHdfsService;
 
 /**
  * Hadoop服务实现类
- * 
+ *
  * @author zhaoyong
  */
 @Service
 public class HadoopHdfsServiceImpl implements HadoopHdfsService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(HadoopHdfsServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HadoopHdfsServiceImpl.class);
 
-  private static final int BUFFER_SIZE = 1024 * 1024 * 64;
+    private static final int BUFFER_SIZE = 1024 * 1024 * 64;
 
-  @Resource
-  private FileSystem fileSystem;
+    @Resource
+    private FileSystem fileSystem;
 
-  @Override
-  public boolean mkdir(String path) {
-    try {
-      return fileSystem.mkdirs(new Path(path));
-    } catch (IOException e) {
-      LOGGER.error("mkdir error:", e);
-    }
-    return false;
-  }
-
-  @Override
-  public boolean existFile(String path) {
-    if (StringUtils.isEmpty(path)) {
-      return false;
-    }
-    try {
-      return fileSystem.exists(new Path(path));
-    } catch (IOException e) {
-      LOGGER.error("existFile error:", e);
-    }
-    return false;
-  }
-
-  @Override
-  public List<FileInfoDto> readPathInfo(String path) {
-    try {
-      FileStatus[] statusList = fileSystem.listStatus(new Path(path));
-
-      return IntStream.range(0, statusList.length).mapToObj(i -> statusList[i]).map(fileStatus -> {
-        FileInfoDto fileInfoDto = new FileInfoDto();
-        fileInfoDto.setFileName(fileStatus.getPath().getName());
-        fileInfoDto.setFilePath(fileStatus.getPath().toString());
-        fileInfoDto.setSize(fileStatus.getLen());
-        fileInfoDto.setIsDirectory(fileStatus.isDirectory());
-        return fileInfoDto;
-      }).collect(Collectors.toList());
-
-    } catch (IOException e) {
-      LOGGER.error("readPathInfo error:", e);
-    }
-    return Collections.emptyList();
-  }
-
-  @Override
-  public void createFile(String path, MultipartFile file) {
-    if (StringUtils.isEmpty(path) || file == null) {
-      return;
-    }
-    String fileName = file.getOriginalFilename();
-    try (FSDataOutputStream outputStream = fileSystem.create(new Path(path + File.separator + fileName))) {
-      outputStream.write(file.getBytes());
-    } catch (IOException e) {
-      LOGGER.error("createFile error:", e);
-    }
-  }
-
-  @Override
-  public String readFile(String path) {
-    try (FSDataInputStream inputStream = fileSystem.open(new Path(path))) {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()));
-      String line;
-      StringBuilder sb = new StringBuilder();
-      while ((line = reader.readLine()) != null) {
-        sb.append(line);
-      }
-      return sb.toString();
-    } catch (IOException e) {
-      LOGGER.error("readFile error:", e);
-    }
-    return null;
-  }
-
-  @Override
-  public List<FileInfoDto> listFile(String path) {
-    List<FileInfoDto> result = new ArrayList<>();
-
-    try {
-      RemoteIterator<LocatedFileStatus> filesList = fileSystem.listFiles(new Path(path), true);
-      while (filesList.hasNext()) {
-        LocatedFileStatus fileStatus = filesList.next();
-        FileInfoDto fileInfoDto = new FileInfoDto();
-        fileInfoDto.setFileName(fileStatus.getPath().getName());
-        fileInfoDto.setFilePath(fileStatus.getPath().toString());
-        fileInfoDto.setSize(fileStatus.getLen());
-        fileInfoDto.setIsDirectory(fileStatus.isDirectory());
-        result.add(fileInfoDto);
-      }
-    } catch (IOException e) {
-      LOGGER.error("listFile error:", e);
+    @Override
+    public boolean mkdir(String path) {
+        try {
+            return fileSystem.mkdirs(new Path(path));
+        }
+        catch (IOException e) {
+            LOGGER.error("mkdir error:", e);
+        }
+        return false;
     }
 
-    return result;
-  }
+    @Override
+    public boolean existFile(String path) {
+        if (StringUtils.isEmpty(path)) {
+            return false;
+        }
+        try {
+            return fileSystem.exists(new Path(path));
+        }
+        catch (IOException e) {
+            LOGGER.error("existFile error:", e);
+        }
+        return false;
+    }
 
-  @Override
-  public boolean renameFile(String oldName, String newName) {
-    if (StringUtils.isEmpty(oldName) || StringUtils.isEmpty(newName)) {
-      return false;
-    }
-    try {
-      return fileSystem.rename(new Path(oldName), new Path(newName));
-    } catch (IOException e) {
-      LOGGER.error("renameFile error:", e);
-    }
-    return false;
-  }
+    @Override
+    public List<FileInfoDto> readPathInfo(String path) {
+        try {
+            FileStatus[] statusList = fileSystem.listStatus(new Path(path));
 
-  @Override
-  public boolean deleteFile(String path) {
-    if (StringUtils.isEmpty(path)) {
-      return false;
-    }
-    try {
-      return fileSystem.deleteOnExit(new Path(path));
-    } catch (IOException e) {
-      LOGGER.error("deleteFile error:", e);
-    }
-    return false;
-  }
+            return IntStream.range(0, statusList.length).mapToObj(i -> statusList[i]).map(fileStatus -> {
+                FileInfoDto fileInfoDto = new FileInfoDto();
+                fileInfoDto.setFileName(fileStatus.getPath().getName());
+                fileInfoDto.setFilePath(fileStatus.getPath().toString());
+                fileInfoDto.setSize(fileStatus.getLen());
+                fileInfoDto.setIsDirectory(fileStatus.isDirectory());
+                return fileInfoDto;
+            }).collect(Collectors.toList());
 
-  @Override
-  public void uploadFile(String path, String uploadPath) {
-    if (StringUtils.isEmpty(path) || StringUtils.isEmpty(uploadPath)) {
-      return;
+        }
+        catch (IOException e) {
+            LOGGER.error("readPathInfo error:", e);
+        }
+        return Collections.emptyList();
     }
-    try {
-      // 调用文件系统的文件复制方法，第一个参数是否删除原文件true为删除，默认为false
-      fileSystem.copyFromLocalFile(false, new Path(path), new Path(uploadPath));
-    } catch (IOException e) {
-      LOGGER.error("uploadFile error:", e);
-    }
-  }
 
-  @Override
-  public void downloadFile(String path, String downloadPath) {
-    if (StringUtils.isEmpty(path) || StringUtils.isEmpty(downloadPath)) {
-      return;
+    @Override
+    public void createFile(String path, MultipartFile file) {
+        if (StringUtils.isEmpty(path) || file == null) {
+            return;
+        }
+        String fileName = file.getOriginalFilename();
+        try (FSDataOutputStream outputStream = fileSystem.create(new Path(path + File.separator + fileName))) {
+            outputStream.write(file.getBytes());
+        }
+        catch (IOException e) {
+            LOGGER.error("createFile error:", e);
+        }
     }
-    try {
-      // 调用文件系统的文件复制方法，第一个参数是否删除原文件true为删除，默认为false
-      fileSystem.copyToLocalFile(false, new Path(path), new Path(downloadPath));
-    } catch (IOException e) {
-      LOGGER.error("downloadFile error:", e);
-    }
-  }
 
-  @Override
-  public void copyFile(String sourcePath, String targetPath) {
-    if (StringUtils.isEmpty(sourcePath) || StringUtils.isEmpty(targetPath)) {
-      return;
+    @Override
+    public String readFile(String path) {
+        try (FSDataInputStream inputStream = fileSystem.open(new Path(path))) {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()));
+            String line;
+            StringBuilder sb = new StringBuilder();
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            return sb.toString();
+        }
+        catch (IOException e) {
+            LOGGER.error("readFile error:", e);
+        }
+        return null;
     }
-    try (FSDataInputStream inputStream = fileSystem.open(new Path(sourcePath));
-        FSDataOutputStream outputStream = fileSystem.create(new Path(targetPath))) {
 
-      IOUtils.copyBytes(inputStream, outputStream, BUFFER_SIZE, false);
-    } catch (IOException e) {
-      LOGGER.error("copyFile error:", e);
+    @Override
+    public List<FileInfoDto> listFile(String path) {
+        List<FileInfoDto> result = new ArrayList<>();
+
+        try {
+            RemoteIterator<LocatedFileStatus> filesList = fileSystem.listFiles(new Path(path), true);
+            while (filesList.hasNext()) {
+                LocatedFileStatus fileStatus = filesList.next();
+                FileInfoDto fileInfoDto = new FileInfoDto();
+                fileInfoDto.setFileName(fileStatus.getPath().getName());
+                fileInfoDto.setFilePath(fileStatus.getPath().toString());
+                fileInfoDto.setSize(fileStatus.getLen());
+                fileInfoDto.setIsDirectory(fileStatus.isDirectory());
+                result.add(fileInfoDto);
+            }
+        }
+        catch (IOException e) {
+            LOGGER.error("listFile error:", e);
+        }
+
+        return result;
     }
-  }
 
-  @Override
-  public byte[] openFileToBytes(String path) {
-    try (FSDataInputStream inputStream = fileSystem.open(new Path(path))) {
-      return IOUtils.readFullyToByteArray(inputStream);
-    } catch (IOException e) {
-      LOGGER.error("openFileToBytes error:", e);
+    @Override
+    public boolean renameFile(String oldName, String newName) {
+        if (StringUtils.isEmpty(oldName) || StringUtils.isEmpty(newName)) {
+            return false;
+        }
+        try {
+            return fileSystem.rename(new Path(oldName), new Path(newName));
+        }
+        catch (IOException e) {
+            LOGGER.error("renameFile error:", e);
+        }
+        return false;
     }
-    return new byte[0];
-  }
 
-  @Override
-  public <T> T openFileToObject(String path, Class<T> clazz) {
-    String fileString = readFile(path);
-    return JSON.toJavaObject(JSON.parseObject(fileString), clazz);
-  }
-
-  @Override
-  public BlockLocation[] getFileBlockLocations(String path) {
-    try {
-      FileStatus fileStatus = fileSystem.getFileStatus(new Path(path));
-      return fileSystem.getFileBlockLocations(fileStatus, 0, fileStatus.getLen());
-    } catch (IOException e) {
-      LOGGER.error("getFileBlockLocations error:", e);
+    @Override
+    public boolean deleteFile(String path) {
+        if (StringUtils.isEmpty(path)) {
+            return false;
+        }
+        try {
+            return fileSystem.deleteOnExit(new Path(path));
+        }
+        catch (IOException e) {
+            LOGGER.error("deleteFile error:", e);
+        }
+        return false;
     }
-    return new BlockLocation[0];
-  }
+
+    @Override
+    public void uploadFile(String path, String uploadPath) {
+        if (StringUtils.isEmpty(path) || StringUtils.isEmpty(uploadPath)) {
+            return;
+        }
+        try {
+            // 调用文件系统的文件复制方法，第一个参数是否删除原文件true为删除，默认为false
+            fileSystem.copyFromLocalFile(false, new Path(path), new Path(uploadPath));
+        }
+        catch (IOException e) {
+            LOGGER.error("uploadFile error:", e);
+        }
+    }
+
+    @Override
+    public void downloadFile(String path, String downloadPath) {
+        if (StringUtils.isEmpty(path) || StringUtils.isEmpty(downloadPath)) {
+            return;
+        }
+        try {
+            // 调用文件系统的文件复制方法，第一个参数是否删除原文件true为删除，默认为false
+            fileSystem.copyToLocalFile(false, new Path(path), new Path(downloadPath));
+        }
+        catch (IOException e) {
+            LOGGER.error("downloadFile error:", e);
+        }
+    }
+
+    @Override
+    public void copyFile(String sourcePath, String targetPath) {
+        if (StringUtils.isEmpty(sourcePath) || StringUtils.isEmpty(targetPath)) {
+            return;
+        }
+        try (FSDataInputStream inputStream = fileSystem.open(new Path(sourcePath));
+                FSDataOutputStream outputStream = fileSystem.create(new Path(targetPath))) {
+
+            IOUtils.copyBytes(inputStream, outputStream, BUFFER_SIZE, false);
+        }
+        catch (IOException e) {
+            LOGGER.error("copyFile error:", e);
+        }
+    }
+
+    @Override
+    public byte[] openFileToBytes(String path) {
+        try (FSDataInputStream inputStream = fileSystem.open(new Path(path))) {
+            return IOUtils.readFullyToByteArray(inputStream);
+        }
+        catch (IOException e) {
+            LOGGER.error("openFileToBytes error:", e);
+        }
+        return new byte[0];
+    }
+
+    @Override
+    public <T> T openFileToObject(String path, Class<T> clazz) {
+        String fileString = readFile(path);
+        return JSON.toJavaObject(JSON.parseObject(fileString), clazz);
+    }
+
+    @Override
+    public BlockLocation[] getFileBlockLocations(String path) {
+        try {
+            FileStatus fileStatus = fileSystem.getFileStatus(new Path(path));
+            return fileSystem.getFileBlockLocations(fileStatus, 0, fileStatus.getLen());
+        }
+        catch (IOException e) {
+            LOGGER.error("getFileBlockLocations error:", e);
+        }
+        return new BlockLocation[0];
+    }
 
 }

@@ -39,7 +39,7 @@
 
 1. 数据库: MySQL && Postgres
 2. 缓存: Redis
-3. 队列: RabbitMQ && RocketMQ && Kafka &&  && Mqtt
+3. 队列: RabbitMQ && RocketMQ && Kafka &&  && Mqtt && ActiveMQ
 4. 文件处理: Fastdfs && Hadoop && Minio && Local
 5. 搜索引擎: Elasticserach
 6. 配置管理: Alibaba Nacos
@@ -60,6 +60,7 @@
 21. Kubernetes对接: Kubernetes
 22. Postgis服务: Postgis
 23. Clickhouse: Clickhouse
+24. 单点登录: Keycloak
 
 #### 使用说明
 
@@ -84,8 +85,9 @@
      └── 部分模块压测 部署文档 流程图等。
 
 ├── oner365-api -- Web 引用的 jar 包
-├── oner365-cassandra -- spring-data-Cassandra。 [8720]
-└── oner365-clickhouse -- 数据库 Clickhouse。 [8731]
+├── oner365-activemq -- Apache ActiveMQ. [8732]
+├── oner365-cassandra -- spring-data-Cassandra. [8720]
+└── oner365-clickhouse -- 数据库 Clickhouse. [8731]
 
 └── oner365-data -- 工具包
      ├── oner365-data-commons -- 公共组件包括: 输出封装 工具类等。
@@ -109,6 +111,7 @@
 ├── oner365-hadoop -- Apache Hadoop. [8712]
 ├── oner365-influx -- 时序数据库 Influxdb. [8717]
 ├── oner365-kafka -- Apache Kafka. [8710]
+├── oner365-keycloak -- 单点登录. [8733]
 ├── oner365-kubernetes -- K8s [8728]
 ├── oner365-ldap -- spring-data-Ldap. [8724]
 ├── oner365-mongodb -- 数据库 Mongodb. [8727]

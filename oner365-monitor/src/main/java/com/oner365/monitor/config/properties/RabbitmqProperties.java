@@ -5,73 +5,73 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * rabbitmq配置
- * 
+ *
  * @author zhaoyong
  */
 @Configuration
 @ConfigurationProperties(prefix = "spring.rabbitmq")
 public class RabbitmqProperties {
 
-  /**
-   * 账号
-   */
-  private String username;
+    /**
+     * 账号
+     */
+    private String username;
 
-  /**
-   * 密码
-   */
-  private String password;
+    /**
+     * 密码
+     */
+    private String password;
 
-  /**
-   * web地址
-   */
-  private String uri;
+    /**
+     * web地址
+     */
+    private String uri;
 
-  /**
-   * virtual host
-   */
-  private String virtualHost;
+    /**
+     * virtual host
+     */
+    private String virtualHost;
 
-  public RabbitmqProperties() {
-    super();
-  }
+    public RabbitmqProperties() {
+        super();
+    }
 
-  public String getUsername() {
-    return username;
-  }
+    public String getUsername() {
+        return username;
+    }
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+    public void setUsername(String username) {
+        this.username = username;
+    }
 
-  public String getPassword() {
-    return password;
-  }
+    public String getPassword() {
+        return password;
+    }
 
-  public void setPassword(String password) {
-    this.password = password;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public String getUri() {
-    return uri;
-  }
+    public String getUri() {
+        return uri;
+    }
 
-  public void setUri(String uri) {
-    this.uri = uri;
-  }
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
 
-  /**
-   * @return the virtualHost
-   */
-  public String getVirtualHost() {
-    return virtualHost;
-  }
+    /**
+     * @return the virtualHost
+     */
+    public String getVirtualHost() {
+        return virtualHost;
+    }
 
-  /**
-   * @param virtualHost the virtualHost to set
-   */
-  public void setVirtualHost(String virtualHost) {
-    this.virtualHost = virtualHost;
-  }
+    /**
+     * @param virtualHost the virtualHost to set
+     */
+    public void setVirtualHost(String virtualHost) {
+        this.virtualHost = virtualHost;
+    }
 
 }

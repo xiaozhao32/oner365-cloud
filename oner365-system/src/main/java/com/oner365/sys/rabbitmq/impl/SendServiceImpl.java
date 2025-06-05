@@ -12,11 +12,12 @@ import javax.annotation.Resource;
 
 /**
  * 消息发送服务实现类
+ *
  * @author zhaoyong
  */
 @Service
 public class SendServiceImpl implements ISendService {
-  
+
     @Resource
     private RedisCache redisCache;
 

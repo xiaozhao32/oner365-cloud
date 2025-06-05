@@ -25,32 +25,31 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/kafka/message")
 public class KafkaConsumerMessageController {
 
-  @Resource
-  private IKafkaConsumerClient client;
+    @Resource
+    private IKafkaConsumerClient client;
 
-  /**
-   * 发送消息
-   * 
-   * @param message 消息
-   * @return ResponseData
-   */
-  @ApiOperation("1.消息")
-  @ApiOperationSupport(order = 1)
-  @GetMapping("/send")
-  public ResponseData<String> send(String message) {
-    return client.send(message);
-  }
+    /**
+     * 发送消息
+     * @param message 消息
+     * @return ResponseData
+     */
+    @ApiOperation("1.消息")
+    @ApiOperationSupport(order = 1)
+    @GetMapping("/send")
+    public ResponseData<String> send(String message) {
+        return client.send(message);
+    }
 
-  /**
-   * KafkaStreams 统计单词个数
-   * 
-   * @param word 单词内容
-   * @return 统计单词个数
-   */
-  @ApiOperation("2.统计单词个数")
-  @ApiOperationSupport(order = 2)
-  @GetMapping("/word/count/{word}")
-  public ResponseData<Long> getWordCount(@PathVariable("word") String word) {
-    return client.getWordCount(word);
-  }
+    /**
+     * KafkaStreams 统计单词个数
+     * @param word 单词内容
+     * @return 统计单词个数
+     */
+    @ApiOperation("2.统计单词个数")
+    @ApiOperationSupport(order = 2)
+    @GetMapping("/word/count/{word}")
+    public ResponseData<Long> getWordCount(@PathVariable String word) {
+        return client.getWordCount(word);
+    }
+
 }

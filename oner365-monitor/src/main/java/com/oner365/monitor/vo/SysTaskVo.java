@@ -18,203 +18,204 @@ import com.oner365.monitor.util.CronUtils;
  * @author liutao
  */
 public class SysTaskVo implements Serializable {
-  private static final long serialVersionUID = 1L;
 
-  /**
-   * 任务ID
-   */
-  private String id;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 任务名称
-   */
-  @NotBlank(message = "{monitor.vo.task.taskName.message}")
-  private String taskName;
+    /**
+     * 任务ID
+     */
+    private String id;
 
-  /**
-   * 任务组名
-   */
-  @NotBlank(message = "{monitor.vo.task.taskGroup.message}")
-  private String taskGroup;
+    /**
+     * 任务名称
+     */
+    @NotBlank(message = "{monitor.vo.task.taskName.message}")
+    private String taskName;
 
-  /**
-   * 调用目标字符串
-   */
-  @NotBlank(message = "{monitor.vo.task.invokeTarget.message}")
-  private String invokeTarget;
+    /**
+     * 任务组名
+     */
+    @NotBlank(message = "{monitor.vo.task.taskGroup.message}")
+    private String taskGroup;
 
-  /**
-   * 调用目标参数
-   */
-  private InvokeParamVo invokeParam;
+    /**
+     * 调用目标字符串
+     */
+    @NotBlank(message = "{monitor.vo.task.invokeTarget.message}")
+    private String invokeTarget;
 
-  /**
-   * cron执行表达式
-   */
-  private String cronExpression;
+    /**
+     * 调用目标参数
+     */
+    private InvokeParamVo invokeParam;
 
-  /**
-   * cron计划策略
-   */
-  private MisfirePolicyEnum misfirePolicy = MisfirePolicyEnum.DEFAULT;
+    /**
+     * cron执行表达式
+     */
+    private String cronExpression;
 
-  /**
-   * 是否并发执行（0允许 1禁止）
-   */
-  private String concurrent;
+    /**
+     * cron计划策略
+     */
+    private MisfirePolicyEnum misfirePolicy = MisfirePolicyEnum.DEFAULT;
 
-  /**
-   * 任务状态（1正常 0暂停）
-   */
-  private TaskStatusEnum status;
+    /**
+     * 是否并发执行（0允许 1禁止）
+     */
+    private String concurrent;
 
-  /**
-   * 执行任务状态
-   */
-  private StatusEnum executeStatus;
+    /**
+     * 任务状态（1正常 0暂停）
+     */
+    private TaskStatusEnum status;
 
-  /**
-   * 备注
-   */
-  private String remark;
+    /**
+     * 执行任务状态
+     */
+    private StatusEnum executeStatus;
 
-  /**
-   * 创建人
-   */
-  private String createUser;
+    /**
+     * 备注
+     */
+    private String remark;
 
-  /**
-   * 创建时间
-   */
-  private Date createTime;
+    /**
+     * 创建人
+     */
+    private String createUser;
 
-  /**
-   * 更新时间
-   */
-  private Date updateTime;
+    /**
+     * 创建时间
+     */
+    private Date createTime;
 
-  public SysTaskVo() {
-    super();
-  }
+    /**
+     * 更新时间
+     */
+    private Date updateTime;
 
-  public String getId() {
-    return id;
-  }
-
-  public void setId(String id) {
-    this.id = id;
-  }
-
-  public String getTaskName() {
-    return taskName;
-  }
-
-  public void setTaskName(String taskName) {
-    this.taskName = taskName;
-  }
-
-  public String getTaskGroup() {
-    return taskGroup;
-  }
-
-  public void setTaskGroup(String taskGroup) {
-    this.taskGroup = taskGroup;
-  }
-
-  public String getInvokeTarget() {
-    return invokeTarget;
-  }
-
-  public void setInvokeTarget(String invokeTarget) {
-    this.invokeTarget = invokeTarget;
-  }
-
-  public String getCronExpression() {
-    return cronExpression;
-  }
-
-  public void setCronExpression(String cronExpression) {
-    this.cronExpression = cronExpression;
-  }
-
-  @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-  public Date getNextValidTime() {
-    if (!DataUtils.isEmpty(cronExpression)) {
-      return CronUtils.getNextExecution(cronExpression);
+    public SysTaskVo() {
+        super();
     }
-    return null;
-  }
 
-  public MisfirePolicyEnum getMisfirePolicy() {
-    return misfirePolicy;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setMisfirePolicy(MisfirePolicyEnum misfirePolicy) {
-    this.misfirePolicy = misfirePolicy;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public String getConcurrent() {
-    return concurrent;
-  }
+    public String getTaskName() {
+        return taskName;
+    }
 
-  public void setConcurrent(String concurrent) {
-    this.concurrent = concurrent;
-  }
+    public void setTaskName(String taskName) {
+        this.taskName = taskName;
+    }
 
-  public TaskStatusEnum getStatus() {
-    return status;
-  }
+    public String getTaskGroup() {
+        return taskGroup;
+    }
 
-  public void setStatus(TaskStatusEnum status) {
-    this.status = status;
-  }
+    public void setTaskGroup(String taskGroup) {
+        this.taskGroup = taskGroup;
+    }
 
-  public String getRemark() {
-    return remark;
-  }
+    public String getInvokeTarget() {
+        return invokeTarget;
+    }
 
-  public void setRemark(String remark) {
-    this.remark = remark;
-  }
+    public void setInvokeTarget(String invokeTarget) {
+        this.invokeTarget = invokeTarget;
+    }
 
-  public String getCreateUser() {
-    return createUser;
-  }
+    public String getCronExpression() {
+        return cronExpression;
+    }
 
-  public void setCreateUser(String createUser) {
-    this.createUser = createUser;
-  }
+    public void setCronExpression(String cronExpression) {
+        this.cronExpression = cronExpression;
+    }
 
-  public Date getCreateTime() {
-    return createTime;
-  }
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    public Date getNextValidTime() {
+        if (!DataUtils.isEmpty(cronExpression)) {
+            return CronUtils.getNextExecution(cronExpression);
+        }
+        return null;
+    }
 
-  public void setCreateTime(Date createTime) {
-    this.createTime = createTime;
-  }
+    public MisfirePolicyEnum getMisfirePolicy() {
+        return misfirePolicy;
+    }
 
-  public Date getUpdateTime() {
-    return updateTime;
-  }
+    public void setMisfirePolicy(MisfirePolicyEnum misfirePolicy) {
+        this.misfirePolicy = misfirePolicy;
+    }
 
-  public void setUpdateTime(Date updateTime) {
-    this.updateTime = updateTime;
-  }
+    public String getConcurrent() {
+        return concurrent;
+    }
 
-  public InvokeParamVo getInvokeParam() {
-    return invokeParam;
-  }
+    public void setConcurrent(String concurrent) {
+        this.concurrent = concurrent;
+    }
 
-  public void setInvokeParam(InvokeParamVo invokeParam) {
-    this.invokeParam = invokeParam;
-  }
+    public TaskStatusEnum getStatus() {
+        return status;
+    }
 
-  public StatusEnum getExecuteStatus() {
-    return executeStatus;
-  }
+    public void setStatus(TaskStatusEnum status) {
+        this.status = status;
+    }
 
-  public void setExecuteStatus(StatusEnum executeStatus) {
-    this.executeStatus = executeStatus;
-  }
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getCreateUser() {
+        return createUser;
+    }
+
+    public void setCreateUser(String createUser) {
+        this.createUser = createUser;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
+    public InvokeParamVo getInvokeParam() {
+        return invokeParam;
+    }
+
+    public void setInvokeParam(InvokeParamVo invokeParam) {
+        this.invokeParam = invokeParam;
+    }
+
+    public StatusEnum getExecuteStatus() {
+        return executeStatus;
+    }
+
+    public void setExecuteStatus(StatusEnum executeStatus) {
+        this.executeStatus = executeStatus;
+    }
 
 }

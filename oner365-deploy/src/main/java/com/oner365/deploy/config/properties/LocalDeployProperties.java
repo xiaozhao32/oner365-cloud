@@ -10,105 +10,112 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * 本地部署
- * 
+ *
  * @author zhaoyong
  *
  */
 @Configuration
 @ConfigurationProperties(prefix = "deploy.local")
 public class LocalDeployProperties {
-  
-  /** 部署路径 */
-  private String name;
-  /** 项目路径 */
-  private String location;
-  /** 版本 */
-  private String version;
-  /** 部署路径 */
-  private String suffix;
-  /** 部署环境 */
-  private String active;
-  /** 配置地址 */
-  private String serverAddr;
-  /** 项目名称 */
-  private List<String> projects;
-  /** jar包 */
-  private List<String> libs = new ArrayList<>();
 
-  /**
-   * 构造方法
-   */
-  public LocalDeployProperties() {
-      super();
-  }
+    /** 部署路径 */
+    private String name;
 
-  public String getName() {
-      return name;
-  }
+    /** 项目路径 */
+    private String location;
 
-  public void setName(String name) {
-      this.name = name;
-  }
+    /** 版本 */
+    private String version;
 
-  public String getLocation() {
-      return location;
-  }
+    /** 部署路径 */
+    private String suffix;
 
-  public void setLocation(String location) {
-      this.location = location;
-  }
+    /** 部署环境 */
+    private String active;
 
-  public String getVersion() {
-      return version;
-  }
+    /** 配置地址 */
+    private String serverAddr;
 
-  public void setVersion(String version) {
-      this.version = version;
-  }
+    /** 项目名称 */
+    private List<String> projects;
 
-  public String getSuffix() {
-      return suffix;
-  }
+    /** jar包 */
+    private List<String> libs = new ArrayList<>();
 
-  public void setSuffix(String suffix) {
-      this.suffix = suffix;
-  }
+    /**
+     * 构造方法
+     */
+    public LocalDeployProperties() {
+        super();
+    }
 
-  public List<String> getProjects() {
-      return projects;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setProjects(List<String> projects) {
-      this.projects = projects;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public List<String> getLibs() {
-      return libs;
-  }
+    public String getLocation() {
+        return location;
+    }
 
-  public void setLibs(List<String> libs) {
-      this.libs = libs;
-  }
-  
-  public String getActive() {
-    return active;
-  }
+    public void setLocation(String location) {
+        this.location = location;
+    }
 
-  public void setActive(String active) {
-    this.active = active;
-  }
+    public String getVersion() {
+        return version;
+    }
 
-  @Override
-  public String toString() {
-      return JSON.toJSONString(this);
-  }
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-  public String getServerAddr() {
-    return serverAddr;
-  }
+    public String getSuffix() {
+        return suffix;
+    }
 
-  public void setServerAddr(String serverAddr) {
-    this.serverAddr = serverAddr;
-  }
+    public void setSuffix(String suffix) {
+        this.suffix = suffix;
+    }
+
+    public List<String> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<String> projects) {
+        this.projects = projects;
+    }
+
+    public List<String> getLibs() {
+        return libs;
+    }
+
+    public void setLibs(List<String> libs) {
+        this.libs = libs;
+    }
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
+
+    public String getServerAddr() {
+        return serverAddr;
+    }
+
+    public void setServerAddr(String serverAddr) {
+        this.serverAddr = serverAddr;
+    }
 
 }

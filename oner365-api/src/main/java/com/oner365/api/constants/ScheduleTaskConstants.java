@@ -4,6 +4,7 @@ import com.oner365.data.commons.constants.PublicConstants;
 
 /**
  * 定时任务队列常量
+ *
  * @author zhaoyong
  */
 public class ScheduleTaskConstants extends PublicConstants {
@@ -16,7 +17,7 @@ public class ScheduleTaskConstants extends PublicConstants {
     /**
      * 定时任务队列类型
      */
-    public static final String SCHEDULE_TASK_QUEUE_TYPE= SCHEDULE_TASK_QUEUE_NAME + "." + PublicConstants.MQ_FANOUT;
+    public static final String SCHEDULE_TASK_QUEUE_TYPE = SCHEDULE_TASK_QUEUE_NAME + "." + PublicConstants.MQ_FANOUT;
 
     /**
      * 定时任务队列标识
@@ -31,12 +32,14 @@ public class ScheduleTaskConstants extends PublicConstants {
     /**
      * 更新执行状态队列类型
      */
-    public static final String TASK_UPDATE_STATUS_QUEUE_TYPE = TASK_UPDATE_STATUS_QUEUE_NAME + "." + PublicConstants.MQ_FANOUT;
+    public static final String TASK_UPDATE_STATUS_QUEUE_TYPE = TASK_UPDATE_STATUS_QUEUE_NAME + "."
+            + PublicConstants.MQ_FANOUT;
 
     /**
      * 更新执行状态队列标识
      */
-    public static final String TASK_UPDATE_STATUS_QUEUE_KEY = TASK_UPDATE_STATUS_QUEUE_NAME + "." + PublicConstants.MQ_KEY;
+    public static final String TASK_UPDATE_STATUS_QUEUE_KEY = TASK_UPDATE_STATUS_QUEUE_NAME + "."
+            + PublicConstants.MQ_KEY;
 
     /**
      * 保存日志队列
@@ -59,4 +62,5 @@ public class ScheduleTaskConstants extends PublicConstants {
     private ScheduleTaskConstants() {
         super();
     }
+
 }

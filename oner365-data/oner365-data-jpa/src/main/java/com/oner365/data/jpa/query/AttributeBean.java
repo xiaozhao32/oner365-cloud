@@ -2,6 +2,7 @@ package com.oner365.data.jpa.query;
 
 /**
  * 查询属性配置
+ *
  * @author zhaoyong
  */
 public class AttributeBean {
@@ -56,4 +57,5 @@ public class AttributeBean {
     public void setOpt(String opt) {
         this.opt = opt;
     }
+
 }

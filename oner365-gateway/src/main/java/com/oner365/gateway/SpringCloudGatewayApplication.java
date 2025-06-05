@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * Spring Cloud Gateway网关服务
+ *
  * @author zhaoyong
  */
 @SpringBootApplication

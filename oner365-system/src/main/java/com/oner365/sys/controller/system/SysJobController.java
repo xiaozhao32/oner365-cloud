@@ -35,80 +35,74 @@ import com.oner365.sys.vo.SysJobVo;
 @RequestMapping("/job")
 public class SysJobController extends BaseController {
 
-  @Resource
-  private ISysJobService sysJobService;
+    @Resource
+    private ISysJobService sysJobService;
 
-  /**
-   * 用户职位列表
-   *
-   * @param data 查询参数
-   * @return PageInfo<SysJobDto>
-   */
-  @PostMapping("/list")
-  public PageInfo<SysJobDto> pageList(@RequestBody QueryCriteriaBean data) {
-    return sysJobService.pageList(data);
-  }
+    /**
+     * 用户职位列表
+     * @param data 查询参数
+     * @return PageInfo<SysJobDto>
+     */
+    @PostMapping("/list")
+    public PageInfo<SysJobDto> pageList(@RequestBody QueryCriteriaBean data) {
+        return sysJobService.pageList(data);
+    }
 
-  /**
-   * 获取用户职位
-   *
-   * @param id 编号
-   * @return SysJobDto
-   */
-  @GetMapping("/get/{id}")
-  public SysJobDto get(@PathVariable String id) {
-    return sysJobService.getById(id);
-  }
+    /**
+     * 获取用户职位
+     * @param id 编号
+     * @return SysJobDto
+     */
+    @GetMapping("/get/{id}")
+    public SysJobDto get(@PathVariable String id) {
+        return sysJobService.getById(id);
+    }
 
-  /**
-   * 修改职位状态
-   *
-   * @param id     主键
-   * @param status 状态
-   * @return Boolean
-   */
-  @PostMapping("/status/{id}")
-  public Boolean editStatus(@PathVariable String id, @RequestParam("status") StatusEnum status) {
-    return sysJobService.editStatus(id, status);
-  }
+    /**
+     * 修改职位状态
+     * @param id 主键
+     * @param status 状态
+     * @return Boolean
+     */
+    @PostMapping("/status/{id}")
+    public Boolean editStatus(@PathVariable String id, @RequestParam StatusEnum status) {
+        return sysJobService.editStatus(id, status);
+    }
 
-  /**
-   * 用户职位保存
-   *
-   * @param sysJobVo 职位对象
-   * @return SysJobDto
-   */
-  @PutMapping("/save")
-  public SysJobDto save(@Validated @RequestBody SysJobVo sysJobVo) {
-    return sysJobService.save(sysJobVo);
-  }
+    /**
+     * 用户职位保存
+     * @param sysJobVo 职位对象
+     * @return SysJobDto
+     */
+    @PutMapping("/save")
+    public SysJobDto save(@Validated @RequestBody SysJobVo sysJobVo) {
+        return sysJobService.save(sysJobVo);
+    }
 
-  /**
-   * 删除用户职位
-   *
-   * @param ids 编号
-   * @return List<Boolean>
-   */
-  @DeleteMapping("/delete")
-  public List<Boolean> delete(@RequestBody String... ids) {
-    return Arrays.stream(ids).map(id -> sysJobService.deleteById(id)).collect(Collectors.toList());
-  }
+    /**
+     * 删除用户职位
+     * @param ids 编号
+     * @return List<Boolean>
+     */
+    @DeleteMapping("/delete")
+    public List<Boolean> delete(@RequestBody String... ids) {
+        return Arrays.stream(ids).map(id -> sysJobService.deleteById(id)).collect(Collectors.toList());
+    }
 
-  /**
-   * 导出Excel
-   *
-   * @param data 查询参数
-   * @return ResponseEntity<byte[]>
-   */
-  @PostMapping("/export")
-  public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
-    List<SysJobDto> list = sysJobService.findList(data);
+    /**
+     * 导出Excel
+     * @param data 查询参数
+     * @return ResponseEntity<byte[]>
+     */
+    @PostMapping("/export")
+    public ResponseEntity<byte[]> export(@RequestBody QueryCriteriaBean data) {
+        List<SysJobDto> list = sysJobService.findList(data);
 
-    String[] titleKeys = new String[] { "编号", "职位名称", "职位描述", "排序", "状态", "创建时间", "更新时间" };
-    String[] columnNames = { "id", "jobName", "jobInfo", "jobOrder", "status", "createTime", "updateTime" };
+        String[] titleKeys = new String[] { "编号", "职位名称", "职位描述", "排序", "状态", "创建时间", "更新时间" };
+        String[] columnNames = { "id", "jobName", "jobInfo", "jobOrder", "status", "createTime", "updateTime" };
 
-    String fileName = SysJobDto.class.getSimpleName() + System.currentTimeMillis();
-    return exportExcel(fileName, titleKeys, columnNames, list);
-  }
+        String fileName = SysJobDto.class.getSimpleName() + System.currentTimeMillis();
+        return exportExcel(fileName, titleKeys, columnNames, list);
+    }
 
 }

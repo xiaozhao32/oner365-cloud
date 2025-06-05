@@ -10,15 +10,15 @@ import com.oner365.sys.client.IMonitorServiceClient;
 
 /**
  * 监听服务回调
- * 
+ *
  * @author zhaoyong
  */
 @Component
 public class MonitorServiceClientFallback implements IMonitorServiceClient {
 
-  @Override
-  public ResponseData<SysTaskDto> getInfo(String id) {
-    return ResponseData.error(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
-  }
+    @Override
+    public ResponseData<SysTaskDto> getInfo(String id) {
+        return ResponseData.error(ResultEnum.ERROR.getCode(), ErrorInfoEnum.PARAM.getName());
+    }
 
 }

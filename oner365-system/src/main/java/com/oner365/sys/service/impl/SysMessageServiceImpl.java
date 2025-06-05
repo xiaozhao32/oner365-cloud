@@ -38,85 +38,88 @@ import com.oner365.sys.vo.SysMessageVo;
 @Service
 public class SysMessageServiceImpl implements ISysMessageService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SysMessageServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SysMessageServiceImpl.class);
 
-  private static final String CACHE_NAME = "SysMessage";
+    private static final String CACHE_NAME = "SysMessage";
 
-  @Resource
-  private ISysMessageDao dao;
+    @Resource
+    private ISysMessageDao dao;
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public PageInfo<SysMessageDto> pageList(QueryCriteriaBean data) {
-    try {
-      Page<SysMessage> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
-      return convert(page, SysMessageDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error pageList: ", e);
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public PageInfo<SysMessageDto> pageList(QueryCriteriaBean data) {
+        try {
+            Page<SysMessage> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+            return convert(page, SysMessageDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error pageList: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<SysMessageDto> findList(QueryCriteriaBean data) {
-    try {
-      if (data.getOrder() == null) {
-        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysMessageDto.class);
-      }
-      List<SysMessage> list = dao.findAll(QueryUtils.buildCriteria(data), 
-          Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
-      return convert(list, SysMessageDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error findList: ", e);
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<SysMessageDto> findList(QueryCriteriaBean data) {
+        try {
+            if (data.getOrder() == null) {
+                return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysMessageDto.class);
+            }
+            List<SysMessage> list = dao.findAll(QueryUtils.buildCriteria(data),
+                    Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
+            return convert(list, SysMessageDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return Collections.emptyList();
     }
-    return Collections.emptyList();
-  }
 
-  @Override
-  @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
-  public SysMessageDto getById(String id) {
-    try {
-      Optional<SysMessage> optional = dao.findById(id);
-      return convert(optional.orElse(null), SysMessageDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error getById:", e);
+    @Override
+    @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
+    public SysMessageDto getById(String id) {
+        try {
+            Optional<SysMessage> optional = dao.findById(id);
+            return convert(optional.orElse(null), SysMessageDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error getById:", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public SysMessageDto save(SysMessageVo vo) {
-    if (DataUtils.isEmpty(vo.getId())) {
-      vo.setCreateTime(LocalDateTime.now());
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public SysMessageDto save(SysMessageVo vo) {
+        if (DataUtils.isEmpty(vo.getId())) {
+            vo.setCreateTime(LocalDateTime.now());
+        }
+        vo.setUpdateTime(LocalDateTime.now());
+        SysMessage entity = dao.save(convert(vo, SysMessage.class));
+        return convert(entity, SysMessageDto.class);
     }
-    vo.setUpdateTime(LocalDateTime.now());
-    SysMessage entity = dao.save(convert(vo, SysMessage.class));
-    return convert(entity, SysMessageDto.class);
-  }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Boolean deleteById(String id) {
-    dao.deleteById(id);
-    return Boolean.TRUE;
-  }
-
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Boolean editStatus(String id, MessageStatusEnum status) {
-    Optional<SysMessage> optional = dao.findById(id);
-    if (optional.isPresent()) {
-      optional.get().setStatus(status);
-      optional.get().setUpdateTime(LocalDateTime.now());
-      dao.save(optional.get());
-      return Boolean.TRUE;
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Boolean deleteById(String id) {
+        dao.deleteById(id);
+        return Boolean.TRUE;
     }
-    return Boolean.FALSE;
-  }
+
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Boolean editStatus(String id, MessageStatusEnum status) {
+        Optional<SysMessage> optional = dao.findById(id);
+        if (optional.isPresent()) {
+            optional.get().setStatus(status);
+            optional.get().setUpdateTime(LocalDateTime.now());
+            dao.save(optional.get());
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
 
 }

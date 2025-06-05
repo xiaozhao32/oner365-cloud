@@ -10,55 +10,57 @@ import com.alibaba.fastjson.JSON;
 
 /**
  * 本地部署
- * 
+ *
  * @author zhaoyong
  *
  */
 @Configuration
 @ConfigurationProperties(prefix = "deploy.server")
 public class ServerDeployProperties {
-  
-  /** 项目路径 */
-  private Boolean deploy;
-  /** 部署路径 */
-  private String name;
-  /** 项目名称 */
-  private List<String> servers = new ArrayList<>();
 
-  /**
-   * 构造方法
-   */
-  public ServerDeployProperties() {
-      super();
-  }
+    /** 项目路径 */
+    private Boolean deploy;
 
-  public String getName() {
-      return name;
-  }
+    /** 部署路径 */
+    private String name;
 
-  public void setName(String name) {
-      this.name = name;
-  }
+    /** 项目名称 */
+    private List<String> servers = new ArrayList<>();
 
-  public Boolean getDeploy() {
-    return deploy;
-  }
+    /**
+     * 构造方法
+     */
+    public ServerDeployProperties() {
+        super();
+    }
 
-  public void setDeploy(Boolean deploy) {
-    this.deploy = deploy;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public List<String> getServers() {
-    return servers;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setServers(List<String> servers) {
-    this.servers = servers;
-  }
-  
-  @Override
-  public String toString() {
-      return JSON.toJSONString(this);
-  }
+    public Boolean getDeploy() {
+        return deploy;
+    }
+
+    public void setDeploy(Boolean deploy) {
+        this.deploy = deploy;
+    }
+
+    public List<String> getServers() {
+        return servers;
+    }
+
+    public void setServers(List<String> servers) {
+        this.servers = servers;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
 
 }

@@ -12,6 +12,7 @@ import feign.RequestInterceptor;
 
 /**
  * 请求拦截器
+ *
  * @author zhaoyong
  */
 @Configuration
@@ -24,7 +25,8 @@ public class FeignClientConfig {
         return requestTemplate -> {
             try {
                 requestTemplate.header(HttpHeaders.AUTHORIZATION, RequestUtils.getToken());
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 LOGGER.error("Interceptor:", e);
             }
         };

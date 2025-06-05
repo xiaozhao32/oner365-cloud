@@ -21,7 +21,6 @@ public enum StorageEnum implements BaseEnum {
 
     /**
      * 构造方法
-     *
      * @param name 名称
      */
     StorageEnum(String name) {
@@ -30,7 +29,6 @@ public enum StorageEnum implements BaseEnum {
 
     /**
      * get name
-     *
      * @return name
      */
     @Override

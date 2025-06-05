@@ -29,51 +29,47 @@ import com.oner365.postgis.vo.PositionVo;
 @RequestMapping("/position")
 public class PostgisPositionController extends BaseController {
 
-  @Resource
-  private IPositionService service;
+    @Resource
+    private IPositionService service;
 
-  /**
-   * 集合列表
-   *
-   * @return 集合
-   */
-  @GetMapping("/list")
-  public List<PositionDto> findList() {
-    return service.findList();
-  }
+    /**
+     * 集合列表
+     * @return 集合
+     */
+    @GetMapping("/list")
+    public List<PositionDto> findList() {
+        return service.findList();
+    }
 
-  /**
-   * 保存
-   *
-   * @return ResponseData
-   */
-  @PutMapping("/save")
-  public ResponseData<PositionDto> save(@RequestBody PositionVo vo) {
-    PositionDto result = service.save(vo);
-    return ResponseData.success(result);
-  }
+    /**
+     * 保存
+     * @return ResponseData
+     */
+    @PutMapping("/save")
+    public ResponseData<PositionDto> save(@RequestBody PositionVo vo) {
+        PositionDto result = service.save(vo);
+        return ResponseData.success(result);
+    }
 
-  /**
-   * 按主键查询
-   *
-   * @param id 主键
-   * @return ResponseData
-   */
-  @GetMapping("/get/{id}")
-  public ResponseData<PositionDto> get(@PathVariable("id") String id) {
-    PositionDto result = service.getById(id);
-    return ResponseData.success(result);
-  }
+    /**
+     * 按主键查询
+     * @param id 主键
+     * @return ResponseData
+     */
+    @GetMapping("/get/{id}")
+    public ResponseData<PositionDto> get(@PathVariable String id) {
+        PositionDto result = service.getById(id);
+        return ResponseData.success(result);
+    }
 
-  /**
-   * 删除
-   *
-   * @param ids 编号
-   * @return List<Boolean>
-   */
-  @DeleteMapping("/delete")
-  public List<Boolean> delete(@RequestBody String... ids) {
-    return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
-  }
+    /**
+     * 删除
+     * @param ids 编号
+     * @return List<Boolean>
+     */
+    @DeleteMapping("/delete")
+    public List<Boolean> delete(@RequestBody String... ids) {
+        return Arrays.stream(ids).map(id -> service.deleteById(id)).collect(Collectors.toList());
+    }
 
 }

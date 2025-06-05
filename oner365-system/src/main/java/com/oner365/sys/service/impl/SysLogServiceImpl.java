@@ -35,65 +35,68 @@ import com.oner365.sys.vo.SysLogVo;
 @Component
 public class SysLogServiceImpl implements ISysLogService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SysLogServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SysLogServiceImpl.class);
 
-  @Resource
-  private ISysLogDao dao;
+    @Resource
+    private ISysLogDao dao;
 
-  @Override
-  public PageInfo<SysLogDto> pageList(QueryCriteriaBean data) {
-    try {
-      Page<SysLog> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
-      return convert(page, SysLogDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error pageList: ", e);
+    @Override
+    public PageInfo<SysLogDto> pageList(QueryCriteriaBean data) {
+        try {
+            Page<SysLog> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+            return convert(page, SysLogDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error pageList: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  public List<SysLogDto> findList(QueryCriteriaBean data) {
-    try {
-      return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysLogDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error findList: ", e);
+    @Override
+    public List<SysLogDto> findList(QueryCriteriaBean data) {
+        try {
+            return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysLogDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return Collections.emptyList();
     }
-    return Collections.emptyList();
-  }
 
-  @Override
-  public SysLogDto getById(String id) {
-    try {
-      Optional<SysLog> optional = dao.findById(id);
-      return convert(optional.orElse(null), SysLogDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error getById: ", e);
+    @Override
+    public SysLogDto getById(String id) {
+        try {
+            Optional<SysLog> optional = dao.findById(id);
+            return convert(optional.orElse(null), SysLogDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error getById: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Async
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public void save(SysLogVo vo) {
-    dao.save(convert(vo, SysLog.class));
-  }
-  
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public Boolean deleteById(String id) {
-    dao.deleteById(id);
-    return Boolean.TRUE;
-  }
+    @Async
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    public void save(SysLogVo vo) {
+        dao.save(convert(vo, SysLog.class));
+    }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  public Boolean deleteLog(LocalDateTime dateTime) {
-    Criteria<SysLog> criteria = new Criteria<>();
-    criteria.add(Restrictions.lte(SysConstants.CREATE_TIME, dateTime));
-    List<SysLog> list = dao.findAll(criteria);
-    dao.deleteAll(list);
-    return Boolean.TRUE;
-  }
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    public Boolean deleteById(String id) {
+        dao.deleteById(id);
+        return Boolean.TRUE;
+    }
+
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    public Boolean deleteLog(LocalDateTime dateTime) {
+        Criteria<SysLog> criteria = new Criteria<>();
+        criteria.add(Restrictions.lte(SysConstants.CREATE_TIME, dateTime));
+        List<SysLog> list = dao.findAll(criteria);
+        dao.deleteAll(list);
+        return Boolean.TRUE;
+    }
 
 }

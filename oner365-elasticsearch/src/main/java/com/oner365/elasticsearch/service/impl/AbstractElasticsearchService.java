@@ -18,32 +18,31 @@ import com.oner365.data.jpa.query.QueryUtils;
 
 /**
  * Abstract ElasticsearchService 抽象类
- * 
+ *
  * @author zhaoyong
  */
 public class AbstractElasticsearchService {
-  
-  @Resource
-  private ElasticsearchRestTemplate elasticsearchRestTemplate;
-  
-  @SuppressWarnings("unchecked")
-  public <T> Page<T> pageList(QueryCriteriaBean data, Class<T> clazz) {
-    BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
-    
-    data.getWhereList().forEach(entity -> {
-      if (!DataUtils.isEmpty(entity.getVal())) {
-        queryBuilder.filter(QueryBuilders.termQuery(entity.getKey(), entity.getVal()));
-      }
-    });
 
-    NativeSearchQuery searchQuery = new NativeSearchQueryBuilder()
-        .withQuery(queryBuilder)
-        .withPageable(QueryUtils.buildPageRequest(data))
-        .withSort(QueryUtils.buildSortRequest(data.getOrder()))
-        .build();
-    SearchHits<T> searchHits = elasticsearchRestTemplate.search(searchQuery, clazz);
-    SearchPage<T> page = SearchHitSupport.searchPageFor(searchHits, searchQuery.getPageable());
-    return (Page<T>) SearchHitSupport.unwrapSearchHits(page);
-  }
-  
+    @Resource
+    private ElasticsearchRestTemplate elasticsearchRestTemplate;
+
+    @SuppressWarnings("unchecked")
+    public <T> Page<T> pageList(QueryCriteriaBean data, Class<T> clazz) {
+        BoolQueryBuilder queryBuilder = QueryBuilders.boolQuery();
+
+        data.getWhereList().forEach(entity -> {
+            if (!DataUtils.isEmpty(entity.getVal())) {
+                queryBuilder.filter(QueryBuilders.termQuery(entity.getKey(), entity.getVal()));
+            }
+        });
+
+        NativeSearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(queryBuilder)
+            .withPageable(QueryUtils.buildPageRequest(data))
+            .withSort(QueryUtils.buildSortRequest(data.getOrder()))
+            .build();
+        SearchHits<T> searchHits = elasticsearchRestTemplate.search(searchQuery, clazz);
+        SearchPage<T> page = SearchHitSupport.searchPageFor(searchHits, searchQuery.getPageable());
+        return (Page<T>) SearchHitSupport.unwrapSearchHits(page);
+    }
+
 }

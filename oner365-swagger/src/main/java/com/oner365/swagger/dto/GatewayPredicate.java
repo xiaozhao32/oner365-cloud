@@ -1,6 +1,5 @@
 package com.oner365.swagger.dto;
 
-
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -10,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 路由断言定义模型
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "路由定义信息")

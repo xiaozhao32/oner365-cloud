@@ -12,22 +12,23 @@ import com.oner365.gateway.service.DynamicRouteService;
 
 /**
  * 监听消息广播
- * 
+ *
  * @author liutao
  *
  */
 @Service
 public class RedisMessageReceiver implements MessageListener {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(RedisMessageReceiver.class);
-  
-  @Resource
-  private DynamicRouteService dynamicRouteService;
+    private static final Logger LOGGER = LoggerFactory.getLogger(RedisMessageReceiver.class);
 
-  @Override
-  public void onMessage(Message message, byte[] pattern) {
-    LOGGER.info("RefreshRoute:ok");
-    dynamicRouteService.findList();
-   
-  }
+    @Resource
+    private DynamicRouteService dynamicRouteService;
+
+    @Override
+    public void onMessage(Message message, byte[] pattern) {
+        LOGGER.info("RefreshRoute:ok");
+        dynamicRouteService.findList();
+
+    }
+
 }

@@ -14,6 +14,7 @@ import java.util.stream.IntStream;
 
 /**
  * 拼音工具类
+ *
  * @author zhaoyong
  */
 public class Pinyin4jUtils {
@@ -21,15 +22,16 @@ public class Pinyin4jUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(Pinyin4jUtils.class);
 
     public enum Type {
+
         /* 全部大写 */
         UPPERCASE,
         /* 全部小写 */
         LOWERCASE,
+
     }
 
     /**
      * 将汉字转换为全拼(大写)
-     *
      * @param src 转换内容
      * @return String 转换后的定符串
      */
@@ -39,7 +41,6 @@ public class Pinyin4jUtils {
 
     /**
      * 将汉字转换为全拼(小写)
-     *
      * @param src 转换内容
      * @return String 转换后的定符串
      */
@@ -49,7 +50,6 @@ public class Pinyin4jUtils {
 
     /**
      * 提取每个汉字的首字母(大写)
-     *
      * @param src 转换内容
      * @return String 首字母大小字符串
      */
@@ -59,7 +59,6 @@ public class Pinyin4jUtils {
 
     /**
      * 提取每个汉字的首字母(小写)
-     *
      * @param src 转换内容
      * @return String 首字母大小字符串
      */
@@ -69,8 +68,7 @@ public class Pinyin4jUtils {
 
     /***
      * 获取拼间首字母
-     *
-     * @param src  转换内容
+     * @param src 转换内容
      * @param type 大小写类型,默认大写
      * @return String
      */
@@ -82,21 +80,22 @@ public class Pinyin4jUtils {
             String[] pinyinArray = PinyinHelper.toHanyuPinyinStringArray(word);
             if (pinyinArray != null) {
                 convert.append(pinyinArray[0].charAt(0));
-            } else {
+            }
+            else {
                 convert.append(word);
             }
         });
         if (type == Type.LOWERCASE) {
             return convert.toString().toLowerCase();
-        } else {
+        }
+        else {
             return convert.toString().toUpperCase();
         }
     }
 
     /**
      * 将汉字转换为全拼
-     *
-     * @param src  转换内容
+     * @param src 转换内容
      * @param type 大小写类型,默认大写
      * @return String 转换后的定符串
      */
@@ -116,24 +115,26 @@ public class Pinyin4jUtils {
                     String[] t2 = PinyinHelper.toHanyuPinyinStringArray(c, t3);
                     // 取出该汉字全拼的第一种读音并连接到字符串t4后
                     t4.append(t2[0]);
-                } else {
+                }
+                else {
                     // 如果不是汉字字符，间接取出字符并连接到字符串t4后
                     t4.append(c);
                 }
             }
-        } catch (BadHanyuPinyinOutputFormatCombination e) {
+        }
+        catch (BadHanyuPinyinOutputFormatCombination e) {
             LOGGER.error("Error toPinYin:", e);
         }
         if (type == Type.LOWERCASE) {
             return t4.toString().toLowerCase();
-        } else {
+        }
+        else {
             return t4.toString().toUpperCase();
         }
     }
 
     /**
      * 将字符串转换成ASCII码
-     *
      * @param cnStr 字符串
      * @return String
      */

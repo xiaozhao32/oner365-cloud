@@ -9,21 +9,21 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * Rabbit admin config
- * 
+ *
  * @author zhaoyong
  *
  */
 @Configuration
 public class RabbitAdminConfig {
-  
-  @Resource
-  private ConnectionFactory connectionFactory;
 
-  @Bean
-  RabbitAdmin rabbitAdmin() {
-    RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
-    rabbitAdmin.setAutoStartup(true);
-    return rabbitAdmin;
-  }
+    @Resource
+    private ConnectionFactory connectionFactory;
+
+    @Bean
+    RabbitAdmin rabbitAdmin() {
+        RabbitAdmin rabbitAdmin = new RabbitAdmin(connectionFactory);
+        rabbitAdmin.setAutoStartup(true);
+        return rabbitAdmin;
+    }
 
 }

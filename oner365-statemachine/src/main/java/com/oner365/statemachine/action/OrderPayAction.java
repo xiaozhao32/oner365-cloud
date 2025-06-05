@@ -20,23 +20,23 @@ import com.oner365.statemachine.enums.OrderStateEnum;
 @Service
 public class OrderPayAction implements Action<OrderStateEnum, OrderEventEnum> {
 
-  private final Logger logger = LoggerFactory.getLogger(OrderPayAction.class);
+    private final Logger logger = LoggerFactory.getLogger(OrderPayAction.class);
 
-  @Override
-  public void execute(StateContext<OrderStateEnum, OrderEventEnum> context) {
-    RuntimeException exception = (RuntimeException) context.getException();
-    if (exception != null) {
-      // 输出状态机异常
-      context.getStateMachine().getExtendedState().getVariables().put(RuntimeException.class, exception);
-      return;
+    @Override
+    public void execute(StateContext<OrderStateEnum, OrderEventEnum> context) {
+        RuntimeException exception = (RuntimeException) context.getException();
+        if (exception != null) {
+            // 输出状态机异常
+            context.getStateMachine().getExtendedState().getVariables().put(RuntimeException.class, exception);
+            return;
+        }
+        // 处理订单
+        Order order = (Order) context.getMessage().getHeaders().get(StatemachineConstants.HEADER_NAME);
+        if (order == null) {
+            logger.error("处理失败 订单不存在: {}", context.getMessage());
+            return;
+        }
+        logger.info("处理订单 id: {}, state: {}", order.getId(), order.getOrderState());
     }
-    // 处理订单
-    Order order = (Order) context.getMessage().getHeaders().get(StatemachineConstants.HEADER_NAME);
-    if (order == null) {
-      logger.error("处理失败 订单不存在: {}", context.getMessage());
-      return;
-    }
-    logger.info("处理订单 id: {}, state: {}", order.getId(), order.getOrderState());
-  }
 
 }

@@ -4,37 +4,37 @@ import java.io.Serializable;
 
 /**
  * 主从测试
- * 
+ *
  * @author zhaoyong
  */
 public class MasterSlaveVo implements Serializable {
 
-  private static final long serialVersionUID = 1L;
-  
-  /**
-   * 主键
-   */
-  private String id;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 订单id
-   */
-  private String name;
+    /**
+     * 主键
+     */
+    private String id;
 
-  public String getId() {
-    return id;
-  }
+    /**
+     * 订单id
+     */
+    private String name;
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public String getName() {
-    return name;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public void setName(String name) {
-    this.name = name;
-  }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 
 }

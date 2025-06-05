@@ -13,20 +13,22 @@ import com.oner365.data.web.utils.RequestUtils;
 
 /**
  * 注册用户信息
- * 
+ *
  * @author zhaoyong
  */
 @Order(2)
 @Configuration
 public class CurrentUserMethodArgumentResolver implements HandlerMethodArgumentResolver {
-  @Override
-  public boolean supportsParameter(MethodParameter parameter) {
-    return parameter.hasParameterAnnotation(CurrentUser.class);
-  }
 
-  @Override
-  public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
-      NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
-    return RequestUtils.getAuthUser();
-  }
+    @Override
+    public boolean supportsParameter(MethodParameter parameter) {
+        return parameter.hasParameterAnnotation(CurrentUser.class);
+    }
+
+    @Override
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer,
+            NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
+        return RequestUtils.getAuthUser();
+    }
+
 }

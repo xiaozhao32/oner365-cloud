@@ -18,7 +18,7 @@ import com.oner365.data.commons.enums.StatusEnum;
 
 /**
  * 菜单操作对象
- * 
+ *
  * @author zhaoyong
  */
 @Entity
@@ -26,91 +26,91 @@ import com.oner365.data.commons.enums.StatusEnum;
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public class SysMenuOperation implements Serializable {
 
-  /**
-   *
-   */
-  private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-  @Id
-  @GeneratedValue(generator = "generator")
-  @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
-  private String id;
+    @Id
+    @GeneratedValue(generator = "generator")
+    @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
+    private String id;
 
-  @Column(name = "operation_name", nullable = false, length = 32)
-  private String operationName;
+    @Column(name = "operation_name", nullable = false, length = 32)
+    private String operationName;
 
-  @Column(name = "operation_type", nullable = false, length = 32)
-  private String operationType;
+    @Column(name = "operation_type", nullable = false, length = 32)
+    private String operationType;
 
-  @Enumerated
-  @Column(name = "status", nullable = false)
-  private StatusEnum status;
+    @Enumerated
+    @Column(name = "status", nullable = false)
+    private StatusEnum status;
 
-  /**
-   * 创建时间 create_time
-   */
-  @Column(name = "create_time", updatable = false)
-  private LocalDateTime createTime;
+    /**
+     * 创建时间 create_time
+     */
+    @Column(name = "create_time", updatable = false)
+    private LocalDateTime createTime;
 
-  /**
-   * 更新时间 update_time
-   */
-  @Column(name = "update_time", insertable = false)
-  private LocalDateTime updateTime;
+    /**
+     * 更新时间 update_time
+     */
+    @Column(name = "update_time", insertable = false)
+    private LocalDateTime updateTime;
 
-  /**
-   * Constructor
-   */
-  public SysMenuOperation() {
-    super();
-  }
+    /**
+     * Constructor
+     */
+    public SysMenuOperation() {
+        super();
+    }
 
-  public String getId() {
-    return id;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public String getOperationName() {
-    return operationName;
-  }
+    public String getOperationName() {
+        return operationName;
+    }
 
-  public void setOperationName(String operationName) {
-    this.operationName = operationName;
-  }
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
+    }
 
-  public String getOperationType() {
-    return operationType;
-  }
+    public String getOperationType() {
+        return operationType;
+    }
 
-  public void setOperationType(String operationType) {
-    this.operationType = operationType;
-  }
+    public void setOperationType(String operationType) {
+        this.operationType = operationType;
+    }
 
-  public StatusEnum getStatus() {
-    return status;
-  }
+    public StatusEnum getStatus() {
+        return status;
+    }
 
-  public void setStatus(StatusEnum status) {
-    this.status = status;
-  }
+    public void setStatus(StatusEnum status) {
+        this.status = status;
+    }
 
-  public LocalDateTime getCreateTime() {
-    return createTime;
-  }
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
 
-  public void setCreateTime(LocalDateTime createTime) {
-    this.createTime = createTime;
-  }
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
 
-  public LocalDateTime getUpdateTime() {
-    return updateTime;
-  }
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
 
-  public void setUpdateTime(LocalDateTime updateTime) {
-    this.updateTime = updateTime;
-  }
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 
 }

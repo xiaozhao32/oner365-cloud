@@ -25,19 +25,19 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/mqtt/message")
 public class MqttConsumerMessageController {
 
-  @Resource
-  private IMqttConsumerClient client;
+    @Resource
+    private IMqttConsumerClient client;
 
-  /**
-   * 发送消息
-   * 
-   * @param message 消息
-   * @return ResponseData
-   */
-  @ApiOperation("1.消息")
-  @ApiOperationSupport(order = 1)
-  @GetMapping("/send")
-  public ResponseData<JSONObject> send(String message) {
-    return client.send(message);
-  }
+    /**
+     * 发送消息
+     * @param message 消息
+     * @return ResponseData
+     */
+    @ApiOperation("1.消息")
+    @ApiOperationSupport(order = 1)
+    @GetMapping("/send")
+    public ResponseData<JSONObject> send(String message) {
+        return client.send(message);
+    }
+
 }

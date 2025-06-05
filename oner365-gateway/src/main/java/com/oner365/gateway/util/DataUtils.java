@@ -15,27 +15,27 @@ import org.springframework.http.server.reactive.ServerHttpRequest;
 
 /**
  * 工具类
- * 
+ *
  * @author zhaoyong
  *
  */
 public class DataUtils {
-  
+
     private static final Logger LOGGER = LoggerFactory.getLogger(DataUtils.class);
-  
+
     private static final String HEADER_UNKNOWN = "unknown";
 
     private static final String POINT = ".";
 
     private static final int IP_LENGTH = 15;
+
     private static final String IP_LOCALHOST = "0:0:0:0:0:0:0:1";
-    
+
     private DataUtils() {
     }
 
     /**
      * 判断一个Object 是否为空
-     *
      * @param obj 对象
      * @return boolean
      */
@@ -63,10 +63,9 @@ public class DataUtils {
         // else
         return false;
     }
-    
+
     /**
      * 获取ip
-     *
      * @param request ServerHttpRequest
      * @return String
      */
@@ -104,14 +103,14 @@ public class DataUtils {
 
     /**
      * 获取本机ip
-     *
      * @return String
      */
     public static String getLocalhost() {
         try {
             InetAddress inet = InetAddress.getLocalHost();
             return inet.getHostAddress();
-        } catch (UnknownHostException e) {
+        }
+        catch (UnknownHostException e) {
             LOGGER.error("Error getLocalhost:", e);
         }
         return null;

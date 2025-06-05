@@ -25,7 +25,7 @@ public class ClusterDto implements Serializable {
 
     /** Status */
     private ShardRoutingState status;
-    
+
     /** properties */
     private List<ClusterMappingDto> mappingList;
 
@@ -72,13 +72,14 @@ public class ClusterDto implements Serializable {
      * @return the mappingList
      */
     public List<ClusterMappingDto> getMappingList() {
-      return mappingList;
+        return mappingList;
     }
 
     /**
      * @param mappingList the mappingList to set
      */
     public void setMappingList(List<ClusterMappingDto> mappingList) {
-      this.mappingList = mappingList;
+        this.mappingList = mappingList;
     }
+
 }

@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 过滤器定义模型
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "过滤器")

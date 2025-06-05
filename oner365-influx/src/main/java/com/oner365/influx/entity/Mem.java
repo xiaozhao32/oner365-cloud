@@ -8,64 +8,64 @@ import com.influxdb.annotations.Measurement;
 
 /**
  * 持久化对象
- * 
+ *
  * @author zhaoyong
  *
  */
 @Measurement(name = "mem")
 public class Mem implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @Column(tag = true)
-  private String host;
+    @Column(tag = true)
+    private String host;
 
-  @Column(name = "_value")
-  private Double usedPercent;
+    @Column(name = "_value")
+    private Double usedPercent;
 
-  @Column(timestamp = true)
-  private Instant time;
+    @Column(timestamp = true)
+    private Instant time;
 
-  /**
-   * @return the host
-   */
-  public String getHost() {
-    return host;
-  }
+    /**
+     * @return the host
+     */
+    public String getHost() {
+        return host;
+    }
 
-  /**
-   * @param host the host to set
-   */
-  public void setHost(String host) {
-    this.host = host;
-  }
+    /**
+     * @param host the host to set
+     */
+    public void setHost(String host) {
+        this.host = host;
+    }
 
-  /**
-   * @return the usedPercent
-   */
-  public Double getUsedPercent() {
-    return usedPercent;
-  }
+    /**
+     * @return the usedPercent
+     */
+    public Double getUsedPercent() {
+        return usedPercent;
+    }
 
-  /**
-   * @param usedPercent the usedPercent to set
-   */
-  public void setUsedPercent(Double usedPercent) {
-    this.usedPercent = usedPercent;
-  }
+    /**
+     * @param usedPercent the usedPercent to set
+     */
+    public void setUsedPercent(Double usedPercent) {
+        this.usedPercent = usedPercent;
+    }
 
-  /**
-   * @return the time
-   */
-  public Instant getTime() {
-    return time;
-  }
+    /**
+     * @return the time
+     */
+    public Instant getTime() {
+        return time;
+    }
 
-  /**
-   * @param time the time to set
-   */
-  public void setTime(Instant time) {
-    this.time = time;
-  }
+    /**
+     * @param time the time to set
+     */
+    public void setTime(Instant time) {
+        this.time = time;
+    }
 
 }

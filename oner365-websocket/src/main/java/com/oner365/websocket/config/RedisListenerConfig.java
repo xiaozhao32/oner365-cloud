@@ -20,22 +20,21 @@ import com.oner365.websocket.constants.WebSocketConstants;
 @Configuration
 public class RedisListenerConfig {
 
-  @Resource
-  private MessageListener redisMessageReceiver;
+    @Resource
+    private MessageListener redisMessageReceiver;
 
-  /**
-   * 初始化监听器
-   *
-   * @param connectionFactory connectionFactory
-   * @return RedisMessageListenerContainer
-   */
-  @Bean
-  RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
-    RedisMessageListenerContainer container = new RedisMessageListenerContainer();
-    container.setConnectionFactory(connectionFactory);
-    container.addMessageListener(new MessageListenerAdapter(redisMessageReceiver),
-            new PatternTopic(WebSocketConstants.WEBSOCKET_MESSAGE_QUEUE_NAME));
-    return container;
-  }
+    /**
+     * 初始化监听器
+     * @param connectionFactory connectionFactory
+     * @return RedisMessageListenerContainer
+     */
+    @Bean
+    RedisMessageListenerContainer container(RedisConnectionFactory connectionFactory) {
+        RedisMessageListenerContainer container = new RedisMessageListenerContainer();
+        container.setConnectionFactory(connectionFactory);
+        container.addMessageListener(new MessageListenerAdapter(redisMessageReceiver),
+                new PatternTopic(WebSocketConstants.WEBSOCKET_MESSAGE_QUEUE_NAME));
+        return container;
+    }
 
 }

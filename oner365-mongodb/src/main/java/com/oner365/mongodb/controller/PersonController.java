@@ -20,58 +20,54 @@ import com.oner365.mongodb.vo.PersonVo;
 
 /**
  * Person Controller
- * 
+ *
  * @author zhaoyong
  */
 @RestController
 @RequestMapping("/person")
 public class PersonController extends BaseController {
 
-  @Resource
-  private IPersonService service;
+    @Resource
+    private IPersonService service;
 
-  /**
-   * 分页查询
-   * 
-   * @param data 查询对象
-   * @return PageInfo
-   */
-  @PostMapping("/page")
-  public PageInfo<PersonDto> page(@RequestBody QueryCriteriaBean data) {
-    return service.page(data);
-  }
+    /**
+     * 分页查询
+     * @param data 查询对象
+     * @return PageInfo
+     */
+    @PostMapping("/page")
+    public PageInfo<PersonDto> page(@RequestBody QueryCriteriaBean data) {
+        return service.page(data);
+    }
 
-  /**
-   * Get Person
-   * 
-   * @param id 主键
-   * @return PersonDto
-   */
-  @GetMapping("/get/{id}")
-  public PersonDto get(@PathVariable("id") String id) {
-    return service.getById(id);
-  }
+    /**
+     * Get Person
+     * @param id 主键
+     * @return PersonDto
+     */
+    @GetMapping("/get/{id}")
+    public PersonDto get(@PathVariable String id) {
+        return service.getById(id);
+    }
 
-  /**
-   * Save Person
-   * 
-   * @param vo 对象
-   * @return Person
-   */
-  @PutMapping("/save")
-  public PersonDto save(@RequestBody PersonVo vo) {
-    return service.save(vo);
-  }
+    /**
+     * Save Person
+     * @param vo 对象
+     * @return Person
+     */
+    @PutMapping("/save")
+    public PersonDto save(@RequestBody PersonVo vo) {
+        return service.save(vo);
+    }
 
-  /**
-   * Delete Person
-   * 
-   * @param id 主键
-   * @return Person
-   */
-  @DeleteMapping("/delete/{id}")
-  public Boolean delete(@PathVariable("id") String id) {
-    return service.delete(id);
-  }
+    /**
+     * Delete Person
+     * @param id 主键
+     * @return Person
+     */
+    @DeleteMapping("/delete/{id}")
+    public Boolean delete(@PathVariable String id) {
+        return service.delete(id);
+    }
 
 }

@@ -31,124 +31,131 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
  * Swagger Config
- * 
+ *
  * @author zhaoyong
- * 
+ *
  */
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig implements WebMvcConfigurer {
 
-  @Resource
-  private SwaggerProperties properties;
+    @Resource
+    private SwaggerProperties properties;
 
-  @Override
-  public void addResourceHandlers(ResourceHandlerRegistry registry) {
-    registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
-    registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
-  }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("doc.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
 
-  @Bean
-  Docket systemApi() {
-    return buildApi("System(系统管理)", "com.oner365.swagger.controller.system");
-  }
+    @Bean
+    Docket systemApi() {
+        return buildApi("System(系统管理)", "com.oner365.swagger.controller.system");
+    }
 
-  @Bean
-  Docket monitorApi() {
-    return buildApi("Monitor(监控中心)", "com.oner365.swagger.controller.monitor");
-  }
+    @Bean
+    Docket monitorApi() {
+        return buildApi("Monitor(监控中心)", "com.oner365.swagger.controller.monitor");
+    }
 
-  @Bean
-  Docket elasticsearchApi() {
-    return buildApi("Elasticsearch(索引查询)", "com.oner365.swagger.controller.elasticsearch");
-  }
+    @Bean
+    Docket elasticsearchApi() {
+        return buildApi("Elasticsearch(索引查询)", "com.oner365.swagger.controller.elasticsearch");
+    }
 
-  @Bean
-  Docket gatewayApi() {
-    return buildApi("Cloud 专用(网关管理)", "com.oner365.swagger.controller.gateway");
-  }
+    @Bean
+    Docket gatewayApi() {
+        return buildApi("Cloud 专用(网关管理)", "com.oner365.swagger.controller.gateway");
+    }
 
-  @Bean
-  Docket filesApi() {
-    return buildApi("Files(文件中心)", "com.oner365.swagger.controller.files");
-  }
-  
-  @Bean
-  Docket mqttApi() {
-    return buildApi("Mqtt(消息队列)", "com.oner365.swagger.controller.mqtt");
-  }
+    @Bean
+    Docket filesApi() {
+        return buildApi("Files(文件中心)", "com.oner365.swagger.controller.files");
+    }
 
-  @Bean
-  Docket kafkaApi() {
-    return buildApi("Kafka(消息队列)", "com.oner365.swagger.controller.kafka");
-  }
+    @Bean
+    Docket mqttApi() {
+        return buildApi("Mqtt(消息队列)", "com.oner365.swagger.controller.mqtt");
+    }
 
-  @Bean
-  Docket rocketmqApi() {
-    return buildApi("Rocketmq(消息队列)", "com.oner365.swagger.controller.rocketmq");
-  }
-  
-  @Bean
-  Docket pulsarApi() {
-    return buildApi("Pulsar(消息队列)", "com.oner365.swagger.controller.pulsar");
-  }
+    @Bean
+    Docket kafkaApi() {
+        return buildApi("Kafka(消息队列)", "com.oner365.swagger.controller.kafka");
+    }
 
-  @Bean
-  Docket dubboApi() {
-    return buildApi("Dubbo(Dubbo服务)", "com.oner365.swagger.controller.dubbo");
-  }
-  
-  @Bean
-  Docket hadoopApi() {
-    return buildApi("Hadoop(文件中心)", "com.oner365.swagger.controller.hadoop");
-  }
-  
-  @Bean
-  Docket ldapApi() {
-    return buildApi("Ldap(用户中心)", "com.oner365.swagger.controller.ldap");
-  }
-  
-  @Bean
-  Docket postgisApi() {
-    return buildApi("Postgis(地图处理)", "com.oner365.swagger.controller.postgis");
-  }
-  
-  @Bean
-  Docket mongodbApi() {
-    return buildApi("Mongodb(数据库)", "com.oner365.swagger.controller.mongodb");
-  }
-  
-  private Docket buildApi(String groupName, String packageName) {
-    return new Docket(DocumentationType.OAS_30).pathMapping(PublicConstants.DELIMITER).groupName(groupName)
-        .apiInfo(apiInfo()).select().apis(RequestHandlerSelectors.basePackage(packageName)).paths(PathSelectors.any())
-        .build().securitySchemes(securitySchemes()).securityContexts(securityContexts());
-  }
+    @Bean
+    Docket rocketmqApi() {
+        return buildApi("Rocketmq(消息队列)", "com.oner365.swagger.controller.rocketmq");
+    }
 
-  private ApiInfo apiInfo() {
-    return new ApiInfoBuilder().title(properties.getName()).termsOfServiceUrl(properties.getUrl())
-        .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.txt").description(properties.getDescription())
-        .contact(new Contact(properties.getName(), properties.getUrl(), properties.getEmail()))
-        .version(properties.getVersion()).build();
-  }
+    @Bean
+    Docket pulsarApi() {
+        return buildApi("Pulsar(消息队列)", "com.oner365.swagger.controller.pulsar");
+    }
 
-  /**
-   * 设置授权信息
-   */
-  private List<SecurityScheme> securitySchemes() {
-    ApiKey apiKey = new ApiKey(HttpHeaders.AUTHORIZATION, HttpHeaders.AUTHORIZATION, In.HEADER.toValue());
-    return Collections.singletonList(apiKey);
-  }
+    @Bean
+    Docket dubboApi() {
+        return buildApi("Dubbo(Dubbo服务)", "com.oner365.swagger.controller.dubbo");
+    }
 
-  /**
-   * 授权信息全局应用
-   */
-  private List<SecurityContext> securityContexts() {
-    return Collections
-        .singletonList(
-            SecurityContext.builder()
-                .securityReferences(Collections.singletonList(new SecurityReference(HttpHeaders.AUTHORIZATION,
+    @Bean
+    Docket hadoopApi() {
+        return buildApi("Hadoop(文件中心)", "com.oner365.swagger.controller.hadoop");
+    }
+
+    @Bean
+    Docket ldapApi() {
+        return buildApi("Ldap(用户中心)", "com.oner365.swagger.controller.ldap");
+    }
+
+    @Bean
+    Docket postgisApi() {
+        return buildApi("Postgis(地图处理)", "com.oner365.swagger.controller.postgis");
+    }
+
+    @Bean
+    Docket mongodbApi() {
+        return buildApi("Mongodb(数据库)", "com.oner365.swagger.controller.mongodb");
+    }
+
+    private Docket buildApi(String groupName, String packageName) {
+        return new Docket(DocumentationType.OAS_30).pathMapping(PublicConstants.DELIMITER)
+            .groupName(groupName)
+            .apiInfo(apiInfo())
+            .select()
+            .apis(RequestHandlerSelectors.basePackage(packageName))
+            .paths(PathSelectors.any())
+            .build()
+            .securitySchemes(securitySchemes())
+            .securityContexts(securityContexts());
+    }
+
+    private ApiInfo apiInfo() {
+        return new ApiInfoBuilder().title(properties.getName())
+            .termsOfServiceUrl(properties.getUrl())
+            .licenseUrl("http://www.apache.org/licenses/LICENSE-2.0.txt")
+            .description(properties.getDescription())
+            .contact(new Contact(properties.getName(), properties.getUrl(), properties.getEmail()))
+            .version(properties.getVersion())
+            .build();
+    }
+
+    /**
+     * 设置授权信息
+     */
+    private List<SecurityScheme> securitySchemes() {
+        ApiKey apiKey = new ApiKey(HttpHeaders.AUTHORIZATION, HttpHeaders.AUTHORIZATION, In.HEADER.toValue());
+        return Collections.singletonList(apiKey);
+    }
+
+    /**
+     * 授权信息全局应用
+     */
+    private List<SecurityContext> securityContexts() {
+        return Collections.singletonList(SecurityContext.builder()
+            .securityReferences(Collections.singletonList(new SecurityReference(HttpHeaders.AUTHORIZATION,
                     new AuthorizationScope[] { new AuthorizationScope("global", properties.getDescription()) })))
-                .build());
-  }
+            .build());
+    }
 
 }

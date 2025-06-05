@@ -41,106 +41,108 @@ import com.oner365.sys.vo.SysDictItemVo;
 @Service
 public class SysDictItemServiceImpl implements ISysDictItemService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SysDictItemServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SysDictItemServiceImpl.class);
 
-  private static final String CACHE_NAME = "SysDictItem";
-  private static final String CACHE_TYPE_NAME = "SysDictItemType";
+    private static final String CACHE_NAME = "SysDictItem";
 
-  @Resource
-  private ISysDictItemDao dao;
+    private static final String CACHE_TYPE_NAME = "SysDictItemType";
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @Caching(evict = { 
-      @CacheEvict(value = CACHE_NAME, allEntries = true),
-      @CacheEvict(value = CACHE_TYPE_NAME, allEntries = true) })
-  public SysDictItemDto save(SysDictItemVo vo) {
-    SysDictItem entity = dao.save(convert(vo, SysDictItem.class));
-    return convert(entity, SysDictItemDto.class);
-  }
+    @Resource
+    private ISysDictItemDao dao;
 
-  @Override
-  @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
-  public SysDictItemDto getById(String id) {
-    try {
-      Optional<SysDictItem> optional = dao.findById(id);
-      return convert(optional.orElse(null), SysDictItemDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error getById: ", e);
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
+            @CacheEvict(value = CACHE_TYPE_NAME, allEntries = true) })
+    public SysDictItemDto save(SysDictItemVo vo) {
+        SysDictItem entity = dao.save(convert(vo, SysDictItem.class));
+        return convert(entity, SysDictItemDto.class);
     }
-    return null;
-  }
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public PageInfo<SysDictItemDto> pageList(QueryCriteriaBean data) {
-    try {
-      Page<SysDictItem> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
-      return convert(page, SysDictItemDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error pageList: ", e);
+    @Override
+    @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
+    public SysDictItemDto getById(String id) {
+        try {
+            Optional<SysDictItem> optional = dao.findById(id);
+            return convert(optional.orElse(null), SysDictItemDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error getById: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<SysDictItemDto> findList(QueryCriteriaBean data) {
-    try {
-      if (data.getOrder() == null) {
-        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysDictItemDto.class);
-      }
-      List<SysDictItem> list = dao.findAll(QueryUtils.buildCriteria(data), 
-          Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
-      return convert(list, SysDictItemDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error findList: ", e);
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public PageInfo<SysDictItemDto> pageList(QueryCriteriaBean data) {
+        try {
+            Page<SysDictItem> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+            return convert(page, SysDictItemDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error pageList: ", e);
+        }
+        return null;
     }
-    return Collections.emptyList();
-  }
 
-  @Override
-  public Boolean checkCode(String id, String typeId, String code) {
-    try {
-      Criteria<SysDictItem> criteria = new Criteria<>();
-      criteria.add(Restrictions.eq(SysConstants.ITEM_CODE, DataUtils.trimToNull(code)));
-      criteria.add(Restrictions.eq(SysConstants.TYPE_ID, DataUtils.trimToNull(typeId)));
-      if (!DataUtils.isEmpty(id)) {
-        criteria.add(Restrictions.ne(SysConstants.ID, id));
-      }
-      if (dao.count(criteria) > 0) {
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<SysDictItemDto> findList(QueryCriteriaBean data) {
+        try {
+            if (data.getOrder() == null) {
+                return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysDictItemDto.class);
+            }
+            List<SysDictItem> list = dao.findAll(QueryUtils.buildCriteria(data),
+                    Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
+            return convert(list, SysDictItemDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return Collections.emptyList();
+    }
+
+    @Override
+    public Boolean checkCode(String id, String typeId, String code) {
+        try {
+            Criteria<SysDictItem> criteria = new Criteria<>();
+            criteria.add(Restrictions.eq(SysConstants.ITEM_CODE, DataUtils.trimToNull(code)));
+            criteria.add(Restrictions.eq(SysConstants.TYPE_ID, DataUtils.trimToNull(typeId)));
+            if (!DataUtils.isEmpty(id)) {
+                criteria.add(Restrictions.ne(SysConstants.ID, id));
+            }
+            if (dao.count(criteria) > 0) {
+                return Boolean.TRUE;
+            }
+        }
+        catch (Exception e) {
+            LOGGER.error("Error checkCode:", e);
+        }
+        return Boolean.FALSE;
+    }
+
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
+            @CacheEvict(value = CACHE_TYPE_NAME, allEntries = true) })
+    public Boolean deleteById(String id) {
+        dao.deleteById(id);
         return Boolean.TRUE;
-      }
-    } catch (Exception e) {
-      LOGGER.error("Error checkCode:", e);
     }
-    return Boolean.FALSE;
-  }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @Caching(evict = { 
-      @CacheEvict(value = CACHE_NAME, allEntries = true),
-      @CacheEvict(value = CACHE_TYPE_NAME, allEntries = true) })
-  public Boolean deleteById(String id) {
-    dao.deleteById(id);
-    return Boolean.TRUE;
-  }
-
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @Caching(evict = {
-      @CacheEvict(value = CACHE_NAME, allEntries = true),
-      @CacheEvict(value = CACHE_TYPE_NAME, allEntries = true) })
-  public Boolean editStatus(String id, StatusEnum status) {
-    Optional<SysDictItem> optional = dao.findById(id);
-    if (optional.isPresent()) {
-      SysDictItem entity = optional.get();
-      entity.setStatus(status);
-      dao.save(entity);
-      return Boolean.TRUE;
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @Caching(evict = { @CacheEvict(value = CACHE_NAME, allEntries = true),
+            @CacheEvict(value = CACHE_TYPE_NAME, allEntries = true) })
+    public Boolean editStatus(String id, StatusEnum status) {
+        Optional<SysDictItem> optional = dao.findById(id);
+        if (optional.isPresent()) {
+            SysDictItem entity = optional.get();
+            entity.setStatus(status);
+            dao.save(entity);
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
-    return Boolean.FALSE;
-  }
 
 }

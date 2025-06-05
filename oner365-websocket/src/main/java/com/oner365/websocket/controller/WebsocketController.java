@@ -10,6 +10,7 @@ import com.oner365.data.web.controller.BaseController;
 
 /**
  * 测试ws
+ *
  * @author liutao
  */
 @RefreshScope
@@ -17,15 +18,15 @@ import com.oner365.data.web.controller.BaseController;
 @RequestMapping("/websocket2")
 public class WebsocketController extends BaseController {
 
+    /**
+     * 测试接收ws数据
+     * @param token token
+     * @return ResponseData
+     */
+    @GetMapping
+    public ResponseData<String> test(String token) {
+        logger.info("token:{}", token);
+        return ResponseData.success(token);
+    }
 
-	/**
-	 * 测试接收ws数据
-	 * @param token token
-	 * @return ResponseData
-	 */
-	@GetMapping
-	public ResponseData<String> test(String token) {
-		logger.info("token:{}", token);
-		return ResponseData.success(token);
-	}
 }

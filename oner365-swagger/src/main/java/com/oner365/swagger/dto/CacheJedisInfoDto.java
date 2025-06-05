@@ -54,4 +54,5 @@ public class CacheJedisInfoDto implements Serializable {
     public void setSize(Long size) {
         this.size = size;
     }
+
 }

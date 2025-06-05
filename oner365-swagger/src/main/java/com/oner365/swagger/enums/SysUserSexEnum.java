@@ -28,8 +28,7 @@ public enum SysUserSexEnum implements Serializable {
 
     /**
      * 构造方法
-     *
-     * @param code  编码
+     * @param code 编码
      * @param name 名称
      */
     SysUserSexEnum(String code, String name) {
@@ -39,7 +38,6 @@ public enum SysUserSexEnum implements Serializable {
 
     /**
      * get code
-     *
      * @return code
      */
     public String getCode() {
@@ -48,7 +46,6 @@ public enum SysUserSexEnum implements Serializable {
 
     /**
      * get name
-     *
      * @return name
      */
     public String getName() {
@@ -57,14 +54,13 @@ public enum SysUserSexEnum implements Serializable {
 
     /**
      * 获取枚举
-     *
      * @param code 编码
      * @return MessageStatusEnum
      */
     public static SysUserSexEnum getCode(String code) {
         Optional<SysUserSexEnum> result = Arrays.stream(SysUserSexEnum.values())
-                .filter(e -> e.getCode().equals(code))
-                .findFirst();
+            .filter(e -> e.getCode().equals(code))
+            .findFirst();
         return result.orElse(null);
     }
 

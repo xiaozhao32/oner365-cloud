@@ -14,25 +14,26 @@ import com.oner365.gateway.service.IRedisSendMessageService;
 
 /**
  * 发送消息广播实现类
+ *
  * @author liutao
  *
  */
 @Service
 public class RedisSendMessageServiceImpl implements IRedisSendMessageService {
-  
-  private final Logger logger = LoggerFactory.getLogger(RedisSendMessageServiceImpl.class);
 
-  @Resource
-  public RedisTemplate<String,Serializable> redisTemplate;
+    private final Logger logger = LoggerFactory.getLogger(RedisSendMessageServiceImpl.class);
 
-  @Override
-  public void sendRefreshRoute() {
-    try {
-      redisTemplate.convertAndSend(GatewayConstants.QUEUE_NAME, GatewayConstants.QUEUE_NAME);
-    }catch(Exception e) {
-      logger.error("sendRefreshRoute error", e);
+    @Resource
+    public RedisTemplate<String, Serializable> redisTemplate;
+
+    @Override
+    public void sendRefreshRoute() {
+        try {
+            redisTemplate.convertAndSend(GatewayConstants.QUEUE_NAME, GatewayConstants.QUEUE_NAME);
+        }
+        catch (Exception e) {
+            logger.error("sendRefreshRoute error", e);
+        }
     }
-  }
-
 
 }

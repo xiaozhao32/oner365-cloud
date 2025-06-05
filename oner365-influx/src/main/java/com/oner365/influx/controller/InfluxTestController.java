@@ -24,28 +24,27 @@ import com.oner365.influx.service.InfluxService;
 @RequestMapping("/influx/test")
 public class InfluxTestController extends BaseController {
 
-  @Resource
-  private InfluxService service;
+    @Resource
+    private InfluxService service;
 
-  /**
-   * 保存对象
-   * 
-   * @param vo 对象
-   * @return 是否成功
-   */
-  @PostMapping("/save")
-  public Boolean save(@RequestBody Mem vo) {
-    return service.save(vo);
-  }
+    /**
+     * 保存对象
+     * @param vo 对象
+     * @return 是否成功
+     */
+    @PostMapping("/save")
+    public Boolean save(@RequestBody Mem vo) {
+        return service.save(vo);
+    }
 
-  /**
-   * 查询列表
-   *
-   * @param data 查询对象
-   * @return List<Mem>
-   */
-  @GetMapping("/list")
-  public List<Mem> findList(String data) {
-    return service.findList(data);
-  }
+    /**
+     * 查询列表
+     * @param data 查询对象
+     * @return List<Mem>
+     */
+    @GetMapping("/list")
+    public List<Mem> findList(String data) {
+        return service.findList(data);
+    }
+
 }

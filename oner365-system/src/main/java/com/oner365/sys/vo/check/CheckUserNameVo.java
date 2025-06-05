@@ -6,28 +6,28 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * 检测编码
- * 
+ *
  * @author zhaoyong
  *
  */
 public class CheckUserNameVo implements Serializable {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * 主键 id
      */
     private String id;
-    
+
     /**
      * 用户名称
      */
     @NotBlank(message = "{system.vo.check.userName.message}")
     private String userName;
-    
+
     /**
      * 构造方法
      */

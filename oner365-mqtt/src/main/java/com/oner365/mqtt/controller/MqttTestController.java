@@ -12,7 +12,7 @@ import com.oner365.mqtt.service.IMqttSendMessageService;
 
 /**
  * 队列 controller
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -20,20 +20,20 @@ import com.oner365.mqtt.service.IMqttSendMessageService;
 @RequestMapping("/message")
 public class MqttTestController extends BaseController {
 
-  @Resource
-  private IMqttSendMessageService service;
+    @Resource
+    private IMqttSendMessageService service;
 
-  /**
-   * 测试发送
-   * 
-   * @param message 参数
-   * @return JSONObject
-   */
-  @GetMapping("/send")
-  public JSONObject send(String message) {
-    JSONObject json = new JSONObject();
-    json.put("message", message);
-    service.sendMessage(json.toJSONString());
-    return json;
-  }
+    /**
+     * 测试发送
+     * @param message 参数
+     * @return JSONObject
+     */
+    @GetMapping("/send")
+    public JSONObject send(String message) {
+        JSONObject json = new JSONObject();
+        json.put("message", message);
+        service.sendMessage(json.toJSONString());
+        return json;
+    }
+
 }

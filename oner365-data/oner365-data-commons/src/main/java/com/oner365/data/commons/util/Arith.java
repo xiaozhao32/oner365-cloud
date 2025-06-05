@@ -5,7 +5,7 @@ import java.math.RoundingMode;
 
 /**
  * 精确的浮点数运算
- * 
+ *
  * @author zhaoyong
  */
 public class Arith {
@@ -19,7 +19,6 @@ public class Arith {
 
     /**
      * 提供精确的加法运算。
-     * 
      * @param v1 被加数
      * @param v2 加数
      * @return 两个参数的和
@@ -32,7 +31,6 @@ public class Arith {
 
     /**
      * 提供精确的减法运算。
-     * 
      * @param v1 被减数
      * @param v2 减数
      * @return 两个参数的差
@@ -45,7 +43,6 @@ public class Arith {
 
     /**
      * 提供精确的乘法运算。
-     * 
      * @param v1 被乘数
      * @param v2 乘数
      * @return 两个参数的积
@@ -58,7 +55,6 @@ public class Arith {
 
     /**
      * 提供（相对）精确的除法运算，当发生除不尽的情况时，精确到 小数点以后10位，以后的数字四舍五入。
-     * 
      * @param v1 被除数
      * @param v2 除数
      * @return 两个参数的商
@@ -69,9 +65,8 @@ public class Arith {
 
     /**
      * 提供（相对）精确的除法运算。当发生除不尽的情况时，由scale参数指 定精度，以后的数字四舍五入。
-     * 
-     * @param v1    被除数
-     * @param v2    除数
+     * @param v1 被除数
+     * @param v2 除数
      * @param scale 表示表示需要精确到小数点以后几位。
      * @return 两个参数的商
      */
@@ -89,8 +84,7 @@ public class Arith {
 
     /**
      * 提供精确的小数位四舍五入处理。
-     * 
-     * @param v     需要四舍五入的数字
+     * @param v 需要四舍五入的数字
      * @param scale 小数点后保留几位
      * @return 四舍五入后的结果
      */
@@ -102,4 +96,5 @@ public class Arith {
         BigDecimal one = new BigDecimal("1");
         return b.divide(one, scale, RoundingMode.HALF_UP).doubleValue();
     }
+
 }

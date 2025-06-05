@@ -17,7 +17,7 @@ import com.oner365.data.commons.util.DateUtil;
 
 /**
  * 日期格式化
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -26,12 +26,12 @@ import com.oner365.data.commons.util.DateUtil;
 @AutoConfigureBefore({ JacksonAutoConfiguration.class })
 public class DateFormatConfig implements Jackson2ObjectMapperBuilderCustomizer {
 
-  @Override
-  public void customize(Jackson2ObjectMapperBuilder builder) {
-    builder.locale(Locale.CHINA);
-    builder.timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
-    builder.simpleDateFormat(DateUtil.FULL_TIME_FORMAT);
-    builder.modules(new JavaTimeModule());
-  }
+    @Override
+    public void customize(Jackson2ObjectMapperBuilder builder) {
+        builder.locale(Locale.CHINA);
+        builder.timeZone(TimeZone.getTimeZone(ZoneId.systemDefault()));
+        builder.simpleDateFormat(DateUtil.FULL_TIME_FORMAT);
+        builder.modules(new JavaTimeModule());
+    }
 
 }

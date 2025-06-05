@@ -9,18 +9,18 @@ import com.oner365.swagger.dto.TransportClientDto;
 
 /**
  * Elasticsearch服务 - 信息
- * 
+ *
  * @author zhaoyong
  *
  */
 @FeignClient(value = PathConstants.FEIGN_CLIENT_ELASTICSEARCH, contextId = PathConstants.CONTEXT_ELASTICSEARCH_INFO_ID)
 public interface IElasticsearchInfoClient {
 
-  /**
-   * 缓存信息
-   * 
-   * @return ResponseData<TransportClientDto>
-   */
-  @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_INFO_INDEX)
-  ResponseData<TransportClientDto> index();
+    /**
+     * 缓存信息
+     * @return ResponseData<TransportClientDto>
+     */
+    @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_INFO_INDEX)
+    ResponseData<TransportClientDto> index();
+
 }

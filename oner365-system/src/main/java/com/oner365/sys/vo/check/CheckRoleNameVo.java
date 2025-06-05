@@ -6,28 +6,28 @@ import javax.validation.constraints.NotBlank;
 
 /**
  * 检测编码
- * 
+ *
  * @author zhaoyong
  *
  */
 public class CheckRoleNameVo implements Serializable {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = 1L;
-    
+
     /**
      * 主键 id
      */
     private String id;
-    
+
     /**
      * 角色名称
      */
     @NotBlank(message = "{system.vo.check.role.name.message}")
     private String roleName;
-    
+
     /**
      * 构造方法
      */

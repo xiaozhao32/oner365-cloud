@@ -14,6 +14,7 @@ import com.oner365.websocket.client.IFileServiceClient;
 
 /**
  * 文件处理
+ *
  * @author liutao
  */
 @RefreshScope
@@ -21,20 +22,17 @@ import com.oner365.websocket.client.IFileServiceClient;
 @RequestMapping("/file")
 public class FileController {
 
-	@Resource
-	private IFileServiceClient client;
+    @Resource
+    private IFileServiceClient client;
 
-	/**
-	 * 上传文件
-	 * 需要指定
-	 * 		类型: Content-Type: multipart/form-data
-	 * 		方式: Post
-	 * 		参数: @RequestPart
-	 * @param multipartFile 文件
-	 * @return String 文件路径
-	 */
-	@PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-	public String uploadFile(@RequestPart("multipartFile") MultipartFile multipartFile) {
-		return client.upload(multipartFile);
-	}
+    /**
+     * 上传文件 需要指定 类型: Content-Type: multipart/form-data 方式: Post 参数: @RequestPart
+     * @param multipartFile 文件
+     * @return String 文件路径
+     */
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public String uploadFile(@RequestPart("multipartFile") MultipartFile multipartFile) {
+        return client.upload(multipartFile);
+    }
+
 }

@@ -35,73 +35,75 @@ import com.oner365.mongodb.vo.PersonVo;
 @Service
 public class PersonServiceImpl implements IPersonService {
 
-  private final Logger logger = LoggerFactory.getLogger(PersonServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(PersonServiceImpl.class);
 
-  @Resource
-  private PersonRepository repository;
+    @Resource
+    private PersonRepository repository;
 
-  @Override
-  @Transactional(rollbackFor = ProjectException.class)
-  public PersonDto save(PersonVo vo) {
-    if (DataUtils.isEmpty(vo.getId())) {
-      vo.setCreateTime(DateUtil.dateToTimestamp(DateUtil.getDate()));
+    @Override
+    @Transactional(rollbackFor = ProjectException.class)
+    public PersonDto save(PersonVo vo) {
+        if (DataUtils.isEmpty(vo.getId())) {
+            vo.setCreateTime(DateUtil.dateToTimestamp(DateUtil.getDate()));
+        }
+        Person entity = repository.save(convertVo(vo));
+        return convertDto(entity);
     }
-    Person entity = repository.save(convertVo(vo));
-    return convertDto(entity);
-  }
 
-  @Override
-  public PersonDto getById(String id) {
-    Optional<Person> optional = repository.findById(id);
-    return convertDto(optional.orElse(null));
-  }
-
-  @Override
-  public PageInfo<PersonDto> page(QueryCriteriaBean data) {
-    try {
-      Page<Person> page = repository.findAll(QueryUtils.buildPageRequest(data));
-      List<Person> personList = page.getContent();
-      List<PersonDto> personDtoList = personList.stream().map(this::convertDto)
-          .collect(Collectors.toList());
-      return new PageInfo<>(personDtoList, page.getNumber() + 1, page.getSize(), page.getTotalElements());
-    } catch (Exception e) {
-      logger.error("Error pageList: ", e);
+    @Override
+    public PersonDto getById(String id) {
+        Optional<Person> optional = repository.findById(id);
+        return convertDto(optional.orElse(null));
     }
-    return null;
-  }
 
-  @Override
-  @Transactional(rollbackFor = ProjectException.class)
-  public Boolean delete(String id) {
-    try {
-      repository.deleteById(id);
-      return Boolean.TRUE;
-    } catch (Exception e) {
-      logger.error("Error delete: ", e);
+    @Override
+    public PageInfo<PersonDto> page(QueryCriteriaBean data) {
+        try {
+            Page<Person> page = repository.findAll(QueryUtils.buildPageRequest(data));
+            List<Person> personList = page.getContent();
+            List<PersonDto> personDtoList = personList.stream().map(this::convertDto).collect(Collectors.toList());
+            return new PageInfo<>(personDtoList, page.getNumber() + 1, page.getSize(), page.getTotalElements());
+        }
+        catch (Exception e) {
+            logger.error("Error pageList: ", e);
+        }
+        return null;
     }
-    return Boolean.FALSE;
-  }
 
-  private Person convertVo(@NotNull PersonVo vo) {
-    Person result = new Person();
-    result.setAge(vo.getAge());
-    result.setCreateTime(vo.getCreateTime().toInstant());
-    result.setId(vo.getId());
-    result.setName(vo.getName());
-    result.setUpdateTime(Instant.now());
-    return result;
-  }
-
-  private PersonDto convertDto(Person entity) {
-    if (entity == null) {
-      return null;
+    @Override
+    @Transactional(rollbackFor = ProjectException.class)
+    public Boolean delete(String id) {
+        try {
+            repository.deleteById(id);
+            return Boolean.TRUE;
+        }
+        catch (Exception e) {
+            logger.error("Error delete: ", e);
+        }
+        return Boolean.FALSE;
     }
-    PersonDto result = new PersonDto();
-    result.setAge(entity.getAge());
-    result.setCreateTime(Timestamp.from(entity.getCreateTime()));
-    result.setId(entity.getId());
-    result.setName(entity.getName());
-    result.setUpdateTime(Timestamp.from(entity.getUpdateTime()));
-    return result;
-  }
+
+    private Person convertVo(@NotNull PersonVo vo) {
+        Person result = new Person();
+        result.setAge(vo.getAge());
+        result.setCreateTime(vo.getCreateTime().toInstant());
+        result.setId(vo.getId());
+        result.setName(vo.getName());
+        result.setUpdateTime(Instant.now());
+        return result;
+    }
+
+    private PersonDto convertDto(Person entity) {
+        if (entity == null) {
+            return null;
+        }
+        PersonDto result = new PersonDto();
+        result.setAge(entity.getAge());
+        result.setCreateTime(Timestamp.from(entity.getCreateTime()));
+        result.setId(entity.getId());
+        result.setName(entity.getName());
+        result.setUpdateTime(Timestamp.from(entity.getUpdateTime()));
+        return result;
+    }
+
 }

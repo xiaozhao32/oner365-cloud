@@ -18,17 +18,17 @@ import com.oner365.kafka.constants.KafkaConstants;
 @Component
 public class KafkaConsumerListener {
 
-  private final Logger logger = LoggerFactory.getLogger(KafkaConsumerListener.class);
+    private final Logger logger = LoggerFactory.getLogger(KafkaConsumerListener.class);
 
-  /**
-   * 监听 Topic1 服务
-   *
-   * @param record 参数
-   */
-  @KafkaListener(id = "${spring.kafka.consumer.group-id}", topics = { KafkaConstants.TOPIC_1 })
-  public void listen(ConsumerRecord<String, ?> consumerRecord) {
-    Optional<?> kafkaMessage = Optional.of(consumerRecord.value());
-    Object message = kafkaMessage.get();
-    logger.info("Kafka Message received: {}", message);
-  }
+    /**
+     * 监听 Topic1 服务
+     * @param record 参数
+     */
+    @KafkaListener(id = "${spring.kafka.consumer.group-id}", topics = { KafkaConstants.TOPIC_1 })
+    public void listen(ConsumerRecord<String, ?> consumerRecord) {
+        Optional<?> kafkaMessage = Optional.of(consumerRecord.value());
+        Object message = kafkaMessage.get();
+        logger.info("Kafka Message received: {}", message);
+    }
+
 }

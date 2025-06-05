@@ -155,4 +155,5 @@ public class SysUserOrg implements Serializable {
     public String toString() {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
+
 }

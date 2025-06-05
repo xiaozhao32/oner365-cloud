@@ -25,179 +25,179 @@ import com.oner365.postgis.enums.PostgisTypeEnum;
 
 /**
  * Position PO
- * 
+ *
  * @author zhaoyong
  */
 @Entity
 @Table(name = "t_position")
 public class Position implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键
-   */
-  @Id
-  @GeneratedValue(generator = "generator")
-  @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
-  private String id;
+    /**
+     * 主键
+     */
+    @Id
+    @GeneratedValue(generator = "generator")
+    @GenericGenerator(name = "generator", strategy = PublicConstants.UUID)
+    private String id;
 
-  /**
-   * 名称
-   */
-  @Column(name = "position_name", length = 32)
-  private String positionName;
+    /**
+     * 名称
+     */
+    @Column(name = "position_name", length = 32)
+    private String positionName;
 
-  /**
-   * 枚举类型
-   */
-  @Enumerated(EnumType.STRING)
-  @Column(name = "postgis_type")
-  private PostgisTypeEnum postgisType;
+    /**
+     * 枚举类型
+     */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "postgis_type")
+    private PostgisTypeEnum postgisType;
 
-  /**
-   * Geometry Point
-   */
-  @Column(name = "position_point", columnDefinition = "geometry(Point,4326)")
-  private Point positionPoint;
+    /**
+     * Geometry Point
+     */
+    @Column(name = "position_point", columnDefinition = "geometry(Point,4326)")
+    private Point positionPoint;
 
-  /**
-   * Geometry Polygon
-   */
-  @Column(name = "position_polygon", columnDefinition = "geometry(Polygon,4326)")
-  private Polygon positionPolygon;
-  
-  /**
-   * Geometry LineString
-   */
-  @Column(name = "position_line_string", columnDefinition = "geometry(Polygon,4326)")
-  private LineString positionLineString;
-  
-  /**
-   * Geometry MultiPoint
-   */
-  @Column(name = "position_multi_point", columnDefinition = "geometry(Point,4326)")
-  private MultiPoint multiPoint;
-  
-  /**
-   * Geometry MultiLineString
-   */
-  @Column(name = "position_multi_line_string", columnDefinition = "geometry(Point,4326)")
-  private MultiLineString multiLineString;
-  
-  /**
-   * Geometry MultiPolygon
-   */
-  @Column(name = "position_multi_polygon", columnDefinition = "geometry(Point,4326)")
-  private MultiPolygon multiPolygon;
+    /**
+     * Geometry Polygon
+     */
+    @Column(name = "position_polygon", columnDefinition = "geometry(Polygon,4326)")
+    private Polygon positionPolygon;
 
-  /**
-   * 创建时间
-   */
-  @Column(name = "create_time", updatable = false)
-  private LocalDateTime createTime;
+    /**
+     * Geometry LineString
+     */
+    @Column(name = "position_line_string", columnDefinition = "geometry(Polygon,4326)")
+    private LineString positionLineString;
 
-  /**
-   * 更新时间
-   */
-  @Column(name = "update_time", insertable = false)
-  private LocalDateTime updateTime;
-  
-  public Position() {
-    super();
-  }
+    /**
+     * Geometry MultiPoint
+     */
+    @Column(name = "position_multi_point", columnDefinition = "geometry(Point,4326)")
+    private MultiPoint multiPoint;
 
-  public String getId() {
-    return id;
-  }
+    /**
+     * Geometry MultiLineString
+     */
+    @Column(name = "position_multi_line_string", columnDefinition = "geometry(Point,4326)")
+    private MultiLineString multiLineString;
 
-  public void setId(String id) {
-    this.id = id;
-  }
+    /**
+     * Geometry MultiPolygon
+     */
+    @Column(name = "position_multi_polygon", columnDefinition = "geometry(Point,4326)")
+    private MultiPolygon multiPolygon;
 
-  public String getPositionName() {
-    return positionName;
-  }
+    /**
+     * 创建时间
+     */
+    @Column(name = "create_time", updatable = false)
+    private LocalDateTime createTime;
 
-  public void setPositionName(String positionName) {
-    this.positionName = positionName;
-  }
+    /**
+     * 更新时间
+     */
+    @Column(name = "update_time", insertable = false)
+    private LocalDateTime updateTime;
 
-  public LocalDateTime getCreateTime() {
-    return createTime;
-  }
+    public Position() {
+        super();
+    }
 
-  public void setCreateTime(LocalDateTime createTime) {
-    this.createTime = createTime;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public LocalDateTime getUpdateTime() {
-    return updateTime;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  public void setUpdateTime(LocalDateTime updateTime) {
-    this.updateTime = updateTime;
-  }
+    public String getPositionName() {
+        return positionName;
+    }
 
-  public Point getPositionPoint() {
-    return positionPoint;
-  }
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
 
-  public void setPositionPoint(Point positionPoint) {
-    this.positionPoint = positionPoint;
-  }
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
 
-  public Polygon getPositionPolygon() {
-    return positionPolygon;
-  }
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
 
-  public void setPositionPolygon(Polygon positionPolygon) {
-    this.positionPolygon = positionPolygon;
-  }
+    public LocalDateTime getUpdateTime() {
+        return updateTime;
+    }
 
-  public PostgisTypeEnum getPostgisType() {
-    return postgisType;
-  }
+    public void setUpdateTime(LocalDateTime updateTime) {
+        this.updateTime = updateTime;
+    }
 
-  public void setPostgisType(PostgisTypeEnum postgisType) {
-    this.postgisType = postgisType;
-  }
+    public Point getPositionPoint() {
+        return positionPoint;
+    }
 
-  public LineString getPositionLineString() {
-    return positionLineString;
-  }
+    public void setPositionPoint(Point positionPoint) {
+        this.positionPoint = positionPoint;
+    }
 
-  public void setPositionLineString(LineString positionLineString) {
-    this.positionLineString = positionLineString;
-  }
+    public Polygon getPositionPolygon() {
+        return positionPolygon;
+    }
 
-  public MultiPoint getMultiPoint() {
-    return multiPoint;
-  }
+    public void setPositionPolygon(Polygon positionPolygon) {
+        this.positionPolygon = positionPolygon;
+    }
 
-  public void setMultiPoint(MultiPoint multiPoint) {
-    this.multiPoint = multiPoint;
-  }
+    public PostgisTypeEnum getPostgisType() {
+        return postgisType;
+    }
 
-  public MultiLineString getMultiLineString() {
-    return multiLineString;
-  }
+    public void setPostgisType(PostgisTypeEnum postgisType) {
+        this.postgisType = postgisType;
+    }
 
-  public void setMultiLineString(MultiLineString multiLineString) {
-    this.multiLineString = multiLineString;
-  }
+    public LineString getPositionLineString() {
+        return positionLineString;
+    }
 
-  public MultiPolygon getMultiPolygon() {
-    return multiPolygon;
-  }
+    public void setPositionLineString(LineString positionLineString) {
+        this.positionLineString = positionLineString;
+    }
 
-  public void setMultiPolygon(MultiPolygon multiPolygon) {
-    this.multiPolygon = multiPolygon;
-  }
-  
-  @Override
-  public String toString() {
-    return JSON.toJSONString(this);
-  }
+    public MultiPoint getMultiPoint() {
+        return multiPoint;
+    }
+
+    public void setMultiPoint(MultiPoint multiPoint) {
+        this.multiPoint = multiPoint;
+    }
+
+    public MultiLineString getMultiLineString() {
+        return multiLineString;
+    }
+
+    public void setMultiLineString(MultiLineString multiLineString) {
+        this.multiLineString = multiLineString;
+    }
+
+    public MultiPolygon getMultiPolygon() {
+        return multiPolygon;
+    }
+
+    public void setMultiPolygon(MultiPolygon multiPolygon) {
+        this.multiPolygon = multiPolygon;
+    }
+
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
 
 }

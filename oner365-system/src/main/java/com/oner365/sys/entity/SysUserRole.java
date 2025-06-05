@@ -18,6 +18,7 @@ import com.oner365.data.commons.constants.PublicConstants;
 
 /**
  * 基础权限--用户角色表nt_sys_user_role
+ *
  * @author liutao
  */
 @Entity
@@ -38,18 +39,16 @@ public class SysUserRole implements Serializable {
     /**
      * 角色 role_id
      */
-    @ManyToOne(cascade=CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "role_id")
     private SysRole sysRole;
 
     /**
      * 用户 user_id
      */
-    @ManyToOne(cascade=CascadeType.REFRESH)
+    @ManyToOne(cascade = CascadeType.REFRESH)
     @JoinColumn(name = "user_id")
     private SysUser sysUser;
-
-
 
     /**
      * Generate constructor
@@ -95,4 +94,5 @@ public class SysUserRole implements Serializable {
     public String toString() {
         return new ToStringBuilder(this).append("id", getId()).toString();
     }
+
 }

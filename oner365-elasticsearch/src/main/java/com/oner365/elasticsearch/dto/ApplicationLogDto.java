@@ -12,164 +12,165 @@ import org.springframework.boot.logging.LogLevel;
  */
 public class ApplicationLogDto implements Serializable {
 
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  /**
-   * 主键
-   */
-  private String id;
+    /**
+     * 主键
+     */
+    private String id;
 
-  /**
-   * 线程名称
-   */
-  private String threadName;
-  
-  /**
-   * 版本
-   */
-  private String version;
-  
-  /**
-   * 消息内容
-   */
-  private String message;
-  
-  /**
-   * 日志级别
-   */
-  private LogLevel level;
-  
-  /**
-   * 类名称
-   */
-  private String loggerName;
-  
-  /**
-   * 项目名称
-   */
-  private String projectName;
-  
-  /**
-   * 创建时间
-   */
-  private LocalDateTime createTime;
-  
-  /**
-   * 构造方法
-   */
-  public ApplicationLogDto() {
-    super();
-  }
+    /**
+     * 线程名称
+     */
+    private String threadName;
 
-  /**
-   * @return the id
-   */
-  public String getId() {
-    return id;
-  }
+    /**
+     * 版本
+     */
+    private String version;
 
-  /**
-   * @param id the id to set
-   */
-  public void setId(String id) {
-    this.id = id;
-  }
+    /**
+     * 消息内容
+     */
+    private String message;
 
-  /**
-   * @return the threadName
-   */
-  public String getThreadName() {
-    return threadName;
-  }
+    /**
+     * 日志级别
+     */
+    private LogLevel level;
 
-  /**
-   * @param threadName the threadName to set
-   */
-  public void setThreadName(String threadName) {
-    this.threadName = threadName;
-  }
+    /**
+     * 类名称
+     */
+    private String loggerName;
 
-  /**
-   * @return the version
-   */
-  public String getVersion() {
-    return version;
-  }
+    /**
+     * 项目名称
+     */
+    private String projectName;
 
-  /**
-   * @param version the version to set
-   */
-  public void setVersion(String version) {
-    this.version = version;
-  }
+    /**
+     * 创建时间
+     */
+    private LocalDateTime createTime;
 
-  /**
-   * @return the message
-   */
-  public String getMessage() {
-    return message;
-  }
+    /**
+     * 构造方法
+     */
+    public ApplicationLogDto() {
+        super();
+    }
 
-  /**
-   * @param message the message to set
-   */
-  public void setMessage(String message) {
-    this.message = message;
-  }
+    /**
+     * @return the id
+     */
+    public String getId() {
+        return id;
+    }
 
-  /**
-   * @return the level
-   */
-  public LogLevel getLevel() {
-    return level;
-  }
+    /**
+     * @param id the id to set
+     */
+    public void setId(String id) {
+        this.id = id;
+    }
 
-  /**
-   * @param level the level to set
-   */
-  public void setLevel(LogLevel level) {
-    this.level = level;
-  }
+    /**
+     * @return the threadName
+     */
+    public String getThreadName() {
+        return threadName;
+    }
 
-  /**
-   * @return the loggerName
-   */
-  public String getLoggerName() {
-    return loggerName;
-  }
+    /**
+     * @param threadName the threadName to set
+     */
+    public void setThreadName(String threadName) {
+        this.threadName = threadName;
+    }
 
-  /**
-   * @param loggerName the loggerName to set
-   */
-  public void setLoggerName(String loggerName) {
-    this.loggerName = loggerName;
-  }
+    /**
+     * @return the version
+     */
+    public String getVersion() {
+        return version;
+    }
 
-  /**
-   * @return the createTime
-   */
-  public LocalDateTime getCreateTime() {
-    return createTime;
-  }
+    /**
+     * @param version the version to set
+     */
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-  /**
-   * @param createTime the createTime to set
-   */
-  public void setCreateTime(LocalDateTime createTime) {
-    this.createTime = createTime;
-  }
+    /**
+     * @return the message
+     */
+    public String getMessage() {
+        return message;
+    }
 
-  /**
-   * @return the projectName
-   */
-  public String getProjectName() {
-    return projectName;
-  }
+    /**
+     * @param message the message to set
+     */
+    public void setMessage(String message) {
+        this.message = message;
+    }
 
-  /**
-   * @param projectName the projectName to set
-   */
-  public void setProjectName(String projectName) {
-    this.projectName = projectName;
-  }
+    /**
+     * @return the level
+     */
+    public LogLevel getLevel() {
+        return level;
+    }
+
+    /**
+     * @param level the level to set
+     */
+    public void setLevel(LogLevel level) {
+        this.level = level;
+    }
+
+    /**
+     * @return the loggerName
+     */
+    public String getLoggerName() {
+        return loggerName;
+    }
+
+    /**
+     * @param loggerName the loggerName to set
+     */
+    public void setLoggerName(String loggerName) {
+        this.loggerName = loggerName;
+    }
+
+    /**
+     * @return the createTime
+     */
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    /**
+     * @param createTime the createTime to set
+     */
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    /**
+     * @return the projectName
+     */
+    public String getProjectName() {
+        return projectName;
+    }
+
+    /**
+     * @param projectName the projectName to set
+     */
+    public void setProjectName(String projectName) {
+        this.projectName = projectName;
+    }
+
 }

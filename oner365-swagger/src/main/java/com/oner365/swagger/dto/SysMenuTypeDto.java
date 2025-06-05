@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 /**
  * 菜单类型对象
+ *
  * @author zhaoyong
  */
 @ApiModel(value = "菜单类型")
@@ -111,7 +112,7 @@ public class SysMenuTypeDto implements Serializable {
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
     }
-    
+
     /**
      * toString Method
      */

@@ -16,7 +16,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * 服务器监控
- * 
+ *
  * @author zhaoyong
  */
 @RestController
@@ -24,16 +24,17 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/server")
 public class MonitorServerController {
 
-  @Resource
-  private IMonitorServerClient client;
+    @Resource
+    private IMonitorServerClient client;
 
-  /**
-   * 当前服务器信息
-   */
-  @ApiOperation("1.首页")
-  @ApiOperationSupport(order = 1)
-  @GetMapping("/index")
-  public ResponseData<Server> index() {
-    return client.index();
-  }
+    /**
+     * 当前服务器信息
+     */
+    @ApiOperation("1.首页")
+    @ApiOperationSupport(order = 1)
+    @GetMapping("/index")
+    public ResponseData<Server> index() {
+        return client.index();
+    }
+
 }

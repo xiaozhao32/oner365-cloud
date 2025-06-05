@@ -41,102 +41,106 @@ import com.oner365.sys.vo.SysConfigVo;
 @Service
 public class SysConfigServiceImpl implements ISysConfigService {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SysConfigServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(SysConfigServiceImpl.class);
 
-  private static final String CACHE_NAME = "SysConfig";
+    private static final String CACHE_NAME = "SysConfig";
 
-  @Resource
-  private ISysConfigDao dao;
+    @Resource
+    private ISysConfigDao dao;
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public PageInfo<SysConfigDto> pageList(QueryCriteriaBean data) {
-    try {
-      Page<SysConfig> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
-      return convert(page, SysConfigDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error pageList: ", e);
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public PageInfo<SysConfigDto> pageList(QueryCriteriaBean data) {
+        try {
+            Page<SysConfig> page = dao.findAll(QueryUtils.buildCriteria(data), QueryUtils.buildPageRequest(data));
+            return convert(page, SysConfigDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error pageList: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  @GeneratorCache(CACHE_NAME)
-  public List<SysConfigDto> findList(QueryCriteriaBean data) {
-    try {
-      if (data.getOrder() == null) {
-        return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysConfigDto.class);
-      }
-      List<SysConfig> list = dao.findAll(QueryUtils.buildCriteria(data),
-          Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
-      return convert(list, SysConfigDto.class);
-    } catch (Exception e) {
-      LOGGER.error("Error findList: ", e);
+    @Override
+    @GeneratorCache(CACHE_NAME)
+    public List<SysConfigDto> findList(QueryCriteriaBean data) {
+        try {
+            if (data.getOrder() == null) {
+                return convert(dao.findAll(QueryUtils.buildCriteria(data)), SysConfigDto.class);
+            }
+            List<SysConfig> list = dao.findAll(QueryUtils.buildCriteria(data),
+                    Objects.requireNonNull(QueryUtils.buildSortRequest(data.getOrder())));
+            return convert(list, SysConfigDto.class);
+        }
+        catch (Exception e) {
+            LOGGER.error("Error findList: ", e);
+        }
+        return Collections.emptyList();
     }
-    return Collections.emptyList();
-  }
 
-  @Override
-  @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
-  public SysConfigDto getById(String id) {
-    try {
-      Optional<SysConfig> optional = dao.findById(id);
-      if (optional.isPresent()) {
-        return convert(optional.get(), SysConfigDto.class);
-      }
-    } catch (Exception e) {
-      LOGGER.error("Error getById: ", e);
+    @Override
+    @RedisCacheAble(value = CACHE_NAME, key = PublicConstants.KEY_ID)
+    public SysConfigDto getById(String id) {
+        try {
+            Optional<SysConfig> optional = dao.findById(id);
+            if (optional.isPresent()) {
+                return convert(optional.get(), SysConfigDto.class);
+            }
+        }
+        catch (Exception e) {
+            LOGGER.error("Error getById: ", e);
+        }
+        return null;
     }
-    return null;
-  }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public SysConfigDto save(SysConfigVo vo) {
-    if (DataUtils.isEmpty(vo.getId())) {
-      vo.setStatus(StatusEnum.YES);
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public SysConfigDto save(SysConfigVo vo) {
+        if (DataUtils.isEmpty(vo.getId())) {
+            vo.setStatus(StatusEnum.YES);
+        }
+        SysConfig entity = dao.save(convert(vo, SysConfig.class));
+        return convert(entity, SysConfigDto.class);
     }
-    SysConfig entity = dao.save(convert(vo, SysConfig.class));
-    return convert(entity, SysConfigDto.class);
-  }
 
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Boolean deleteById(String id) {
-    dao.deleteById(id);
-    return Boolean.TRUE;
-  }
-
-  @Override
-  @Transactional(rollbackFor = ProjectRuntimeException.class)
-  @CacheEvict(value = CACHE_NAME, allEntries = true)
-  public Boolean editStatus(String id, StatusEnum status) {
-    Optional<SysConfig> optional = dao.findById(id);
-    if (optional.isPresent()) {
-      optional.get().setStatus(status);
-      dao.save(optional.get());
-      return Boolean.TRUE;
-    }
-    return Boolean.FALSE;
-  }
-  
-  @Override
-  public Boolean checkConfigName(String id, String configName) {
-    try {
-      Criteria<SysConfig> criteria = new Criteria<>();
-      criteria.add(Restrictions.eq(SysConstants.CONFIG_NAME, DataUtils.trimToNull(configName)));
-      if (!DataUtils.isEmpty(id)) {
-        criteria.add(Restrictions.ne(SysConstants.ID, id));
-      }
-      if (dao.count(criteria) > 0) {
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Boolean deleteById(String id) {
+        dao.deleteById(id);
         return Boolean.TRUE;
-      }
-    } catch (Exception e) {
-      LOGGER.error("Error checkConfigName:", e);
     }
-    return Boolean.FALSE;
-  }
+
+    @Override
+    @Transactional(rollbackFor = ProjectRuntimeException.class)
+    @CacheEvict(value = CACHE_NAME, allEntries = true)
+    public Boolean editStatus(String id, StatusEnum status) {
+        Optional<SysConfig> optional = dao.findById(id);
+        if (optional.isPresent()) {
+            optional.get().setStatus(status);
+            dao.save(optional.get());
+            return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
+    }
+
+    @Override
+    public Boolean checkConfigName(String id, String configName) {
+        try {
+            Criteria<SysConfig> criteria = new Criteria<>();
+            criteria.add(Restrictions.eq(SysConstants.CONFIG_NAME, DataUtils.trimToNull(configName)));
+            if (!DataUtils.isEmpty(id)) {
+                criteria.add(Restrictions.ne(SysConstants.ID, id));
+            }
+            if (dao.count(criteria) > 0) {
+                return Boolean.TRUE;
+            }
+        }
+        catch (Exception e) {
+            LOGGER.error("Error checkConfigName:", e);
+        }
+        return Boolean.FALSE;
+    }
 
 }

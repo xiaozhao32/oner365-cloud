@@ -15,25 +15,26 @@ import com.oner365.websocket.vo.WebSocketMessageVo;
 
 /**
  * 发送消息广播实现类
+ *
  * @author liutao
  *
  */
 @Service
 public class RedisSendMessageServiceImpl implements IRedisSendMessageService {
-  
-  private final Logger logger = LoggerFactory.getLogger(RedisSendMessageServiceImpl.class);
 
-  @Resource
-  public RedisTemplate<String,Serializable> redisTemplate;
+    private final Logger logger = LoggerFactory.getLogger(RedisSendMessageServiceImpl.class);
 
-  @Override
-  public void sendMessage(WebSocketMessageVo webSocketMessageVo) {
-    try {
-      redisTemplate.convertAndSend(WebSocketConstants.WEBSOCKET_MESSAGE_QUEUE_NAME, webSocketMessageVo);
-    }catch(Exception e) {
-      logger.error("sendMessage error", e);
+    @Resource
+    public RedisTemplate<String, Serializable> redisTemplate;
+
+    @Override
+    public void sendMessage(WebSocketMessageVo webSocketMessageVo) {
+        try {
+            redisTemplate.convertAndSend(WebSocketConstants.WEBSOCKET_MESSAGE_QUEUE_NAME, webSocketMessageVo);
+        }
+        catch (Exception e) {
+            logger.error("sendMessage error", e);
+        }
     }
-  }
-
 
 }

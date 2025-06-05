@@ -22,76 +22,69 @@ import com.oner365.swagger.dto.FileInfoDto;
 @FeignClient(value = PathConstants.FEIGN_CLIENT_HADOOP, contextId = PathConstants.CONTEXT_HADOOP_HDFS_ID)
 public interface IHadoopHdfsClient {
 
-  /**
-   * 创建文件夹
-   *
-   * @param path 文件夹
-   * @return ResponseData<Boolean>
-   */
-  @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_MKDIR)
-  ResponseData<Boolean> mkdir(@RequestParam("path") String path);
-  
-  /**
-   * 读取HDFS目录信息
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_INFO)
-  ResponseData<List<FileInfoDto>> readPathInfo(@RequestParam("path") String path);
-  
-  /**
-   * 获取HDFS文件在集群中的位置
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_LOCATIONS)
-  ResponseData<Object> getFileBlockLocations(@RequestParam("path") String path);
+    /**
+     * 创建文件夹
+     * @param path 文件夹
+     * @return ResponseData<Boolean>
+     */
+    @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_MKDIR)
+    ResponseData<Boolean> mkdir(@RequestParam("path") String path);
 
-  /**
-   * 上传文件
-   *
-   * @param path 文件
-   * @param file 文件
-   * @return ResponseData
-   */
-  @PostMapping(PathConstants.REQUEST_HADOOP_HDFS_CREATE)
-  ResponseData<Boolean> createFile(@RequestParam("path") String path, @RequestParam("file") MultipartFile file);
-  
-  /**
-   * 读取HDFS文件内容
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_READ)
-  ResponseData<String> readFile(@RequestParam("path") String path);
+    /**
+     * 读取HDFS目录信息
+     * @param path 文件
+     * @return ResponseData
+     */
+    @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_INFO)
+    ResponseData<List<FileInfoDto>> readPathInfo(@RequestParam("path") String path);
 
-  /**
-   * 获取文件
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_BYTES)
-  ResponseData<byte[]> openFileToBytes(@RequestParam("path") String path);
+    /**
+     * 获取HDFS文件在集群中的位置
+     * @param path 文件
+     * @return ResponseData
+     */
+    @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_LOCATIONS)
+    ResponseData<Object> getFileBlockLocations(@RequestParam("path") String path);
 
-  /**
-   * 读取文件列表
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_LIST)
-  ResponseData<List<FileInfoDto>> listFile(@RequestParam("path") String path);
+    /**
+     * 上传文件
+     * @param path 文件
+     * @param file 文件
+     * @return ResponseData
+     */
+    @PostMapping(PathConstants.REQUEST_HADOOP_HDFS_CREATE)
+    ResponseData<Boolean> createFile(@RequestParam("path") String path, @RequestParam("file") MultipartFile file);
 
-  /**
-   * 删除文件
-   *
-   * @param path 文件
-   * @return ResponseData
-   */
-  @DeleteMapping(PathConstants.REQUEST_HADOOP_HDFS_DELETE)
-  ResponseData<Boolean> deleteFile(@RequestParam("path") String path);
+    /**
+     * 读取HDFS文件内容
+     * @param path 文件
+     * @return ResponseData
+     */
+    @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_READ)
+    ResponseData<String> readFile(@RequestParam("path") String path);
+
+    /**
+     * 获取文件
+     * @param path 文件
+     * @return ResponseData
+     */
+    @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_BYTES)
+    ResponseData<byte[]> openFileToBytes(@RequestParam("path") String path);
+
+    /**
+     * 读取文件列表
+     * @param path 文件
+     * @return ResponseData
+     */
+    @GetMapping(PathConstants.REQUEST_HADOOP_HDFS_LIST)
+    ResponseData<List<FileInfoDto>> listFile(@RequestParam("path") String path);
+
+    /**
+     * 删除文件
+     * @param path 文件
+     * @return ResponseData
+     */
+    @DeleteMapping(PathConstants.REQUEST_HADOOP_HDFS_DELETE)
+    ResponseData<Boolean> deleteFile(@RequestParam("path") String path);
+
 }

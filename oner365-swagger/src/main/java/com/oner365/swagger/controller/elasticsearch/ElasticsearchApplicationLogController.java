@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiOperation;
 
 /**
  * Elasticsearch - 应用日志
- * 
+ *
  * @author zhaoyong
  */
 @RestController
@@ -32,45 +32,43 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/elasticsearch/application/log")
 public class ElasticsearchApplicationLogController {
 
-  @Resource
-  private IElasticsearchApplicationLogClient client;
+    @Resource
+    private IElasticsearchApplicationLogClient client;
 
-  /**
-   * 获取列表
-   * 
-   * @param data 查询参数
-   * @return ResponseData<PageInfo<ApplicationLogDto>>
-   */
-  @ApiOperation("1.获取列表")
-  @ApiOperationSupport(order = 1)
-  @PostMapping("/list")
-  public ResponseData<PageInfo<ApplicationLogDto>> list(@RequestBody QueryCriteriaBean data) {
-    return client.list(data);
-  }
+    /**
+     * 获取列表
+     * @param data 查询参数
+     * @return ResponseData<PageInfo<ApplicationLogDto>>
+     */
+    @ApiOperation("1.获取列表")
+    @ApiOperationSupport(order = 1)
+    @PostMapping("/list")
+    public ResponseData<PageInfo<ApplicationLogDto>> list(@RequestBody QueryCriteriaBean data) {
+        return client.list(data);
+    }
 
-  /**
-   * id查询
-   *
-   * @param id 编号
-   * @return ResponseData<ApplicationLogDto>
-   */
-  @ApiOperation("2.按id查询")
-  @ApiOperationSupport(order = 2)
-  @GetMapping("/get/{id}")
-  public ResponseData<ApplicationLogDto> get(@PathVariable("id") String id) {
-    return client.get(id);
-  }
+    /**
+     * id查询
+     * @param id 编号
+     * @return ResponseData<ApplicationLogDto>
+     */
+    @ApiOperation("2.按id查询")
+    @ApiOperationSupport(order = 2)
+    @GetMapping("/get/{id}")
+    public ResponseData<ApplicationLogDto> get(@PathVariable String id) {
+        return client.get(id);
+    }
 
-  /**
-   * 删除
-   *
-   * @param ids 编号
-   * @return Integer
-   */
-  @ApiOperation("3.删除")
-  @ApiOperationSupport(order = 4)
-  @DeleteMapping("/delete")
-  public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
-    return client.delete(ids);
-  }
+    /**
+     * 删除
+     * @param ids 编号
+     * @return Integer
+     */
+    @ApiOperation("3.删除")
+    @ApiOperationSupport(order = 4)
+    @DeleteMapping("/delete")
+    public ResponseData<List<Boolean>> delete(@RequestBody String... ids) {
+        return client.delete(ids);
+    }
+
 }

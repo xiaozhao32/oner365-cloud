@@ -14,31 +14,31 @@ import com.oner365.influx.config.properties.InfluxProperties;
 
 /**
  * influx config
- * 
+ *
  * @author zhaoyong
  *
  */
 @Configuration
 @EnableConfigurationProperties({ InfluxProperties.class })
 public class InfluxConfig {
-  
-  private static final Logger LOGGER = LoggerFactory.getLogger(InfluxConfig.class);
-  
-  @Resource
-  private InfluxProperties influxProperties;
-  
-  /**
-   * 获取连接
-   * 
-   * @return InfluxDBClient
-   */
-  public InfluxDBClient getInfluxClient() {
-    return InfluxDBClientFactory.create(influxProperties.getUrl(), influxProperties.getToken().toCharArray());
-  }
-  
-  @PreDestroy
-  public void destroy() {
-    LOGGER.info("influx close..");
-    getInfluxClient().close();
-  }
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(InfluxConfig.class);
+
+    @Resource
+    private InfluxProperties influxProperties;
+
+    /**
+     * 获取连接
+     * @return InfluxDBClient
+     */
+    public InfluxDBClient getInfluxClient() {
+        return InfluxDBClientFactory.create(influxProperties.getUrl(), influxProperties.getToken().toCharArray());
+    }
+
+    @PreDestroy
+    public void destroy() {
+        LOGGER.info("influx close..");
+        getInfluxClient().close();
+    }
+
 }

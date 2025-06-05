@@ -15,19 +15,22 @@ import com.oner365.data.jpa.service.BaseService;
 
 /**
  * 定时任务监听
- * 
+ *
  * @author liutao
  *
  */
 @Component
 public interface IScheduleTaskService extends BaseService {
 
-  /**
-   * 定时任务监听
-   *
-   * @param invokeParamDto 对象
-   * @throws SSLException SSLException
-   */
-  @RabbitListener(bindings = @QueueBinding(value = @Queue(value = ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_NAME, autoDelete = "false"), exchange = @Exchange(value = ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_TYPE, type = ExchangeTypes.FANOUT), key = ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_KEY))
-  void scheduleTask(InvokeParamDto invokeParamDto) throws SSLException;
+    /**
+     * 定时任务监听
+     * @param invokeParamDto 对象
+     * @throws SSLException SSLException
+     */
+    @RabbitListener(bindings = @QueueBinding(
+            value = @Queue(value = ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_NAME, autoDelete = "false"),
+            exchange = @Exchange(value = ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_TYPE, type = ExchangeTypes.FANOUT),
+            key = ScheduleTaskConstants.SCHEDULE_TASK_QUEUE_KEY))
+    void scheduleTask(InvokeParamDto invokeParamDto) throws SSLException;
+
 }

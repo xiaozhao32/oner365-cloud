@@ -10,7 +10,7 @@ import com.oner365.data.datasource.constants.DataSourceConstants;
 
 /**
  * 数据源注解
- * 
+ *
  * @author zhaoyong
  *
  */
@@ -19,6 +19,6 @@ import com.oner365.data.datasource.constants.DataSourceConstants;
 @Documented
 public @interface DataSource {
 
-  String value() default DataSourceConstants.PRIMARY;
+    String value() default DataSourceConstants.PRIMARY;
 
 }

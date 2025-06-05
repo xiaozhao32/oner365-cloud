@@ -8,6 +8,7 @@ import org.springframework.context.annotation.ComponentScan;
 
 /**
  * websocket 启动类
+ *
  * @author liutao
  */
 @SpringBootApplication
@@ -16,10 +17,8 @@ import org.springframework.context.annotation.ComponentScan;
 @ComponentScan({ "com.oner365" })
 public class WebsocketApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(WebsocketApplication.class, args);
-	}
-
-	
+    public static void main(String[] args) {
+        SpringApplication.run(WebsocketApplication.class, args);
+    }
 
 }
