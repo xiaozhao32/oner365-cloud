@@ -31,7 +31,7 @@
 		LEFT JOIN nt_sys_role ro ON ur.role_id = ro.id
 		WHERE ur.user_id = #{userId} AND m.menu_type_id=#{menuTypeId} AND m.status='1'
 		<if test="menuName != null and menuName != ''">
-            AND menu_name LIKE concat('%', #{menuName}, '%')
+            AND menu_name LIKE '%' || #{menuName} || '%'
 		</if>
 		ORDER BY m.parent_id, m.menu_order
 	</select>

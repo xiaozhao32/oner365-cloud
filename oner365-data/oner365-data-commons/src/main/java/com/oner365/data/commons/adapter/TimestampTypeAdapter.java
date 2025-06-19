@@ -2,7 +2,6 @@ package com.oner365.data.commons.adapter;
 
 import java.lang.reflect.Type;
 import java.sql.Timestamp;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -24,29 +23,19 @@ import com.oner365.data.commons.util.DateUtil;
  */
 public class TimestampTypeAdapter implements JsonSerializer<Timestamp>, JsonDeserializer<Timestamp> {
 
-    private static final ThreadLocal<DateFormat> LOCAL = new ThreadLocal<>();
-
-    /**
-     * get method
-     * @return DateFormat
-     */
-    public static DateFormat getDateFormat() {
-        if (LOCAL.get() == null) {
-            LOCAL.set(new SimpleDateFormat(DateUtil.FULL_TIME_FORMAT));
-        }
-        return LOCAL.get();
-    }
+    private static final ThreadLocal<SimpleDateFormat> SIMPLE_DATE_FORMAT = ThreadLocal
+            .withInitial(() -> new SimpleDateFormat(DateUtil.FULL_TIME_FORMAT));
 
     /**
      * remove method
      */
     public static void remove() {
-        LOCAL.remove();
+        SIMPLE_DATE_FORMAT.remove();
     }
 
     @Override
     public JsonElement serialize(Timestamp src, Type arg1, JsonSerializationContext arg2) {
-        String dateFormatAsString = getDateFormat().format(new Date(src.getTime()));
+        String dateFormatAsString = SIMPLE_DATE_FORMAT.get().format(new Date(src.getTime()));
         return new JsonPrimitive(dateFormatAsString);
     }
 
@@ -60,7 +49,7 @@ public class TimestampTypeAdapter implements JsonSerializer<Timestamp>, JsonDese
                 return null;
             }
             else {
-                Date date = getDateFormat().parse(json.getAsString());
+                Date date = SIMPLE_DATE_FORMAT.get().parse(json.getAsString());
                 return new Timestamp(date.getTime());
             }
         }

@@ -395,29 +395,6 @@ public class DateUtil {
     }
 
     /**
-     * 格式化日期
-     * @param date 日期
-     * @return String
-     */
-    public static String format(Date date) {
-        SimpleDateFormat df = new SimpleDateFormat(FULL_TIME_FORMAT, Locale.CHINESE);
-        df.setTimeZone(TimeZone.getTimeZone(DATE_TIMEZONE));
-        return df.format(date);
-    }
-
-    /**
-     * 格式化日期
-     * @param date 日期
-     * @param pattern 格式
-     * @return String
-     */
-    public static String format(Date date, String pattern) {
-        SimpleDateFormat df = new SimpleDateFormat(pattern, Locale.CHINESE);
-        df.setTimeZone(TimeZone.getTimeZone(DATE_TIMEZONE));
-        return df.format(date);
-    }
-
-    /**
      * 解析时间字符串
      * @param dateString 日期字符串
      * @param format 格式
