@@ -9,11 +9,9 @@ spring:
   profiles:
     active: dev
     
-  boot:
-    admin:
-      client: 
-        url: http://localhost:8706 
-        api-path: 
+  main:
+    allow-circular-references: true
+    allow-bean-definition-overriding: true
         
   cloud:
     # consul
