@@ -1,4 +1,21 @@
-# oner365 项目说明文档
+# Oner365 Spring Cloud
+
+![Spring Framework 5.3.39](https://shields.io/badge/Spring%20Framework-5.3.39-blue) 
+![Spring Boot 2.7.18](https://shields.io/badge/Spring%20Boot-2.7.18-blue) 
+![Spring Cloud 2021.0.9](https://shields.io/badge/Spring%20Cloud-2021.0.9-blue) 
+![License Apache 2.0](https://shields.io/badge/License-Apache--2.0-blue) 
+![Java 8,11,17](https://img.shields.io/badge/JDK-8%2C11%2C17-green)
+
+![Author Zy&Lt](https://shields.io/badge/Author-Zy&Lt-orange) 
+![Version 2.1.0](https://shields.io/badge/Version-2.1.0-red) 
+![Github star](https://img.shields.io/github/stars/xiaozhao32/oner365-cloud?style=flat&logo=github) 
+![Github fork](https://img.shields.io/github/forks/xiaozhao32/oner365-cloud?style=flat&logo=github) 
+![Gitee star](https://gitee.com/xiaozhao32/oner365-cloud/badge/star.svg?theme=dark) 
+![Gitee fork](https://gitee.com/xiaozhao32/oner365-cloud/badge/fork.svg?theme=dark)
+
+[![Github 仓库](https://github.com/xiaozhao32/oner365-cloud)](https://github.com/xiaozhao32/oner365-cloud) | [Gitee 仓库](https://gitee.com/xiaozhao32/oner365-cloud)
+
+---
 
 ## 项目介绍
 oner365 是一个基于 Spring Cloud Alibaba 的微服务架构项目，支持多种数据库和中间件，如 MySQL、PostgreSQL、Oracle、MongoDB、Redis、Cassandra、Elasticsearch、InfluxDB、Hadoop、ActiveMQ、RabbitMQ、Kafka 等。该项目提供丰富的功能模块，包括权限管理、任务调度、日志管理、文件存储、数据访问、消息队列、监控等。

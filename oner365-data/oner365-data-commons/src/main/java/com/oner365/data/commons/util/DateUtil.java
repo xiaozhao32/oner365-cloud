@@ -2,9 +2,6 @@ package com.oner365.data.commons.util;
 
 import java.lang.management.ManagementFactory;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -15,10 +12,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
-import java.util.TimeZone;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -159,8 +154,7 @@ public class DateUtil {
         String regex = "\\d{4}-\\d{2}-\\d{2}";
         Pattern pattern = Pattern.compile(regex);
         Matcher m = pattern.matcher(strDate);
-        boolean dateFlag = m.matches();
-        if (dateFlag) {
+        if (m.matches()) {
             return stringToDate(strDate, FULL_DATE_FORMAT);
         }
         return stringToDate(strDate, FULL_TIME_FORMAT);
@@ -173,12 +167,16 @@ public class DateUtil {
      * @return 日期型日期
      */
     public static Date stringToDate(String strDate, String fm) {
-        DateFormat df = new SimpleDateFormat(fm);
-        df.setTimeZone(TimeZone.getTimeZone(DATE_TIMEZONE));
         try {
-            return df.parse(strDate);
+            if (FULL_DATE_FORMAT.equals(fm)) {
+                LocalDate localDate = LocalDate.parse(strDate, DateTimeFormatter.ofPattern(fm));
+                return DateUtil.localDateToDate(localDate);
+            } else {
+                LocalDateTime localDateTime = LocalDateTime.parse(strDate, DateTimeFormatter.ofPattern(fm));
+                return DateUtil.localDateTimeToDate(localDateTime);
+            }
         }
-        catch (ParseException e) {
+        catch (Exception e) {
             LOGGER.error("Error stringToDate: ", e);
         }
         return null;
@@ -192,9 +190,8 @@ public class DateUtil {
      */
     public static String dateToString(Date date, String fm) {
         try {
-            SimpleDateFormat dateFmt = new SimpleDateFormat(fm);
-            dateFmt.setTimeZone(TimeZone.getTimeZone(DATE_TIMEZONE));
-            return dateFmt.format(date);
+            LocalDateTime localDateTime = DateUtil.dateToLocalDateTime(date);
+            return localDateTime.format(DateTimeFormatter.ofPattern(fm));
         }
         catch (Exception e) {
             LOGGER.error("Error dateToString: ", e);
@@ -392,49 +389,6 @@ public class DateUtil {
      */
     public static Date truncate(Date d1, int i) {
         return org.apache.commons.lang3.time.DateUtils.truncate(d1, i);
-    }
-
-    /**
-     * 解析时间字符串
-     * @param dateString 日期字符串
-     * @param format 格式
-     * @return Date
-     */
-    public static Date parse(String dateString, String format) {
-        return parse(dateString, format, Locale.CHINESE, TimeZone.getDefault());
-    }
-
-    /**
-     * 解析时间字符串
-     * @param dateString 日期字符串
-     * @param format 格式
-     * @param locale 本地化
-     * @param timeZone 域
-     * @return Date
-     */
-    public static Date parse(String dateString, String format, Locale locale, TimeZone timeZone) {
-        SimpleDateFormat formatter = (SimpleDateFormat) DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG,
-                locale);
-        formatter.applyPattern(format);
-        formatter.setTimeZone(timeZone);
-        try {
-            return formatter.parse(dateString);
-        }
-        catch (Exception e) {
-            LOGGER.error("Error parse:", e);
-        }
-        return null;
-    }
-
-    /**
-     * 获得当前时间的格式
-     * @param pattern 格式
-     * @return String
-     */
-    public static String getCurrentTime(String pattern) {
-        SimpleDateFormat format = new SimpleDateFormat(pattern);
-        format.setTimeZone(TimeZone.getTimeZone(DATE_TIMEZONE));
-        return format.format(getDate());
     }
 
     /**
@@ -1601,7 +1555,7 @@ public class DateUtil {
 
         Calendar lastEndTime = Calendar.getInstance();
         lastEndTime
-            .setTime(nextDay(stringToDate(resultList.get(resultList.size() - 1).get("end"), FULL_DATE_FORMAT), 1));
+            .setTime(nextDay(stringToDate(resultList.get(resultList.size() - 1).get(endString), FULL_DATE_FORMAT), 1));
         if (lastEndTime.compareTo(c2) < 0) {
             Map<String, String> map = new HashMap<>(10);
             map.put(startString, dateToString(getDateStartTime(dateToString(
