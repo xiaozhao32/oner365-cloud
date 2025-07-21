@@ -88,7 +88,7 @@ public class FileLocalUploadUtils {
         }
         String fileUrl = fileWeb + PublicConstants.DELIMITER + uploadPath + fileName;
 
-        String ss = fileUrl.replace(PublicConstants.FILE_HTTP, "");
+        String ss = fileUrl.replace(PublicConstants.FILE_HTTP, PublicConstants.EMPTY);
         String fastUrl = StringUtils.substringBefore(ss, PublicConstants.DELIMITER);
         String id = uploadPath + fileName;
         // save file

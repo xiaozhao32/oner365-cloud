@@ -163,7 +163,7 @@ public class VelocityUtils {
      */
     public static String getFileName(String template, GenTable genTable) {
         // 文件名称
-        String fileName = "";
+        String fileName = PublicConstants.EMPTY;
         // 包路径
         String packageName = genTable.getPackageName();
         // 模块名

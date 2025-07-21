@@ -6,6 +6,8 @@ import java.io.StringWriter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
+import com.oner365.data.commons.constants.PublicConstants;
+
 /**
  * 错误信息处理类。
  *
@@ -37,7 +39,7 @@ public class ExceptionUtil {
         Throwable root = ExceptionUtils.getRootCause(e);
         root = (root == null ? e : root);
         if (root == null) {
-            return "";
+            return PublicConstants.EMPTY;
         }
         String msg = root.getMessage();
         if (msg == null) {

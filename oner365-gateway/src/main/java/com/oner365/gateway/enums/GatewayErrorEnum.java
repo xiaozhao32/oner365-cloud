@@ -1,5 +1,7 @@
 package com.oner365.gateway.enums;
 
+import com.oner365.data.commons.constants.PublicConstants;
+
 /**
  * 服务错误信息
  *
@@ -37,7 +39,7 @@ public enum GatewayErrorEnum {
                 return e.getDescription();
             }
         }
-        return "";
+        return PublicConstants.EMPTY;
     }
 
 }

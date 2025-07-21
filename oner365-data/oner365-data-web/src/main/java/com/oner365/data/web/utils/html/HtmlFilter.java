@@ -11,6 +11,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.oner365.data.commons.constants.PublicConstants;
+
 /**
  * HTML过滤器，用于去除XSS漏洞隐患。
  *
@@ -289,7 +291,7 @@ public final class HtmlFilter {
             //
             // try and form html
             //
-            s = regexReplace(P_END_ARROW, "", s);
+            s = regexReplace(P_END_ARROW, PublicConstants.EMPTY, s);
             // 不追加结束标签
             s = regexReplace(P_BODY_TO_END, "<$1>", s);
             s = regexReplace(P_XML_CONTENT, "$1<$2", s);
@@ -307,7 +309,7 @@ public final class HtmlFilter {
             // (we need to do a lookahead assertion so that the last bracket can
             // be used in the next pass of the regexp)
             //
-            s = regexReplace(P_BOTH_ARROWS, "", s);
+            s = regexReplace(P_BOTH_ARROWS, PublicConstants.EMPTY, s);
         }
 
         return s;
@@ -343,11 +345,11 @@ public final class HtmlFilter {
             if (!P_REMOVE_PAIR_BLANKS.containsKey(tag)) {
                 P_REMOVE_PAIR_BLANKS.putIfAbsent(tag, Pattern.compile("<" + tag + "(\\s[^>]*)?></" + tag + ">"));
             }
-            result = regexReplace(P_REMOVE_PAIR_BLANKS.get(tag), "", result);
+            result = regexReplace(P_REMOVE_PAIR_BLANKS.get(tag), PublicConstants.EMPTY, result);
             if (!P_REMOVE_SELF_BLANKS.containsKey(tag)) {
                 P_REMOVE_SELF_BLANKS.putIfAbsent(tag, Pattern.compile("<" + tag + "(\\s[^>]*)?/>"));
             }
-            result = regexReplace(P_REMOVE_SELF_BLANKS.get(tag), "", result);
+            result = regexReplace(P_REMOVE_SELF_BLANKS.get(tag), PublicConstants.EMPTY, result);
         }
 
         return result;
@@ -415,7 +417,7 @@ public final class HtmlFilter {
                 }
 
                 if (inArray(name, vNeedClosingTags)) {
-                    ending = "";
+                    ending = PublicConstants.EMPTY;
                 }
 
                 if (ending == null || ending.length() < 1) {
@@ -432,7 +434,7 @@ public final class HtmlFilter {
                 return "<" + name + params + ending + ">";
             }
             else {
-                return "";
+                return PublicConstants.EMPTY;
             }
         }
 
@@ -442,7 +444,7 @@ public final class HtmlFilter {
             return "<" + m.group() + ">";
         }
 
-        return "";
+        return PublicConstants.EMPTY;
     }
 
     private String processParamProtocol(String s) {

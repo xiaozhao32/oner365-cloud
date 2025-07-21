@@ -26,6 +26,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oner365.data.commons.constants.PublicConstants;
 import com.oner365.data.commons.exception.ProjectRuntimeException;
 
 import ch.ethz.ssh2.Connection;
@@ -64,7 +65,7 @@ public class DeployUtils {
         String s = DeployUtils.execExecute("cmd /c netstat -ano | findstr \"" + port + "\" ");
         String process = StringUtils.substringAfterLast(s, " ");
         LOGGER.info("stop:{}", process);
-        if (!"".equals(process)) {
+        if (!PublicConstants.EMPTY.equals(process)) {
             String ss = DeployUtils.execExecute("cmd /c taskkill /pid " + process + " -f");
             LOGGER.info("stop:{}", ss);
         }

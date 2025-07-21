@@ -21,6 +21,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oner365.data.commons.constants.PublicConstants;
+
 /**
  * 功能：时间处理工具类
  *
@@ -820,7 +822,7 @@ public class DateUtil {
             birthName += "2000";
         }
         if (!isLeapYear(birthName)) {
-            return "";
+            return PublicConstants.EMPTY;
         }
         int month = Integer.parseInt(birthName.substring(birthName.indexOf('-') + 1, birthName.lastIndexOf('-')));
         int day = Integer.parseInt(birthName.substring(birthName.lastIndexOf('-') + 1));
@@ -1457,11 +1459,11 @@ public class DateUtil {
     public static String getYmdDateCn(String dateStr) {
         if (dateStr != null) {
             if (dateStr.length() < POS_10) {
-                return "";
+                return PublicConstants.EMPTY;
             }
             return dateStr.substring(0, 4) + dateStr.substring(5, 7) + dateStr.substring(8, 10);
         }
-        return "";
+        return PublicConstants.EMPTY;
     }
 
     /**

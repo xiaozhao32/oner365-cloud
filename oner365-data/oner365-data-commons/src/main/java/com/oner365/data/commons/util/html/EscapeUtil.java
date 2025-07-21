@@ -1,5 +1,6 @@
 package com.oner365.data.commons.util.html;
 
+import com.oner365.data.commons.constants.PublicConstants;
 import com.oner365.data.commons.util.DataUtils;
 
 /**
@@ -70,7 +71,7 @@ public class EscapeUtil {
      */
     private static String encode(String text) {
         if (DataUtils.isEmpty(text)) {
-            return "";
+            return PublicConstants.EMPTY;
         }
 
         final StringBuilder tmp = new StringBuilder(text.length() * 6);

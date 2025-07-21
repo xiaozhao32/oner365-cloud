@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.oner365.data.commons.constants.PublicConstants;
 import com.oner365.data.commons.util.ClassesUtil;
 import com.oner365.data.commons.util.DataUtils;
 
@@ -103,7 +104,7 @@ public class ImportExcelUtils {
         String[] title = new String[colNum];
         for (int i = 0; i < colNum; i++) {
             Object val = getCellValue(row.getCell((short) i));
-            title[i] = val != null ? val.toString().trim() : "";
+            title[i] = val != null ? val.toString().trim() : PublicConstants.EMPTY;
         }
         excelData.setColumnNames(title);
 
@@ -165,7 +166,7 @@ public class ImportExcelUtils {
                 break;
             case _NONE:
             case BLANK:
-                value = "";
+                value = PublicConstants.EMPTY;
                 break;
             case BOOLEAN:
                 value = cell.getBooleanCellValue();
@@ -181,7 +182,7 @@ public class ImportExcelUtils {
                     value = df.format(cell.getNumericCellValue());
                 }
                 else {
-                    value = (cell + "").trim();
+                    value = (cell + PublicConstants.EMPTY).trim();
                 }
                 break;
             case FORMULA:

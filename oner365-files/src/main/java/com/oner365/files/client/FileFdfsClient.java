@@ -90,7 +90,7 @@ public class FileFdfsClient implements IFileStorageClient {
         // save
         SysFileStorageVo entity = new SysFileStorageVo();
         entity.setFastdfsUrl(PublicConstants.FILE_HTTP + fileFdfsProperties.getIp());
-        entity.setId(StringUtils.replace(url, entity.getFastdfsUrl() + PublicConstants.DELIMITER, ""));
+        entity.setId(StringUtils.replace(url, entity.getFastdfsUrl() + PublicConstants.DELIMITER, PublicConstants.EMPTY));
         entity.setCreateTime(LocalDateTime.now());
         entity.setDirectory(false);
         entity.setFileStorage(getName());
@@ -110,7 +110,7 @@ public class FileFdfsClient implements IFileStorageClient {
      */
     private String getExtName(String fileName, String contentType) {
         String result = FilenameUtils.getExtension(fileName);
-        if ("".equals(result)) {
+        if (PublicConstants.EMPTY.equals(result)) {
             return StringUtils.substringAfterLast(contentType, PublicConstants.DELIMITER);
         }
         return result;

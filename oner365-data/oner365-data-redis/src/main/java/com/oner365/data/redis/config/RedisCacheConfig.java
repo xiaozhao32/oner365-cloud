@@ -32,7 +32,6 @@ import org.springframework.data.redis.connection.lettuce.LettucePoolingClientCon
 import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.util.ObjectUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
@@ -121,10 +120,10 @@ public class RedisCacheConfig implements CachingConfigurer {
             @Qualifier("poolConfig") GenericObjectPoolConfig<LettuceClientConfiguration> poolConfig) {
         RedisSentinelConfiguration redisSentinelConfiguration = new RedisSentinelConfiguration(
                 redisProperties.getSentinel().getMaster(), new HashSet<>(redisProperties.getSentinel().getNodes()));
-        if (!ObjectUtils.isEmpty(redisProperties.getSentinel().getPassword())) {
+        if (!DataUtils.isEmpty(redisProperties.getSentinel().getPassword())) {
             redisSentinelConfiguration.setSentinelPassword(redisProperties.getSentinel().getPassword());
         }
-        if (!ObjectUtils.isEmpty(redisProperties.getPassword())) {
+        if (!DataUtils.isEmpty(redisProperties.getPassword())) {
             redisSentinelConfiguration.setPassword(redisProperties.getPassword());
         }
         LettuceClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder()

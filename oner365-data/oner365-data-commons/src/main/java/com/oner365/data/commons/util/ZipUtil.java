@@ -44,7 +44,7 @@ public class ZipUtil {
     public static void zip(File file, String dest, List<String> filter) {
         try (FileOutputStream outputStream = new FileOutputStream(dest);
                 ZipOutputStream out = new ZipOutputStream(outputStream)) {
-            zip(out, file, "", filter);
+            zip(out, file, PublicConstants.EMPTY, filter);
         }
         catch (IOException e) {
             LOGGER.error("Error zip:", e);
@@ -60,7 +60,7 @@ public class ZipUtil {
     public static void zip(List<File> files, String dest, List<String> filter) {
         try (FileOutputStream outputStream = new FileOutputStream(dest);
                 ZipOutputStream out = new ZipOutputStream(outputStream)) {
-            files.forEach(file -> zip(out, file, "", filter));
+            files.forEach(file -> zip(out, file, PublicConstants.EMPTY, filter));
         }
         catch (IOException e) {
             LOGGER.error("Error zip:", e);
@@ -78,7 +78,7 @@ public class ZipUtil {
         if (srcFile.exists()) {
             String base = baseName;
             if (srcFile.isDirectory()) {
-                base = base.length() == 0 ? "" : base + PublicConstants.DELIMITER;
+                base = base.length() == 0 ? PublicConstants.EMPTY : base + PublicConstants.DELIMITER;
                 zipBaseDirectory(out, srcFile, filter, base);
             }
             else {
@@ -216,7 +216,7 @@ public class ZipUtil {
      * @return String
      */
     public static String getZipComment(String srcFile) {
-        String comment = "";
+        String comment = PublicConstants.EMPTY;
         try (ZipFile zipFile = new ZipFile(srcFile)) {
             Enumeration<?> e = zipFile.getEntries();
             while (e.hasMoreElements()) {
