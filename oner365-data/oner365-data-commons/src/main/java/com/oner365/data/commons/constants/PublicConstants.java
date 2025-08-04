@@ -121,6 +121,11 @@ public class PublicConstants {
      * 队列锁时间
      */
     public static final Integer QUEUE_LOCK_TIME_SECOND = 10;
+    
+    /**
+     * 空字符串
+     */
+    public static final String EMPTY = "";
 
     /**
      * Constructor

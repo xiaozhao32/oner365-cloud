@@ -6,6 +6,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+import com.oner365.data.commons.constants.PublicConstants;
+
 /**
  * Cache Annotation
  * 
@@ -16,8 +18,8 @@ import java.lang.annotation.Target;
 @Documented
 public @interface RedisCacheAble {
 
-    String value() default "";
+    String value() default PublicConstants.EMPTY;
 
-    String key() default "";
+    String key() default PublicConstants.EMPTY;
 
 }

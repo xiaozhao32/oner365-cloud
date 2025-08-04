@@ -67,7 +67,7 @@ public class RedisCacheAspect {
     @Around("annotationAble()&& @annotation(rd)")
     public Object redisCacheAble(ProceedingJoinPoint joinPoint, RedisCacheAble rd) throws Throwable {
 
-        String key = "";
+        String key = PublicConstants.EMPTY;
         if (commonProperties.isRedisEnabled()) {
             String preKey = rd.value();
             String arg0 = joinPoint.getArgs()[0].toString();

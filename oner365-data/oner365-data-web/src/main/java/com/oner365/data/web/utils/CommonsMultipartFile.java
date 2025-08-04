@@ -16,6 +16,8 @@ import org.springframework.util.StreamUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import com.oner365.data.commons.constants.PublicConstants;
+
 /**
  * {@link MultipartFile} implementation for Apache Commons FileUpload.
  *
@@ -77,7 +79,7 @@ public class CommonsMultipartFile implements MultipartFile {
         String filename = this.fileItem.getName();
         if (filename == null) {
             // Should never happen.
-            return "";
+            return PublicConstants.EMPTY;
         }
         if (this.preserveFilename) {
             // Do not try to strip off a path...
@@ -204,8 +206,8 @@ public class CommonsMultipartFile implements MultipartFile {
     @Override
     public String toString() {
         return "MultipartFile[field=\"" + this.fileItem.getFieldName() + "\""
-                + (this.fileItem.getName() != null ? ", filename=" + this.fileItem.getName() : "")
-                + (this.fileItem.getContentType() != null ? ", contentType=" + this.fileItem.getContentType() : "")
+                + (this.fileItem.getName() != null ? ", filename=" + this.fileItem.getName() : PublicConstants.EMPTY)
+                + (this.fileItem.getContentType() != null ? ", contentType=" + this.fileItem.getContentType() : PublicConstants.EMPTY)
                 + ", size=" + this.fileItem.getSize() + "]";
     }
 

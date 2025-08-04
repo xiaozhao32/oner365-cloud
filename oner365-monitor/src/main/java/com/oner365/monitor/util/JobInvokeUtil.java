@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSON;
 import com.oner365.api.rabbitmq.dto.InvokeParamDto;
 import com.oner365.api.rabbitmq.dto.SysTaskDto;
+import com.oner365.data.commons.constants.PublicConstants;
 import com.oner365.data.commons.util.DataUtils;
 import com.oner365.monitor.entity.InvokeParam;
 
@@ -141,7 +142,7 @@ public class JobInvokeUtil {
             String str = StringUtils.trimToEmpty(methodParams[index]);
             // String字符串类型，包含'
             if (StringUtils.contains(str, "'")) {
-                classes.add(new Object[] { StringUtils.replace(str, "'", ""), String.class });
+                classes.add(new Object[] { StringUtils.replace(str, "'", PublicConstants.EMPTY), String.class });
             }
             // boolean布尔类型，等于true或者false
             else if (StringUtils.equals(str, "true") || StringUtils.equalsIgnoreCase(str, "false")) {
@@ -149,11 +150,11 @@ public class JobInvokeUtil {
             }
             // long长整形，包含L
             else if (StringUtils.containsIgnoreCase(str, "L")) {
-                classes.add(new Object[] { Long.valueOf(StringUtils.replaceIgnoreCase(str, "L", "")), Long.class });
+                classes.add(new Object[] { Long.valueOf(StringUtils.replaceIgnoreCase(str, "L", PublicConstants.EMPTY)), Long.class });
             }
             // double浮点类型，包含D
             else if (StringUtils.containsIgnoreCase(str, "D")) {
-                classes.add(new Object[] { Double.valueOf(StringUtils.replaceIgnoreCase(str, "D", "")), Double.class });
+                classes.add(new Object[] { Double.valueOf(StringUtils.replaceIgnoreCase(str, "D", PublicConstants.EMPTY)), Double.class });
             }
             // 其他类型归类为整形
             else {

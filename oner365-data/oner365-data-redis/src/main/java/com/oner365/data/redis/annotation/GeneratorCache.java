@@ -28,7 +28,7 @@ public @interface GeneratorCache {
     @AliasFor("value")
     String[] cacheNames() default {};
 
-    String key() default "";
+    String key() default PublicConstants.EMPTY;
 
     String keyGenerator() default PublicConstants.KEY_GENERATOR;
 

@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 
+import com.oner365.data.commons.constants.PublicConstants;
+
 /**
  * base64 工具类
  *
@@ -69,7 +71,7 @@ public class Base64Utils {
      */
     public static String stringInsertByInterval(String original, String insertString, int interval) {
         if (original == null) {
-            return "";
+            return PublicConstants.EMPTY;
         }
         int len = original.length();
         if (interval >= len) {

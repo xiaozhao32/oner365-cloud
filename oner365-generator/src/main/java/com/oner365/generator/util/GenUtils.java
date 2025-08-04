@@ -261,7 +261,7 @@ public class GenUtils {
         return Arrays.stream(searchList)
             .filter(replacement::startsWith)
             .findFirst()
-            .map(searchString -> replacement.replaceFirst(searchString, ""))
+            .map(searchString -> replacement.replaceFirst(searchString, PublicConstants.EMPTY))
             .orElse(replacement);
     }
 
@@ -271,7 +271,7 @@ public class GenUtils {
      * @return 替换后的名字
      */
     public static String replaceText(String text) {
-        return RegExUtils.replaceAll(text, "(?:表|" + PublicConstants.NAME + ")", "");
+        return RegExUtils.replaceAll(text, "(?:表|" + PublicConstants.NAME + ")", PublicConstants.EMPTY);
     }
 
     /**

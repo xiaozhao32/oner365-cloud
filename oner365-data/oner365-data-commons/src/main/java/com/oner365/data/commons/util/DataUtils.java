@@ -98,7 +98,7 @@ public class DataUtils {
                 return fileName.substring(i + 1).toLowerCase();
             }
         }
-        return "";
+        return PublicConstants.EMPTY;
     }
 
     /**
@@ -266,7 +266,7 @@ public class DataUtils {
                 return fileName.substring(0, i);
             }
         }
-        return "";
+        return PublicConstants.EMPTY;
     }
 
     /**
@@ -339,7 +339,7 @@ public class DataUtils {
      * @return String
      */
     public static String trimToEmpty(String str) {
-        return isEmpty(str) ? "" : str.trim();
+        return isEmpty(str) ? PublicConstants.EMPTY : str.trim();
     }
 
     /**

@@ -3,6 +3,8 @@ package com.oner365.data.commons.util;
 import java.math.BigDecimal;
 import java.util.stream.IntStream;
 
+import com.oner365.data.commons.constants.PublicConstants;
+
 /**
  * 工具类
  *
@@ -12,9 +14,9 @@ public class DataFormat {
 
     private static final String[] CHN_NUMBER = { "零", "一", "二", "三", "四", "五", "六", "七", "八", "九" };
 
-    private static final String[] CHN_UNIT = { "", "十", "百", "千" };
+    private static final String[] CHN_UNIT = { PublicConstants.EMPTY, "十", "百", "千" };
 
-    private static final String[] CHN_UNIT_SECTION = { "", "万", "亿", "万亿" };
+    private static final String[] CHN_UNIT_SECTION = { PublicConstants.EMPTY, "万", "亿", "万亿" };
 
     private static final String E = "E";
 

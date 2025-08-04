@@ -75,7 +75,7 @@ public class GeneTransFormUtils {
      * @return String
      */
     public static String geneTrimString(String geneInfo) {
-        return geneInfo.replaceAll("((?<=\\{)\"\\w+\":\"\",|,*\"\\w+\":\"\")", "");
+        return geneInfo.replaceAll("((?<=\\{)\"\\w+\":\"\",|,*\"\\w+\":\"\")", PublicConstants.EMPTY);
     }
 
     /**
