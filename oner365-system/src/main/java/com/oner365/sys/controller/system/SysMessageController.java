@@ -63,7 +63,7 @@ public class SysMessageController extends BaseController {
      * @param data 查询对象
      * @return PageInfo<SysMessageDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SysMessageDto> pageList(@RequestBody QueryCriteriaBean data) {
         return sysMessageService.pageList(data);
     }

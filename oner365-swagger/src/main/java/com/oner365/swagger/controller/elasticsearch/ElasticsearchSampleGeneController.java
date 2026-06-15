@@ -44,9 +44,9 @@ public class ElasticsearchSampleGeneController {
      */
     @ApiOperation("1.获取列表")
     @ApiOperationSupport(order = 1)
-    @PostMapping("/list")
-    public ResponseData<PageInfo<SampleGeneDto>> list(@RequestBody QueryCriteriaBean data) {
-        return client.list(data);
+    @PostMapping("/page")
+    public ResponseData<PageInfo<SampleGeneDto>> page(@RequestBody QueryCriteriaBean data) {
+        return client.page(data);
     }
 
     /**

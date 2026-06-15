@@ -35,8 +35,16 @@ public interface ISystemRoleClient {
      * @param data 查询参数
      * @return ResponseData<PageInfo<SysRoleDto>>
      */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_ROLE_PAGE)
+    ResponseData<PageInfo<SysRoleDto>> page(@RequestBody QueryCriteriaBean data);
+    
+    /**
+     * 列表
+     * @param data 查询参数
+     * @return ResponseData<PageInfo<SysRoleDto>>
+     */
     @PostMapping(PathConstants.REQUEST_SYSTEM_ROLE_LIST)
-    ResponseData<PageInfo<SysRoleDto>> list(@RequestBody QueryCriteriaBean data);
+    ResponseData<List<SysRoleDto>> list(@RequestBody QueryCriteriaBean data);
 
     /**
      * 按id获取查询
@@ -44,7 +52,7 @@ public interface ISystemRoleClient {
      * @return ResponseData<SysRoleDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_ROLE_GET_ID)
-    ResponseData<SysRoleDto> getById(@PathVariable("id") String id);
+    ResponseData<SysRoleDto> getById(@PathVariable String id);
 
     /**
      * 修改状态
@@ -53,7 +61,7 @@ public interface ISystemRoleClient {
      * @return ResponseData<Boolean>
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_ROLE_STATUS)
-    ResponseData<Boolean> editStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
+    ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
     /**
      * 判断类别id 类别是否存在

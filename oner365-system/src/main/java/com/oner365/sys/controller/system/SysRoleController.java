@@ -44,7 +44,7 @@ public class SysRoleController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysRoleDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SysRoleDto> pageList(@RequestBody QueryCriteriaBean data) {
         return roleService.pageList(data);
     }

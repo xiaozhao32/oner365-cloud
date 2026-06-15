@@ -38,8 +38,8 @@ public interface ISystemUserClient {
      * @param data 查询参数
      * @return ResponseData<PageInfo<SysUserDto>>
      */
-    @PostMapping(PathConstants.REQUEST_SYSTEM_USER_LIST)
-    ResponseData<PageInfo<SysUserDto>> list(@RequestBody QueryCriteriaBean data);
+    @PostMapping(PathConstants.REQUEST_SYSTEM_USER_PAGE)
+    ResponseData<PageInfo<SysUserDto>> page(@RequestBody QueryCriteriaBean data);
 
     /**
      * 按id获取查询
@@ -47,7 +47,7 @@ public interface ISystemUserClient {
      * @return ResponseData<SysUserDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_USER_GET_ID)
-    ResponseData<SysUserDto> getById(@PathVariable("id") String id);
+    ResponseData<SysUserDto> getById(@PathVariable String id);
 
     /**
      * 获取个人信息
@@ -103,7 +103,7 @@ public interface ISystemUserClient {
      * @return ResponseData<Boolean>
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_USER_STATUS)
-    ResponseData<Boolean> editStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
+    ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
     /**
      * 保存

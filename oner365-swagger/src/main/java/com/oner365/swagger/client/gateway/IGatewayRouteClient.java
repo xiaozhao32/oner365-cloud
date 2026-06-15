@@ -32,8 +32,8 @@ public interface IGatewayRouteClient {
      * @param data 查询参数
      * @return ResponseData<String>
      */
-    @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_LIST)
-    ResponseData<PageInfo<GatewayRouteDto>> list(@RequestBody QueryCriteriaBean data);
+    @PostMapping(PathConstants.REQUEST_GATEWAY_ROUTE_PAGE)
+    ResponseData<PageInfo<GatewayRouteDto>> page(@RequestBody QueryCriteriaBean data);
 
     /**
      * 获取路由
@@ -41,7 +41,7 @@ public interface IGatewayRouteClient {
      * @return ResponseData
      */
     @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_GET_ID)
-    ResponseData<GatewayRouteDto> get(@PathVariable("id") String id);
+    ResponseData<GatewayRouteDto> get(@PathVariable String id);
 
     /**
      * 增加路由
@@ -73,7 +73,7 @@ public interface IGatewayRouteClient {
      * @return ResponseData
      */
     @GetMapping(PathConstants.REQUEST_GATEWAY_ROUTE_STATUS)
-    ResponseData<Boolean> updateRouteStatus(@PathVariable("id") String id, @PathVariable("status") StatusEnum status);
+    ResponseData<Boolean> updateRouteStatus(@PathVariable String id, @PathVariable StatusEnum status);
 
     /**
      * 删除路由

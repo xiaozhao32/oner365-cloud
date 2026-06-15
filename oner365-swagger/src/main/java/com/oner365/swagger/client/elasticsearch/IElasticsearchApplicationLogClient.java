@@ -30,8 +30,8 @@ public interface IElasticsearchApplicationLogClient {
      * @param data 查询条件
      * @return ResponseData<PageInfo<ApplicationLogDto>>
      */
-    @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_APPLICATION_LOG_LIST)
-    ResponseData<PageInfo<ApplicationLogDto>> list(@RequestBody QueryCriteriaBean data);
+    @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_APPLICATION_LOG_PAGE)
+    ResponseData<PageInfo<ApplicationLogDto>> page(@RequestBody QueryCriteriaBean data);
 
     /**
      * id查询
@@ -39,7 +39,7 @@ public interface IElasticsearchApplicationLogClient {
      * @return ResponseData<ApplicationLogDto>
      */
     @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_APPLICATION_LOG_GET_ID)
-    ResponseData<ApplicationLogDto> get(@PathVariable("id") String id);
+    ResponseData<ApplicationLogDto> get(@PathVariable String id);
 
     /**
      * 删除

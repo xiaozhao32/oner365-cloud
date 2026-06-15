@@ -59,7 +59,7 @@ public class PathConstants {
     public static final String REQUEST_SYSTEM_DATASOURCE_DELETE = "/datasource/delete";
 
     /** 字典信息 */
-    public static final String REQUEST_SYSTEM_DICT_TYPE_LIST = "/dict/type/list";
+    public static final String REQUEST_SYSTEM_DICT_TYPE_PAGE = "/dict/type/page";
 
     public static final String REQUEST_SYSTEM_DICT_TYPE_CODES_LIST = "/dict/type/codes/list";
 
@@ -75,7 +75,7 @@ public class PathConstants {
 
     public static final String REQUEST_SYSTEM_DICT_TYPE_EXPORT = "/dict/type/export";
 
-    public static final String REQUEST_SYSTEM_DICT_ITEM_LIST = "/dict/item/list";
+    public static final String REQUEST_SYSTEM_DICT_ITEM_PAGE = "/dict/item/page";
 
     public static final String REQUEST_SYSTEM_DICT_ITEM_GET_ID = "/dict/item/get/{id}";
 
@@ -94,6 +94,8 @@ public class PathConstants {
     public static final String REQUEST_SYSTEM_DICT_ITEM_TYPE_IDS = "/dict/item/type/ids";
 
     /** 职位信息 */
+    public static final String REQUEST_SYSTEM_JOB_PAGE = "/job/page";
+    
     public static final String REQUEST_SYSTEM_JOB_LIST = "/job/list";
 
     public static final String REQUEST_SYSTEM_JOB_GET_ID = "/job/get/{id}";
@@ -107,7 +109,7 @@ public class PathConstants {
     public static final String REQUEST_SYSTEM_JOB_EXPORT = "/job/export";
 
     /** 日志信息 */
-    public static final String REQUEST_SYSTEM_LOG_LIST = "/log/list";
+    public static final String REQUEST_SYSTEM_LOG_PAGE = "/log/page";
 
     public static final String REQUEST_SYSTEM_LOG_GET_ID = "/log/get/{id}";
 
@@ -135,7 +137,7 @@ public class PathConstants {
     public static final String REQUEST_SYSTEM_MENU_DELETE = "/menus/delete";
 
     /** 菜单操作 */
-    public static final String REQUEST_SYSTEM_MENU_OPERATION_LIST = "/menu/operation/list";
+    public static final String REQUEST_SYSTEM_MENU_OPERATION_PAGE = "/menu/operation/page";
 
     public static final String REQUEST_SYSTEM_MENU_OPERATION_GET_ID = "/menu/operation/get/{id}";
 
@@ -150,6 +152,8 @@ public class PathConstants {
     public static final String REQUEST_SYSTEM_MENU_OPERATION_EXPORT = "/menu/operation/export";
 
     /** 菜单类型 */
+    public static final String REQUEST_SYSTEM_MENU_TYPE_PAGE = "/menu/type/page";
+
     public static final String REQUEST_SYSTEM_MENU_TYPE_LIST = "/menu/type/list";
 
     public static final String REQUEST_SYSTEM_MENU_TYPE_ALL = "/menu/type/all";
@@ -167,7 +171,7 @@ public class PathConstants {
     /** 消息通知 */
     public static final String REQUEST_SYSTEM_MESSAGE_REFRESH = "/message/refresh";
 
-    public static final String REQUEST_SYSTEM_MESSAGE_LIST = "/message/list";
+    public static final String REQUEST_SYSTEM_MESSAGE_PAGE = "/message/page";
 
     public static final String REQUEST_SYSTEM_MESSAGE_GET_ID = "/message/get/{id}";
 
@@ -203,6 +207,8 @@ public class PathConstants {
     public static final String REQUEST_SYSTEM_ORG_DELETE = "/org/delete";
 
     /** 角色管理 */
+    public static final String REQUEST_SYSTEM_ROLE_PAGE = "/role/page";
+    
     public static final String REQUEST_SYSTEM_ROLE_LIST = "/role/list";
 
     public static final String REQUEST_SYSTEM_ROLE_GET_ID = "/role/get/{id}";
@@ -218,7 +224,7 @@ public class PathConstants {
     public static final String REQUEST_SYSTEM_ROLE_EXPORT = "/role/export";
 
     /** 用户管理 */
-    public static final String REQUEST_SYSTEM_USER_LIST = "/user/list";
+    public static final String REQUEST_SYSTEM_USER_PAGE = "/user/page";
 
     public static final String REQUEST_SYSTEM_USER_GET_ID = "/user/get/{id}";
 
@@ -249,7 +255,7 @@ public class PathConstants {
     public static final String CONTEXT_GATEWAY_ROUTE_ID = "IGatewayRouteClient";
 
     /** 网关路由管理 */
-    public static final String REQUEST_GATEWAY_ROUTE_LIST = "/route/list";
+    public static final String REQUEST_GATEWAY_ROUTE_PAGE = "/route/page";
 
     public static final String REQUEST_GATEWAY_ROUTE_GET_ID = "/route/get/{id}";
 
@@ -298,7 +304,7 @@ public class PathConstants {
     public static final String REQUEST_ELASTICSEARCH_INFO_INDEX = "/info/index";
 
     /** 基因信息 */
-    public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_LIST = "/sample/gene/list";
+    public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_PAGE = "/sample/gene/page";
 
     public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_GET_ID = "/sample/gene/get/{id}";
 
@@ -307,7 +313,7 @@ public class PathConstants {
     public static final String REQUEST_ELASTICSEARCH_SAMPLE_GENE_DELETE = "/sample/gene/delete";
 
     /** 坐标信息 */
-    public static final String REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_LIST = "/sample/location/list";
+    public static final String REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_PAGE = "/sample/location/page";
 
     public static final String REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_GET_ID = "/sample/location/get/{id}";
 
@@ -316,7 +322,7 @@ public class PathConstants {
     public static final String REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_DELETE = "/sample/location/delete";
 
     /** 应用日志 */
-    public static final String REQUEST_ELASTICSEARCH_APPLICATION_LOG_LIST = "/application/log/list";
+    public static final String REQUEST_ELASTICSEARCH_APPLICATION_LOG_PAGE = "/application/log/page";
 
     public static final String REQUEST_ELASTICSEARCH_APPLICATION_LOG_GET_ID = "/application/log/get/{id}";
 

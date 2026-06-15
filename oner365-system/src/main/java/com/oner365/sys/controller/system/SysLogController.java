@@ -43,7 +43,7 @@ public class SysLogController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysLog>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SysLogDto> pageList(@RequestBody QueryCriteriaBean data) {
         return logService.pageList(data);
     }

@@ -46,7 +46,7 @@ public class SysMenuOperationController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysMenuOperationDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SysMenuOperationDto> pageList(@RequestBody QueryCriteriaBean data) {
         return menuOperationService.pageList(data);
     }

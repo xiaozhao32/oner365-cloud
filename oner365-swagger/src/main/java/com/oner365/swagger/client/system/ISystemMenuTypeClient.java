@@ -34,15 +34,15 @@ public interface ISystemMenuTypeClient {
      * @param data 查询参数
      * @return ResponseData<PageInfo<SysMenuTypeDto>>
      */
-    @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_LIST)
-    ResponseData<PageInfo<SysMenuTypeDto>> list(@RequestBody QueryCriteriaBean data);
+    @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_PAGE)
+    ResponseData<PageInfo<SysMenuTypeDto>> page(@RequestBody QueryCriteriaBean data);
 
     /**
      * 获取全部有效类型
      * @return ResponseData<List<SysMenuTypeDto>>
      */
-    @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_ALL)
-    ResponseData<List<SysMenuTypeDto>> all();
+    @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_LIST)
+    ResponseData<List<SysMenuTypeDto>> list();
 
     /**
      * 按id获取查询
@@ -50,7 +50,7 @@ public interface ISystemMenuTypeClient {
      * @return ResponseData<SysMenuTypeDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_GET_ID)
-    ResponseData<SysMenuTypeDto> getById(@PathVariable("id") String id);
+    ResponseData<SysMenuTypeDto> getById(@PathVariable String id);
 
     /**
      * 修改状态
@@ -59,7 +59,7 @@ public interface ISystemMenuTypeClient {
      * @return ResponseData<Boolean>
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_MENU_TYPE_STATUS)
-    ResponseData<Boolean> editStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
+    ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
     /**
      * 判断是否存在

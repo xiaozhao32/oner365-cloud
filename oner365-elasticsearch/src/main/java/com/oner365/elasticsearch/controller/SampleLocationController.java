@@ -40,7 +40,7 @@ public class SampleLocationController extends BaseController {
      * @param data 查询条件参数
      * @return PageInfo<SampleLocationDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SampleLocationDto> pageList(@RequestBody QueryCriteriaBean data) {
         return this.service.pageList(data);
     }

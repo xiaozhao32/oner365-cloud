@@ -21,6 +21,6 @@ public interface IDubboConsumerClient {
      * @return String
      */
     @GetMapping(PathConstants.REQUEST_DUBBO_CONSUMER_MESSAGE_SEND)
-    String send(@RequestParam("message") String message);
+    String send(@RequestParam String message);
 
 }

@@ -56,7 +56,7 @@ public class FileController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysFileStorage>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SysFileStorageDto> pageList(@RequestBody QueryCriteriaBean data) {
         return fileStorageService.pageList(data);
     }

@@ -43,7 +43,7 @@ public class SysJobController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysJobDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SysJobDto> pageList(@RequestBody QueryCriteriaBean data) {
         return sysJobService.pageList(data);
     }

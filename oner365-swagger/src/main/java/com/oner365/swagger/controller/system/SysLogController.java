@@ -46,9 +46,9 @@ public class SysLogController {
      */
     @ApiOperation("1.获取列表")
     @ApiOperationSupport(order = 1)
-    @PostMapping("/list")
-    public ResponseData<PageInfo<SysLogDto>> list(@RequestBody QueryCriteriaBean data) {
-        return client.list(data);
+    @PostMapping("/page")
+    public ResponseData<PageInfo<SysLogDto>> page(@RequestBody QueryCriteriaBean data) {
+        return client.page(data);
     }
 
     /**

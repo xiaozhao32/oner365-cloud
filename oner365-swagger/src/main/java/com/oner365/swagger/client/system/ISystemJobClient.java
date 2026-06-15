@@ -34,8 +34,16 @@ public interface ISystemJobClient {
      * @param data 查询参数
      * @return ResponseData<PageInfo<SysJobDto>>
      */
+    @PostMapping(PathConstants.REQUEST_SYSTEM_JOB_PAGE)
+    ResponseData<PageInfo<SysJobDto>> page(@RequestBody QueryCriteriaBean data);
+    
+    /**
+     * 列表
+     * @param data 查询参数
+     * @return ResponseData<PageInfo<SysJobDto>>
+     */
     @PostMapping(PathConstants.REQUEST_SYSTEM_JOB_LIST)
-    ResponseData<PageInfo<SysJobDto>> list(@RequestBody QueryCriteriaBean data);
+    ResponseData<List<SysJobDto>> list(@RequestBody QueryCriteriaBean data);
 
     /**
      * 按id获取查询
@@ -43,7 +51,7 @@ public interface ISystemJobClient {
      * @return ResponseData<SysJobDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_JOB_GET_ID)
-    ResponseData<SysJobDto> getById(@PathVariable("id") String id);
+    ResponseData<SysJobDto> getById(@PathVariable String id);
 
     /**
      * 修改状态
@@ -52,7 +60,7 @@ public interface ISystemJobClient {
      * @return ResponseData<Boolean>
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_JOB_STATUS)
-    ResponseData<Boolean> editStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
+    ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
     /**
      * 保存

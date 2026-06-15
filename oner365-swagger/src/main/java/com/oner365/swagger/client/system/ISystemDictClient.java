@@ -38,8 +38,8 @@ public interface ISystemDictClient {
      * @param data 查询参数
      * @return ResponseData<PageInfo<SysDictItemTypeDto>>
      */
-    @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_TYPE_LIST)
-    ResponseData<PageInfo<SysDictItemTypeDto>> findTypeList(@RequestBody QueryCriteriaBean data);
+    @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_TYPE_PAGE)
+    ResponseData<PageInfo<SysDictItemTypeDto>> findTypePage(@RequestBody QueryCriteriaBean data);
 
     /**
      * 获取指定类别列表
@@ -55,7 +55,7 @@ public interface ISystemDictClient {
      * @return ResponseData<SysDictItemTypeDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_DICT_TYPE_GET_ID)
-    ResponseData<SysDictItemTypeDto> getTypeById(@PathVariable("id") String id);
+    ResponseData<SysDictItemTypeDto> getTypeById(@PathVariable String id);
 
     /**
      * 判断类别id 类别是否存在
@@ -71,7 +71,7 @@ public interface ISystemDictClient {
      * @return ResponseData<List<SysDictItemDto>>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_DICT_ITEM_TYPE)
-    ResponseData<List<SysDictItemDto>> findTypeInfoById(@PathVariable("typeId") String typeId);
+    ResponseData<List<SysDictItemDto>> findTypeInfoById(@PathVariable String typeId);
 
     /**
      * 获取类别字典信息
@@ -88,7 +88,7 @@ public interface ISystemDictClient {
      * @return ResponseData<Boolean>
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_TYPE_STATUS)
-    ResponseData<Boolean> editTypeStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
+    ResponseData<Boolean> editTypeStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
     /**
      * 字典类别保存
@@ -119,8 +119,8 @@ public interface ISystemDictClient {
      * @param data 查询参数
      * @return ResponseData<PageInfo<SysDictItemDto>>
      */
-    @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_ITEM_LIST)
-    ResponseData<PageInfo<SysDictItemDto>> findItemList(@RequestBody QueryCriteriaBean data);
+    @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_ITEM_PAGE)
+    ResponseData<PageInfo<SysDictItemDto>> findItemPage(@RequestBody QueryCriteriaBean data);
 
     /**
      * 获取字典信息
@@ -128,7 +128,7 @@ public interface ISystemDictClient {
      * @return ResponseData<SysDictItemDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_DICT_ITEM_GET_ID)
-    ResponseData<SysDictItemDto> getItemById(@PathVariable("id") String id);
+    ResponseData<SysDictItemDto> getItemById(@PathVariable String id);
 
     /**
      * 判断类别id 字典是否存在
@@ -145,7 +145,7 @@ public interface ISystemDictClient {
      * @return ResponseData<Boolean>
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_DICT_ITEM_STATUS)
-    ResponseData<Boolean> editItemStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
+    ResponseData<Boolean> editItemStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
     /**
      * 保存字典信息

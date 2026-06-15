@@ -56,8 +56,8 @@ public class SysDictItemController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysDictItemTypeDto>
      */
-    @PostMapping("/type/list")
-    public PageInfo<SysDictItemTypeDto> findTypeList(@RequestBody QueryCriteriaBean data) {
+    @PostMapping("/type/page")
+    public PageInfo<SysDictItemTypeDto> findTypePage(@RequestBody QueryCriteriaBean data) {
         return sysDictItemTypeService.pageList(data);
     }
 
@@ -181,8 +181,8 @@ public class SysDictItemController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysDictItemDto>
      */
-    @PostMapping("/item/list")
-    public PageInfo<SysDictItemDto> findItemList(@RequestBody QueryCriteriaBean data) {
+    @PostMapping("/item/page")
+    public PageInfo<SysDictItemDto> findItemPage(@RequestBody QueryCriteriaBean data) {
         return sysDictItemService.pageList(data);
     }
 

@@ -61,9 +61,9 @@ public class SysMessageController {
      */
     @ApiOperation("2.获取分页列表")
     @ApiOperationSupport(order = 2)
-    @PostMapping("/list")
-    public ResponseData<PageInfo<SysMessageDto>> list(@RequestBody QueryCriteriaBean data) {
-        return client.list(data);
+    @PostMapping("/page")
+    public ResponseData<PageInfo<SysMessageDto>> page(@RequestBody QueryCriteriaBean data) {
+        return client.page(data);
     }
 
     /**

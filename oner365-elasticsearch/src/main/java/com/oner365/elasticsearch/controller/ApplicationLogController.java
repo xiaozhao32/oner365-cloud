@@ -38,7 +38,7 @@ public class ApplicationLogController extends BaseController {
      * @param data 查询条件参数
      * @return PageInfo<ApplicationLogDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<ApplicationLogDto> pageList(@RequestBody QueryCriteriaBean data) {
         return this.service.pageList(data);
     }

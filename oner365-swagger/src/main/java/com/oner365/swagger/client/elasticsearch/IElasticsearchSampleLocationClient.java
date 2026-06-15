@@ -32,8 +32,8 @@ public interface IElasticsearchSampleLocationClient {
      * @param data 查询条件
      * @return ResponseData<PageInfo<SampleLocationDto>>
      */
-    @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_LIST)
-    ResponseData<PageInfo<SampleLocationDto>> list(@RequestBody QueryCriteriaBean data);
+    @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_PAGE)
+    ResponseData<PageInfo<SampleLocationDto>> page(@RequestBody QueryCriteriaBean data);
 
     /**
      * id查询
@@ -41,7 +41,7 @@ public interface IElasticsearchSampleLocationClient {
      * @return ResponseData<SampleLocationDto>
      */
     @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_LOCATION_GET_ID)
-    ResponseData<SampleLocationDto> get(@PathVariable("id") String id);
+    ResponseData<SampleLocationDto> get(@PathVariable String id);
 
     /**
      * 保存

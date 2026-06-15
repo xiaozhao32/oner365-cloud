@@ -33,8 +33,8 @@ public interface ISystemLogClient {
      * @param data 查询参数
      * @return ResponseData<PageInfo<SysLogDto>>
      */
-    @PostMapping(PathConstants.REQUEST_SYSTEM_LOG_LIST)
-    ResponseData<PageInfo<SysLogDto>> list(@RequestBody QueryCriteriaBean data);
+    @PostMapping(PathConstants.REQUEST_SYSTEM_LOG_PAGE)
+    ResponseData<PageInfo<SysLogDto>> page(@RequestBody QueryCriteriaBean data);
 
     /**
      * 按id获取查询
@@ -42,7 +42,7 @@ public interface ISystemLogClient {
      * @return ResponseData<SysLogDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_LOG_GET_ID)
-    ResponseData<SysLogDto> getById(@PathVariable("id") String id);
+    ResponseData<SysLogDto> getById(@PathVariable String id);
 
     /**
      * 保存
@@ -66,7 +66,7 @@ public interface ISystemLogClient {
      * @return ResponseData<Boolean>
      */
     @DeleteMapping(PathConstants.REQUEST_SYSTEM_LOG_DAYS_DELETE)
-    ResponseData<Boolean> deleteDays(@RequestParam("days") Integer days);
+    ResponseData<Boolean> deleteDays(@RequestParam Integer days);
 
     /**
      * 导出

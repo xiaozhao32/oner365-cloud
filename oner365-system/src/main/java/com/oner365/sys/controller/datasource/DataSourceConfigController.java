@@ -42,7 +42,7 @@ public class DataSourceConfigController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<DataSourceConfigDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<DataSourceConfigDto> pageList(@RequestBody QueryCriteriaBean data) {
         return service.pageList(data);
     }

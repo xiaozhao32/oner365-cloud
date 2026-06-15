@@ -32,8 +32,8 @@ public interface IElasticsearchSampleGeneClient {
      * @param data 查询条件
      * @return ResponseData<PageInfo<SampleGeneDto>>
      */
-    @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_LIST)
-    ResponseData<PageInfo<SampleGeneDto>> list(@RequestBody QueryCriteriaBean data);
+    @PostMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_PAGE)
+    ResponseData<PageInfo<SampleGeneDto>> page(@RequestBody QueryCriteriaBean data);
 
     /**
      * id查询
@@ -41,7 +41,7 @@ public interface IElasticsearchSampleGeneClient {
      * @return ResponseData<SampleGeneDto>
      */
     @GetMapping(PathConstants.REQUEST_ELASTICSEARCH_SAMPLE_GENE_GET_ID)
-    ResponseData<SampleGeneDto> get(@PathVariable("id") String id);
+    ResponseData<SampleGeneDto> get(@PathVariable String id);
 
     /**
      * 保存

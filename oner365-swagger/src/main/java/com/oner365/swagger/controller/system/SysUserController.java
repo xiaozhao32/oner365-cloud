@@ -51,9 +51,9 @@ public class SysUserController {
      */
     @ApiOperation("1.用户列表")
     @ApiOperationSupport(order = 1)
-    @PostMapping("/list")
-    public ResponseData<PageInfo<SysUserDto>> list(@RequestBody QueryCriteriaBean data) {
-        return client.list(data);
+    @PostMapping("/page")
+    public ResponseData<PageInfo<SysUserDto>> page(@RequestBody QueryCriteriaBean data) {
+        return client.page(data);
     }
 
     /**

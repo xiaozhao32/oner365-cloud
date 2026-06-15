@@ -69,7 +69,7 @@ public class SysUserController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysUserDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SysUserDto> pageList(@RequestBody QueryCriteriaBean data) {
         return sysUserService.pageList(data);
     }

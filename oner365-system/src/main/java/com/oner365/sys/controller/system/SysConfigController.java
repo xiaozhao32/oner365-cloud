@@ -44,7 +44,7 @@ public class SysConfigController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysConfigDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SysConfigDto> pageList(@RequestBody QueryCriteriaBean data) {
         return sysConfigService.pageList(data);
     }

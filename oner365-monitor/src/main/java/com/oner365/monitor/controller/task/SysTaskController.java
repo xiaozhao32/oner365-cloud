@@ -44,7 +44,7 @@ public class SysTaskController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysTaskDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SysTaskDto> pageList(@RequestBody QueryCriteriaBean data) {
         return taskService.pageList(data);
     }

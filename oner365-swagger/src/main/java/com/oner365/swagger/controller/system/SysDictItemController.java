@@ -52,9 +52,9 @@ public class SysDictItemController {
      */
     @ApiOperation("1.获取类别列表")
     @ApiOperationSupport(order = 1)
-    @PostMapping("/type/list")
-    public ResponseData<PageInfo<SysDictItemTypeDto>> findTypeList(@RequestBody QueryCriteriaBean data) {
-        return client.findTypeList(data);
+    @PostMapping("/type/page")
+    public ResponseData<PageInfo<SysDictItemTypeDto>> findTypePage(@RequestBody QueryCriteriaBean data) {
+        return client.findTypePage(data);
     }
 
     /**
@@ -173,9 +173,9 @@ public class SysDictItemController {
      */
     @ApiOperation("11.获取字典列表")
     @ApiOperationSupport(order = 11)
-    @PostMapping("/item/list")
-    public ResponseData<PageInfo<SysDictItemDto>> findItemList(@RequestBody QueryCriteriaBean data) {
-        return client.findItemList(data);
+    @PostMapping("/item/page")
+    public ResponseData<PageInfo<SysDictItemDto>> findItemPage(@RequestBody QueryCriteriaBean data) {
+        return client.findItemPage(data);
     }
 
     /**

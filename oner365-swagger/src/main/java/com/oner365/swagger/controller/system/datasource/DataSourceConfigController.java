@@ -47,7 +47,7 @@ public class DataSourceConfigController {
      */
     @ApiOperation("1.获取列表")
     @ApiOperationSupport(order = 1)
-    @PostMapping("/list")
+    @PostMapping("/page")
     public ResponseData<PageInfo<DataSourceConfigDto>> pageList(@RequestBody QueryCriteriaBean data) {
         return client.pageList(data);
     }

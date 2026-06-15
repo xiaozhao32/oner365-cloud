@@ -36,7 +36,7 @@ public class SysTaskLogController extends BaseController {
      * @param data 查询参数
      * @return PageInfo<SysTaskLogDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SysTaskLogDto> pageList(@RequestBody QueryCriteriaBean data) {
         return taskLogService.pageList(data);
     }

@@ -48,9 +48,9 @@ public class SysMenuTypeController {
      */
     @ApiOperation("1.获取分页列表")
     @ApiOperationSupport(order = 1)
-    @PostMapping("/list")
-    public ResponseData<PageInfo<SysMenuTypeDto>> list(@RequestBody QueryCriteriaBean data) {
-        return client.list(data);
+    @PostMapping("/page")
+    public ResponseData<PageInfo<SysMenuTypeDto>> page(@RequestBody QueryCriteriaBean data) {
+        return client.page(data);
     }
 
     /**
@@ -59,9 +59,9 @@ public class SysMenuTypeController {
      */
     @ApiOperation("2.获取全部有效类型")
     @ApiOperationSupport(order = 2)
-    @GetMapping("/all")
-    public ResponseData<List<SysMenuTypeDto>> findAll() {
-        return client.all();
+    @GetMapping("/list")
+    public ResponseData<List<SysMenuTypeDto>> findList() {
+        return client.list();
     }
 
     /**

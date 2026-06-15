@@ -45,7 +45,7 @@ public class SampleGeneController extends BaseController {
      * @param data 查询条件参数
      * @return Page<SampleGeneDto>
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public PageInfo<SampleGeneDto> pageList(@RequestBody QueryCriteriaBean data) {
         return service.pageList(data);
     }

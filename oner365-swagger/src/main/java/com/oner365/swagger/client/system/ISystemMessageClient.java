@@ -36,15 +36,15 @@ public interface ISystemMessageClient {
      * @return ResponseData<Boolean>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_REFRESH)
-    ResponseData<Boolean> refresh(@RequestParam("messageType") MessageTypeEnum messageType);
+    ResponseData<Boolean> refresh(@RequestParam MessageTypeEnum messageType);
 
     /**
      * 列表
      * @param data 查询参数
      * @return ResponseData<PageInfo<SysMessageDto>>
      */
-    @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_LIST)
-    ResponseData<PageInfo<SysMessageDto>> list(@RequestBody QueryCriteriaBean data);
+    @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_PAGE)
+    ResponseData<PageInfo<SysMessageDto>> page(@RequestBody QueryCriteriaBean data);
 
     /**
      * 按id获取查询
@@ -52,7 +52,7 @@ public interface ISystemMessageClient {
      * @return ResponseData<SysMessageDto>
      */
     @GetMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_GET_ID)
-    ResponseData<SysMessageDto> getById(@PathVariable("id") String id);
+    ResponseData<SysMessageDto> getById(@PathVariable String id);
 
     /**
      * 修改状态
@@ -61,7 +61,7 @@ public interface ISystemMessageClient {
      * @return ResponseData<Boolean>
      */
     @PostMapping(PathConstants.REQUEST_SYSTEM_MESSAGE_STATUS)
-    ResponseData<Boolean> editStatus(@PathVariable("id") String id, @RequestParam("status") StatusEnum status);
+    ResponseData<Boolean> editStatus(@PathVariable String id, @RequestParam StatusEnum status);
 
     /**
      * 保存

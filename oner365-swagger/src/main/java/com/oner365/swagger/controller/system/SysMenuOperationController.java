@@ -50,9 +50,9 @@ public class SysMenuOperationController {
      */
     @ApiOperation("1.获取列表")
     @ApiOperationSupport(order = 1)
-    @PostMapping("/list")
-    public ResponseData<PageInfo<SysMenuOperationDto>> findList(@RequestBody QueryCriteriaBean data) {
-        return client.list(data);
+    @PostMapping("/page")
+    public ResponseData<PageInfo<SysMenuOperationDto>> pageList(@RequestBody QueryCriteriaBean data) {
+        return client.page(data);
     }
 
     /**

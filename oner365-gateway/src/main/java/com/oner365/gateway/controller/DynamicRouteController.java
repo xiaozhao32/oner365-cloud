@@ -42,7 +42,7 @@ public class DynamicRouteController {
      * @param data 查询参数
      * @return ResponseData
      */
-    @PostMapping("/list")
+    @PostMapping("/page")
     public ResponseData<PageInfo<GatewayRouteDto>> pageList(@RequestBody QueryCriteriaBean data) {
         PageInfo<GatewayRouteDto> page = dynamicRouteService.pageList(data);
         return ResponseData.success(page);
