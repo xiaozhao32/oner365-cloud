@@ -2,11 +2,9 @@ package com.oner365.data.redis.config;
 
 import java.io.Serializable;
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.HashSet;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
-import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -15,9 +13,7 @@ import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.CacheManager;
-import org.springframework.cache.annotation.CachingConfigurer;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
@@ -33,10 +29,8 @@ import org.springframework.data.redis.core.RedisOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.support.spring.FastJsonRedisSerializer;
 import com.oner365.data.commons.constants.PublicConstants;
-import com.oner365.data.commons.util.ClassesUtil;
 import com.oner365.data.commons.util.DataUtils;
 
 import io.lettuce.core.ReadFrom;
@@ -55,7 +49,7 @@ import redis.clients.jedis.Jedis;
 @ConditionalOnClass({ JedisConnection.class, RedisOperations.class, Jedis.class })
 @EnableConfigurationProperties(RedisProperties.class)
 @AutoConfigureAfter(RedisAutoConfiguration.class)
-public class RedisCacheConfig implements CachingConfigurer {
+public class RedisCacheConfig {
 
     @Bean
     CacheManager cacheManager(RedisConnectionFactory connectionFactory) {
@@ -130,39 +124,6 @@ public class RedisCacheConfig implements CachingConfigurer {
             .poolConfig(poolConfig)
             .build();
         return new LettuceConnectionFactory(redisSentinelConfiguration, lettuceClientConfiguration);
-    }
-
-    @Bean
-    @Override
-    public KeyGenerator keyGenerator() {
-        return (target, method, params) -> {
-            String sp = "::";
-            StringBuilder strBuilder = new StringBuilder(30);
-            // 类名
-            strBuilder.append(target.getClass().getSimpleName());
-            strBuilder.append(sp);
-            // 方法名
-            strBuilder.append(method.getName());
-            strBuilder.append(sp);
-            if (params.length > 0) {
-                // 参数值
-                Arrays.stream(params).forEach(object -> {
-                    if (DataUtils.isEmpty(object)) {
-                        strBuilder.append(Strings.EMPTY);
-                    }
-                    else if (ClassesUtil.isPrimitive(object.getClass())) {
-                        strBuilder.append(object);
-                    }
-                    else {
-                        strBuilder.append(JSON.toJSONString(object).hashCode());
-                    }
-                });
-            }
-            else {
-                strBuilder.append(sp);
-            }
-            return strBuilder.toString();
-        };
     }
 
 }
